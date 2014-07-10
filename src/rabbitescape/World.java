@@ -23,4 +23,16 @@ public class World
             thing.step( this );
         }
     }
+
+    public ChangeDescription describeChanges()
+    {
+        ChangeDescription ret = new ChangeDescription();
+
+        for ( Thing thing : things )
+        {
+            thing.describeChanges( ret );
+        }
+
+        return ret;
+    }
 }

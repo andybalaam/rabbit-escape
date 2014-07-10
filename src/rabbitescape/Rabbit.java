@@ -1,6 +1,7 @@
 package rabbitescape;
 
 import static rabbitescape.Direction.*;
+import rabbitescape.ChangeDescription.State;
 
 public class Rabbit extends Thing
 {
@@ -18,6 +19,19 @@ public class Rabbit extends Thing
         if ( !fall( world ) )
         {
             walk( world );
+        }
+    }
+
+    @Override
+    public void describeChanges( ChangeDescription ret )
+    {
+        if ( dir == RIGHT )
+        {
+            ret.add( x, y, State.RABBIT_WALKING_RIGHT );
+        }
+        else
+        {
+            ret.add( x, y, State.RABBIT_WALKING_LEFT );
         }
     }
 

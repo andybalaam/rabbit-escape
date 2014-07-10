@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import rabbitescape.ChangeDescription.Change;
 import rabbitescape.err.RabbitEscapeException;
 
 public class TextWorldManip
@@ -127,14 +128,7 @@ public class TextWorldManip
             chars[ thing.y ][ thing.x ] = charForThing( thing );
         }
 
-        String[] ret = new String[world.size.height];
-
-        for ( int lineNum = 0; lineNum < world.size.height; ++lineNum )
-        {
-            ret[lineNum] = new String( chars[lineNum] );
-        }
-
-        return ret;
+        return charsToStrings( chars );
     }
 
     private static char charForThing( Thing thing )
@@ -148,6 +142,45 @@ public class TextWorldManip
             throw new AssertionError(
                 "Unknown Thing type: " + thing.getClass() );
         }
+    }
+
+    public static String[] renderChangeDescription(
+        World world, ChangeDescription desc )
+    {
+        char[][] chars = filledChars(
+            world.size.height, world.size.width, ' ' );
+
+        for ( Change change : desc.changes )
+        {
+            chars[ change.y ][ change.x ] = charForChange( change );
+        }
+
+        return charsToStrings( chars );
+    }
+
+
+    private static char charForChange( Change change )
+    {
+        switch( change.state )
+        {
+            case RABBIT_WALKING_LEFT:  return '<';
+            case RABBIT_WALKING_RIGHT: return '>';
+            default:
+                throw new AssertionError(
+                    "Unknown Change state: " + change.state.name() );
+        }
+    }
+
+    private static String[] charsToStrings( char[][] chars )
+    {
+        String[] ret = new String[chars.length];
+
+        for ( int lineNum = 0; lineNum < chars.length; ++lineNum )
+        {
+            ret[lineNum] = new String( chars[lineNum] );
+        }
+
+        return ret;
     }
 
     private static char[][] filledChars( int height, int width, char c )
