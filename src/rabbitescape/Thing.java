@@ -12,5 +12,5 @@ public abstract class Thing
     }
 
     public abstract void step( World world );
-    public abstract void describeChanges( ChangeDescription ret );
+    public abstract void describeChanges( World world, ChangeDescription ret );
 }

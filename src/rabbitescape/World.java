@@ -30,9 +30,21 @@ public class World
 
         for ( Thing thing : things )
         {
-            thing.describeChanges( ret );
+            thing.describeChanges( this, ret );
         }
 
         return ret;
+    }
+
+    public boolean blockAt( int x, int y )
+    {
+        for ( Block block : blocks )
+        {
+            if ( block.x == x && block.y == y )
+            {
+                return true;
+            }
+        }
+        return false;
     }
 }

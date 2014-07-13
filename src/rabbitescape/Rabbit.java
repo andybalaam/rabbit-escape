@@ -1,91 +1,53 @@
 package rabbitescape;
 
-import static rabbitescape.Direction.*;
-import rabbitescape.ChangeDescription.State;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Rabbit extends Thing
 {
-    Direction dir;
+    private final List<Behaviour> behaviours;
+    public Direction dir;
 
     public Rabbit( int x, int y, Direction dir )
     {
         super( x, y );
         this.dir = dir;
+        behaviours = createBehaviours();
+    }
+
+    private static List<Behaviour> createBehaviours()
+    {
+        List<Behaviour> ret = new ArrayList<Behaviour>();
+
+        ret.add( new Falling() );
+        ret.add( new Walking() );
+
+        return ret;
     }
 
     @Override
     public void step( World world )
     {
-        if ( !fall( world ) )
+        for ( Behaviour behaviour : behaviours )
         {
-            walk( world );
+            boolean handled = behaviour.behave( this, world );
+            if ( handled )
+            {
+                break;
+            }
         }
     }
 
     @Override
-    public void describeChanges( ChangeDescription ret )
+    public void describeChanges( World world, ChangeDescription ret )
     {
-        if ( dir == RIGHT )
+        for ( Behaviour behaviour : behaviours )
         {
-            ret.add( x, y, State.RABBIT_WALKING_RIGHT );
-        }
-        else
-        {
-            ret.add( x, y, State.RABBIT_WALKING_LEFT );
-        }
-    }
-
-    /**
-     * Fall if possible.
-     * @return true if we are falling
-     */
-    private boolean fall( World world )
-    {
-        int below = y + 1;
-
-        if ( blockAt( world, x, below ) )
-        {
-            return false;
-        }
-
-        int furtherBelow = y + 2;
-
-        if ( blockAt( world, x, furtherBelow ) )
-        {
-            // Only fall 1 step
-            y = below;
-        }
-        else
-        {
-            y = furtherBelow;
-        }
-
-        return true;
-    }
-
-    private void walk( World world )
-    {
-        int destination = ( dir == RIGHT ) ? x + 1 : x - 1;
-
-        if ( blockAt( world, destination, y ) )
-        {
-            dir = opposite( dir );
-        }
-        else
-        {
-            x = destination;
-        }
-    }
-
-    private static boolean blockAt( World world, int x, int y )
-    {
-        for ( Block block : world.blocks )
-        {
-            if ( block.x == x && block.y == y )
+            boolean handled = behaviour.describeChanges( this, world, ret );
+            if ( handled )
             {
-                return true;
+                break;
             }
         }
-        return false;
     }
 }
