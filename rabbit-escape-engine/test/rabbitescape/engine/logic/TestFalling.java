@@ -72,7 +72,32 @@ public class TestFalling
             "#####"
         );
 
+        assertThat(
+            renderWorld( world, true ),
+            equalTo(
+                "   r ",
+                "   f ",
+                "   f ",
+                "     ",
+                "     ",  // Falling
+                "#####"
+            )
+        );
+
         world.step();
+
+        assertThat(
+            renderWorld( world, true ),
+            equalTo(
+                "     ",
+                "     ",
+                "   r ",
+                "   f ",
+                "   f ",  // Falling
+                "#####"
+            )
+        );
+
         world.step();
 
         assertThat(
@@ -102,8 +127,23 @@ public class TestFalling
             "#####"
         );
 
+        world.step();     // Falling
         world.step();
-        world.step();
+
+        assertThat(
+            renderWorld( world, true ),
+            equalTo(
+                "     ",
+                "     ",
+                "     ",
+                "     ",
+                "   r ",
+                "   f ",
+                "   f ",  // Still falling
+                "#####"
+            )
+        );
+
         world.step();
 
         assertThat(

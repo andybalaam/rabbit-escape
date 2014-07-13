@@ -61,13 +61,12 @@ public class Falling implements Behaviour
             return false;
         }
 
-        if ( heightFallen + 1 > fatalHeight )
+        if (
+               ( heightFallen + 1 > fatalHeight )            // Going to die
+            && ( world.blockAt( rabbit.x, rabbit.y + 2 ) )   // during this step
+        )
         {
-            int furtherBelow = rabbit.y + 2;
-            if ( world.blockAt( rabbit.x, furtherBelow ) )
-            {
-                ret.add( rabbit.x, rabbit.y, State.RABBIT_FALLING_1_TO_DEATH );
-            }
+            ret.add( rabbit.x, rabbit.y, State.RABBIT_FALLING_1_TO_DEATH );
         }
         else
         {

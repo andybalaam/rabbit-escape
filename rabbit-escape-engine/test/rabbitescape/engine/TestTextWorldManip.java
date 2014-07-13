@@ -77,11 +77,11 @@ public class TestTextWorldManip
         assertThat(
             renderChangeDescription( world, desc ),
             equalTo(
-                "f  ",
-                "  f",
-                " f ",
                 "   ",
-                "   "
+                "f  ",
+                "f f",
+                " ff",
+                " f "
             )
         );
     }
