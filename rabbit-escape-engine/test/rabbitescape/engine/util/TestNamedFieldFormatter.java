@@ -1,9 +1,9 @@
-package rabbitescape.util;
+package rabbitescape.engine.util;
 
 import static org.hamcrest.MatcherAssert.*;
 import static org.hamcrest.core.IsEqual.*;
-import static rabbitescape.util.NamedFieldFormatter.*;
-import static rabbitescape.util.Util.*;
+import static rabbitescape.engine.util.NamedFieldFormatter.*;
+import static rabbitescape.engine.util.Util.*;
 
 import java.util.HashMap;
 import java.util.Map;

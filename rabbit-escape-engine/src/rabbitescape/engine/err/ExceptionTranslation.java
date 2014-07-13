@@ -1,6 +1,6 @@
-package rabbitescape.err;
+package rabbitescape.engine.err;
 
-import static rabbitescape.util.Util.*;
+import static rabbitescape.engine.util.Util.*;
 
 import java.lang.reflect.Field;
 import java.util.HashMap;
@@ -9,19 +9,19 @@ import java.util.Map;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
-import rabbitescape.util.NamedFieldFormatter;
+import rabbitescape.engine.util.NamedFieldFormatter;
 
 public class ExceptionTranslation
 {
-    private static final String prefix = "rabbitescape.";
+    private static final String prefix = "rabbitescape.engine.";
 
     public static String translate(
         RabbitEscapeException exception, Locale locale )
     {
         String key = stripPrefix( exception.getClass().getCanonicalName() );
 
-        ResourceBundle bundle =
-            ResourceBundle.getBundle( "rabbitescape.err.exceptions", locale );
+        ResourceBundle bundle = ResourceBundle.getBundle(
+            "rabbitescape.engine.err.exceptions", locale );
 
         try
         {

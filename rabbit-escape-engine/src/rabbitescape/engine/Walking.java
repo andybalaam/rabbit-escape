@@ -1,7 +1,7 @@
-package rabbitescape;
+package rabbitescape.engine;
 
-import static rabbitescape.Direction.*;
-import rabbitescape.ChangeDescription.State;
+import static rabbitescape.engine.Direction.*;
+import rabbitescape.engine.ChangeDescription.State;
 
 public class Walking implements Behaviour
 {

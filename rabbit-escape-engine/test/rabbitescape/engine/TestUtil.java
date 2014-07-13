@@ -1,8 +1,8 @@
-package rabbitescape;
+package rabbitescape.engine;
 
 import static org.hamcrest.MatcherAssert.*;
 import static org.hamcrest.core.IsEqual.*;
-import static rabbitescape.util.Util.*;
+import static rabbitescape.engine.util.Util.*;
 
 import java.util.Arrays;
 

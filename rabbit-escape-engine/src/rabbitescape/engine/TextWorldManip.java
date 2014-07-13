@@ -1,15 +1,15 @@
-package rabbitescape;
+package rabbitescape.engine;
 
-import static rabbitescape.Direction.*;
-import static rabbitescape.util.Util.*;
+import static rabbitescape.engine.Direction.*;
+import static rabbitescape.engine.util.Util.*;
 
 import java.awt.Dimension;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import rabbitescape.ChangeDescription.Change;
-import rabbitescape.err.RabbitEscapeException;
+import rabbitescape.engine.ChangeDescription.Change;
+import rabbitescape.engine.err.RabbitEscapeException;
 
 public class TextWorldManip
 {

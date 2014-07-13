@@ -1,9 +1,9 @@
-package rabbitescape;
+package rabbitescape.engine;
 
 import static org.hamcrest.MatcherAssert.*;
-import static rabbitescape.ChangeDescription.State.*;
-import static rabbitescape.TextWorldManip.*;
-import static rabbitescape.Tools.*;
+import static rabbitescape.engine.ChangeDescription.State.*;
+import static rabbitescape.engine.TextWorldManip.*;
+import static rabbitescape.engine.Tools.*;
 
 import org.junit.Test;
 

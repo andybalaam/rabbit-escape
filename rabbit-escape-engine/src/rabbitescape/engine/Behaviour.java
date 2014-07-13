@@ -1,4 +1,4 @@
-package rabbitescape;
+package rabbitescape.engine;
 
 public interface Behaviour
 {

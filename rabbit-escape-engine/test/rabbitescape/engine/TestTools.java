@@ -1,11 +1,10 @@
-package rabbitescape;
+package rabbitescape.engine;
 
-import static org.hamcrest.core.IsNot.*;
 import static org.hamcrest.MatcherAssert.*;
+import static org.hamcrest.core.IsNot.*;
+import static rabbitescape.engine.Tools.*;
 
 import org.junit.Test;
-
-import static rabbitescape.Tools.*;
 
 public class TestTools
 {

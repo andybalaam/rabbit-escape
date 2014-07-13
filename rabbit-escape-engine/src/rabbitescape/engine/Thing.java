@@ -1,4 +1,4 @@
-package rabbitescape;
+package rabbitescape.engine;
 
 public abstract class Thing
 {

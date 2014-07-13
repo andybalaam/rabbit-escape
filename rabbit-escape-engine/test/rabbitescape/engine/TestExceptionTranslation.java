@@ -1,4 +1,4 @@
-package rabbitescape;
+package rabbitescape.engine;
 
 import static org.hamcrest.MatcherAssert.*;
 import static org.hamcrest.core.IsEqual.*;
@@ -6,6 +6,8 @@ import static org.hamcrest.core.IsEqual.*;
 import java.util.Locale;
 
 import org.junit.Test;
+
+import rabbitescape.engine.TextWorldManip;
 
 public class TestExceptionTranslation
 {

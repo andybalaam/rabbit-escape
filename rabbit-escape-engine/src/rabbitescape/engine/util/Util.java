@@ -1,4 +1,4 @@
-package rabbitescape.util;
+package rabbitescape.engine.util;
 
 import java.util.ArrayList;
 import java.util.Arrays;

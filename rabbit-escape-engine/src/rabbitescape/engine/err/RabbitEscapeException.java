@@ -1,4 +1,4 @@
-package rabbitescape.err;
+package rabbitescape.engine.err;
 
 import java.util.Locale;
 

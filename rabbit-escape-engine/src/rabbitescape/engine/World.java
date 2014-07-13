@@ -1,4 +1,4 @@
-package rabbitescape;
+package rabbitescape.engine;
 
 import java.awt.Dimension;
 import java.util.List;
