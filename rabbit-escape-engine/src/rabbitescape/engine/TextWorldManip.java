@@ -55,6 +55,15 @@ public class TextWorldManip
         return new World( size, blocks, things );
     }
 
+    public static World createEmptyWorld( int width, int height )
+    {
+        return new World(
+            new Dimension( width, height ),
+            new ArrayList<Block>(),
+            new ArrayList<Thing>()
+        );
+    }
+
     private static Dimension processLines(
         String[] lines,
         List<Block> blocks,
@@ -176,13 +185,13 @@ public class TextWorldManip
         switch( change.state )
         {
             case RABBIT_WALKING_LEFT:
-                chars[change.y][change.x] = '<';
+                chars[change.y][change.x-1] = '<';
                 break;
             case RABBIT_TURNING_LEFT_TO_RIGHT:
                 chars[change.y][change.x] = '|';
                 break;
             case RABBIT_WALKING_RIGHT:
-                chars[change.y][change.x] = '>';
+                chars[change.y][change.x + 1] = '>';
                 break;
             case RABBIT_TURNING_RIGHT_TO_LEFT:
                 chars[change.y][change.x] = '?';

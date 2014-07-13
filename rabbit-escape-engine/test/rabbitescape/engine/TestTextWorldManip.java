@@ -28,13 +28,9 @@ public class TestTextWorldManip
     }
 
     @Test
-    public void Render_walking_rabbits()
+    public void Walking_rabbits()
     {
-        World world = createWorld(
-            "   ",
-            "   ",
-            "   "
-        );
+        World world = createEmptyWorld( 3, 3 );
 
         ChangeDescription desc = new ChangeDescription();
         desc.add( 0, 0, RABBIT_WALKING_RIGHT );
@@ -44,9 +40,83 @@ public class TestTextWorldManip
         assertThat(
             renderChangeDescription( world, desc ),
             equalTo(
-                ">  ",
-                "  <",
-                " > "
+                " > ",
+                " < ",
+                "  >"
+            )
+        );
+    }
+
+    @Test
+    public void Turning_rabbits()
+    {
+        World world = createEmptyWorld( 3, 1 );
+
+        ChangeDescription desc = new ChangeDescription();
+        desc.add( 0, 0, RABBIT_TURNING_LEFT_TO_RIGHT );
+        desc.add( 2, 0, RABBIT_TURNING_RIGHT_TO_LEFT  );
+
+        assertThat(
+            renderChangeDescription( world, desc ),
+            equalTo(
+                "| ?"
+            )
+        );
+    }
+
+    @Test
+    public void Falling_rabbits()
+    {
+        World world = createEmptyWorld( 3, 5 );
+
+        ChangeDescription desc = new ChangeDescription();
+        desc.add( 0, 0, RABBIT_FALLING );
+        desc.add( 2, 1, RABBIT_FALLING  );
+        desc.add( 1, 2, RABBIT_FALLING );
+
+        assertThat(
+            renderChangeDescription( world, desc ),
+            equalTo(
+                "f  ",
+                "  f",
+                " f ",
+                "   ",
+                "   "
+            )
+        );
+    }
+
+    @Test
+    public void Rabbits_falling_odd_num_squares_to_death()
+    {
+        World world = createEmptyWorld( 3, 2 );
+
+        ChangeDescription desc = new ChangeDescription();
+        desc.add( 0, 0, RABBIT_FALLING_1_TO_DEATH );
+        desc.add( 2, 0, RABBIT_DYING_OF_FALLING_2  );
+
+        assertThat(
+            renderChangeDescription( world, desc ),
+            equalTo(
+                "  y",
+                "x  "
+            )
+        );
+    }
+
+    @Test
+    public void Rabbits_falling_even_num_squares_to_death()
+    {
+        World world = createEmptyWorld( 3, 2 );
+
+        ChangeDescription desc = new ChangeDescription();
+        desc.add( 0, 0, RABBIT_DYING_OF_FALLING );
+
+        assertThat(
+            renderChangeDescription( world, desc ),
+            equalTo(
+                "X  ",
+                "   "
             )
         );
     }

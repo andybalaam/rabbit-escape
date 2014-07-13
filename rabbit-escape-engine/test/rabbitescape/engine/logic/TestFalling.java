@@ -82,7 +82,7 @@ public class TestFalling
                 "     ",
                 "     ",
                 "     ",
-                "   > ",  // Landed and going to walk off
+                "   r>",  // Landed and going to walk off
                 "#####"
             )
         );
