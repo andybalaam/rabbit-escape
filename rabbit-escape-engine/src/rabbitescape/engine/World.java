@@ -20,7 +20,10 @@ public class World
     {
         for ( Thing thing : things )
         {
-            thing.step( this );
+            if ( thing.alive )
+            {
+                thing.step( this );
+            }
         }
     }
 
@@ -30,7 +33,10 @@ public class World
 
         for ( Thing thing : things )
         {
-            thing.describeChanges( this, ret );
+            if ( thing.alive )
+            {
+                thing.describeChanges( this, ret );
+            }
         }
 
         return ret;

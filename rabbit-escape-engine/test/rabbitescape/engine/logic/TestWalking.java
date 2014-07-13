@@ -1,4 +1,4 @@
-package rabbitescape.engine;
+package rabbitescape.engine.logic;
 
 import static org.hamcrest.MatcherAssert.*;
 import static rabbitescape.engine.TextWorldManip.*;
@@ -6,7 +6,9 @@ import static rabbitescape.engine.Tools.*;
 
 import org.junit.Test;
 
-public class TestGameLogic
+import rabbitescape.engine.World;
+
+public class TestWalking
 {
     @Test
     public void Take_a_step_right_on_normal_ground()
@@ -21,7 +23,7 @@ public class TestGameLogic
         world.step();
 
         assertThat(
-            renderWorld( world ),
+            renderWorld( world, false ),
             equalTo(
                 "     ",
                 "     ",
@@ -44,7 +46,7 @@ public class TestGameLogic
         world.step();
 
         assertThat(
-            renderWorld( world ),
+            renderWorld( world, false ),
             equalTo(
                 "     ",
                 "     ",
@@ -65,7 +67,7 @@ public class TestGameLogic
         world.step();
 
         assertThat(
-            renderWorld( world ),
+            renderWorld( world, false ),
             equalTo(
                 "#r   ",
                 "#####"
@@ -84,59 +86,9 @@ public class TestGameLogic
         world.step();
 
         assertThat(
-            renderWorld( world ),
+            renderWorld( world, false ),
             equalTo(
                 "# j# ",
-                "#####"
-            )
-        );
-    }
-
-    @Test
-    public void Fall_when_no_floor()
-    {
-        World world = createWorld(
-            "   r ",
-            "     ",
-            "     ",
-            "     ",
-            "#####"
-        );
-
-        world.step();
-
-        assertThat(
-            renderWorld( world ),
-            equalTo(
-                "     ",
-                "     ",
-                "   r ",
-                "     ",
-                "#####"
-            )
-        );
-    }
-
-    @Test
-    public void Fall_only_1_when_floor_is_1_below()
-    {
-        World world = createWorld(
-            "   r ",
-            "     ",
-            "   # ",
-            "     ",
-            "#####"
-        );
-
-        world.step();
-
-        assertThat(
-            renderWorld( world ),
-            equalTo(
-                "     ",
-                "   r ",
-                "   # ",
-                "     ",
                 "#####"
             )
         );

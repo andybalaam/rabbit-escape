@@ -22,7 +22,7 @@ public class TestTextWorldManip
         };
 
         assertThat(
-            renderWorld( createWorld( lines ) ),
+            renderWorld( createWorld( lines ), false ),
             equalTo( lines )
         );
     }

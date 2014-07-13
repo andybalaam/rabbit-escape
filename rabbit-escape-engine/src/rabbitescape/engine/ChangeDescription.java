@@ -8,7 +8,13 @@ public class ChangeDescription
     public enum State
     {
         RABBIT_WALKING_LEFT,
-        RABBIT_WALKING_RIGHT
+        RABBIT_TURNING_LEFT_TO_RIGHT,
+        RABBIT_WALKING_RIGHT,
+        RABBIT_TURNING_RIGHT_TO_LEFT,
+        RABBIT_FALLING,
+        RABBIT_FALLING_1_TO_DEATH,
+        RABBIT_DYING_OF_FALLING_2,
+        RABBIT_DYING_OF_FALLING,
     }
 
     public static class Change

@@ -5,8 +5,8 @@ import java.util.List;
 
 public class Rabbit extends Thing
 {
-    private final List<Behaviour> behaviours;
     public Direction dir;
+    private final List<Behaviour> behaviours;
 
     public Rabbit( int x, int y, Direction dir )
     {
@@ -49,5 +49,10 @@ public class Rabbit extends Thing
                 break;
             }
         }
+    }
+
+    public void die()
+    {
+        alive = false;
     }
 }

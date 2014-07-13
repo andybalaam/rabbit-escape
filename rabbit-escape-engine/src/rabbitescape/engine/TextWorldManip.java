@@ -113,7 +113,7 @@ public class TextWorldManip
         return new Dimension( width, lines.length );
     }
 
-    public static String[] renderWorld( World world )
+    public static String[] renderWorld( World world, boolean showChanges )
     {
         char[][] chars = filledChars(
             world.size.height, world.size.width, ' ' );
@@ -125,7 +125,19 @@ public class TextWorldManip
 
         for ( Thing thing : world.things )
         {
-            chars[ thing.y ][ thing.x ] = charForThing( thing );
+            if ( thing.alive )
+            {
+                chars[ thing.y ][ thing.x ] = charForThing( thing );
+            }
+        }
+
+        if ( showChanges )
+        {
+            ChangeDescription desc = world.describeChanges();
+            for ( ChangeDescription.Change change : desc.changes )
+            {
+                charForChange( change, chars );
+            }
         }
 
         return charsToStrings( chars );
@@ -152,19 +164,41 @@ public class TextWorldManip
 
         for ( Change change : desc.changes )
         {
-            chars[ change.y ][ change.x ] = charForChange( change );
+            charForChange( change, chars );
         }
 
         return charsToStrings( chars );
     }
 
 
-    private static char charForChange( Change change )
+    private static void charForChange( Change change, char[][] chars )
     {
         switch( change.state )
         {
-            case RABBIT_WALKING_LEFT:  return '<';
-            case RABBIT_WALKING_RIGHT: return '>';
+            case RABBIT_WALKING_LEFT:
+                chars[change.y][change.x] = '<';
+                break;
+            case RABBIT_TURNING_LEFT_TO_RIGHT:
+                chars[change.y][change.x] = '|';
+                break;
+            case RABBIT_WALKING_RIGHT:
+                chars[change.y][change.x] = '>';
+                break;
+            case RABBIT_TURNING_RIGHT_TO_LEFT:
+                chars[change.y][change.x] = '?';
+                break;
+            case RABBIT_FALLING:
+                chars[change.y][change.x] = 'f';
+                break;
+            case RABBIT_FALLING_1_TO_DEATH:
+                chars[change.y + 1][change.x] = 'x';
+                break;
+            case RABBIT_DYING_OF_FALLING_2:
+                chars[change.y][change.x] = 'y';
+                break;
+            case RABBIT_DYING_OF_FALLING:
+                chars[change.y][change.x] = 'X';
+                break;
             default:
                 throw new AssertionError(
                     "Unknown Change state: " + change.state.name() );
