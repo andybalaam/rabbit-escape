@@ -1,5 +1,7 @@
 package rabbitescape.engine;
 
+import static rabbitescape.engine.Direction.*;
+
 import java.awt.Dimension;
 import java.util.List;
 
@@ -55,7 +57,7 @@ public class World
     {
         for ( Block block : blocks )
         {
-            if ( block.x == x && block.y == y && block instanceof SquareBlock )
+            if ( block.x == x && block.y == y && block.riseDir == DOWN )
             {
                 return true;
             }

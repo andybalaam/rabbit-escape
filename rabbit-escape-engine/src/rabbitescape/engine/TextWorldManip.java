@@ -98,17 +98,17 @@ public class TextWorldManip
                     }
                     case '#':
                     {
-                        blocks.add( new SquareBlock( charNum, lineNum ) );
+                        blocks.add( new Block( charNum, lineNum, DOWN ) );
                         break;
                     }
                     case '/':
                     {
-                        blocks.add( new SlopeRightBlock( charNum, lineNum ) );
+                        blocks.add( new Block( charNum, lineNum, RIGHT ) );
                         break;
                     }
                     case '\\':
                     {
-                        blocks.add( new SlopeLeftBlock( charNum, lineNum ) );
+                        blocks.add( new Block( charNum, lineNum, LEFT ) );
                         break;
                     }
                     case 'r':
@@ -166,15 +166,15 @@ public class TextWorldManip
 
     private static char charForBlock( Block block )
     {
-        if ( block instanceof SquareBlock )
+        if ( block.riseDir == DOWN )
         {
             return '#';
         }
-        if ( block instanceof SlopeRightBlock )
+        if ( block.riseDir == RIGHT )
         {
             return '/';
         }
-        if ( block instanceof SlopeLeftBlock )
+        if ( block.riseDir == LEFT )
         {
             return '\\';
         }

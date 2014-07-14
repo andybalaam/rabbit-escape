@@ -107,13 +107,7 @@ public class Walking implements Behaviour
 
     private boolean riseBlockAt( int x, Rabbit rabbit, World world )
     {
-        return riseBlockType( rabbit ).isInstance(
-            world.getBlockAt( x, rabbit.y ) );
-    }
-
-    private Class<? extends Block> riseBlockType( Rabbit rabbit )
-    {
-        return rabbit.dir == RIGHT
-            ? SlopeRightBlock.class : SlopeLeftBlock.class;
+        Block block = world.getBlockAt( x, rabbit.y );
+        return ( block != null && block.riseDir == rabbit.dir );
     }
 }
