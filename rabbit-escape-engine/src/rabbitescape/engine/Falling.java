@@ -1,5 +1,6 @@
 package rabbitescape.engine;
 
+import static rabbitescape.engine.ChangeDescription.State.*;
 import rabbitescape.engine.ChangeDescription.State;
 
 public class Falling implements Behaviour
@@ -9,39 +10,43 @@ public class Falling implements Behaviour
     private int heightFallen = 0;
 
     @Override
-    public boolean behave( Rabbit rabbit, World world )
+    public boolean behave( Rabbit rabbit, State state )
     {
-        if ( !falling( rabbit, world ) )
+        switch ( state )
         {
-            if ( heightFallen > fatalHeight )
+            case RABBIT_DYING_OF_FALLING:
             {
                 rabbit.die();
                 return true;
             }
-
-            heightFallen = 0;
-            return false;
+            case RABBIT_DYING_OF_FALLING_2:
+            {
+                rabbit.die();
+                return true;
+            }
+            case RABBIT_FALLING:
+            {
+                heightFallen += 2;
+                rabbit.y = rabbit.y + 2;
+                return true;
+            }
+            case RABBIT_FALLING_1_TO_DEATH:
+            case RABBIT_FALLING_1:
+            {
+                heightFallen += 1;
+                rabbit.y = rabbit.y + 1;
+                return true;
+            }
+            default:
+            {
+                heightFallen = 0;
+                return false;
+            }
         }
-
-        int furtherBelow = rabbit.y + 2;
-
-        if ( world.squareBlockAt( rabbit.x, furtherBelow ) )
-        {
-            heightFallen += 1;
-            rabbit.y = rabbit.y + 1;
-        }
-        else
-        {
-            heightFallen += 2;
-            rabbit.y = furtherBelow;
-        }
-
-        return true;
     }
 
     @Override
-    public boolean describeChanges(
-        Rabbit rabbit, World world, ChangeDescription ret )
+    public State newState( Rabbit rabbit, World world )
     {
         if ( !falling( rabbit, world ) )
         {
@@ -49,18 +54,14 @@ public class Falling implements Behaviour
             {
                 if ( heightFallen % 2 == 0 )
                 {
-                    ret.add(
-                        rabbit.x, rabbit.y, State.RABBIT_DYING_OF_FALLING );
+                    return RABBIT_DYING_OF_FALLING;
                 }
                 else
                 {
-                    ret.add(
-                        rabbit.x, rabbit.y, State.RABBIT_DYING_OF_FALLING_2 );
+                    return RABBIT_DYING_OF_FALLING_2;
                 }
-                return true;
             }
-
-            return false;
+            return null;
         }
 
         if (
@@ -68,21 +69,19 @@ public class Falling implements Behaviour
             && ( world.squareBlockAt( rabbit.x, rabbit.y + 2 ) ) // during step
         )
         {
-            ret.add( rabbit.x, rabbit.y, State.RABBIT_FALLING_1_TO_DEATH );
+            return State.RABBIT_FALLING_1_TO_DEATH;
         }
         else
         {
             if ( world.squareBlockAt( rabbit.x, rabbit.y + 2 ) )
             {
-                ret.add( rabbit.x, rabbit.y, State.RABBIT_FALLING_1 );
+                return State.RABBIT_FALLING_1;
             }
             else
             {
-                ret.add( rabbit.x, rabbit.y, State.RABBIT_FALLING );
+                return State.RABBIT_FALLING;
             }
         }
-
-        return true;
     }
 
     boolean falling( Rabbit rabbit, World world )

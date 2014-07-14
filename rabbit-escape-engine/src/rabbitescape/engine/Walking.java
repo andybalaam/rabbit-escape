@@ -1,76 +1,101 @@
 package rabbitescape.engine;
 
+import static rabbitescape.engine.ChangeDescription.State.*;
 import static rabbitescape.engine.Direction.*;
 import rabbitescape.engine.ChangeDescription.State;
 
 public class Walking implements Behaviour
 {
     @Override
-    public boolean describeChanges(
-        Rabbit rabbit, World world, ChangeDescription ret )
+    public State newState( Rabbit rabbit, World world )
     {
         if ( rabbit.dir == RIGHT )
         {
             if ( startRise( rabbit, world ) )
             {
-                ret.add( rabbit.x, rabbit.y, State.RABBIT_RISING_RIGHT_1 );
+                return RABBIT_RISING_RIGHT_1;
             }
             else if ( finishRise( rabbit, world ) )
             {
-                ret.add( rabbit.x, rabbit.y, State.RABBIT_RISING_RIGHT_2 );
+                return RABBIT_RISING_RIGHT_2;
             }
             else if ( turn( rabbit, world ) )
             {
-                ret.add(
-                    rabbit.x, rabbit.y, State.RABBIT_TURNING_RIGHT_TO_LEFT );
+                return RABBIT_TURNING_RIGHT_TO_LEFT;
             }
             else
             {
-                ret.add( rabbit.x, rabbit.y, State.RABBIT_WALKING_RIGHT );
+                return RABBIT_WALKING_RIGHT;
             }
         }
         else
         {
             if ( startRise( rabbit, world ) )
             {
-                ret.add( rabbit.x, rabbit.y, State.RABBIT_RISING_LEFT_1 );
+                return RABBIT_RISING_LEFT_1;
             }
             else if ( finishRise( rabbit, world ) )
             {
-                ret.add( rabbit.x, rabbit.y, State.RABBIT_RISING_LEFT_2 );
+                return RABBIT_RISING_LEFT_2;
             }
             else if ( turn( rabbit, world ) )
             {
-                ret.add(
-                    rabbit.x, rabbit.y, State.RABBIT_TURNING_LEFT_TO_RIGHT );
+                return RABBIT_TURNING_LEFT_TO_RIGHT;
             }
             else
             {
-                ret.add( rabbit.x, rabbit.y, State.RABBIT_WALKING_LEFT );
+                return RABBIT_WALKING_LEFT;
             }
         }
-
-        return true;
     }
 
     @Override
-    public boolean behave( Rabbit rabbit, World world )
+    public boolean behave( Rabbit rabbit, State state )
     {
-        if ( finishRise( rabbit, world ) )
+        switch ( state )
         {
-            rabbit.x = dest( rabbit );
-            rabbit.y -= 1;
+            case RABBIT_RISING_LEFT_1:
+            case RABBIT_WALKING_LEFT:
+            {
+                --rabbit.x;
+                return true;
+            }
+            case RABBIT_RISING_RIGHT_1:
+            case RABBIT_WALKING_RIGHT:
+            {
+                ++rabbit.x;
+                return true;
+            }
+            case RABBIT_RISING_LEFT_2:
+            {
+                --rabbit.y;
+                --rabbit.x;
+                return true;
+            }
+            case RABBIT_RISING_RIGHT_2:
+            {
+                --rabbit.y;
+                ++rabbit.x;
+                return true;
+            }
+            case RABBIT_TURNING_LEFT_TO_RIGHT:
+            {
+                rabbit.dir = RIGHT;
+                return true;
+            }
+            case RABBIT_TURNING_RIGHT_TO_LEFT:
+            {
+                rabbit.dir = LEFT;
+                return true;
+            }
+            default:
+            {
+                throw new AssertionError(
+                    "Should have handled all states in Walking or before,"
+                    + " but we are in state " + state.name()
+                );
+            }
         }
-        else if ( turn( rabbit, world ) )
-        {
-            rabbit.dir = opposite( rabbit.dir );
-        }
-        else
-        {
-            rabbit.x = dest( rabbit );
-        }
-
-        return true;  // We always handle the behaviour if no-one else did
     }
 
     private static boolean turn( Rabbit rabbit, World world )

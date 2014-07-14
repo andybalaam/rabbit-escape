@@ -26,25 +26,31 @@ public class Rabbit extends Thing
     }
 
     @Override
+    public void init( World world )
+    {
+        calcNewState( world );
+    }
+
+    @Override
     public void step( World world )
     {
         for ( Behaviour behaviour : behaviours )
         {
-            boolean handled = behaviour.behave( this, world );
+            boolean handled = behaviour.behave( this, state );
             if ( handled )
             {
                 break;
             }
         }
+        calcNewState( world );
     }
 
-    @Override
-    public void describeChanges( World world, ChangeDescription ret )
+    private void calcNewState( World world )
     {
         for ( Behaviour behaviour : behaviours )
         {
-            boolean handled = behaviour.describeChanges( this, world, ret );
-            if ( handled )
+            state = behaviour.newState( this, world );
+            if ( state != null )
             {
                 break;
             }

@@ -1,8 +1,9 @@
 package rabbitescape.engine;
 
+import rabbitescape.engine.ChangeDescription.State;
+
 public interface Behaviour
 {
-    boolean describeChanges(
-        Rabbit rabbit, World world, ChangeDescription ret );
-    boolean behave( Rabbit rabbit, World world );
+    State newState( Rabbit rabbit, World world );
+    boolean behave( Rabbit rabbit, State state );
 }

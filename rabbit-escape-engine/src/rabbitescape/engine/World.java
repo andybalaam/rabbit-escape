@@ -14,6 +14,15 @@ public class World
         this.size = size;
         this.blocks = blocks;
         this.things = things;
+        init();
+    }
+
+    private void init()
+    {
+        for ( Thing thing : things )
+        {
+            thing.init( this );
+        }
     }
 
     public void step()
@@ -35,7 +44,7 @@ public class World
         {
             if ( thing.alive )
             {
-                thing.describeChanges( this, ret );
+                ret.add( thing.x, thing.y, thing.state );
             }
         }
 
