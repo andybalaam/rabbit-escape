@@ -60,4 +60,29 @@ public class TestMain
             )
         );
     }
+
+    @Test
+    public void Bad_level_character_syntax_errors_are_reported()
+    {
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        String[] badLevel = new String[] { "##", "#z" };
+        FileSystem fs = new FakeFileSystem( "file1", badLevel );
+
+        Main main = new Main( fs, new PrintStream( out ), Locale.ENGLISH );
+
+        int status = main.run( new String[] { "file1" } );
+
+        assertThat( status, not( equalTo( 0 ) ) );
+
+        assertThat(
+            out.toString(),
+            equalTo(
+                "Line number 2 contains an unknown character 'z' "
+                + "in text world lines:\n"
+                + "##\n"
+                + "#z\n"
+                + "Unable to load world file 'file1'.\n"
+            )
+        );
+    }
 }

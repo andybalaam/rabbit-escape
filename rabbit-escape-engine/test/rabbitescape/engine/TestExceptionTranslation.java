@@ -61,6 +61,21 @@ public class TestExceptionTranslation
         );
     }
 
+    @Test
+    public void Translate_exception_containing_backslash()
+    {
+        RabbitEscapeException e = new TextWorldManip.UnknownCharacter(
+            new String[] { "#\\" }, 0, 1 );
+
+        assertThat(
+            e.translate( Locale.ENGLISH ),
+            equalTo(
+                "Line number 1 contains an unknown character "
+                 + "'\\' in text world lines:\n#\\"
+            )
+        );
+    }
+
     public static class Undescribed extends RabbitEscapeException
     {
         private static final long serialVersionUID = 1L;

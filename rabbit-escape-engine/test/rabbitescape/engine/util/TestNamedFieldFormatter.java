@@ -42,6 +42,15 @@ public class TestNamedFieldFormatter
         );
     }
 
+    @Test
+    public void Substitute_with_values_containing_special_characters()
+    {
+        assertThat(
+            format( "${cc}a ${b}${cc}${cc}", map( "b", "\\", "cc", "C$D" ) ),
+            equalTo( "C$Da \\C$DC$D" )
+        );
+    }
+
     private static Map<String, Object> map( Object... keysAndValues )
     {
         HashMap<String, Object> ret = new HashMap<String, Object>();

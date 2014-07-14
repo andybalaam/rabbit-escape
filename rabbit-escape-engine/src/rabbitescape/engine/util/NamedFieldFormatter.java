@@ -1,6 +1,7 @@
 package rabbitescape.engine.util;
 
 import java.util.Map;
+import java.util.regex.Matcher;
 
 public class NamedFieldFormatter
 {
@@ -31,7 +32,7 @@ public class NamedFieldFormatter
         {
             ans = ans.replaceAll(
                 "\\$\\{" + param.getKey() + "\\}",
-                String.valueOf( param.getValue() )
+                Matcher.quoteReplacement( String.valueOf( param.getValue() ) )
             );
         }
 
