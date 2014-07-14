@@ -106,6 +106,11 @@ public class TextWorldManip
                         blocks.add( new SlopeRightBlock( charNum, lineNum ) );
                         break;
                     }
+                    case '\\':
+                    {
+                        blocks.add( new SlopeLeftBlock( charNum, lineNum ) );
+                        break;
+                    }
                     case 'r':
                     {
                         things.add( new Rabbit( charNum, lineNum, RIGHT ) );
@@ -169,6 +174,10 @@ public class TextWorldManip
         {
             return '/';
         }
+        if ( block instanceof SlopeLeftBlock )
+        {
+            return '\\';
+        }
         else
         {
             throw new AssertionError(
@@ -225,6 +234,12 @@ public class TextWorldManip
                 break;
             case RABBIT_RISING_RIGHT_2:
                 chars[change.y - 1][change.x + 1] = '\'';
+                break;
+            case RABBIT_RISING_LEFT_1:
+                chars[change.y][change.x - 1] = '`';
+                break;
+            case RABBIT_RISING_LEFT_2:
+                chars[change.y - 1][change.x - 1] = '!';
                 break;
             case RABBIT_FALLING:
                 chars[change.y + 1][change.x] = 'f';

@@ -31,7 +31,15 @@ public class Walking implements Behaviour
         }
         else
         {
-            if ( turn( rabbit, world ) )
+            if ( startRise( rabbit, world ) )
+            {
+                ret.add( rabbit.x, rabbit.y, State.RABBIT_RISING_LEFT_1 );
+            }
+            else if ( finishRise( rabbit, world ) )
+            {
+                ret.add( rabbit.x, rabbit.y, State.RABBIT_RISING_LEFT_2 );
+            }
+            else if ( turn( rabbit, world ) )
             {
                 ret.add(
                     rabbit.x, rabbit.y, State.RABBIT_TURNING_LEFT_TO_RIGHT );
@@ -77,14 +85,23 @@ public class Walking implements Behaviour
 
     private boolean startRise( Rabbit rabbit, World world )
     {
-        return (
-            world.getBlockAt( dest( rabbit ), rabbit.y )
-                instanceof SlopeRightBlock );
+        return riseBlockAt( dest( rabbit ), rabbit, world );
     }
 
     private boolean finishRise( Rabbit rabbit, World world )
     {
-        return (
-            world.getBlockAt( rabbit.x, rabbit.y ) instanceof SlopeRightBlock );
+        return riseBlockAt( rabbit.x, rabbit, world );
+    }
+
+    private boolean riseBlockAt( int x, Rabbit rabbit, World world )
+    {
+        return riseBlockType( rabbit ).isInstance(
+            world.getBlockAt( x, rabbit.y ) );
+    }
+
+    private Class<? extends Block> riseBlockType( Rabbit rabbit )
+    {
+        return rabbit.dir == RIGHT
+            ? SlopeRightBlock.class : SlopeLeftBlock.class;
     }
 }

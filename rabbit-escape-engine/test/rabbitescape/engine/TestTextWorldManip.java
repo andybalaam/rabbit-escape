@@ -15,7 +15,7 @@ public class TestTextWorldManip
         String[] lines = {
             "#####",
             "#   #",
-            "#  /#",
+            "#\\ /#",
             "#   #",
             "#r j#",
             "#####"
@@ -65,7 +65,7 @@ public class TestTextWorldManip
     }
 
     @Test
-    public void Rising_rabbits()
+    public void Rising_rabbits_right()
     {
         World world = createEmptyWorld( 5, 2 );
 
@@ -78,6 +78,24 @@ public class TestTextWorldManip
             equalTo(
                 "   ' ",
                 " ~   "
+            )
+        );
+    }
+
+    @Test
+    public void Rising_rabbits_left()
+    {
+        World world = createEmptyWorld( 5, 2 );
+
+        ChangeDescription desc = new ChangeDescription();
+        desc.add( 4, 1, RABBIT_RISING_LEFT_1 );
+        desc.add( 2, 1, RABBIT_RISING_LEFT_2  );
+
+        assertThat(
+            renderChangeDescription( world, desc ),
+            equalTo(
+                " !   ",
+                "   ` "
             )
         );
     }
