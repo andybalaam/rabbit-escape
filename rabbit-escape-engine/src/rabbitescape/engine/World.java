@@ -53,16 +53,10 @@ public class World
         return ret;
     }
 
-    public boolean squareBlockAt( int x, int y )
+    public boolean flatBlockAt( int x, int y )
     {
-        for ( Block block : blocks )
-        {
-            if ( block.x == x && block.y == y && block.riseDir == DOWN )
-            {
-                return true;
-            }
-        }
-        return false;
+        Block block = getBlockAt( x, y );
+        return ( block != null && block.riseDir == DOWN );
     }
 
     public Block getBlockAt( int x, int y )

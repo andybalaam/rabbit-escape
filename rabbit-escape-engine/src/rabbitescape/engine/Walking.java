@@ -87,7 +87,7 @@ public class Walking implements Behaviour
 
     private static boolean turn( Rabbit rabbit, World world )
     {
-        return world.squareBlockAt( dest( rabbit ), rabbit.y );
+        return world.flatBlockAt( dest( rabbit ), rabbit.y );
     }
 
     private static int dest( Rabbit rabbit )

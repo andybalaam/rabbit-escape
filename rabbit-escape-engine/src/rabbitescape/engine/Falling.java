@@ -65,15 +65,15 @@ public class Falling implements Behaviour
         }
 
         if (
-               ( heightFallen + 1 > fatalHeight )                // Going to die
-            && ( world.squareBlockAt( rabbit.x, rabbit.y + 2 ) ) // during step
+               ( heightFallen + 1 > fatalHeight )              // Going to die
+            && ( world.flatBlockAt( rabbit.x, rabbit.y + 2 ) ) // during step
         )
         {
             return State.RABBIT_FALLING_1_TO_DEATH;
         }
         else
         {
-            if ( world.squareBlockAt( rabbit.x, rabbit.y + 2 ) )
+            if ( world.flatBlockAt( rabbit.x, rabbit.y + 2 ) )
             {
                 return State.RABBIT_FALLING_1;
             }
@@ -87,7 +87,7 @@ public class Falling implements Behaviour
     boolean falling( Rabbit rabbit, World world )
     {
         int below = rabbit.y + 1;
-        if ( world.squareBlockAt( rabbit.x, below ) )
+        if ( world.flatBlockAt( rabbit.x, below ) )
         {
             return false;
         }
