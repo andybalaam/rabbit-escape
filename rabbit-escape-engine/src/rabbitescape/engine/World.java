@@ -42,15 +42,27 @@ public class World
         return ret;
     }
 
-    public boolean blockAt( int x, int y )
+    public boolean squareBlockAt( int x, int y )
     {
         for ( Block block : blocks )
         {
-            if ( block.x == x && block.y == y )
+            if ( block.x == x && block.y == y && block instanceof SquareBlock )
             {
                 return true;
             }
         }
         return false;
+    }
+
+    public Block getBlockAt( int x, int y )
+    {
+        for ( Block block : blocks )
+        {
+            if ( block.x == x && block.y == y )
+            {
+                return block;
+            }
+        }
+        return null;
     }
 }

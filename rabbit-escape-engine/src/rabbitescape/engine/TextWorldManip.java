@@ -98,7 +98,12 @@ public class TextWorldManip
                     }
                     case '#':
                     {
-                        blocks.add( new Block( charNum, lineNum ) );
+                        blocks.add( new SquareBlock( charNum, lineNum ) );
+                        break;
+                    }
+                    case '/':
+                    {
+                        blocks.add( new SlopeRightBlock( charNum, lineNum ) );
                         break;
                     }
                     case 'r':
@@ -131,7 +136,7 @@ public class TextWorldManip
 
         for ( Block block : world.blocks )
         {
-            chars[ block.y ][ block.x ] = '#';
+            chars[ block.y ][ block.x ] = charForBlock( block );
         }
 
         for ( Thing thing : world.things )
@@ -152,6 +157,23 @@ public class TextWorldManip
         }
 
         return charsToStrings( chars );
+    }
+
+    private static char charForBlock( Block block )
+    {
+        if ( block instanceof SquareBlock )
+        {
+            return '#';
+        }
+        if ( block instanceof SlopeRightBlock )
+        {
+            return '/';
+        }
+        else
+        {
+            throw new AssertionError(
+                "Unknown Block type: " + block.getClass() );
+        }
     }
 
     private static char charForThing( Thing thing )
@@ -197,6 +219,12 @@ public class TextWorldManip
                 break;
             case RABBIT_TURNING_RIGHT_TO_LEFT:
                 chars[change.y][change.x] = '?';
+                break;
+            case RABBIT_RISING_RIGHT_1:
+                chars[change.y][change.x + 1] = '~';
+                break;
+            case RABBIT_RISING_RIGHT_2:
+                chars[change.y - 1][change.x + 1] = '\'';
                 break;
             case RABBIT_FALLING:
                 chars[change.y + 1][change.x] = 'f';

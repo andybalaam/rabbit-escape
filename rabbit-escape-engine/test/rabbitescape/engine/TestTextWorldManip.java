@@ -15,7 +15,7 @@ public class TestTextWorldManip
         String[] lines = {
             "#####",
             "#   #",
-            "#   #",
+            "#  /#",
             "#   #",
             "#r j#",
             "#####"
@@ -60,6 +60,24 @@ public class TestTextWorldManip
             renderChangeDescription( world, desc ),
             equalTo(
                 "| ?"
+            )
+        );
+    }
+
+    @Test
+    public void Rising_rabbits()
+    {
+        World world = createEmptyWorld( 5, 2 );
+
+        ChangeDescription desc = new ChangeDescription();
+        desc.add( 0, 1, RABBIT_RISING_RIGHT_1 );
+        desc.add( 2, 1, RABBIT_RISING_RIGHT_2  );
+
+        assertThat(
+            renderChangeDescription( world, desc ),
+            equalTo(
+                "   ' ",
+                " ~   "
             )
         );
     }

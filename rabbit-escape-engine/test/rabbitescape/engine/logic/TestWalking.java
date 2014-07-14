@@ -93,4 +93,47 @@ public class TestWalking
             )
         );
     }
+
+    @Test
+    public void Climb_up_a_slope()
+    {
+        World world = createWorld(
+            "     ",
+            "r /##",
+            "#####"
+        );
+
+        world.step();
+
+        assertThat(
+            renderWorld( world, true ),
+            equalTo(
+                "     ",
+                " r~##",  // Approaching
+                "#####"
+            )
+        );
+
+        world.step();
+
+        assertThat(
+            renderWorld( world, true ),
+            equalTo(
+                "   ' ",
+                "  r##",  // Going up slope
+                "#####"
+            )
+        );
+
+        world.step();
+
+        assertThat(
+            renderWorld( world, true ),
+            equalTo(
+                "   r>",  // At top
+                "  /##",
+                "#####"
+            )
+        );
+    }
 }

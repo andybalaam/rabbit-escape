@@ -11,7 +11,15 @@ public class Walking implements Behaviour
     {
         if ( rabbit.dir == RIGHT )
         {
-            if ( turn( rabbit, world ) )
+            if ( startRise( rabbit, world ) )
+            {
+                ret.add( rabbit.x, rabbit.y, State.RABBIT_RISING_RIGHT_1 );
+            }
+            else if ( finishRise( rabbit, world ) )
+            {
+                ret.add( rabbit.x, rabbit.y, State.RABBIT_RISING_RIGHT_2 );
+            }
+            else if ( turn( rabbit, world ) )
             {
                 ret.add(
                     rabbit.x, rabbit.y, State.RABBIT_TURNING_RIGHT_TO_LEFT );
@@ -40,14 +48,18 @@ public class Walking implements Behaviour
     @Override
     public boolean behave( Rabbit rabbit, World world )
     {
-        if ( turn( rabbit, world ) )
+        if ( finishRise( rabbit, world ) )
+        {
+            rabbit.x = dest( rabbit );
+            rabbit.y -= 1;
+        }
+        else if ( turn( rabbit, world ) )
         {
             rabbit.dir = opposite( rabbit.dir );
         }
         else
         {
-            int destination = ( rabbit.dir == RIGHT ) ? rabbit.x + 1 : rabbit.x - 1;
-            rabbit.x = destination;
+            rabbit.x = dest( rabbit );
         }
 
         return true;  // We always handle the behaviour if no-one else did
@@ -55,7 +67,24 @@ public class Walking implements Behaviour
 
     private static boolean turn( Rabbit rabbit, World world )
     {
-        int destination = ( rabbit.dir == RIGHT ) ? rabbit.x + 1 : rabbit.x - 1;
-        return world.blockAt( destination, rabbit.y );
+        return world.squareBlockAt( dest( rabbit ), rabbit.y );
+    }
+
+    private static int dest( Rabbit rabbit )
+    {
+        return ( rabbit.dir == RIGHT ) ? rabbit.x + 1 : rabbit.x - 1;
+    }
+
+    private boolean startRise( Rabbit rabbit, World world )
+    {
+        return (
+            world.getBlockAt( dest( rabbit ), rabbit.y )
+                instanceof SlopeRightBlock );
+    }
+
+    private boolean finishRise( Rabbit rabbit, World world )
+    {
+        return (
+            world.getBlockAt( rabbit.x, rabbit.y ) instanceof SlopeRightBlock );
     }
 }

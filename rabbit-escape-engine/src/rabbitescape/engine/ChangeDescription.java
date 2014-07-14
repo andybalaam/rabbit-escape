@@ -15,6 +15,8 @@ public class ChangeDescription
         RABBIT_FALLING_1_TO_DEATH,
         RABBIT_DYING_OF_FALLING_2,
         RABBIT_DYING_OF_FALLING,
+        RABBIT_RISING_RIGHT_1,
+        RABBIT_RISING_RIGHT_2,
     }
 
     public static class Change
