@@ -31,6 +31,7 @@ public class GameLoop
             {
                 e.printStackTrace();
             }
+
             world.step();
         }
     }

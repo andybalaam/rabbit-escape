@@ -2,80 +2,58 @@ package rabbitescape.ui.text;
 
 import static rabbitescape.engine.util.Util.*;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import java.io.PrintStream;
+import java.util.Locale;
 
-import rabbitescape.engine.TextWorldManip;
+import rabbitescape.engine.LoadWorldFile;
 import rabbitescape.engine.World;
+import rabbitescape.engine.util.FileSystem;
+import rabbitescape.engine.util.RealFileSystem;
 
 public class Main
 {
-    public static void main( String[] args ) throws FileNotFoundException
+    private static final int SUCCESS             = 0;
+    private static final int FAILED_TO_LOAD_FILE = 1;
+
+    private final FileSystem fs;
+    private final PrintStream out;
+    private final Locale locale;
+
+    public Main( FileSystem fs, PrintStream out, Locale locale )
     {
-        new Main().run( args );
+        this.fs = fs;
+        this.out = out;
+        this.locale = locale;
     }
 
-    private void run( String[] args ) throws FileNotFoundException
+    public static void main( String[] args )
+    {
+        Main m = new Main(
+            new RealFileSystem(), System.out, Locale.getDefault() );
+
+        int status = m.run( args );
+
+        System.exit( status );
+    }
+
+    public int run( String[] args )
     {
         reAssert( args.length == 1 );
 
-        String[] lines = readWorldFromFile( args[0] );
-
-        World world = TextWorldManip.createWorld( lines );
-
-        GameLoop gameLoop = new GameLoop( world );
-
-        gameLoop.run();
-
-        // Parse args
-        // for each world
-        // Load file
-        // create world
-        // run world
-    }
-
-    private static String[] readWorldFromFile( String fileName )
-        throws FileNotFoundException
-    {
-        List<String> ret = new ArrayList<String>();
-
-        File f = new File( fileName );
-
-        reAssert( f.exists() );
-
-        BufferedReader reader = new BufferedReader( new FileReader( f ) );
         try
         {
-            String line = reader.readLine();
+            World world = new LoadWorldFile( fs ).load( args[0] );
 
-            while( line != null )
-            {
-                ret.add( line.trim() );
-                line = reader.readLine();
-            }
+            GameLoop gameLoop = new GameLoop( world );
 
-            return ret.toArray( new String[] {} );
+            gameLoop.run();
         }
-        catch ( IOException e )
+        catch( LoadWorldFile.Failed e )
         {
-            e.printStackTrace(); // TODO
-            return null;
+            out.println( e.translate( locale ) );
+            return FAILED_TO_LOAD_FILE;
         }
-        finally
-        {
-            try
-            {
-                reader.close();
-            }
-            catch ( IOException e )
-            {
-                e.printStackTrace(); // TODO
-            }
-        }
+
+        return SUCCESS;
     }
 }

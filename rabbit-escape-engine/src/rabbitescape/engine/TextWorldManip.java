@@ -46,6 +46,7 @@ public class TextWorldManip
     }
 
     public static World createWorld( String... lines )
+        throws WrongLineLength, UnknownCharacter
     {
         List<Block> blocks = new ArrayList<Block>();
         List<Thing> things = new ArrayList<Thing>();
@@ -69,6 +70,7 @@ public class TextWorldManip
         List<Block> blocks,
         List<Thing> things
     )
+        throws WrongLineLength, UnknownCharacter
     {
         if ( lines.length == 0 )
         {

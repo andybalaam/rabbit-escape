@@ -3,11 +3,11 @@ package rabbitescape.engine.err;
 import static rabbitescape.engine.util.Util.*;
 
 import java.lang.reflect.Field;
-import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
+import java.util.TreeMap;
 
 import rabbitescape.engine.util.NamedFieldFormatter;
 
@@ -29,7 +29,7 @@ public class ExceptionTranslation
         }
         catch( MissingResourceException e )
         {
-            return extractFields( exception ).toString();
+            return key + " " + extractFields( exception ).toString();
         }
     }
 
@@ -43,7 +43,8 @@ public class ExceptionTranslation
     private static Map<String, Object> extractFields(
         RabbitEscapeException exception )
     {
-        Map<String, Object> ret = new HashMap<String, Object>();
+        // TreeMap for predictable ordering
+        Map<String, Object> ret = new TreeMap<String, Object>();
 
         for ( Field field : exception.getClass().getFields() )
         {

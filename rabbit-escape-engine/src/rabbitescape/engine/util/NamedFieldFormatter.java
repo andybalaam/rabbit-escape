@@ -31,7 +31,7 @@ public class NamedFieldFormatter
         {
             ans = ans.replaceAll(
                 "\\$\\{" + param.getKey() + "\\}",
-                param.getValue().toString()
+                String.valueOf( param.getValue() )
             );
         }
 
