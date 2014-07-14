@@ -245,6 +245,9 @@ public class TextWorldManip
                 chars[change.y + 1][change.x] = 'f';
                 chars[change.y + 2][change.x] = 'f';
                 break;
+            case RABBIT_FALLING_1:
+                chars[change.y + 1][change.x] = 'f';
+                break;
             case RABBIT_FALLING_1_TO_DEATH:
                 chars[change.y + 1][change.x] = 'x';
                 break;

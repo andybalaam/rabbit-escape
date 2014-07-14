@@ -108,7 +108,7 @@ public class TestTextWorldManip
         ChangeDescription desc = new ChangeDescription();
         desc.add( 0, 0, RABBIT_FALLING );
         desc.add( 2, 1, RABBIT_FALLING  );
-        desc.add( 1, 2, RABBIT_FALLING );
+        desc.add( 1, 2, RABBIT_FALLING_1 );
 
         assertThat(
             renderChangeDescription( world, desc ),
@@ -117,7 +117,7 @@ public class TestTextWorldManip
                 "f  ",
                 "f f",
                 " ff",
-                " f "
+                "   "
             )
         );
     }

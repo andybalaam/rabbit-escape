@@ -49,11 +49,13 @@ public class Falling implements Behaviour
             {
                 if ( heightFallen % 2 == 0 )
                 {
-                    ret.add( rabbit.x, rabbit.y, State.RABBIT_DYING_OF_FALLING );
+                    ret.add(
+                        rabbit.x, rabbit.y, State.RABBIT_DYING_OF_FALLING );
                 }
                 else
                 {
-                    ret.add( rabbit.x, rabbit.y, State.RABBIT_DYING_OF_FALLING_2 );
+                    ret.add(
+                        rabbit.x, rabbit.y, State.RABBIT_DYING_OF_FALLING_2 );
                 }
                 return true;
             }
@@ -62,15 +64,22 @@ public class Falling implements Behaviour
         }
 
         if (
-               ( heightFallen + 1 > fatalHeight )            // Going to die
-            && ( world.squareBlockAt( rabbit.x, rabbit.y + 2 ) )   // during this step
+               ( heightFallen + 1 > fatalHeight )                // Going to die
+            && ( world.squareBlockAt( rabbit.x, rabbit.y + 2 ) ) // during step
         )
         {
             ret.add( rabbit.x, rabbit.y, State.RABBIT_FALLING_1_TO_DEATH );
         }
         else
         {
-            ret.add( rabbit.x, rabbit.y, State.RABBIT_FALLING );
+            if ( world.squareBlockAt( rabbit.x, rabbit.y + 2 ) )
+            {
+                ret.add( rabbit.x, rabbit.y, State.RABBIT_FALLING_1 );
+            }
+            else
+            {
+                ret.add( rabbit.x, rabbit.y, State.RABBIT_FALLING );
+            }
         }
 
         return true;

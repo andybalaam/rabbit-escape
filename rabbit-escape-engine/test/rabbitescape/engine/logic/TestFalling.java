@@ -46,6 +46,17 @@ public class TestFalling
             "#####"
         );
 
+        assertThat(
+            renderWorld( world, true ),
+            equalTo(
+                "   r ",
+                "   f ",
+                "   # ",
+                "     ",
+                "#####"
+            )
+        );
+
         world.step();
 
         assertThat(
