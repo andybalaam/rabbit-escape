@@ -9,44 +9,31 @@ public class Walking implements Behaviour
     @Override
     public State newState( Rabbit rabbit, World world )
     {
-        if ( rabbit.dir == RIGHT )
+        if ( startRise( rabbit, world ) )
         {
-            if ( startRise( rabbit, world ) )
-            {
-                return RABBIT_RISING_RIGHT_1;
-            }
-            else if ( finishRise( rabbit, world ) )
-            {
-                return RABBIT_RISING_RIGHT_2;
-            }
-            else if ( turn( rabbit, world ) )
-            {
-                return RABBIT_TURNING_RIGHT_TO_LEFT;
-            }
-            else
-            {
-                return RABBIT_WALKING_RIGHT;
-            }
+            return rl( rabbit, RABBIT_RISING_RIGHT_1, RABBIT_RISING_LEFT_1 );
+        }
+        else if ( finishRise( rabbit, world ) )
+        {
+            return rl( rabbit, RABBIT_RISING_RIGHT_2, RABBIT_RISING_LEFT_2 );
+        }
+        else if ( turn( rabbit, world ) )
+        {
+            return rl(
+                rabbit,
+                RABBIT_TURNING_RIGHT_TO_LEFT,
+                RABBIT_TURNING_LEFT_TO_RIGHT
+            );
         }
         else
         {
-            if ( startRise( rabbit, world ) )
-            {
-                return RABBIT_RISING_LEFT_1;
-            }
-            else if ( finishRise( rabbit, world ) )
-            {
-                return RABBIT_RISING_LEFT_2;
-            }
-            else if ( turn( rabbit, world ) )
-            {
-                return RABBIT_TURNING_LEFT_TO_RIGHT;
-            }
-            else
-            {
-                return RABBIT_WALKING_LEFT;
-            }
+            return rl( rabbit, RABBIT_WALKING_RIGHT, RABBIT_WALKING_LEFT );
         }
+    }
+
+    private State rl( Rabbit rabbit, State rightState, State leftState )
+    {
+        return rabbit.dir == RIGHT ? rightState : leftState;
     }
 
     @Override
