@@ -1,0 +1,27 @@
+<project>
+
+    <target name="test">
+        <junit
+            haltonfailure="on"
+        >
+            <assertions><enable/></assertions>
+            <formatter type="plain" usefile="false"/>
+
+            <classpath>
+                <pathelement location="rabbit-escape-engine/bin"/>
+                <pathelement location="rabbit-escape-ui-text/bin"/>
+            </classpath>
+
+            <batchtest>
+                <fileset dir="rabbit-escape-engine/test">
+                    <include name="**/Test*.java"/>
+                </fileset>
+                <fileset dir="rabbit-escape-ui-text/test">
+                    <include name="**/Test*.java"/>
+                </fileset>
+            </batchtest>
+        </junit>
+    </target>
+
+</project>
+
