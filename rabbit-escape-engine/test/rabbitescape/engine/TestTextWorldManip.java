@@ -101,6 +101,42 @@ public class TestTextWorldManip
     }
 
     @Test
+    public void Lowering_rabbits_right()
+    {
+        World world = createEmptyWorld( 5, 2 );
+
+        ChangeDescription desc = new ChangeDescription();
+        desc.add( 0, 0, RABBIT_LOWERING_RIGHT_1 );
+        desc.add( 2, 0, RABBIT_LOWERING_RIGHT_2  );
+
+        assertThat(
+            renderChangeDescription( world, desc ),
+            equalTo(
+                "   _ ",
+                " -   "
+            )
+        );
+    }
+
+    @Test
+    public void Lowering_rabbits_left()
+    {
+        World world = createEmptyWorld( 5, 2 );
+
+        ChangeDescription desc = new ChangeDescription();
+        desc.add( 4, 0, RABBIT_LOWERING_LEFT_1 );
+        desc.add( 2, 0, RABBIT_LOWERING_LEFT_2  );
+
+        assertThat(
+            renderChangeDescription( world, desc ),
+            equalTo(
+                " +   ",
+                "   = "
+            )
+        );
+    }
+
+    @Test
     public void Falling_rabbits()
     {
         World world = createEmptyWorld( 3, 5 );

@@ -20,6 +20,10 @@ public class ChangeDescription
         RABBIT_RISING_RIGHT_2,
         RABBIT_RISING_LEFT_1,
         RABBIT_RISING_LEFT_2,
+        RABBIT_LOWERING_RIGHT_1,
+        RABBIT_LOWERING_RIGHT_2,
+        RABBIT_LOWERING_LEFT_1,
+        RABBIT_LOWERING_LEFT_2,
     }
 
     public static class Change

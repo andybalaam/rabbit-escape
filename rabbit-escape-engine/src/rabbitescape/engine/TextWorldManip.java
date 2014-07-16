@@ -241,6 +241,18 @@ public class TextWorldManip
             case RABBIT_RISING_LEFT_2:
                 chars[change.y - 1][change.x - 1] = '!';
                 break;
+            case RABBIT_LOWERING_RIGHT_1:
+                chars[change.y + 1][change.x + 1] = '-';
+                break;
+            case RABBIT_LOWERING_RIGHT_2:
+                chars[change.y][change.x + 1] = '_';
+                break;
+            case RABBIT_LOWERING_LEFT_1:
+                chars[change.y + 1][change.x - 1] = '=';
+                break;
+            case RABBIT_LOWERING_LEFT_2:
+                chars[change.y][change.x - 1] = '+';
+                break;
             case RABBIT_FALLING:
                 chars[change.y + 1][change.x] = 'f';
                 chars[change.y + 2][change.x] = 'f';

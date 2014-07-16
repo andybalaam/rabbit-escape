@@ -17,6 +17,16 @@ public class Walking implements Behaviour
         {
             return rl( rabbit, RABBIT_RISING_RIGHT_2, RABBIT_RISING_LEFT_2 );
         }
+        if ( startLower( rabbit, world ) )
+        {
+            return rl(
+                rabbit, RABBIT_LOWERING_RIGHT_1, RABBIT_LOWERING_LEFT_1 );
+        }
+        else if ( finishLower( rabbit, world ) )
+        {
+            return rl(
+                rabbit, RABBIT_LOWERING_RIGHT_2, RABBIT_LOWERING_LEFT_2 );
+        }
         else if ( turn( rabbit, world ) )
         {
             return rl(
@@ -42,12 +52,14 @@ public class Walking implements Behaviour
         switch ( state )
         {
             case RABBIT_RISING_LEFT_1:
+            case RABBIT_LOWERING_LEFT_2:
             case RABBIT_WALKING_LEFT:
             {
                 --rabbit.x;
                 return true;
             }
             case RABBIT_RISING_RIGHT_1:
+            case RABBIT_LOWERING_RIGHT_2:
             case RABBIT_WALKING_RIGHT:
             {
                 ++rabbit.x;
@@ -62,6 +74,18 @@ public class Walking implements Behaviour
             case RABBIT_RISING_RIGHT_2:
             {
                 --rabbit.y;
+                ++rabbit.x;
+                return true;
+            }
+            case RABBIT_LOWERING_LEFT_1:
+            {
+                ++rabbit.y;
+                --rabbit.x;
+                return true;
+            }
+            case RABBIT_LOWERING_RIGHT_1:
+            {
+                ++rabbit.y;
                 ++rabbit.x;
                 return true;
             }
@@ -105,9 +129,28 @@ public class Walking implements Behaviour
         return riseBlockAt( rabbit.x, rabbit, world );
     }
 
+    private boolean startLower( Rabbit rabbit, World world )
+    {
+        return lowerBlockAt( dest( rabbit ), rabbit.y + 1, rabbit, world );
+    }
+
+    private boolean finishLower( Rabbit rabbit, World world )
+    {
+        return lowerBlockAt( rabbit.x, rabbit.y, rabbit, world );
+    }
+
     private boolean riseBlockAt( int x, Rabbit rabbit, World world )
     {
         Block block = world.getBlockAt( x, rabbit.y );
         return ( block != null && block.riseDir == rabbit.dir );
+    }
+
+    private boolean lowerBlockAt( int x, int y, Rabbit rabbit, World world )
+    {
+        Block block = world.getBlockAt( x, y );
+        return (
+            block != null
+            && block.riseDir == Direction.opposite( rabbit.dir )
+        );
     }
 }

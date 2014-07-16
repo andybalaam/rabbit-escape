@@ -137,7 +137,6 @@ public class TestWalking
         );
     }
 
-
     @Test
     public void Climb_up_a_slope_left()
     {
@@ -176,6 +175,92 @@ public class TestWalking
             equalTo(
                 "<j   ",  // At top
                 "##\\  ",
+                "#####"
+            )
+        );
+    }
+
+    @Test
+    public void Climb_down_a_slope_right()
+    {
+        World world = createWorld(
+            "r    ",
+            "##\\  ",
+            "#####"
+        );
+
+        world.step();
+
+        assertThat(
+            renderWorld( world, true ),
+            equalTo(
+                " r   ",
+                "##-  ", // Approaching
+                "#####"
+            )
+        );
+
+        world.step();
+
+        assertThat(
+            renderWorld( world, true ),
+            equalTo(
+                "     ",
+                "##r_ ", // Going down slope
+                "#####"
+            )
+        );
+
+        world.step();
+
+        assertThat(
+            renderWorld( world, true ),
+            equalTo(
+                "     ",
+                "##\\r>", // At bottom
+                "#####"
+            )
+        );
+    }
+
+    @Test
+    public void Climb_down_a_slope_left()
+    {
+        World world = createWorld(
+            "    j",
+            "  /##",
+            "#####"
+        );
+
+        world.step();
+
+        assertThat(
+            renderWorld( world, true ),
+            equalTo(
+                "   j ",
+                "  =##", // Approaching
+                "#####"
+            )
+        );
+
+        world.step();
+
+        assertThat(
+            renderWorld( world, true ),
+            equalTo(
+                "     ",
+                " +j##", // Going down slope
+                "#####"
+            )
+        );
+
+        world.step();
+
+        assertThat(
+            renderWorld( world, true ),
+            equalTo(
+                "     ",
+                "<j/##", // At bottom
                 "#####"
             )
         );
