@@ -1,6 +1,7 @@
 package rabbitescape.engine;
 
 import static org.hamcrest.MatcherAssert.*;
+import static org.hamcrest.core.IsEqual.*;
 import static rabbitescape.engine.ChangeDescription.State.*;
 import static rabbitescape.engine.TextWorldManip.*;
 import static rabbitescape.engine.Tools.*;
@@ -14,7 +15,7 @@ public class TestTextWorldManip
     {
         String[] lines = {
             "#####",
-            "#   #",
+            "#  Q#",
             "#\\ /#",
             "#   #",
             "#r j#",
@@ -50,7 +51,7 @@ public class TestTextWorldManip
     @Test
     public void Turning_rabbits()
     {
-        World world = createEmptyWorld( 3, 1 );
+        World world = createEmptyWorld( 3, 2 );
 
         ChangeDescription desc = new ChangeDescription();
         desc.add( 0, 0, RABBIT_TURNING_LEFT_TO_RIGHT );
@@ -59,7 +60,8 @@ public class TestTextWorldManip
         assertThat(
             renderChangeDescription( world, desc ),
             equalTo(
-                "| ?"
+                "| ?",
+                "   "
             )
         );
     }
@@ -228,7 +230,7 @@ public class TestTextWorldManip
     @Test
     public void Rabbits_walking_down_and_immediately_up()
     {
-        World world = createEmptyWorld( 5, 1 );
+        World world = createEmptyWorld( 5, 2 );
 
         ChangeDescription desc = new ChangeDescription();
         desc.add( 0, 0, RABBIT_LOWERING_AND_RISING_RIGHT );
@@ -237,7 +239,8 @@ public class TestTextWorldManip
         assertThat(
             renderChangeDescription( world, desc ),
             equalTo(
-                " , . "
+                " , . ",
+                "     "
             )
         );
     }
@@ -245,7 +248,7 @@ public class TestTextWorldManip
     @Test
     public void Rabbits_walking_up_and_immediately_down()
     {
-        World world = createEmptyWorld( 5, 1 );
+        World world = createEmptyWorld( 5, 2 );
 
         ChangeDescription desc = new ChangeDescription();
         desc.add( 0, 0, RABBIT_RISING_AND_LOWERING_RIGHT );
@@ -254,7 +257,8 @@ public class TestTextWorldManip
         assertThat(
             renderChangeDescription( world, desc ),
             equalTo(
-                " & * "
+                " & * ",
+                "     "
             )
         );
     }
@@ -281,6 +285,33 @@ public class TestTextWorldManip
                 "ffffedsa",
                 "edsa    "
             )
+        );
+    }
+
+    @Test
+    public void Can_provide_world_name()
+    {
+        String[] lines = {
+            ":name=My World!"
+        };
+
+        assertThat(
+            createWorld( lines ).name,
+            equalTo( "My World!" )
+        );
+    }
+
+
+    @Test
+    public void Can_provide_number_of_rabbits()
+    {
+        String[] lines = {
+            ":num_rabbits=10"
+        };
+
+        assertThat(
+            createWorld( lines ).numRabbits,
+            equalTo( 10 )
         );
     }
 }

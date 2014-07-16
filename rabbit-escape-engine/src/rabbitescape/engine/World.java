@@ -3,6 +3,7 @@ package rabbitescape.engine;
 import static rabbitescape.engine.Direction.*;
 
 import java.awt.Dimension;
+import java.util.ArrayList;
 import java.util.List;
 
 public class World
@@ -10,12 +11,27 @@ public class World
     public final Dimension size;
     public final List<Block> blocks;
     public final List<Thing> things;
+    public final String name;
 
-    public World( Dimension size, List<Block> blocks, List<Thing> things )
+    private final List<Thing> thingsToAdd;
+    public final int numRabbits;
+
+    public World(
+        Dimension size,
+        List<Block> blocks,
+        List<Thing> things,
+        String name,
+        int numRabbits
+    )
     {
         this.size = size;
         this.blocks = blocks;
         this.things = things;
+        this.name = name;
+        this.numRabbits = numRabbits;
+
+        thingsToAdd = new ArrayList<Thing>();
+
         init();
     }
 
@@ -29,6 +45,8 @@ public class World
 
     public void step()
     {
+        thingsToAdd.clear();
+
         for ( Thing thing : things )
         {
             if ( thing.alive )
@@ -36,6 +54,8 @@ public class World
                 thing.step( this );
             }
         }
+
+        things.addAll( thingsToAdd );
     }
 
     public ChangeDescription describeChanges()
@@ -70,5 +90,10 @@ public class World
             }
         }
         return null;
+    }
+
+    public void addThing( Thing thing )
+    {
+        thingsToAdd.add( thing );
     }
 }

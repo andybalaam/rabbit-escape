@@ -6,14 +6,16 @@ import static rabbitescape.engine.util.Util.*;
 import java.awt.Dimension;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import rabbitescape.engine.ChangeDescription.Change;
 import rabbitescape.engine.err.RabbitEscapeException;
 
 public class TextWorldManip
 {
-    public static class WrongLineLength extends RabbitEscapeException
+    public static class IncorrectLine extends RabbitEscapeException
     {
         private static final long serialVersionUID = 1L;
 
@@ -21,11 +23,51 @@ public class TextWorldManip
         public final int lineNum;
         public final String line;
 
-        public WrongLineLength( String[] lines, int lineNum )
+        public IncorrectLine( String[] lines, int lineNum )
         {
             this.lines = join( "\n", lines );
             this.lineNum = lineNum + 1; // Human-readable line number
             this.line = lines[lineNum];
+        }
+    }
+
+    public static class WrongLineLength extends IncorrectLine
+    {
+        private static final long serialVersionUID = 1L;
+
+        public WrongLineLength( String[] lines, int lineNum )
+        {
+            super( lines, lineNum );
+        }
+    }
+
+    public static class InvalidMetaLine extends IncorrectLine
+    {
+        private static final long serialVersionUID = 1L;
+
+        public InvalidMetaLine( String[] lines, int lineNum )
+        {
+            super( lines, lineNum );
+        }
+    }
+
+    public static class UnknownMetaKey extends IncorrectLine
+    {
+        private static final long serialVersionUID = 1L;
+
+        public UnknownMetaKey( String[] lines, int lineNum )
+        {
+            super( lines, lineNum );
+        }
+    }
+
+    public static class NonIntegerMetaValue extends IncorrectLine
+    {
+        private static final long serialVersionUID = 1L;
+
+        public NonIntegerMetaValue( String[] lines, int lineNum )
+        {
+            super( lines, lineNum );
         }
     }
 
@@ -45,15 +87,23 @@ public class TextWorldManip
         }
     }
 
+
+
     public static World createWorld( String... lines )
         throws WrongLineLength, UnknownCharacter
     {
         List<Block> blocks = new ArrayList<Block>();
         List<Thing> things = new ArrayList<Thing>();
 
-        Dimension size = processLines( lines, blocks, things );
+        LineProcessor processor = new LineProcessor( blocks, things, lines );
 
-        return new World( size, blocks, things );
+        return new World(
+            processor.size(),
+            blocks,
+            things,
+            processor.metaString( "name",        "Untitled" ),
+            processor.metaInt(    "num_rabbits", 10 )
+        );
     }
 
     public static World createEmptyWorld( int width, int height )
@@ -61,28 +111,136 @@ public class TextWorldManip
         return new World(
             new Dimension( width, height ),
             new ArrayList<Block>(),
-            new ArrayList<Thing>()
+            new ArrayList<Thing>(),
+            "Empty World",
+            0
         );
     }
 
-    private static Dimension processLines(
-        String[] lines,
-        List<Block> blocks,
-        List<Thing> things
-    )
-        throws WrongLineLength, UnknownCharacter
+    private static class LineProcessor
     {
-        if ( lines.length == 0 )
+        private static final List<String> META_INTS =
+            Arrays.asList( new String[] {
+                "num_rabbits"
+            } );
+
+        private static final List<String> META_STRINGS =
+            Arrays.asList( new String[] {
+                "name"
+            } );
+
+        private final List<Block> blocks;
+        private final List<Thing> things;
+        private final String[] lines;
+        private final Map<String, String>  m_metaStrings;
+        private final Map<String, Integer> m_metaInts;
+
+        private int width;
+        private int height;
+        private int lineNum;
+
+        public LineProcessor(
+            List<Block> blocks, List<Thing> things, String[] lines )
         {
-            return new Dimension( 3, 3 );
+            this.blocks = blocks;
+            this.things = things;
+            this.lines = lines;
+            this.m_metaStrings = new HashMap<String, String>();
+            this.m_metaInts    = new HashMap<String, Integer>();
+
+            width = -1;
+            height = 0;
+            lineNum = 0;
+
+            process();
         }
 
-        int width = lines[0].length();
-
-        int lineNum = 0;
-        for ( String line : lines )
+        public String metaString( String key, String def )
         {
-            if ( line.length() != width )
+            String ret = m_metaStrings.get( key );
+            if ( ret == null )
+            {
+                return def;
+            }
+            else
+            {
+                return ret;
+            }
+        }
+
+        public int metaInt( String key, int def )
+        {
+            Integer ret = m_metaInts.get( key );
+            if ( ret == null )
+            {
+                return def;
+            }
+            else
+            {
+                return ret.intValue();
+            }
+        }
+
+        public Dimension size()
+        {
+            return new Dimension( width, height );
+        }
+
+        private void process()
+        {
+            for ( String line : lines )
+            {
+                if ( line.startsWith( ":" ) )
+                {
+                    processMetaLine( line );
+                }
+                else
+                {
+                    processItemsLine( line );
+                }
+                ++lineNum;
+            }
+        }
+
+        private void processMetaLine( String line )
+        {
+            String[] splitLine = line.substring( 1 ).split( "=" );
+            if ( splitLine.length != 2 )
+            {
+                throw new InvalidMetaLine( lines, lineNum );
+            }
+
+            String key   = splitLine[0];
+            String value = splitLine[1];
+
+            if ( META_INTS.contains( key ) )
+            {
+                try
+                {
+                    m_metaInts.put( key, Integer.valueOf( value ) );
+                }
+                catch( NumberFormatException e )
+                {
+                    throw new NonIntegerMetaValue( lines, lineNum );
+                }
+            }
+            else if ( META_STRINGS.contains( key ) )
+            {
+                m_metaStrings.put( key, value );
+            }
+            else
+            {
+                throw new UnknownMetaKey( lines, lineNum );
+            }
+        }
+
+        private void processItemsLine( String line )
+        {
+            if ( width == -1 )
+            {
+                width = line.length();
+            }
+            else if ( line.length() != width )
             {
                 throw new WrongLineLength( lines, lineNum );
             }
@@ -98,40 +256,43 @@ public class TextWorldManip
                     }
                     case '#':
                     {
-                        blocks.add( new Block( charNum, lineNum, DOWN ) );
+                        blocks.add( new Block( charNum, height, DOWN ) );
                         break;
                     }
                     case '/':
                     {
-                        blocks.add( new Block( charNum, lineNum, RIGHT ) );
+                        blocks.add( new Block( charNum, height, RIGHT ) );
                         break;
                     }
                     case '\\':
                     {
-                        blocks.add( new Block( charNum, lineNum, LEFT ) );
+                        blocks.add( new Block( charNum, height, LEFT ) );
                         break;
                     }
                     case 'r':
                     {
-                        things.add( new Rabbit( charNum, lineNum, RIGHT ) );
+                        things.add( new Rabbit( charNum, height, RIGHT ) );
                         break;
                     }
                     case 'j':
                     {
-                        things.add( new Rabbit( charNum, lineNum, LEFT ) );
+                        things.add( new Rabbit( charNum, height, LEFT ) );
+                        break;
+                    }
+                    case 'Q':
+                    {
+                        things.add( new Entrance( charNum, height ) );
                         break;
                     }
                     default:
                     {
-                        throw new UnknownCharacter( lines, lineNum, charNum );
+                        throw new UnknownCharacter( lines, height, charNum );
                     }
                 }
                 ++charNum;
             }
-            ++lineNum;
+            ++height;
         }
-
-        return new Dimension( width, lines.length );
     }
 
     public static String[] renderWorld( World world, boolean showChanges )
@@ -190,6 +351,10 @@ public class TextWorldManip
         if ( thing instanceof Rabbit )
         {
             return ( (Rabbit)thing ).dir == RIGHT ? 'r' : 'j';
+        }
+        else if ( thing instanceof Entrance )
+        {
+            return 'Q';
         }
         else
         {
