@@ -548,4 +548,151 @@ public class TestWalking
             )
         );
     }
+
+    @Test
+    public void Slope_down_then_immediately_up_right()
+    {
+        World world = createWorld(
+            "r   ",
+            "#\\/#",
+            "####"
+        );
+
+        assertThat(
+            renderWorld( world, true ),
+            equalTo(
+                "r   ",
+                "#-/#",
+                "####"
+            )
+        );
+
+        world.step();
+
+        assertThat(
+            renderWorld( world, true ),
+            equalTo(
+                "    ",
+                "#r,#",
+                "####"
+            )
+        );
+
+        world.step();
+
+        assertThat(
+            renderWorld( world, true ),
+            equalTo(
+                "   '",
+                "#\\r#",
+                "####"
+            )
+        );
+    }
+
+    @Test
+    public void Slope_down_then_immediately_up_left()
+    {
+        World world = createWorld(
+            "   j",
+            "#\\/#",
+            "####"
+        );
+
+        assertThat(
+            renderWorld( world, true ),
+            equalTo(
+                "   j",
+                "#\\=#",
+                "####"
+            )
+        );
+
+        world.step();
+
+        assertThat(
+            renderWorld( world, true ),
+            equalTo(
+                "    ",
+                "#.j#",
+                "####"
+            )
+        );
+
+        world.step();
+
+        assertThat(
+            renderWorld( world, true ),
+            equalTo(
+                "!   ",
+                "#j/#",
+                "####"
+            )
+        );
+    }
+
+
+    @Test
+    public void Slope_up_then_immediately_down_right()
+    {
+        World world = createWorld(
+            "    ",
+            "r/\\ ",
+            "####"
+        );
+
+        world.step();
+
+        assertThat(
+            renderWorld( world, true ),
+            equalTo(
+                "    ",
+                " r& ",
+                "####"
+            )
+        );
+
+        world.step();
+
+        assertThat(
+            renderWorld( world, true ),
+            equalTo(
+                "    ",
+                " /r_",
+                "####"
+            )
+        );
+    }
+
+    @Test
+    public void Slope_up_then_immediately_down_left()
+    {
+        World world = createWorld(
+            "    ",
+            " /\\j",
+            "####"
+        );
+
+        world.step();
+
+        assertThat(
+            renderWorld( world, true ),
+            equalTo(
+                "    ",
+                " *j ",
+                "####"
+            )
+        );
+
+        world.step();
+
+        assertThat(
+            renderWorld( world, true ),
+            equalTo(
+                "    ",
+                "+j\\ ",
+                "####"
+            )
+        );
+    }
 }

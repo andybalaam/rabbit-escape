@@ -224,4 +224,38 @@ public class TestTextWorldManip
             )
         );
     }
+
+    @Test
+    public void Rabbits_walking_down_and_immediately_up()
+    {
+        World world = createEmptyWorld( 5, 1 );
+
+        ChangeDescription desc = new ChangeDescription();
+        desc.add( 0, 0, RABBIT_LOWERING_AND_RISING_RIGHT );
+        desc.add( 4, 0, RABBIT_LOWERING_AND_RISING_LEFT );
+
+        assertThat(
+            renderChangeDescription( world, desc ),
+            equalTo(
+                " , . "
+            )
+        );
+    }
+
+    @Test
+    public void Rabbits_walking_up_and_immediately_down()
+    {
+        World world = createEmptyWorld( 5, 1 );
+
+        ChangeDescription desc = new ChangeDescription();
+        desc.add( 0, 0, RABBIT_RISING_AND_LOWERING_RIGHT );
+        desc.add( 4, 0, RABBIT_RISING_AND_LOWERING_LEFT );
+
+        assertThat(
+            renderChangeDescription( world, desc ),
+            equalTo(
+                " & * "
+            )
+        );
+    }
 }

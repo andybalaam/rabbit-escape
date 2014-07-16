@@ -277,6 +277,18 @@ public class TextWorldManip
             case RABBIT_LOWERING_LEFT_END:
                 chars[change.y][change.x - 1] = '+';
                 break;
+            case RABBIT_LOWERING_AND_RISING_RIGHT:
+                chars[change.y][change.x + 1] = ',';
+                break;
+            case RABBIT_LOWERING_AND_RISING_LEFT:
+                chars[change.y][change.x - 1] = '.';
+                break;
+            case RABBIT_RISING_AND_LOWERING_RIGHT:
+                chars[change.y][change.x + 1] = '&';
+                break;
+            case RABBIT_RISING_AND_LOWERING_LEFT:
+                chars[change.y][change.x - 1] = '*';
+                break;
             case RABBIT_FALLING:
                 chars[change.y + 1][change.x] = 'f';
                 chars[change.y + 2][change.x] = 'f';
