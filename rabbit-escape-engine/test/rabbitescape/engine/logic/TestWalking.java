@@ -98,9 +98,10 @@ public class TestWalking
     public void Climb_up_a_slope_right()
     {
         World world = createWorld(
-            "     ",
-            "r /##",
-            "#####"
+            "      ",
+            "   /##",
+            "r /###",
+            "######"
         );
 
         world.step();
@@ -108,9 +109,10 @@ public class TestWalking
         assertThat(
             renderWorld( world, true ),
             equalTo(
-                "     ",
-                " r~##",  // Approaching
-                "#####"
+                "      ",
+                "   /##",
+                " r~###",  // Approaching
+                "######"
             )
         );
 
@@ -119,9 +121,10 @@ public class TestWalking
         assertThat(
             renderWorld( world, true ),
             equalTo(
-                "   ' ",
-                "  r##",  // Going up slope
-                "#####"
+                "      ",
+                "   $##",
+                "  r###",  // Going up slope
+                "######"
             )
         );
 
@@ -130,9 +133,22 @@ public class TestWalking
         assertThat(
             renderWorld( world, true ),
             equalTo(
-                "   r>",  // At top
-                "  /##",
-                "#####"
+                "    ' ",
+                "   r##",
+                "  /###",  // Approaching end
+                "######"
+            )
+        );
+
+        world.step();
+
+        assertThat(
+            renderWorld( world, true ),
+            equalTo(
+                "    r>",  // At top
+                "   /##",
+                "  /###",
+                "######"
             )
         );
     }
@@ -141,9 +157,10 @@ public class TestWalking
     public void Climb_up_a_slope_left()
     {
         World world = createWorld(
-            "     ",
-            "##\\ j",
-            "#####"
+            "      ",
+            "##\\   ",
+            "###\\ j",
+            "######"
         );
 
         world.step();
@@ -151,9 +168,10 @@ public class TestWalking
         assertThat(
             renderWorld( world, true ),
             equalTo(
-                "     ",
-                "##`j ",  // Approaching
-                "#####"
+                "      ",
+                "##\\   ",
+                "###`j ",  // Approaching
+                "######"
             )
         );
 
@@ -162,9 +180,10 @@ public class TestWalking
         assertThat(
             renderWorld( world, true ),
             equalTo(
-                " !   ",
-                "##j  ",  // Going up slope
-                "#####"
+                "      ",
+                "##^   ",
+                "###j  ",  // Going up slope
+                "######"
             )
         );
 
@@ -173,9 +192,22 @@ public class TestWalking
         assertThat(
             renderWorld( world, true ),
             equalTo(
-                "<j   ",  // At top
-                "##\\  ",
-                "#####"
+                " !    ",
+                "##j   ",
+                "###\\  ",  // Approaching top
+                "######"
+            )
+        );
+
+        world.step();
+
+        assertThat(
+            renderWorld( world, true ),
+            equalTo(
+                "<j    ",  // At top
+                "##\\   ",
+                "###\\  ",
+                "######"
             )
         );
     }
@@ -184,9 +216,10 @@ public class TestWalking
     public void Climb_down_a_slope_right()
     {
         World world = createWorld(
-            "r    ",
-            "##\\  ",
-            "#####"
+            "r     ",
+            "##\\   ",
+            "###\\  ",
+            "######"
         );
 
         world.step();
@@ -194,9 +227,10 @@ public class TestWalking
         assertThat(
             renderWorld( world, true ),
             equalTo(
-                " r   ",
-                "##-  ", // Approaching
-                "#####"
+                " r    ",
+                "##-   ", // Approaching
+                "###\\  ",
+                "######"
             )
         );
 
@@ -205,9 +239,10 @@ public class TestWalking
         assertThat(
             renderWorld( world, true ),
             equalTo(
-                "     ",
-                "##r_ ", // Going down slope
-                "#####"
+                "      ",
+                "##r   ", // Going down slope
+                "###@  ",
+                "######"
             )
         );
 
@@ -216,9 +251,21 @@ public class TestWalking
         assertThat(
             renderWorld( world, true ),
             equalTo(
-                "     ",
-                "##\\r>", // At bottom
-                "#####"
+                "      ",
+                "##\\   ", // Approaching bottom
+                "###r_ ",
+                "######"
+            )
+        );
+        world.step();
+
+        assertThat(
+            renderWorld( world, true ),
+            equalTo(
+                "      ",
+                "##\\   ",
+                "###\\r>", // At bottom
+                "######"
             )
         );
     }
@@ -227,9 +274,10 @@ public class TestWalking
     public void Climb_down_a_slope_left()
     {
         World world = createWorld(
-            "    j",
-            "  /##",
-            "#####"
+            "     j",
+            "   /##",
+            "  /###",
+            "######"
         );
 
         world.step();
@@ -237,9 +285,10 @@ public class TestWalking
         assertThat(
             renderWorld( world, true ),
             equalTo(
-                "   j ",
-                "  =##", // Approaching
-                "#####"
+                "    j ",
+                "   =##", // Approaching
+                "  /###",
+                "######"
             )
         );
 
@@ -248,9 +297,10 @@ public class TestWalking
         assertThat(
             renderWorld( world, true ),
             equalTo(
-                "     ",
-                " +j##", // Going down slope
-                "#####"
+                "      ",
+                "   j##", // Going down slope
+                "  %###",
+                "######"
             )
         );
 
@@ -259,9 +309,22 @@ public class TestWalking
         assertThat(
             renderWorld( world, true ),
             equalTo(
-                "     ",
-                "<j/##", // At bottom
-                "#####"
+                "      ",
+                "   /##", // Approaching bottom
+                " +j###",
+                "######"
+            )
+        );
+
+        world.step();
+
+        assertThat(
+            renderWorld( world, true ),
+            equalTo(
+                "      ",
+                "   /##",
+                "<j/###", // At bottom
+                "######"
             )
         );
     }

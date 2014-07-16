@@ -229,28 +229,40 @@ public class TextWorldManip
             case RABBIT_TURNING_RIGHT_TO_LEFT:
                 chars[change.y][change.x] = '?';
                 break;
-            case RABBIT_RISING_RIGHT_1:
+            case RABBIT_RISING_RIGHT_START:
                 chars[change.y][change.x + 1] = '~';
                 break;
-            case RABBIT_RISING_RIGHT_2:
+            case RABBIT_RISING_RIGHT_CONTINUE:
+                chars[change.y - 1][change.x + 1] = '$';
+                break;
+            case RABBIT_RISING_RIGHT_END:
                 chars[change.y - 1][change.x + 1] = '\'';
                 break;
-            case RABBIT_RISING_LEFT_1:
+            case RABBIT_RISING_LEFT_START:
                 chars[change.y][change.x - 1] = '`';
                 break;
-            case RABBIT_RISING_LEFT_2:
+            case RABBIT_RISING_LEFT_CONTINUE:
+                chars[change.y - 1][change.x - 1] = '^';
+                break;
+            case RABBIT_RISING_LEFT_END:
                 chars[change.y - 1][change.x - 1] = '!';
                 break;
-            case RABBIT_LOWERING_RIGHT_1:
+            case RABBIT_LOWERING_RIGHT_START:
                 chars[change.y + 1][change.x + 1] = '-';
                 break;
-            case RABBIT_LOWERING_RIGHT_2:
+            case RABBIT_LOWERING_RIGHT_CONTINUE:
+                chars[change.y + 1][change.x + 1] = '@';
+                break;
+            case RABBIT_LOWERING_RIGHT_END:
                 chars[change.y][change.x + 1] = '_';
                 break;
-            case RABBIT_LOWERING_LEFT_1:
+            case RABBIT_LOWERING_LEFT_START:
                 chars[change.y + 1][change.x - 1] = '=';
                 break;
-            case RABBIT_LOWERING_LEFT_2:
+            case RABBIT_LOWERING_LEFT_CONTINUE:
+                chars[change.y + 1][change.x - 1] = '%';
+                break;
+            case RABBIT_LOWERING_LEFT_END:
                 chars[change.y][change.x - 1] = '+';
                 break;
             case RABBIT_FALLING:
