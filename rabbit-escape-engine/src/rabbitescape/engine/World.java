@@ -61,6 +61,7 @@ public class World
 
     public Block getBlockAt( int x, int y )
     {
+        // TODO: faster
         for ( Block block : blocks )
         {
             if ( block.x == x && block.y == y )

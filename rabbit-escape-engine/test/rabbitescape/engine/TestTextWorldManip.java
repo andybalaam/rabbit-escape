@@ -67,12 +67,13 @@ public class TestTextWorldManip
     @Test
     public void Rising_rabbits_right()
     {
-        World world = createEmptyWorld( 5, 6 );
+        World world = createEmptyWorld( 5, 8 );
 
         ChangeDescription desc = new ChangeDescription();
         desc.add( 0, 1, RABBIT_RISING_RIGHT_START );
-        desc.add( 0, 3, RABBIT_RISING_RIGHT_CONTINUE  );
-        desc.add( 0, 5, RABBIT_RISING_RIGHT_END  );
+        desc.add( 0, 3, RABBIT_RISING_RIGHT_CONTINUE );
+        desc.add( 0, 5, RABBIT_RISING_RIGHT_END );
+        desc.add( 0, 7, RABBIT_TURNING_RIGHT_TO_LEFT_RISING );
 
         assertThat(
             renderChangeDescription( world, desc ),
@@ -82,7 +83,9 @@ public class TestTextWorldManip
                 " $   ",
                 "     ",
                 " '   ",
-                "     "
+                "     ",
+                "     ",
+                "}    "
             )
         );
     }
@@ -90,12 +93,13 @@ public class TestTextWorldManip
     @Test
     public void Rising_rabbits_left()
     {
-        World world = createEmptyWorld( 5, 6 );
+        World world = createEmptyWorld( 5, 8 );
 
         ChangeDescription desc = new ChangeDescription();
         desc.add( 4, 1, RABBIT_RISING_LEFT_START );
         desc.add( 4, 3, RABBIT_RISING_LEFT_CONTINUE  );
         desc.add( 4, 5, RABBIT_RISING_LEFT_END  );
+        desc.add( 4, 7, RABBIT_TURNING_LEFT_TO_RIGHT_RISING  );
 
         assertThat(
             renderChangeDescription( world, desc ),
@@ -105,7 +109,9 @@ public class TestTextWorldManip
                 "   ^ ",
                 "     ",
                 "   ! ",
-                "     "
+                "     ",
+                "     ",
+                "    {"
             )
         );
     }
@@ -113,12 +119,13 @@ public class TestTextWorldManip
     @Test
     public void Lowering_rabbits_right()
     {
-        World world = createEmptyWorld( 5, 6 );
+        World world = createEmptyWorld( 5, 8 );
 
         ChangeDescription desc = new ChangeDescription();
         desc.add( 0, 0, RABBIT_LOWERING_RIGHT_START );
         desc.add( 0, 2, RABBIT_LOWERING_RIGHT_CONTINUE  );
         desc.add( 0, 4, RABBIT_LOWERING_RIGHT_END  );
+        desc.add( 0, 6, RABBIT_TURNING_LEFT_TO_RIGHT_LOWERING  );
 
         assertThat(
             renderChangeDescription( world, desc ),
@@ -128,6 +135,8 @@ public class TestTextWorldManip
                 "     ",
                 " @   ",
                 " _   ",
+                "     ",
+                "[    ",
                 "     "
             )
         );
@@ -136,12 +145,13 @@ public class TestTextWorldManip
     @Test
     public void Lowering_rabbits_left()
     {
-        World world = createEmptyWorld( 5, 6 );
+        World world = createEmptyWorld( 5, 8 );
 
         ChangeDescription desc = new ChangeDescription();
         desc.add( 4, 0, RABBIT_LOWERING_LEFT_START );
         desc.add( 4, 2, RABBIT_LOWERING_LEFT_CONTINUE );
         desc.add( 4, 4, RABBIT_LOWERING_LEFT_END  );
+        desc.add( 4, 6, RABBIT_TURNING_LEFT_TO_RIGHT_LOWERING  );
 
         assertThat(
             renderChangeDescription( world, desc ),
@@ -151,6 +161,8 @@ public class TestTextWorldManip
                 "     ",
                 "   % ",
                 "   + ",
+                "     ",
+                "    [",
                 "     "
             )
         );

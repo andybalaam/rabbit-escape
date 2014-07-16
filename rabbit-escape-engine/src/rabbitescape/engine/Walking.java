@@ -6,74 +6,149 @@ import rabbitescape.engine.ChangeDescription.State;
 
 public class Walking implements Behaviour
 {
-    @Override
-    public State newState( Rabbit rabbit, World world )
+    private static class StateCalc
     {
-        if ( continueRise( rabbit, world ) )
+        private final Rabbit rabbit;
+        private final World world;
+
+        StateCalc( Rabbit rabbit, World world )
         {
-            return rl(
-                rabbit,
-                RABBIT_RISING_RIGHT_CONTINUE,
-                RABBIT_RISING_LEFT_CONTINUE
-            );
+            this.rabbit = rabbit;
+            this.world = world;
         }
-        else if ( startRise( rabbit, world ) )
+
+        public State newState()
         {
-            return rl(
-                rabbit,
-                RABBIT_RISING_RIGHT_START,
-                RABBIT_RISING_LEFT_START
-            );
+            if ( rising() )
+            {
+                int nextX = destX();
+                int nextY = rabbit.y - 1;
+
+                if ( riseBlockAt( nextX, nextY ) )
+                {
+                    return rl(
+                        RABBIT_RISING_RIGHT_CONTINUE,
+                        RABBIT_RISING_LEFT_CONTINUE
+                    );
+                }
+                else if( world.flatBlockAt( nextX, nextY ) )
+                {
+                    return rl(
+                        RABBIT_TURNING_RIGHT_TO_LEFT_RISING,
+                        RABBIT_TURNING_LEFT_TO_RIGHT_RISING
+                    );
+                }
+                else
+                {
+                    return rl(
+                        RABBIT_RISING_RIGHT_END,
+                        RABBIT_RISING_LEFT_END
+                    );
+                }
+            }
+            else if( lowering() )
+            {
+                int nextX = destX();
+                int nextY = rabbit.y + 1;
+
+                if ( lowerBlockAt( nextX, nextY ) )
+                {
+                    return rl(
+                        RABBIT_LOWERING_RIGHT_CONTINUE,
+                        RABBIT_LOWERING_LEFT_CONTINUE
+                    );
+                }
+                else if( world.flatBlockAt( nextX, rabbit.y ) )
+                {
+                    return rl(
+                        RABBIT_TURNING_RIGHT_TO_LEFT_LOWERING,
+                        RABBIT_TURNING_LEFT_TO_RIGHT_LOWERING
+                    );
+                }
+                else
+                {
+                    return rl(
+                        RABBIT_LOWERING_RIGHT_END,
+                        RABBIT_LOWERING_LEFT_END
+                    );
+                }
+            }
+            else  // On flat ground now
+            {
+                int nextX = destX();
+                int nextY = rabbit.y;
+
+                if ( lowerBlockAt( nextX, rabbit.y + 1 ) )
+                {
+                    return rl(
+                        RABBIT_LOWERING_RIGHT_START,
+                        RABBIT_LOWERING_LEFT_START
+                    );
+                }
+                else if ( riseBlockAt( nextX, nextY ) )
+                {
+                    return rl(
+                        RABBIT_RISING_RIGHT_START,
+                        RABBIT_RISING_LEFT_START
+                    );
+                }
+                else if( world.flatBlockAt( nextX, nextY ) )
+                {
+                    return rl(
+                        RABBIT_TURNING_RIGHT_TO_LEFT,
+                        RABBIT_TURNING_LEFT_TO_RIGHT
+                    );
+                }
+                else
+                {
+                    return rl(
+                        RABBIT_WALKING_RIGHT,
+                        RABBIT_WALKING_LEFT
+                    );
+                }
+            }
         }
-        else if ( finishRise( rabbit, world ) )
+
+        private int destX()
         {
-            return rl(
-                rabbit,
-                RABBIT_RISING_RIGHT_END,
-                RABBIT_RISING_LEFT_END
-            );
+            return ( rabbit.dir == RIGHT ) ? rabbit.x + 1 : rabbit.x - 1;
         }
-        else if ( continueLower( rabbit, world ) )
+
+        private State rl( State rightState, State leftState )
         {
-            return rl(
-                rabbit,
-                RABBIT_LOWERING_RIGHT_CONTINUE,
-                RABBIT_LOWERING_LEFT_CONTINUE
-            );
+            return rabbit.dir == RIGHT ? rightState : leftState;
         }
-        else if ( startLower( rabbit, world ) )
+
+        private boolean rising()
         {
-            return rl(
-                rabbit,
-                RABBIT_LOWERING_RIGHT_START,
-                RABBIT_LOWERING_LEFT_START
-            );
+            return riseBlockAt( rabbit.x, rabbit.y );
         }
-        else if ( finishLower( rabbit, world ) )
+
+        private boolean lowering()
         {
-            return rl(
-                rabbit,
-                RABBIT_LOWERING_RIGHT_END,
-                RABBIT_LOWERING_LEFT_END
-            );
+            return lowerBlockAt( rabbit.x, rabbit.y );
         }
-        else if ( turn( rabbit, world ) )
+
+        private boolean riseBlockAt( int x, int y )
         {
-            return rl(
-                rabbit,
-                RABBIT_TURNING_RIGHT_TO_LEFT,
-                RABBIT_TURNING_LEFT_TO_RIGHT
-            );
+            Block block = world.getBlockAt( x, y );
+            return ( block != null && block.riseDir == rabbit.dir );
         }
-        else
+
+        private boolean lowerBlockAt( int x, int y )
         {
-            return rl( rabbit, RABBIT_WALKING_RIGHT, RABBIT_WALKING_LEFT );
+            Block block = world.getBlockAt( x, y );
+            return (
+                block != null
+                && block.riseDir == Direction.opposite( rabbit.dir )
+            );
         }
     }
 
-    private State rl( Rabbit rabbit, State rightState, State leftState )
+    @Override
+    public State newState( Rabbit rabbit, World world )
     {
-        return rabbit.dir == RIGHT ? rightState : leftState;
+        return new StateCalc( rabbit, world ).newState();
     }
 
     @Override
@@ -124,11 +199,15 @@ public class Walking implements Behaviour
                 return true;
             }
             case RABBIT_TURNING_LEFT_TO_RIGHT:
+            case RABBIT_TURNING_LEFT_TO_RIGHT_RISING:
+            case RABBIT_TURNING_LEFT_TO_RIGHT_LOWERING:
             {
                 rabbit.dir = RIGHT;
                 return true;
             }
             case RABBIT_TURNING_RIGHT_TO_LEFT:
+            case RABBIT_TURNING_RIGHT_TO_LEFT_RISING:
+            case RABBIT_TURNING_RIGHT_TO_LEFT_LOWERING:
             {
                 rabbit.dir = LEFT;
                 return true;
@@ -141,66 +220,5 @@ public class Walking implements Behaviour
                 );
             }
         }
-    }
-
-    private static boolean turn( Rabbit rabbit, World world )
-    {
-        return world.flatBlockAt( dest( rabbit ), rabbit.y );
-    }
-
-    private static int dest( Rabbit rabbit )
-    {
-        return ( rabbit.dir == RIGHT ) ? rabbit.x + 1 : rabbit.x - 1;
-    }
-
-    private boolean startRise( Rabbit rabbit, World world )
-    {
-        return riseBlockAt( dest( rabbit ), rabbit.y, rabbit, world );
-    }
-
-    private boolean continueRise( Rabbit rabbit, World world )
-    {
-        return (
-               riseBlockAt( rabbit.x,       rabbit.y,     rabbit, world )
-            && riseBlockAt( dest( rabbit ), rabbit.y - 1, rabbit, world )
-        );
-    }
-
-    private boolean finishRise( Rabbit rabbit, World world )
-    {
-        return riseBlockAt( rabbit.x, rabbit.y, rabbit, world );
-    }
-
-    private boolean continueLower( Rabbit rabbit, World world )
-    {
-        return (
-               lowerBlockAt( rabbit.x, rabbit.y, rabbit, world )
-            && lowerBlockAt( dest( rabbit ), rabbit.y + 1, rabbit, world )
-        );
-    }
-
-    private boolean startLower( Rabbit rabbit, World world )
-    {
-        return lowerBlockAt( dest( rabbit ), rabbit.y + 1, rabbit, world );
-    }
-
-    private boolean finishLower( Rabbit rabbit, World world )
-    {
-        return lowerBlockAt( rabbit.x, rabbit.y, rabbit, world );
-    }
-
-    private boolean riseBlockAt( int x, int y, Rabbit rabbit, World world )
-    {
-        Block block = world.getBlockAt( x, y );
-        return ( block != null && block.riseDir == rabbit.dir );
-    }
-
-    private boolean lowerBlockAt( int x, int y, Rabbit rabbit, World world )
-    {
-        Block block = world.getBlockAt( x, y );
-        return (
-            block != null
-            && block.riseDir == Direction.opposite( rabbit.dir )
-        );
     }
 }

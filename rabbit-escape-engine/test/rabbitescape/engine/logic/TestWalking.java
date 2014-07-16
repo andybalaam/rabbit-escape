@@ -64,6 +64,14 @@ public class TestWalking
             "#####"
         );
 
+        assertThat(
+            renderWorld( world, true ),
+            equalTo(
+                "#|   ",
+                "#####"
+            )
+        );
+
         world.step();
 
         assertThat(
@@ -325,6 +333,218 @@ public class TestWalking
                 "   /##",
                 "<j/###", // At bottom
                 "######"
+            )
+        );
+    }
+
+    @Test
+    public void Turn_on_a_slope_up_right()
+    {
+        World world = createWorld(
+            "   #",
+            "r /#",
+            "####"
+        );
+
+        world.step();
+
+        assertThat(
+            renderWorld( world, true ),
+            equalTo(
+                "   #",
+                " r~#",
+                "####"
+            )
+        );
+
+        world.step();
+
+        assertThat(
+            renderWorld( world, true ),
+            equalTo(
+                "   #",
+                "  }#",
+                "####"
+            )
+        );
+
+        world.step();
+
+        assertThat(
+            renderWorld( world, true ),
+            equalTo(
+                "   #",
+                " +j#",
+                "####"
+            )
+        );
+
+        world.step();
+
+        assertThat(
+            renderWorld( world, true ),
+            equalTo(
+                "   #",
+                "<j/#",
+                "####"
+            )
+        );
+    }
+
+    @Test
+    public void Turn_on_a_slope_up_left()
+    {
+        World world = createWorld(
+            "#   ",
+            "#\\ j",
+            "####"
+        );
+
+        world.step();
+
+        assertThat(
+            renderWorld( world, true ),
+            equalTo(
+                "#   ",
+                "#`j ",
+                "####"
+            )
+        );
+
+        world.step();
+
+        assertThat(
+            renderWorld( world, true ),
+            equalTo(
+                "#   ",
+                "#{  ",
+                "####"
+            )
+        );
+
+        world.step();
+
+        assertThat(
+            renderWorld( world, true ),
+            equalTo(
+                "#   ",
+                "#r_ ",
+                "####"
+            )
+        );
+
+        world.step();
+
+        assertThat(
+            renderWorld( world, true ),
+            equalTo(
+                "#   ",
+                "#\\r>",
+                "####"
+            )
+        );
+    }
+
+    @Test
+    public void Turn_on_a_slope_down_right()
+    {
+        World world = createWorld(
+            " r  ",
+            "##\\#",
+            "####"
+        );
+
+        assertThat(
+            renderWorld( world, true ),
+            equalTo(
+                " r  ",
+                "##-#",
+                "####"
+            )
+        );
+
+        world.step();
+
+        assertThat(
+            renderWorld( world, true ),
+            equalTo(
+                "    ",
+                "##]#",
+                "####"
+            )
+        );
+
+        world.step();
+
+        assertThat(
+            renderWorld( world, true ),
+            equalTo(
+                " !  ",
+                "##j#",
+                "####"
+            )
+        );
+
+        world.step();
+
+        assertThat(
+            renderWorld( world, true ),
+            equalTo(
+                "<j  ",
+                "##\\#",
+                "####"
+            )
+        );
+    }
+
+    @Test
+    public void Turn_on_a_slope_down_left()
+    {
+        World world = createWorld(
+            "  j ",
+            "#/##",
+            "####"
+        );
+
+        assertThat(
+            renderWorld( world, true ),
+            equalTo(
+                "  j ",
+                "#=##",
+                "####"
+            )
+        );
+
+        world.step();
+
+        assertThat(
+            renderWorld( world, true ),
+            equalTo(
+                "    ",
+                "#[##",
+                "####"
+            )
+        );
+
+        world.step();
+
+        assertThat(
+            renderWorld( world, true ),
+            equalTo(
+                "  ' ",
+                "#r##",
+                "####"
+            )
+        );
+
+        world.step();
+
+        assertThat(
+            renderWorld( world, true ),
+            equalTo(
+                "  r>",
+                "#/##",
+                "####"
             )
         );
     }
