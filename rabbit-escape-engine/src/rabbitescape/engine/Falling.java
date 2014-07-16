@@ -1,6 +1,7 @@
 package rabbitescape.engine;
 
 import static rabbitescape.engine.ChangeDescription.State.*;
+import static rabbitescape.engine.Direction.*;
 import rabbitescape.engine.ChangeDescription.State;
 
 public class Falling implements Behaviour
@@ -25,6 +26,10 @@ public class Falling implements Behaviour
                 return true;
             }
             case RABBIT_FALLING:
+            case RABBIT_FALLING_ONTO_LOWER_RIGHT:
+            case RABBIT_FALLING_ONTO_LOWER_LEFT:
+            case RABBIT_FALLING_ONTO_RISE_RIGHT:
+            case RABBIT_FALLING_ONTO_RISE_LEFT:
             {
                 heightFallen += 2;
                 rabbit.y = rabbit.y + 2;
@@ -73,15 +78,40 @@ public class Falling implements Behaviour
         }
         else
         {
-            if ( world.flatBlockAt( rabbit.x, rabbit.y + 2 ) )
+            Block block2Down = world.getBlockAt( rabbit.x, rabbit.y + 2 );
+            if ( block2Down != null )
             {
-                return State.RABBIT_FALLING_1;
+                if ( block2Down.riseDir == DOWN ) // Flat block
+                {
+                    return State.RABBIT_FALLING_1;
+                }
+                else if( block2Down.riseDir == rabbit.dir )
+                {
+                    return rl(
+                        rabbit,
+                        RABBIT_FALLING_ONTO_RISE_RIGHT,
+                        RABBIT_FALLING_ONTO_RISE_LEFT
+                    );
+                }
+                else
+                {
+                    return rl(
+                        rabbit,
+                        RABBIT_FALLING_ONTO_LOWER_RIGHT,
+                        RABBIT_FALLING_ONTO_LOWER_LEFT
+                    );
+                }
             }
             else
             {
                 return State.RABBIT_FALLING;
             }
         }
+    }
+
+    private State rl( Rabbit rabbit, State rightState, State leftState )
+    {
+        return rabbit.dir == RIGHT ? rightState : leftState;
     }
 
     boolean falling( Rabbit rabbit, World world )

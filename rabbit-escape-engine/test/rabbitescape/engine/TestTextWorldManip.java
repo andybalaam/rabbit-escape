@@ -258,4 +258,25 @@ public class TestTextWorldManip
             )
         );
     }
+
+    @Test
+    public void Rabbits_falling_onto_slopes()
+    {
+        World world = createEmptyWorld( 4, 3 );
+
+        ChangeDescription desc = new ChangeDescription();
+        desc.add( 0, 0, RABBIT_FALLING_ONTO_LOWER_RIGHT );
+        desc.add( 1, 0, RABBIT_FALLING_ONTO_RISE_RIGHT );
+        desc.add( 2, 0, RABBIT_FALLING_ONTO_LOWER_LEFT );
+        desc.add( 3, 0, RABBIT_FALLING_ONTO_RISE_LEFT );
+
+        assertThat(
+            renderChangeDescription( world, desc ),
+            equalTo(
+                "    ",
+                "ffff",
+                "edsa"
+            )
+        );
+    }
 }
