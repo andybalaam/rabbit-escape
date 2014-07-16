@@ -12,6 +12,8 @@ import rabbitescape.engine.LoadWorldFile.Failed;
 import rabbitescape.engine.LoadWorldFile.MissingFile;
 import rabbitescape.engine.LoadWorldFile.ReadingFailed;
 import rabbitescape.engine.err.RabbitEscapeException;
+import rabbitescape.engine.textworld.UnknownCharacter;
+import rabbitescape.engine.textworld.WrongLineLength;
 
 public class TestExceptionTranslation
 {
@@ -19,7 +21,7 @@ public class TestExceptionTranslation
     public void Translate_exception_into_English()
     {
         assertThat(
-            new TextWorldManip.WrongLineLength(
+            new WrongLineLength(
                 new String[] { "x", "y", "zz", "a" }, 2
             ).translate( Locale.ENGLISH ),
             equalTo(
@@ -64,7 +66,7 @@ public class TestExceptionTranslation
     @Test
     public void Translate_exception_containing_backslash()
     {
-        RabbitEscapeException e = new TextWorldManip.UnknownCharacter(
+        RabbitEscapeException e = new UnknownCharacter(
             new String[] { "#\\" }, 0, 1 );
 
         assertThat(

@@ -1,8 +1,8 @@
 package rabbitescape.ui.text;
 
 import static rabbitescape.engine.util.Util.*;
-import rabbitescape.engine.TextWorldManip;
 import rabbitescape.engine.World;
+import rabbitescape.engine.textworld.TextWorldManip;
 
 public class GameLoop
 {

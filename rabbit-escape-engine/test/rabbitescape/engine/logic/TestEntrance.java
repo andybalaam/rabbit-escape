@@ -1,8 +1,8 @@
 package rabbitescape.engine.logic;
 
 import static org.hamcrest.MatcherAssert.*;
-import static rabbitescape.engine.TextWorldManip.*;
 import static rabbitescape.engine.Tools.*;
+import static rabbitescape.engine.textworld.TextWorldManip.*;
 
 import org.junit.Test;
 

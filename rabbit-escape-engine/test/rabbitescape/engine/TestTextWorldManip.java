@@ -3,8 +3,8 @@ package rabbitescape.engine;
 import static org.hamcrest.MatcherAssert.*;
 import static org.hamcrest.core.IsEqual.*;
 import static rabbitescape.engine.ChangeDescription.State.*;
-import static rabbitescape.engine.TextWorldManip.*;
 import static rabbitescape.engine.Tools.*;
+import static rabbitescape.engine.textworld.TextWorldManip.*;
 
 import org.junit.Test;
 

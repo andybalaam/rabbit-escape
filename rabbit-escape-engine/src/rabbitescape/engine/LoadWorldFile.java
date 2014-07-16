@@ -4,6 +4,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import rabbitescape.engine.err.RabbitEscapeException;
+import rabbitescape.engine.textworld.TextWorldManip;
 import rabbitescape.engine.util.FileSystem;
 
 public class LoadWorldFile
