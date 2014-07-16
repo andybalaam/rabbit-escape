@@ -37,6 +37,10 @@ public class Falling implements Behaviour
             }
             case RABBIT_FALLING_1_TO_DEATH:
             case RABBIT_FALLING_1:
+            case RABBIT_FALLING_1_ONTO_LOWER_RIGHT:
+            case RABBIT_FALLING_1_ONTO_LOWER_LEFT:
+            case RABBIT_FALLING_1_ONTO_RISE_RIGHT:
+            case RABBIT_FALLING_1_ONTO_RISE_LEFT:
             {
                 heightFallen += 1;
                 rabbit.y = rabbit.y + 1;
@@ -59,10 +63,12 @@ public class Falling implements Behaviour
             {
                 if ( heightFallen % 2 == 0 )
                 {
+                    // TODO: handle falling onto slopes
                     return RABBIT_DYING_OF_FALLING;
                 }
                 else
                 {
+                    // TODO: handle falling onto slopes
                     return RABBIT_DYING_OF_FALLING_2;
                 }
             }
@@ -74,6 +80,7 @@ public class Falling implements Behaviour
             && ( world.flatBlockAt( rabbit.x, rabbit.y + 2 ) ) // during step
         )
         {
+            // TODO: handle falling onto slopes
             return State.RABBIT_FALLING_1_TO_DEATH;
         }
         else
@@ -83,7 +90,29 @@ public class Falling implements Behaviour
             {
                 if ( block2Down.riseDir == DOWN ) // Flat block
                 {
-                    return State.RABBIT_FALLING_1;
+                    Block block1Down = world.getBlockAt(
+                        rabbit.x, rabbit.y + 1 );
+
+                    if ( block1Down == null )
+                    {
+                        return State.RABBIT_FALLING_1;
+                    }
+                    else if ( block1Down.riseDir == rabbit.dir )
+                    {
+                        return rl(
+                            rabbit,
+                            RABBIT_FALLING_1_ONTO_RISE_RIGHT,
+                            RABBIT_FALLING_1_ONTO_RISE_LEFT
+                        );
+                    }
+                    else // Must be a slope in the opposite direction
+                    {
+                        return rl(
+                            rabbit,
+                            RABBIT_FALLING_1_ONTO_LOWER_RIGHT,
+                            RABBIT_FALLING_1_ONTO_LOWER_LEFT
+                        );
+                    }
                 }
                 else if( block2Down.riseDir == rabbit.dir )
                 {

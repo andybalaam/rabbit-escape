@@ -312,6 +312,18 @@ public class TextWorldManip
             case RABBIT_FALLING_1:
                 chars[change.y + 1][change.x] = 'f';
                 break;
+            case RABBIT_FALLING_1_ONTO_LOWER_RIGHT:
+                chars[change.y + 1][change.x] = 'e';
+                break;
+            case RABBIT_FALLING_1_ONTO_LOWER_LEFT:
+                chars[change.y + 1][change.x] = 's';
+                break;
+            case RABBIT_FALLING_1_ONTO_RISE_RIGHT:
+                chars[change.y + 1][change.x] = 'd';
+                break;
+            case RABBIT_FALLING_1_ONTO_RISE_LEFT:
+                chars[change.y + 1][change.x] = 'a';
+                break;
             case RABBIT_FALLING_1_TO_DEATH:
                 chars[change.y + 1][change.x] = 'x';
                 break;

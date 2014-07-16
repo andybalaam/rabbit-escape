@@ -395,4 +395,123 @@ public class TestFalling
         );
     }
 
+    @Test
+    public void Fall_1_onto_slope_down_right()
+    {
+        World world = createWorld(
+            "   r ",
+            "  #\\ ",
+            "#####"
+        );
+
+        assertThat(
+            renderWorld( world, true ),
+            equalTo(
+                "   r ",
+                "  #e ",
+                "#####"
+            )
+        );
+
+        world.step();
+
+        assertThat(
+            renderWorld( world, true ),
+            equalTo(
+                "     ",
+                "  #r_",
+                "#####"
+            )
+        );
+    }
+
+    @Test
+    public void Fall_1_onto_slope_down_left()
+    {
+        World world = createWorld(
+            "  j  ",
+            "  /# ",
+            "#####"
+        );
+
+        assertThat(
+            renderWorld( world, true ),
+            equalTo(
+                "  j  ",
+                "  s# ",
+                "#####"
+            )
+        );
+
+        world.step();
+
+        assertThat(
+            renderWorld( world, true ),
+            equalTo(
+                "     ",
+                " +j# ",
+                "#####"
+            )
+        );
+    }
+
+    @Test
+    public void Fall_1_onto_slope_up_right()
+    {
+        World world = createWorld(
+            "  r  ",
+            "  /# ",
+            "#####"
+        );
+
+        assertThat(
+            renderWorld( world, true ),
+            equalTo(
+                "  r  ",
+                "  d# ",
+                "#####"
+            )
+        );
+
+        world.step();
+
+        assertThat(
+            renderWorld( world, true ),
+            equalTo(
+                "   ' ",
+                "  r# ",
+                "#####"
+            )
+        );
+    }
+
+    @Test
+    public void Fall_1_onto_slope_up_left()
+    {
+        World world = createWorld(
+            "   j ",
+            "  #\\ ",
+            "#####"
+        );
+
+        assertThat(
+            renderWorld( world, true ),
+            equalTo(
+                "   j ",
+                "  #a ",
+                "#####"
+            )
+        );
+
+        world.step();
+
+        assertThat(
+            renderWorld( world, true ),
+            equalTo(
+                "  !  ",
+                "  #j ",
+                "#####"
+            )
+        );
+    }
 }
