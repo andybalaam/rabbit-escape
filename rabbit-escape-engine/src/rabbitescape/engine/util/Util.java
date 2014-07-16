@@ -121,4 +121,45 @@ public class Util
 
         return ret.toString();
     }
+
+    public static Iterable<Integer> range( final int max )
+    {
+        return new Iterable<Integer>()
+        {
+            @Override
+            public Iterator<Integer> iterator()
+            {
+                class MyIt implements Iterator<Integer>
+                {
+                    private final int max;
+                    private int i;
+
+                    public MyIt( int max )
+                    {
+                        this.max = max;
+                    }
+
+                    @Override
+                    public boolean hasNext()
+                    {
+                        return i < max;
+                    }
+
+                    @Override
+                    public Integer next()
+                    {
+                        return i++;
+                    }
+
+                    @Override
+                    public void remove()
+                    {
+                        throw new UnsupportedOperationException();
+                    }
+                }
+
+                return new MyIt( max );
+            }
+        };
+    }
 }

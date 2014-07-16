@@ -7,6 +7,7 @@ public class ChangeDescription
 {
     public enum State
     {
+        NOT_CHANGING,
         RABBIT_WALKING_LEFT,
         RABBIT_TURNING_LEFT_TO_RIGHT,
         RABBIT_TURNING_LEFT_TO_RIGHT_RISING,

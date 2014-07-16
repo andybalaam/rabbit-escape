@@ -12,6 +12,21 @@ import rabbitescape.engine.World;
 
 public class TextWorldManip
 {
+    private static final String num_rabbits  = "num_rabbits";
+    private static final String rabbit_delay = "rabbit_delay";
+    private static final String name         = "name";
+
+    public static final List<String> META_INTS =
+        Arrays.asList( new String[] {
+            num_rabbits,
+            rabbit_delay
+        } );
+
+    public static final List<String> META_STRINGS =
+        Arrays.asList( new String[] {
+            name
+        } );
+
     public static World createWorld( String... lines )
         throws WrongLineLength, UnknownCharacter
     {
@@ -25,7 +40,8 @@ public class TextWorldManip
             blocks,
             things,
             processor.metaString( "name",        "Untitled" ),
-            processor.metaInt(    "num_rabbits", 10 )
+            processor.metaInt(    "num_rabbits",  10 ),
+            processor.metaInt(    "rabbit_delay", 4 )
         );
     }
 
@@ -36,7 +52,8 @@ public class TextWorldManip
             new ArrayList<Block>(),
             new ArrayList<Thing>(),
             "Empty World",
-            0
+            0,
+            1
         );
     }
 

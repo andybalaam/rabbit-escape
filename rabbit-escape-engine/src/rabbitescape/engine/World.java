@@ -12,16 +12,18 @@ public class World
     public final List<Block> blocks;
     public final List<Thing> things;
     public final String name;
+    public final int numRabbits;
+    public final int rabbitDelay;
 
     private final List<Thing> thingsToAdd;
-    public final int numRabbits;
 
     public World(
         Dimension size,
         List<Block> blocks,
         List<Thing> things,
         String name,
-        int numRabbits
+        int numRabbits,
+        int rabbitDelay
     )
     {
         this.size = size;
@@ -29,6 +31,7 @@ public class World
         this.things = things;
         this.name = name;
         this.numRabbits = numRabbits;
+        this.rabbitDelay = rabbitDelay;
 
         thingsToAdd = new ArrayList<Thing>();
 
@@ -53,6 +56,11 @@ public class World
             {
                 thing.step( this );
             }
+        }
+
+        for ( Thing thing : thingsToAdd )
+        {
+            thing.init( this );
         }
 
         things.addAll( thingsToAdd );

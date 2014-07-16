@@ -2,9 +2,12 @@ package rabbitescape.engine;
 
 import static org.hamcrest.MatcherAssert.*;
 import static org.hamcrest.core.IsEqual.*;
+import static org.junit.Assert.fail;
 import static rabbitescape.engine.util.Util.*;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import org.junit.Test;
 
@@ -126,6 +129,31 @@ public class TestUtil
         assertThat(
             list( asChars( "" ) ).toArray( new Character[] {} ),
             equalTo( new Character[] {} )
+        );
+    }
+
+    @Test
+    public void Empty_range_does_not_enter_loop()
+    {
+        for( int i : range( 0 ) )
+        {
+            fail( "Should not get here " + i );
+        }
+    }
+
+    @Test
+    public void Range_provides_consecutive_integer_values()
+    {
+        List<Integer> result = new ArrayList<Integer>();
+
+        for( int i : range( 7 ) )
+        {
+            result.add( i );
+        }
+
+        assertThat(
+            result.toArray( new Integer[] {} ),
+            equalTo( new Integer[] { 0, 1, 2, 3, 4, 5, 6 } )
         );
     }
 }

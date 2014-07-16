@@ -4,7 +4,6 @@ import static rabbitescape.engine.Direction.*;
 import static rabbitescape.engine.util.Util.*;
 
 import java.awt.Dimension;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,16 +15,6 @@ import rabbitescape.engine.Thing;
 
 class LineProcessor
 {
-    private static final List<String> META_INTS =
-        Arrays.asList( new String[] {
-            "num_rabbits"
-        } );
-
-    private static final List<String> META_STRINGS =
-        Arrays.asList( new String[] {
-            "name"
-        } );
-
     private final List<Block> blocks;
     private final List<Thing> things;
     private final String[] lines;
@@ -110,7 +99,7 @@ class LineProcessor
         String key   = splitLine[0];
         String value = splitLine[1];
 
-        if ( META_INTS.contains( key ) )
+        if ( TextWorldManip.META_INTS.contains( key ) )
         {
             try
             {
@@ -121,7 +110,7 @@ class LineProcessor
                 throw new NonIntegerMetaValue( lines, lineNum );
             }
         }
-        else if ( META_STRINGS.contains( key ) )
+        else if ( TextWorldManip.META_STRINGS.contains( key ) )
         {
             m_metaStrings.put( key, value );
         }

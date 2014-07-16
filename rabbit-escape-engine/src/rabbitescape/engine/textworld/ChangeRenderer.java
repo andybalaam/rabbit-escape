@@ -17,6 +17,8 @@ public class ChangeRenderer
     {
         switch( change.state )
         {
+            case NOT_CHANGING:
+                break;
             case RABBIT_WALKING_LEFT:
                 chars[change.y][change.x-1] = '<';
                 break;
