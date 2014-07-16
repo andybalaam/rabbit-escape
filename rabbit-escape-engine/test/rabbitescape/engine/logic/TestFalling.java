@@ -514,4 +514,73 @@ public class TestFalling
             )
         );
     }
+
+
+    @Test
+    public void Fall_to_death_onto_slopes()
+    {
+        // The animation for this is wrong so this test will need updating,
+        // but the behaviour must show the rabbits dying.
+
+        World world = createWorld(
+            "rrrr",
+            "    ",
+            "    ",
+            "    ",
+            "    ",
+            " /\\ ",
+            "/##\\",
+            "####"
+        );
+
+        world.step();
+        world.step();
+
+        assertThat(
+            renderWorld( world, true ),
+            equalTo(
+                "    ",
+                "    ",
+                "    ",
+                "    ",
+                "rrrr",
+                "fxxf",
+                "d##e",
+                "####"
+            )
+        );
+
+        world.step();
+
+        assertThat(
+            renderWorld( world, true ),
+            equalTo(
+                "    ",
+                "    ",
+                "    ",
+                "    ",
+                "    ",
+                " yy ",
+                "X##X",
+                "####"
+            )
+        );
+
+
+        world.step();
+
+        assertThat(
+            renderWorld( world, true ),
+            equalTo(
+                "    ",
+                "    ",
+                "    ",
+                "    ",
+                "    ",
+                " /\\ ",
+                "/##\\",
+                "####"
+            )
+        );
+    }
 }
