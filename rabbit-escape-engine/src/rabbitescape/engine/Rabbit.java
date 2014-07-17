@@ -57,9 +57,4 @@ public class Rabbit extends Thing
             }
         }
     }
-
-    public void die()
-    {
-        alive = false;
-    }
 }

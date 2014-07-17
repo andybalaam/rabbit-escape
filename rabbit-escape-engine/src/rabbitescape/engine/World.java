@@ -59,10 +59,7 @@ public class World
 
         for ( Thing thing : things )
         {
-            if ( thing.alive )
-            {
-                thing.step( this );
-            }
+            thing.step( this );
         }
 
         for ( Thing thing : thingsToAdd )
@@ -80,10 +77,7 @@ public class World
 
         for ( Thing thing : things )
         {
-            if ( thing.alive )
-            {
-                ret.add( thing.x, thing.y, thing.state );
-            }
+            ret.add( thing.x, thing.y, thing.state );
         }
 
         return ret;
@@ -116,6 +110,11 @@ public class World
     public void saveRabbit( Rabbit rabbit )
     {
         ++numSavedRabbits;
+        thingsToRemove.add( rabbit );
+    }
+
+    public void killRabbit( Rabbit rabbit )
+    {
         thingsToRemove.add( rabbit );
     }
 }

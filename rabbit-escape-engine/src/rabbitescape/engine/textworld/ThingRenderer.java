@@ -15,10 +15,7 @@ public class ThingRenderer
     {
         for ( Thing thing : things )
         {
-            if ( thing.alive )
-            {
-                chars[ thing.y ][ thing.x ] = charForThing( thing );
-            }
+            chars[ thing.y ][ thing.x ] = charForThing( thing );
         }
     }
 
