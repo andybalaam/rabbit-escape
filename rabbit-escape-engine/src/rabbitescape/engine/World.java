@@ -7,8 +7,22 @@ import java.awt.Dimension;
 import java.util.ArrayList;
 import java.util.List;
 
+import rabbitescape.engine.err.RabbitEscapeException;
+
 public class World
 {
+    public static class DontStepAfterFinish extends RabbitEscapeException
+    {
+        private static final long serialVersionUID = 1L;
+
+        public final String worldName;
+
+        public DontStepAfterFinish( String worldName )
+        {
+            this.worldName = worldName;
+        }
+    }
+
     public final Dimension size;
     public final List<Block> blocks;
     public final List<Rabbit> rabbits;
@@ -21,6 +35,7 @@ public class World
     private final List<Rabbit> rabbitsToRemove;
 
     public int numSavedRabbits;
+    public int rabbitsStillToEnter;
 
     public World(
         Dimension size,
@@ -44,6 +59,7 @@ public class World
         rabbitsToRemove = new ArrayList<Rabbit>();
 
         numSavedRabbits = 0;
+        rabbitsStillToEnter = numRabbits;
 
         init();
     }
@@ -58,6 +74,11 @@ public class World
 
     public void step()
     {
+        if ( finished() )
+        {
+            throw new DontStepAfterFinish( name );
+        }
+
         rabbitsToAdd.clear();
         rabbitsToRemove.clear();
 
@@ -127,5 +148,10 @@ public class World
     public void killRabbit( Rabbit rabbit )
     {
         rabbitsToRemove.add( rabbit );
+    }
+
+    public boolean finished()
+    {
+        return ( rabbits.size() == 0 && rabbitsStillToEnter <= 0 );
     }
 }

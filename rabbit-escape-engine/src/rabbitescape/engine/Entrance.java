@@ -7,7 +7,6 @@ public class Entrance extends Thing
     private int delay;
 
     private int timeToNextRabbit;
-    private int rabbitsLeft;
 
     public Entrance( int x, int y )
     {
@@ -18,14 +17,13 @@ public class Entrance extends Thing
     @Override
     public void init( World world )
     {
-        this.delay       = world.rabbitDelay;
-        this.rabbitsLeft = world.numRabbits;
+        this.delay = world.rabbitDelay;
     }
 
     @Override
     public void step( World world )
     {
-        if ( rabbitsLeft <=0 )
+        if ( world.rabbitsStillToEnter <= 0 )
         {
             return;
         }
@@ -33,7 +31,7 @@ public class Entrance extends Thing
         if ( timeToNextRabbit == 0 )
         {
             timeToNextRabbit = delay;
-            --rabbitsLeft;
+            --world.rabbitsStillToEnter;
 
             world.addRabbit( new Rabbit( x, y + 1, RIGHT ) );
         }

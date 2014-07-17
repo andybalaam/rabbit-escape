@@ -78,7 +78,5 @@ public class TestExit
         assertThat( world.numSavedRabbits, equalTo( 3 ) );
         world.step();
         assertThat( world.numSavedRabbits, equalTo( 4 ) );
-        world.step();
-        assertThat( world.numSavedRabbits, equalTo( 4 ) );
     }
 }

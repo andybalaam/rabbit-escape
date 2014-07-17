@@ -15,17 +15,17 @@ public class GameLoop
 
     public void run()
     {
-        while( true )
+        while( !world.finished() )
         {
             try
             {
                 System.out.println(
                     join("\n", TextWorldManip.renderWorld( world, false ) ) );
-                Thread.sleep( 500 );
+                Thread.sleep( 200 );
 
                 System.out.println(
                     join("\n", TextWorldManip.renderWorld( world, true ) ) );
-                Thread.sleep( 500 );
+                Thread.sleep( 200 );
             }
             catch ( InterruptedException e )
             {
