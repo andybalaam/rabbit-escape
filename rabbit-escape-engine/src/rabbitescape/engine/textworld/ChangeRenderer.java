@@ -135,6 +135,9 @@ public class ChangeRenderer
             case RABBIT_DYING_OF_FALLING:
                 chars[change.y][change.x] = 'X';
                 break;
+            case RABBIT_ENTERING_EXIT:
+                chars[change.y][change.x] = 'R';
+                break;
             default:
                 throw new AssertionError(
                     "Unknown Change state: " + change.state.name() );

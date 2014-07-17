@@ -45,6 +45,7 @@ public class ChangeDescription
         RABBIT_LOWERING_AND_RISING_LEFT,
         RABBIT_RISING_AND_LOWERING_RIGHT,
         RABBIT_RISING_AND_LOWERING_LEFT,
+        RABBIT_ENTERING_EXIT,
     }
 
     public static class Change

@@ -19,6 +19,7 @@ public class Rabbit extends Thing
     {
         List<Behaviour> ret = new ArrayList<Behaviour>();
 
+        ret.add( new Exiting() );
         ret.add( new Falling() );
         ret.add( new Walking() );
 
@@ -36,7 +37,7 @@ public class Rabbit extends Thing
     {
         for ( Behaviour behaviour : behaviours )
         {
-            boolean handled = behaviour.behave( this, state );
+            boolean handled = behaviour.behave( world, this, state );
             if ( handled )
             {
                 break;

@@ -10,6 +10,7 @@ import java.util.Map;
 
 import rabbitescape.engine.Block;
 import rabbitescape.engine.Entrance;
+import rabbitescape.engine.Exit;
 import rabbitescape.engine.Rabbit;
 import rabbitescape.engine.Thing;
 
@@ -176,6 +177,11 @@ class LineProcessor
             case 'Q':
             {
                 things.add( new Entrance( charNum, height ) );
+                break;
+            }
+            case 'O':
+            {
+                things.add( new Exit( charNum, height ) );
                 break;
             }
             default:

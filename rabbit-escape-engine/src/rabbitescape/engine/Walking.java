@@ -166,7 +166,7 @@ public class Walking implements Behaviour
     }
 
     @Override
-    public boolean behave( Rabbit rabbit, State state )
+    public boolean behave( World world, Rabbit rabbit, State state )
     {
         switch ( state )
         {

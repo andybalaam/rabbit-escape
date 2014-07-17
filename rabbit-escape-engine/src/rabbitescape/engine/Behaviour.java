@@ -5,5 +5,5 @@ import rabbitescape.engine.ChangeDescription.State;
 public interface Behaviour
 {
     State newState( Rabbit rabbit, World world );
-    boolean behave( Rabbit rabbit, State state );
+    boolean behave( World world, Rabbit rabbit, State state );
 }

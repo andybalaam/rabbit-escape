@@ -11,7 +11,7 @@ public class Falling implements Behaviour
     private int heightFallen = 0;
 
     @Override
-    public boolean behave( Rabbit rabbit, State state )
+    public boolean behave( World world, Rabbit rabbit, State state )
     {
         switch ( state )
         {

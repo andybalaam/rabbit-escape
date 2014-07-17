@@ -17,7 +17,7 @@ public class TestTextWorldManip
             "#####",
             "#  Q#",
             "#\\ /#",
-            "#   #",
+            "#  O#",
             "#r j#",
             "#####"
         };

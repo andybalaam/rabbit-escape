@@ -16,6 +16,9 @@ public class World
     public final int rabbitDelay;
 
     private final List<Thing> thingsToAdd;
+    private final List<Thing> thingsToRemove;
+
+    public int numSavedRabbits;
 
     public World(
         Dimension size,
@@ -33,7 +36,10 @@ public class World
         this.numRabbits = numRabbits;
         this.rabbitDelay = rabbitDelay;
 
-        thingsToAdd = new ArrayList<Thing>();
+        thingsToAdd    = new ArrayList<Thing>();
+        thingsToRemove = new ArrayList<Thing>();
+
+        numSavedRabbits = 0;
 
         init();
     }
@@ -49,6 +55,7 @@ public class World
     public void step()
     {
         thingsToAdd.clear();
+        thingsToRemove.clear();
 
         for ( Thing thing : things )
         {
@@ -64,6 +71,7 @@ public class World
         }
 
         things.addAll( thingsToAdd );
+        things.removeAll( thingsToRemove );
     }
 
     public ChangeDescription describeChanges()
@@ -103,5 +111,11 @@ public class World
     public void addThing( Thing thing )
     {
         thingsToAdd.add( thing );
+    }
+
+    public void saveRabbit( Rabbit rabbit )
+    {
+        ++numSavedRabbits;
+        thingsToRemove.add( rabbit );
     }
 }

@@ -5,6 +5,7 @@ import static rabbitescape.engine.Direction.*;
 import java.util.List;
 
 import rabbitescape.engine.Entrance;
+import rabbitescape.engine.Exit;
 import rabbitescape.engine.Rabbit;
 import rabbitescape.engine.Thing;
 
@@ -30,6 +31,10 @@ public class ThingRenderer
         else if ( thing instanceof Entrance )
         {
             return 'Q';
+        }
+        else if ( thing instanceof Exit )
+        {
+            return 'O';
         }
         else
         {
