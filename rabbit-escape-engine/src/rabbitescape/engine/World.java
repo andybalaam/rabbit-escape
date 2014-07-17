@@ -1,5 +1,6 @@
 package rabbitescape.engine;
 
+import static rabbitescape.engine.util.Util.*;
 import static rabbitescape.engine.Direction.*;
 
 import java.awt.Dimension;
@@ -10,19 +11,21 @@ public class World
 {
     public final Dimension size;
     public final List<Block> blocks;
+    public final List<Rabbit> rabbits;
     public final List<Thing> things;
     public final String name;
     public final int numRabbits;
     public final int rabbitDelay;
 
-    private final List<Thing> thingsToAdd;
-    private final List<Thing> thingsToRemove;
+    private final List<Rabbit> rabbitsToAdd;
+    private final List<Rabbit> rabbitsToRemove;
 
     public int numSavedRabbits;
 
     public World(
         Dimension size,
         List<Block> blocks,
+        List<Rabbit> rabbits,
         List<Thing> things,
         String name,
         int numRabbits,
@@ -31,13 +34,14 @@ public class World
     {
         this.size = size;
         this.blocks = blocks;
+        this.rabbits = rabbits;
         this.things = things;
         this.name = name;
         this.numRabbits = numRabbits;
         this.rabbitDelay = rabbitDelay;
 
-        thingsToAdd    = new ArrayList<Thing>();
-        thingsToRemove = new ArrayList<Thing>();
+        rabbitsToAdd    = new ArrayList<Rabbit>();
+        rabbitsToRemove = new ArrayList<Rabbit>();
 
         numSavedRabbits = 0;
 
@@ -46,7 +50,7 @@ public class World
 
     private void init()
     {
-        for ( Thing thing : things )
+        for ( Thing thing : allThings() )
         {
             thing.init( this );
         }
@@ -54,33 +58,40 @@ public class World
 
     public void step()
     {
-        thingsToAdd.clear();
-        thingsToRemove.clear();
+        rabbitsToAdd.clear();
+        rabbitsToRemove.clear();
 
-        for ( Thing thing : things )
+        for ( Thing thing : allThings() )
         {
             thing.step( this );
         }
 
-        for ( Thing thing : thingsToAdd )
+        // Add any new rabbits
+        for ( Rabbit rabbit : rabbitsToAdd )
         {
-            thing.init( this );
+            rabbit.init( this );
         }
+        rabbits.addAll( rabbitsToAdd );
 
-        things.addAll( thingsToAdd );
-        things.removeAll( thingsToRemove );
+        // Remove any dead or saved ones
+        rabbits.removeAll( rabbitsToRemove );
     }
 
     public ChangeDescription describeChanges()
     {
         ChangeDescription ret = new ChangeDescription();
 
-        for ( Thing thing : things )
+        for ( Thing thing : allThings() )
         {
             ret.add( thing.x, thing.y, thing.state );
         }
 
         return ret;
+    }
+
+    private Iterable<Thing> allThings()
+    {
+        return chain( rabbits, things );
     }
 
     public boolean flatBlockAt( int x, int y )
@@ -102,19 +113,19 @@ public class World
         return null;
     }
 
-    public void addThing( Thing thing )
+    public void addRabbit( Rabbit rabbit )
     {
-        thingsToAdd.add( thing );
+        rabbitsToAdd.add( rabbit );
     }
 
     public void saveRabbit( Rabbit rabbit )
     {
         ++numSavedRabbits;
-        thingsToRemove.add( rabbit );
+        rabbitsToRemove.add( rabbit );
     }
 
     public void killRabbit( Rabbit rabbit )
     {
-        thingsToRemove.add( rabbit );
+        rabbitsToRemove.add( rabbit );
     }
 }

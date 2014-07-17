@@ -1,12 +1,9 @@
 package rabbitescape.engine.textworld;
 
-import static rabbitescape.engine.Direction.*;
-
 import java.util.List;
 
 import rabbitescape.engine.Entrance;
 import rabbitescape.engine.Exit;
-import rabbitescape.engine.Rabbit;
 import rabbitescape.engine.Thing;
 
 public class ThingRenderer
@@ -21,11 +18,7 @@ public class ThingRenderer
 
     private static char charForThing( Thing thing )
     {
-        if ( thing instanceof Rabbit )
-        {
-            return ( (Rabbit)thing ).dir == RIGHT ? 'r' : 'j';
-        }
-        else if ( thing instanceof Entrance )
+        if ( thing instanceof Entrance )
         {
             return 'Q';
         }

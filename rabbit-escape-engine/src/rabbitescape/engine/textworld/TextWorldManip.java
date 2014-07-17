@@ -7,6 +7,7 @@ import java.util.List;
 
 import rabbitescape.engine.Block;
 import rabbitescape.engine.ChangeDescription;
+import rabbitescape.engine.Rabbit;
 import rabbitescape.engine.Thing;
 import rabbitescape.engine.World;
 
@@ -31,13 +32,16 @@ public class TextWorldManip
         throws WrongLineLength, UnknownCharacter
     {
         List<Block> blocks = new ArrayList<Block>();
+        List<Rabbit> rabbits = new ArrayList<Rabbit>();
         List<Thing> things = new ArrayList<Thing>();
 
-        LineProcessor processor = new LineProcessor( blocks, things, lines );
+        LineProcessor processor = new LineProcessor(
+            blocks, rabbits, things, lines );
 
         return new World(
             processor.size(),
             blocks,
+            rabbits,
             things,
             processor.metaString( "name",        "Untitled" ),
             processor.metaInt(    "num_rabbits",  10 ),
@@ -50,6 +54,7 @@ public class TextWorldManip
         return new World(
             new Dimension( width, height ),
             new ArrayList<Block>(),
+            new ArrayList<Rabbit>(),
             new ArrayList<Thing>(),
             "Empty World",
             0,
@@ -62,7 +67,7 @@ public class TextWorldManip
         char[][] chars = emptyWorldChars( world );
 
         BlockRenderer.render( chars, world.blocks );
-
+        RabbitRenderer.render( chars, world.rabbits );
         ThingRenderer.render( chars, world.things );
 
         if ( showChanges )

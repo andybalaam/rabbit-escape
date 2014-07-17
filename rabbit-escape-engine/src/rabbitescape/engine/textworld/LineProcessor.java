@@ -17,6 +17,7 @@ import rabbitescape.engine.Thing;
 class LineProcessor
 {
     private final List<Block> blocks;
+    private final List<Rabbit> rabbits;
     private final List<Thing> things;
     private final String[] lines;
     private final Map<String, String>  m_metaStrings;
@@ -27,9 +28,14 @@ class LineProcessor
     private int lineNum;
 
     public LineProcessor(
-        List<Block> blocks, List<Thing> things, String[] lines )
+        List<Block> blocks,
+        List<Rabbit> rabbits,
+        List<Thing> things,
+        String[] lines
+    )
     {
         this.blocks = blocks;
+        this.rabbits = rabbits;
         this.things = things;
         this.lines = lines;
         this.m_metaStrings = new HashMap<String, String>();
@@ -166,12 +172,12 @@ class LineProcessor
             }
             case 'r':
             {
-                things.add( new Rabbit( charNum, height, RIGHT ) );
+                rabbits.add( new Rabbit( charNum, height, RIGHT ) );
                 break;
             }
             case 'j':
             {
-                things.add( new Rabbit( charNum, height, LEFT ) );
+                rabbits.add( new Rabbit( charNum, height, LEFT ) );
                 break;
             }
             case 'Q':

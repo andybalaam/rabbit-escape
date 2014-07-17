@@ -156,4 +156,80 @@ public class TestUtil
             equalTo( new Integer[] { 0, 1, 2, 3, 4, 5, 6 } )
         );
     }
+
+    @Test
+    public void Chain_deals_with_initial_empty_list()
+    {
+        List<Integer> list1 = Arrays.asList( new Integer[] {} );
+        List<Integer> list2 = Arrays.asList( new Integer[] { 6, 7, 8 } );
+
+        List<Integer> result = new ArrayList<Integer>();
+
+        for( int i : chain( list1, list2 ) )
+        {
+            result.add( i );
+        }
+
+        assertThat(
+            result.toArray( new Integer[] {} ),
+            equalTo( new Integer[] { 6, 7, 8 } )
+        );
+    }
+
+    @Test
+    public void Chain_deals_with_second_list_empty()
+    {
+        List<Integer> list1 = Arrays.asList( new Integer[] { 5, 4, 3 } );
+        List<Integer> list2 = Arrays.asList( new Integer[] {} );
+
+        List<Integer> result = new ArrayList<Integer>();
+
+        for( int i : chain( list1, list2 ) )
+        {
+            result.add( i );
+        }
+
+        assertThat(
+            result.toArray( new Integer[] {} ),
+            equalTo( new Integer[] { 5, 4, 3 } )
+        );
+    }
+
+    @Test
+    public void Chain_deals_with_both_lists_empty()
+    {
+        List<Integer> list1 = Arrays.asList( new Integer[] {} );
+        List<Integer> list2 = Arrays.asList( new Integer[] {} );
+
+        List<Integer> result = new ArrayList<Integer>();
+
+        for( int i : chain( list1, list2 ) )
+        {
+            result.add( i );
+        }
+
+        assertThat(
+            result.toArray( new Integer[] {} ),
+            equalTo( new Integer[] {} )
+        );
+    }
+
+    @Test
+    public void Chain_concatenates_two_iterables()
+    {
+        List<Integer> list1 = Arrays.asList( new Integer[] { 5, 4, 3 } );
+        List<Integer> list2 = Arrays.asList( new Integer[] { 6, 7, 8 } );
+
+        List<Integer> result = new ArrayList<Integer>();
+
+        for( int i : chain( list1, list2 ) )
+        {
+            result.add( i );
+        }
+
+        assertThat(
+            result.toArray( new Integer[] {} ),
+            equalTo( new Integer[] { 5, 4, 3, 6, 7, 8 } )
+        );
+    }
 }

@@ -162,4 +162,48 @@ public class Util
             }
         };
     }
+
+    public static <T> Iterable<T> chain(
+        final Iterable<? extends T> it1, final Iterable<? extends T> it2 )
+    {
+        return new Iterable<T>()
+        {
+            @Override
+            public Iterator<T> iterator()
+            {
+                class MyIt implements Iterator<T>
+                {
+                    private final Iterator<? extends T> i1;
+                    private final Iterator<? extends T> i2;
+
+                    public MyIt(
+                        Iterator<? extends T> i1, Iterator<? extends T> i2 )
+                    {
+                        this.i1 = i1;
+                        this.i2 = i2;
+                    }
+
+                    @Override
+                    public boolean hasNext()
+                    {
+                        return i1.hasNext() || i2.hasNext();
+                    }
+
+                    @Override
+                    public T next()
+                    {
+                        return i1.hasNext() ? i1.next() : i2.next();
+                    }
+
+                    @Override
+                    public void remove()
+                    {
+                        throw new UnsupportedOperationException();
+                    }
+                }
+
+                return new MyIt( it1.iterator(), it2.iterator() );
+            }
+        };
+    }
 }
