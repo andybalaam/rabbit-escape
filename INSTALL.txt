@@ -1,0 +1,6 @@
+
+# For development:
+sudo apt-get install libav-tools inkscape
+
+make test
+
