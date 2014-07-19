@@ -2,7 +2,7 @@
 IMAGESSRC := $(wildcard images-src/*.svg)
 IMAGES32 := $(IMAGESSRC:images-src/%.svg=images32/%.png)
 
-ANIMATIONS32 := animations32/walk.gif
+ANIMATIONS32 := animations32/walk.gif animations32/bash.gif
 
 images32/%.png: images-src/%.svg
 	mkdir -p images32; inkscape $< --export-png=$@
