@@ -9,8 +9,8 @@
                 includeantruntime="false"
             >
                 <classpath>
-                    <pathelement location="../lib/org.hamcrest.core_1.3.0.jar"/>
-                    <pathelement location="../lib/junit.jar"/>
+                    <pathelement location="lib/org.hamcrest.core_1.3.0.jar"/>
+                    <pathelement location="lib/junit.jar"/>
                     <pathelement location="@{cp}"/>
                     <pathelement location="@{dir}/bin"/>
                 </classpath>
