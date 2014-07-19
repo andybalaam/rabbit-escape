@@ -309,6 +309,28 @@ public class TestTextWorldManip
     }
 
     @Test
+    public void Bashing()
+    {
+        World world = createEmptyWorld( 3, 4 );
+
+        ChangeDescription desc = new ChangeDescription();
+        desc.add( 1, 0, RABBIT_BASHING_RIGHT );
+        desc.add( 1, 1, RABBIT_BASHING_LEFT );
+        desc.add( 1, 2, RABBIT_BASHING_USELESSLY_RIGHT );
+        desc.add( 1, 3, RABBIT_BASHING_USELESSLY_LEFT );
+
+        assertThat(
+            renderChangeDescription( world, desc ),
+            equalTo(
+                "  K",
+                "W  ",
+                "  I",
+                "J  "
+            )
+        );
+    }
+
+    @Test
     public void Can_provide_world_name()
     {
         String[] lines = {

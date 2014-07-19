@@ -9,7 +9,7 @@ public class Exit extends Thing
     }
 
     @Override
-    public void init( World world )
+    public void calcNewState( World world )
     {
     }
 

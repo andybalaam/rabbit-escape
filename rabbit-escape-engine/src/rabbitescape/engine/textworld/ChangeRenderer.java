@@ -138,6 +138,12 @@ public class ChangeRenderer
             case RABBIT_ENTERING_EXIT:
                 chars[change.y][change.x] = 'R';
                 break;
+            case RABBIT_BASHING_RIGHT:
+                chars[change.y][change.x + 1] = 'K';
+                break;
+            case RABBIT_BASHING_LEFT:
+                chars[change.y][change.x - 1] = 'W';
+                break;
             case RABBIT_BASHING_USELESSLY_RIGHT:
                 chars[change.y][change.x + 1] = 'I';
                 break;

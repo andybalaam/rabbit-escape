@@ -11,13 +11,17 @@ public class Entrance extends Thing
     public Entrance( int x, int y )
     {
         super( x, y );
+        delay = -1;
         timeToNextRabbit = 0;
     }
 
     @Override
-    public void init( World world )
+    public void calcNewState( World world )
     {
-        this.delay = world.rabbitDelay;
+        if ( delay == -1 )
+        {
+            delay = world.rabbitDelay;
+        }
     }
 
     @Override

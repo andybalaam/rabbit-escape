@@ -35,9 +35,16 @@ public class Rabbit extends Thing
     }
 
     @Override
-    public void init( World world )
+    public void calcNewState( World world )
     {
-        calcNewState( world );
+        for ( Behaviour behaviour : behaviours )
+        {
+            state = behaviour.newState( this, world );
+            if ( state != null )
+            {
+                break;
+            }
+        }
     }
 
     @Override
@@ -47,20 +54,6 @@ public class Rabbit extends Thing
         {
             boolean handled = behaviour.behave( world, this, state );
             if ( handled )
-            {
-                break;
-            }
-        }
-
-        calcNewState( world );
-    }
-
-    private void calcNewState( World world )
-    {
-        for ( Behaviour behaviour : behaviours )
-        {
-            state = behaviour.newState( this, world );
-            if ( state != null )
             {
                 break;
             }

@@ -17,6 +17,6 @@ public abstract class Thing
         this.y = y;
     }
 
-    public abstract void init( World world );
+    public abstract void calcNewState( World world );
     public abstract void step( World world );
 }

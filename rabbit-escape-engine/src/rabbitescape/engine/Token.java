@@ -18,23 +18,7 @@ public class Token extends Thing
     }
 
     @Override
-    public void init( World world )
-    {
-        calcNewState( world );
-    }
-
-    @Override
-    public void step( World world )
-    {
-        if ( state == TOKEN_FALLING )
-        {
-            ++y;
-        }
-
-        calcNewState( world );
-    }
-
-    private void calcNewState( World world )
+    public void calcNewState( World world )
     {
         if ( world.flatBlockAt( x, y + 1 ) )
         {
@@ -43,6 +27,15 @@ public class Token extends Thing
         else
         {
             state = TOKEN_FALLING;
+        }
+    }
+
+    @Override
+    public void step( World world )
+    {
+        if ( state == TOKEN_FALLING )
+        {
+            ++y;
         }
     }
 }
