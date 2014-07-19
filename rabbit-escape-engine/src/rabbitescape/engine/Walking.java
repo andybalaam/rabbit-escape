@@ -130,7 +130,7 @@ public class Walking implements Behaviour
 
         private State rl( State rightState, State leftState )
         {
-            return rabbit.dir == RIGHT ? rightState : leftState;
+            return BehaviourTools.rl( rabbit, rightState, leftState );
         }
 
         private boolean rising()

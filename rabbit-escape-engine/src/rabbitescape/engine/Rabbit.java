@@ -5,8 +5,15 @@ import java.util.List;
 
 public class Rabbit extends Thing
 {
-    public Direction dir;
+    public static enum Mode
+    {
+        NORMAL,
+        BASH,
+    }
+
     private final List<Behaviour> behaviours;
+
+    public Direction dir;
 
     public Rabbit( int x, int y, Direction dir )
     {
@@ -21,6 +28,7 @@ public class Rabbit extends Thing
 
         ret.add( new Exiting() );
         ret.add( new Falling() );
+        ret.add( new Bashing() );
         ret.add( new Walking() );
 
         return ret;
@@ -43,6 +51,7 @@ public class Rabbit extends Thing
                 break;
             }
         }
+
         calcNewState( world );
     }
 

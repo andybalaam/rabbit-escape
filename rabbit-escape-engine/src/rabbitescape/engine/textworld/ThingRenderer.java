@@ -5,6 +5,7 @@ import java.util.List;
 import rabbitescape.engine.Entrance;
 import rabbitescape.engine.Exit;
 import rabbitescape.engine.Thing;
+import rabbitescape.engine.Token;
 
 public class ThingRenderer
 {
@@ -26,10 +27,19 @@ public class ThingRenderer
         {
             return 'O';
         }
+        else if ( thing instanceof Token )
+        {
+            return charForToken( (Token)thing );
+        }
         else
         {
             throw new AssertionError(
                 "Unknown Thing type: " + thing.getClass() );
         }
+    }
+
+    private static char charForToken( Token thing )
+    {
+        return 'b';
     }
 }

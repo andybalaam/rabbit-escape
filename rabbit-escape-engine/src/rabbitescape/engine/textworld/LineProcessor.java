@@ -13,6 +13,7 @@ import rabbitescape.engine.Entrance;
 import rabbitescape.engine.Exit;
 import rabbitescape.engine.Rabbit;
 import rabbitescape.engine.Thing;
+import rabbitescape.engine.Token;
 
 class LineProcessor
 {
@@ -188,6 +189,11 @@ class LineProcessor
             case 'O':
             {
                 things.add( new Exit( charNum, height ) );
+                break;
+            }
+            case 'b':
+            {
+                things.add( new Token( charNum, height, Token.Type.bash ) );
                 break;
             }
             default:

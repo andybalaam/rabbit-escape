@@ -1,7 +1,9 @@
 package rabbitescape.engine;
 
+import static rabbitescape.engine.BehaviourTools.*;
 import static rabbitescape.engine.ChangeDescription.State.*;
 import static rabbitescape.engine.Direction.*;
+
 import rabbitescape.engine.ChangeDescription.State;
 
 public class Falling implements Behaviour
@@ -136,11 +138,6 @@ public class Falling implements Behaviour
                 return State.RABBIT_FALLING;
             }
         }
-    }
-
-    private State rl( Rabbit rabbit, State rightState, State leftState )
-    {
-        return rabbit.dir == RIGHT ? rightState : leftState;
     }
 
     boolean falling( Rabbit rabbit, World world )

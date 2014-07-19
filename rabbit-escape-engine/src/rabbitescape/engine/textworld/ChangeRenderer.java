@@ -138,6 +138,15 @@ public class ChangeRenderer
             case RABBIT_ENTERING_EXIT:
                 chars[change.y][change.x] = 'R';
                 break;
+            case RABBIT_BASHING_USELESSLY_RIGHT:
+                chars[change.y][change.x + 1] = 'I';
+                break;
+            case RABBIT_BASHING_USELESSLY_LEFT:
+                chars[change.y][change.x - 1] = 'J';
+                break;
+            case TOKEN_FALLING:
+                chars[change.y + 1][change.x] = 'z';
+                break;
             default:
                 throw new AssertionError(
                     "Unknown Change state: " + change.state.name() );

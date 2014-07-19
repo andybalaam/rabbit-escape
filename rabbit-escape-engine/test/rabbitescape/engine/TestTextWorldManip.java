@@ -14,12 +14,12 @@ public class TestTextWorldManip
     public void Round_trip_basic_world()
     {
         String[] lines = {
-            "#####",
-            "#  Q#",
-            "#\\ /#",
-            "#  O#",
-            "#r j#",
-            "#####"
+            "#######",
+            "#  Q  #",
+            "#\\   /#",
+            "#  O  #",
+            "#r j b#",
+            "#######"
         };
 
         assertThat(
@@ -292,6 +292,23 @@ public class TestTextWorldManip
     }
 
     @Test
+    public void Tokens_falling()
+    {
+        World world = createEmptyWorld( 1, 2 );
+
+        ChangeDescription desc = new ChangeDescription();
+        desc.add( 0, 0, TOKEN_FALLING );
+
+        assertThat(
+            renderChangeDescription( world, desc ),
+            equalTo(
+                " ",
+                "z"
+            )
+        );
+    }
+
+    @Test
     public void Can_provide_world_name()
     {
         String[] lines = {
@@ -303,7 +320,6 @@ public class TestTextWorldManip
             equalTo( "My World!" )
         );
     }
-
 
     @Test
     public void Can_provide_number_of_rabbits()

@@ -33,6 +33,7 @@ public class World
 
     private final List<Rabbit> rabbitsToAdd;
     private final List<Rabbit> rabbitsToRemove;
+    private final List<Thing> thingsToRemove;
 
     public int numSavedRabbits;
     public int rabbitsStillToEnter;
@@ -57,6 +58,7 @@ public class World
 
         rabbitsToAdd    = new ArrayList<Rabbit>();
         rabbitsToRemove = new ArrayList<Rabbit>();
+        thingsToRemove = new ArrayList<Thing>();
 
         numSavedRabbits = 0;
         rabbitsStillToEnter = numRabbits;
@@ -81,6 +83,7 @@ public class World
 
         rabbitsToAdd.clear();
         rabbitsToRemove.clear();
+        thingsToRemove.clear();
 
         for ( Thing thing : allThings() )
         {
@@ -96,6 +99,9 @@ public class World
 
         // Remove any dead or saved ones
         rabbits.removeAll( rabbitsToRemove );
+
+        // Remove any used tokens etc.
+        things.removeAll( thingsToRemove );
     }
 
     public ChangeDescription describeChanges()
@@ -150,8 +156,26 @@ public class World
         rabbitsToRemove.add( rabbit );
     }
 
+    public void removeThing( Thing thing )
+    {
+        thingsToRemove.add( thing );
+    }
+
     public boolean finished()
     {
         return ( rabbits.size() == 0 && rabbitsStillToEnter <= 0 );
+    }
+
+    public Token getTokenAt( int x, int y )
+    {
+        // TODO: faster
+        for ( Thing thing : things )
+        {
+            if ( thing.x == x && thing.y == y && thing instanceof Token )
+            {
+                return (Token)thing;
+            }
+        }
+        return null;
     }
 }
