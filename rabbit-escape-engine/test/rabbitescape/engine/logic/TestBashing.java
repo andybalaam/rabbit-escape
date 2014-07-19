@@ -77,4 +77,84 @@ public class TestBashing
             )
         );
     }
+
+    @Test
+    public void Bash_through_longer_wall()
+    {
+        World world = createWorld(
+            " rb###     ###bj ",
+            "#################"
+        );
+
+        world.step();
+
+        assertThat(
+            renderWorld( world, true ),
+            equalTo(
+                "  rK##     ##Wj  ",
+                "#################"
+            )
+        );
+
+        world.step();
+
+        assertThat(
+            renderWorld( world, true ),
+            equalTo(
+                "  r>##     ##<j  ",
+                "#################"
+            )
+        );
+
+        world.step();
+
+        assertThat(
+            renderWorld( world, true ),
+            equalTo(
+                "   rK#     #Wj   ",
+                "#################"
+            )
+        );
+
+        world.step();
+
+        assertThat(
+            renderWorld( world, true ),
+            equalTo(
+                "   r>#     #<j   ",
+                "#################"
+            )
+        );
+
+        world.step();
+
+        assertThat(
+            renderWorld( world, true ),
+            equalTo(
+                "    rK     Wj    ",
+                "#################"
+            )
+        );
+
+        world.step();
+
+        assertThat(
+            renderWorld( world, true ),
+            equalTo(
+                "    r>     <j    ",
+                "#################"
+            )
+        );
+
+
+        world.step();
+
+        assertThat(
+            renderWorld( world, true ),
+            equalTo(
+                "     r>   <j     ",
+                "#################"
+            )
+        );
+    }
 }

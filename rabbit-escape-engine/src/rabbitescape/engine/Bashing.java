@@ -3,6 +3,7 @@ package rabbitescape.engine;
 import static rabbitescape.engine.BehaviourTools.*;
 import static rabbitescape.engine.ChangeDescription.State.*;
 import static rabbitescape.engine.Direction.*;
+import static rabbitescape.engine.Token.Type.*;
 
 import rabbitescape.engine.ChangeDescription.State;
 import rabbitescape.engine.Token.Type;
@@ -10,6 +11,8 @@ import rabbitescape.engine.err.RabbitEscapeException;
 
 public class Bashing implements Behaviour
 {
+    int stepsOfBashing;
+
     public static class UnknownTokenType extends RabbitEscapeException
     {
         private static final long serialVersionUID = 1L;
@@ -25,36 +28,33 @@ public class Bashing implements Behaviour
     @Override
     public State newState( Rabbit rabbit, World world )
     {
+        boolean justPickedUpToken = false;
+
         Token token = world.getTokenAt( rabbit.x, rabbit.y );
-        if ( token != null )
+        if ( token != null && token.type == bash )
         {
             world.removeThing( token );
+            justPickedUpToken = true;
+        }
 
-            switch ( token.type )
+        if ( justPickedUpToken || stepsOfBashing > 0 )
+        {
+            if ( world.getBlockAt( destX( rabbit ), rabbit.y ) != null )
             {
-                case bash:
-                {
-                    if ( world.getBlockAt( destX( rabbit ), rabbit.y ) != null )
-                    {
-                        return rl(
-                            rabbit,
-                            RABBIT_BASHING_RIGHT,
-                            RABBIT_BASHING_LEFT
-                        );
-                    }
-                    else
-                    {
-                        return rl(
-                            rabbit,
-                            RABBIT_BASHING_USELESSLY_RIGHT,
-                            RABBIT_BASHING_USELESSLY_LEFT
-                        );
-                    }
-                }
-                default:
-                {
-                    throw new UnknownTokenType( token.type );
-                }
+                stepsOfBashing = 2;
+                return rl(
+                    rabbit,
+                    RABBIT_BASHING_RIGHT,
+                    RABBIT_BASHING_LEFT
+                );
+            }
+            else if ( justPickedUpToken )
+            {
+                return rl(
+                    rabbit,
+                    RABBIT_BASHING_USELESSLY_RIGHT,
+                    RABBIT_BASHING_USELESSLY_LEFT
+                );
             }
         }
         return null;
