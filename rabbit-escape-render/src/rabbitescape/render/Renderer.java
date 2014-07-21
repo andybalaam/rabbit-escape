@@ -6,10 +6,14 @@ import rabbitescape.render.androidlike.Paint;
 public class Renderer
 {
     private final Canvas canvas;
+    private final int offsetX;
+    private final int offsetY;
 
-    public Renderer( Canvas canvas )
+    public Renderer( Canvas canvas, int offsetX, int offsetY )
     {
         this.canvas = canvas;
+        this.offsetX = offsetX;
+        this.offsetY = offsetY;
     }
 
     public void render( Sprite[] sprites, Paint paint )
@@ -17,7 +21,11 @@ public class Renderer
         for ( Sprite sprite : sprites )
         {
             this.canvas.drawBitmap(
-                sprite.bitmap, sprite.x * 32, sprite.y * 32, paint );
+                sprite.bitmap,
+                offsetX + sprite.x * 32,
+                offsetY + sprite.y * 32,
+                paint
+            );
         }
     }
 }
