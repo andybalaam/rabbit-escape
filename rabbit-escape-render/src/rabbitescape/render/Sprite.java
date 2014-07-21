@@ -7,14 +7,37 @@ import rabbitescape.render.androidlike.Bitmap;
  */
 public class Sprite
 {
-    public final Bitmap bitmap;
-    public final int x;
-    public final int y;
+    private final Bitmap originalBitmap;
+    private final BitmapScaler scaler;
+    public final int tileX;
+    public final int tileY;
 
-    public Sprite( Bitmap bitmap, int x, int y )
+    public Bitmap bitmap;
+    private int tileSize;
+
+    public Sprite(
+        Bitmap bitmap,
+        BitmapScaler scaler,
+        int tileX,
+        int tileY,
+        int initialTileSize
+    )
     {
-        this.bitmap = bitmap;
-        this.x = x;
-        this.y = y;
+        this.originalBitmap = bitmap;
+        this.scaler = scaler;
+        this.tileX = tileX;
+        this.tileY = tileY;
+        this.tileSize = -1;
+
+        scaleTo( this.tileSize );
+    }
+
+    public void scaleTo( int tileSize )
+    {
+        if ( this.tileSize != tileSize )
+        {
+            this.bitmap = scaler.scale( this.originalBitmap, tileSize );
+            this.tileSize = tileSize;
+        }
     }
 }
