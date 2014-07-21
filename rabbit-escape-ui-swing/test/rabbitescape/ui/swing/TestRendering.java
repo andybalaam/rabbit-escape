@@ -18,17 +18,23 @@ public class TestRendering
 
         SwingBitmap x = bitmapLoader.load( "/rabbitescape/ui/swing/x.png" );
 
-        Sprite x1 = new Sprite( x, 0, 0 );
-        Sprite x2 = new Sprite( x, 1, 0 );
+        Sprite[] sprites = new Sprite[] {
+            new Sprite( x, 0, 0 ),
+            new Sprite( x, 1, 0 ),
+            new Sprite( x, 0, 1 ),
+            new Sprite( x, 1, 1 ),
+            new Sprite( x, 0, 2 ),
+            new Sprite( x, 1, 2 ),
+        };
 
         SwingCanvas output = new SwingCanvas(
-            new SwingBitmap( "output", 64, 32 ) );
+            new SwingBitmap( "output", 64, 96 ) );
 
         Renderer renderer = new Renderer( output );
-        renderer.render( new Sprite[] { x1, x2 }, new SwingPaint() );
+        renderer.render( sprites, new SwingPaint() );
 
         SwingBitmap expected = bitmapLoader.load(
-            "/rabbitescape/ui/swing/xx.png" );
+            "/rabbitescape/ui/swing/sixx.png" );
 
         assertThat( output.bitmap, equalTo( expected ) );
     }

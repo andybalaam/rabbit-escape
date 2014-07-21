@@ -44,7 +44,7 @@ public class Tools
             _desc.appendText( expected.name() );
 
             writeToFile( "./exp.bmp", expected );
-            writeToFile( "./act.bmp", expected );
+            writeToFile( "./act.bmp", actual );
 
             _desc.appendText(
                 "\n[Comparison written to ./exp.bmp and ./act.bmp]" );

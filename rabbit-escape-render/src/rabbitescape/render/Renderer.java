@@ -17,7 +17,7 @@ public class Renderer
         for ( Sprite sprite : sprites )
         {
             this.canvas.drawBitmap(
-                sprite.bitmap, sprite.x * 32, sprite.y, paint );
+                sprite.bitmap, sprite.x * 32, sprite.y * 32, paint );
         }
     }
 }

@@ -25,7 +25,7 @@ public class TestTools
         SwingBitmapLoader bitmapLoader = new SwingBitmapLoader();
 
         SwingBitmap x1 = bitmapLoader.load( "/rabbitescape/ui/swing/x.png" );
-        SwingBitmap x2 = bitmapLoader.load( "/rabbitescape/ui/swing/xx.png" );
+        SwingBitmap x2 = bitmapLoader.load( "/rabbitescape/ui/swing/sixx.png" );
 
         assertThat( x1, not( equalTo( x2 ) ) );
     }
