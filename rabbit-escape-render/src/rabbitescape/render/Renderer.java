@@ -26,8 +26,8 @@ public class Renderer
 
             this.canvas.drawBitmap(
                 sprite.bitmap,
-                offsetX + sprite.tileX * tileSize,
-                offsetY + sprite.tileY * tileSize,
+                sprite.offsetX + offsetX + ( sprite.tileX * tileSize ),
+                sprite.offsetY + offsetY + ( sprite.tileY * tileSize ),
                 paint
             );
         }

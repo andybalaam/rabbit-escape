@@ -24,11 +24,11 @@ public class TestRendering
         SwingBitmap x = bitmapLoader.load( "/rabbitescape/ui/swing/x.png" );
 
         Sprite[] sprites = new Sprite[] {
-            new Sprite( x, scaler, 0, 0, 32 ),
-            new Sprite( x, scaler, 1, 0, 32 ),
-            new Sprite( x, scaler, 0, 1, 32 ),
-            new Sprite( x, scaler, 1, 1, 32 ),
-            new Sprite( x, scaler, 1, 2, 32 ),
+            new Sprite( x, scaler, 0, 0, 32, 0, 0 ),
+            new Sprite( x, scaler, 1, 0, 32, 0, 0 ),
+            new Sprite( x, scaler, 0, 1, 32, 0, 0 ),
+            new Sprite( x, scaler, 1, 1, 32, 0, 0 ),
+            new Sprite( x, scaler, 1, 2, 32, 0, 0 ),
         };
 
         SwingCanvas output = blankCanvas( 64, 96 );
@@ -51,7 +51,7 @@ public class TestRendering
         SwingBitmap x = bitmapLoader.load( "/rabbitescape/ui/swing/x.png" );
 
         Sprite[] sprites = new Sprite[] {
-            new Sprite( x, scaler, 0, 0, 32 )
+            new Sprite( x, scaler, 0, 0, 32, 0, 0 )
         };
 
         SwingCanvas output = blankCanvas( 35, 34 );
@@ -74,8 +74,8 @@ public class TestRendering
         SwingBitmap x = bitmapLoader.load( "/rabbitescape/ui/swing/x.png" );
 
         Sprite[] sprites = new Sprite[] {
-            new Sprite( x, scaler, 1, 1, 32 )  // Note: original tile size
-                                               // is larger
+            new Sprite( x, scaler, 1, 1, 32, 0, 0 ) // Note: original tile size
+                                                    // is larger
         };
 
         SwingCanvas output = blankCanvas( 35, 34 );
@@ -83,6 +83,52 @@ public class TestRendering
         Renderer renderer = new Renderer( output, 3, 2, 16 ); // But the
                                                               // renderer gets
                                                               // to override.
+        renderer.render( sprites, new SwingPaint() );
+
+        SwingBitmap expected = bitmapLoader.load(
+            "/rabbitescape/ui/swing/x16-32.png" );
+
+        assertThat( output.bitmap, equalTo( expected ) );
+    }
+
+    @Test
+    public void Sprites_can_be_offset_individually()
+    {
+        SwingBitmapLoader bitmapLoader = new SwingBitmapLoader();
+        SwingBitmapScaler scaler = new SwingBitmapScaler();
+
+        SwingBitmap x = bitmapLoader.load( "/rabbitescape/ui/swing/x.png" );
+
+        Sprite[] sprites = new Sprite[] {
+            new Sprite( x, scaler, 0, 0, 32, 3, 2 )  // Sprite offset
+        };
+
+        SwingCanvas output = blankCanvas( 35, 34 );
+
+        Renderer renderer = new Renderer( output, 0, 0, 32 ); // Renderer not
+        renderer.render( sprites, new SwingPaint() );
+
+        SwingBitmap expected = bitmapLoader.load(
+            "/rabbitescape/ui/swing/x32.png" );
+
+        assertThat( output.bitmap, equalTo( expected ) );
+    }
+
+    @Test
+    public void Sprites_offset_is_scaled_relative_to_tile_size()
+    {
+        SwingBitmapLoader bitmapLoader = new SwingBitmapLoader();
+        SwingBitmapScaler scaler = new SwingBitmapScaler();
+
+        SwingBitmap x = bitmapLoader.load( "/rabbitescape/ui/swing/x.png" );
+
+        Sprite[] sprites = new Sprite[] {
+            new Sprite( x, scaler, 1, 1, 32, 6, 4 )
+        };
+
+        SwingCanvas output = blankCanvas( 35, 34 );
+
+        Renderer renderer = new Renderer( output, 0, 0, 16 );
         renderer.render( sprites, new SwingPaint() );
 
         SwingBitmap expected = bitmapLoader.load(
