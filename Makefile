@@ -20,10 +20,21 @@ compile:
 	ant compile
 
 clean:
-	rm -rf rabbit-escape-engine/bin/* rabbit-escape-ui-text/bin/* images32/* animations32/*
+	rm -rf \
+		rabbit-escape-engine/bin/* \
+		rabbit-escape-render/bin/* \
+		rabbit-escape-ui-text/bin/* \
+		rabbit-escape-ui-swing/bin/* \
+		images32/* \
+		animations32/*
 
 run: compile
-	java -cp rabbit-escape-engine/bin/:rabbit-escape-ui-text/bin/ rabbitescape.ui.text.Main levels/basic/level_01.rel
+	java -cp \
+		rabbit-escape-engine/bin/\
+		:rabbit-escape-render/bin/\
+		:rabbit-escape-ui-text/bin/\
+		:rabbit-escape-ui-swing/bin/\
+		rabbitescape.ui.text.Main levels/basic/level_01.rel
 
 test: compile
 	# Work around what looks like an Ant 1.9 bug by including the classpath here

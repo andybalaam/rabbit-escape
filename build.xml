@@ -11,15 +11,15 @@
                 <classpath>
                     <pathelement location="lib/org.hamcrest.core_1.3.0.jar"/>
                     <pathelement location="lib/junit.jar"/>
-                    <pathelement location="@{cp}"/>
+                    <pathelement path="@{cp}"/>
                     <pathelement location="@{dir}/bin"/>
                 </classpath>
                 <src path="@{dir}/src"/>
                 <src path="@{dir}/test"/>
             </javac>
             <copy todir="@{dir}/bin">
-                <fileset dir="@{dir}/src"  includes="**/*.properties"/>
-                <fileset dir="@{dir}/test" includes="**/*.properties" />
+                <fileset dir="@{dir}/src"  includes="**/*.properties,**/*.png"/>
+                <fileset dir="@{dir}/test" includes="**/*.properties,**/*.png" />
             </copy>
         </sequential>
     </macrodef>
@@ -29,8 +29,16 @@
             dir="rabbit-escape-engine"
         />
         <compile-project
+            dir="rabbit-escape-render"
+            cp="rabbit-escape-engine/bin"
+        />
+        <compile-project
             dir="rabbit-escape-ui-text"
             cp="rabbit-escape-engine/bin"
+        />
+        <compile-project
+            dir="rabbit-escape-ui-swing"
+            cp="rabbit-escape-engine/bin:rabbit-escape-render/bin"
         />
     </target>
 
@@ -43,14 +51,22 @@
 
             <classpath>
                 <pathelement location="rabbit-escape-engine/bin"/>
+                <pathelement location="rabbit-escape-render/bin"/>
                 <pathelement location="rabbit-escape-ui-text/bin"/>
+                <pathelement location="rabbit-escape-ui-swing/bin"/>
             </classpath>
 
             <batchtest>
                 <fileset dir="rabbit-escape-engine/test">
                     <include name="**/Test*.java"/>
                 </fileset>
+                <fileset dir="rabbit-escape-render/test">
+                    <include name="**/Test*.java"/>
+                </fileset>
                 <fileset dir="rabbit-escape-ui-text/test">
+                    <include name="**/Test*.java"/>
+                </fileset>
+                <fileset dir="rabbit-escape-ui-swing/test">
                     <include name="**/Test*.java"/>
                 </fileset>
             </batchtest>
