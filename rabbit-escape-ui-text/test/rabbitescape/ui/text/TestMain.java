@@ -22,9 +22,9 @@ public class TestMain
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         FileSystem fs = new NothingExistsFileSystem();
 
-        Main main = new Main( fs, new PrintStream( out ), Locale.ENGLISH );
+        TextMain main = new TextMain( fs, new PrintStream( out ), Locale.ENGLISH );
 
-        int status = main.run( new String[] { "file1" } );
+        int status = main.launchGame( new String[] { "file1" } );
 
         assertThat( status, not( equalTo( 0 ) ) );
 
@@ -44,9 +44,10 @@ public class TestMain
         String[] badLevel = new String[] { "##", "#" };
         FileSystem fs = new FakeFileSystem( "file1", badLevel );
 
-        Main main = new Main( fs, new PrintStream( out ), Locale.ENGLISH );
+        TextMain main = new TextMain(
+            fs, new PrintStream( out ), Locale.ENGLISH );
 
-        int status = main.run( new String[] { "file1" } );
+        int status = main.launchGame( new String[] { "file1" } );
 
         assertThat( status, not( equalTo( 0 ) ) );
 
@@ -68,9 +69,10 @@ public class TestMain
         String[] badLevel = new String[] { "##", "#z" };
         FileSystem fs = new FakeFileSystem( "file1", badLevel );
 
-        Main main = new Main( fs, new PrintStream( out ), Locale.ENGLISH );
+        TextMain main = new TextMain(
+            fs, new PrintStream( out ), Locale.ENGLISH );
 
-        int status = main.run( new String[] { "file1" } );
+        int status = main.launchGame( new String[] { "file1" } );
 
         assertThat( status, not( equalTo( 0 ) ) );
 

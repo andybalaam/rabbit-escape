@@ -1,4 +1,4 @@
-package rabbitescape.ui.text;
+package rabbitescape.render;
 
 import static rabbitescape.engine.util.Util.*;
 
@@ -8,10 +8,11 @@ import java.util.Locale;
 import rabbitescape.engine.LoadWorldFile;
 import rabbitescape.engine.World;
 import rabbitescape.engine.util.FileSystem;
-import rabbitescape.engine.util.RealFileSystem;
 
-public class Main
+public abstract class Main
 {
+    public abstract GameLoop createGameLoop( World world );
+
     private static final int SUCCESS             = 0;
     private static final int FAILED_TO_LOAD_FILE = 1;
 
@@ -26,17 +27,13 @@ public class Main
         this.locale = locale;
     }
 
-    public static void main( String[] args )
+    public void run( String[] args )
     {
-        Main m = new Main(
-            new RealFileSystem(), System.out, Locale.getDefault() );
-
-        int status = m.run( args );
-
+        int status = launchGame( args );
         System.exit( status );
     }
 
-    public int run( String[] args )
+    public int launchGame( String[] args )
     {
         reAssert( args.length == 1 );
 
@@ -44,7 +41,7 @@ public class Main
         {
             World world = new LoadWorldFile( fs ).load( args[0] );
 
-            GameLoop gameLoop = new GameLoop( world );
+            GameLoop gameLoop = createGameLoop( world );
 
             gameLoop.run();
         }

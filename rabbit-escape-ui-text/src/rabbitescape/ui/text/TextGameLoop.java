@@ -3,16 +3,18 @@ package rabbitescape.ui.text;
 import static rabbitescape.engine.util.Util.*;
 import rabbitescape.engine.World;
 import rabbitescape.engine.textworld.TextWorldManip;
+import rabbitescape.render.GameLoop;
 
-public class GameLoop
+public class TextGameLoop implements GameLoop
 {
     private final World world;
 
-    public GameLoop( World world )
+    public TextGameLoop( World world )
     {
         this.world = world;
     }
 
+    @Override
     public void run()
     {
         while( !world.finished() )
