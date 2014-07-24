@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/rabbit-escape-engine/rabbit-escape-engine.iml" filepath="$PROJECT_DIR$/rabbit-escape-engine/rabbit-escape-engine.iml" />
+      <module fileurl="file://$PROJECT_DIR$/rabbit-escape-render/rabbit-escape-render.iml" filepath="$PROJECT_DIR$/rabbit-escape-render/rabbit-escape-render.iml" />
+      <module fileurl="file://$PROJECT_DIR$/rabbit-escape-ui-swing/rabbit-escape-ui-swing.iml" filepath="$PROJECT_DIR$/rabbit-escape-ui-swing/rabbit-escape-ui-swing.iml" />
+      <module fileurl="file://$PROJECT_DIR$/rabbit-escape-ui-text/rabbit-escape-ui-text.iml" filepath="$PROJECT_DIR$/rabbit-escape-ui-text/rabbit-escape-ui-text.iml" />
+    </modules>
+  </component>
+</project>
+
