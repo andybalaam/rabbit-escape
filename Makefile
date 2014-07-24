@@ -1,4 +1,6 @@
 
+CLASSPATH=rabbit-escape-engine/bin/:rabbit-escape-render/bin/:rabbit-escape-ui-text/bin/:rabbit-escape-ui-swing/bin/
+
 IMAGESSRC := $(wildcard images-src/*.svg)
 IMAGES32 := $(IMAGESSRC:images-src/%.svg=images32/%.png)
 
@@ -28,13 +30,9 @@ clean:
 		images32/* \
 		animations32/*
 
+
 run: compile
-	java -cp \
-		rabbit-escape-engine/bin/\
-		:rabbit-escape-render/bin/\
-		:rabbit-escape-ui-text/bin/\
-		:rabbit-escape-ui-swing/bin/\
-		rabbitescape.ui.text.Main levels/basic/level_01.rel
+	java -cp $(CLASSPATH) rabbitescape.ui.text.TextMain levels/basic/level_01.rel
 
 test: compile
 	# Work around what looks like an Ant 1.9 bug by including the classpath here
