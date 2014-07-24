@@ -35,5 +35,4 @@ Developers
 
 See [INSTALL.md](https://github.com/andybalaam/rabbit-escape/blob/master/INSTALL.md).
 
-    make test
 
