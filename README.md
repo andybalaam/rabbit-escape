@@ -2,7 +2,7 @@ Rabbit Escape
 =============
 
 Rabbit Escape is a mobile game inspired by Lemmings and Pingus
-in which you must rescue some Rabbits from a hostile environment
+in which you must rescue some rabbits from a hostile environment
 by giving them special abilities.
 
 Screenshots
