@@ -46,4 +46,43 @@ public class FakeFileSystem implements FileSystem
         }
     }
 
+    @Override
+    public String read( String fileName )
+        throws FileNotFoundException,
+        IOException
+    {
+        return join( "\n", readLines( fileName ) );
+    }
+
+    @Override
+    public void write( String fileName, String contents )
+    {
+        files.put( fileName, contents.split( "\n" ) );
+    }
+
+    @Override
+    public String parent( String filePath )
+    {
+        int i = filePath.lastIndexOf( '/' );
+        if ( i != -1 )
+        {
+            return filePath.substring( 0, i );
+        }
+        else
+        {
+            return "";
+        }
+    }
+
+    @Override
+    public void mkdirs( String dirPath )
+    {
+        String parent = parent( dirPath );
+        if ( !parent.isEmpty() && !exists( parent ) )
+        {
+            mkdirs( parent );
+        }
+
+        files.put( dirPath, new String[] {} );
+    }
 }

@@ -1,16 +1,27 @@
 package rabbitescape.ui.swing;
 
+import static rabbitescape.engine.i18n.Translation.t;
+import static rabbitescape.ui.swing.SwingGameInit.*;
+
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JScrollPane;
+
+import rabbitescape.engine.config.Config;
+import rabbitescape.engine.config.ConfigTools;
 
 public class GameJFrame extends JFrame
 {
     private static final long serialVersionUID = 1L;
 
-    private class Listener implements WindowListener
+    private class Listener implements WindowListener, ComponentListener
     {
         @Override
         public void windowActivated( WindowEvent e )
@@ -52,21 +63,73 @@ public class GameJFrame extends JFrame
         public void windowOpened( WindowEvent e )
         {
         }
+
+        @Override
+        public void componentHidden( ComponentEvent e )
+        {
+        }
+
+        @Override
+        public void componentMoved( ComponentEvent e )
+        {
+            ConfigTools.setInt( uiConfig, CFG_GAME_WINDOW_LEFT, getX() );
+            ConfigTools.setInt( uiConfig, CFG_GAME_WINDOW_TOP,  getY() );
+            uiConfig.save();
+        }
+
+        @Override
+        public void componentResized( ComponentEvent e )
+        {
+            ConfigTools.setInt( uiConfig, CFG_GAME_WINDOW_WIDTH,  getWidth() );
+            ConfigTools.setInt( uiConfig, CFG_GAME_WINDOW_HEIGHT, getHeight() );
+            uiConfig.save();
+        }
+
+        @Override
+        public void componentShown( ComponentEvent e )
+        {
+        }
     }
 
+    private final Config uiConfig;
     private SwingGameLoop gameLoop;
 
-    public GameJFrame()
+    public GameJFrame( Config uiConfig )
     {
+        this.uiConfig = uiConfig;
         gameLoop = null;
 
-        addWindowListener( new Listener() );
+        Listener listener = new Listener();
+        addWindowListener( listener );
+        addComponentListener( listener );
 
         JLabel label = new JLabel( "Hello World" );
-        getContentPane().add( label );
+        label.setPreferredSize( new Dimension( 400, 200 ) );
+        JScrollPane scrollPane = new JScrollPane( label );
+        getContentPane().add( scrollPane, BorderLayout.CENTER );
 
+        setTitle( t( "Rabbit Escape" ) );
+        setBoundsFromConfig();
         pack();
         setVisible(true);
+    }
+
+    private void setBoundsFromConfig()
+    {
+        int x      = ConfigTools.getInt( uiConfig, CFG_GAME_WINDOW_LEFT );
+        int y      = ConfigTools.getInt( uiConfig, CFG_GAME_WINDOW_TOP );
+        int width  = ConfigTools.getInt( uiConfig, CFG_GAME_WINDOW_WIDTH );
+        int height = ConfigTools.getInt( uiConfig, CFG_GAME_WINDOW_HEIGHT );
+
+        if ( x != Integer.MIN_VALUE && y != Integer.MIN_VALUE )
+        {
+            setLocation( x, y );
+        }
+
+        if ( width != Integer.MIN_VALUE && y != Integer.MIN_VALUE )
+        {
+            setPreferredSize( new Dimension( width, height ) );
+        }
     }
 
     public void setGameLoop( SwingGameLoop gameLoop )

@@ -32,7 +32,7 @@ public class SwingMain extends Main
         SwingGameInit init = new SwingGameInit();
 
         SwingUtilities.invokeLater( init );
-        
+
         return new SwingGameLoop( init, world );
     }
 

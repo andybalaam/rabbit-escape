@@ -5,7 +5,18 @@ import java.io.IOException;
 
 public interface FileSystem
 {
-    boolean exists( String fileName );
-    String[] readLines( String fileName )
+    public boolean exists( String fileName );
+
+    public String[] readLines( String fileName )
         throws FileNotFoundException, IOException;
+
+    public String read( String fileName )
+        throws FileNotFoundException, IOException;
+
+    public void write( String fileName, String contents )
+        throws IOException;
+
+    public String parent( String filePath );
+
+    public void mkdirs( String dirPath );
 }

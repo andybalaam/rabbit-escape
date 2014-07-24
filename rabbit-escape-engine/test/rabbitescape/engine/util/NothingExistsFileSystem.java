@@ -18,4 +18,30 @@ public class NothingExistsFileSystem implements FileSystem
     {
         throw new UnsupportedOperationException();
     }
+
+    @Override
+    public String read( String filePath )
+        throws FileNotFoundException,
+        IOException
+    {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void write( String fileName, String contents )
+    {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public String parent( String filePath )
+    {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void mkdirs( String parent )
+    {
+        throw new UnsupportedOperationException();
+    }
 }
