@@ -192,7 +192,7 @@ public class Util
                     @Override
                     public T next()
                     {
-                        return i1.hasNext() ? i1.next() : i2.next();
+                        return i1.hasNext() ? (T)i1.next() : (T)i2.next();
                     }
 
                     @Override

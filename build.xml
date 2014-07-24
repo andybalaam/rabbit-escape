@@ -4,6 +4,8 @@
         <attribute name="dir"/>
         <attribute name="cp" default=""/>
         <sequential>
+            <mkdir dir="@{dir}/bin"/>
+            <mkdir dir="@{dir}/test"/>
             <javac
                 destdir="@{dir}/bin"
                 includeantruntime="false"
@@ -34,7 +36,7 @@
         />
         <compile-project
             dir="rabbit-escape-ui-text"
-            cp="rabbit-escape-engine/bin"
+            cp="rabbit-escape-engine/bin:rabbit-escape-render/bin"
         />
         <compile-project
             dir="rabbit-escape-ui-swing"
