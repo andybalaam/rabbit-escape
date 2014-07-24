@@ -11,13 +11,17 @@ Run tests
 
     make test
 
+IntelliJ IDEA
+-------------
+
+The main directory contains IntelliJ project files - the project should
+compile and run out of the box - please contact us if not.
+
 Eclipse
 -------
 
-I can't understand why, but somehow I started this project using Eclipse.
-You don't have to, but if you do want to, the .project and .classpath files
-are there.  Do File -> Import -> Existing projects into workspace to
-get started.
+There are Eclipse project files, so "File" -> "Import" ->
+"Existing projects into workspace" should work.
 
 Contributing
 ------------
