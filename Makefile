@@ -36,6 +36,9 @@ clean:
 run: compile
 	java -cp $(CLASSPATH) rabbitescape.ui.text.TextMain levels/basic/level_01.rel
 
+rungui: compile
+	java -cp $(CLASSPATH) rabbitescape.ui.swing.SwingMain levels/basic/level_03.rel
+
 test: compile
 	# Work around what looks like an Ant 1.9 bug by including the classpath here
 	CLASSPATH=lib/org.hamcrest.core_1.3.0.jar:lib/junit.jar ant test
