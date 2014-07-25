@@ -25,7 +25,7 @@ public class SwingGameLoop implements GameLoop
         this.world = world;
         this.jframe = init.waitForUi.waitForUi();
         this.running = true;
-        this.renderingTileSize = 32;
+        this.renderingTileSize = 64;
 
         jframe.setGameLoop( this );
 
