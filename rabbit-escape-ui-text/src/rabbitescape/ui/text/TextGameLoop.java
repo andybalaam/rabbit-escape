@@ -37,4 +37,17 @@ public class TextGameLoop implements GameLoop
             world.step();
         }
     }
+
+    @Override
+    public void showResult()
+    {
+        if ( world.success() )
+        {
+            System.out.println( "You won!" );
+        }
+        else
+        {
+            System.out.println( "You lost." );
+        }
+    }
 }

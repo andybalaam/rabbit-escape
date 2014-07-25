@@ -5,26 +5,24 @@ import rabbitescape.render.androidlike.Paint;
 
 public class Renderer
 {
-    private final Canvas canvas;
     private final int offsetX;
     private final int offsetY;
     private final int tileSize;
 
-    public Renderer( Canvas canvas, int offsetX, int offsetY, int tileSize )
+    public Renderer( int offsetX, int offsetY, int tileSize )
     {
-        this.canvas = canvas;
         this.offsetX = offsetX;
         this.offsetY = offsetY;
         this.tileSize = tileSize;
     }
 
-    public void render( Sprite[] sprites, Paint paint )
+    public void render( Canvas canvas, Sprite[] sprites, Paint paint )
     {
         for ( Sprite sprite : sprites )
         {
             sprite.scaleTo( tileSize );
 
-            this.canvas.drawBitmap(
+            canvas.drawBitmap(
                 sprite.bitmap,
                 sprite.offsetX + offsetX + ( sprite.tileX * tileSize ),
                 sprite.offsetY + offsetY + ( sprite.tileY * tileSize ),

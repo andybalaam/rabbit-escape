@@ -44,6 +44,8 @@ public abstract class Main
             GameLoop gameLoop = createGameLoop( world );
 
             gameLoop.run();
+
+            gameLoop.showResult();
         }
         catch( LoadWorldFile.Failed e )
         {

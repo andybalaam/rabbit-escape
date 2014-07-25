@@ -71,6 +71,7 @@ public class World
     public final List<Thing> things;
     public final String name;
     public final int numRabbits;
+    public final int requiredNumSavedRabbits;
     public final int rabbitDelay;
 
     private final Changes changes;
@@ -94,6 +95,7 @@ public class World
         this.things = things;
         this.name = name;
         this.numRabbits = numRabbits;
+        this.requiredNumSavedRabbits = 1;
         this.rabbitDelay = rabbitDelay;
         this.changes = new Changes();
 
@@ -216,5 +218,10 @@ public class World
             }
         }
         return null;
+    }
+
+    public boolean success()
+    {
+        return numSavedRabbits > requiredNumSavedRabbits;
     }
 }

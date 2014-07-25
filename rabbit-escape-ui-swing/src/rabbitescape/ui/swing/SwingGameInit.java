@@ -14,17 +14,17 @@ public class SwingGameInit implements Runnable
     public static final String CFG_GAME_WINDOW_WIDTH  = "game.window.width";
     public static final String CFG_GAME_WINDOW_HEIGHT = "game.window.height";
 
-    public class WaitForCanvas
+    public class WaitForUi
     {
-        private synchronized void notifyCanvasReady()
+        private synchronized void notifyUiReady()
         {
-            assert canvas != null;
+            assert jframe != null;
             notify();
         }
 
-        public synchronized GameJFrame waitForCanvas()
+        public synchronized GameJFrame waitForUi()
         {
-            while ( canvas == null )
+            while ( jframe == null )
             {
                 try
                 {
@@ -38,25 +38,25 @@ public class SwingGameInit implements Runnable
                 }
             }
 
-            return canvas;
+            return jframe;
         }
     }
 
-    public final WaitForCanvas waitForCanvas = new WaitForCanvas();
+    public final WaitForUi waitForUi = new WaitForUi();
 
-    private GameJFrame canvas = null;
+    private GameJFrame jframe = null;
 
     @Override
     public void run()
     {
-        GameJFrame frame = new GameJFrame( createConfig() );
+        GameJFrame jframe = new GameJFrame( createConfig() );
         // load all images in a worker thread
 
         // When ready, put frame or canvas or something into a variable.
 
-        canvas = frame;
+        this.jframe = jframe;
 
-        waitForCanvas.notifyCanvasReady();
+        waitForUi.notifyUiReady();
     }
 
     private Config createConfig()

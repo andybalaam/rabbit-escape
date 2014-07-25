@@ -4,6 +4,7 @@ import static rabbitescape.engine.i18n.Translation.t;
 import static rabbitescape.ui.swing.SwingGameInit.*;
 
 import java.awt.BorderLayout;
+import java.awt.Canvas;
 import java.awt.Dimension;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
@@ -11,7 +12,6 @@ import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 
 import rabbitescape.engine.config.Config;
@@ -91,27 +91,47 @@ public class GameJFrame extends JFrame
         }
     }
 
+    public Canvas canvas;
+
     private final Config uiConfig;
     private SwingGameLoop gameLoop;
 
     public GameJFrame( Config uiConfig )
     {
         this.uiConfig = uiConfig;
-        gameLoop = null;
+        this.gameLoop = null;
+        this.canvas = initUi();
+        initListeners();
+    }
 
+    private Canvas initUi()
+    {
+        setIgnoreRepaint( true );
+
+        Canvas canvas = new Canvas();
+        canvas.setIgnoreRepaint( true );
+        canvas.setPreferredSize( new Dimension( 400, 200 ) );
+
+        JScrollPane scrollPane = new JScrollPane( canvas );
+        getContentPane().add( scrollPane, BorderLayout.CENTER );
+
+        setBoundsFromConfig();
+
+        setTitle( t( "Rabbit Escape" ) );
+        pack();
+        setVisible( true );
+
+        // Must do this after frame is made visible
+        canvas.createBufferStrategy( 2 );
+
+        return canvas;
+    }
+
+    private void initListeners()
+    {
         Listener listener = new Listener();
         addWindowListener( listener );
         addComponentListener( listener );
-
-        JLabel label = new JLabel( "Hello World" );
-        label.setPreferredSize( new Dimension( 400, 200 ) );
-        JScrollPane scrollPane = new JScrollPane( label );
-        getContentPane().add( scrollPane, BorderLayout.CENTER );
-
-        setTitle( t( "Rabbit Escape" ) );
-        setBoundsFromConfig();
-        pack();
-        setVisible(true);
     }
 
     private void setBoundsFromConfig()

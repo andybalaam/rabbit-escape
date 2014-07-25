@@ -35,8 +35,4 @@ public class SwingMain extends Main
 
         return new SwingGameLoop( init, world );
     }
-
-    protected void createGameFrame()
-    {
-    }
 }

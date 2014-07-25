@@ -1,21 +1,25 @@
 package rabbitescape.ui.swing;
 
+import java.awt.Graphics2D;
+
 import rabbitescape.render.androidlike.Bitmap;
 import rabbitescape.render.androidlike.Canvas;
 import rabbitescape.render.androidlike.Paint;
 
 public class SwingCanvas implements Canvas
 {
-    public final SwingBitmap bitmap;
+    public final Graphics2D gfx;
 
-    public SwingCanvas( SwingBitmap bitmap )
+    public SwingCanvas( Graphics2D gfx )
     {
-        this.bitmap = bitmap;
+        this.gfx = gfx;
     }
 
     @Override
     public void drawBitmap( Bitmap bitmap, float left, float top, Paint paint )
     {
-        this.bitmap.drawBitmap( bitmap, (int)left, (int)top );
+        SwingBitmap b = (SwingBitmap)bitmap;
+
+        this.gfx.drawImage( b.image, (int)left, (int)top, null );
     }
 }
