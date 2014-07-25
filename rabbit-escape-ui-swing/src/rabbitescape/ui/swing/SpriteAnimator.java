@@ -3,6 +3,8 @@ package rabbitescape.ui.swing;
 import java.util.ArrayList;
 import java.util.List;
 
+import static rabbitescape.engine.ChangeDescription.State.*;
+
 import rabbitescape.engine.ChangeDescription;
 import rabbitescape.engine.Rabbit;
 import rabbitescape.engine.World;
@@ -12,7 +14,8 @@ public class SpriteAnimator
 {
     private final World world;
     private final SwingBitmapScaler scaler;
-    private final SwingBitmap[] frames;
+    private final SwingBitmap[] walk_frames;
+    private final SwingBitmap[] bash_frames;
     private final int tileSize;
 
     public SpriteAnimator(
@@ -24,7 +27,7 @@ public class SpriteAnimator
 
         SwingBitmapLoader bitmapLoader = new SwingBitmapLoader();
 
-        frames = new SwingBitmap[] {
+        walk_frames = new SwingBitmap[] {
             bitmapLoader.load(
                 "/rabbitescape/ui/swing/images32/rabbit-walk-01.png" ),
             bitmapLoader.load(
@@ -46,6 +49,29 @@ public class SpriteAnimator
             bitmapLoader.load(
                 "/rabbitescape/ui/swing/images32/rabbit-walk-10.png" )
         };
+
+        bash_frames = new SwingBitmap[] {
+            bitmapLoader.load(
+                "/rabbitescape/ui/swing/images32/rabbit-bash-01.png" ),
+            bitmapLoader.load(
+                "/rabbitescape/ui/swing/images32/rabbit-bash-02.png" ),
+                bitmapLoader.load(
+                "/rabbitescape/ui/swing/images32/rabbit-bash-03.png" ),
+            bitmapLoader.load(
+                "/rabbitescape/ui/swing/images32/rabbit-bash-04.png" ),
+            bitmapLoader.load(
+                "/rabbitescape/ui/swing/images32/rabbit-bash-05.png" ),
+            bitmapLoader.load(
+                "/rabbitescape/ui/swing/images32/rabbit-bash-06.png" ),
+            bitmapLoader.load(
+                "/rabbitescape/ui/swing/images32/rabbit-bash-07.png" ),
+            bitmapLoader.load(
+                "/rabbitescape/ui/swing/images32/rabbit-bash-08.png" ),
+            bitmapLoader.load(
+                "/rabbitescape/ui/swing/images32/rabbit-bash-09.png" ),
+            bitmapLoader.load(
+                "/rabbitescape/ui/swing/images32/rabbit-bash-10.png" )
+        };
     }
 
     public Sprite[] getSprites( int frameNum )
@@ -54,9 +80,13 @@ public class SpriteAnimator
 
         for ( Rabbit rabbit : world.rabbits )
         {
+            SwingBitmap frame = rabbit.state == RABBIT_BASHING_RIGHT ?
+                  bash_frames[frameNum]
+                : walk_frames[frameNum];
+
             ret.add(
                 new Sprite(
-                    frames[frameNum],
+                    frame,
                     scaler,
                     rabbit.x,
                     rabbit.y,
