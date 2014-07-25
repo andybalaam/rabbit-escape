@@ -12,7 +12,7 @@ public class SpriteAnimator
 {
     private final World world;
     private final SwingBitmapScaler scaler;
-    private final SwingBitmap x;
+    private final SwingBitmap[] frames;
     private final int tileSize;
 
     public SpriteAnimator(
@@ -24,7 +24,28 @@ public class SpriteAnimator
 
         SwingBitmapLoader bitmapLoader = new SwingBitmapLoader();
 
-        x = bitmapLoader.load( "/rabbitescape/ui/swing/x.png" );
+        frames = new SwingBitmap[] {
+            bitmapLoader.load(
+                "/rabbitescape/ui/swing/images32/rabbit-walk-01.png" ),
+            bitmapLoader.load(
+                "/rabbitescape/ui/swing/images32/rabbit-walk-02.png" ),
+                bitmapLoader.load(
+                "/rabbitescape/ui/swing/images32/rabbit-walk-03.png" ),
+            bitmapLoader.load(
+                "/rabbitescape/ui/swing/images32/rabbit-walk-04.png" ),
+            bitmapLoader.load(
+                "/rabbitescape/ui/swing/images32/rabbit-walk-05.png" ),
+            bitmapLoader.load(
+                "/rabbitescape/ui/swing/images32/rabbit-walk-06.png" ),
+            bitmapLoader.load(
+                "/rabbitescape/ui/swing/images32/rabbit-walk-07.png" ),
+            bitmapLoader.load(
+                "/rabbitescape/ui/swing/images32/rabbit-walk-08.png" ),
+            bitmapLoader.load(
+                "/rabbitescape/ui/swing/images32/rabbit-walk-09.png" ),
+            bitmapLoader.load(
+                "/rabbitescape/ui/swing/images32/rabbit-walk-10.png" )
+        };
     }
 
     public Sprite[] getSprites( int frameNum )
@@ -34,7 +55,16 @@ public class SpriteAnimator
         for ( Rabbit rabbit : world.rabbits )
         {
             ret.add(
-                new Sprite( x, scaler, rabbit.x, rabbit.y, tileSize, 0, 0 ) );
+                new Sprite(
+                    frames[frameNum],
+                    scaler,
+                    rabbit.x,
+                    rabbit.y,
+                    tileSize,
+                    0,
+                    0
+                )
+            );
         }
 
         return ret.toArray( new Sprite[] {} );

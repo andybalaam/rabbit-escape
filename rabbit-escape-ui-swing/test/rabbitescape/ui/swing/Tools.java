@@ -1,11 +1,15 @@
 package rabbitescape.ui.swing;
 
-import java.io.ByteArrayOutputStream;
+import java.awt.image.BufferedImage;
+import java.awt.image.Raster;
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
 
 import javax.imageio.ImageIO;
+
+import static org.hamcrest.CoreMatchers.*;
+import static org.hamcrest.MatcherAssert.*;
 
 import org.hamcrest.BaseMatcher;
 import org.hamcrest.Description;
@@ -35,7 +39,7 @@ public class Tools
 
             this.actual = (SwingBitmap)actual;
 
-            return Arrays.equals( bytes( expected ), bytes( this.actual ) );
+            return Arrays.equals( pixels( expected ), pixels( this.actual ) );
         }
 
         @Override
@@ -43,37 +47,44 @@ public class Tools
         {
             _desc.appendText( expected.name() );
 
-            writeToFile( "./exp.bmp", expected );
-            writeToFile( "./act.bmp", actual );
+            writeToFile( "./exp.png", this.expected );
+            writeToFile( "./act.png", this.actual );
 
             _desc.appendText(
-                "\n[Comparison written to ./exp.bmp and ./act.bmp]" );
+                "\n[Comparison written to ./exp.png and ./act.png]" );
         }
 
-        private byte[] bytes( SwingBitmap bitmap )
+        private int[] pixels( SwingBitmap bitmap )
         {
-            ByteArrayOutputStream os = new ByteArrayOutputStream();
+            BufferedImage img = bitmap.image;
 
-            try
-            {
-                ImageIO.write( bitmap.image, "bmp", os );
-                return os.toByteArray();
-            }
-            catch ( IOException e )
-            {
-                throw new AssertionError( e );
-            }
+            Raster r = img.getData();
+
+            int w = r.getWidth();
+            int h = r.getHeight();
+
+            int[] ret = new int[r.getNumBands() * w * h];
+
+            return r.getPixels( r.getMinX(), r.getMinY(), w, h, ret );
         }
 
         private void writeToFile( String fileName, SwingBitmap bitmap )
         {
             try
             {
-                ImageIO.write( bitmap.image, "bmp", new File( fileName ) );
+                boolean written = ImageIO.write(
+                    bitmap.image, "png", new File( fileName ) );
+
+                assertThat( written, is( true ) );
             }
             catch ( IOException e )
             {
+                e.printStackTrace();
                 throw new AssertionError( e );
+            }
+            catch ( Throwable e )
+            {
+                e.printStackTrace();
             }
         }
     }

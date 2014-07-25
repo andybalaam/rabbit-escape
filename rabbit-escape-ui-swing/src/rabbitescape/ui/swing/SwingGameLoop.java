@@ -77,7 +77,7 @@ public class SwingGameLoop implements GameLoop
     {
         try
         {
-            Thread.sleep( 20 );
+            Thread.sleep( 50 );
         }
         catch ( InterruptedException e )
         {

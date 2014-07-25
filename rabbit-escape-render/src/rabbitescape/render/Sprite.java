@@ -38,16 +38,18 @@ public class Sprite
         this.originalOffsetX = offsetX;
         this.originalOffsetY = offsetY;
 
-        this.tileSize = -1;
-        scaleTo( tileSize );
+        this.bitmap = bitmap;
+        this.tileSize = tileSize;
+        this.offsetX = offsetX;
+        this.offsetY = offsetY;
     }
 
     public void scaleTo( int tileSize )
     {
         if ( this.tileSize != tileSize )
         {
-            this.bitmap = scaler.scale( this.originalBitmap, tileSize );
             double scale = (double)tileSize / (double)originalTileSize;
+            this.bitmap = scaler.scale( this.originalBitmap, scale );
             offsetX = (int)( originalOffsetX * scale );
             offsetY = (int)( originalOffsetY * scale );
             this.tileSize = tileSize;

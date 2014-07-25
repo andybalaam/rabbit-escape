@@ -18,7 +18,7 @@ public class SwingBitmap implements Bitmap
     {
         this.name = name;
         this.image = new java.awt.image.BufferedImage(
-            w, h, java.awt.image.BufferedImage.TYPE_INT_RGB );
+            w, h, java.awt.image.BufferedImage.TYPE_INT_ARGB );
     }
 
     @Override

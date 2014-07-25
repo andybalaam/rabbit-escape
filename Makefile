@@ -1,16 +1,18 @@
 
 CLASSPATH=rabbit-escape-engine/bin/:rabbit-escape-render/bin/:rabbit-escape-ui-text/bin/:rabbit-escape-ui-swing/bin/
 
+IMAGES32_DEST=rabbit-escape-ui-swing/src/rabbitescape/ui/swing/images32
+
 IMAGESSRC := $(wildcard images-src/*.svg)
-IMAGES32 := $(IMAGESSRC:images-src/%.svg=images32/%.png)
+IMAGES32 := $(IMAGESSRC:images-src/%.svg=$(IMAGES32_DEST)/%.png)
 
 ANIMATIONS32 := animations32/walk.gif animations32/bash.gif
 
-images32/%.png: images-src/%.svg
-	mkdir -p images32; inkscape $< --export-png=$@
+$(IMAGES32_DEST)/%.png: images-src/%.svg
+	mkdir -p $(IMAGES32_DEST); inkscape $< --export-png=$@
 
 animations32/%.gif: $(IMAGES32)
-	mkdir -p animations32; avconv -y -f image2 -r 10 -i images32/rabbit-$*-%02d.png -pix_fmt rgb24 -an $@
+	mkdir -p animations32; avconv -y -f image2 -r 10 -i $(IMAGES32_DEST)/rabbit-$*-%02d.png -pix_fmt rgb24 -an $@
 
 all: compile
 
@@ -18,7 +20,7 @@ images: $(IMAGES32)
 
 animations: $(ANIMATIONS32)
 
-compile:
+compile: images
 	ant compile
 
 clean:

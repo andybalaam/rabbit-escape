@@ -1,5 +1,6 @@
 package rabbitescape.ui.swing;
 
+import java.awt.AlphaComposite;
 import java.awt.Graphics2D;
 
 import rabbitescape.render.androidlike.Bitmap;
@@ -20,6 +21,7 @@ public class SwingCanvas implements Canvas
     {
         SwingBitmap b = (SwingBitmap)bitmap;
 
+        this.gfx.setComposite( AlphaComposite.SrcAtop );
         this.gfx.drawImage( b.image, (int)left, (int)top, null );
     }
 }
