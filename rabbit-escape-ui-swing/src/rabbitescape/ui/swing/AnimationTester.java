@@ -25,6 +25,8 @@ public class AnimationTester extends JFrame
 {
     private static final long serialVersionUID = 1L;
 
+    public static final String NONE = "<none>";
+
     public static final String CONFIG_PATH =
         "~/.rabbitescape/config/animationtester.properties"
             .replace( "~", System.getProperty( "user.home" ) );
@@ -36,6 +38,23 @@ public class AnimationTester extends JFrame
         "animationtester.window.top";
 
     private static final String CFG_AT_TILE_SIZE = "animationtester.tile.size";
+
+    private static final String CFG_AT_ANIMATIONS =
+        "animationtester.animations";
+
+    private static final String[][] defaultAnimations = new String[][] {
+        new String[] { NONE, NONE, NONE },
+        new String[] { NONE, NONE, NONE },
+        new String[] { NONE, NONE, NONE },
+
+        new String[] { "walk", NONE, NONE },
+        new String[] { NONE, "bash", "walk" },
+        new String[] { NONE, NONE, NONE },
+
+        new String[] { NONE, NONE, NONE },
+        new String[] { NONE, NONE, NONE },
+        new String[] { NONE, NONE, NONE }
+    };
 
     public static class AnimationNotFound extends RabbitEscapeException
     {
@@ -57,27 +76,72 @@ public class AnimationTester extends JFrame
         {
             int i = screen2index( mouseEvent.getX(), mouseEvent.getY() );
 
-            Object[] possibilities = { "<none>", "walk", "bash" };
-            String changedAnimation = (String)JOptionPane.showInputDialog(
+            String[] possibilties = new String[] { NONE, "walk", "bash" };
+
+            JPanel threeDropDowns = new JPanel();
+            JList<String> list0 = addAnimationList(
+                threeDropDowns, possibilties, animations[i][0] );
+
+            JList<String> list1 = addAnimationList(
+                threeDropDowns, possibilties, animations[i][1] );
+
+            JList<String> list2 = addAnimationList(
+                threeDropDowns, possibilties, animations[i][2] );
+
+            int retVal = JOptionPane.showOptionDialog(
                 AnimationTester.this,
-                "Choose animation:",
+                threeDropDowns,
                 "Change animation",
+                JOptionPane.OK_CANCEL_OPTION,
                 JOptionPane.PLAIN_MESSAGE,
                 null,
-                possibilities,
-                animations[i]
+                null,
+                null
             );
 
-            if ( changedAnimation != null )
+            if ( retVal == JOptionPane.CANCEL_OPTION )
             {
-                if ( changedAnimation.equals( "<none>") )
-                {
-                    changedAnimation = "";
-                }
-
-                animations[i] = changedAnimation;
-                loadBitmaps();
+                return;
             }
+
+            animations[i][0] = noneForNull( list0.getSelectedValue() );
+            animations[i][1] = noneForNull( list1.getSelectedValue() );
+            animations[i][2] = noneForNull( list2.getSelectedValue() );
+
+            saveAnimationsToConfig();
+            loadBitmaps();
+        }
+
+        private void saveAnimationsToConfig()
+        {
+            atConfig.set(
+                CFG_AT_ANIMATIONS, animationsToConfigString( animations ) );
+
+            atConfig.save();
+        }
+
+        private String noneForNull( String value )
+        {
+            if ( value == null )
+            {
+                return NONE;
+            }
+            else
+            {
+                return value;
+            }
+        }
+
+        private JList<String> addAnimationList(
+            JPanel parent, String[] possibilities, String animation )
+        {
+            JList<String> list = new JList<String>( possibilities );
+
+            parent.add( list );
+
+            list.setSelectedValue( animation, true );
+
+            return list;
         }
 
         @Override
@@ -132,13 +196,9 @@ public class AnimationTester extends JFrame
     private final Config atConfig;
     private SwingBitmapScaler scaler;
     private SwingPaint paint;
-    private SwingBitmap[][] frames;
+    private SwingBitmap[][][] frames;
 
-    private final String[] animations = new String[] {
-        "", "", "",
-        "walk", "walk", "bash",
-        "", "", ""
-    };
+    private final String[][] animations;
 
     private static class InitUi implements Runnable
     {
@@ -146,10 +206,22 @@ public class AnimationTester extends JFrame
 
         @Override
         public void run() {
-            animationTester = new AnimationTester( createConfig() );
-            synchronized ( this )
+            try
             {
-                notifyAll();
+                animationTester = new AnimationTester( createConfig() );
+                synchronized ( this )
+                {
+                    notifyAll();
+                }
+            }
+            catch ( Throwable t )
+            {
+                synchronized ( this )
+                {
+                    notifyAll();
+                }
+                t.printStackTrace();
+                System.exit( 3 );
             }
         }
 
@@ -163,7 +235,11 @@ public class AnimationTester extends JFrame
             {
                 // Will come when notified
             }
-            animationTester.loop();
+
+            if ( animationTester != null )
+            {
+                animationTester.loop();
+            }
         }
     }
 
@@ -172,6 +248,9 @@ public class AnimationTester extends JFrame
         this.atConfig = atConfig;
         this.tileSize = ConfigTools.getInt( atConfig, CFG_AT_TILE_SIZE );
         this.numTilesX = 3;
+        this.animations = animationsFromConfig(
+            atConfig.get( CFG_AT_ANIMATIONS ) );
+
         int numTilesY = 3;
 
         setIgnoreRepaint( true );
@@ -220,17 +299,23 @@ public class AnimationTester extends JFrame
         frames = loadAllFrames( bitmapLoader, animations );
     }
 
-    private SwingBitmap[][] loadAllFrames(
-        SwingBitmapLoader bitmapLoader, String[] animations )
+    private SwingBitmap[][][] loadAllFrames(
+        SwingBitmapLoader bitmapLoader, String[][] animations )
     {
-        SwingBitmap[][] ret = new SwingBitmap[animations.length][];
+        SwingBitmap[][][] ret = new SwingBitmap[animations.length][][];
         int i = 0;
-        for ( String animation : animations )
+        for ( String[] animationTriplet : animations )
         {
-            if ( !animation.isEmpty() )
+            ret[i] = new SwingBitmap[animationTriplet.length][];
+            int j = 0;
+            for ( String animation : animationTriplet )
             {
-                ret[i] = loadFrames(
-                    bitmapLoader, loadAnimation( animation ) );
+                if ( !animation.equals( NONE ) )
+                {
+                    ret[i][j] = loadFrames(
+                        bitmapLoader, loadAnimation( animation ) );
+                }
+                ++j;
             }
             ++i;
         }
@@ -246,7 +331,6 @@ public class AnimationTester extends JFrame
             URL url = getClass().getResource( key );
             if ( url == null )
             {
-                System.out.println( key + " not found." );
                 throw new AnimationNotFound( name );
             }
 
@@ -288,10 +372,17 @@ public class AnimationTester extends JFrame
 
     public static void main( String[] args )
     {
-        InitUi initUi = new InitUi();
-        SwingUtilities.invokeLater(initUi);
-        initUi.loopWhenReady();
-        initUi.animationTester.loop();
+        try
+        {
+            InitUi initUi = new InitUi();
+            SwingUtilities.invokeLater( initUi );
+            initUi.loopWhenReady();
+        }
+        catch( Throwable t )
+        {
+            t.printStackTrace();
+            System.exit( 2 );
+        }
     }
 
     private void loop()
@@ -300,11 +391,12 @@ public class AnimationTester extends JFrame
 
         Renderer renderer = new Renderer( 0, 0, tileSize );
 
+        int frameSetNum = 0;
         int frameNum = 0;
         running = true;
         while( running && this.isVisible() )
         {
-            new DrawFrame( strategy, renderer, frameNum ).run();
+            new DrawFrame( strategy, renderer, frameSetNum, frameNum ).run();
 
             pause();
 
@@ -312,20 +404,31 @@ public class AnimationTester extends JFrame
             if ( frameNum == 10 )
             {
                 frameNum = 0;
+                ++frameSetNum;
+                if ( frameSetNum == 3)
+                {
+                    frameSetNum = 0;
+                }
             }
         }
     }
 
     private class DrawFrame extends BufferedDraw
     {
+        private final int frameSetNum;
         private final int frameNum;
         private final Renderer renderer;
 
         public DrawFrame(
-            BufferStrategy strategy, Renderer renderer, int frameNum )
+            BufferStrategy strategy,
+            Renderer renderer,
+            int frameSetNum,
+            int frameNum
+        )
         {
             super( strategy );
             this.renderer = renderer;
+            this.frameSetNum = frameSetNum;
             this.frameNum = frameNum;
         }
 
@@ -342,8 +445,9 @@ public class AnimationTester extends JFrame
 
             List<Sprite> sprites = new ArrayList<>();
             int i = 0;
-            for ( SwingBitmap[] bmps : frames )
+            for ( SwingBitmap[][] bmpSets : frames )
             {
+                SwingBitmap[] bmps = bmpSets[frameSetNum];
                 if ( bmps == null )
                 {
                     ++i;
@@ -408,6 +512,57 @@ public class AnimationTester extends JFrame
             "The on-screen size of tiles in the animation tester in pixels"
         );
 
+        definition.set(
+            CFG_AT_ANIMATIONS,
+            "",
+            "The animations selected to play in the animation tester"
+            + " (3 per tile)"
+        );
+
         return new Config( definition, new RealFileSystem(), CONFIG_PATH );
     }
+
+    private static String animationsToConfigString( String[][] animations )
+    {
+        StringBuilder ret = new StringBuilder();
+
+        for ( String[] arr : animations )
+        {
+            for ( String anim : arr )
+            {
+                ret.append( anim );
+                ret.append( ' ' );
+            }
+        }
+
+        return ret.toString();
+    }
+
+    private static String[][] animationsFromConfig( String cfgEntry )
+    {
+        if ( cfgEntry.isEmpty() )
+        {
+            return defaultAnimations;
+        }
+
+        String[] items = cfgEntry.split( " " );
+
+        if ( items.length % 3 != 0 )
+        {
+            return defaultAnimations;
+        }
+
+        String[][] ret = new String[items.length / 3][];
+
+        for ( int i = 0; i < items.length / 3; ++i )
+        {
+            ret[i] = new String[3];
+            ret[i][0] = items[ i * 3 ];
+            ret[i][1] = items[ i * 3 + 1 ];
+            ret[i][2] = items[ i * 3 + 2 ];
+        }
+
+        return ret;
+    }
+
 }
