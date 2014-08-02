@@ -11,16 +11,16 @@ ANIMATIONS32 := animations32/walk.gif animations32/bash.gif
 $(IMAGES32_DEST)/%.png: images-src/%.svg
 	mkdir -p $(IMAGES32_DEST); inkscape $< --export-png=$@
 
-animations32/%.gif: $(IMAGES32)
-	mkdir -p animations32; avconv -y -f image2 -r 10 -i $(IMAGES32_DEST)/rabbit-$*-%02d.png -pix_fmt rgb24 -an $@
+rabbit-escape-render/src/rabbitescape/render/animations/ls.txt: rabbit-escape-render/src/rabbitescape/render/animations/*.rea
+	cd rabbit-escape-render/src/rabbitescape/render/animations; ls *.rea > ls.txt
 
 all: compile
 
 images: $(IMAGES32)
 
-animations: $(ANIMATIONS32)
+animations: rabbit-escape-render/src/rabbitescape/render/animations/ls.txt
 
-compile: images
+compile: images animations
 	ant compile
 
 clean:
@@ -30,7 +30,7 @@ clean:
 		rabbit-escape-ui-text/bin/* \
 		rabbit-escape-ui-swing/bin/* \
 		images32/* \
-		animations32/*
+		rabbit-escape-render/src/rabbitescape/render/animations/ls.txt
 
 
 run: compile
@@ -38,6 +38,9 @@ run: compile
 
 rungui: compile
 	java -cp $(CLASSPATH) rabbitescape.ui.swing.SwingMain levels/basic/level_03.rel
+
+runat: compile
+	java -cp $(CLASSPATH) rabbitescape.ui.swing.AnimationTester
 
 test: compile
 	# Work around what looks like an Ant 1.9 bug by including the classpath here

@@ -68,6 +68,16 @@ public class AnimationTester extends JFrame
         }
     }
 
+    public static class ErrorLoadingAnimationNames extends RabbitEscapeException
+    {
+        private static final long serialVersionUID = 1L;
+
+        public ErrorLoadingAnimationNames( Throwable cause )
+        {
+            super( cause );
+        }
+    }
+
     private class Listener implements
         java.awt.event.MouseListener, ComponentListener
     {
@@ -76,7 +86,7 @@ public class AnimationTester extends JFrame
         {
             int i = screen2index( mouseEvent.getX(), mouseEvent.getY() );
 
-            String[] possibilties = new String[] { NONE, "walk", "bash" };
+            String[] possibilties = loadPossibilities();
 
             JPanel threeDropDowns = new JPanel();
             JList<String> list0 = addAnimationList(
@@ -110,6 +120,38 @@ public class AnimationTester extends JFrame
 
             saveAnimationsToConfig();
             loadBitmaps();
+        }
+
+        private String[] loadPossibilities()
+        {
+            try
+            {
+                List<String> ret = new ArrayList<String>();
+                ret.add( NONE );
+
+                BufferedReader reader = new BufferedReader(
+                    new InputStreamReader(
+                        getClass().getResource(
+                            "/rabbitescape/render/animations/ls.txt"
+                        ).openStream()
+                    )
+                );
+
+                String line;
+                while ( ( line = reader.readLine() ) != null )
+                {
+                    if ( line.endsWith( ".rea" ) )
+                    {
+                        ret.add( line.substring( 0, line.length() - 4 ) );
+                    }
+                }
+
+                return ret.toArray( new String[ret.size() ] );
+            }
+            catch ( IOException e )
+            {
+                throw new ErrorLoadingAnimationNames( e );
+            }
         }
 
         private void saveAnimationsToConfig()
@@ -312,8 +354,16 @@ public class AnimationTester extends JFrame
             {
                 if ( !animation.equals( NONE ) )
                 {
-                    ret[i][j] = loadFrames(
-                        bitmapLoader, loadAnimation( animation ) );
+                    try
+                    {
+                        ret[i][j] = loadFrames(
+                            bitmapLoader, loadAnimation( animation ) );
+                    }
+                    catch( AnimationNotFound e )
+                    {
+                        e.printStackTrace();
+                        ret[i][j] = null;
+                    }
                 }
                 ++j;
             }
@@ -344,7 +394,7 @@ public class AnimationTester extends JFrame
                 String trimmedLn = ln.trim();
                 if ( !trimmedLn.isEmpty() )
                 {
-                    ret.add(ln.trim());
+                    ret.add( trimmedLn );
                 }
             }
 
