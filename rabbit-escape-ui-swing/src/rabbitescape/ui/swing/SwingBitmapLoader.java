@@ -19,5 +19,9 @@ public class SwingBitmapLoader
         {
             throw new FailedToLoadImage( name, e );
         }
+        catch ( IllegalArgumentException e )
+        {
+            throw new FailedToLoadImage( name, e );
+        }
     }
 }

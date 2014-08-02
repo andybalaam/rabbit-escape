@@ -6,8 +6,6 @@ IMAGES32_DEST=rabbit-escape-ui-swing/src/rabbitescape/ui/swing/images32
 IMAGESSRC := $(wildcard images-src/*.svg)
 IMAGES32 := $(IMAGESSRC:images-src/%.svg=$(IMAGES32_DEST)/%.png)
 
-ANIMATIONS32 := animations32/walk.gif animations32/bash.gif
-
 $(IMAGES32_DEST)/%.png: images-src/%.svg
 	mkdir -p $(IMAGES32_DEST); inkscape $< --export-png=$@
 

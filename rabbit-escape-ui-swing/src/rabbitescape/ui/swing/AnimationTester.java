@@ -42,7 +42,7 @@ public class AnimationTester extends JFrame
     private static final String CFG_AT_ANIMATIONS =
         "animationtester.animations";
 
-    private static final String[][] defaultAnimations = new String[][] {
+    private static final String[][] defaultAnimationNames = new String[][] {
         new String[] { NONE, NONE, NONE },
         new String[] { NONE, NONE, NONE },
         new String[] { NONE, NONE, NONE },
@@ -68,6 +68,24 @@ public class AnimationTester extends JFrame
         }
     }
 
+    public static class BadAnimationLine extends RabbitEscapeException
+    {
+        private static final long serialVersionUID = 1L;
+
+        public final String line;
+
+        public BadAnimationLine( String line )
+        {
+            this.line = line;
+        }
+
+        public BadAnimationLine( String line, Throwable cause )
+        {
+            super( cause );
+            this.line = line;
+        }
+    }
+
     public static class ErrorLoadingAnimationNames extends RabbitEscapeException
     {
         private static final long serialVersionUID = 1L;
@@ -90,13 +108,13 @@ public class AnimationTester extends JFrame
 
             JPanel threeDropDowns = new JPanel();
             JList<String> list0 = addAnimationList(
-                threeDropDowns, possibilties, animations[i][0] );
+                threeDropDowns, possibilties, animationNames[i][0] );
 
             JList<String> list1 = addAnimationList(
-                threeDropDowns, possibilties, animations[i][1] );
+                threeDropDowns, possibilties, animationNames[i][1] );
 
             JList<String> list2 = addAnimationList(
-                threeDropDowns, possibilties, animations[i][2] );
+                threeDropDowns, possibilties, animationNames[i][2] );
 
             int retVal = JOptionPane.showOptionDialog(
                 AnimationTester.this,
@@ -114,9 +132,9 @@ public class AnimationTester extends JFrame
                 return;
             }
 
-            animations[i][0] = noneForNull( list0.getSelectedValue() );
-            animations[i][1] = noneForNull( list1.getSelectedValue() );
-            animations[i][2] = noneForNull( list2.getSelectedValue() );
+            animationNames[i][0] = noneForNull( list0.getSelectedValue() );
+            animationNames[i][1] = noneForNull( list1.getSelectedValue() );
+            animationNames[i][2] = noneForNull( list2.getSelectedValue() );
 
             saveAnimationsToConfig();
             loadBitmaps();
@@ -157,7 +175,7 @@ public class AnimationTester extends JFrame
         private void saveAnimationsToConfig()
         {
             atConfig.set(
-                CFG_AT_ANIMATIONS, animationsToConfigString( animations ) );
+                CFG_AT_ANIMATIONS, animationsToConfigString( animationNames ) );
 
             atConfig.save();
         }
@@ -238,9 +256,9 @@ public class AnimationTester extends JFrame
     private final Config atConfig;
     private SwingBitmapScaler scaler;
     private SwingPaint paint;
-    private SwingBitmap[][][] frames;
+    private SwingBitmapAndOffset[][][] frames;
 
-    private final String[][] animations;
+    private final String[][] animationNames;
 
     private static class InitUi implements Runnable
     {
@@ -290,7 +308,7 @@ public class AnimationTester extends JFrame
         this.atConfig = atConfig;
         this.tileSize = ConfigTools.getInt( atConfig, CFG_AT_TILE_SIZE );
         this.numTilesX = 3;
-        this.animations = animationsFromConfig(
+        this.animationNames = animationsFromConfig(
             atConfig.get( CFG_AT_ANIMATIONS ) );
 
         int numTilesY = 3;
@@ -338,26 +356,28 @@ public class AnimationTester extends JFrame
         paint = new SwingPaint();
         SwingBitmapLoader bitmapLoader = new SwingBitmapLoader();
 
-        frames = loadAllFrames( bitmapLoader, animations );
+        frames = loadAllFrames( bitmapLoader, animationNames );
     }
 
-    private SwingBitmap[][][] loadAllFrames(
-        SwingBitmapLoader bitmapLoader, String[][] animations )
+    private SwingBitmapAndOffset[][][] loadAllFrames(
+        SwingBitmapLoader bitmapLoader, String[][] animationNames )
     {
-        SwingBitmap[][][] ret = new SwingBitmap[animations.length][][];
+        SwingBitmapAndOffset[][][] ret =
+            new SwingBitmapAndOffset[animationNames.length][][];
+
         int i = 0;
-        for ( String[] animationTriplet : animations )
+        for ( String[] animationTriplet : animationNames )
         {
-            ret[i] = new SwingBitmap[animationTriplet.length][];
+            ret[i] = new SwingBitmapAndOffset[animationTriplet.length][];
             int j = 0;
-            for ( String animation : animationTriplet )
+            for ( String animationName : animationTriplet )
             {
-                if ( !animation.equals( NONE ) )
+                if ( !animationName.equals( NONE ) )
                 {
                     try
                     {
                         ret[i][j] = loadFrames(
-                            bitmapLoader, loadAnimation( animation ) );
+                            bitmapLoader, loadAnimation( animationName ) );
                     }
                     catch( AnimationNotFound e )
                     {
@@ -372,7 +392,7 @@ public class AnimationTester extends JFrame
         return ret;
     }
 
-    private String[] loadAnimation( String name )
+    private FrameNameAndOffset[] loadAnimation( String name )
     {
         try
         {
@@ -387,18 +407,18 @@ public class AnimationTester extends JFrame
             BufferedReader reader = new BufferedReader(
                 new InputStreamReader( url.openStream() ) );
 
-            List<String> ret = new ArrayList<>();
+            List<FrameNameAndOffset> ret = new ArrayList<>();
             String ln;
             while ( ( ln = reader.readLine() ) != null )
             {
                 String trimmedLn = ln.trim();
                 if ( !trimmedLn.isEmpty() )
                 {
-                    ret.add( trimmedLn );
+                    ret.add( frameNameAndOffset( trimmedLn ) );
                 }
             }
 
-            return ret.toArray( new String[ ret.size() ] );
+            return ret.toArray( new FrameNameAndOffset[ ret.size() ] );
         }
         catch ( IOException e )
         {
@@ -406,15 +426,58 @@ public class AnimationTester extends JFrame
         }
     }
 
-    private SwingBitmap[] loadFrames(
-        SwingBitmapLoader bitmapLoader, String[] animation )
+    private FrameNameAndOffset frameNameAndOffset( String animLine )
     {
-        SwingBitmap[] ret = new SwingBitmap[animation.length];
-        int i = 0;
-        for ( String frameName : animation )
+        String[] parts = animLine.split( " " );
+
+        try
         {
-            ret[i] = bitmapLoader.load(
-                "/rabbitescape/ui/swing/images32/" + frameName + ".png" );
+            switch ( parts.length )
+            {
+                case 1:
+                {
+                    return new FrameNameAndOffset( parts[0] );
+                }
+                case 2:
+                {
+                    return new FrameNameAndOffset(
+                        parts[0], Integer.valueOf( parts[1] ) );
+                }
+                case 3:
+                {
+                    return new FrameNameAndOffset(
+                        parts[0],
+                        Integer.valueOf( parts[1] ),
+                        Integer.valueOf( parts[2] )
+                    );
+                }
+                default:
+                {
+                    throw new BadAnimationLine( animLine );
+                }
+            }
+        }
+        catch ( NumberFormatException e )
+        {
+            throw new BadAnimationLine( animLine, e );
+        }
+    }
+
+    private SwingBitmapAndOffset[] loadFrames(
+        SwingBitmapLoader bitmapLoader, FrameNameAndOffset[] frameNameAndOffsets )
+    {
+        SwingBitmapAndOffset[] ret =
+            new SwingBitmapAndOffset[frameNameAndOffsets.length];
+
+        int i = 0;
+        for ( FrameNameAndOffset frame : frameNameAndOffsets )
+        {
+            SwingBitmap bmp = bitmapLoader.load(
+                "/rabbitescape/ui/swing/images32/" + frame.name + ".png" );
+
+            ret[i] = new SwingBitmapAndOffset(
+                bmp, frame.offsetX, frame.offsetY );
+
             ++i;
         }
         return ret;
@@ -495,17 +558,26 @@ public class AnimationTester extends JFrame
 
             List<Sprite> sprites = new ArrayList<>();
             int i = 0;
-            for ( SwingBitmap[][] bmpSets : frames )
+            for ( SwingBitmapAndOffset[][] bmpSets : frames )
             {
-                SwingBitmap[] bmps = bmpSets[frameSetNum];
+                SwingBitmapAndOffset[] bmps = bmpSets[frameSetNum];
                 if ( bmps == null )
                 {
                     ++i;
                     continue;
                 }
                 java.awt.Point loc = int2dim( i );
+                SwingBitmapAndOffset bmp = bmps[frameNum];
                 Sprite sprite = new Sprite(
-                    bmps[frameNum], scaler, loc.x, loc.y, 32, 0, 0 );
+                    bmp.bitmap,
+                    scaler,
+                    loc.x,
+                    loc.y,
+                    32,
+                    bmp.offsetX,
+                    bmp.offsetY
+                );
+
                 sprites.add( sprite );
                 ++i;
             }
@@ -592,14 +664,14 @@ public class AnimationTester extends JFrame
     {
         if ( cfgEntry.isEmpty() )
         {
-            return defaultAnimations;
+            return defaultAnimationNames;
         }
 
         String[] items = cfgEntry.split( " " );
 
         if ( items.length % 3 != 0 )
         {
-            return defaultAnimations;
+            return defaultAnimationNames;
         }
 
         String[][] ret = new String[items.length / 3][];
