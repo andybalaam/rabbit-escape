@@ -18,8 +18,12 @@ import static rabbitescape.engine.i18n.Translation.t;
 
 public class AnimationTester extends JFrame
 {
-    private static class AnimationNotFound extends RabbitEscapeException
+    private static final long serialVersionUID = 1L;
+
+    public static class AnimationNotFound extends RabbitEscapeException
     {
+        private static final long serialVersionUID = 1L;
+
         public final String name;
 
         public AnimationNotFound( String name )
@@ -85,7 +89,7 @@ public class AnimationTester extends JFrame
     private SwingPaint paint;
     private SwingBitmap[][] frames;
 
-    private String[] animations = new String[] {
+    private final String[] animations = new String[] {
         "", "", "",
         "walk", "walk", "bash",
         "", "", ""
