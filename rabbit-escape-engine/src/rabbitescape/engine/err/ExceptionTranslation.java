@@ -18,7 +18,14 @@ public class ExceptionTranslation
     public static String translate(
         RabbitEscapeException exception, Locale locale )
     {
-        String key = stripPrefix( exception.getClass().getCanonicalName() );
+        String name = exception.getClass().getCanonicalName();
+
+        if ( !name.startsWith( prefix ) )
+        {
+            return name + " " + extractFields( exception ).toString();
+        }
+
+        String key = stripPrefix( name );
 
         ResourceBundle bundle = ResourceBundle.getBundle(
             "rabbitescape.engine.err.exceptions", locale );
