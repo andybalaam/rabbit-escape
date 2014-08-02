@@ -47,8 +47,8 @@ public class AnimationTester extends JFrame
         new String[] { NONE, NONE, NONE },
         new String[] { NONE, NONE, NONE },
 
-        new String[] { "walk", NONE, NONE },
-        new String[] { NONE, "bash", "walk" },
+        new String[] { "rabbit_walking_right", NONE, NONE },
+        new String[] { NONE, "rabbit_bashing_right", "rabbit_walking_right" },
         new String[] { NONE, NONE, NONE },
 
         new String[] { NONE, NONE, NONE },
