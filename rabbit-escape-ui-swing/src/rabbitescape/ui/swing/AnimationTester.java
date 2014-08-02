@@ -1,10 +1,16 @@
 package rabbitescape.ui.swing;
 
+import rabbitescape.engine.config.Config;
+import rabbitescape.engine.config.ConfigTools;
 import rabbitescape.engine.err.RabbitEscapeException;
+import rabbitescape.engine.util.RealFileSystem;
 import rabbitescape.render.Renderer;
 import rabbitescape.render.Sprite;
 
 import javax.swing.*;
+
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferStrategy;
 import java.io.BufferedReader;
@@ -12,13 +18,24 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.*;
-import java.util.List;
 
 import static rabbitescape.engine.i18n.Translation.t;
 
 public class AnimationTester extends JFrame
 {
     private static final long serialVersionUID = 1L;
+
+    public static final String CONFIG_PATH =
+        "~/.rabbitescape/config/animationtester.properties"
+            .replace( "~", System.getProperty( "user.home" ) );
+
+    public static final String CFG_AT_WINDOW_LEFT =
+        "animationtester.window.left";
+
+    public static final String CFG_AT_WINDOW_TOP =
+        "animationtester.window.top";
+
+    private static final String CFG_AT_TILE_SIZE = "animationtester.tile.size";
 
     public static class AnimationNotFound extends RabbitEscapeException
     {
@@ -32,7 +49,8 @@ public class AnimationTester extends JFrame
         }
     }
 
-    private class Listener implements java.awt.event.MouseListener
+    private class Listener implements
+        java.awt.event.MouseListener, ComponentListener
     {
         @Override
         public void mouseClicked( MouseEvent mouseEvent )
@@ -41,7 +59,7 @@ public class AnimationTester extends JFrame
 
             Object[] possibilities = { "<none>", "walk", "bash" };
             String changedAnimation = (String)JOptionPane.showInputDialog(
-                null,
+                AnimationTester.this,
                 "Choose animation:",
                 "Change animation",
                 JOptionPane.PLAIN_MESSAGE,
@@ -50,13 +68,16 @@ public class AnimationTester extends JFrame
                 animations[i]
             );
 
-            if ( changedAnimation.equals( "<none>") )
+            if ( changedAnimation != null )
             {
-                changedAnimation = "";
-            }
+                if ( changedAnimation.equals( "<none>") )
+                {
+                    changedAnimation = "";
+                }
 
-            animations[i] = changedAnimation;
-            loadBitmaps();
+                animations[i] = changedAnimation;
+                loadBitmaps();
+            }
         }
 
         @Override
@@ -78,6 +99,29 @@ public class AnimationTester extends JFrame
         public void mouseExited( MouseEvent mouseEvent )
         {
         }
+
+        @Override
+        public void componentHidden( ComponentEvent arg0 )
+        {
+        }
+
+        @Override
+        public void componentMoved( ComponentEvent arg0 )
+        {
+            ConfigTools.setInt( atConfig, CFG_AT_WINDOW_LEFT, getX() );
+            ConfigTools.setInt( atConfig, CFG_AT_WINDOW_TOP,  getY() );
+            atConfig.save();
+        }
+
+        @Override
+        public void componentResized( ComponentEvent arg0 )
+        {
+        }
+
+        @Override
+        public void componentShown( ComponentEvent arg0 )
+        {
+        }
     }
 
     private final int tileSize;
@@ -85,6 +129,7 @@ public class AnimationTester extends JFrame
     boolean running;
 
     private final java.awt.Canvas canvas;
+    private final Config atConfig;
     private SwingBitmapScaler scaler;
     private SwingPaint paint;
     private SwingBitmap[][] frames;
@@ -101,7 +146,7 @@ public class AnimationTester extends JFrame
 
         @Override
         public void run() {
-            animationTester = new AnimationTester();
+            animationTester = new AnimationTester( createConfig() );
             synchronized ( this )
             {
                 notifyAll();
@@ -122,9 +167,10 @@ public class AnimationTester extends JFrame
         }
     }
 
-    public AnimationTester()
+    public AnimationTester( Config atConfig )
     {
-        this.tileSize = 128;
+        this.atConfig = atConfig;
+        this.tileSize = ConfigTools.getInt( atConfig, CFG_AT_TILE_SIZE );
         this.numTilesX = 3;
         int numTilesY = 3;
 
@@ -140,7 +186,11 @@ public class AnimationTester extends JFrame
 
         loadBitmaps();
 
-        canvas.addMouseListener(new Listener());
+        Listener listener = new Listener();
+        canvas.addMouseListener( listener );
+        addComponentListener( listener );
+
+        setBoundsFromConfig();
 
         setTitle( t( "Animation Tester" ) );
         pack();
@@ -148,6 +198,17 @@ public class AnimationTester extends JFrame
 
         // Must do this after frame is made visible
         canvas.createBufferStrategy( 2 );
+    }
+
+    private void setBoundsFromConfig()
+    {
+        int x = ConfigTools.getInt( atConfig, CFG_AT_WINDOW_LEFT );
+        int y = ConfigTools.getInt( atConfig, CFG_AT_WINDOW_TOP );
+
+        if ( x != Integer.MIN_VALUE && y != Integer.MIN_VALUE )
+        {
+            setLocation( x, y );
+        }
     }
 
     private void loadBitmaps()
@@ -159,7 +220,8 @@ public class AnimationTester extends JFrame
         frames = loadAllFrames( bitmapLoader, animations );
     }
 
-    private SwingBitmap[][] loadAllFrames( SwingBitmapLoader bitmapLoader, String[] animations )
+    private SwingBitmap[][] loadAllFrames(
+        SwingBitmapLoader bitmapLoader, String[] animations )
     {
         SwingBitmap[][] ret = new SwingBitmap[animations.length][];
         int i = 0;
@@ -322,5 +384,30 @@ public class AnimationTester extends JFrame
         {
             // Ignore
         }
+    }
+
+    private static Config createConfig()
+    {
+        Config.Definition definition = new Config.Definition();
+
+        definition.set(
+            CFG_AT_WINDOW_LEFT,
+            String.valueOf( Integer.MIN_VALUE ),
+            "The x position of the animation tester window on the screen"
+        );
+
+        definition.set(
+            CFG_AT_WINDOW_TOP,
+            String.valueOf( Integer.MIN_VALUE ),
+            "The y position of the animation tester window on the screen"
+        );
+
+        definition.set(
+            CFG_AT_TILE_SIZE,
+            String.valueOf( 128 ),
+            "The on-screen size of tiles in the animation tester in pixels"
+        );
+
+        return new Config( definition, new RealFileSystem(), CONFIG_PATH );
     }
 }
