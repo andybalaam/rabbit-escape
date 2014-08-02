@@ -9,12 +9,12 @@ IMAGES32 := $(IMAGESSRC:images-src/%.svg=$(IMAGES32_DEST)/%.png)
 $(IMAGES32_DEST)/%.png: images-src/%.svg
 	mkdir -p $(IMAGES32_DEST); inkscape $< --export-png=$@
 
-rabbit-escape-render/src/rabbitescape/render/animations/ls.txt: rabbit-escape-render/src/rabbitescape/render/animations/*.rea
-	cd rabbit-escape-render/src/rabbitescape/render/animations; ls *.rea > ls.txt
-
 all: compile
 
 images: $(IMAGES32)
+
+rabbit-escape-render/src/rabbitescape/render/animations/ls.txt: rabbit-escape-render/src/rabbitescape/render/animations/*.rea
+	cd rabbit-escape-render/src/rabbitescape/render/animations; ls *.rea > ls.txt
 
 animations: rabbit-escape-render/src/rabbitescape/render/animations/ls.txt
 
