@@ -5,6 +5,7 @@ import rabbitescape.engine.config.ConfigTools;
 import rabbitescape.engine.util.RealFileSystem;
 import rabbitescape.render.AnimationCache;
 import rabbitescape.render.AnimationLoader;
+import rabbitescape.render.BitmapCache;
 import rabbitescape.render.Renderer;
 import rabbitescape.render.Sprite;
 
@@ -286,11 +287,14 @@ public class AnimationTester extends JFrame
         paint = new SwingPaint();
         SwingBitmapLoader bitmapLoader = new SwingBitmapLoader();
 
-        frames = loadAllFrames( bitmapLoader, animationNames );
+        BitmapCache<SwingBitmap> bitmapCache = new BitmapCache<SwingBitmap>(
+            bitmapLoader, 500 );
+
+        frames = loadAllFrames( bitmapCache, animationNames );
     }
 
     private SwingAnimation[][] loadAllFrames(
-        SwingBitmapLoader bitmapLoader, String[][] animationNames )
+        BitmapCache<SwingBitmap> bitmapCache, String[][] animationNames )
     {
         SwingAnimation[][] ret =
             new SwingAnimation[animationNames.length][];
@@ -307,7 +311,7 @@ public class AnimationTester extends JFrame
                     try
                     {
                         ret[i][j] = new SwingAnimation(
-                            bitmapLoader,
+                            bitmapCache,
                             animationCache.get( animationName )
                         );
                     }

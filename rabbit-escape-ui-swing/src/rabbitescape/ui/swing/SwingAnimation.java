@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import rabbitescape.render.Animation;
+import rabbitescape.render.BitmapCache;
 import rabbitescape.render.FrameNameAndOffset;
 
 public class SwingAnimation
@@ -15,13 +16,14 @@ public class SwingAnimation
         this.bitmaps = bitmaps;
     }
 
-    public SwingAnimation( SwingBitmapLoader bitmapLoader, Animation animation )
+    public SwingAnimation(
+        BitmapCache<SwingBitmap> bitmapCache, Animation animation )
     {
         this.bitmaps = new ArrayList<SwingBitmapAndOffset>();
 
         for ( FrameNameAndOffset frame : animation )
         {
-            SwingBitmap bmp = bitmapLoader.load(
+            SwingBitmap bmp = bitmapCache.get(
                 "/rabbitescape/ui/swing/images32/" + frame.name + ".png" );
 
             this.bitmaps.add(

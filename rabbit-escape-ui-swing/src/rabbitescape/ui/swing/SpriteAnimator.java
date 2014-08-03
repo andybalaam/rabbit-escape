@@ -2,14 +2,16 @@ package rabbitescape.ui.swing;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
-import static rabbitescape.engine.ChangeDescription.State.*;
 import static rabbitescape.engine.Direction.*;
 
 import rabbitescape.engine.Block;
 import rabbitescape.engine.ChangeDescription;
 import rabbitescape.engine.Rabbit;
 import rabbitescape.engine.World;
+import rabbitescape.render.Animation;
+import rabbitescape.render.AnimationCache;
 import rabbitescape.render.BitmapCache;
 import rabbitescape.render.Sprite;
 
@@ -17,58 +19,33 @@ public class SpriteAnimator
 {
     private final World world;
     private final SwingBitmapScaler scaler;
-    private final String[] walk_frames;
-    private final String[] bash_frames;
     private final String land_block;
     private final String land_rising_right;
     private final String land_rising_left;
     private final int tileSize;
     private final BitmapCache<SwingBitmap> bitmapCache;
+    private final AnimationCache animationCache;
 
     public SpriteAnimator(
         World world,
         ChangeDescription changes,
         int tileSize,
-        BitmapCache<SwingBitmap> bitmapCache
+        BitmapCache<SwingBitmap> bitmapCache,
+        AnimationCache animationCache
     )
     {
         this.world = world;
         this.scaler = new SwingBitmapScaler();
         this.tileSize = tileSize;
         this.bitmapCache = bitmapCache;
+        this.animationCache = animationCache;
 
-        walk_frames = new String[] {
-            "/rabbitescape/ui/swing/images32/rabbit-walk-01.png",
-            "/rabbitescape/ui/swing/images32/rabbit-walk-02.png",
-            "/rabbitescape/ui/swing/images32/rabbit-walk-03.png",
-            "/rabbitescape/ui/swing/images32/rabbit-walk-04.png",
-            "/rabbitescape/ui/swing/images32/rabbit-walk-05.png",
-            "/rabbitescape/ui/swing/images32/rabbit-walk-06.png",
-            "/rabbitescape/ui/swing/images32/rabbit-walk-07.png",
-            "/rabbitescape/ui/swing/images32/rabbit-walk-08.png",
-            "/rabbitescape/ui/swing/images32/rabbit-walk-09.png",
-            "/rabbitescape/ui/swing/images32/rabbit-walk-10.png"
-        };
+        this.land_block = "/rabbitescape/ui/swing/images32/land-block.png";
 
-        bash_frames = new String[] {
-            "/rabbitescape/ui/swing/images32/rabbit-bash-01.png",
-            "/rabbitescape/ui/swing/images32/rabbit-bash-02.png",
-            "/rabbitescape/ui/swing/images32/rabbit-bash-03.png",
-            "/rabbitescape/ui/swing/images32/rabbit-bash-04.png",
-            "/rabbitescape/ui/swing/images32/rabbit-bash-05.png",
-            "/rabbitescape/ui/swing/images32/rabbit-bash-06.png",
-            "/rabbitescape/ui/swing/images32/rabbit-bash-07.png",
-            "/rabbitescape/ui/swing/images32/rabbit-bash-08.png",
-            "/rabbitescape/ui/swing/images32/rabbit-bash-09.png",
-            "/rabbitescape/ui/swing/images32/rabbit-bash-10.png"
-        };
-
-        land_block = "/rabbitescape/ui/swing/images32/land-block.png";
-
-        land_rising_right =
+        this.land_rising_right =
             "/rabbitescape/ui/swing/images32/land-rising-right.png";
 
-        land_rising_left =
+        this.land_rising_left =
             "/rabbitescape/ui/swing/images32/land-rising-left.png";
     }
 
@@ -93,19 +70,29 @@ public class SpriteAnimator
 
         for ( Rabbit rabbit : world.rabbits )
         {
-            String frame = rabbit.state == RABBIT_BASHING_RIGHT ?
-                  bash_frames[frameNum]
-                : walk_frames[frameNum];
+            String frame = rabbit.state.name().toLowerCase( Locale.ENGLISH );
+            Animation animation = animationCache.get( frame );
+
+            if ( animation == null )
+            {
+                continue;  // TODO: Throw here - we should find all animations
+            }
+
+            // TODO: don't make a new one of these every time?
+            SwingAnimation swingAnimation = new SwingAnimation(
+                bitmapCache, animation );
+
+            SwingBitmapAndOffset bmp = swingAnimation.get( frameNum );
 
             ret.add(
                 new Sprite(
-                    bitmapCache.get( frame ),
+                    bmp.bitmap,
                     scaler,
                     rabbit.x,
                     rabbit.y,
                     tileSize,
-                    0,
-                    0
+                    bmp.offsetX,
+                    bmp.offsetY
                 )
             );
         }
