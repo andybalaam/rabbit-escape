@@ -182,7 +182,7 @@ public class AnimationTester extends JFrame
     private final Config atConfig;
     private SwingBitmapScaler scaler;
     private SwingPaint paint;
-    private SwingBitmapAndOffset[][][] frames;
+    private SwingAnimation[][] frames;
     private final AnimationCache animationCache;
 
     private final String[][] animationNames;
@@ -291,16 +291,16 @@ public class AnimationTester extends JFrame
         frames = loadAllFrames( bitmapLoader, animationNames );
     }
 
-    private SwingBitmapAndOffset[][][] loadAllFrames(
+    private SwingAnimation[][] loadAllFrames(
         SwingBitmapLoader bitmapLoader, String[][] animationNames )
     {
-        SwingBitmapAndOffset[][][] ret =
-            new SwingBitmapAndOffset[animationNames.length][][];
+        SwingAnimation[][] ret =
+            new SwingAnimation[animationNames.length][];
 
         int i = 0;
         for ( String[] animationTriplet : animationNames )
         {
-            ret[i] = new SwingBitmapAndOffset[animationTriplet.length][];
+            ret[i] = new SwingAnimation[animationTriplet.length];
             int j = 0;
             for ( String animationName : animationTriplet )
             {
@@ -326,24 +326,21 @@ public class AnimationTester extends JFrame
         return ret;
     }
 
-    private SwingBitmapAndOffset[] loadFrames(
+    private SwingAnimation loadFrames(
         SwingBitmapLoader bitmapLoader, Animation animation )
     {
-        SwingBitmapAndOffset[] ret =
-            new SwingBitmapAndOffset[ animation.size() ];
+        List<SwingBitmapAndOffset> ret = new ArrayList<SwingBitmapAndOffset>();
 
-        int i = 0;
         for ( FrameNameAndOffset frame : animation )
         {
             SwingBitmap bmp = bitmapLoader.load(
                 "/rabbitescape/ui/swing/images32/" + frame.name + ".png" );
 
-            ret[i] = new SwingBitmapAndOffset(
-                bmp, frame.offsetX, frame.offsetY );
-
-            ++i;
+            ret.add( new SwingBitmapAndOffset(
+                bmp, frame.offsetX, frame.offsetY ) );
         }
-        return ret;
+
+        return new SwingAnimation( ret );
     }
 
     public static void main( String[] args )
@@ -421,16 +418,16 @@ public class AnimationTester extends JFrame
 
             List<Sprite> sprites = new ArrayList<>();
             int i = 0;
-            for ( SwingBitmapAndOffset[][] bmpSets : frames )
+            for ( SwingAnimation[] bmpSets : frames )
             {
-                SwingBitmapAndOffset[] bmps = bmpSets[frameSetNum];
+                SwingAnimation bmps = bmpSets[frameSetNum];
                 if ( bmps == null )
                 {
                     ++i;
                     continue;
                 }
                 java.awt.Point loc = int2dim( i );
-                SwingBitmapAndOffset bmp = bmps[frameNum];
+                SwingBitmapAndOffset bmp = bmps.get( frameNum );
                 Sprite sprite = new Sprite(
                     bmp.bitmap,
                     scaler,
