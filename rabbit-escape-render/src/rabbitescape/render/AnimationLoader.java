@@ -2,6 +2,7 @@ package rabbitescape.render;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.ArrayList;
@@ -96,27 +97,34 @@ public class AnimationLoader
             {
                 throw new AnimationNotFound( name );
             }
+            InputStream stream = url.openStream();
 
-            BufferedReader reader = new BufferedReader(
-                new InputStreamReader( url.openStream() ) );
-
-            List<FrameNameAndOffset> ret = new ArrayList<>();
-            String ln;
-            while ( ( ln = reader.readLine() ) != null )
-            {
-                String trimmedLn = ln.trim();
-                if ( !trimmedLn.isEmpty() )
-                {
-                    ret.add( frameNameAndOffset( trimmedLn ) );
-                }
-            }
-
-            return ret.toArray( new FrameNameAndOffset[ ret.size() ] );
+            return readAnimation( stream );
         }
         catch ( IOException e )
         {
             throw new AnimationNotFound( name );
         }
+    }
+
+    public static FrameNameAndOffset[] readAnimation( InputStream stream )
+        throws IOException
+    {
+        BufferedReader reader = new BufferedReader(
+            new InputStreamReader( stream ) );
+
+        List<FrameNameAndOffset> ret = new ArrayList<>();
+        String ln;
+        while ( ( ln = reader.readLine() ) != null )
+        {
+            String trimmedLn = ln.trim();
+            if ( !trimmedLn.isEmpty() )
+            {
+                ret.add( frameNameAndOffset( trimmedLn ) );
+            }
+        }
+
+        return ret.toArray( new FrameNameAndOffset[ ret.size() ] );
     }
 
     private static FrameNameAndOffset frameNameAndOffset( String animLine )
