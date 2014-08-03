@@ -3,6 +3,7 @@ package rabbitescape.ui.swing;
 import rabbitescape.engine.config.Config;
 import rabbitescape.engine.config.ConfigTools;
 import rabbitescape.engine.util.RealFileSystem;
+import rabbitescape.render.AnimationCache;
 import rabbitescape.render.AnimationLoader;
 import rabbitescape.render.FrameNameAndOffset;
 import rabbitescape.render.Renderer;
@@ -60,7 +61,7 @@ public class AnimationTester extends JFrame
         {
             int i = screen2index( mouseEvent.getX(), mouseEvent.getY() );
 
-            String[] possibilties = animationLoader.listAll();
+            String[] possibilties = animationCache.listAll();
 
             JPanel threeDropDowns = new JPanel();
             JList<String> list0 = addAnimationList(
@@ -181,7 +182,7 @@ public class AnimationTester extends JFrame
     private SwingBitmapScaler scaler;
     private SwingPaint paint;
     private SwingBitmapAndOffset[][][] frames;
-    private final AnimationLoader animationLoader;
+    private final AnimationCache animationCache;
 
     private final String[][] animationNames;
 
@@ -233,7 +234,7 @@ public class AnimationTester extends JFrame
         this.atConfig = atConfig;
         this.tileSize = ConfigTools.getInt( atConfig, CFG_AT_TILE_SIZE );
         this.numTilesX = 3;
-        this.animationLoader = new AnimationLoader();
+        this.animationCache = new AnimationCache( new AnimationLoader() );
 
         this.animationNames = animationsFromConfig(
             atConfig.get( CFG_AT_ANIMATIONS ) );
@@ -308,7 +309,7 @@ public class AnimationTester extends JFrame
                     {
                         ret[i][j] = loadFrames(
                             bitmapLoader,
-                            animationLoader.load( animationName )
+                            animationCache.get( animationName )
                         );
                     }
                     catch( AnimationNotFound e )
