@@ -246,7 +246,10 @@ public class AnimationTester extends JFrame
         this.canvas = new java.awt.Canvas();
         canvas.setIgnoreRepaint( true );
         canvas.setPreferredSize(
-            new java.awt.Dimension( tileSize * numTilesX, tileSize * numTilesY) );
+            new java.awt.Dimension(
+                tileSize * numTilesX, tileSize * numTilesY
+            )
+        );
 
         getContentPane().add( canvas, java.awt.BorderLayout.CENTER );
 
