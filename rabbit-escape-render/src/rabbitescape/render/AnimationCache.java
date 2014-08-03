@@ -6,7 +6,7 @@ import java.util.Map;
 public class AnimationCache
 {
     private final String[] names;
-    private final Map<String, FrameNameAndOffset[]> animations;
+    private final Map<String, Animation> animations;
 
     public AnimationCache( AnimationLoader animationLoader )
     {
@@ -27,7 +27,7 @@ public class AnimationCache
         return names;
     }
 
-    public FrameNameAndOffset[] get( String animationName )
+    public Animation get( String animationName )
     {
         return animations.get( animationName );
     }

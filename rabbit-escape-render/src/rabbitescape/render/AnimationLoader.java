@@ -86,7 +86,7 @@ public class AnimationLoader
         }
     }
 
-    public FrameNameAndOffset[] load( String name )
+    public Animation load( String name )
     {
         try
         {
@@ -107,7 +107,7 @@ public class AnimationLoader
         }
     }
 
-    public static FrameNameAndOffset[] readAnimation( InputStream stream )
+    public static Animation readAnimation( InputStream stream )
         throws IOException
     {
         BufferedReader reader = new BufferedReader(
@@ -124,7 +124,7 @@ public class AnimationLoader
             }
         }
 
-        return ret.toArray( new FrameNameAndOffset[ ret.size() ] );
+        return new Animation( ret );
     }
 
     private static FrameNameAndOffset frameNameAndOffset( String animLine )

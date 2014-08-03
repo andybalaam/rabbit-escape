@@ -22,10 +22,10 @@ public class TestAnimationLoader
             }
         );
 
-        FrameNameAndOffset[] frames = AnimationLoader.readAnimation( anim );
+        Animation animation = AnimationLoader.readAnimation( anim );
 
         assertThat(
-            animationToString( frames ),
+            animationToString( animation ),
             equalTo(
                 new String[] {
                     "framez1 0 0",
@@ -47,10 +47,10 @@ public class TestAnimationLoader
             }
         );
 
-        FrameNameAndOffset[] frames = AnimationLoader.readAnimation( anim );
+        Animation animation = AnimationLoader.readAnimation( anim );
 
         assertThat(
-            animationToString( frames ),
+            animationToString( animation ),
             equalTo(
                 new String[] {
                     "framez1 1 2",
@@ -68,13 +68,13 @@ public class TestAnimationLoader
             join( "\n", animation ).getBytes( "UTF8" ) );
     }
 
-    private String[] animationToString( FrameNameAndOffset[] frames )
+    private String[] animationToString( Animation animation )
     {
-        String[] ret = new String[ frames.length ];
+        String[] ret = new String[ animation.size() ];
 
-        for ( int i = 0; i < frames.length; ++i )
+        for ( int i = 0; i < animation.size(); ++i )
         {
-            ret[i] = frameToString( frames[i] );
+            ret[i] = frameToString( animation.get( i ) );
         }
 
         return ret;
