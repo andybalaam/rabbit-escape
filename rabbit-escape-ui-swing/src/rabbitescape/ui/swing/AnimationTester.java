@@ -3,7 +3,8 @@ package rabbitescape.ui.swing;
 import rabbitescape.engine.config.Config;
 import rabbitescape.engine.config.ConfigTools;
 import rabbitescape.engine.util.RealFileSystem;
-import rabbitescape.render.Animations;
+import rabbitescape.render.AnimationLoader;
+import rabbitescape.render.FrameNameAndOffset;
 import rabbitescape.render.Renderer;
 import rabbitescape.render.Sprite;
 
@@ -13,14 +14,10 @@ import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferStrategy;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.URL;
 import java.util.*;
 
 import static rabbitescape.engine.i18n.Translation.t;
-import static rabbitescape.render.Animations.*;
+import static rabbitescape.render.AnimationLoader.*;
 
 public class AnimationTester extends JFrame
 {
@@ -63,7 +60,7 @@ public class AnimationTester extends JFrame
         {
             int i = screen2index( mouseEvent.getX(), mouseEvent.getY() );
 
-            String[] possibilties = Animations.listAnimationNames();
+            String[] possibilties = animationLoader.listAll();
 
             JPanel threeDropDowns = new JPanel();
             JList<String> list0 = addAnimationList(
@@ -184,6 +181,7 @@ public class AnimationTester extends JFrame
     private SwingBitmapScaler scaler;
     private SwingPaint paint;
     private SwingBitmapAndOffset[][][] frames;
+    private final AnimationLoader animationLoader;
 
     private final String[][] animationNames;
 
@@ -235,6 +233,8 @@ public class AnimationTester extends JFrame
         this.atConfig = atConfig;
         this.tileSize = ConfigTools.getInt( atConfig, CFG_AT_TILE_SIZE );
         this.numTilesX = 3;
+        this.animationLoader = new AnimationLoader();
+
         this.animationNames = animationsFromConfig(
             atConfig.get( CFG_AT_ANIMATIONS ) );
 
@@ -307,7 +307,9 @@ public class AnimationTester extends JFrame
                     try
                     {
                         ret[i][j] = loadFrames(
-                            bitmapLoader, loadAnimation( animationName ) );
+                            bitmapLoader,
+                            animationLoader.load( animationName )
+                        );
                     }
                     catch( AnimationNotFound e )
                     {
@@ -320,77 +322,6 @@ public class AnimationTester extends JFrame
             ++i;
         }
         return ret;
-    }
-
-    private FrameNameAndOffset[] loadAnimation( String name )
-    {
-        try
-        {
-            String key = "/rabbitescape/render/animations/" + name + ".rea";
-
-            URL url = getClass().getResource( key );
-            if ( url == null )
-            {
-                throw new AnimationNotFound( name );
-            }
-
-            BufferedReader reader = new BufferedReader(
-                new InputStreamReader( url.openStream() ) );
-
-            List<FrameNameAndOffset> ret = new ArrayList<>();
-            String ln;
-            while ( ( ln = reader.readLine() ) != null )
-            {
-                String trimmedLn = ln.trim();
-                if ( !trimmedLn.isEmpty() )
-                {
-                    ret.add( frameNameAndOffset( trimmedLn ) );
-                }
-            }
-
-            return ret.toArray( new FrameNameAndOffset[ ret.size() ] );
-        }
-        catch ( IOException e )
-        {
-            throw new AnimationNotFound( name );
-        }
-    }
-
-    private FrameNameAndOffset frameNameAndOffset( String animLine )
-    {
-        String[] parts = animLine.split( " " );
-
-        try
-        {
-            switch ( parts.length )
-            {
-                case 1:
-                {
-                    return new FrameNameAndOffset( parts[0] );
-                }
-                case 2:
-                {
-                    return new FrameNameAndOffset(
-                        parts[0], Integer.valueOf( parts[1] ) );
-                }
-                case 3:
-                {
-                    return new FrameNameAndOffset(
-                        parts[0],
-                        Integer.valueOf( parts[1] ),
-                        Integer.valueOf( parts[2] )
-                    );
-                }
-                default:
-                {
-                    throw new BadAnimationLine( animLine );
-                }
-            }
-        }
-        catch ( NumberFormatException e )
-        {
-            throw new BadAnimationLine( animLine, e );
-        }
     }
 
     private SwingBitmapAndOffset[] loadFrames(

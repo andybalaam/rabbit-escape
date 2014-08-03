@@ -1,4 +1,4 @@
-package rabbitescape.ui.swing;
+package rabbitescape.render;
 
 public class FrameNameAndOffset
 {
@@ -22,5 +22,4 @@ public class FrameNameAndOffset
         this.offsetX = offsetX;
         this.offsetY = offsetY;
     }
-
 }
