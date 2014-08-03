@@ -26,13 +26,16 @@ public class SpriteAnimator
     private final BitmapCache<SwingBitmap> bitmapCache;
 
     public SpriteAnimator(
-        World world, ChangeDescription changes, int tileSize )
+        World world,
+        ChangeDescription changes,
+        int tileSize,
+        BitmapCache<SwingBitmap> bitmapCache
+    )
     {
         this.world = world;
         this.scaler = new SwingBitmapScaler();
         this.tileSize = tileSize;
-        this.bitmapCache = new BitmapCache<SwingBitmap>(
-            new SwingBitmapLoader(), 500 );
+        this.bitmapCache = bitmapCache;
 
         walk_frames = new String[] {
             "/rabbitescape/ui/swing/images32/rabbit-walk-01.png",

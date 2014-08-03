@@ -7,6 +7,7 @@ import java.awt.image.BufferStrategy;
 
 import rabbitescape.engine.ChangeDescription;
 import rabbitescape.engine.World;
+import rabbitescape.render.BitmapCache;
 import rabbitescape.render.GameLoop;
 import rabbitescape.render.Renderer;
 
@@ -47,7 +48,9 @@ public class SwingGameLoop implements GameLoop
         int imagesTileSize = 32;
 
         BufferStrategy strategy = jframe.canvas.getBufferStrategy();
-        final Renderer renderer = new Renderer( 0, 0, renderingTileSize );
+        Renderer renderer = new Renderer( 0, 0, renderingTileSize );
+        BitmapCache<SwingBitmap> bitmapCache =
+            new BitmapCache<SwingBitmap>( new SwingBitmapLoader(), 500 );
 
         while( running )
         {
@@ -55,7 +58,7 @@ public class SwingGameLoop implements GameLoop
             ChangeDescription changes = world.describeChanges();
 
             final SpriteAnimator animator = new SpriteAnimator(
-                world, changes, imagesTileSize );
+                world, changes, imagesTileSize, bitmapCache );
 
             for ( int f = 0; running && f < framesPerStep; ++f )
             {
