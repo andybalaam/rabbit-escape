@@ -3,10 +3,8 @@ package rabbitescape.ui.swing;
 import rabbitescape.engine.config.Config;
 import rabbitescape.engine.config.ConfigTools;
 import rabbitescape.engine.util.RealFileSystem;
-import rabbitescape.render.Animation;
 import rabbitescape.render.AnimationCache;
 import rabbitescape.render.AnimationLoader;
-import rabbitescape.render.FrameNameAndOffset;
 import rabbitescape.render.Renderer;
 import rabbitescape.render.Sprite;
 
@@ -308,7 +306,7 @@ public class AnimationTester extends JFrame
                 {
                     try
                     {
-                        ret[i][j] = loadFrames(
+                        ret[i][j] = new SwingAnimation(
                             bitmapLoader,
                             animationCache.get( animationName )
                         );
@@ -324,23 +322,6 @@ public class AnimationTester extends JFrame
             ++i;
         }
         return ret;
-    }
-
-    private SwingAnimation loadFrames(
-        SwingBitmapLoader bitmapLoader, Animation animation )
-    {
-        List<SwingBitmapAndOffset> ret = new ArrayList<SwingBitmapAndOffset>();
-
-        for ( FrameNameAndOffset frame : animation )
-        {
-            SwingBitmap bmp = bitmapLoader.load(
-                "/rabbitescape/ui/swing/images32/" + frame.name + ".png" );
-
-            ret.add( new SwingBitmapAndOffset(
-                bmp, frame.offsetX, frame.offsetY ) );
-        }
-
-        return new SwingAnimation( ret );
     }
 
     public static void main( String[] args )
