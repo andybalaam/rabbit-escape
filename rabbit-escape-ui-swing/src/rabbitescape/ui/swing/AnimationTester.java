@@ -2,8 +2,8 @@ package rabbitescape.ui.swing;
 
 import rabbitescape.engine.config.Config;
 import rabbitescape.engine.config.ConfigTools;
-import rabbitescape.engine.err.RabbitEscapeException;
 import rabbitescape.engine.util.RealFileSystem;
+import rabbitescape.render.Animations;
 import rabbitescape.render.Renderer;
 import rabbitescape.render.Sprite;
 
@@ -20,12 +20,11 @@ import java.net.URL;
 import java.util.*;
 
 import static rabbitescape.engine.i18n.Translation.t;
+import static rabbitescape.render.Animations.*;
 
 public class AnimationTester extends JFrame
 {
     private static final long serialVersionUID = 1L;
-
-    public static final String NONE = "<none>";
 
     public static final String CONFIG_PATH =
         "~/.rabbitescape/config/animationtester.properties"
@@ -56,46 +55,6 @@ public class AnimationTester extends JFrame
         new String[] { NONE, NONE, NONE }
     };
 
-    public static class AnimationNotFound extends RabbitEscapeException
-    {
-        private static final long serialVersionUID = 1L;
-
-        public final String name;
-
-        public AnimationNotFound( String name )
-        {
-            this.name = name;
-        }
-    }
-
-    public static class BadAnimationLine extends RabbitEscapeException
-    {
-        private static final long serialVersionUID = 1L;
-
-        public final String line;
-
-        public BadAnimationLine( String line )
-        {
-            this.line = line;
-        }
-
-        public BadAnimationLine( String line, Throwable cause )
-        {
-            super( cause );
-            this.line = line;
-        }
-    }
-
-    public static class ErrorLoadingAnimationNames extends RabbitEscapeException
-    {
-        private static final long serialVersionUID = 1L;
-
-        public ErrorLoadingAnimationNames( Throwable cause )
-        {
-            super( cause );
-        }
-    }
-
     private class Listener implements
         java.awt.event.MouseListener, ComponentListener
     {
@@ -104,7 +63,7 @@ public class AnimationTester extends JFrame
         {
             int i = screen2index( mouseEvent.getX(), mouseEvent.getY() );
 
-            String[] possibilties = loadPossibilities();
+            String[] possibilties = Animations.listAnimationNames();
 
             JPanel threeDropDowns = new JPanel();
             JList<String> list0 = addAnimationList(
@@ -138,38 +97,6 @@ public class AnimationTester extends JFrame
 
             saveAnimationsToConfig();
             loadBitmaps();
-        }
-
-        private String[] loadPossibilities()
-        {
-            try
-            {
-                List<String> ret = new ArrayList<String>();
-                ret.add( NONE );
-
-                BufferedReader reader = new BufferedReader(
-                    new InputStreamReader(
-                        getClass().getResource(
-                            "/rabbitescape/render/animations/ls.txt"
-                        ).openStream()
-                    )
-                );
-
-                String line;
-                while ( ( line = reader.readLine() ) != null )
-                {
-                    if ( line.endsWith( ".rea" ) )
-                    {
-                        ret.add( line.substring( 0, line.length() - 4 ) );
-                    }
-                }
-
-                return ret.toArray( new String[ret.size() ] );
-            }
-            catch ( IOException e )
-            {
-                throw new ErrorLoadingAnimationNames( e );
-            }
         }
 
         private void saveAnimationsToConfig()
