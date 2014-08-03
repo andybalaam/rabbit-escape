@@ -1,6 +1,5 @@
 package rabbitescape.ui.swing;
 
-import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
@@ -25,7 +24,7 @@ public class SwingGameLoop implements GameLoop
         this.world = world;
         this.jframe = init.waitForUi.waitForUi();
         this.running = true;
-        this.renderingTileSize = 64;
+        this.renderingTileSize = 32;
 
         jframe.setGameLoop( this );
 
@@ -88,17 +87,18 @@ public class SwingGameLoop implements GameLoop
     {
         private static final SwingPaint unusedPaint = new SwingPaint();
 
-        private final Canvas canvas;
+        private final java.awt.Canvas canvas;
         private final Renderer renderer;
         private final SpriteAnimator animator;
         private final int frameNum;
 
         public DrawFrame(
             BufferStrategy strategy,
-            Canvas canvas,
+            java.awt.Canvas canvas,
             Renderer renderer,
             SpriteAnimator animator,
-            int frameNum )
+            int frameNum
+        )
         {
             super( strategy );
             this.canvas = canvas;
@@ -118,8 +118,10 @@ public class SwingGameLoop implements GameLoop
                 canvas.getHeight()
             );
 
+            SwingCanvas canvas = new SwingCanvas( g );
+
             renderer.render(
-                new SwingCanvas( g ),
+                canvas,
                 animator.getSprites( frameNum ),
                 unusedPaint
             );

@@ -6,5 +6,5 @@ package rabbitescape.render.androidlike;
 public interface Bitmap
 {
     public String name();
-    public void drawBitmap( Bitmap bitmap, int x, int y );
+    //public void drawBitmap( Bitmap bitmap, int x, int y );
 }

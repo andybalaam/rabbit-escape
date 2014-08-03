@@ -27,11 +27,11 @@ public class SwingBitmap implements Bitmap
         return name;
     }
 
-    @Override
+    /*@Override
     public void drawBitmap( Bitmap bitmap, int x, int y )
     {
         SwingBitmap bmp = (SwingBitmap)bitmap;
 
         image.getRaster().setRect( x, y, bmp.image.getData() );
-    }
+    }*/
 }

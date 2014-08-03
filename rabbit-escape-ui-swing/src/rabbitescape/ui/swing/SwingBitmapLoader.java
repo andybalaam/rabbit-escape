@@ -2,10 +2,12 @@ package rabbitescape.ui.swing;
 
 import java.io.IOException;
 
+import rabbitescape.render.BitmapLoader;
 import rabbitescape.render.FailedToLoadImage;
 
-public class SwingBitmapLoader
+public class SwingBitmapLoader implements BitmapLoader<SwingBitmap>
 {
+    @Override
     public SwingBitmap load( String name )
     {
         try

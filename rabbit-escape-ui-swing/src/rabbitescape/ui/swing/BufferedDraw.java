@@ -42,7 +42,15 @@ public abstract class BufferedDraw
 
             } while( strategy.contentsRestored() );
 
-            strategy.show();
+            try
+            {
+                strategy.show();
+            }
+            catch ( IllegalStateException e )
+            {
+                // Display has gone away - nothing to do
+                return;
+            }
 
         } while( strategy.contentsLost() );
     }
