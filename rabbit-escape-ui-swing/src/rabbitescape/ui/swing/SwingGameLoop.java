@@ -45,7 +45,7 @@ public class SwingGameLoop implements GameLoop
     }
 
     @Override
-    public void run()
+    public void run(String[] args)
     {
         int imagesTileSize = 32;
 

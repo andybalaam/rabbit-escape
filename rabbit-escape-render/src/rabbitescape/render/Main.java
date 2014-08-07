@@ -35,7 +35,7 @@ public abstract class Main
 
     public int launchGame( String[] args )
     {
-        reAssert( args.length == 1 );
+        reAssert( args.length >= 1 );
 
         try
         {
@@ -43,7 +43,7 @@ public abstract class Main
 
             GameLoop gameLoop = createGameLoop( world );
 
-            gameLoop.run();
+            gameLoop.run( args );
 
             gameLoop.showResult();
         }
