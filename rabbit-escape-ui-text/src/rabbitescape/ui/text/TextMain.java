@@ -27,6 +27,7 @@ public class TextMain extends Main
     @Override
     public GameLoop createGameLoop( World world )
     {
-        return new TextGameLoop( world, System.in, System.out );
+        return new TextGameLoop(
+            world, new Terminal( System.in, System.out, Locale.getDefault() ) );
     }
 }
