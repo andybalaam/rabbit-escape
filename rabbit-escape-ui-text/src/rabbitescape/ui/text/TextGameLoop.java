@@ -9,15 +9,21 @@ import rabbitescape.render.GameLoop;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.PrintStream;
 
 public class TextGameLoop implements GameLoop
 {
     private final World world;
+    private final InputStream in;
+    private final PrintStream out;
 
-    public TextGameLoop( World world )
+    public TextGameLoop( World world, InputStream in, PrintStream out )
     {
         this.world = world;
+        this.in = in;
+        this.out = out;
     }
 
     @Override
@@ -35,12 +41,12 @@ public class TextGameLoop implements GameLoop
             {
                 if ( !useInput )
                 {
-                    System.out.println(
+                    out.println(
                         join( "\n", TextWorldManip.renderWorld( world, true ) ) );
                     Thread.sleep( 200 );
                 }
 
-                System.out.println(
+                out.println(
                     join( "\n", TextWorldManip.renderWorld( world, false ) ) );
 
                 if ( useInput )
@@ -52,7 +58,7 @@ public class TextGameLoop implements GameLoop
                         done = processInput( world, inp );
                         if ( !done )
                         {
-                            System.out.println( "Didn't understand '" + inp + "'." );
+                            out.println( "Didn't understand '" + inp + "'." );
                         }
                     }
                 }
@@ -79,7 +85,7 @@ public class TextGameLoop implements GameLoop
         String[] vals = input.split( " +" );
         if ( vals.length != 3 )
         {
-            System.out.println( "num_vals = " + vals.length );
+            out.println( "num_vals = " + vals.length );
             return false;
         }
         String item = vals[0];
@@ -92,7 +98,7 @@ public class TextGameLoop implements GameLoop
         }
         catch( java.lang.NumberFormatException e )
         {
-            System.out.println( e.getMessage() );
+            out.println( e.getMessage() );
             return false;
         }
 
@@ -101,7 +107,7 @@ public class TextGameLoop implements GameLoop
             || y < 0 || y >= world.size.getHeight()
         )
         {
-            System.out.println( "x=" + x+ " y= " + y );
+            out.println( "x=" + x+ " y= " + y );
             return false;
         }
 
@@ -112,19 +118,19 @@ public class TextGameLoop implements GameLoop
         }
         else
         {
-            System.out.println( "Unknown item " + item );
+            out.println( "Unknown item " + item );
             return false;
         }
     }
 
     private String input()
     {
-        System.out.println( "Press return or type 'ITEM x y' to place an item." );
-        System.out.println( "ITEM = bash" );
+        out.println( "Press return or type 'ITEM x y' to place an item." );
+        out.println( "ITEM = bash" );
 
         try
         {
-            return new BufferedReader( new InputStreamReader( System.in ) ).readLine();
+            return new BufferedReader( new InputStreamReader( in ) ).readLine();
         }
         catch (IOException e)
         {
@@ -137,11 +143,11 @@ public class TextGameLoop implements GameLoop
     {
         if ( world.success() )
         {
-            System.out.println( "You won!" );
+            out.println( "You won!" );
         }
         else
         {
-            System.out.println( "You lost." );
+            out.println( "You lost." );
         }
     }
 }
