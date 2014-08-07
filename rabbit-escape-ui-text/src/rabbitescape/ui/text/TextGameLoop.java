@@ -33,9 +33,15 @@ public class TextGameLoop implements GameLoop
         {
             try
             {
+                if ( !useInput )
+                {
+                    System.out.println(
+                        join( "\n", TextWorldManip.renderWorld( world, true ) ) );
+                    Thread.sleep( 200 );
+                }
+
                 System.out.println(
-                    join("\n", TextWorldManip.renderWorld( world, false ) ) );
-                Thread.sleep( 200 );
+                    join( "\n", TextWorldManip.renderWorld( world, false ) ) );
 
                 if ( useInput )
                 {
@@ -50,10 +56,10 @@ public class TextGameLoop implements GameLoop
                         }
                     }
                 }
-
-                System.out.println(
-                    join("\n", TextWorldManip.renderWorld( world, true ) ) );
-                Thread.sleep( 200 );
+                else
+                {
+                    Thread.sleep( 200 );
+                }
             }
             catch ( InterruptedException e )
             {
