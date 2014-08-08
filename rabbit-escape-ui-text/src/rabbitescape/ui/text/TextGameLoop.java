@@ -1,6 +1,7 @@
 package rabbitescape.ui.text;
 
 import static rabbitescape.engine.util.Util.*;
+import static rabbitescape.engine.util.Translation.t;
 
 import rabbitescape.engine.World;
 import rabbitescape.engine.textworld.TextWorldManip;
@@ -82,11 +83,11 @@ public class TextGameLoop implements GameLoop
     {
         if ( world.success() )
         {
-            terminal.out.println( "You won!" );
+            terminal.out.println( t( "You won!" ) );
         }
         else
         {
-            terminal.out.println( "You lost." );
+            terminal.out.println( t( "You lost." ) );
         }
     }
 }

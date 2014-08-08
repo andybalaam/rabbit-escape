@@ -7,7 +7,10 @@ import static rabbitescape.engine.util.Util.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 
 import org.junit.Test;
 
@@ -76,6 +79,17 @@ public class TestUtil
     }
 
     @Test
+    public void Build_list_from_array_with_list()
+    {
+        String[] input = new String[] { "a", "c", "b" };
+
+        assertThat(
+            list( input ).toArray( new String[] {} ),
+            equalTo( new String[] { "a", "c", "b" } )
+        );
+    }
+
+    @Test
     public void Get_the_first_item_with_getNth()
     {
         assertThat(
@@ -129,6 +143,25 @@ public class TestUtil
         assertThat(
             list( asChars( "" ) ).toArray( new Character[] {} ),
             equalTo( new Character[] {} )
+        );
+    }
+
+    @Test
+    public void Build_empty_string_from_chars()
+    {
+        assertThat(
+            stringFromChars( list( new Character[] {} ) ),
+            equalTo( "" )
+        );
+    }
+
+
+    @Test
+    public void Build_a_string_from_chars()
+    {
+        assertThat(
+            stringFromChars( list( new Character[] { 'x', 'y', 'z' } ) ),
+            equalTo( "xyz" )
         );
     }
 
@@ -230,6 +263,55 @@ public class TestUtil
         assertThat(
             result.toArray( new Integer[] {} ),
             equalTo( new Integer[] { 5, 4, 3, 6, 7, 8 } )
+        );
+    }
+
+    @Test
+    public void Create_empty_map_with_newMap()
+    {
+        assertThat(
+            newMap(),
+            equalTo( (Map<String, Object>)new HashMap<String, Object>() )
+        );
+    }
+
+    @Test
+    public void Create_full_map_with_newMap()
+    {
+        Map<String, Object> expected = new TreeMap<String, Object>();
+        expected.put( "x", "y" );
+        expected.put( "z", "a" );
+
+        assertThat(
+            newMap( "x", "y", "z", "a" ),
+            equalTo( expected )
+        );
+    }
+
+    @Test( expected = AssertionError.class )
+    public void Odd_number_of_args_to_newMap_is_an_error()
+    {
+        newMap( "x", "y", "z" );
+    }
+
+    Function<Integer, String> stringise()
+    {
+        return new Function<Integer, String>()
+        {
+            @Override
+            public String apply( Integer t )
+            {
+                return t.toString();
+            }
+        };
+    }
+
+    @Test
+    public void Apply_a_function_to_each_element_with_map()
+    {
+        assertThat(
+            list( map( stringise(), list( new Integer[] { 3, -4, 5 } ) ) ),
+            equalTo( list( new String[] { "3", "-4", "5" } ) )
         );
     }
 }

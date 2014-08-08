@@ -4,6 +4,9 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+import static rabbitescape.engine.util.Translation.t;
+import static rabbitescape.engine.util.Util.*;
+
 import rabbitescape.engine.Token;
 import rabbitescape.engine.World;
 import rabbitescape.engine.err.ExceptionTranslation;
@@ -196,8 +199,11 @@ public class InputHandler
 
     private String input()
     {
-        terminal.out.println( "Press return or type 'ITEM x y' to place an item." );
-        terminal.out.println( "ITEM = bash" );
+        terminal.out.println(
+            t( "Press return or type 'ITEM x y' to place an item." ) );
+
+        terminal.out.println(
+            t( "ITEM = ${items}", newMap( "items", "bash" ) ) );
 
         try
         {

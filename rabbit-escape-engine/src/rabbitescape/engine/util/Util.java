@@ -2,12 +2,19 @@ package rabbitescape.engine.util;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.NoSuchElementException;
 
 public class Util
 {
+    public static interface Function<T, R>
+    {
+        public R apply( T t );
+    }
+
     /**
      * Always assert something, without needing -ea set on the JVM.
      */
@@ -34,6 +41,19 @@ public class Util
         throw new ArrayIndexOutOfBoundsException( n );
     }
 
+    public static <T, R> Iterable<R> map(
+        Function<T, R> function, Iterable<T> iterable )
+    {
+        List<R> ret = new ArrayList<R>();
+
+        for ( T t : iterable )
+        {
+            ret.add( function.apply( t ) );
+        }
+
+        return ret;
+    }
+
     public static <T> List<T> list( Iterable<T> input )
     {
         List<T> ret = new ArrayList<T>();
@@ -41,6 +61,25 @@ public class Util
         for ( T item : input )
         {
             ret.add( item );
+        }
+
+        return ret;
+    }
+
+    public static <T> List<T> list( T[] input )
+    {
+        return Arrays.asList( input );
+    }
+
+    public static Map<String, Object> newMap( String... keysAndValues )
+    {
+        reAssert( keysAndValues.length % 2 == 0 );
+
+        Map<String, Object> ret = new HashMap<String, Object>();
+
+        for ( int i = 0; i < keysAndValues.length; i += 2 )
+        {
+            ret.put( keysAndValues[i], keysAndValues[ i + 1 ] );
         }
 
         return ret;
@@ -93,6 +132,18 @@ public class Util
                 return new CharIterator( str );
             }
         };
+    }
+
+    public static String stringFromChars( Iterable<Character> chars )
+    {
+        StringBuilder ret = new StringBuilder();
+
+        for ( Character c : chars )
+        {
+            ret.append( c );
+        }
+
+        return ret.toString();
     }
 
     public static String join( String glue, String[] items )
