@@ -24,7 +24,7 @@ public class TestFalling
         world.step();
 
         assertThat(
-            renderWorld( world, false ),
+            renderWorld( world, false, false ),
             equalTo(
                 "     ",
                 "     ",
@@ -47,7 +47,7 @@ public class TestFalling
         );
 
         assertThat(
-            renderWorld( world, true ),
+            renderWorld( world, true, false ),
             equalTo(
                 "   r ",
                 "   f ",
@@ -60,7 +60,7 @@ public class TestFalling
         world.step();
 
         assertThat(
-            renderWorld( world, false ),
+            renderWorld( world, false, false ),
             equalTo(
                 "     ",
                 "   r ",
@@ -84,7 +84,7 @@ public class TestFalling
         );
 
         assertThat(
-            renderWorld( world, true ),
+            renderWorld( world, true, false ),
             equalTo(
                 "   r ",
                 "   f ",
@@ -98,7 +98,7 @@ public class TestFalling
         world.step();
 
         assertThat(
-            renderWorld( world, true ),
+            renderWorld( world, true, false ),
             equalTo(
                 "     ",
                 "     ",
@@ -112,7 +112,7 @@ public class TestFalling
         world.step();
 
         assertThat(
-            renderWorld( world, true ),
+            renderWorld( world, true, false ),
             equalTo(
                 "     ",
                 "     ",
@@ -142,7 +142,7 @@ public class TestFalling
         world.step();
 
         assertThat(
-            renderWorld( world, true ),
+            renderWorld( world, true, false ),
             equalTo(
                 "     ",
                 "     ",
@@ -158,7 +158,7 @@ public class TestFalling
         world.step();
 
         assertThat(
-            renderWorld( world, false ),
+            renderWorld( world, false, false ),
             equalTo(
                 "     ",
                 "     ",
@@ -172,7 +172,7 @@ public class TestFalling
         );
 
         assertThat(
-            renderWorld( world, true ),
+            renderWorld( world, true, false ),
             equalTo(
                 "     ",
                 "     ",
@@ -189,7 +189,7 @@ public class TestFalling
 
 
         assertThat(
-            renderWorld( world, true ),
+            renderWorld( world, true, false ),
             equalTo(
                 "     ",
                 "     ",
@@ -220,7 +220,7 @@ public class TestFalling
         world.step();
 
         assertThat(
-            renderWorld( world, true ),
+            renderWorld( world, true, false ),
             equalTo(
                 "     ",
                 "     ",
@@ -235,7 +235,7 @@ public class TestFalling
         world.step();
 
         assertThat(
-            renderWorld( world, true ),
+            renderWorld( world, true, false ),
             equalTo(
                 "     ",
                 "     ",
@@ -250,7 +250,7 @@ public class TestFalling
         world.step();
 
         assertThat(
-            renderWorld( world, true ),
+            renderWorld( world, true, false ),
             equalTo(
                 "     ",
                 "     ",
@@ -274,7 +274,7 @@ public class TestFalling
         );
 
         assertThat(
-            renderWorld( world, true ),
+            renderWorld( world, true, false ),
             equalTo(
                 "   r ",
                 "   f ",
@@ -286,7 +286,7 @@ public class TestFalling
         world.step();
 
         assertThat(
-            renderWorld( world, true ),
+            renderWorld( world, true, false ),
             equalTo(
                 "     ",
                 "     ",
@@ -307,7 +307,7 @@ public class TestFalling
         );
 
         assertThat(
-            renderWorld( world, true ),
+            renderWorld( world, true, false ),
             equalTo(
                 "  j  ",
                 "  f  ",
@@ -319,7 +319,7 @@ public class TestFalling
         world.step();
 
         assertThat(
-            renderWorld( world, true ),
+            renderWorld( world, true, false ),
             equalTo(
                 "     ",
                 "     ",
@@ -340,7 +340,7 @@ public class TestFalling
         );
 
         assertThat(
-            renderWorld( world, true ),
+            renderWorld( world, true, false ),
             equalTo(
                 "  r  ",
                 "  f  ",
@@ -352,7 +352,7 @@ public class TestFalling
         world.step();
 
         assertThat(
-            renderWorld( world, true ),
+            renderWorld( world, true, false ),
             equalTo(
                 "     ",
                 "   ' ",
@@ -373,7 +373,7 @@ public class TestFalling
         );
 
         assertThat(
-            renderWorld( world, true ),
+            renderWorld( world, true, false ),
             equalTo(
                 "   j ",
                 "   f ",
@@ -385,7 +385,7 @@ public class TestFalling
         world.step();
 
         assertThat(
-            renderWorld( world, true ),
+            renderWorld( world, true, false ),
             equalTo(
                 "     ",
                 "  !  ",
@@ -405,7 +405,7 @@ public class TestFalling
         );
 
         assertThat(
-            renderWorld( world, true ),
+            renderWorld( world, true, false ),
             equalTo(
                 "   r ",
                 "  #e ",
@@ -416,7 +416,7 @@ public class TestFalling
         world.step();
 
         assertThat(
-            renderWorld( world, true ),
+            renderWorld( world, true, false ),
             equalTo(
                 "     ",
                 "  #r_",
@@ -435,7 +435,7 @@ public class TestFalling
         );
 
         assertThat(
-            renderWorld( world, true ),
+            renderWorld( world, true, false ),
             equalTo(
                 "  j  ",
                 "  s# ",
@@ -446,7 +446,7 @@ public class TestFalling
         world.step();
 
         assertThat(
-            renderWorld( world, true ),
+            renderWorld( world, true, false ),
             equalTo(
                 "     ",
                 " +j# ",
@@ -465,7 +465,7 @@ public class TestFalling
         );
 
         assertThat(
-            renderWorld( world, true ),
+            renderWorld( world, true, false ),
             equalTo(
                 "  r  ",
                 "  d# ",
@@ -476,7 +476,7 @@ public class TestFalling
         world.step();
 
         assertThat(
-            renderWorld( world, true ),
+            renderWorld( world, true, false ),
             equalTo(
                 "   ' ",
                 "  r# ",
@@ -495,7 +495,7 @@ public class TestFalling
         );
 
         assertThat(
-            renderWorld( world, true ),
+            renderWorld( world, true, false ),
             equalTo(
                 "   j ",
                 "  #a ",
@@ -506,7 +506,7 @@ public class TestFalling
         world.step();
 
         assertThat(
-            renderWorld( world, true ),
+            renderWorld( world, true, false ),
             equalTo(
                 "  !  ",
                 "  #j ",
@@ -537,7 +537,7 @@ public class TestFalling
         world.step();
 
         assertThat(
-            renderWorld( world, true ),
+            renderWorld( world, true, false ),
             equalTo(
                 "    ",
                 "    ",
@@ -553,7 +553,7 @@ public class TestFalling
         world.step();
 
         assertThat(
-            renderWorld( world, true ),
+            renderWorld( world, true, false ),
             equalTo(
                 "    ",
                 "    ",
@@ -570,7 +570,7 @@ public class TestFalling
         world.step();
 
         assertThat(
-            renderWorld( world, true ),
+            renderWorld( world, true, false ),
             equalTo(
                 "    ",
                 "    ",

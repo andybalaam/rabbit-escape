@@ -21,7 +21,7 @@ public class TestBashing
         world.step();
 
         assertThat(
-            renderWorld( world, true ),
+            renderWorld( world, true, false ),
             equalTo(
                 "  rI Jj  ",
                 "#########"
@@ -31,7 +31,7 @@ public class TestBashing
         world.step();
 
         assertThat(
-            renderWorld( world, true ),
+            renderWorld( world, true, false ),
             equalTo(
                 "  r> <j  ",
                 "#########"
@@ -50,7 +50,7 @@ public class TestBashing
         world.step();
 
         assertThat(
-            renderWorld( world, true ),
+            renderWorld( world, true, false ),
             equalTo(
                 "  rK     Wj  ",
                 "#############"
@@ -60,7 +60,7 @@ public class TestBashing
         world.step();
 
         assertThat(
-            renderWorld( world, true ),
+            renderWorld( world, true, false ),
             equalTo(
                 "  r>     <j  ",
                 "#############"
@@ -70,7 +70,7 @@ public class TestBashing
         world.step();
 
         assertThat(
-            renderWorld( world, true ),
+            renderWorld( world, true, false ),
             equalTo(
                 "   r>   <j   ",
                 "#############"
@@ -89,7 +89,7 @@ public class TestBashing
         world.step();
 
         assertThat(
-            renderWorld( world, true ),
+            renderWorld( world, true, false ),
             equalTo(
                 "  rK##     ##Wj  ",
                 "#################"
@@ -99,7 +99,7 @@ public class TestBashing
         world.step();
 
         assertThat(
-            renderWorld( world, true ),
+            renderWorld( world, true, false ),
             equalTo(
                 "  r>##     ##<j  ",
                 "#################"
@@ -109,7 +109,7 @@ public class TestBashing
         world.step();
 
         assertThat(
-            renderWorld( world, true ),
+            renderWorld( world, true, false ),
             equalTo(
                 "   rK#     #Wj   ",
                 "#################"
@@ -119,7 +119,7 @@ public class TestBashing
         world.step();
 
         assertThat(
-            renderWorld( world, true ),
+            renderWorld( world, true, false ),
             equalTo(
                 "   r>#     #<j   ",
                 "#################"
@@ -129,7 +129,7 @@ public class TestBashing
         world.step();
 
         assertThat(
-            renderWorld( world, true ),
+            renderWorld( world, true, false ),
             equalTo(
                 "    rK     Wj    ",
                 "#################"
@@ -139,7 +139,7 @@ public class TestBashing
         world.step();
 
         assertThat(
-            renderWorld( world, true ),
+            renderWorld( world, true, false ),
             equalTo(
                 "    r>     <j    ",
                 "#################"
@@ -150,7 +150,7 @@ public class TestBashing
         world.step();
 
         assertThat(
-            renderWorld( world, true ),
+            renderWorld( world, true, false ),
             equalTo(
                 "     r>   <j     ",
                 "#################"

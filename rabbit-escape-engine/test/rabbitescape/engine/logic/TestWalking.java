@@ -23,7 +23,7 @@ public class TestWalking
         world.step();
 
         assertThat(
-            renderWorld( world, false ),
+            renderWorld( world, false, false ),
             equalTo(
                 "     ",
                 "     ",
@@ -46,7 +46,7 @@ public class TestWalking
         world.step();
 
         assertThat(
-            renderWorld( world, false ),
+            renderWorld( world, false, false ),
             equalTo(
                 "     ",
                 "     ",
@@ -65,7 +65,7 @@ public class TestWalking
         );
 
         assertThat(
-            renderWorld( world, true ),
+            renderWorld( world, true, false ),
             equalTo(
                 "#|   ",
                 "#####"
@@ -75,7 +75,7 @@ public class TestWalking
         world.step();
 
         assertThat(
-            renderWorld( world, false ),
+            renderWorld( world, false, false ),
             equalTo(
                 "#r   ",
                 "#####"
@@ -94,7 +94,7 @@ public class TestWalking
         world.step();
 
         assertThat(
-            renderWorld( world, false ),
+            renderWorld( world, false, false ),
             equalTo(
                 "# j# ",
                 "#####"
@@ -115,7 +115,7 @@ public class TestWalking
         world.step();
 
         assertThat(
-            renderWorld( world, true ),
+            renderWorld( world, true, false ),
             equalTo(
                 "      ",
                 "   /##",
@@ -127,7 +127,7 @@ public class TestWalking
         world.step();
 
         assertThat(
-            renderWorld( world, true ),
+            renderWorld( world, true, false ),
             equalTo(
                 "      ",
                 "   $##",
@@ -139,7 +139,7 @@ public class TestWalking
         world.step();
 
         assertThat(
-            renderWorld( world, true ),
+            renderWorld( world, true, false ),
             equalTo(
                 "    ' ",
                 "   r##",
@@ -151,7 +151,7 @@ public class TestWalking
         world.step();
 
         assertThat(
-            renderWorld( world, true ),
+            renderWorld( world, true, false ),
             equalTo(
                 "    r>",  // At top
                 "   /##",
@@ -174,7 +174,7 @@ public class TestWalking
         world.step();
 
         assertThat(
-            renderWorld( world, true ),
+            renderWorld( world, true, false ),
             equalTo(
                 "      ",
                 "##\\   ",
@@ -186,7 +186,7 @@ public class TestWalking
         world.step();
 
         assertThat(
-            renderWorld( world, true ),
+            renderWorld( world, true, false ),
             equalTo(
                 "      ",
                 "##^   ",
@@ -198,7 +198,7 @@ public class TestWalking
         world.step();
 
         assertThat(
-            renderWorld( world, true ),
+            renderWorld( world, true, false ),
             equalTo(
                 " !    ",
                 "##j   ",
@@ -210,7 +210,7 @@ public class TestWalking
         world.step();
 
         assertThat(
-            renderWorld( world, true ),
+            renderWorld( world, true, false ),
             equalTo(
                 "<j    ",  // At top
                 "##\\   ",
@@ -233,7 +233,7 @@ public class TestWalking
         world.step();
 
         assertThat(
-            renderWorld( world, true ),
+            renderWorld( world, true, false ),
             equalTo(
                 " r    ",
                 "##-   ", // Approaching
@@ -245,7 +245,7 @@ public class TestWalking
         world.step();
 
         assertThat(
-            renderWorld( world, true ),
+            renderWorld( world, true, false ),
             equalTo(
                 "      ",
                 "##r   ", // Going down slope
@@ -257,7 +257,7 @@ public class TestWalking
         world.step();
 
         assertThat(
-            renderWorld( world, true ),
+            renderWorld( world, true, false ),
             equalTo(
                 "      ",
                 "##\\   ", // Approaching bottom
@@ -268,7 +268,7 @@ public class TestWalking
         world.step();
 
         assertThat(
-            renderWorld( world, true ),
+            renderWorld( world, true, false ),
             equalTo(
                 "      ",
                 "##\\   ",
@@ -291,7 +291,7 @@ public class TestWalking
         world.step();
 
         assertThat(
-            renderWorld( world, true ),
+            renderWorld( world, true, false ),
             equalTo(
                 "    j ",
                 "   =##", // Approaching
@@ -303,7 +303,7 @@ public class TestWalking
         world.step();
 
         assertThat(
-            renderWorld( world, true ),
+            renderWorld( world, true, false ),
             equalTo(
                 "      ",
                 "   j##", // Going down slope
@@ -315,7 +315,7 @@ public class TestWalking
         world.step();
 
         assertThat(
-            renderWorld( world, true ),
+            renderWorld( world, true, false ),
             equalTo(
                 "      ",
                 "   /##", // Approaching bottom
@@ -327,7 +327,7 @@ public class TestWalking
         world.step();
 
         assertThat(
-            renderWorld( world, true ),
+            renderWorld( world, true, false ),
             equalTo(
                 "      ",
                 "   /##",
@@ -349,7 +349,7 @@ public class TestWalking
         world.step();
 
         assertThat(
-            renderWorld( world, true ),
+            renderWorld( world, true, false ),
             equalTo(
                 "   #",
                 " r~#",
@@ -360,7 +360,7 @@ public class TestWalking
         world.step();
 
         assertThat(
-            renderWorld( world, true ),
+            renderWorld( world, true, false ),
             equalTo(
                 "   #",
                 "  }#",
@@ -371,7 +371,7 @@ public class TestWalking
         world.step();
 
         assertThat(
-            renderWorld( world, true ),
+            renderWorld( world, true, false ),
             equalTo(
                 "   #",
                 " +j#",
@@ -382,7 +382,7 @@ public class TestWalking
         world.step();
 
         assertThat(
-            renderWorld( world, true ),
+            renderWorld( world, true, false ),
             equalTo(
                 "   #",
                 "<j/#",
@@ -403,7 +403,7 @@ public class TestWalking
         world.step();
 
         assertThat(
-            renderWorld( world, true ),
+            renderWorld( world, true, false ),
             equalTo(
                 "#   ",
                 "#`j ",
@@ -414,7 +414,7 @@ public class TestWalking
         world.step();
 
         assertThat(
-            renderWorld( world, true ),
+            renderWorld( world, true, false ),
             equalTo(
                 "#   ",
                 "#{  ",
@@ -425,7 +425,7 @@ public class TestWalking
         world.step();
 
         assertThat(
-            renderWorld( world, true ),
+            renderWorld( world, true, false ),
             equalTo(
                 "#   ",
                 "#r_ ",
@@ -436,7 +436,7 @@ public class TestWalking
         world.step();
 
         assertThat(
-            renderWorld( world, true ),
+            renderWorld( world, true, false ),
             equalTo(
                 "#   ",
                 "#\\r>",
@@ -455,7 +455,7 @@ public class TestWalking
         );
 
         assertThat(
-            renderWorld( world, true ),
+            renderWorld( world, true, false ),
             equalTo(
                 " r  ",
                 "##-#",
@@ -466,7 +466,7 @@ public class TestWalking
         world.step();
 
         assertThat(
-            renderWorld( world, true ),
+            renderWorld( world, true, false ),
             equalTo(
                 "    ",
                 "##]#",
@@ -477,7 +477,7 @@ public class TestWalking
         world.step();
 
         assertThat(
-            renderWorld( world, true ),
+            renderWorld( world, true, false ),
             equalTo(
                 " !  ",
                 "##j#",
@@ -488,7 +488,7 @@ public class TestWalking
         world.step();
 
         assertThat(
-            renderWorld( world, true ),
+            renderWorld( world, true, false ),
             equalTo(
                 "<j  ",
                 "##\\#",
@@ -507,7 +507,7 @@ public class TestWalking
         );
 
         assertThat(
-            renderWorld( world, true ),
+            renderWorld( world, true, false ),
             equalTo(
                 "  j ",
                 "#=##",
@@ -518,7 +518,7 @@ public class TestWalking
         world.step();
 
         assertThat(
-            renderWorld( world, true ),
+            renderWorld( world, true, false ),
             equalTo(
                 "    ",
                 "#[##",
@@ -529,7 +529,7 @@ public class TestWalking
         world.step();
 
         assertThat(
-            renderWorld( world, true ),
+            renderWorld( world, true, false ),
             equalTo(
                 "  ' ",
                 "#r##",
@@ -540,7 +540,7 @@ public class TestWalking
         world.step();
 
         assertThat(
-            renderWorld( world, true ),
+            renderWorld( world, true, false ),
             equalTo(
                 "  r>",
                 "#/##",
@@ -559,7 +559,7 @@ public class TestWalking
         );
 
         assertThat(
-            renderWorld( world, true ),
+            renderWorld( world, true, false ),
             equalTo(
                 "r   ",
                 "#-/#",
@@ -570,7 +570,7 @@ public class TestWalking
         world.step();
 
         assertThat(
-            renderWorld( world, true ),
+            renderWorld( world, true, false ),
             equalTo(
                 "    ",
                 "#r,#",
@@ -581,7 +581,7 @@ public class TestWalking
         world.step();
 
         assertThat(
-            renderWorld( world, true ),
+            renderWorld( world, true, false ),
             equalTo(
                 "   '",
                 "#\\r#",
@@ -600,7 +600,7 @@ public class TestWalking
         );
 
         assertThat(
-            renderWorld( world, true ),
+            renderWorld( world, true, false ),
             equalTo(
                 "   j",
                 "#\\=#",
@@ -611,7 +611,7 @@ public class TestWalking
         world.step();
 
         assertThat(
-            renderWorld( world, true ),
+            renderWorld( world, true, false ),
             equalTo(
                 "    ",
                 "#.j#",
@@ -622,7 +622,7 @@ public class TestWalking
         world.step();
 
         assertThat(
-            renderWorld( world, true ),
+            renderWorld( world, true, false ),
             equalTo(
                 "!   ",
                 "#j/#",
@@ -644,7 +644,7 @@ public class TestWalking
         world.step();
 
         assertThat(
-            renderWorld( world, true ),
+            renderWorld( world, true, false ),
             equalTo(
                 "    ",
                 " r& ",
@@ -655,7 +655,7 @@ public class TestWalking
         world.step();
 
         assertThat(
-            renderWorld( world, true ),
+            renderWorld( world, true, false ),
             equalTo(
                 "    ",
                 " /r_",
@@ -676,7 +676,7 @@ public class TestWalking
         world.step();
 
         assertThat(
-            renderWorld( world, true ),
+            renderWorld( world, true, false ),
             equalTo(
                 "    ",
                 " *j ",
@@ -687,7 +687,7 @@ public class TestWalking
         world.step();
 
         assertThat(
-            renderWorld( world, true ),
+            renderWorld( world, true, false ),
             equalTo(
                 "    ",
                 "+j\\ ",

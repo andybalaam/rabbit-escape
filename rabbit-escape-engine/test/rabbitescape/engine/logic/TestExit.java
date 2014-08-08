@@ -22,7 +22,7 @@ public class TestExit
         world.step();
 
         assertThat(
-            renderWorld( world, true ),
+            renderWorld( world, true, false ),
             equalTo(
                 " r>O ",
                 "#####"
@@ -32,7 +32,7 @@ public class TestExit
         world.step();
 
         assertThat(
-            renderWorld( world, true ),
+            renderWorld( world, true, false ),
             equalTo(
                 "  r> ",
                 "#####"
@@ -42,7 +42,7 @@ public class TestExit
         world.step();
 
         assertThat(
-            renderWorld( world, true ),
+            renderWorld( world, true, false ),
             equalTo(
                 "   R ",  // Entering
                 "#####"
@@ -52,7 +52,7 @@ public class TestExit
         world.step();
 
         assertThat(
-            renderWorld( world, true ),
+            renderWorld( world, true, false ),
             equalTo(
                 "   O ",  // Gone
                 "#####"

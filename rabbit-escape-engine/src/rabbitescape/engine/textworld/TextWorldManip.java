@@ -62,7 +62,8 @@ public class TextWorldManip
         );
     }
 
-    public static String[] renderWorld( World world, boolean showChanges )
+    public static String[] renderWorld(
+        World world, boolean showChanges, boolean coordinates )
     {
         char[][] chars = emptyWorldChars( world );
 
@@ -75,29 +76,70 @@ public class TextWorldManip
             ChangeRenderer.render( chars, world.describeChanges() );
         }
 
-        return charsToStrings( chars );
+        return charsToStrings( chars, coordinates );
     }
 
     public static String[] renderChangeDescription(
-        World world, ChangeDescription desc )
+        World world, ChangeDescription desc, boolean coordinates )
     {
         char[][] chars = emptyWorldChars( world );
 
         ChangeRenderer.render( chars, desc );
 
-        return charsToStrings( chars );
+        return charsToStrings( chars, coordinates );
     }
 
-    private static String[] charsToStrings( char[][] chars )
+    private static String[] charsToStrings(
+        char[][] chars, boolean coordinates )
     {
-        String[] ret = new String[chars.length];
+        int len = chars.length;
+
+        if ( coordinates )
+        {
+            len += 2;
+        }
+
+        String[] ret = new String[len];
 
         for ( int lineNum = 0; lineNum < chars.length; ++lineNum )
         {
-            ret[lineNum] = new String( chars[lineNum] );
+            String ans = new String( chars[lineNum] );
+
+            if ( coordinates)
+            {
+                ans = formatRowNum( lineNum ) + " " + ans;
+            }
+            ret[lineNum] = ans;
+        }
+
+        if ( coordinates )
+        {
+            addColumnCoords( ret, chars[0].length, chars.length );
         }
 
         return ret;
+    }
+
+    private static void addColumnCoords( String[] ret, int width, int height )
+    {
+        StringBuilder tensRow = new StringBuilder();
+        StringBuilder unitsRow = new StringBuilder();
+
+        tensRow.append( "   " );
+        unitsRow.append( "   " );
+        for ( int i = 0; i < width; ++i )
+        {
+            tensRow.append( ( i / 10 ) % 10 );
+            unitsRow.append( i % 10 );
+        }
+
+        ret[height]     = tensRow.toString();
+        ret[height + 1] = unitsRow.toString();
+    }
+
+    private static String formatRowNum( int lineNum )
+    {
+        return String.format( "%02d", lineNum ).substring( 0, 2 );
     }
 
     private static char[][] emptyWorldChars( World world )

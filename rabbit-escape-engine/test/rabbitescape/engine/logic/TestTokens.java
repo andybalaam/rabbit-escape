@@ -21,7 +21,7 @@ public class TestTokens
         );
 
         assertThat(
-            renderWorld( world, true ),
+            renderWorld( world, true, false ),
             equalTo(
                 " b ",
                 " z ",
@@ -33,7 +33,7 @@ public class TestTokens
         world.step();
 
         assertThat(
-            renderWorld( world, true ),
+            renderWorld( world, true, false ),
             equalTo(
                 "   ",
                 " b ",
@@ -45,7 +45,7 @@ public class TestTokens
         world.step();
 
         assertThat(
-            renderWorld( world, true ),
+            renderWorld( world, true, false ),
             equalTo(
                 "   ",
                 "   ",
@@ -57,7 +57,7 @@ public class TestTokens
         world.step();
 
         assertThat(
-            renderWorld( world, true ),
+            renderWorld( world, true, false ),
             equalTo(
                 "   ",
                 "   ",

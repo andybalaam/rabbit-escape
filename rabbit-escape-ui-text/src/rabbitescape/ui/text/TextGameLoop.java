@@ -74,8 +74,9 @@ public class TextGameLoop implements GameLoop
 
     private void printWorldImpl( boolean showChanges )
     {
-        terminal.out.println(
-            join( "\n", TextWorldManip.renderWorld( world, showChanges ) ) );
+        String[] txt = TextWorldManip.renderWorld( world, showChanges, true );
+
+        terminal.out.println( join( "\n", txt ) );
     }
 
     @Override

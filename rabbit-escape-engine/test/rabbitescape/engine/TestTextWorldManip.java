@@ -23,12 +23,41 @@ public class TestTextWorldManip
         };
 
         assertThat(
-            renderWorld( createWorld( lines ), false ),
+            renderWorld( createWorld( lines ), false, false ),
             equalTo( lines )
         );
 
         // Also, shouldn't throw if we render this with states
-        renderWorld( createWorld( lines ), true );
+        renderWorld( createWorld( lines ), true, false );
+    }
+
+    @Test
+    public void Basic_world_with_coords()
+    {
+        String[] world = {
+            "############",
+            "#          #",
+            "#          #",
+            "#          #",
+            "#          #",
+            "############"
+        };
+
+        String[] expected = {
+            "00 ############",
+            "01 #          #",
+            "02 #          #",
+            "03 #          #",
+            "04 #          #",
+            "05 ############",
+            "   000000000011",
+            "   012345678901",
+        };
+
+        assertThat(
+            renderWorld( createWorld( world ), false, true ),
+            equalTo( expected )
+        );
     }
 
     @Test
@@ -42,7 +71,7 @@ public class TestTextWorldManip
         desc.add( 1, 2, RABBIT_WALKING_RIGHT );
 
         assertThat(
-            renderChangeDescription( world, desc ),
+            renderChangeDescription( world, desc, false ),
             equalTo(
                 " > ",
                 " < ",
@@ -61,7 +90,7 @@ public class TestTextWorldManip
         desc.add( 2, 0, RABBIT_TURNING_RIGHT_TO_LEFT  );
 
         assertThat(
-            renderChangeDescription( world, desc ),
+            renderChangeDescription( world, desc, false ),
             equalTo(
                 "| ?",
                 "   "
@@ -81,7 +110,7 @@ public class TestTextWorldManip
         desc.add( 0, 7, RABBIT_TURNING_RIGHT_TO_LEFT_RISING );
 
         assertThat(
-            renderChangeDescription( world, desc ),
+            renderChangeDescription( world, desc, false ),
             equalTo(
                 "     ",
                 " ~   ",
@@ -107,7 +136,7 @@ public class TestTextWorldManip
         desc.add( 4, 7, RABBIT_TURNING_LEFT_TO_RIGHT_RISING  );
 
         assertThat(
-            renderChangeDescription( world, desc ),
+            renderChangeDescription( world, desc, false ),
             equalTo(
                 "     ",
                 "   ` ",
@@ -133,7 +162,7 @@ public class TestTextWorldManip
         desc.add( 0, 6, RABBIT_TURNING_LEFT_TO_RIGHT_LOWERING  );
 
         assertThat(
-            renderChangeDescription( world, desc ),
+            renderChangeDescription( world, desc, false ),
             equalTo(
                 "     ",
                 " -   ",
@@ -159,7 +188,7 @@ public class TestTextWorldManip
         desc.add( 4, 6, RABBIT_TURNING_LEFT_TO_RIGHT_LOWERING  );
 
         assertThat(
-            renderChangeDescription( world, desc ),
+            renderChangeDescription( world, desc, false ),
             equalTo(
                 "     ",
                 "   = ",
@@ -184,7 +213,7 @@ public class TestTextWorldManip
         desc.add( 1, 2, RABBIT_FALLING_1 );
 
         assertThat(
-            renderChangeDescription( world, desc ),
+            renderChangeDescription( world, desc, false ),
             equalTo(
                 "   ",
                 "f  ",
@@ -205,7 +234,7 @@ public class TestTextWorldManip
         desc.add( 2, 0, RABBIT_DYING_OF_FALLING_2  );
 
         assertThat(
-            renderChangeDescription( world, desc ),
+            renderChangeDescription( world, desc, false ),
             equalTo(
                 "  y",
                 "x  "
@@ -222,7 +251,7 @@ public class TestTextWorldManip
         desc.add( 0, 0, RABBIT_DYING_OF_FALLING );
 
         assertThat(
-            renderChangeDescription( world, desc ),
+            renderChangeDescription( world, desc, false ),
             equalTo(
                 "X  ",
                 "   "
@@ -240,7 +269,7 @@ public class TestTextWorldManip
         desc.add( 4, 0, RABBIT_LOWERING_AND_RISING_LEFT );
 
         assertThat(
-            renderChangeDescription( world, desc ),
+            renderChangeDescription( world, desc, false ),
             equalTo(
                 " , . ",
                 "     "
@@ -258,7 +287,7 @@ public class TestTextWorldManip
         desc.add( 4, 0, RABBIT_RISING_AND_LOWERING_LEFT );
 
         assertThat(
-            renderChangeDescription( world, desc ),
+            renderChangeDescription( world, desc, false ),
             equalTo(
                 " & * ",
                 "     "
@@ -282,7 +311,7 @@ public class TestTextWorldManip
         desc.add( 7, 0, RABBIT_FALLING_1_ONTO_RISE_LEFT );
 
         assertThat(
-            renderChangeDescription( world, desc ),
+            renderChangeDescription( world, desc, false ),
             equalTo(
                 "        ",
                 "ffffedsa",
@@ -300,7 +329,7 @@ public class TestTextWorldManip
         desc.add( 0, 0, TOKEN_FALLING );
 
         assertThat(
-            renderChangeDescription( world, desc ),
+            renderChangeDescription( world, desc, false ),
             equalTo(
                 " ",
                 "z"
@@ -320,7 +349,7 @@ public class TestTextWorldManip
         desc.add( 1, 3, RABBIT_BASHING_USELESSLY_LEFT );
 
         assertThat(
-            renderChangeDescription( world, desc ),
+            renderChangeDescription( world, desc, false ),
             equalTo(
                 "  K",
                 "W  ",

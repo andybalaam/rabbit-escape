@@ -25,7 +25,7 @@ public class TestEntrance
         world.step();
 
         assertThat(
-            renderWorld( world, true ),
+            renderWorld( world, true, false ),
             equalTo(
                 " Q   ",
                 " r   ",
@@ -49,7 +49,7 @@ public class TestEntrance
         fiveSteps( world );
 
         assertThat(
-            renderWorld( world, false ),
+            renderWorld( world, false, false ),
             equalTo(
                 " Q              ",
                 " r r r          ",
@@ -61,7 +61,7 @@ public class TestEntrance
         fiveSteps( world );
 
         assertThat(
-            renderWorld( world, false ),
+            renderWorld( world, false, false ),
             equalTo(
                 " Q              ",
                 "  r r r r r     ",
@@ -84,7 +84,7 @@ public class TestEntrance
         fiveSteps( world );
 
         assertThat(
-            renderWorld( world, false ),
+            renderWorld( world, false, false ),
             equalTo(
                 " Q              ",
                 "     r          ",
@@ -96,7 +96,7 @@ public class TestEntrance
         world.step();
 
         assertThat(
-            renderWorld( world, false ),
+            renderWorld( world, false, false ),
             equalTo(
                 " Q              ",
                 " r    r         ",
@@ -119,7 +119,7 @@ public class TestEntrance
         fiveSteps( world );
 
         assertThat(
-            renderWorld( world, false ),
+            renderWorld( world, false, false ),
             equalTo(
                 " Q              ",
                 "     r          ",
@@ -130,7 +130,7 @@ public class TestEntrance
         fiveSteps( world );
 
         assertThat(
-            renderWorld( world, false ),
+            renderWorld( world, false, false ),
             equalTo(
                 " Q              ",
                 "          r     ",
@@ -154,7 +154,7 @@ public class TestEntrance
         fiveSteps( world );
 
         assertThat(
-            renderWorld( world, false ),
+            renderWorld( world, false, false ),
             equalTo(
                 " Q              ",
                 "  rrrr          ",
@@ -165,7 +165,7 @@ public class TestEntrance
         fiveSteps( world );
 
         assertThat(
-            renderWorld( world, false ),
+            renderWorld( world, false, false ),
             equalTo(
                 " Q              ",
                 "       rrrr     ",
