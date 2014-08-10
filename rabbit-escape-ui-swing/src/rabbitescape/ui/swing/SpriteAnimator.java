@@ -6,10 +6,7 @@ import java.util.Locale;
 
 import static rabbitescape.engine.Direction.*;
 
-import rabbitescape.engine.Block;
-import rabbitescape.engine.ChangeDescription;
-import rabbitescape.engine.Rabbit;
-import rabbitescape.engine.World;
+import rabbitescape.engine.*;
 import rabbitescape.render.Animation;
 import rabbitescape.render.AnimationCache;
 import rabbitescape.render.BitmapCache;
@@ -51,7 +48,7 @@ public class SpriteAnimator
 
     public Sprite[] getSprites( int frameNum )
     {
-        List<Sprite> ret = new ArrayList<Sprite>();
+        List<Sprite> ret = new ArrayList<>();
 
         for ( Block block : world.blocks )
         {
@@ -70,34 +67,44 @@ public class SpriteAnimator
 
         for ( Rabbit rabbit : world.rabbits )
         {
-            String frame = rabbit.state.name().toLowerCase( Locale.ENGLISH );
-            Animation animation = animationCache.get( frame );
-
-            if ( animation == null )
-            {
-                continue;  // TODO: Throw here - we should find all animations
-            }
-
-            // TODO: don't make a new one of these every time?
-            SwingAnimation swingAnimation = new SwingAnimation(
-                bitmapCache, animation );
-
-            SwingBitmapAndOffset bmp = swingAnimation.get( frameNum );
-
-            ret.add(
-                new Sprite(
-                    bmp.bitmap,
-                    scaler,
-                    rabbit.x,
-                    rabbit.y,
-                    tileSize,
-                    bmp.offsetX,
-                    bmp.offsetY
-                )
-            );
+            drawThing( frameNum, ret, rabbit );
         }
 
-        return ret.toArray( new Sprite[] {} );
+        for ( Thing thing : world.things )
+        {
+            drawThing( frameNum, ret, thing );
+        }
+
+        return ret.toArray( new Sprite[ret.size()] );
+    }
+
+    private void drawThing( int frameNum, List<Sprite> ret, Thing thing )
+    {
+        String frame = thing.state.name().toLowerCase( Locale.ENGLISH );
+        Animation animation = animationCache.get( frame );
+
+        if ( animation == null )
+        {
+            return;
+        }
+
+        // TODO: don't make a new one of these every time?
+        SwingAnimation swingAnimation = new SwingAnimation(
+            bitmapCache, animation );
+
+        SwingBitmapAndOffset bmp = swingAnimation.get( frameNum );
+
+        ret.add(
+            new Sprite(
+                bmp.bitmap,
+                scaler,
+                thing.x,
+                thing.y,
+                tileSize,
+                bmp.offsetX,
+                bmp.offsetY
+            )
+        );
     }
 
     private SwingBitmap bitmapForBlock( Block block )

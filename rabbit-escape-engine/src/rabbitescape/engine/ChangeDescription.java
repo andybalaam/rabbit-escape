@@ -7,7 +7,7 @@ public class ChangeDescription
 {
     public enum State
     {
-        NOT_CHANGING,
+        NOTHING,
         RABBIT_WALKING_LEFT,
         RABBIT_TURNING_LEFT_TO_RIGHT,
         RABBIT_TURNING_LEFT_TO_RIGHT_RISING,
@@ -50,6 +50,7 @@ public class ChangeDescription
         RABBIT_BASHING_LEFT,
         RABBIT_BASHING_USELESSLY_RIGHT,
         RABBIT_BASHING_USELESSLY_LEFT,
+        TOKEN_STILL,
         TOKEN_FALLING,
     }
 

@@ -12,7 +12,7 @@ public abstract class Thing
 
     public Thing( int x, int y )
     {
-        state = NOT_CHANGING;
+        state = NOTHING;
         this.x = x;
         this.y = y;
     }

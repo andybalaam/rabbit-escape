@@ -22,7 +22,7 @@ public class Token extends Thing
     {
         if ( world.flatBlockAt( x, y + 1 ) )
         {
-            state = NOT_CHANGING;
+            state = TOKEN_STILL;
         }
         else
         {
