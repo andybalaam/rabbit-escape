@@ -13,7 +13,7 @@ public class Token extends Thing
 
     public Token( int x, int y, Type type )
     {
-        super( x, y );
+        super( x, y, TOKEN_STILL );
         this.type = type;
     }
 

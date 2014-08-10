@@ -1,5 +1,7 @@
 package rabbitescape.engine;
 
+import static rabbitescape.engine.ChangeDescription.State.*;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,7 +19,7 @@ public class Rabbit extends Thing
 
     public Rabbit( int x, int y, Direction dir )
     {
-        super( x, y );
+        super( x, y, RABBIT_WALKING_LEFT );
         this.dir = dir;
         behaviours = createBehaviours();
     }

@@ -1,5 +1,6 @@
 package rabbitescape.engine;
 
+import static rabbitescape.engine.ChangeDescription.State.*;
 import static rabbitescape.engine.Direction.*;
 
 public class Entrance extends Thing
@@ -10,7 +11,7 @@ public class Entrance extends Thing
 
     public Entrance( int x, int y )
     {
-        super( x, y );
+        super( x, y, ENTRANCE );
         delay = -1;
         timeToNextRabbit = 0;
     }

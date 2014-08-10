@@ -17,7 +17,6 @@ public class ChangeRenderer
     {
         switch( change.state )
         {
-            case TOKEN_STILL:
             case NOTHING:
                 break;
             case RABBIT_WALKING_LEFT:
@@ -151,8 +150,14 @@ public class ChangeRenderer
             case RABBIT_BASHING_USELESSLY_LEFT:
                 chars[change.y][change.x - 1] = 'J';
                 break;
+            case TOKEN_STILL:
+                break;
             case TOKEN_FALLING:
                 chars[change.y + 1][change.x] = 'z';
+                break;
+            case ENTRANCE:
+                break;
+            case EXIT:
                 break;
             default:
                 throw new AssertionError(

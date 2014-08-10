@@ -52,6 +52,8 @@ public class ChangeDescription
         RABBIT_BASHING_USELESSLY_LEFT,
         TOKEN_STILL,
         TOKEN_FALLING,
+        ENTRANCE,
+        EXIT,
     }
 
     public static class Change

@@ -10,9 +10,9 @@ public abstract class Thing
     public int x;
     public int y;
 
-    public Thing( int x, int y )
+    public Thing( int x, int y, State state )
     {
-        state = NOTHING;
+        this.state = state;
         this.x = x;
         this.y = y;
     }
