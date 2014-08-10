@@ -57,6 +57,7 @@ public class Bashing implements Behaviour
                 );
             }
         }
+        --stepsOfBashing;
         return null;
     }
 

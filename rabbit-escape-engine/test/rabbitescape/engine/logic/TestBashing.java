@@ -157,4 +157,63 @@ public class TestBashing
             )
         );
     }
+
+    @Test
+    public void Bashing_doesnt_last()
+    {
+        World world = createWorld(
+                " rb# # # #bj ",
+                "#############"
+        );
+
+        world.step();
+
+        assertThat(
+                renderWorld( world, true, false ),
+                equalTo(
+                        "  rK # # Wj  ",
+                        "#############"
+                )
+        );
+
+        world.step();
+
+        assertThat(
+                renderWorld( world, true, false ),
+                equalTo(
+                        "  r> # # <j  ",
+                        "#############"
+                )
+        );
+
+        world.step();
+
+        assertThat(
+                renderWorld( world, true, false ),
+                equalTo(
+                        "   r># #<j   ",
+                        "#############"
+                )
+        );
+
+        world.step();
+
+        assertThat(
+                renderWorld( world, true, false ),
+                equalTo(
+                        "    ?# #|    ",
+                        "#############"
+                )
+        );
+
+        world.step();
+
+        assertThat(
+                renderWorld( world, true, false ),
+                equalTo(
+                        "   <j# #r>   ",
+                        "#############"
+                )
+        );
+    }
 }
