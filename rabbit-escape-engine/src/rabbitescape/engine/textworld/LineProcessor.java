@@ -20,6 +20,7 @@ class LineProcessor
     private final List<Block> blocks;
     private final List<Rabbit> rabbits;
     private final List<Thing> things;
+    private final Map<Token.Type, Integer> abilities;
     private final String[] lines;
     private final Map<String, String>  m_metaStrings;
     private final Map<String, Integer> m_metaInts;
@@ -32,15 +33,17 @@ class LineProcessor
         List<Block> blocks,
         List<Rabbit> rabbits,
         List<Thing> things,
+        Map<Token.Type, Integer> abilities,
         String[] lines
     )
     {
         this.blocks = blocks;
         this.rabbits = rabbits;
         this.things = things;
+        this.abilities = abilities;
         this.lines = lines;
-        this.m_metaStrings = new HashMap<String, String>();
-        this.m_metaInts    = new HashMap<String, Integer>();
+        this.m_metaStrings = new HashMap<>();
+        this.m_metaInts    = new HashMap<>();
 
         width = -1;
         height = 0;
@@ -71,7 +74,7 @@ class LineProcessor
         }
         else
         {
-            return ret.intValue();
+            return ret;
         }
     }
 
@@ -109,22 +112,31 @@ class LineProcessor
 
         if ( TextWorldManip.META_INTS.contains( key ) )
         {
-            try
-            {
-                m_metaInts.put( key, Integer.valueOf( value ) );
-            }
-            catch( NumberFormatException e )
-            {
-                throw new NonIntegerMetaValue( lines, lineNum );
-            }
+            m_metaInts.put( key, toInt( value ) );
         }
         else if ( TextWorldManip.META_STRINGS.contains( key ) )
         {
             m_metaStrings.put( key, value );
         }
+        else if ( TextWorldManip.ABILITIES.contains( key ) )
+        {
+            abilities.put( Token.Type.valueOf( key ), toInt( value ) );
+        }
         else
         {
             throw new UnknownMetaKey( lines, lineNum );
+        }
+    }
+
+    private int toInt( String value )
+    {
+        try
+        {
+            return Integer.valueOf( value );
+        }
+        catch( NumberFormatException e )
+        {
+            throw new NonIntegerMetaValue( lines, lineNum );
         }
     }
 

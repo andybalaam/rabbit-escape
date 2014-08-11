@@ -175,10 +175,7 @@ public class InputHandler
             Command command = new Command( input, world );
             if ( command.item.equals( "bash" ) )
             {
-                world.addThing(
-                    new Token( command.x, command.y, Token.Type.bash ) );
-
-                return true;
+                world.addToken( command.x, command.y, Token.Type.bash );
             }
             else
             {
@@ -189,6 +186,8 @@ public class InputHandler
         {
             return fail( ExceptionTranslation.translate( e, terminal.locale ) );
         }
+
+        return true;
     }
 
     private boolean fail( String message )

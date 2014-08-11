@@ -1,14 +1,13 @@
 package rabbitescape.engine.logic;
 
+import static org.hamcrest.MatcherAssert.*;
+import static org.hamcrest.CoreMatchers.*;
 import static rabbitescape.engine.util.Util.*;
 import static rabbitescape.engine.textworld.TextWorldManip.*;
 
-import static org.hamcrest.core.IsNull.*;
-import static org.hamcrest.core.Is.*;
-import static org.hamcrest.MatcherAssert.*;
-
 import org.junit.Test;
 
+import rabbitescape.engine.Token;
 import rabbitescape.engine.World;
 import rabbitescape.engine.World.DontStepAfterFinish;
 
@@ -74,6 +73,71 @@ public class TestWorld
         // We should now be finished
         assertThat( world.finished(), is( true ) );
     }
+
+    @Test
+    public void World_stores_number_of_abilities()
+    {
+        World world = createWorld(
+                ":bash=5",
+                "   ",
+                "###"
+        );
+
+        assertThat( world.abilities.get( Token.Type.bash ), equalTo( 5 ) );
+    }
+
+    @Test
+    public void World_reduces_abilities_when_you_use_a_token()
+    {
+        World world = createWorld(
+                ":bash=5",
+                ":dig=3",
+                "   ",
+                "###"
+        );
+
+        // This is what we are testing
+        world.addToken(0, 0, Token.Type.bash);
+        world.step();
+
+        // There should be one less bash
+        assertThat( world.abilities.get( Token.Type.bash ), equalTo( 4 ) );
+
+        // The dig ability was unaffected
+        assertThat( world.abilities.get( Token.Type.dig ), equalTo( 3 ) );
+    }
+
+    @Test
+    public void World_refuses_to_add_a_token_if_none_left()
+    {
+        World world = createWorld(
+                ":bash=1",
+                "   ",
+                "###"
+        );
+
+        // Use up the last bash
+        world.addToken( 0, 0, Token.Type.bash );
+        world.step();
+
+        // Sanity
+        assertThat( world.abilities.get( Token.Type.bash ), equalTo( 0 ) );
+
+        // This is what we are testing: can't add another
+        World.UnableToAddToken caughtException = null;
+        try
+        {
+            world.addToken( 1, 0, Token.Type.bash );
+        }
+        catch ( World.UnableToAddToken e )
+        {
+            caughtException = e;
+        }
+
+        assertThat( caughtException, notNullValue() );
+    }
+
+    // ---
 
     private void fiveSteps( World world )
     {

@@ -2,13 +2,7 @@ package rabbitescape.engine.util;
 
 import static rabbitescape.engine.util.Util.*;
 
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import java.util.MissingResourceException;
-import java.util.ResourceBundle;
-
-import rabbitescape.engine.util.Util.Function;
+import java.util.*;
 
 public class Translation
 {

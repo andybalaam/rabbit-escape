@@ -49,6 +49,7 @@ public class SwingGameInit implements Runnable
     @Override
     public void run()
     {
+        //noinspection UnnecessaryLocalVariable
         GameJFrame jframe = new GameJFrame( createConfig() );
         // load all images in a worker thread
 

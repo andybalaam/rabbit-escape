@@ -1,7 +1,5 @@
 package rabbitescape.engine;
 
-import static rabbitescape.engine.ChangeDescription.State.*;
-
 import rabbitescape.engine.ChangeDescription.State;
 
 public abstract class Thing

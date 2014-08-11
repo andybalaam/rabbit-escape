@@ -143,6 +143,7 @@ public class Falling implements Behaviour
     boolean falling( Rabbit rabbit, World world )
     {
         int below = rabbit.y + 1;
+        //noinspection RedundantIfStatement
         if ( world.flatBlockAt( rabbit.x, below ) )
         {
             return false;

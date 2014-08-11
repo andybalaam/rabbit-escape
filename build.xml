@@ -9,7 +9,11 @@
             <javac
                 destdir="@{dir}/bin"
                 includeantruntime="false"
+                debug="on"
             >
+                <compilerarg value="-Werror"/>
+                <compilerarg value="-Xlint"/>
+                <compilerarg value="-Xlint:-path"/>
                 <classpath>
                     <pathelement location="lib/org.hamcrest.core_1.3.0.jar"/>
                     <pathelement location="lib/junit.jar"/>

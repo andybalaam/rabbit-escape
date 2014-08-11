@@ -7,6 +7,7 @@ public class Token extends Thing
     public static enum Type
     {
         bash,
+        dig,
     }
 
     public final Type type;

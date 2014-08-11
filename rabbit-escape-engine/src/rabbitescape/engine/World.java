@@ -6,6 +6,7 @@ import static rabbitescape.engine.Direction.*;
 import java.awt.Dimension;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import rabbitescape.engine.err.RabbitEscapeException;
 
@@ -37,13 +38,45 @@ public class World
         }
     }
 
+    public static class UnableToAddToken extends RabbitEscapeException
+    {
+        private static final long serialVersionUID = 1L;
+
+        public final Token.Type ability;
+
+        public UnableToAddToken( Token.Type ability )
+        {
+            this.ability = ability;
+        }
+    }
+
+    public static class NoSuchAbilityInThisWorld extends UnableToAddToken
+    {
+        private static final long serialVersionUID = 1L;
+
+        public NoSuchAbilityInThisWorld( Token.Type ability )
+        {
+            super( ability );
+        }
+    }
+
+    public static class NoneOfThisAbilityLeft extends UnableToAddToken
+    {
+        private static final long serialVersionUID = 1L;
+
+        public NoneOfThisAbilityLeft( Token.Type ability )
+        {
+            super( ability );
+        }
+    }
+
     private static class Changes
     {
-        private final List<Rabbit> rabbitsToAdd    = new ArrayList<Rabbit>();
-        private final List<Rabbit> rabbitsToRemove = new ArrayList<Rabbit>();
-        private final List<Thing>  thingsToAdd     = new ArrayList<Thing>();
-        private final List<Thing>  thingsToRemove  = new ArrayList<Thing>();
-        private final List<Block>  blocksToRemove  = new ArrayList<Block>();
+        private final List<Rabbit> rabbitsToAdd    = new ArrayList<>();
+        private final List<Rabbit> rabbitsToRemove = new ArrayList<>();
+        private final List<Thing>  thingsToAdd     = new ArrayList<>();
+        private final List<Thing>  thingsToRemove  = new ArrayList<>();
+        private final List<Block>  blocksToRemove  = new ArrayList<>();
 
         public void apply( World world )
         {
@@ -72,6 +105,7 @@ public class World
     public final List<Block> blocks;
     public final List<Rabbit> rabbits;
     public final List<Thing> things;
+    public final Map<Token.Type, Integer> abilities;
     public final String name;
     public final int numRabbits;
     public final int requiredNumSavedRabbits;
@@ -87,6 +121,7 @@ public class World
         List<Block> blocks,
         List<Rabbit> rabbits,
         List<Thing> things,
+        Map<Token.Type, Integer> abilities,
         String name,
         int numRabbits,
         int rabbitDelay
@@ -96,6 +131,7 @@ public class World
         this.blocks = blocks;
         this.rabbits = rabbits;
         this.things = things;
+        this.abilities = abilities;
         this.name = name;
         this.numRabbits = numRabbits;
         this.requiredNumSavedRabbits = 1;
@@ -125,7 +161,7 @@ public class World
 
         for ( Thing thing : allThings() )
         {
-            thing.step( this );
+            thing.step(this);
         }
 
         changes.apply( this );
@@ -190,9 +226,23 @@ public class World
         changes.rabbitsToRemove.add( rabbit );
     }
 
-    public void addThing( Thing thing )
+    public void addToken( int x, int y, Token.Type type )
+    throws UnableToAddToken
     {
-        changes.thingsToAdd.add( thing );
+        Integer numLeft = abilities.get( type );
+
+        if ( numLeft == null )
+        {
+            throw new NoSuchAbilityInThisWorld( type );
+        }
+
+        if ( numLeft == 0 )
+        {
+            throw new NoneOfThisAbilityLeft( type );
+        }
+
+        changes.thingsToAdd.add( new Token( x, y, type ) );
+        abilities.put( type, numLeft - 1 );
     }
 
     public void removeThing( Thing thing )

@@ -6,6 +6,9 @@ IMAGES32_DEST=rabbit-escape-ui-swing/src/rabbitescape/ui/swing/images32
 IMAGESSRC := $(wildcard images-src/*.svg)
 IMAGES32 := $(IMAGESSRC:images-src/%.svg=$(IMAGES32_DEST)/%.png)
 
+ANIMATIONS_DIR := rabbit-escape-render/src/rabbitescape/render/animations
+ANIMATIONS_LS := $(ANIMATIONS_DIR)/ls.txt
+
 $(IMAGES32_DEST)/%.png: images-src/%.svg
 	mkdir -p $(IMAGES32_DEST); inkscape $< --export-png=$@
 
@@ -13,22 +16,25 @@ all: compile
 
 images: $(IMAGES32)
 
-rabbit-escape-render/src/rabbitescape/render/animations/ls.txt: rabbit-escape-render/src/rabbitescape/render/animations/*.rea
-	cd rabbit-escape-render/src/rabbitescape/render/animations; ls *.rea > ls.txt
+$(ANIMATIONS_LS): $(ANIMATIONS_DIR)/*.rea
+	cd $(ANIMATIONS_DIR); ls *.rea > ls.txt
 
-animations: rabbit-escape-render/src/rabbitescape/render/animations/ls.txt
+animations: $(ANIMATIONS_LS)
 
 compile: images animations
 	ant compile
 
-clean:
+clean-code:
 	rm -rf \
 		rabbit-escape-engine/bin/* \
 		rabbit-escape-render/bin/* \
 		rabbit-escape-ui-text/bin/* \
-		rabbit-escape-ui-swing/bin/* \
-		images32/* \
-		rabbit-escape-render/src/rabbitescape/render/animations/ls.txt
+		rabbit-escape-ui-swing/bin/*
+
+clean: clean-code
+	rm -rf \
+		$(IMAGES32_DEST)/* \
+		$(ANIMATIONS_LS)
 
 
 run: compile

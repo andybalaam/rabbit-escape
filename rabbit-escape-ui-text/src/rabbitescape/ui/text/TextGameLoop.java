@@ -44,6 +44,7 @@ public class TextGameLoop implements GameLoop
                     InputHandler inputHandler =
                         new InputHandler( world, terminal );
 
+                    //noinspection StatementWithEmptyBody
                     while ( !inputHandler.handle() )
                     {
                     }

@@ -1,15 +1,9 @@
 package rabbitescape.engine.textworld;
 
 import java.awt.Dimension;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
-import rabbitescape.engine.Block;
-import rabbitescape.engine.ChangeDescription;
-import rabbitescape.engine.Rabbit;
-import rabbitescape.engine.Thing;
-import rabbitescape.engine.World;
+import rabbitescape.engine.*;
 
 public class TextWorldManip
 {
@@ -17,32 +11,44 @@ public class TextWorldManip
     private static final String rabbit_delay = "rabbit_delay";
     private static final String name         = "name";
 
-    public static final List<String> META_INTS =
-        Arrays.asList( new String[] {
-            num_rabbits,
-            rabbit_delay
-        } );
+    public static final List<String> META_INTS = Arrays.asList(
+        num_rabbits,
+        rabbit_delay
+    );
 
-    public static final List<String> META_STRINGS =
-        Arrays.asList( new String[] {
-            name
-        } );
+    public static final List<String> META_STRINGS = Arrays.asList(
+        name
+    );
+
+    public static final List<String> ABILITIES = abilitiesList();
+
+    private static List<String> abilitiesList()
+    {
+        List<String> ret = new ArrayList<>();
+        for ( Token.Type type : Token.Type.values() )
+        {
+            ret.add( type.name() );
+        }
+        return ret;
+    }
 
     public static World createWorld( String... lines )
         throws WrongLineLength, UnknownCharacter
     {
-        List<Block> blocks = new ArrayList<Block>();
-        List<Rabbit> rabbits = new ArrayList<Rabbit>();
-        List<Thing> things = new ArrayList<Thing>();
+        List<Block> blocks = new ArrayList<>();
+        List<Rabbit> rabbits = new ArrayList<>();
+        List<Thing> things = new ArrayList<>();
+        Map<Token.Type, Integer> abilities = new HashMap<>();
 
         LineProcessor processor = new LineProcessor(
-            blocks, rabbits, things, lines );
+            blocks, rabbits, things, abilities, lines );
 
         return new World(
             processor.size(),
             blocks,
             rabbits,
             things,
+            abilities,
             processor.metaString( "name",        "Untitled" ),
             processor.metaInt(    "num_rabbits",  10 ),
             processor.metaInt(    "rabbit_delay", 4 )
@@ -56,6 +62,7 @@ public class TextWorldManip
             new ArrayList<Block>(),
             new ArrayList<Rabbit>(),
             new ArrayList<Thing>(),
+            new HashMap<Token.Type, Integer>(),
             "Empty World",
             0,
             1

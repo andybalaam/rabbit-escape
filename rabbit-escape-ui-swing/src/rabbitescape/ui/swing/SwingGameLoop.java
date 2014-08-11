@@ -15,7 +15,7 @@ import rabbitescape.render.Renderer;
 
 public class SwingGameLoop implements GameLoop
 {
-    private final int framesPerStep = 10;
+    private static final int framesPerStep = 10;
 
     private final GameJFrame jframe;
     private final World world;
