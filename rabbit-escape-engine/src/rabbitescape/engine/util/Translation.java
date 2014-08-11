@@ -41,7 +41,7 @@ public class Translation
         {
             return new Function<Character, Character>()
             {
-                List<Character> ALLOWED = list(
+                final List<Character> ALLOWED = list(
                     asChars( "abcdefghijklmnopqrstuvwxyz0123456789" ) );
 
                 @Override

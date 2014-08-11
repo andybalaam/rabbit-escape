@@ -190,6 +190,7 @@ public class InputHandler
         return true;
     }
 
+    @SuppressWarnings( "SameReturnValue" )
     private boolean fail( String message )
     {
         terminal.out.println( message );

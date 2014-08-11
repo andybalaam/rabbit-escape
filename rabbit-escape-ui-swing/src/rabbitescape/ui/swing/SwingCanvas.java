@@ -9,7 +9,7 @@ import rabbitescape.render.androidlike.Paint;
 
 public class SwingCanvas implements Canvas
 {
-    public final Graphics2D gfx;
+    private final Graphics2D gfx;
 
     public SwingCanvas( Graphics2D gfx )
     {

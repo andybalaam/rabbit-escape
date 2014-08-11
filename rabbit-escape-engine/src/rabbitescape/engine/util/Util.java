@@ -44,7 +44,7 @@ public class Util
     public static <T, R> Iterable<R> map(
         Function<T, R> function, Iterable<T> iterable )
     {
-        List<R> ret = new ArrayList<R>();
+        List<R> ret = new ArrayList<>();
 
         for ( T t : iterable )
         {
@@ -56,7 +56,7 @@ public class Util
 
     public static <T> List<T> list( Iterable<T> input )
     {
-        List<T> ret = new ArrayList<T>();
+        List<T> ret = new ArrayList<>();
 
         for ( T item : input )
         {
@@ -71,11 +71,26 @@ public class Util
         return Arrays.asList( input );
     }
 
+    public static String[] stringArray( List<String> list )
+    {
+        return list.toArray( new String[ list.size() ] );
+    }
+
+    public static Character[] characterArray( List<Character> list )
+    {
+        return list.toArray( new Character[ list.size() ] );
+    }
+
+    public static Integer[] integerArray( List<Integer> list )
+    {
+        return list.toArray( new Integer[ list.size() ] );
+    }
+
     public static Map<String, Object> newMap( String... keysAndValues )
     {
         reAssert( keysAndValues.length % 2 == 0 );
 
-        Map<String, Object> ret = new HashMap<String, Object>();
+        Map<String, Object> ret = new HashMap<>();
 
         for ( int i = 0; i < keysAndValues.length; i += 2 )
         {
@@ -243,7 +258,7 @@ public class Util
                     @Override
                     public T next()
                     {
-                        return i1.hasNext() ? (T)i1.next() : (T)i2.next();
+                        return i1.hasNext() ? i1.next() : i2.next();
                     }
 
                     @Override

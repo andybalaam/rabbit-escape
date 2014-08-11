@@ -16,6 +16,7 @@ public class Tools
             @Override
             public boolean matches( Object otherLines )
             {
+                //noinspection SimplifiableIfStatement
                 if ( !( otherLines instanceof String[] ) )
                 {
                     return false;
@@ -39,6 +40,7 @@ public class Tools
             @Override
             public boolean matches( Object otherList )
             {
+                //noinspection SimplifiableIfStatement
                 if ( !( otherList instanceof List<?> ) )
                 {
                     return false;

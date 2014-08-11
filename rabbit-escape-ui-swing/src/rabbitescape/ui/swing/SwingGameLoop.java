@@ -53,7 +53,7 @@ public class SwingGameLoop implements GameLoop
         Renderer renderer = new Renderer( 0, 0, renderingTileSize );
 
         BitmapCache<SwingBitmap> bitmapCache =
-            new BitmapCache<SwingBitmap>( new SwingBitmapLoader(), 500 );
+            new BitmapCache<>( new SwingBitmapLoader(), 500 );
 
         AnimationCache animationCache = new AnimationCache(
             new AnimationLoader() );
@@ -87,7 +87,7 @@ public class SwingGameLoop implements GameLoop
         {
             Thread.sleep( 50 );
         }
-        catch ( InterruptedException e )
+        catch ( InterruptedException ignored )
         {
         }
     }
@@ -163,7 +163,7 @@ public class SwingGameLoop implements GameLoop
         {
             Thread.sleep( 2000 );
         }
-        catch ( InterruptedException e )
+        catch ( InterruptedException ignored )
         {
         }
     }

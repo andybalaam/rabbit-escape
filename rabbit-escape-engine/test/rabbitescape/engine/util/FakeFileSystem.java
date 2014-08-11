@@ -15,7 +15,7 @@ public class FakeFileSystem implements FileSystem
     {
         reAssert( namesAndContents.length % 2 == 0 ); // Even number of args
 
-        files = new TreeMap<String, String[]>();
+        files = new TreeMap<>();
 
         for ( int i = 0; i < namesAndContents.length; i += 2 )
         {
@@ -31,6 +31,7 @@ public class FakeFileSystem implements FileSystem
         return files.containsKey( fileName );
     }
 
+    @SuppressWarnings( "DuplicateThrows" )
     @Override
     public String[] readLines( String fileName )
         throws FileNotFoundException, IOException
@@ -46,10 +47,10 @@ public class FakeFileSystem implements FileSystem
         }
     }
 
+    @SuppressWarnings( "DuplicateThrows" )
     @Override
     public String read( String fileName )
-        throws FileNotFoundException,
-        IOException
+        throws FileNotFoundException, IOException
     {
         return join( "\n", readLines( fileName ) );
     }

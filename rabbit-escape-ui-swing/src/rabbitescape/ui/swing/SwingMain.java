@@ -13,7 +13,7 @@ import rabbitescape.render.Main;
 
 public class SwingMain extends Main
 {
-    public SwingMain( FileSystem fs, PrintStream out, Locale locale )
+    private SwingMain( FileSystem fs, PrintStream out, Locale locale )
     {
         super( fs, out, locale );
     }

@@ -5,7 +5,7 @@ import rabbitescape.engine.util.RealFileSystem;
 
 public class SwingGameInit implements Runnable
 {
-    public static final String CONFIG_PATH =
+    private static final String CONFIG_PATH =
         "~/.rabbitescape/config/ui.properties"
             .replace( "~", System.getProperty( "user.home" ) );
 
@@ -26,6 +26,7 @@ public class SwingGameInit implements Runnable
         {
             while ( jframe == null )
             {
+                //noinspection EmptyCatchBlock
                 try
                 {
                     synchronized( this )

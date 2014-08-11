@@ -91,7 +91,7 @@ public class GameJFrame extends JFrame
         }
     }
 
-    public Canvas canvas;
+    public final Canvas canvas;
 
     private final Config uiConfig;
     private SwingGameLoop gameLoop;

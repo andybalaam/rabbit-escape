@@ -11,15 +11,10 @@ public class SwingAnimation
 {
     private final List<SwingBitmapAndOffset> bitmaps;
 
-    public SwingAnimation( List<SwingBitmapAndOffset> bitmaps )
-    {
-        this.bitmaps = bitmaps;
-    }
-
     public SwingAnimation(
         BitmapCache<SwingBitmap> bitmapCache, Animation animation )
     {
-        this.bitmaps = new ArrayList<SwingBitmapAndOffset>();
+        this.bitmaps = new ArrayList<>();
 
         for ( FrameNameAndOffset frame : animation )
         {

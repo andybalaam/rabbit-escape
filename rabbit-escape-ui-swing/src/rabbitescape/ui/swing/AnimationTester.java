@@ -24,14 +24,14 @@ public class AnimationTester extends JFrame
 {
     private static final long serialVersionUID = 1L;
 
-    public static final String CONFIG_PATH =
+    private static final String CONFIG_PATH =
         "~/.rabbitescape/config/animationtester.properties"
             .replace( "~", System.getProperty( "user.home" ) );
 
-    public static final String CFG_AT_WINDOW_LEFT =
+    private static final String CFG_AT_WINDOW_LEFT =
         "animationtester.window.left";
 
-    public static final String CFG_AT_WINDOW_TOP =
+    private static final String CFG_AT_WINDOW_TOP =
         "animationtester.window.top";
 
     private static final String CFG_AT_TILE_SIZE = "animationtester.tile.size";
@@ -120,7 +120,7 @@ public class AnimationTester extends JFrame
         private JList<String> addAnimationList(
             JPanel parent, String[] possibilities, String animation )
         {
-            JList<String> list = new JList<String>( possibilities );
+            JList<String> list = new JList<>( possibilities );
 
             parent.add( list );
 
@@ -287,7 +287,7 @@ public class AnimationTester extends JFrame
         paint = new SwingPaint();
         SwingBitmapLoader bitmapLoader = new SwingBitmapLoader();
 
-        BitmapCache<SwingBitmap> bitmapCache = new BitmapCache<SwingBitmap>(
+        BitmapCache<SwingBitmap> bitmapCache = new BitmapCache<>(
             bitmapLoader, 500 );
 
         frames = loadAllFrames( bitmapCache, animationNames );

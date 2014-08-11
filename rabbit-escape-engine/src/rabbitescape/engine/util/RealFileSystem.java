@@ -19,37 +19,35 @@ public class RealFileSystem implements FileSystem
         return new File( fileName ).exists();
     }
 
+    @SuppressWarnings( "DuplicateThrows" )
     @Override
     public String[] readLines( String fileName )
         throws FileNotFoundException, IOException
     {
-        List<String> ret = new ArrayList<String>();
+        List<String> ret = new ArrayList<>();
 
-        BufferedReader reader = new BufferedReader(
-            new FileReader( new File( fileName ) ) );
-
-        try
+        try (
+            BufferedReader reader = new BufferedReader(
+                new FileReader( new File( fileName ) )
+            )
+        )
         {
             String line = reader.readLine();
 
-            while( line != null )
+            while ( line != null )
             {
                 ret.add( line );
                 line = reader.readLine();
             }
 
-            return ret.toArray( new String[] {} );
-        }
-        finally
-        {
-            reader.close();
+            return stringArray( ret );
         }
     }
 
+    @SuppressWarnings( "DuplicateThrows" )
     @Override
     public String read( String fileName )
-        throws FileNotFoundException,
-        IOException
+        throws FileNotFoundException, IOException
     {
         return join( "\n", readLines( fileName ) );
     }
@@ -57,14 +55,9 @@ public class RealFileSystem implements FileSystem
     @Override
     public void write( String fileName, String contents ) throws IOException
     {
-        FileWriter writer = new FileWriter( new File( fileName ) );
-        try
+        try ( FileWriter writer = new FileWriter( new File( fileName ) ) )
         {
             writer.append( contents );
-        }
-        finally
-        {
-            writer.close();
         }
     }
 

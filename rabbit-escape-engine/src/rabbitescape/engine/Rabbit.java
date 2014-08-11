@@ -7,12 +7,6 @@ import java.util.List;
 
 public class Rabbit extends Thing
 {
-    public static enum Mode
-    {
-        NORMAL,
-        BASH,
-    }
-
     private final List<Behaviour> behaviours;
 
     public Direction dir;
@@ -26,7 +20,7 @@ public class Rabbit extends Thing
 
     private static List<Behaviour> createBehaviours()
     {
-        List<Behaviour> ret = new ArrayList<Behaviour>();
+        List<Behaviour> ret = new ArrayList<>();
 
         ret.add( new Exiting() );
         ret.add( new Falling() );

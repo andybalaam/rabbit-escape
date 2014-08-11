@@ -11,18 +11,18 @@ public class NothingExistsFileSystem implements FileSystem
         return false;
     }
 
+    @SuppressWarnings( "DuplicateThrows" )
     @Override
     public String[] readLines( String fileName )
-        throws FileNotFoundException,
-        IOException
+        throws FileNotFoundException, IOException
     {
         throw new UnsupportedOperationException();
     }
 
+    @SuppressWarnings( "DuplicateThrows" )
     @Override
     public String read( String filePath )
-        throws FileNotFoundException,
-        IOException
+        throws FileNotFoundException, IOException
     {
         throw new UnsupportedOperationException();
     }

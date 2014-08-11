@@ -51,7 +51,7 @@ public class ExceptionTranslation
         RabbitEscapeException exception )
     {
         // TreeMap for predictable ordering
-        Map<String, Object> ret = new TreeMap<String, Object>();
+        Map<String, Object> ret = new TreeMap<>();
 
         for ( Field field : exception.getClass().getFields() )
         {

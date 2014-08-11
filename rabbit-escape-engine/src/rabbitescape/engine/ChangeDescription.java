@@ -70,7 +70,7 @@ public class ChangeDescription
         }
     }
 
-    public List<Change> changes = new ArrayList<Change>();
+    public final List<Change> changes = new ArrayList<>();
 
     public void add( int x, int y, State state )
     {

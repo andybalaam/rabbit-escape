@@ -58,7 +58,7 @@ public class AnimationLoader
     {
         try
         {
-            List<String> ret = new ArrayList<String>();
+            List<String> ret = new ArrayList<>();
             ret.add( NONE );
 
             BufferedReader reader = new BufferedReader(

@@ -61,7 +61,7 @@ public class TestUtil
         Iterable<String> input = Arrays.asList( new String[] {} );
 
         assertThat(
-            list( input ).toArray( new String[] {} ),
+            stringArray( list( input ) ),
             equalTo( new String[] {} )
         );
     }
@@ -69,11 +69,10 @@ public class TestUtil
     @Test
     public void Build_list_from_iterable_with_list()
     {
-        Iterable<String> input = Arrays.asList(
-            new String[] { "a", "c", "b" } );
+        Iterable<String> input = Arrays.asList( "a", "c", "b" );
 
         assertThat(
-            list( input ).toArray( new String[] {} ),
+            stringArray( list( input ) ),
             equalTo( new String[] { "a", "c", "b" } )
         );
     }
@@ -84,7 +83,7 @@ public class TestUtil
         String[] input = new String[] { "a", "c", "b" };
 
         assertThat(
-            list( input ).toArray( new String[] {} ),
+            stringArray( list( input ) ),
             equalTo( new String[] { "a", "c", "b" } )
         );
     }
@@ -93,7 +92,7 @@ public class TestUtil
     public void Get_the_first_item_with_getNth()
     {
         assertThat(
-            getNth( Arrays.asList( new String[] { "a", "b", "c" } ), 0 ),
+            getNth( Arrays.asList( "a", "b", "c" ), 0 ),
             equalTo( "a" )
         );
     }
@@ -102,7 +101,7 @@ public class TestUtil
     public void Get_the_last_item_with_getNth()
     {
         assertThat(
-            getNth( Arrays.asList( new String[] { "a", "b", "c" } ), 2 ),
+            getNth( Arrays.asList( "a", "b", "c" ), 2 ),
             equalTo( "c" )
         );
     }
@@ -111,7 +110,7 @@ public class TestUtil
     public void Get_any_item_with_getNth()
     {
         assertThat(
-            getNth( Arrays.asList( new String[] { "a", "b", "c" } ), 1 ),
+            getNth( Arrays.asList( "a", "b", "c" ), 1 ),
             equalTo( "b" )
         );
     }
@@ -119,20 +118,20 @@ public class TestUtil
     @Test( expected = ArrayIndexOutOfBoundsException.class )
     public void Negative_n_for_getNth_is_an_error()
     {
-        getNth( Arrays.asList( new String[] { "a", "b", "c" } ), -1 );
+        getNth( Arrays.asList( "a", "b", "c" ), -1 );
     }
 
     @Test( expected = ArrayIndexOutOfBoundsException.class )
     public void Past_end_of_list_for_getNth_is_an_error()
     {
-        getNth( Arrays.asList( new String[] { "a", "b", "c" } ), 3 );
+        getNth( Arrays.asList( "a", "b", "c" ), 3 );
     }
 
     @Test
     public void Iterate_through_string_with_asChars()
     {
         assertThat(
-            list( asChars( "acb" ) ).toArray( new Character[] {} ),
+            characterArray( list( asChars( "acb" ) ) ),
             equalTo( new Character[] { 'a', 'c', 'b' } )
         );
     }
@@ -141,7 +140,7 @@ public class TestUtil
     public void Iterate_through_empty_string_with_asChars()
     {
         assertThat(
-            list( asChars( "" ) ).toArray( new Character[] {} ),
+            characterArray( list( asChars( "" ) ) ),
             equalTo( new Character[] {} )
         );
     }
@@ -177,7 +176,7 @@ public class TestUtil
     @Test
     public void Range_provides_consecutive_integer_values()
     {
-        List<Integer> result = new ArrayList<Integer>();
+        List<Integer> result = new ArrayList<>();
 
         for( int i : range( 7 ) )
         {
@@ -185,7 +184,7 @@ public class TestUtil
         }
 
         assertThat(
-            result.toArray( new Integer[] {} ),
+            integerArray( result ),
             equalTo( new Integer[] { 0, 1, 2, 3, 4, 5, 6 } )
         );
     }
@@ -193,10 +192,10 @@ public class TestUtil
     @Test
     public void Chain_deals_with_initial_empty_list()
     {
-        List<Integer> list1 = Arrays.asList( new Integer[] {} );
-        List<Integer> list2 = Arrays.asList( new Integer[] { 6, 7, 8 } );
+        List<Integer> list1 = Arrays.asList();
+        List<Integer> list2 = Arrays.asList( 6, 7, 8 );
 
-        List<Integer> result = new ArrayList<Integer>();
+        List<Integer> result = new ArrayList<>();
 
         for( int i : chain( list1, list2 ) )
         {
@@ -204,7 +203,7 @@ public class TestUtil
         }
 
         assertThat(
-            result.toArray( new Integer[] {} ),
+            integerArray( result ),
             equalTo( new Integer[] { 6, 7, 8 } )
         );
     }
@@ -212,10 +211,10 @@ public class TestUtil
     @Test
     public void Chain_deals_with_second_list_empty()
     {
-        List<Integer> list1 = Arrays.asList( new Integer[] { 5, 4, 3 } );
-        List<Integer> list2 = Arrays.asList( new Integer[] {} );
+        List<Integer> list1 = Arrays.asList( 5, 4, 3 );
+        List<Integer> list2 = Arrays.asList();
 
-        List<Integer> result = new ArrayList<Integer>();
+        List<Integer> result = new ArrayList<>();
 
         for( int i : chain( list1, list2 ) )
         {
@@ -223,7 +222,7 @@ public class TestUtil
         }
 
         assertThat(
-            result.toArray( new Integer[] {} ),
+            integerArray( result ),
             equalTo( new Integer[] { 5, 4, 3 } )
         );
     }
@@ -234,7 +233,7 @@ public class TestUtil
         List<Integer> list1 = Arrays.asList( new Integer[] {} );
         List<Integer> list2 = Arrays.asList( new Integer[] {} );
 
-        List<Integer> result = new ArrayList<Integer>();
+        List<Integer> result = new ArrayList<>();
 
         for( int i : chain( list1, list2 ) )
         {
@@ -242,7 +241,7 @@ public class TestUtil
         }
 
         assertThat(
-            result.toArray( new Integer[] {} ),
+            integerArray( result ),
             equalTo( new Integer[] {} )
         );
     }
@@ -250,10 +249,10 @@ public class TestUtil
     @Test
     public void Chain_concatenates_two_iterables()
     {
-        List<Integer> list1 = Arrays.asList( new Integer[] { 5, 4, 3 } );
-        List<Integer> list2 = Arrays.asList( new Integer[] { 6, 7, 8 } );
+        List<Integer> list1 = Arrays.asList( 5, 4, 3 );
+        List<Integer> list2 = Arrays.asList( 6, 7, 8 );
 
-        List<Integer> result = new ArrayList<Integer>();
+        List<Integer> result = new ArrayList<>();
 
         for( int i : chain( list1, list2 ) )
         {
@@ -261,7 +260,7 @@ public class TestUtil
         }
 
         assertThat(
-            result.toArray( new Integer[] {} ),
+            integerArray( result ),
             equalTo( new Integer[] { 5, 4, 3, 6, 7, 8 } )
         );
     }
@@ -278,7 +277,7 @@ public class TestUtil
     @Test
     public void Create_full_map_with_newMap()
     {
-        Map<String, Object> expected = new TreeMap<String, Object>();
+        Map<String, Object> expected = new TreeMap<>();
         expected.put( "x", "y" );
         expected.put( "z", "a" );
 

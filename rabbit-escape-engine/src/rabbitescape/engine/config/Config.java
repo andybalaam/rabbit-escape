@@ -53,11 +53,9 @@ public class Config
 
     public static class Definition
     {
-        private final Map<String, String> defaults =
-            new HashMap<String, String>();
+        private final Map<String, String> defaults = new HashMap<>();
 
-        private final Map<String, String> descriptions =
-            new HashMap<String, String>();
+        private final Map<String, String> descriptions = new HashMap<>();
 
         public void set( String key, String defaultValue, String description )
         {
@@ -101,7 +99,7 @@ public class Config
         this.definition = definition;
         this.fs = fs;
         this.filePath = filePath;
-        this.values = new HashMap<String, String>();
+        this.values = new HashMap<>();
         load();
     }
 
@@ -168,7 +166,7 @@ public class Config
         StringBuilder ret = new StringBuilder();
 
         // Tree set for sorting
-        TreeSet<String> keys = new TreeSet<String>(
+        TreeSet<String> keys = new TreeSet<>(
             definition.defaults.keySet() );
 
         boolean first = true;

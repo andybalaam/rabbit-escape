@@ -6,24 +6,10 @@ import static rabbitescape.engine.Direction.*;
 import static rabbitescape.engine.Token.Type.*;
 
 import rabbitescape.engine.ChangeDescription.State;
-import rabbitescape.engine.Token.Type;
-import rabbitescape.engine.err.RabbitEscapeException;
 
 public class Bashing implements Behaviour
 {
-    int stepsOfBashing;
-
-    public static class UnknownTokenType extends RabbitEscapeException
-    {
-        private static final long serialVersionUID = 1L;
-
-        public final Type type;
-
-        public UnknownTokenType( Type type )
-        {
-            this.type = type;
-        }
-    }
+    private int stepsOfBashing;
 
     @Override
     public State newState( Rabbit rabbit, World world )

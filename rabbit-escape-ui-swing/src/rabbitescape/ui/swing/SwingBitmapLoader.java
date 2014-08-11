@@ -17,11 +17,7 @@ public class SwingBitmapLoader implements BitmapLoader<SwingBitmap>
                 javax.imageio.ImageIO.read( getClass().getResource( name ) )
             );
         }
-        catch ( IOException e )
-        {
-            throw new FailedToLoadImage( name, e );
-        }
-        catch ( IllegalArgumentException e )
+        catch ( IOException | IllegalArgumentException e )
         {
             throw new FailedToLoadImage( name, e );
         }

@@ -53,7 +53,7 @@ public class TestNamedFieldFormatter
 
     private static Map<String, Object> map( Object... keysAndValues )
     {
-        HashMap<String, Object> ret = new HashMap<String, Object>();
+        HashMap<String, Object> ret = new HashMap<>();
 
         reAssert( keysAndValues.length % 2 == 0 );
 
