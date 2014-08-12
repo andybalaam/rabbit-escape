@@ -24,14 +24,14 @@ animations: $(ANIMATIONS_LS)
 compile: images animations
 	ant compile
 
-clean-code:
+clean:
 	rm -rf \
 		rabbit-escape-engine/bin/* \
 		rabbit-escape-render/bin/* \
 		rabbit-escape-ui-text/bin/* \
 		rabbit-escape-ui-swing/bin/*
 
-clean: clean-code
+clean-all: clean
 	rm -rf \
 		$(IMAGES32_DEST)/* \
 		$(ANIMATIONS_LS)
