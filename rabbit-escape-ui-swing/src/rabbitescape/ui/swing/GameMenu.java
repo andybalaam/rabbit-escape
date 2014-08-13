@@ -8,6 +8,8 @@ import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.LayoutManager;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -19,13 +21,17 @@ import javax.swing.JScrollPane;
 import javax.swing.JToggleButton;
 
 import rabbitescape.engine.Token;
-import rabbitescape.engine.Token.Type;
 import rabbitescape.engine.config.Config;
 import rabbitescape.engine.config.ConfigTools;
 import rabbitescape.render.BitmapCache;
 
 class GameMenu
 {
+    public static interface AbilityChangedListener
+    {
+        void abilityChosen( Token.Type ability );
+    }
+
     public JToggleButton mute;
     public JToggleButton pause;
     public final JButton exit;
@@ -96,13 +102,13 @@ class GameMenu
         return ret;
     }
 
-    private Map<Type, JToggleButton> addAbilitiesButtons()
+    private Map<Token.Type, JToggleButton> addAbilitiesButtons()
     {
         Map<Token.Type, JToggleButton> ret = new HashMap<>();
 
         ButtonGroup abilitiesGroup = new ButtonGroup();
 
-        Type[] abilityTypes = new Token.Type[] {
+        Token.Type[] abilityTypes = new Token.Type[] {
             Token.Type.bash, Token.Type.dig };
 
         for ( Token.Type ability : abilityTypes )
@@ -169,4 +175,21 @@ class GameMenu
         );
     }
 
+    public void addAbilitiesListener( final AbilityChangedListener listener )
+    {
+        for (
+            final Map.Entry<Token.Type, JToggleButton> abilityEntry
+                : abilities.entrySet()
+        )
+        {
+            abilityEntry.getValue().addActionListener( new ActionListener()
+            {
+                @Override
+                public void actionPerformed( ActionEvent evt )
+                {
+                    listener.abilityChosen( abilityEntry.getKey() );
+                }
+            } );
+        }
+    }
 }

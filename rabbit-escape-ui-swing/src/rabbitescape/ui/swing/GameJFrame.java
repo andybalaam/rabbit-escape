@@ -66,12 +66,13 @@ public class GameJFrame extends JFrame
     public final Canvas canvas;
     private final GameMenu menu;
 
+    private Token.Type chosenAbility;
     private SwingGameLoop gameLoop;
-
 
     public GameJFrame( Config uiConfig, BitmapCache<SwingBitmap> bitmapCache )
     {
         this.uiConfig = uiConfig;
+        this.chosenAbility = null;
         this.gameLoop = null;
 
         this.buttonSizeInPixels = new Dimension( 32, 32 );
@@ -128,6 +129,15 @@ public class GameJFrame extends JFrame
         addWindowListener( listener );
         addComponentListener( listener );
         canvas.addMouseListener( listener );
+
+        menu.addAbilitiesListener( new GameMenu.AbilityChangedListener()
+        {
+            @Override
+            public void abilityChosen( Token.Type ability )
+            {
+                chooseAbility( ability );
+            }
+        } );
 
         menu.exit.addActionListener( new ActionListener()
         {
@@ -203,11 +213,10 @@ public class GameJFrame extends JFrame
 
     private void click( Point pixelPosition )
     {
-        Token.Type chosenAbility = Token.Type.bash;
-        /*if ( chosenAbility == null )
+        if ( chosenAbility == null )
         {
             return;
-        }*/
+        }
 
         int numLeft = gameLoop.addToken( chosenAbility, pixelPosition );
 
@@ -215,5 +224,10 @@ public class GameJFrame extends JFrame
         {
             menu.abilities.get( chosenAbility ).setEnabled( false );
         }
+    }
+
+    protected void chooseAbility( Token.Type ability )
+    {
+        chosenAbility = ability;
     }
 }
