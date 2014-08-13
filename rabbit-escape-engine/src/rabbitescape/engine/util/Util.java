@@ -2,11 +2,13 @@ package rabbitescape.engine.util;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
+import java.util.TreeSet;
 
 public class Util
 {
@@ -271,5 +273,17 @@ public class Util
                 return new MyIt( it1.iterator(), it2.iterator() );
             }
         };
+    }
+
+    public static <T> Iterable<T> sorted( Iterable<T> input )
+    {
+        TreeSet<T> ret = new TreeSet<T>();
+
+        for ( T t : input )
+        {
+            ret.add( t );
+        }
+
+        return ret;
     }
 }

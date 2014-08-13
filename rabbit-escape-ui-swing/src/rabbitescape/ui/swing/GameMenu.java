@@ -1,5 +1,6 @@
 package rabbitescape.ui.swing;
 
+import static rabbitescape.engine.util.Util.*;
 import static rabbitescape.ui.swing.SwingGameInit.*;
 
 import java.awt.BorderLayout;
@@ -110,7 +111,7 @@ class GameMenu
 
         ButtonGroup abilitiesGroup = new ButtonGroup();
 
-        for ( Token.Type ability : abilityTypes.keySet() )
+        for ( Token.Type ability : sorted( abilityTypes.keySet() ) )
         {
             String iconName = "ability-" + ability.toString();
 

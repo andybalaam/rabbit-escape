@@ -313,4 +313,22 @@ public class TestUtil
             equalTo( list( new String[] { "3", "-4", "5" } ) )
         );
     }
+
+    @Test
+    public void Sorted_empty_list_is_empty()
+    {
+        assertThat(
+            list( sorted( Arrays.asList() ) ),
+            equalTo( Arrays.asList() )
+        );
+    }
+
+    @Test
+    public void Sorted_version_of_a_list()
+    {
+        assertThat(
+            list( sorted( Arrays.asList( 5, 3, 4 ) ) ),
+            equalTo( Arrays.asList( 3, 4, 5 ) )
+        );
+    }
 }
