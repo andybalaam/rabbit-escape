@@ -122,9 +122,18 @@ public class GameJFrame extends JFrame
         menu.exit.addActionListener( new ActionListener()
         {
             @Override
-            public void actionPerformed( ActionEvent arg0 )
+            public void actionPerformed( ActionEvent evt )
             {
                 exit();
+            }
+        } );
+
+        menu.mute.addActionListener( new ActionListener()
+        {
+            @Override
+            public void actionPerformed( ActionEvent evt )
+            {
+                setMuted( menu.mute.isSelected() );
             }
         } );
     }
@@ -160,5 +169,11 @@ public class GameJFrame extends JFrame
         }
 
         dispose();
+    }
+
+    private void setMuted( boolean muted )
+    {
+        ConfigTools.setBool( uiConfig, CFG_MUTED, muted );
+        uiConfig.save();
     }
 }
