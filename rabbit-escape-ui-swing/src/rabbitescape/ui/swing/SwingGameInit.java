@@ -2,6 +2,7 @@ package rabbitescape.ui.swing;
 
 import rabbitescape.engine.config.Config;
 import rabbitescape.engine.util.RealFileSystem;
+import rabbitescape.render.BitmapCache;
 
 public class SwingGameInit implements Runnable
 {
@@ -13,18 +14,19 @@ public class SwingGameInit implements Runnable
     public static final String CFG_GAME_WINDOW_TOP    = "game.window.top";
     public static final String CFG_GAME_WINDOW_WIDTH  = "game.window.width";
     public static final String CFG_GAME_WINDOW_HEIGHT = "game.window.height";
+    public static final String CFG_MUTED = "muted";
 
     public class WaitForUi
     {
         private synchronized void notifyUiReady()
         {
-            assert jframe != null;
+            assert whenUiReady != null;
             notify();
         }
 
-        public synchronized GameJFrame waitForUi()
+        public synchronized WhenUiReady waitForUi()
         {
-            while ( jframe == null )
+            while ( whenUiReady == null )
             {
                 //noinspection EmptyCatchBlock
                 try
@@ -39,24 +41,42 @@ public class SwingGameInit implements Runnable
                 }
             }
 
-            return jframe;
+            return whenUiReady;
+        }
+    }
+
+    /**
+     * Stuff we have made by the time we notify that the UI is ready
+     */
+    public static class WhenUiReady
+    {
+        public final GameJFrame jframe;
+        public final BitmapCache<SwingBitmap> bitmapCache;
+
+        public WhenUiReady(
+            GameJFrame jframe, BitmapCache<SwingBitmap> bitmapCache )
+        {
+            this.jframe = jframe;
+            this.bitmapCache = bitmapCache;
         }
     }
 
     public final WaitForUi waitForUi = new WaitForUi();
 
-    private GameJFrame jframe = null;
+    private WhenUiReady whenUiReady = null;
 
     @Override
     public void run()
     {
+        BitmapCache<SwingBitmap> bitmapCache = new BitmapCache<>(
+            new SwingBitmapLoader(), 500 );
+
         //noinspection UnnecessaryLocalVariable
-        GameJFrame jframe = new GameJFrame( createConfig() );
-        // load all images in a worker thread
+        GameJFrame jframe = new GameJFrame( createConfig(), bitmapCache );
 
-        // When ready, put frame or canvas or something into a variable.
+        // Populate the cache with images in a worker thread?
 
-        this.jframe = jframe;
+        this.whenUiReady = new WhenUiReady( jframe, bitmapCache );
 
         waitForUi.notifyUiReady();
     }
@@ -87,6 +107,12 @@ public class SwingGameInit implements Runnable
             CFG_GAME_WINDOW_HEIGHT,
             String.valueOf( Integer.MIN_VALUE ),
             "The height of the game window on the screen"
+        );
+
+        definition.set(
+            CFG_MUTED,
+            String.valueOf( false ),
+            "Disable all sound"
         );
 
         return new Config( definition, new RealFileSystem(), CONFIG_PATH );

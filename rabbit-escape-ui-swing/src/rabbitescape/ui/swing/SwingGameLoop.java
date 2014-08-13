@@ -12,22 +12,30 @@ import rabbitescape.render.AnimationLoader;
 import rabbitescape.render.BitmapCache;
 import rabbitescape.render.GameLoop;
 import rabbitescape.render.Renderer;
+import rabbitescape.ui.swing.SwingGameInit.WhenUiReady;
 
 public class SwingGameLoop implements GameLoop
 {
     private static final int framesPerStep = 10;
 
-    private final GameJFrame jframe;
     private final World world;
     private boolean running;
     private final int renderingTileSize;
 
+    private final GameJFrame jframe;
+    private final BitmapCache<SwingBitmap> bitmapCache;
+
     public SwingGameLoop( SwingGameInit init, World world )
     {
         this.world = world;
-        this.jframe = init.waitForUi.waitForUi();
         this.running = true;
         this.renderingTileSize = 32;
+
+        // This blocks until the UI is ready:
+        WhenUiReady uiPieces = init.waitForUi.waitForUi();
+
+        this.jframe = uiPieces.jframe;
+        this.bitmapCache = uiPieces.bitmapCache;
 
         jframe.setGameLoop( this );
 
@@ -51,9 +59,6 @@ public class SwingGameLoop implements GameLoop
 
         BufferStrategy strategy = jframe.canvas.getBufferStrategy();
         Renderer renderer = new Renderer( 0, 0, renderingTileSize );
-
-        BitmapCache<SwingBitmap> bitmapCache =
-            new BitmapCache<>( new SwingBitmapLoader(), 500 );
 
         AnimationCache animationCache = new AnimationCache(
             new AnimationLoader() );

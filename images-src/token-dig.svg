@@ -15,14 +15,13 @@
    id="svg2"
    version="1.1"
    inkscape:version="0.48.4 r9939"
-   sodipodi:docname="token-bash.svg">
+   sodipodi:docname="token-dig.svg">
   <defs
      id="defs4">
     <linearGradient
-       inkscape:collect="always"
        id="linearGradient15952">
       <stop
-         style="stop-color:#77ffff;stop-opacity:1;"
+         style="stop-color:#7778ff;stop-opacity:1;"
          offset="0"
          id="stop15954" />
       <stop
@@ -49,7 +48,7 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="1"
+     inkscape:zoom="26.59375"
      inkscape:cx="16"
      inkscape:cy="16"
      inkscape:document-units="px"
@@ -68,7 +67,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title />
+        <dc:title></dc:title>
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -87,29 +86,19 @@
        sodipodi:ry="8.9133854"
        d="m 26.204724,16.346457 a 9.6377954,8.9133854 0 1 1 -19.2755906,0 9.6377954,8.9133854 0 1 1 19.2755906,0 z"
        transform="matrix(0.80328904,0,0,0.86857407,2.6919676,1022.1641)" />
-    <g
-       transform="matrix(0.5,0,0,0.35658333,8,666.62372)"
-       id="g4520">
-      <rect
-         y="1034.3622"
-         x="4"
-         height="4"
-         width="24"
-         id="rect4498"
-         style="fill:#000000;fill-opacity:1;stroke:none" />
-      <path
-         sodipodi:nodetypes="cccc"
-         transform="translate(0,1020.3622)"
-         inkscape:connector-curvature="0"
-         id="path4500"
-         d="M 2,16 8,22 8,10 z"
-         style="fill:#000000;fill-opacity:1;stroke:none" />
-      <path
-         sodipodi:nodetypes="cccc"
-         inkscape:connector-curvature="0"
-         id="path4500-9"
-         d="m 30,1036.3622 -6,6 0,-12 z"
-         style="fill:#000000;fill-opacity:1;stroke:none" />
-    </g>
+    <rect
+       style="fill:#000000;fill-opacity:1;stroke:none"
+       id="rect4498"
+       width="12.5"
+       height="1.4263333"
+       x="1029.6732"
+       y="-16.713169"
+       transform="matrix(0,1,-1,0,0,0)" />
+    <path
+       style="fill:#000000;fill-opacity:1;stroke:none"
+       d="m 15.999996,1043.1732 -2.1395,-3 4.279,0 z"
+       id="path4500-9"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cccc" />
   </g>
 </svg>

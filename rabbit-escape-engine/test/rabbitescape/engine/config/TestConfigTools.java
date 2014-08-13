@@ -28,4 +28,22 @@ public class TestConfigTools
 
         assertThat( ConfigTools.getInt( cfg, "num" ), is( 45 ) );
     }
+
+    @Test
+    public void Can_get_and_set_bools()
+    {
+        Config.Definition def = new Config.Definition();
+        def.set( "key1", "true", "desc1" );
+        def.set( "key2", "false", "desc2" );
+
+        Config cfg = new Config( def, null, null );
+
+        assertThat( ConfigTools.getBool( cfg, "key1" ), is( true ) );
+        assertThat( ConfigTools.getBool( cfg, "key2" ), is( false ) );
+
+        ConfigTools.setBool( cfg, "key1", false );
+
+        assertThat( ConfigTools.getBool( cfg, "key1" ), is( false ) );
+    }
+
 }

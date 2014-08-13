@@ -11,4 +11,14 @@ public class ConfigTools
     {
         return Integer.parseInt( config.get( key ) );
     }
+
+    public static void setBool( Config config, String key, boolean value )
+    {
+        config.set( key, String.valueOf( value ) );
+    }
+
+    public static boolean getBool( Config config, String key )
+    {
+        return Boolean.parseBoolean( config.get( key ) );
+    }
 }
