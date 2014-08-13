@@ -5,6 +5,7 @@ import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.image.BufferStrategy;
+import java.util.Map;
 
 import rabbitescape.engine.ChangeDescription;
 import rabbitescape.engine.Token;
@@ -225,5 +226,10 @@ public class SwingGameLoop implements GameLoop
         }
 
         return world.abilities.get( ability );
+    }
+
+    public Map<Token.Type, Integer> getAbilities()
+    {
+        return world.abilities;
     }
 }

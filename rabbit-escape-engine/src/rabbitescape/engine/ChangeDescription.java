@@ -50,8 +50,10 @@ public class ChangeDescription
         RABBIT_BASHING_LEFT,
         RABBIT_BASHING_USELESSLY_RIGHT,
         RABBIT_BASHING_USELESSLY_LEFT,
-        TOKEN_STILL,
-        TOKEN_FALLING,
+        TOKEN_BASH_STILL,
+        TOKEN_BASH_FALLING,
+        TOKEN_DIG_STILL,
+        TOKEN_DIG_FALLING,
         ENTRANCE,
         EXIT,
     }

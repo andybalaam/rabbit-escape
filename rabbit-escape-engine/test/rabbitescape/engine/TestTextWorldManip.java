@@ -326,7 +326,7 @@ public class TestTextWorldManip
         World world = createEmptyWorld( 1, 2 );
 
         ChangeDescription desc = new ChangeDescription();
-        desc.add( 0, 0, TOKEN_FALLING );
+        desc.add( 0, 0, TOKEN_BASH_FALLING );
 
         assertThat(
             renderChangeDescription( world, desc, false ),

@@ -63,8 +63,9 @@ public class GameJFrame extends JFrame
     private final Dimension buttonSizeInPixels;
     private final Dimension worldSizeInPixels;
     private final Config uiConfig;
+    private final BitmapCache<SwingBitmap> bitmapCache;
     public final Canvas canvas;
-    private final GameMenu menu;
+    private GameMenu menu;
 
     private Token.Type chosenAbility;
     private SwingGameLoop gameLoop;
@@ -72,6 +73,7 @@ public class GameJFrame extends JFrame
     public GameJFrame( Config uiConfig, BitmapCache<SwingBitmap> bitmapCache )
     {
         this.uiConfig = uiConfig;
+        this.bitmapCache = bitmapCache;
         this.chosenAbility = null;
         this.gameLoop = null;
 
@@ -79,16 +81,7 @@ public class GameJFrame extends JFrame
         this.worldSizeInPixels = new Dimension( 400, 200 );
 
         this.canvas = initUi();
-        this.menu = new GameMenu(
-            getContentPane(),
-            bitmapCache,
-            buttonSizeInPixels,
-            worldSizeInPixels,
-            uiConfig,
-            backgroundColor
-        );
-
-        initListeners();
+        this.menu = null;
     }
 
     private Canvas initUi()
@@ -188,6 +181,20 @@ public class GameJFrame extends JFrame
     public void setGameLoop( SwingGameLoop gameLoop )
     {
         this.gameLoop = gameLoop;
+
+        this.menu = new GameMenu(
+            getContentPane(),
+            bitmapCache,
+            buttonSizeInPixels,
+            worldSizeInPixels,
+            uiConfig,
+            backgroundColor,
+            gameLoop.getAbilities()
+        );
+
+        pack();
+
+        initListeners();
     }
 
     private void exit()

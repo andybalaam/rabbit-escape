@@ -51,7 +51,8 @@ class GameMenu
         Dimension buttonSizeInPixels,
         Dimension worldSizeInPixels,
         Config uiConfig,
-        Color backgroundColor
+        Color backgroundColor,
+        Map<Token.Type, Integer> abilityTypes
     )
     {
         this.bitmapCache = bitmapCache;
@@ -70,7 +71,7 @@ class GameMenu
 
         addSpacer();
 
-        this.abilities = addAbilitiesButtons();
+        this.abilities = addAbilitiesButtons( abilityTypes );
 
         addSpacer();
 
@@ -102,18 +103,16 @@ class GameMenu
         return ret;
     }
 
-    private Map<Token.Type, JToggleButton> addAbilitiesButtons()
+    private Map<Token.Type, JToggleButton> addAbilitiesButtons(
+        Map<Token.Type, Integer> abilityTypes )
     {
         Map<Token.Type, JToggleButton> ret = new HashMap<>();
 
         ButtonGroup abilitiesGroup = new ButtonGroup();
 
-        Token.Type[] abilityTypes = new Token.Type[] {
-            Token.Type.bash, Token.Type.dig };
-
-        for ( Token.Type ability : abilityTypes )
+        for ( Token.Type ability : abilityTypes.keySet() )
         {
-            String iconName = "ability-" + ability;
+            String iconName = "ability-" + ability.toString();
 
             JToggleButton button = addToggleButton( iconName, null, false );
 
