@@ -20,6 +20,7 @@ public class SwingGameLoop implements GameLoop
 
     private final World world;
     private boolean running;
+    private boolean paused;
     private final int renderingTileSize;
 
     private final GameJFrame jframe;
@@ -29,6 +30,7 @@ public class SwingGameLoop implements GameLoop
     {
         this.world = world;
         this.running = true;
+        this.paused = false;
         this.renderingTileSize = 32;
 
         // This blocks until the UI is ready:
@@ -52,8 +54,13 @@ public class SwingGameLoop implements GameLoop
         running = false;
     }
 
+    public void setPaused( boolean paused )
+    {
+        this.paused = paused;
+    }
+
     @Override
-    public void run(String[] args)
+    public void run( String[] args )
     {
         int imagesTileSize = 32;
 
@@ -76,7 +83,12 @@ public class SwingGameLoop implements GameLoop
                 new DrawFrame(
                     strategy, jframe.canvas, renderer, animator, f ).run();
 
-                pause();
+                sleep( 50 );
+
+                while ( paused )
+                {
+                    sleep( 500 );
+                }
             }
 
             if ( world.finished() )
@@ -86,11 +98,11 @@ public class SwingGameLoop implements GameLoop
         }
     }
 
-    private void pause()
+    private void sleep( long millis )
     {
         try
         {
-            Thread.sleep( 50 );
+            Thread.sleep( millis );
         }
         catch ( InterruptedException ignored )
         {

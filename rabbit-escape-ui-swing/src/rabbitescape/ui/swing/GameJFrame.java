@@ -136,6 +136,15 @@ public class GameJFrame extends JFrame
                 setMuted( menu.mute.isSelected() );
             }
         } );
+
+        menu.pause.addActionListener( new ActionListener()
+        {
+            @Override
+            public void actionPerformed( ActionEvent evt )
+            {
+                setPaused( menu.pause.isSelected() );
+            }
+        } );
     }
 
     private void setBoundsFromConfig()
@@ -175,5 +184,10 @@ public class GameJFrame extends JFrame
     {
         ConfigTools.setBool( uiConfig, CFG_MUTED, muted );
         uiConfig.save();
+    }
+
+    private void setPaused( boolean paused )
+    {
+        gameLoop.setPaused( paused );
     }
 }
