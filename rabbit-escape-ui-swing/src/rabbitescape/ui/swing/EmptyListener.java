@@ -2,13 +2,16 @@ package rabbitescape.ui.swing;
 
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 
 /**
  * A listener that does nothing.  Extend to provide behaviour.
  */
-public class EmptyListener implements WindowListener, ComponentListener
+public class EmptyListener
+    implements WindowListener, ComponentListener, MouseListener
 {
     @Override
     public void componentHidden( ComponentEvent arg0 )
@@ -62,6 +65,31 @@ public class EmptyListener implements WindowListener, ComponentListener
 
     @Override
     public void windowOpened( WindowEvent arg0 )
+    {
+    }
+
+    @Override
+    public void mouseClicked( MouseEvent e )
+    {
+    }
+
+    @Override
+    public void mouseEntered( MouseEvent e )
+    {
+    }
+
+    @Override
+    public void mouseExited( MouseEvent e )
+    {
+    }
+
+    @Override
+    public void mousePressed( MouseEvent e )
+    {
+    }
+
+    @Override
+    public void mouseReleased( MouseEvent e )
     {
     }
 }

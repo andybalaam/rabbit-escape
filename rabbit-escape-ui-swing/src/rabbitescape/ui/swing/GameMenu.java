@@ -8,6 +8,8 @@ import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.LayoutManager;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
@@ -16,6 +18,8 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JToggleButton;
 
+import rabbitescape.engine.Token;
+import rabbitescape.engine.Token.Type;
 import rabbitescape.engine.config.Config;
 import rabbitescape.engine.config.ConfigTools;
 import rabbitescape.render.BitmapCache;
@@ -33,6 +37,7 @@ class GameMenu
     private final Dimension worldSizeInPixels;
 
     private final JPanel panel;
+    public final Map<Token.Type, JToggleButton> abilities;
 
     public GameMenu(
         Container contentPane,
@@ -59,7 +64,7 @@ class GameMenu
 
         addSpacer();
 
-        addAbilitiesButtons();
+        this.abilities = addAbilitiesButtons();
 
         addSpacer();
 
@@ -91,19 +96,27 @@ class GameMenu
         return ret;
     }
 
-    private void addAbilitiesButtons()
+    private Map<Type, JToggleButton> addAbilitiesButtons()
     {
+        Map<Token.Type, JToggleButton> ret = new HashMap<>();
+
         ButtonGroup abilitiesGroup = new ButtonGroup();
 
-        for ( String ability : new String[] { "bash", "dig" } )
+        Type[] abilityTypes = new Token.Type[] {
+            Token.Type.bash, Token.Type.dig };
+
+        for ( Token.Type ability : abilityTypes )
         {
             String iconName = "ability-" + ability;
 
             JToggleButton button = addToggleButton( iconName, null, false );
 
-            //abilityButtons.add( button, ability );
+            ret.put( ability, button );
+
             abilitiesGroup.add( button );
         }
+
+        return ret;
     }
 
     private void addSpacer()

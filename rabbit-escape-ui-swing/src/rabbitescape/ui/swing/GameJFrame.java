@@ -8,14 +8,17 @@ import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
+import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentEvent;
+import java.awt.event.MouseEvent;
 import java.awt.event.WindowEvent;
 
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
 
+import rabbitescape.engine.Token;
 import rabbitescape.engine.config.Config;
 import rabbitescape.engine.config.ConfigTools;
 import rabbitescape.render.BitmapCache;
@@ -46,6 +49,12 @@ public class GameJFrame extends JFrame
             ConfigTools.setInt( uiConfig, CFG_GAME_WINDOW_WIDTH,  getWidth() );
             ConfigTools.setInt( uiConfig, CFG_GAME_WINDOW_HEIGHT, getHeight() );
             uiConfig.save();
+        }
+
+        @Override
+        public void mouseClicked( MouseEvent e )
+        {
+            click( e.getPoint() );
         }
     }
 
@@ -118,6 +127,7 @@ public class GameJFrame extends JFrame
         Listener listener = new Listener();
         addWindowListener( listener );
         addComponentListener( listener );
+        canvas.addMouseListener( listener );
 
         menu.exit.addActionListener( new ActionListener()
         {
@@ -189,5 +199,21 @@ public class GameJFrame extends JFrame
     private void setPaused( boolean paused )
     {
         gameLoop.setPaused( paused );
+    }
+
+    private void click( Point pixelPosition )
+    {
+        Token.Type chosenAbility = Token.Type.bash;
+        /*if ( chosenAbility == null )
+        {
+            return;
+        }*/
+
+        int numLeft = gameLoop.addToken( chosenAbility, pixelPosition );
+
+        if ( numLeft == 0 )
+        {
+            menu.abilities.get( chosenAbility ).setEnabled( false );
+        }
     }
 }

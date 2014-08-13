@@ -3,9 +3,11 @@ package rabbitescape.ui.swing;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
+import java.awt.Point;
 import java.awt.image.BufferStrategy;
 
 import rabbitescape.engine.ChangeDescription;
+import rabbitescape.engine.Token;
 import rabbitescape.engine.World;
 import rabbitescape.render.AnimationCache;
 import rabbitescape.render.AnimationLoader;
@@ -16,9 +18,34 @@ import rabbitescape.ui.swing.SwingGameInit.WhenUiReady;
 
 public class SwingGameLoop implements GameLoop
 {
+    /**
+     * Everything that modifies the world goes through here, with
+     * synchronization.
+     */
+    private static class WorldModifier
+    {
+        private final World world;
+
+        public WorldModifier( World world )
+        {
+            this.world = world;
+        }
+
+        public synchronized void step()
+        {
+            world.step();
+        }
+
+        public synchronized void addToken( int x, int y, Token.Type type )
+        {
+            world.addToken( x, y, type );
+        }
+    }
+
     private static final int framesPerStep = 10;
 
     private final World world;
+    private final WorldModifier worldModifier;
     private boolean running;
     private boolean paused;
     private final int renderingTileSize;
@@ -29,6 +56,7 @@ public class SwingGameLoop implements GameLoop
     public SwingGameLoop( SwingGameInit init, World world )
     {
         this.world = world;
+        this.worldModifier = new WorldModifier( world );
         this.running = true;
         this.paused = false;
         this.renderingTileSize = 32;
@@ -72,7 +100,7 @@ public class SwingGameLoop implements GameLoop
 
         while( running )
         {
-            world.step();
+            worldModifier.step();
             ChangeDescription changes = world.describeChanges();
 
             final SpriteAnimator animator = new SpriteAnimator(
@@ -183,5 +211,19 @@ public class SwingGameLoop implements GameLoop
         catch ( InterruptedException ignored )
         {
         }
+    }
+
+    public int addToken( Token.Type ability, Point pixelPosition )
+    {
+        if ( world.abilities.get( ability ) > 0 )
+        {
+            worldModifier.addToken(
+                pixelPosition.x / renderingTileSize,
+                pixelPosition.y / renderingTileSize,
+                ability
+            );
+        }
+
+        return world.abilities.get( ability );
     }
 }
