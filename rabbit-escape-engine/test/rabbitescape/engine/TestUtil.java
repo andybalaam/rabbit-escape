@@ -14,6 +14,8 @@ import java.util.TreeMap;
 
 import org.junit.Test;
 
+import rabbitescape.engine.util.Util;
+
 public class TestUtil
 {
     @Test
@@ -92,7 +94,7 @@ public class TestUtil
     public void Get_the_first_item_with_getNth()
     {
         assertThat(
-            getNth( Arrays.asList( "a", "b", "c" ), 0 ),
+            getNth( list( "a", "b", "c" ), 0 ),
             equalTo( "a" )
         );
     }
@@ -101,7 +103,7 @@ public class TestUtil
     public void Get_the_last_item_with_getNth()
     {
         assertThat(
-            getNth( Arrays.asList( "a", "b", "c" ), 2 ),
+            getNth( list( "a", "b", "c" ), 2 ),
             equalTo( "c" )
         );
     }
@@ -110,7 +112,7 @@ public class TestUtil
     public void Get_any_item_with_getNth()
     {
         assertThat(
-            getNth( Arrays.asList( "a", "b", "c" ), 1 ),
+            getNth( list( "a", "b", "c" ), 1 ),
             equalTo( "b" )
         );
     }
@@ -118,13 +120,13 @@ public class TestUtil
     @Test( expected = ArrayIndexOutOfBoundsException.class )
     public void Negative_n_for_getNth_is_an_error()
     {
-        getNth( Arrays.asList( "a", "b", "c" ), -1 );
+        getNth( list( "a", "b", "c" ), -1 );
     }
 
     @Test( expected = ArrayIndexOutOfBoundsException.class )
     public void Past_end_of_list_for_getNth_is_an_error()
     {
-        getNth( Arrays.asList( "a", "b", "c" ), 3 );
+        getNth( list( "a", "b", "c" ), 3 );
     }
 
     @Test
@@ -149,7 +151,7 @@ public class TestUtil
     public void Build_empty_string_from_chars()
     {
         assertThat(
-            stringFromChars( list( new Character[] {} ) ),
+            stringFromChars( Util.<Character>list() ),
             equalTo( "" )
         );
     }
@@ -159,7 +161,7 @@ public class TestUtil
     public void Build_a_string_from_chars()
     {
         assertThat(
-            stringFromChars( list( new Character[] { 'x', 'y', 'z' } ) ),
+            stringFromChars( list( 'x', 'y', 'z' ) ),
             equalTo( "xyz" )
         );
     }
@@ -192,8 +194,8 @@ public class TestUtil
     @Test
     public void Chain_deals_with_initial_empty_list()
     {
-        List<Integer> list1 = Arrays.asList();
-        List<Integer> list2 = Arrays.asList( 6, 7, 8 );
+        List<Integer> list1 = list();
+        List<Integer> list2 = list( 6, 7, 8 );
 
         List<Integer> result = new ArrayList<>();
 
@@ -211,8 +213,8 @@ public class TestUtil
     @Test
     public void Chain_deals_with_second_list_empty()
     {
-        List<Integer> list1 = Arrays.asList( 5, 4, 3 );
-        List<Integer> list2 = Arrays.asList();
+        List<Integer> list1 = list( 5, 4, 3 );
+        List<Integer> list2 = list();
 
         List<Integer> result = new ArrayList<>();
 
@@ -230,8 +232,8 @@ public class TestUtil
     @Test
     public void Chain_deals_with_both_lists_empty()
     {
-        List<Integer> list1 = Arrays.asList( new Integer[] {} );
-        List<Integer> list2 = Arrays.asList( new Integer[] {} );
+        List<Integer> list1 = list();
+        List<Integer> list2 = list();
 
         List<Integer> result = new ArrayList<>();
 
@@ -249,8 +251,8 @@ public class TestUtil
     @Test
     public void Chain_concatenates_two_iterables()
     {
-        List<Integer> list1 = Arrays.asList( 5, 4, 3 );
-        List<Integer> list2 = Arrays.asList( 6, 7, 8 );
+        List<Integer> list1 = list( 5, 4, 3 );
+        List<Integer> list2 = list( 6, 7, 8 );
 
         List<Integer> result = new ArrayList<>();
 
@@ -309,8 +311,8 @@ public class TestUtil
     public void Apply_a_function_to_each_element_with_map()
     {
         assertThat(
-            list( map( stringise(), list( new Integer[] { 3, -4, 5 } ) ) ),
-            equalTo( list( new String[] { "3", "-4", "5" } ) )
+            list( map( stringise(), list( 3, -4, 5 ) ) ),
+            equalTo( list( "3", "-4", "5" ) )
         );
     }
 
@@ -318,8 +320,8 @@ public class TestUtil
     public void Sorted_empty_list_is_empty()
     {
         assertThat(
-            list( sorted( Arrays.asList() ) ),
-            equalTo( Arrays.asList() )
+            list( sorted( list() ) ),
+            equalTo( list() )
         );
     }
 
@@ -327,8 +329,8 @@ public class TestUtil
     public void Sorted_version_of_a_list()
     {
         assertThat(
-            list( sorted( Arrays.asList( 5, 3, 4 ) ) ),
-            equalTo( Arrays.asList( 3, 4, 5 ) )
+            list( sorted( list( 5, 3, 4 ) ) ),
+            equalTo( list( 3, 4, 5 ) )
         );
     }
 }

@@ -67,7 +67,8 @@ public class Util
         return ret;
     }
 
-    public static <T> List<T> list( T[] input )
+    @SafeVarargs
+    public static <T> List<T> list( T... input )
     {
         return Arrays.asList( input );
     }
