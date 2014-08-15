@@ -3,9 +3,12 @@ package rabbitescape.engine;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
+import static rabbitescape.engine.util.Util.*;
+
 import rabbitescape.engine.err.RabbitEscapeException;
 import rabbitescape.engine.textworld.TextWorldManip;
 import rabbitescape.engine.util.FileSystem;
+import rabbitescape.engine.util.Util.MissingResource;
 
 public class LoadWorldFile
 {
@@ -30,6 +33,12 @@ public class LoadWorldFile
 
         public MissingFile( String fileName )
         {
+            this.fileName = fileName;
+        }
+
+        public MissingFile( Throwable cause, String fileName )
+        {
+            super( cause );
             this.fileName = fileName;
         }
     }
@@ -72,7 +81,7 @@ public class LoadWorldFile
     {
         if( !fs.exists( fileName ) )
         {
-            throw new MissingFile( fileName );
+            return readLinesFromResource( fileName );
         }
 
         try
@@ -86,6 +95,19 @@ public class LoadWorldFile
         catch( IOException e )
         {
             throw new ReadingFailed( fileName, e );
+        }
+    }
+
+    public static String[] readLinesFromResource( String fileName )
+    {
+        try
+        {
+            return stringArray(
+                resourceLines( "/rabbitescape/levels/" + fileName ) );
+        }
+        catch ( MissingResource e )
+        {
+            throw new MissingFile( e, fileName );
         }
     }
 }

@@ -38,13 +38,13 @@ clean-all: clean
 
 
 run: compile
-	java -cp $(CLASSPATH) rabbitescape.ui.text.TextMain levels/basic/level_01.rel
+	java -cp $(CLASSPATH) rabbitescape.ui.text.TextMain test/level_01.rel
 
 runinteractive: compile
-	java -cp $(CLASSPATH) rabbitescape.ui.text.TextMain levels/basic/level_01.rel --interactive
+	java -cp $(CLASSPATH) rabbitescape.ui.text.TextMain test/level_01.rel --interactive
 
 rungui: compile
-	java -cp $(CLASSPATH) rabbitescape.ui.swing.SwingMain levels/basic/level_03.rel
+	java -cp $(CLASSPATH) rabbitescape.ui.swing.SwingMain test/level_03.rel
 
 runat: compile
 	java -cp $(CLASSPATH) rabbitescape.ui.swing.AnimationTester
