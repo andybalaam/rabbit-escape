@@ -10,14 +10,14 @@ public class AnimationCache
 
     public AnimationCache( AnimationLoader animationLoader )
     {
-        this.names = animationLoader.listAll();
+        this.names = AnimationLoader.listAll();
         this.animations = new HashMap<>();
 
         for ( String name : names )
         {
             if ( !name.equals( AnimationLoader.NONE ) )
             {
-                this.animations.put( name, animationLoader.load( name ) );
+                this.animations.put( name, AnimationLoader.load( name ) );
             }
         }
     }

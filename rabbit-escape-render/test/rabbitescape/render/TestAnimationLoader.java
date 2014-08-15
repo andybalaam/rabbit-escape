@@ -61,6 +61,18 @@ public class TestAnimationLoader
         );
     }
 
+    @Test
+    public void Filter_contents_of_ls_file_and_add_none()
+    {
+        assertThat(
+            AnimationLoader.animationFilesInResource(
+                "/rabbitescape/render/testls.txt" ),
+            equalTo( new String[] { "<none>", "aa", "bb", "cc" } )
+        );
+    }
+
+    // ---
+
     private ByteArrayInputStream animationAsStream( String[] animation )
         throws UnsupportedEncodingException
     {

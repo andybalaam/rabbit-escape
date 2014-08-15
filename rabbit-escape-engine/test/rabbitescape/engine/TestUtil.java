@@ -1,10 +1,14 @@
 package rabbitescape.engine;
 
 import static org.hamcrest.MatcherAssert.*;
-import static org.hamcrest.core.IsEqual.*;
+import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.fail;
+
 import static rabbitescape.engine.util.Util.*;
 
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -13,8 +17,6 @@ import java.util.Map;
 import java.util.TreeMap;
 
 import org.junit.Test;
-
-import rabbitescape.engine.util.Util;
 
 public class TestUtil
 {
@@ -91,10 +93,48 @@ public class TestUtil
     }
 
     @Test
+    public void Build_arrays_from_lists()
+    {
+        assertThat(
+            stringArray( Arrays.asList( new String[] { "d", "e" } ) ),
+            equalTo( new String[] { "d", "e" } )
+        );
+
+        assertThat(
+            characterArray( Arrays.asList( new Character[] { 'd', 'e' } ) ),
+            equalTo( new Character[] { 'd', 'e' } )
+        );
+
+        assertThat(
+            integerArray( Arrays.asList( new Integer[] { 4, 5 } ) ),
+            equalTo( new Integer[] { 4, 5 } )
+        );
+    }
+
+    @Test
+    public void Build_arrays_from_iterables_lists()
+    {
+        assertThat(
+            stringArray( (Iterable<String>)Arrays.asList( new String[] { "d", "e" } ) ),
+            equalTo( new String[] { "d", "e" } )
+        );
+
+        assertThat(
+            characterArray( (Iterable<Character>)Arrays.asList( new Character[] { 'd', 'e' } ) ),
+            equalTo( new Character[] { 'd', 'e' } )
+        );
+
+        assertThat(
+            integerArray( (Iterable<Integer>)Arrays.asList( new Integer[] { 4, 5 } ) ),
+            equalTo( new Integer[] { 4, 5 } )
+        );
+    }
+
+    @Test
     public void Get_the_first_item_with_getNth()
     {
         assertThat(
-            getNth( list( "a", "b", "c" ), 0 ),
+            getNth( Arrays.asList( "a", "b", "c" ), 0 ),
             equalTo( "a" )
         );
     }
@@ -103,7 +143,7 @@ public class TestUtil
     public void Get_the_last_item_with_getNth()
     {
         assertThat(
-            getNth( list( "a", "b", "c" ), 2 ),
+            getNth( Arrays.asList( "a", "b", "c" ), 2 ),
             equalTo( "c" )
         );
     }
@@ -112,7 +152,7 @@ public class TestUtil
     public void Get_any_item_with_getNth()
     {
         assertThat(
-            getNth( list( "a", "b", "c" ), 1 ),
+            getNth( Arrays.asList( "a", "b", "c" ), 1 ),
             equalTo( "b" )
         );
     }
@@ -120,13 +160,13 @@ public class TestUtil
     @Test( expected = ArrayIndexOutOfBoundsException.class )
     public void Negative_n_for_getNth_is_an_error()
     {
-        getNth( list( "a", "b", "c" ), -1 );
+        getNth( Arrays.asList( "a", "b", "c" ), -1 );
     }
 
     @Test( expected = ArrayIndexOutOfBoundsException.class )
     public void Past_end_of_list_for_getNth_is_an_error()
     {
-        getNth( list( "a", "b", "c" ), 3 );
+        getNth( Arrays.asList( "a", "b", "c" ), 3 );
     }
 
     @Test
@@ -151,7 +191,7 @@ public class TestUtil
     public void Build_empty_string_from_chars()
     {
         assertThat(
-            stringFromChars( Util.<Character>list() ),
+            stringFromChars( list( new Character[] {} ) ),
             equalTo( "" )
         );
     }
@@ -161,7 +201,7 @@ public class TestUtil
     public void Build_a_string_from_chars()
     {
         assertThat(
-            stringFromChars( list( 'x', 'y', 'z' ) ),
+            stringFromChars( Arrays.asList( 'x', 'y', 'z' ) ),
             equalTo( "xyz" )
         );
     }
@@ -194,8 +234,8 @@ public class TestUtil
     @Test
     public void Chain_deals_with_initial_empty_list()
     {
-        List<Integer> list1 = list();
-        List<Integer> list2 = list( 6, 7, 8 );
+        List<Integer> list1 = list( new Integer[] {} );
+        List<Integer> list2 = Arrays.asList( 6, 7, 8 );
 
         List<Integer> result = new ArrayList<>();
 
@@ -213,8 +253,8 @@ public class TestUtil
     @Test
     public void Chain_deals_with_second_list_empty()
     {
-        List<Integer> list1 = list( 5, 4, 3 );
-        List<Integer> list2 = list();
+        List<Integer> list1 = Arrays.asList( 5, 4, 3 );
+        List<Integer> list2 = list( new Integer[] {} );
 
         List<Integer> result = new ArrayList<>();
 
@@ -232,8 +272,8 @@ public class TestUtil
     @Test
     public void Chain_deals_with_both_lists_empty()
     {
-        List<Integer> list1 = list();
-        List<Integer> list2 = list();
+        List<Integer> list1 = list( new Integer[] {} );
+        List<Integer> list2 = list( new Integer[] {} );
 
         List<Integer> result = new ArrayList<>();
 
@@ -251,8 +291,8 @@ public class TestUtil
     @Test
     public void Chain_concatenates_two_iterables()
     {
-        List<Integer> list1 = list( 5, 4, 3 );
-        List<Integer> list2 = list( 6, 7, 8 );
+        List<Integer> list1 = Arrays.asList( 5, 4, 3 );
+        List<Integer> list2 = Arrays.asList( 6, 7, 8 );
 
         List<Integer> result = new ArrayList<>();
 
@@ -264,6 +304,106 @@ public class TestUtil
         assertThat(
             integerArray( result ),
             equalTo( new Integer[] { 5, 4, 3, 6, 7, 8 } )
+        );
+    }
+
+    @Test
+    public void Filter_deals_with_empty_list()
+    {
+        assertThat(
+            list( filter( endsWith( "x" ), new ArrayList<String>() ) ),
+            equalTo( (List<String>)new ArrayList<String>() )
+        );
+    }
+
+    @Test
+    public void Filter_removes_nonmatching_items_even_at_beginning()
+    {
+        List<String> inp = Arrays.asList( "ax", "bx", "ay", "bx", "x", "by" );
+
+        assertThat(
+            list( filter( endsWith( "y" ), inp ) ),
+            equalTo( Arrays.asList( "ay", "by" ) )
+        );
+    }
+
+    @Test
+    public void Filter_removes_nonmatching_items_even_at_end()
+    {
+        List<String> inp = Arrays.asList( "ay", "bx", "x", "by", "ax", "bx" );
+
+        assertThat(
+            list( filter( endsWith( "y" ), inp ) ),
+            equalTo( Arrays.asList( "ay", "by" ) )
+        );
+    }
+
+    @Test
+    public void Striplast_0_chars()
+    {
+        assertThat(
+            stripLast( 0 ).apply( "987654321" ),
+            equalTo( "987654321" )
+        );
+    }
+
+    @Test
+    public void Striplast_4_chars()
+    {
+        assertThat(
+            stripLast( 4 ).apply( "987654321" ),
+            equalTo( "98765" )
+        );
+    }
+
+    @Test
+    public void Striplast_more_than_there_are_gives_empty_string()
+    {
+        assertThat(
+            stripLast( 20 ).apply( "987654321" ),
+            equalTo( "" )
+        );
+    }
+
+    @Test( expected = StringIndexOutOfBoundsException.class )
+    public void Striplast_negative_is_an_error()
+    {
+        stripLast( -2 ).apply( "987654321" );
+    }
+
+    @Test
+    public void Endswith_empty_string_is_true()
+    {
+        assertThat(
+            endsWith( "" ).apply( "987654321" ),
+            equalTo( true )
+        );
+    }
+
+    @Test
+    public void Endswith_suffix_is_true()
+    {
+        assertThat(
+            endsWith( "21" ).apply( "987654321" ),
+            equalTo( true )
+        );
+    }
+
+    @Test
+    public void Endswith_nonsuffix_is_false()
+    {
+        assertThat(
+            endsWith( "AA" ).apply( "987654321" ),
+            equalTo( false )
+        );
+    }
+
+    @Test
+    public void Endswith_longer_suffix_than_string_is_false()
+    {
+        assertThat(
+            endsWith( "A987654321" ).apply( "987654321" ),
+            equalTo( false )
         );
     }
 
@@ -311,8 +451,8 @@ public class TestUtil
     public void Apply_a_function_to_each_element_with_map()
     {
         assertThat(
-            list( map( stringise(), list( 3, -4, 5 ) ) ),
-            equalTo( list( "3", "-4", "5" ) )
+            list( map( stringise(), Arrays.asList( 3, -4, 5 ) ) ),
+            equalTo( Arrays.asList( "3", "-4", "5" ) )
         );
     }
 
@@ -320,8 +460,8 @@ public class TestUtil
     public void Sorted_empty_list_is_empty()
     {
         assertThat(
-            list( sorted( list() ) ),
-            equalTo( list() )
+            list( sorted( Arrays.asList() ) ),
+            equalTo( Arrays.asList() )
         );
     }
 
@@ -329,8 +469,49 @@ public class TestUtil
     public void Sorted_version_of_a_list()
     {
         assertThat(
-            list( sorted( list( 5, 3, 4 ) ) ),
-            equalTo( list( 3, 4, 5 ) )
+            list( sorted( Arrays.asList( 5, 3, 4 ) ) ),
+            equalTo( Arrays.asList( 3, 4, 5 ) )
         );
+    }
+
+    @Test
+    public void Read_the_lines_in_a_stream() throws Exception
+    {
+        byte[] contents = "foo\nbar\nbaz\n".getBytes( "UTF8" );
+
+        assertThat(
+            list( streamLines( new ByteArrayInputStream( contents ) ) ),
+            equalTo( Arrays.asList( "foo", "bar", "baz" ) )
+        );
+    }
+
+    @Test( expected = ReadingResourceFailed.class )
+    public void Reading_a_throwing_stream_is_an_error()
+    {
+        InputStream throwing = new InputStream()
+        {
+            @Override
+            public int read() throws IOException
+            {
+                throw new IOException();
+            }
+        };
+
+        streamLines( throwing ).iterator();
+    }
+
+    @Test
+    public void Read_the_lines_in_a_resource()
+    {
+        assertThat(
+            list( resourceLines( "/rabbitescape/engine/testresource.rel" ) ),
+            equalTo( Arrays.asList( "x", "y", "z" ) )
+        );
+    }
+
+    @Test( expected = MissingResource.class )
+    public void Reading_a_nonexistent_resource_is_an_error()
+    {
+        resourceLines( "/rabbitescape/engine/NONEXISTENT.rel" );
     }
 }

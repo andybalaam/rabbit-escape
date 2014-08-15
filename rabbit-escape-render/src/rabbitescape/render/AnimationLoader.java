@@ -6,7 +6,10 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+
+import static rabbitescape.engine.util.Util.*;
 
 import rabbitescape.engine.err.RabbitEscapeException;
 
@@ -54,39 +57,36 @@ public class AnimationLoader
         }
     }
 
-    public String[] listAll()
+    public static String[] animationFilesInResource( String lsResourceName )
     {
         try
         {
-            List<String> ret = new ArrayList<>();
-            ret.add( NONE );
-
-            BufferedReader reader = new BufferedReader(
-                new InputStreamReader(
-                    getClass().getResource(
-                        "/rabbitescape/render/animations/ls.txt"
-                    ).openStream()
+            return stringArray(
+                chain(
+                    Arrays.asList( NONE ),
+                    map(
+                        stripLast( 4 ),
+                        filter(
+                            endsWith( ".rea" ),
+                            resourceLines( lsResourceName )
+                        )
+                    )
                 )
             );
-
-            String line;
-            while ( ( line = reader.readLine() ) != null )
-            {
-                if ( line.endsWith( ".rea" ) )
-                {
-                    ret.add( line.substring( 0, line.length() - 4 ) );
-                }
-            }
-
-            return ret.toArray( new String[ret.size() ] );
         }
-        catch ( IOException e )
+        catch ( ReadingResourceFailed e )
         {
             throw new ErrorLoadingAnimationNames( e );
         }
     }
 
-    public Animation load( String name )
+    public static String[] listAll()
+    {
+        return animationFilesInResource(
+            "/rabbitescape/render/animations/ls.txt" );
+    }
+
+    public static Animation load( String name )
     {
         try
         {

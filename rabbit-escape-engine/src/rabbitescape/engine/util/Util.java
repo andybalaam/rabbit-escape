@@ -1,5 +1,9 @@
 package rabbitescape.engine.util;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -9,11 +13,41 @@ import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.TreeSet;
 
+import rabbitescape.engine.err.RabbitEscapeException;
+
 public class Util
 {
     public static interface Function<T, R>
     {
         public R apply( T t );
+    }
+
+    public static class ReadingResourceFailed extends RabbitEscapeException
+    {
+        private static final long serialVersionUID = 1L;
+
+        public final String name;
+
+        public ReadingResourceFailed( Throwable cause, String name )
+        {
+            super( cause );
+            this.name = name;
+        }
+
+        public ReadingResourceFailed( String name )
+        {
+            this.name = name;
+        }
+    }
+
+    public static class MissingResource extends ReadingResourceFailed
+    {
+        private static final long serialVersionUID = 1L;
+
+        public MissingResource( String name )
+        {
+            super( name );
+        }
     }
 
     /**
@@ -67,8 +101,7 @@ public class Util
         return ret;
     }
 
-    @SafeVarargs
-    public static <T> List<T> list( T... input )
+    public static <T> List<T> list( T[] input )
     {
         return Arrays.asList( input );
     }
@@ -78,14 +111,29 @@ public class Util
         return list.toArray( new String[ list.size() ] );
     }
 
+    public static String[] stringArray( Iterable<String> items )
+    {
+        return stringArray( list( items ) );
+    }
+
     public static Character[] characterArray( List<Character> list )
     {
         return list.toArray( new Character[ list.size() ] );
     }
 
+    public static Character[] characterArray( Iterable<Character> items )
+    {
+        return characterArray( list( items ) );
+    }
+
     public static Integer[] integerArray( List<Integer> list )
     {
         return list.toArray( new Integer[ list.size() ] );
+    }
+
+    public static Integer[] integerArray( Iterable<Integer> items )
+    {
+        return integerArray( list( items ) );
     }
 
     public static Map<String, Object> newMap( String... keysAndValues )
@@ -275,6 +323,97 @@ public class Util
         };
     }
 
+    public static <T> Iterable<T> filter(
+        final Function<T, Boolean> predicate,
+        final Iterable<T> input
+    )
+    {
+        class It implements Iterator<T>
+        {
+            private final Function<T, Boolean> predicate;
+            private final Iterator<T> it;
+            private T nextItem;
+
+            public It( Function<T, Boolean> predicate, Iterator<T> it )
+            {
+                this.predicate = predicate;
+                this.it = it;
+                this.nextItem = null;
+
+                advance();
+            }
+
+            @Override
+            public boolean hasNext()
+            {
+                return nextItem != null;
+            }
+
+            @Override
+            public T next()
+            {
+                T item = nextItem;
+                advance();
+                return item;
+            }
+
+            @Override
+            public void remove()
+            {
+                throw new UnsupportedOperationException();
+            }
+
+            private void advance()
+            {
+                T item = null;
+                while ( it.hasNext() )
+                {
+                    T tmp = it.next();
+                    if ( predicate.apply( tmp ) )
+                    {
+                        item = tmp;
+                        break;
+                    }
+                }
+                nextItem = item;
+            }
+
+        }
+
+        return new Iterable<T>()
+        {
+            @Override
+            public Iterator<T> iterator()
+            {
+                return new It( predicate, input.iterator() );
+            }
+        };
+    }
+
+    public static Function<String, String> stripLast( final int i )
+    {
+        return new Function<String, String>()
+        {
+            @Override
+            public String apply( String input )
+            {
+                return input.substring( 0, Math.max( 0, input.length() - i ) );
+            }
+        };
+    }
+
+    public static Function<String, Boolean> endsWith( final String suffix )
+    {
+        return new Function<String, Boolean>()
+        {
+            @Override
+            public Boolean apply( String input )
+            {
+                return input.endsWith( suffix );
+            }
+        };
+    }
+
     public static <T> Iterable<T> sorted( Iterable<T> input )
     {
         TreeSet<T> ret = new TreeSet<T>();
@@ -285,5 +424,81 @@ public class Util
         }
 
         return ret;
+    }
+
+    private static class ReaderIterator implements Iterator<String>
+    {
+        private final String name;
+        private final BufferedReader reader;
+        private String nextLine;
+
+        public ReaderIterator( String name, BufferedReader reader )
+        {
+            this.name = name;
+            this.reader = reader;
+            this.nextLine = readLine();
+        }
+
+        @Override
+        public boolean hasNext()
+        {
+            return nextLine != null;
+        }
+
+        @Override
+        public String next()
+        {
+            String thisLine = nextLine;
+            nextLine = readLine();
+            return thisLine;
+        }
+
+        private String readLine()
+        {
+            try
+            {
+                return reader.readLine();
+            }
+            catch ( IOException e )
+            {
+                throw new ReadingResourceFailed( e, name );
+            }
+        }
+
+        @Override
+        public void remove()
+        {
+            throw new UnsupportedOperationException();
+        }
+    }
+
+
+    public static Iterable<String> streamLines( InputStream input )
+    {
+        return streamLines( null, input );
+    }
+
+    private static Iterable<String> streamLines(
+        final String name, final InputStream input )
+    {
+        return new Iterable<String>()
+        {
+            @Override
+            public Iterator<String> iterator()
+            {
+                return new ReaderIterator(
+                    name, new BufferedReader( new InputStreamReader( input ) ) );
+            }
+        };
+    }
+
+    public static Iterable<String> resourceLines( String name )
+    {
+        InputStream res = Util.class.getResourceAsStream( name );
+        if ( res == null )
+        {
+            throw new MissingResource( name );
+        }
+        return streamLines( name, res );
     }
 }
