@@ -323,47 +323,68 @@ public class Util
         };
     }
 
+    private static abstract class UntilNullIterator<T> implements Iterator<T>
+    {
+        private T nextItem;
+        private boolean start;
+
+        public UntilNullIterator()
+        {
+            this.nextItem = null;
+            this.start = true;
+        }
+
+        @Override
+        public boolean hasNext()
+        {
+            if ( start ) advance();
+
+            return nextItem != null;
+        }
+
+        @Override
+        public T next()
+        {
+            if ( start ) advance();
+
+            T item = nextItem;
+            advance();
+            return item;
+        }
+
+        @Override
+        public void remove()
+        {
+            throw new UnsupportedOperationException();
+        }
+
+        private void advance()
+        {
+            start = false;
+            nextItem = nextOrNull();
+        }
+
+        protected abstract T nextOrNull();
+    }
+
     public static <T> Iterable<T> filter(
         final Function<T, Boolean> predicate,
         final Iterable<T> input
     )
     {
-        class It implements Iterator<T>
+        class It extends UntilNullIterator<T>
         {
             private final Function<T, Boolean> predicate;
             private final Iterator<T> it;
-            private T nextItem;
 
             public It( Function<T, Boolean> predicate, Iterator<T> it )
             {
                 this.predicate = predicate;
                 this.it = it;
-                this.nextItem = null;
-
-                advance();
             }
 
             @Override
-            public boolean hasNext()
-            {
-                return nextItem != null;
-            }
-
-            @Override
-            public T next()
-            {
-                T item = nextItem;
-                advance();
-                return item;
-            }
-
-            @Override
-            public void remove()
-            {
-                throw new UnsupportedOperationException();
-            }
-
-            private void advance()
+            protected T nextOrNull()
             {
                 T item = null;
                 while ( it.hasNext() )
@@ -375,9 +396,8 @@ public class Util
                         break;
                     }
                 }
-                nextItem = item;
+                return item;
             }
-
         }
 
         return new Iterable<T>()
@@ -426,34 +446,19 @@ public class Util
         return ret;
     }
 
-    private static class ReaderIterator implements Iterator<String>
+    private static class ReaderIterator extends UntilNullIterator<String>
     {
         private final String name;
         private final BufferedReader reader;
-        private String nextLine;
 
         public ReaderIterator( String name, BufferedReader reader )
         {
             this.name = name;
             this.reader = reader;
-            this.nextLine = readLine();
         }
 
         @Override
-        public boolean hasNext()
-        {
-            return nextLine != null;
-        }
-
-        @Override
-        public String next()
-        {
-            String thisLine = nextLine;
-            nextLine = readLine();
-            return thisLine;
-        }
-
-        private String readLine()
+        protected String nextOrNull()
         {
             try
             {
@@ -464,14 +469,7 @@ public class Util
                 throw new ReadingResourceFailed( e, name );
             }
         }
-
-        @Override
-        public void remove()
-        {
-            throw new UnsupportedOperationException();
-        }
     }
-
 
     public static Iterable<String> streamLines( InputStream input )
     {

@@ -497,7 +497,7 @@ public class TestUtil
             }
         };
 
-        streamLines( throwing ).iterator();
+        streamLines( throwing ).iterator().hasNext();
     }
 
     @Test
