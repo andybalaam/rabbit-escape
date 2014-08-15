@@ -5,6 +5,8 @@ import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.image.BufferStrategy;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import rabbitescape.engine.ChangeDescription;
@@ -19,6 +21,11 @@ import rabbitescape.ui.swing.SwingGameInit.WhenUiReady;
 
 public class SwingGameLoop implements GameLoop
 {
+    public static interface StatsChangedListener
+    {
+        void changed( int waiting, int out, int saved );
+    }
+
     /**
      * Everything that modifies the world goes through here, with
      * synchronization.
@@ -45,11 +52,12 @@ public class SwingGameLoop implements GameLoop
 
     private static final int framesPerStep = 10;
 
-    private final World world;
+    public final World world;
     private final WorldModifier worldModifier;
     private boolean running;
     private boolean paused;
     private final int renderingTileSize;
+    private final List<StatsChangedListener> statsListeners;
 
     private final GameJFrame jframe;
     private final BitmapCache<SwingBitmap> bitmapCache;
@@ -61,6 +69,7 @@ public class SwingGameLoop implements GameLoop
         this.running = true;
         this.paused = false;
         this.renderingTileSize = 32;
+        this.statsListeners = new ArrayList<>();
 
         // This blocks until the UI is ready:
         WhenUiReady uiPieces = init.waitForUi.waitForUi();
@@ -102,6 +111,7 @@ public class SwingGameLoop implements GameLoop
         while( running )
         {
             worldModifier.step();
+            notifyStatsListeners();
             ChangeDescription changes = world.describeChanges();
 
             final SpriteAnimator animator = new SpriteAnimator(
@@ -231,5 +241,22 @@ public class SwingGameLoop implements GameLoop
     public Map<Token.Type, Integer> getAbilities()
     {
         return world.abilities;
+    }
+
+    public void addStatsChangedListener( StatsChangedListener listener )
+    {
+        statsListeners.add( listener );
+    }
+
+    private void notifyStatsListeners()
+    {
+        for ( StatsChangedListener listener : statsListeners )
+        {
+            listener.changed(
+                world.rabbitsStillToEnter,
+                world.numRabbitsOut(),
+                world.numSavedRabbits
+            );
+        }
     }
 }

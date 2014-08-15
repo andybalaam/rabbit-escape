@@ -16,6 +16,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.WindowEvent;
 
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
 import rabbitescape.engine.Token;
@@ -60,18 +61,23 @@ public class GameJFrame extends JFrame
 
     private static final Color backgroundColor = Color.WHITE;
 
+    private final Container contentPane;
+    private final JPanel middlePanel;
     private final Dimension buttonSizeInPixels;
     private final Dimension worldSizeInPixels;
     private final Config uiConfig;
     private final BitmapCache<SwingBitmap> bitmapCache;
     public final Canvas canvas;
     private GameMenu menu;
+    private TopBar topBar;
 
     private Token.Type chosenAbility;
     private SwingGameLoop gameLoop;
 
     public GameJFrame( Config uiConfig, BitmapCache<SwingBitmap> bitmapCache )
     {
+        this.contentPane = getContentPane();
+        this.middlePanel = new JPanel( new BorderLayout() );
         this.uiConfig = uiConfig;
         this.bitmapCache = bitmapCache;
         this.chosenAbility = null;
@@ -82,14 +88,16 @@ public class GameJFrame extends JFrame
 
         this.canvas = initUi();
         this.menu = null;
+        this.topBar = null;
     }
 
     private Canvas initUi()
     {
         setIgnoreRepaint( true );
 
-        Container contentPane = getContentPane();
-        Canvas canvas = initCanvas( contentPane, worldSizeInPixels );
+        contentPane.add( middlePanel, BorderLayout.CENTER );
+
+        Canvas canvas = initCanvas( middlePanel, worldSizeInPixels );
 
         setBoundsFromConfig();
 
@@ -122,6 +130,7 @@ public class GameJFrame extends JFrame
         addWindowListener( listener );
         addComponentListener( listener );
         canvas.addMouseListener( listener );
+        gameLoop.addStatsChangedListener( this.topBar );
 
         menu.addAbilitiesListener( new GameMenu.AbilityChangedListener()
         {
@@ -183,13 +192,19 @@ public class GameJFrame extends JFrame
         this.gameLoop = gameLoop;
 
         this.menu = new GameMenu(
-            getContentPane(),
+            contentPane,
             bitmapCache,
             buttonSizeInPixels,
             worldSizeInPixels,
             uiConfig,
             backgroundColor,
             gameLoop.getAbilities()
+        );
+
+        this.topBar = new TopBar(
+            backgroundColor,
+            gameLoop.world.requiredNumSavedRabbits,
+            middlePanel
         );
 
         pack();

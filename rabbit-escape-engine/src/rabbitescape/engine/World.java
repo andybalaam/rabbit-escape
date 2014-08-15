@@ -114,6 +114,7 @@ public class World
     private final Changes changes;
 
     public int numSavedRabbits;
+    public int numKilledRabbits;
     public int rabbitsStillToEnter;
 
     public World(
@@ -139,6 +140,7 @@ public class World
         this.changes = new Changes();
 
         numSavedRabbits = 0;
+        numKilledRabbits = 0;
         rabbitsStillToEnter = numRabbits;
 
         init();
@@ -223,6 +225,7 @@ public class World
 
     public void killRabbit( Rabbit rabbit )
     {
+        ++numKilledRabbits;
         changes.rabbitsToRemove.add( rabbit );
     }
 
@@ -281,5 +284,11 @@ public class World
     public boolean success()
     {
         return numSavedRabbits > requiredNumSavedRabbits;
+    }
+
+    public int numRabbitsOut()
+    {
+        return numRabbits -
+            ( rabbitsStillToEnter + numKilledRabbits + numSavedRabbits );
     }
 }
