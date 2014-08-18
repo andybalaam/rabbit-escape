@@ -43,6 +43,9 @@ run: compile
 runinteractive: compile
 	java -cp $(CLASSPATH) rabbitescape.ui.text.TextMain test/level_01.rel --interactive
 
+runmenu: compile
+	java -cp $(CLASSPATH) rabbitescape.ui.text.TextMenuMain
+
 rungui: compile
 	java -cp $(CLASSPATH) rabbitescape.ui.swing.SwingMain test/level_03.rel
 
