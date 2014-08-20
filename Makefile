@@ -7,7 +7,6 @@ IMAGESSRC := $(wildcard images-src/*.svg)
 IMAGES32 := $(IMAGESSRC:images-src/%.svg=$(IMAGES32_DEST)/%.png)
 
 ANIMATIONS_DIR := rabbit-escape-render/src/rabbitescape/render/animations
-ANIMATIONS_LS := $(ANIMATIONS_DIR)/ls.txt
 
 $(IMAGES32_DEST)/%.png: images-src/%.svg
 	mkdir -p $(IMAGES32_DEST); inkscape $< --export-png=$@
@@ -16,10 +15,10 @@ all: compile
 
 images: $(IMAGES32)
 
-$(ANIMATIONS_LS): $(ANIMATIONS_DIR)/*.rea
-	cd $(ANIMATIONS_DIR); ls *.rea > ls.txt
+%/ls.txt: %/*.re*
+	ls $(@D) --hide=ls.txt > $(@D)/ls.txt
 
-animations: $(ANIMATIONS_LS)
+animations: $(ANIMATIONS_DIR)/ls.txt
 
 compile: images animations
 	ant compile
@@ -30,12 +29,12 @@ clean:
 		rabbit-escape-render/bin/* \
 		rabbit-escape-ui-text/bin/* \
 		rabbit-escape-ui-swing/bin/*
+	find ./ -name "ls.txt" -delete
 
-clean-all: clean
-	rm -rf \
-		$(IMAGES32_DEST)/* \
-		$(ANIMATIONS_LS)
+clean-images:
+	rm -rf $(IMAGES32_DEST)/*
 
+clean-all: clean clean-images
 
 run: compile
 	java -cp $(CLASSPATH) rabbitescape.ui.text.TextMain test/level_01.rel
