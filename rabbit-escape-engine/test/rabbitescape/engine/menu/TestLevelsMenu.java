@@ -5,7 +5,7 @@ import static org.hamcrest.CoreMatchers.*;
 
 import org.junit.Test;
 
-import static rabbitescape.engine.util.Translation.*;
+import static rabbitescape.engine.i18n.Translation.*;
 
 public class TestLevelsMenu
 {

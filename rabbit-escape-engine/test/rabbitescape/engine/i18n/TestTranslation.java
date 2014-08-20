@@ -1,4 +1,4 @@
-package rabbitescape.engine.util;
+package rabbitescape.engine.i18n;
 
 import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.*;
@@ -6,6 +6,8 @@ import static org.hamcrest.MatcherAssert.*;
 import java.util.Locale;
 
 import org.junit.Test;
+
+import rabbitescape.engine.i18n.Translation;
 
 public class TestTranslation
 {
@@ -22,7 +24,7 @@ public class TestTranslation
     public void Unknown_key_means_key_is_returned()
     {
         Translation.Instance trans = new Translation.Instance(
-            "rabbitescape.engine.util.testtranslations", Locale.ENGLISH );
+            "rabbitescape.engine.i18n.testtranslations", Locale.ENGLISH );
 
         assertThat( trans.t( "Some key" ), equalTo( "Some key" ) );
     }
@@ -34,11 +36,11 @@ public class TestTranslation
         Locale defaultLocale = Locale.getDefault();
         if ( !defaultLocale.equals( Locale.FRANCE ) )
         {
-            bundleName = "rabbitescape.engine.util.testtranslationsfranceonly";
+            bundleName = "rabbitescape.engine.i18n.testtranslationsfranceonly";
         }
         else
         {
-            bundleName = "rabbitescape.engine.util.testtranslationsspainonly";
+            bundleName = "rabbitescape.engine.i18n.testtranslationsspainonly";
         }
 
         // Ask for chinese translations in a bundle that doesn't supply a
@@ -53,7 +55,7 @@ public class TestTranslation
     public void Known_bundle_and_key_means_value_is_returned()
     {
         Translation.Instance trans = new Translation.Instance(
-            "rabbitescape.engine.util.testtranslations", Locale.ENGLISH );
+            "rabbitescape.engine.i18n.testtranslations", Locale.ENGLISH );
 
         assertThat( trans.t( "test_key_1" ), equalTo( "Test Value 1" ) );
     }
@@ -71,7 +73,7 @@ public class TestTranslation
     public void Sanitised_version_of_key_is_looked_up()
     {
         Translation.Instance trans = new Translation.Instance(
-            "rabbitescape.engine.util.testtranslations", Locale.ENGLISH );
+            "rabbitescape.engine.i18n.testtranslations", Locale.ENGLISH );
 
         assertThat(
             trans.t( "foo! bar% Baz$ BASH£ Quux\" =" ),

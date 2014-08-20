@@ -4,7 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-import static rabbitescape.engine.util.Translation.t;
+import static rabbitescape.engine.i18n.Translation.*;
 import static rabbitescape.engine.util.Util.*;
 
 import rabbitescape.engine.Token;

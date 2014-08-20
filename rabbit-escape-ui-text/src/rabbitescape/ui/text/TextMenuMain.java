@@ -1,6 +1,6 @@
 package rabbitescape.ui.text;
 
-import rabbitescape.engine.util.Translation;
+import rabbitescape.engine.i18n.Translation;
 
 import java.io.BufferedReader;
 import java.io.InputStream;

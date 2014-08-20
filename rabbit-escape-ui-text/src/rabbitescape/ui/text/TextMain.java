@@ -4,9 +4,9 @@ import java.io.PrintStream;
 import java.util.Locale;
 
 import rabbitescape.engine.World;
+import rabbitescape.engine.i18n.Translation;
 import rabbitescape.engine.util.FileSystem;
 import rabbitescape.engine.util.RealFileSystem;
-import rabbitescape.engine.util.Translation;
 import rabbitescape.render.GameLoop;
 import rabbitescape.render.Main;
 

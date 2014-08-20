@@ -1,7 +1,7 @@
 package rabbitescape.ui.text;
 
+import static rabbitescape.engine.i18n.Translation.*;
 import static rabbitescape.engine.util.Util.*;
-import static rabbitescape.engine.util.Translation.t;
 
 import rabbitescape.engine.World;
 import rabbitescape.engine.textworld.TextWorldManip;
