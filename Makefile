@@ -7,6 +7,7 @@ IMAGESSRC := $(wildcard images-src/*.svg)
 IMAGES32 := $(IMAGESSRC:images-src/%.svg=$(IMAGES32_DEST)/%.png)
 
 ANIMATIONS_DIR := rabbit-escape-render/src/rabbitescape/render/animations
+LEVELS_DIRS := $(wildcard rabbit-escape-engine/src/rabbitescape/levels/*)
 
 $(IMAGES32_DEST)/%.png: images-src/%.svg
 	mkdir -p $(IMAGES32_DEST); inkscape $< --export-png=$@
@@ -19,6 +20,8 @@ images: $(IMAGES32)
 	ls $(@D) --hide=ls.txt > $(@D)/ls.txt
 
 animations: $(ANIMATIONS_DIR)/ls.txt
+
+levels: $(patsubst %, %/ls.txt, $(LEVELS_DIRS))
 
 compile: images animations
 	ant compile
