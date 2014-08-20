@@ -11,16 +11,16 @@ import rabbitescape.engine.util.RealFileSystem;
 import rabbitescape.render.GameLoop;
 import rabbitescape.render.Main;
 
-public class SwingMain extends Main
+public class SwingSingleGameMain extends Main
 {
-    private SwingMain( FileSystem fs, PrintStream out, Locale locale )
+    private SwingSingleGameMain( FileSystem fs, PrintStream out, Locale locale )
     {
         super( fs, out, locale );
     }
 
     public static void main( String[] args )
     {
-        Main m = new SwingMain(
+        Main m = new SwingSingleGameMain(
             new RealFileSystem(), System.out, Locale.getDefault() );
 
         m.run( args );
