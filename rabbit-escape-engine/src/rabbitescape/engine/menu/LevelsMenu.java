@@ -32,7 +32,9 @@ public class LevelsMenu extends Menu
         int i = 0;
         for ( String fileName : levelFileNames )
         {
-            ret[i] = new LevelMenuItem( levelsDir + "/" + fileName, i + 1 );
+            ret[i] = new LevelMenuItem(
+                "/rabbitescape/levels/" + levelsDir + "/" + fileName, i + 1 );
+
             ++i;
         }
 
