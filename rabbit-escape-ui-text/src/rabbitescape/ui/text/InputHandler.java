@@ -1,8 +1,6 @@
 package rabbitescape.ui.text;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 
 import static rabbitescape.engine.i18n.Translation.*;
 import static rabbitescape.engine.util.Util.*;
@@ -207,9 +205,7 @@ public class InputHandler
 
         try
         {
-            return new BufferedReader(
-                new InputStreamReader( terminal.in )
-            ).readLine();
+            return terminal.in.readLine();
         }
         catch (IOException e)
         {

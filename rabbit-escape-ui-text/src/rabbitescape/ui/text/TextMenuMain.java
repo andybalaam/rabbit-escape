@@ -2,20 +2,15 @@ package rabbitescape.ui.text;
 
 import rabbitescape.engine.i18n.Translation;
 
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.PrintStream;
 import java.util.Locale;
 
 public class TextMenuMain
 {
     private final TextMenu textMenu;
 
-    public TextMenuMain( InputStream in, PrintStream out )
+    public TextMenuMain( Terminal terminal )
     {
-        this.textMenu = new TextMenu(
-            new BufferedReader( new InputStreamReader( in ) ), out );
+        this.textMenu = new TextMenu( terminal );
     }
 
     public static void main( String[] args )
@@ -23,7 +18,8 @@ public class TextMenuMain
         Locale locale = Locale.getDefault();
         Translation.init( locale );
 
-        TextMenuMain m = new TextMenuMain( System.in, System.out );
+        TextMenuMain m = new TextMenuMain(
+            new Terminal( System.in, System.out, locale ) );
 
         m.run( args );
     }

@@ -1,8 +1,6 @@
 package rabbitescape.ui.text;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.PrintStream;
 import java.util.Stack;
 
 import static rabbitescape.engine.util.Util.*;
@@ -38,13 +36,11 @@ public class TextMenu
         }
     }
 
-    private final BufferedReader in;
-    private final PrintStream out;
+    private final Terminal terminal;
 
-    public TextMenu( BufferedReader in, PrintStream out )
+    public TextMenu( Terminal terminal )
     {
-        this.in = in;
-        this.out = out;
+        this.terminal = terminal;
     }
 
     public void run()
@@ -98,12 +94,12 @@ public class TextMenu
 
     private void level( MenuItem item )
     {
-        out.println( "LEVEL " + ( (LevelMenuItem)item ).fileName );
+        terminal.out.println( "LEVEL " + ( (LevelMenuItem)item ).fileName );
     }
 
     private void about()
     {
-        out.println( t(
+        terminal.out.println( t(
             "\n"
             + "Rabbit Escape\n"
             + "Copyright(c) 2014 by Andy Balaam\n"
@@ -120,8 +116,8 @@ public class TextMenu
 
     private MenuItem showMenu( Menu menu )
     {
-        out.println( menu.intro + "\n" );
-        out.println( renderMenu( menu ) );
+        terminal.out.println( menu.intro + "\n" );
+        terminal.out.println( renderMenu( menu ) );
         int chosenNum = readItemNum( menu.items.length );
         if ( chosenNum == -1 )
         {
@@ -138,7 +134,7 @@ public class TextMenu
         int num = -1;
         while ( num < 0 || num > length )
         {
-            out.print(
+            terminal.out.print(
                 t(
                     "Enter a number (1-${max}), or 0 to go back: ",
                     newMap( "max", String.valueOf( length ) )
@@ -161,7 +157,7 @@ public class TextMenu
     {
         try
         {
-           return in.readLine();
+           return terminal.in.readLine();
         }
         catch ( IOException e )
         {
