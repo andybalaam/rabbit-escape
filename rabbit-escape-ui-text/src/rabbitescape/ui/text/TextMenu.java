@@ -11,6 +11,7 @@ import rabbitescape.engine.menu.LevelMenuItem;
 import rabbitescape.engine.menu.Menu;
 import rabbitescape.engine.menu.MenuDefinition;
 import rabbitescape.engine.menu.MenuItem;
+import rabbitescape.engine.util.FileSystem;
 
 public class TextMenu
 {
@@ -36,10 +37,12 @@ public class TextMenu
         }
     }
 
+    private final FileSystem fs;
     private final Terminal terminal;
 
-    public TextMenu( Terminal terminal )
+    public TextMenu( FileSystem fs, Terminal terminal )
     {
+        this.fs = fs;
         this.terminal = terminal;
     }
 
@@ -94,7 +97,10 @@ public class TextMenu
 
     private void level( MenuItem item )
     {
-        terminal.out.println( "LEVEL " + ( (LevelMenuItem)item ).fileName );
+        LevelMenuItem levelItem = (LevelMenuItem)item;
+
+        new TextMain( fs, terminal.out, terminal.locale )
+            .launchGame( new String[] { levelItem.fileName, "--interactive" } );
     }
 
     private void about()

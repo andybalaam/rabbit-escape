@@ -16,8 +16,8 @@ public class TestLevelsMenu
             menuItemsToStrings( LevelsMenu.menuItems( "test2" ) ),
             equalTo(
                 new String[] {
-                    "Level 1 /rabbitescape/levels/test2/lev1",
-                    "Level 2 /rabbitescape/levels/test2/lev2"
+                    "Level 1 test2/lev1.rel",
+                    "Level 2 test2/lev2.rel"
                 }
             )
         );
