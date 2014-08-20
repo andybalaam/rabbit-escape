@@ -99,7 +99,7 @@ public class TextMenu
     {
         LevelMenuItem levelItem = (LevelMenuItem)item;
 
-        new TextMain( fs, terminal.out, terminal.locale )
+        new TextSingleGameMain( fs, terminal.out, terminal.locale )
             .launchGame( new String[] { levelItem.fileName, "--interactive" } );
     }
 

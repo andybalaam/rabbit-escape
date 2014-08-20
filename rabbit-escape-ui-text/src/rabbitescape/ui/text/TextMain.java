@@ -1,20 +1,18 @@
 package rabbitescape.ui.text;
 
-import java.io.PrintStream;
-import java.util.Locale;
-
-import rabbitescape.engine.World;
 import rabbitescape.engine.i18n.Translation;
 import rabbitescape.engine.util.FileSystem;
 import rabbitescape.engine.util.RealFileSystem;
-import rabbitescape.render.GameLoop;
-import rabbitescape.render.Main;
 
-public class TextMain extends Main
+import java.util.Locale;
+
+public class TextMain
 {
-    public TextMain( FileSystem fs, PrintStream out, Locale locale )
+    private final TextMenu textMenu;
+
+    public TextMain( FileSystem fs, Terminal terminal )
     {
-        super( fs, out, locale );
+        this.textMenu = new TextMenu( fs, terminal );
     }
 
     public static void main( String[] args )
@@ -22,16 +20,16 @@ public class TextMain extends Main
         Locale locale = Locale.getDefault();
         Translation.init( locale );
 
-        Main m = new TextMain(
-            new RealFileSystem(), System.out, locale );
+        TextMain m = new TextMain(
+            new RealFileSystem(),
+            new Terminal( System.in, System.out, locale )
+        );
 
         m.run( args );
     }
 
-    @Override
-    public GameLoop createGameLoop( World world )
+    private void run( String[] args )
     {
-        return new TextGameLoop(
-            world, new Terminal( System.in, System.out, Locale.getDefault() ) );
+        textMenu.run();
     }
 }
