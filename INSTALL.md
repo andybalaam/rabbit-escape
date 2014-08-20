@@ -23,6 +23,8 @@ Eclipse
 There are Eclipse project files, so "File" -> "Import" ->
 "Existing projects into workspace" should work.
 
+You will need to run make before you start.
+
 Contributing
 ------------
 
