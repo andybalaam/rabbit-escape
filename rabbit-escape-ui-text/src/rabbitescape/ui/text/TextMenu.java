@@ -9,6 +9,7 @@ import static rabbitescape.engine.util.Util.*;
 import static rabbitescape.engine.i18n.Translation.*;
 
 import rabbitescape.engine.err.RabbitEscapeException;
+import rabbitescape.engine.menu.LevelMenuItem;
 import rabbitescape.engine.menu.Menu;
 import rabbitescape.engine.menu.MenuDefinition;
 import rabbitescape.engine.menu.MenuItem;
@@ -55,7 +56,7 @@ public class TextMenu
         while ( true )
         {
             MenuItem item = showMenu( stack.peek() );
-            if ( item == null || item.type == MenuDefinition.ItemType.QUIT )
+            if ( item == null || item.type == MenuItem.Type.QUIT )
             {
                 stack.pop();
                 if ( stack.empty() )
@@ -63,7 +64,7 @@ public class TextMenu
                     break;
                 }
             }
-            else if ( item.type == MenuDefinition.ItemType.MENU )
+            else if ( item.type == MenuItem.Type.MENU )
             {
                 stack.push( item.menu );
             }
@@ -83,11 +84,21 @@ public class TextMenu
                 about();
                 return;
             }
+            case LEVEL:
+            {
+                level( item );
+                return;
+            }
             default:
             {
                 throw new UnknownMenuItemType( item );
             }
         }
+    }
+
+    private void level( MenuItem item )
+    {
+        out.println( "LEVEL " + ( (LevelMenuItem)item ).fileName );
     }
 
     private void about()
@@ -170,7 +181,7 @@ public class TextMenu
                     "${num}. ${item}\n",
                     newMap(
                         "num", String.valueOf( i ),
-                        "item", t( item.name )
+                        "item", t( item.name, item.nameParams )
                     )
                 )
             );

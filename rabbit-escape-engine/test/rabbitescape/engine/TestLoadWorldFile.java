@@ -11,7 +11,7 @@ public class TestLoadWorldFile
     public void Read_the_lines_in_a_resource()
     {
         assertThat(
-            LoadWorldFile.readLinesFromResource( "test/fortest.rel" ),
+            LoadWorldFile.readLinesFromResource( "test1/fortest.rel" ),
             equalTo( new String[] { "a", "b", "c" } )
         );
     }

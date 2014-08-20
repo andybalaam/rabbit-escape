@@ -2,17 +2,10 @@ package rabbitescape.engine.menu;
 
 import static rabbitescape.engine.menu.MenuConstruction.*;
 import static rabbitescape.engine.menu.MenuTargets.*;
+import rabbitescape.engine.menu.MenuItem.Type;
 
 public class MenuDefinition
 {
-    public enum ItemType
-    {
-        MENU,
-        ABOUT,
-        DEMO,
-        QUIT,
-    }
-
     public static Menu mainMenu = menu(
         "Welcome to Rabbit Escape!",
         item(
@@ -24,8 +17,8 @@ public class MenuDefinition
                 item( "Hard",   levels( "hard" ) )
             )
         ),
-        item( "About", ItemType.ABOUT ),
-        item( "Demo",  ItemType.DEMO ),
-        item( "Quit",  ItemType.QUIT )
+        item( "About", Type.ABOUT ),
+        item( "Demo",  Type.DEMO ),
+        item( "Quit",  Type.QUIT )
     );
 }
