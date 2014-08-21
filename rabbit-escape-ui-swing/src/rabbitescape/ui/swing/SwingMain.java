@@ -7,18 +7,16 @@ import javax.swing.SwingUtilities;
 
 import rabbitescape.engine.i18n.Translation;
 import rabbitescape.engine.util.RealFileSystem;
+import rabbitescape.render.BitmapCache;
 
 public class SwingMain
 {
-    private final SwingMenu swingMenu;
-
     public SwingMain(
         RealFileSystem fs,
         PrintStream out,
         Locale locale
     )
     {
-        this.swingMenu = new SwingMenu( fs, out, locale );
     }
 
     public static void main( String[] args )
@@ -37,12 +35,15 @@ public class SwingMain
 
     private void run( String[] args )
     {
+        final BitmapCache<SwingBitmap> bitmapCache = new BitmapCache<>(
+            new SwingBitmapLoader(), 500 );
+
         SwingUtilities.invokeLater( new Runnable()
         {
             @Override
             public void run()
             {
-                swingMenu.run();
+                new MenuJFrame( SwingConfigSetup.createConfig(), bitmapCache );
             }
         } );
     }

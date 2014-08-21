@@ -7,10 +7,12 @@ import static rabbitescape.engine.util.Util.*;
 import static rabbitescape.engine.i18n.Translation.*;
 
 import rabbitescape.engine.err.RabbitEscapeException;
+import rabbitescape.engine.menu.AboutText;
 import rabbitescape.engine.menu.LevelMenuItem;
 import rabbitescape.engine.menu.Menu;
 import rabbitescape.engine.menu.MenuDefinition;
 import rabbitescape.engine.menu.MenuItem;
+import rabbitescape.engine.menu.MenuItem.Type;
 import rabbitescape.engine.util.FileSystem;
 
 public class TextMenu
@@ -29,11 +31,13 @@ public class TextMenu
     {
         public static final long serialVersionUID = 1L;
 
-        public final MenuItem item;
+        public final String name;
+        public final Type type;
 
         public UnknownMenuItemType( MenuItem item )
         {
-            this.item = item;
+            this.name = item.name;
+            this.type = item.type;
         }
     }
 
@@ -105,18 +109,12 @@ public class TextMenu
 
     private void about()
     {
-        terminal.out.println( t(
+        terminal.out.println(
             "\n"
-            + "Rabbit Escape\n"
-            + "Copyright(c) 2014 by Andy Balaam\n"
+            + t( AboutText.text ) + "\n"
             + "\n"
-            + "All code released under GPL v2\n"
-            + "All graphics and levels released under CC-BY-NC\n"
-            + "\n"
-            + "https://github.com/andybalaam/rabbit-escape\n"
-            + "\n"
-            + "Press Return to continue.\n"
-        ) );
+            + t( "Press Return to continue." ) + "\n"
+        );
         readLine();
     }
 
