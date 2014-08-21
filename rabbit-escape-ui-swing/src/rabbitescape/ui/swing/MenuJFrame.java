@@ -9,6 +9,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentEvent;
 import java.awt.event.WindowEvent;
+import java.io.PrintStream;
+import java.util.Locale;
 import java.util.Stack;
 
 import javax.swing.JButton;
@@ -20,6 +22,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextPane;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
+import javax.swing.SwingWorker;
 
 import static rabbitescape.engine.i18n.Translation.*;
 import static rabbitescape.ui.swing.SwingConfigSetup.*;
@@ -28,9 +31,11 @@ import rabbitescape.engine.config.Config;
 import rabbitescape.engine.config.ConfigTools;
 import rabbitescape.engine.err.RabbitEscapeException;
 import rabbitescape.engine.menu.AboutText;
+import rabbitescape.engine.menu.LevelMenuItem;
 import rabbitescape.engine.menu.Menu;
 import rabbitescape.engine.menu.MenuDefinition;
 import rabbitescape.engine.menu.MenuItem;
+import rabbitescape.engine.util.RealFileSystem;
 import rabbitescape.render.BitmapCache;
 
 public class MenuJFrame extends JFrame
@@ -110,7 +115,7 @@ public class MenuJFrame extends JFrame
                 }
                 case LEVEL:
                 {
-                    level( item );
+                    level( (LevelMenuItem)item );
                     return;
                 }
                 case QUIT:
@@ -132,13 +137,28 @@ public class MenuJFrame extends JFrame
 
     private static final Color backgroundColor = Color.WHITE;
 
+    private final RealFileSystem fs;
+    private final PrintStream out;
+    private final Locale locale;
+    private final BitmapCache<SwingBitmap> bitmapCache;
+
     private final Stack<Menu> stack;
     private final Config uiConfig;
     private final JPanel menuPanel;
     private final SideMenu sidemenu;
 
-    public MenuJFrame( Config uiConfig, BitmapCache<SwingBitmap> bitmapCache )
+    public MenuJFrame(
+        RealFileSystem fs,
+        PrintStream out,
+        Locale locale,
+        BitmapCache<SwingBitmap> bitmapCache,
+        Config uiConfig
+    )
     {
+        this.fs = fs;
+        this.out = out;
+        this.locale = locale;
+        this.bitmapCache = bitmapCache;
         this.stack = new Stack<>();
         this.uiConfig = uiConfig;
         this.menuPanel = new JPanel( new GridLayout( 0, 1, 4, 4 ) );
@@ -220,8 +240,20 @@ public class MenuJFrame extends JFrame
         }
     }
 
-    private void level( MenuItem item )
+    private void level( final LevelMenuItem item )
     {
+        new SwingWorker<Void, Void>()
+        {
+            @Override
+            protected Void doInBackground() throws Exception
+            {
+                new SwingSingleGameMain(
+                    fs, out, locale, bitmapCache, uiConfig ).launchGame(
+                        new String[] { item.fileName } );
+
+                return null;
+            }
+        }.execute();
     }
 
     private void about()
@@ -229,7 +261,7 @@ public class MenuJFrame extends JFrame
         JTextPane text = new JTextPane();
         text.setText( t( AboutText.text ) );
         text.setBackground( null );
-        
+
         JOptionPane.showMessageDialog(
             MenuJFrame.this,
             text,

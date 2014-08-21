@@ -5,18 +5,32 @@ import java.util.Locale;
 
 import javax.swing.SwingUtilities;
 
+import rabbitescape.engine.config.Config;
 import rabbitescape.engine.i18n.Translation;
 import rabbitescape.engine.util.RealFileSystem;
 import rabbitescape.render.BitmapCache;
 
 public class SwingMain
 {
+    private final RealFileSystem fs;
+    private final PrintStream out;
+    private final Locale locale;
+    private final BitmapCache<SwingBitmap> bitmapCache;
+    private final Config uiConfig;
+
     public SwingMain(
         RealFileSystem fs,
         PrintStream out,
-        Locale locale
+        Locale locale,
+        BitmapCache<SwingBitmap> bitmapCache,
+        Config uiConfig
     )
     {
+        this.fs = fs;
+        this.out = out;
+        this.locale = locale;
+        this.bitmapCache = bitmapCache;
+        this.uiConfig = uiConfig;
     }
 
     public static void main( String[] args )
@@ -27,23 +41,22 @@ public class SwingMain
         SwingMain m = new SwingMain(
             new RealFileSystem(),
             System.out,
-            locale
+            locale,
+            new BitmapCache<>( new SwingBitmapLoader(), 500 ),
+            SwingConfigSetup.createConfig()
         );
 
         m.run( args );
     }
 
-    private void run( String[] args )
+    public void run( String[] args )
     {
-        final BitmapCache<SwingBitmap> bitmapCache = new BitmapCache<>(
-            new SwingBitmapLoader(), 500 );
-
         SwingUtilities.invokeLater( new Runnable()
         {
             @Override
             public void run()
             {
-                new MenuJFrame( SwingConfigSetup.createConfig(), bitmapCache );
+                new MenuJFrame( fs, out, locale, bitmapCache, uiConfig );
             }
         } );
     }

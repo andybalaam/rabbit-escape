@@ -1,5 +1,6 @@
 package rabbitescape.ui.swing;
 
+import rabbitescape.engine.config.Config;
 import rabbitescape.render.BitmapCache;
 
 public class SwingGameInit implements Runnable
@@ -50,18 +51,25 @@ public class SwingGameInit implements Runnable
     }
 
     public final WaitForUi waitForUi = new WaitForUi();
-
     private WhenUiReady whenUiReady = null;
+
+    private final BitmapCache<SwingBitmap> bitmapCache;
+    private final Config uiConfig;
+
+    public SwingGameInit(
+        BitmapCache<SwingBitmap> bitmapCache,
+        Config uiConfig
+    )
+    {
+        this.bitmapCache = bitmapCache;
+        this.uiConfig = uiConfig;
+    }
 
     @Override
     public void run()
     {
-        BitmapCache<SwingBitmap> bitmapCache = new BitmapCache<>(
-            new SwingBitmapLoader(), 500 );
-
         //noinspection UnnecessaryLocalVariable
-        GameJFrame jframe = new GameJFrame(
-            SwingConfigSetup.createConfig(), bitmapCache );
+        GameJFrame jframe = new GameJFrame( uiConfig, bitmapCache );
 
         // Populate the cache with images in a worker thread?
 
