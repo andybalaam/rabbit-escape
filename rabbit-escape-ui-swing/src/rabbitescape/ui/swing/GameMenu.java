@@ -1,7 +1,7 @@
 package rabbitescape.ui.swing;
 
 import static rabbitescape.engine.util.Util.*;
-import static rabbitescape.ui.swing.SwingGameInit.*;
+import static rabbitescape.ui.swing.SwingConfigSetup.*;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
