@@ -17,6 +17,7 @@ public class SwingConfigSetup
     public static final String CFG_MENU_WINDOW_TOP    = "menu.window.top";
     public static final String CFG_MENU_WINDOW_WIDTH  = "menu.window.width";
     public static final String CFG_MENU_WINDOW_HEIGHT = "menu.window.height";
+    public static final String CFG_LEVELS_COMPLETED   = "levels.completed";
     public static final String CFG_MUTED = "muted";
 
     public static Config createConfig()
@@ -64,6 +65,13 @@ public class SwingConfigSetup
             String.valueOf( Integer.MIN_VALUE ),
             "The height of the game window on the screen"
         );
+
+        definition.set(
+            CFG_LEVELS_COMPLETED,
+            "",
+            "Which level you have got to in each level set."
+        );
+
         definition.set(
             CFG_MUTED,
             String.valueOf( false ),

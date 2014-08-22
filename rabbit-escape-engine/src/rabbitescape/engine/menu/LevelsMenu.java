@@ -17,12 +17,13 @@ public class LevelsMenu extends Menu
         }
     }
 
-    public LevelsMenu( String levelsDir )
+    public LevelsMenu( String levelsDir, LevelsCompleted levelsCompleted )
     {
-        super( "Choose a level:", menuItems( levelsDir ) );
+        super( "Choose a level:", menuItems( levelsDir, levelsCompleted ) );
     }
 
-    public static MenuItem[] menuItems( String levelsDir )
+    public static MenuItem[] menuItems(
+        String levelsDir, LevelsCompleted levelsCompleted )
     {
         String[] levelFileNames = levelsInResource(
             "/rabbitescape/levels/" + levelsDir + "/ls.txt" );
@@ -33,7 +34,10 @@ public class LevelsMenu extends Menu
         for ( String fileName : levelFileNames )
         {
             ret[i] = new LevelMenuItem(
-                levelsDir + "/" + fileName + ".rel", i + 1 );
+                levelsDir + "/" + fileName + ".rel",
+                i + 1,
+                levelsCompleted.highestLevelCompleted( levelsDir ) > i
+            );
 
             ++i;
         }

@@ -1,5 +1,6 @@
 package rabbitescape.ui.text;
 
+import rabbitescape.engine.config.Config;
 import rabbitescape.engine.i18n.Translation;
 import rabbitescape.engine.util.FileSystem;
 import rabbitescape.engine.util.RealFileSystem;
@@ -10,9 +11,9 @@ public class TextMain
 {
     private final TextMenu textMenu;
 
-    public TextMain( FileSystem fs, Terminal terminal )
+    public TextMain( FileSystem fs, Terminal terminal, Config config )
     {
-        this.textMenu = new TextMenu( fs, terminal );
+        this.textMenu = new TextMenu( fs, terminal, config );
     }
 
     public static void main( String[] args )
@@ -22,7 +23,8 @@ public class TextMain
 
         TextMain m = new TextMain(
             new RealFileSystem(),
-            new Terminal( System.in, System.out, locale )
+            new Terminal( System.in, System.out, locale ),
+            TextConfigSetup.createConfig()
         );
 
         m.run( args );

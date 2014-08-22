@@ -6,19 +6,23 @@ import rabbitescape.engine.menu.MenuItem.Type;
 
 public class MenuDefinition
 {
-    public static Menu mainMenu = menu(
-        "Welcome to Rabbit Escape!",
-        item(
-            "Start Game",
-            menu(
-                "Choose a set of levels:",
-                item( "Easy",   levels( "easy" ) ),
-                item( "Medium", levels( "medium" ) ),
-                item( "Hard",   levels( "hard" ) )
-            )
-        ),
-        item( "About", Type.ABOUT ),
-        item( "Demo",  Type.DEMO ),
-        item( "Quit",  Type.QUIT )
-    );
+    public static Menu mainMenu( LevelsCompleted levelsCompleted )
+    {
+        return menu(
+            "Welcome to Rabbit Escape!",
+            item(
+                "Start Game",
+                menu(
+                    "Choose a set of levels:",
+                    item( "Easy",   levels( "easy",   levelsCompleted ), true ),
+                    item( "Medium", levels( "medium", levelsCompleted ), true ),
+                    item( "Hard",   levels( "hard",   levelsCompleted ), true )
+                ),
+                true
+            ),
+            item( "About", Type.ABOUT, true ),
+            item( "Demo",  Type.DEMO,  false ),
+            item( "Quit",  Type.QUIT,  true )
+        );
+    }
 }

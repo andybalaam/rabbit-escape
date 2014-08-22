@@ -31,6 +31,7 @@ import rabbitescape.engine.config.Config;
 import rabbitescape.engine.config.ConfigTools;
 import rabbitescape.engine.err.RabbitEscapeException;
 import rabbitescape.engine.menu.AboutText;
+import rabbitescape.engine.menu.ConfigBasedLevelsCompleted;
 import rabbitescape.engine.menu.LevelMenuItem;
 import rabbitescape.engine.menu.Menu;
 import rabbitescape.engine.menu.MenuDefinition;
@@ -163,7 +164,11 @@ public class MenuJFrame extends JFrame
         this.uiConfig = uiConfig;
         this.menuPanel = new JPanel( new GridLayout( 0, 1, 4, 4 ) );
 
-        stack.push( MenuDefinition.mainMenu );
+        stack.push(
+            MenuDefinition.mainMenu(
+                new ConfigBasedLevelsCompleted( uiConfig )
+            )
+        );
 
         Container contentPane = getContentPane();
 
