@@ -124,18 +124,30 @@ public class TextMenu
         readLine();
     }
 
-    private MenuItem showMenu( Menu menu )
+    public MenuItem showMenu( Menu menu )
     {
         terminal.out.println( menu.intro + "\n" );
-        terminal.out.println( renderMenu( menu ) );
-        int chosenNum = readItemNum( menu.items.length );
-        if ( chosenNum == -1 )
+        terminal.out.println( renderItems( menu ) );
+
+        while( true )
         {
-            return null;
-        }
-        else
-        {
-            return menu.items[chosenNum];
+            int chosenNum = readItemNum( menu.items.length );
+            if ( chosenNum == -1 )
+            {
+                return null;
+            }
+            else
+            {
+                MenuItem ret = menu.items[chosenNum];
+                if ( ret.enabled )
+                {
+                    return ret;
+                }
+                else
+                {
+                    terminal.out.println( t( "That menu item is disabled." ) );
+                }
+            }
         }
     }
 
@@ -175,26 +187,42 @@ public class TextMenu
         }
     }
 
-    private String renderMenu( Menu menu )
+    public static String renderItems( Menu menu )
     {
         StringBuilder ret = new StringBuilder();
 
         int i = 1;
         for ( MenuItem item : menu.items )
         {
-            ret.append(
-                t(
-                    "${num}. ${item}\n",
-                    newMap(
-                        "num", String.valueOf( i ),
-                        "item", t( item.name, item.nameParams )
-                    )
-                )
-            );
+            ret.append( renderItem( i, item ) );
 
             ++i;
         }
 
         return ret.toString();
+    }
+
+    private static String renderItem( int i, MenuItem item )
+    {
+        if ( item.enabled )
+        {
+            return t(
+                "${num}. ${item}\n",
+                newMap(
+                    "num", String.valueOf( i ),
+                    "item", t( item.name, item.nameParams )
+                )
+            );
+        }
+        else
+        {
+            return t(
+                "   ${item} (disabled)\n",
+                newMap(
+                    "num", String.valueOf( i ),
+                    "item", t( item.name, item.nameParams )
+                )
+            );
+        }
     }
 }
