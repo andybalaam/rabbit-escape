@@ -220,6 +220,7 @@ public class MenuJFrame extends JFrame
             button.setBackground( backgroundColor );
             button.addActionListener( new ButtonListener( item ) );
             button.setVisible( true );
+            button.setEnabled( item.enabled );
             menuPanel.add( button );
         }
 
