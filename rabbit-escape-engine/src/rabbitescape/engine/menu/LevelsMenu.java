@@ -30,13 +30,13 @@ public class LevelsMenu extends Menu
 
         MenuItem[] ret = new MenuItem[ levelFileNames.length ];
 
-        int i = 0;
+        int i = 1;
         for ( String fileName : levelFileNames )
         {
-            ret[i] = new LevelMenuItem(
+            ret[i-1] = new LevelMenuItem(
                 levelsDir + "/" + fileName + ".rel",
-                i + 1,
-                levelsCompleted.highestLevelCompleted( levelsDir ) > i
+                i,
+                i <= levelsCompleted.highestLevelCompleted( levelsDir ) + 1
             );
 
             ++i;
