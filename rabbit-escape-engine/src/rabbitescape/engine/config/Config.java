@@ -130,7 +130,10 @@ public class Config
     public void set( String key, String value )
     {
         definition.checkKeyExists( key ); // Check the key exists
-        values.put( key, value );
+        if ( ! get( key ).equals( value ) )
+        {
+            values.put( key, value );
+        }
     }
 
     public String get( String key )
