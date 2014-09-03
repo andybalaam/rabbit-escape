@@ -103,6 +103,44 @@ public class TestWalking
     }
 
     @Test
+    public void Turn_when_you_hit_the_back_of_a_slope_on_left()
+    {
+        World world = createWorld(
+            "/j  ",
+            "####"
+        );
+
+        world.step();
+
+        assertThat(
+            renderWorld( world, false, false ),
+            equalTo(
+                "/r  ",
+                "####"
+            )
+        );
+    }
+
+    @Test
+    public void Turn_when_you_hit_the_back_of_a_slope_on_right()
+    {
+        World world = createWorld(
+            "  r\\",
+            "####"
+        );
+
+        world.step();
+
+        assertThat(
+            renderWorld( world, false, false ),
+            equalTo(
+                "  j\\",
+                "####"
+            )
+        );
+    }
+
+    @Test
     public void Climb_up_a_slope_right()
     {
         World world = createWorld(
@@ -392,6 +430,38 @@ public class TestWalking
     }
 
     @Test
+    public void Turn_because_of_backslope_on_a_slope_up_right()
+    {
+        World world = createWorld(
+            "   \\",
+            " r/#",
+            "####"
+        );
+
+        world.step();
+
+        assertThat(
+            renderWorld( world, false, false ),
+            equalTo(
+                "   \\",
+                "  r#",
+                "####"
+            )
+        );
+
+        world.step();
+
+        assertThat(
+            renderWorld( world, false, false ),
+            equalTo(
+                "   \\",
+                "  j#",
+                "####"
+            )
+        );
+    }
+
+    @Test
     public void Turn_on_a_slope_up_left()
     {
         World world = createWorld(
@@ -445,13 +515,46 @@ public class TestWalking
         );
     }
 
+
+    @Test
+    public void Turn_because_of_backslope_on_a_slope_up_left()
+    {
+        World world = createWorld(
+            "/   ",
+            "#\\j ",
+            "####"
+        );
+
+        world.step();
+
+        assertThat(
+            renderWorld( world, false, false ),
+            equalTo(
+                "/   ",
+                "#j  ",
+                "####"
+            )
+        );
+
+        world.step();
+
+        assertThat(
+            renderWorld( world, false, false ),
+            equalTo(
+                "/   ",
+                "#r  ",
+                "####"
+            )
+        );
+    }
+
     @Test
     public void Turn_on_a_slope_down_right()
     {
         World world = createWorld(
             " r  ",
             "##\\#",
-            "####"
+            "###\\"
         );
 
         assertThat(
@@ -459,7 +562,7 @@ public class TestWalking
             equalTo(
                 " r  ",
                 "##-#",
-                "####"
+                "###\\"
             )
         );
 
@@ -470,7 +573,7 @@ public class TestWalking
             equalTo(
                 "    ",
                 "##]#",
-                "####"
+                "###\\"
             )
         );
 
@@ -481,7 +584,7 @@ public class TestWalking
             equalTo(
                 " !  ",
                 "##j#",
-                "####"
+                "###\\"
             )
         );
 
@@ -492,7 +595,40 @@ public class TestWalking
             equalTo(
                 "<j  ",
                 "##\\#",
-                "####"
+                "###\\"
+            )
+        );
+    }
+
+
+    @Test
+    public void Turn_because_of_backslope_on_a_slope_down_right()
+    {
+        World world = createWorld(
+            " r  ",
+            "##\\\\",
+            "###\\"
+        );
+
+        world.step();
+
+        assertThat(
+            renderWorld( world, false, false ),
+            equalTo(
+                "    ",
+                "##r\\",
+                "###\\"
+            )
+        );
+
+        world.step();
+
+        assertThat(
+            renderWorld( world, false, false ),
+            equalTo(
+                "    ",
+                "##j\\",
+                "###\\"
             )
         );
     }
@@ -503,7 +639,7 @@ public class TestWalking
         World world = createWorld(
             "  j ",
             "#/##",
-            "####"
+            "/###"
         );
 
         assertThat(
@@ -511,7 +647,7 @@ public class TestWalking
             equalTo(
                 "  j ",
                 "#=##",
-                "####"
+                "/###"
             )
         );
 
@@ -522,7 +658,7 @@ public class TestWalking
             equalTo(
                 "    ",
                 "#[##",
-                "####"
+                "/###"
             )
         );
 
@@ -533,7 +669,7 @@ public class TestWalking
             equalTo(
                 "  ' ",
                 "#r##",
-                "####"
+                "/###"
             )
         );
 
@@ -544,7 +680,40 @@ public class TestWalking
             equalTo(
                 "  r>",
                 "#/##",
-                "####"
+                "/###"
+            )
+        );
+    }
+
+
+    @Test
+    public void Turn_because_of_blackslope_on_a_slope_down_left()
+    {
+        World world = createWorld(
+            "  j ",
+            "//##",
+            "/###"
+        );
+
+        world.step();
+
+        assertThat(
+            renderWorld( world, false, false ),
+            equalTo(
+                "    ",
+                "/j##",
+                "/###"
+            )
+        );
+
+        world.step();
+
+        assertThat(
+            renderWorld( world, false, false ),
+            equalTo(
+                "    ",
+                "/r##",
+                "/###"
             )
         );
     }

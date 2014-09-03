@@ -38,7 +38,10 @@ public class Walking implements Behaviour
                         RABBIT_RISING_LEFT_CONTINUE
                     );
                 }
-                else if( world.flatBlockAt( nextX, nextY ) )
+                else if(
+                      world.flatBlockAt( nextX, nextY )
+                    || lowerBlockAt( nextX, nextY )
+                )
                 {
                     return rl(
                         RABBIT_TURNING_RIGHT_TO_LEFT_RISING,
@@ -65,18 +68,21 @@ public class Walking implements Behaviour
                         RABBIT_LOWERING_AND_RISING_LEFT
                     );
                 }
+                else if(
+                        world.flatBlockAt( nextX, rabbit.y )
+                     || lowerBlockAt( nextX, rabbit.y )
+                 )
+                 {
+                     return rl(
+                         RABBIT_TURNING_RIGHT_TO_LEFT_LOWERING,
+                         RABBIT_TURNING_LEFT_TO_RIGHT_LOWERING
+                     );
+                 }
                 else if ( lowerBlockAt( nextX, nextY ) )
                 {
                     return rl(
                         RABBIT_LOWERING_RIGHT_CONTINUE,
                         RABBIT_LOWERING_LEFT_CONTINUE
-                    );
-                }
-                else if( world.flatBlockAt( nextX, rabbit.y ) )
-                {
-                    return rl(
-                        RABBIT_TURNING_RIGHT_TO_LEFT_LOWERING,
-                        RABBIT_TURNING_LEFT_TO_RIGHT_LOWERING
                     );
                 }
                 else
@@ -106,7 +112,10 @@ public class Walking implements Behaviour
                         RABBIT_RISING_LEFT_START
                     );
                 }
-                else if( world.flatBlockAt( nextX, nextY ) )
+                else if(
+                       world.flatBlockAt( nextX, nextY )
+                    || lowerBlockAt( nextX, nextY )
+                )
                 {
                     return rl(
                         RABBIT_TURNING_RIGHT_TO_LEFT,
