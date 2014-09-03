@@ -6,9 +6,23 @@ import rabbitescape.engine.Entrance;
 import rabbitescape.engine.Exit;
 import rabbitescape.engine.Thing;
 import rabbitescape.engine.Token;
+import rabbitescape.engine.Token.Type;
+import rabbitescape.engine.err.RabbitEscapeException;
 
 public class ThingRenderer
 {
+    public static class UnknownTokenType extends RabbitEscapeException
+    {
+        public final Type type;
+
+        public UnknownTokenType( Type type )
+        {
+            this.type = type;
+        }
+
+        private static final long serialVersionUID = 1L;
+    }
+
     public static void render( char[][] chars, List<Thing> things )
     {
         for ( Thing thing : things )
@@ -40,6 +54,11 @@ public class ThingRenderer
 
     private static char charForToken( Token thing )
     {
-        return 'b';
+        switch ( thing.type )
+        {
+            case bash: return 'b';
+            case dig:  return 'd';
+            default: throw new UnknownTokenType( thing.type );
+        }
     }
 }

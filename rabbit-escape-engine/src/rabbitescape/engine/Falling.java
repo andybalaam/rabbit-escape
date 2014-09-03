@@ -12,6 +12,16 @@ public class Falling implements Behaviour
 
     private int heightFallen = 0;
 
+    private final Digging digging;
+
+    /**
+     * @param digging a Digging to cancel if we fall >1 block
+     */
+    public Falling( Digging digging )
+    {
+        this.digging = digging;
+    }
+
     @Override
     public boolean behave( World world, Rabbit rabbit, State state )
     {
@@ -33,6 +43,7 @@ public class Falling implements Behaviour
             case RABBIT_FALLING_ONTO_RISE_RIGHT:
             case RABBIT_FALLING_ONTO_RISE_LEFT:
             {
+                digging.stopDigging();
                 heightFallen += 2;
                 rabbit.y = rabbit.y + 2;
                 return true;

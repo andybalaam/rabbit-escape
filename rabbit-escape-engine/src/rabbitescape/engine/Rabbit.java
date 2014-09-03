@@ -5,6 +5,8 @@ import static rabbitescape.engine.ChangeDescription.State.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import rabbitescape.engine.ChangeDescription.State;
+
 public class Rabbit extends Thing
 {
     private final List<Behaviour> behaviours;
@@ -22,9 +24,12 @@ public class Rabbit extends Thing
     {
         List<Behaviour> ret = new ArrayList<>();
 
+        Digging digging = new Digging();
+
         ret.add( new Exiting() );
-        ret.add( new Falling() );
+        ret.add( new Falling( digging ) );
         ret.add( new Bashing() );
+        ret.add( digging );
         ret.add( new Walking() );
 
         return ret;
@@ -33,12 +38,14 @@ public class Rabbit extends Thing
     @Override
     public void calcNewState( World world )
     {
+        boolean done = false;
         for ( Behaviour behaviour : behaviours )
         {
-            state = behaviour.newState( this, world );
-            if ( state != null )
+            State thisState = behaviour.newState( this, world );
+            if ( thisState != null && !done )
             {
-                break;
+                state = thisState;
+                done = true;
             }
         }
     }

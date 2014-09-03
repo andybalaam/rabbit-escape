@@ -583,4 +583,69 @@ public class TestFalling
             )
         );
     }
+
+
+    @Test
+    public void Multiple_falls_are_not_additive()
+    {
+        World world = createWorld(
+            "r    ",
+            "     ",
+            "     ",
+            "     ",
+            "     ",
+            "#    ",
+            "     ",
+            "#####"
+        );
+
+        world.step();     // Falling
+        world.step();
+
+        assertThat(
+            renderWorld( world, true, false ),
+            equalTo(
+                "     ",
+                "     ",
+                "     ",
+                "     ",
+                "r>   ",
+                "#    ",
+                "     ",  // Stopped
+                "#####"
+            )
+        );
+
+        world.step();
+
+        assertThat(
+            renderWorld( world, true, false ),
+            equalTo(
+                "     ",
+                "     ",
+                "     ",
+                "     ",
+                " r   ",
+                "#f   ",
+                " f   ",  // Fall the last bit
+                "#####"
+            )
+        );
+
+        world.step();
+
+        assertThat(
+            renderWorld( world, true, false ),
+            equalTo(
+                "     ",
+                "     ",
+                "     ",
+                "     ",
+                "     ",
+                "#    ",
+                " r>  ",  // Not dead
+                "#####"
+            )
+        );
+    }
 }

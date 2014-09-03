@@ -208,6 +208,11 @@ class LineProcessor
                 things.add( new Token( charNum, height, Token.Type.bash ) );
                 break;
             }
+            case 'd':
+            {
+                things.add( new Token( charNum, height, Token.Type.dig ) );
+                break;
+            }
             default:
             {
                 throw new UnknownCharacter( lines, height, charNum );

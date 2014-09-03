@@ -150,10 +150,18 @@ public class ChangeRenderer
             case RABBIT_BASHING_USELESSLY_LEFT:
                 chars[change.y][change.x - 1] = 'J';
                 break;
+            case RABBIT_DIGGING:
+                chars[change.y + 1][change.x] = 'D';
+                break;
             case TOKEN_BASH_STILL:
                 break;
             case TOKEN_BASH_FALLING:
                 chars[change.y + 1][change.x] = 'z';
+                break;
+            case TOKEN_DIG_STILL:
+                break;
+            case TOKEN_DIG_FALLING:
+                chars[change.y + 1][change.x] = 'f';
                 break;
             case ENTRANCE:
                 break;

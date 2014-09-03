@@ -17,7 +17,7 @@ public class TestTextWorldManip
             "#######",
             "#  Q  #",
             "#\\   /#",
-            "#  O  #",
+            "#  O d#",
             "#r j b#",
             "#######"
         };
@@ -323,16 +323,17 @@ public class TestTextWorldManip
     @Test
     public void Tokens_falling()
     {
-        World world = createEmptyWorld( 1, 2 );
+        World world = createEmptyWorld( 2, 2 );
 
         ChangeDescription desc = new ChangeDescription();
         desc.add( 0, 0, TOKEN_BASH_FALLING );
+        desc.add( 1, 0, TOKEN_DIG_FALLING );
 
         assertThat(
             renderChangeDescription( world, desc, false ),
             equalTo(
-                " ",
-                "z"
+                "  ",
+                "zf"
             )
         );
     }
