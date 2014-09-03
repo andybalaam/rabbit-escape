@@ -16,8 +16,8 @@ Release 0.2 (Android)
 - Android game loop
 - Android graphics
 
-Release 0.1
------------
+Release 0.1 (Playable)
+----------------------
 
 - Levels
 - Check all possible states have graphics
