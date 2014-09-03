@@ -4,7 +4,11 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.GridLayout;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentEvent;
@@ -137,6 +141,7 @@ public class MenuJFrame extends JFrame
     }
 
     private static final Color backgroundColor = Color.WHITE;
+    private static final Color buttonColor = Color.LIGHT_GRAY;
 
     private final RealFileSystem fs;
     private final PrintStream out;
@@ -162,7 +167,7 @@ public class MenuJFrame extends JFrame
         this.bitmapCache = bitmapCache;
         this.stack = new Stack<>();
         this.uiConfig = uiConfig;
-        this.menuPanel = new JPanel( new GridLayout( 0, 1, 4, 4 ) );
+        this.menuPanel = new JPanel( new GridBagLayout() );
 
         stack.push(
             MenuDefinition.mainMenu(
@@ -171,8 +176,6 @@ public class MenuJFrame extends JFrame
         );
 
         Container contentPane = getContentPane();
-
-        setBoundsFromConfig();
 
         Listener listener = new Listener();
         addWindowListener( listener );
@@ -196,11 +199,13 @@ public class MenuJFrame extends JFrame
 
         placeMenu();
 
-        initListeners();
-
         setTitle( t( "Rabbit Escape" ) );
+
         pack();
+        setBoundsFromConfig();
         setVisible( true );
+
+        initListeners();
     }
 
     public void placeMenu()
@@ -209,23 +214,46 @@ public class MenuJFrame extends JFrame
 
         menuPanel.removeAll();
 
+        Dimension buttonSize = new Dimension( 200, 40 );
+
         JLabel label = new JLabel( t( menu.intro ) );
         label.setHorizontalAlignment( SwingConstants.CENTER );
         label.setForeground( Color.RED );
-        menuPanel.add( label );
+        label.setPreferredSize( buttonSize );
+        menuPanel.add( label, constraints( 0 ) );
 
+        int i = 1;
         for ( MenuItem item : menu.items )
         {
             JButton button = new JButton( t( item.name, item.nameParams ) );
-            button.setBackground( backgroundColor );
+            button.setBackground( buttonColor );
             button.addActionListener( new ButtonListener( item ) );
             button.setVisible( true );
             button.setEnabled( item.enabled );
-            menuPanel.add( button );
+            button.setPreferredSize( buttonSize );
+            menuPanel.add( button, constraints( i ) );
+            ++i;
         }
 
         repaint();
-        pack();  // TODO: shouldn't need to do this
+        revalidate();
+    }
+
+    private GridBagConstraints constraints( int i )
+    {
+        return new GridBagConstraints(
+            0,
+            i,
+            1,
+            1,
+            1.0,
+            1.0,
+            GridBagConstraints.CENTER,
+            GridBagConstraints.NONE,
+            new Insets( 10, 10, 10, 10 ),
+            0,
+            0
+        );
     }
 
     private void setBoundsFromConfig()
@@ -239,10 +267,14 @@ public class MenuJFrame extends JFrame
         {
             setLocation( x, y );
         }
+        else
+        {
+            setLocationByPlatform( true );
+        }
 
         if ( width != Integer.MIN_VALUE && y != Integer.MIN_VALUE )
         {
-            setPreferredSize( new Dimension( width, height ) );
+            setSize( new Dimension( width, height ) );
         }
     }
 
