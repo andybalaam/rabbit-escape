@@ -52,6 +52,9 @@ runmenu: compile
 rungui: compile
 	java -cp $(CLASSPATH) rabbitescape.ui.swing.SwingMain
 
+runlevel: compile
+	java -cp $(CLASSPATH) rabbitescape.ui.swing.SwingSingleGameMain test/level_01.rel
+
 runat: compile
 	java -cp $(CLASSPATH) rabbitescape.ui.swing.AnimationTester
 
