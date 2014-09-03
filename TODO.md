@@ -32,14 +32,14 @@ Release 0.1
 - graphics:block
 - action:block
 - graphics:dig
-+ action:dig
-+ graphics:bash
-+ action:bash
-+ graphics:walk
-+ graphics:fall
-+ Swing menus
-+ Swing game loop
-+ Text menus
-+ Text game loop
-+ Basic game logic
+- ~~action:dig~~
+- ~~graphics:bash~~
+- ~~action:bash~~
+- ~~graphics:walk~~
+- ~~graphics:fall~~
+- ~~Swing menus~~
+- ~~Swing game loop~~
+- ~~Text menus~~
+- ~~Text game loop~~
+- ~~Basic game logic~~
 
