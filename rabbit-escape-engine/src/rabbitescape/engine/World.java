@@ -70,11 +70,11 @@ public class World
         }
     }
 
-    private static class Changes
+    public static class Changes
     {
         private final List<Rabbit> rabbitsToAdd    = new ArrayList<>();
         private final List<Rabbit> rabbitsToRemove = new ArrayList<>();
-        private final List<Thing>  thingsToAdd     = new ArrayList<>();
+        public final List<Thing>   thingsToAdd     = new ArrayList<>();
         private final List<Thing>  thingsToRemove  = new ArrayList<>();
         private final List<Block>  blocksToRemove  = new ArrayList<>();
 
@@ -111,7 +111,7 @@ public class World
     public final int requiredNumSavedRabbits;
     public final int rabbitDelay;
 
-    private final Changes changes;
+    public final Changes changes;
 
     public int numSavedRabbits;
     public int numKilledRabbits;

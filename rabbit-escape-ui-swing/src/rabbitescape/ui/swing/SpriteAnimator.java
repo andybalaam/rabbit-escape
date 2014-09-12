@@ -75,6 +75,11 @@ public class SpriteAnimator
             drawThing( frameNum, ret, thing );
         }
 
+        for ( Thing thing : world.changes.thingsToAdd )
+        {
+            drawThing( frameNum, ret, thing );
+        }
+
         return ret.toArray( new Sprite[ret.size()] );
     }
 

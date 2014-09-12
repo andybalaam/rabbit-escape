@@ -36,8 +36,8 @@ public class Token extends Thing
     {
         switch( type )
         {
-            case bash: return moving ? TOKEN_BASH_STILL : TOKEN_BASH_FALLING;
-            case dig:  return moving ? TOKEN_DIG_STILL  : TOKEN_DIG_FALLING;
+            case bash: return moving ? TOKEN_BASH_FALLING : TOKEN_BASH_STILL;
+            case dig:  return moving ? TOKEN_DIG_FALLING  : TOKEN_DIG_STILL;
             default: throw new UnknownType( type );
         }
     }
@@ -45,7 +45,7 @@ public class Token extends Thing
     @Override
     public void calcNewState( World world )
     {
-        state = state( type, world.flatBlockAt( x, y + 1 ) );
+        state = state( type, !world.flatBlockAt( x, y + 1 ) );
     }
 
     @Override
