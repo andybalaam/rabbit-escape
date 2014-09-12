@@ -24,18 +24,18 @@ public class Walking implements Behaviour
                 int nextX = destX();
                 int nextY = rabbit.y - 1;
 
-                if ( lowerBlockAt( nextX, rabbit.y ) )
-                {
-                    return rl(
-                        RABBIT_RISING_AND_LOWERING_RIGHT,
-                        RABBIT_RISING_AND_LOWERING_LEFT
-                    );
-                }
-                else if ( riseBlockAt( nextX, nextY ) )
+                if ( riseBlockAt( nextX, nextY ) )
                 {
                     return rl(
                         RABBIT_RISING_RIGHT_CONTINUE,
                         RABBIT_RISING_LEFT_CONTINUE
+                    );
+                }
+                else if ( lowerBlockAt( nextX, rabbit.y ) )
+                {
+                    return rl(
+                        RABBIT_RISING_AND_LOWERING_RIGHT,
+                        RABBIT_RISING_AND_LOWERING_LEFT
                     );
                 }
                 else if(
@@ -98,18 +98,18 @@ public class Walking implements Behaviour
                 int nextX = destX();
                 int nextY = rabbit.y;
 
-                if ( lowerBlockAt( nextX, rabbit.y + 1 ) )
-                {
-                    return rl(
-                        RABBIT_LOWERING_RIGHT_START,
-                        RABBIT_LOWERING_LEFT_START
-                    );
-                }
-                else if ( riseBlockAt( nextX, nextY ) )
+                if ( riseBlockAt( nextX, nextY ) )
                 {
                     return rl(
                         RABBIT_RISING_RIGHT_START,
                         RABBIT_RISING_LEFT_START
+                    );
+                }
+                else if ( lowerBlockAt( nextX, rabbit.y + 1 ) )
+                {
+                    return rl(
+                        RABBIT_LOWERING_RIGHT_START,
+                        RABBIT_LOWERING_LEFT_START
                     );
                 }
                 else if(

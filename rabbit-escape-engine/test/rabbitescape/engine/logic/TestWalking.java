@@ -1454,4 +1454,355 @@ public class TestWalking
             )
         );
     }
+
+    @Test
+    public void Slope_up_right_nothing_under()
+    {
+        World world = createWorld(
+            "   /",
+            "  / ",
+            "r/  ",
+            "####"
+        );
+
+        world.step();
+
+        assertThat(
+            renderWorld( world, true, false ),
+            equalTo(
+                "   /",
+                "  $ ",
+                " r  ",
+                "####"
+            )
+        );
+
+        world.step();
+
+        assertThat(
+            renderWorld( world, true, false ),
+            equalTo(
+                "   $",
+                "  r ",
+                " /  ",
+                "####"
+            )
+        );
+    }
+
+    @Test
+    public void Bridge_up_right_nothing_under()
+    {
+        World world = createWorld(
+            "   (",
+            "  ( ",
+            "r(  ",
+            "####"
+        );
+
+        world.step();
+
+        assertThat(
+            renderWorld( world, true, false ),
+            equalTo(
+                "   (",
+                "  $ ",
+                " r  ",
+                "####"
+            )
+        );
+
+        world.step();
+
+        assertThat(
+            renderWorld( world, true, false ),
+            equalTo(
+                "   $",
+                "  r ",
+                " (  ",
+                "####"
+            )
+        );
+    }
+
+    @Test
+    public void Slope_up_left_nothing_under()
+    {
+        World world = createWorld(
+            "\\   ",
+            " \\  ",
+            "  \\j",
+            "####"
+        );
+
+        world.step();
+
+        assertThat(
+            renderWorld( world, true, false ),
+            equalTo(
+                "\\   ",
+                " ^  ",
+                "  j ",
+                "####"
+            )
+        );
+
+        world.step();
+
+        assertThat(
+            renderWorld( world, true, false ),
+            equalTo(
+                "^   ",
+                " j  ",
+                "  \\ ",
+                "####"
+            )
+        );
+    }
+
+    @Test
+    public void Bridge_up_left_nothing_under()
+    {
+        World world = createWorld(
+            ")   ",
+            " )  ",
+            "  )j",
+            "####"
+        );
+
+        world.step();
+
+        assertThat(
+            renderWorld( world, true, false ),
+            equalTo(
+                ")   ",
+                " ^  ",
+                "  j ",
+                "####"
+            )
+        );
+
+        world.step();
+
+        assertThat(
+            renderWorld( world, true, false ),
+            equalTo(
+                "^   ",
+                " j  ",
+                "  ) ",
+                "####"
+            )
+        );
+    }
+
+    @Test
+    public void Bridge_up_right_slope_down_right()
+    {
+        World world = createWorld(
+            "   (",
+            "  ( ",
+            "r(  ",
+            "#\\  "
+        );
+
+        world.step();
+
+        assertThat(
+            renderWorld( world, true, false ),
+            equalTo(
+                "   (",
+                "  $ ",
+                " r  ",
+                "#\\  "
+            )
+        );
+
+        world.step();
+
+        assertThat(
+            renderWorld( world, true, false ),
+            equalTo(
+                "   $",
+                "  r ",
+                " (  ",
+                "#\\  "
+            )
+        );
+    }
+
+    @Test
+    public void Bridge_up_left_slope_down_left()
+    {
+        World world = createWorld(
+            ")   ",
+            " )  ",
+            "  )j",
+            "  /#"
+        );
+
+        world.step();
+
+        assertThat(
+            renderWorld( world, true, false ),
+            equalTo(
+                ")   ",
+                " ^  ",
+                "  j ",
+                "  /#"
+            )
+        );
+
+        world.step();
+
+        assertThat(
+            renderWorld( world, true, false ),
+            equalTo(
+                "^   ",
+                " j  ",
+                "  ) ",
+                "  /#"
+            )
+        );
+    }
+
+
+    @Test
+    public void Down_then_Bridge_up_right_slope_down_right()
+    {
+        World world = createWorld(
+            "    (",
+            "r  ( ",
+            "#)(  ",
+            "##\\  "
+        );
+
+        world.step();
+
+        assertThat(
+            renderWorld( world, true, false ),
+            equalTo(
+                "    (",
+                "   ( ",
+                "#r,  ",
+                "##\\  "
+            )
+        );
+
+        world.step();
+
+        assertThat(
+            renderWorld( world, true, false ),
+            equalTo(
+                "    (",
+                "   $ ",
+                "#)r  ",
+                "##\\  "
+            )
+        );
+    }
+
+    @Test
+    public void Down_then_bridge_up_left_slope_down_left()
+    {
+        World world = createWorld(
+            ")    ",
+            " )  j",
+            "  )(#",
+            "  /##"
+        );
+
+        world.step();
+
+        assertThat(
+            renderWorld( world, true, false ),
+            equalTo(
+                ")    ",
+                " )   ",
+                "  .j#",
+                "  /##"
+            )
+        );
+
+        world.step();
+
+        assertThat(
+            renderWorld( world, true, false ),
+            equalTo(
+                ")    ",
+                " ^   ",
+                "  j(#",
+                "  /##"
+            )
+        );
+    }
+
+    @Test
+    public void Mid_bridge_up_right_slope_down_right()
+    {
+        World world = createWorld(
+            "   (",
+            "  ( ",
+            "r(\\ ",
+            "#   "
+        );
+
+        world.step();
+
+        assertThat(
+            renderWorld( world, true, false ),
+            equalTo(
+                "   (",
+                "  $ ",
+                " r\\ ",
+                "#   "
+            )
+        );
+
+        world.step();
+
+        assertThat(
+            renderWorld( world, true, false ),
+            equalTo(
+                "   $",
+                "  r ",
+                " (\\ ",
+                "#   "
+            )
+        );
+    }
+
+    @Test
+    public void Mid_bridge_up_left_slope_down_left()
+    {
+        World world = createWorld(
+            ")   ",
+            " )  ",
+            " /)j",
+            "   #"
+        );
+
+        world.step();
+
+        assertThat(
+            renderWorld( world, true, false ),
+            equalTo(
+                ")   ",
+                " ^  ",
+                " /j ",
+                "   #"
+            )
+        );
+
+        world.step();
+
+        assertThat(
+            renderWorld( world, true, false ),
+            equalTo(
+                "^   ",
+                " j  ",
+                " /) ",
+                "   #"
+            )
+        );
+    }
 }

@@ -199,6 +199,12 @@ public class World
         return ( block != null && block.riseDir == DOWN );
     }
 
+    public boolean slopingBlockAt( int x, int y )
+    {
+        Block block = getBlockAt( x, y );
+        return ( block != null && block.riseDir != DOWN );
+    }
+
     public Block getBlockAt( int x, int y )
     {
         // TODO: faster
