@@ -19,6 +19,8 @@ public class SpriteAnimator
     private final String land_block;
     private final String land_rising_right;
     private final String land_rising_left;
+    private final String bridge_rising_right;
+    private final String bridge_rising_left;
     private final int tileSize;
     private final BitmapCache<SwingBitmap> bitmapCache;
     private final AnimationCache animationCache;
@@ -44,6 +46,12 @@ public class SpriteAnimator
 
         this.land_rising_left =
             "/rabbitescape/ui/swing/images32/land-rising-left.png";
+
+        this.bridge_rising_right =
+            "/rabbitescape/ui/swing/images32/bridge-rising-right.png";
+
+        this.bridge_rising_left =
+            "/rabbitescape/ui/swing/images32/bridge-rising-left.png";
     }
 
     public Sprite[] getSprites( int frameNum )
@@ -114,17 +122,28 @@ public class SpriteAnimator
 
     private SwingBitmap bitmapForBlock( Block block )
     {
-        if ( block.riseDir == RIGHT )
+        if ( block.type == Block.Type.bridge )
         {
-            return bitmapCache.get( land_rising_right );
-        }
-        else if ( block.riseDir == LEFT )
-        {
-            return bitmapCache.get( land_rising_left );
+            if ( block.riseDir == RIGHT )
+            {
+                return bitmapCache.get( bridge_rising_right );
+            }
+            else if ( block.riseDir == LEFT )
+            {
+                return bitmapCache.get( bridge_rising_left );
+            }
         }
         else
         {
-            return bitmapCache.get( land_block );
+            if ( block.riseDir == RIGHT )
+            {
+                return bitmapCache.get( land_rising_right );
+            }
+            else if ( block.riseDir == LEFT )
+            {
+                return bitmapCache.get( land_rising_left );
+            }
         }
+        return bitmapCache.get( land_block );
     }
 }

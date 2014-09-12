@@ -14,12 +14,12 @@ public class TestTextWorldManip
     public void Round_trip_basic_world()
     {
         String[] lines = {
-            "#######",
-            "#  Q  #",
-            "#\\   /#",
-            "#  O d#",
-            "#r j b#",
-            "#######"
+            "###########",
+            "#  Q      #",
+            "#\\       /#",
+            "#  O     d#",
+            "#r j )(  b#",
+            "###########"
         };
 
         assertThat(

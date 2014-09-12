@@ -297,12 +297,78 @@ public class TestFalling
     }
 
     @Test
+    public void Fall_onto_brige_down_right()
+    {
+        World world = createWorld(
+            "   r ",
+            "     ",
+            "  #) ",
+            "#####"
+        );
+
+        assertThat(
+            renderWorld( world, true, false ),
+            equalTo(
+                "   r ",
+                "   f ",
+                "  #e ",
+                "#####"
+            )
+        );
+
+        world.step();
+
+        assertThat(
+            renderWorld( world, true, false ),
+            equalTo(
+                "     ",
+                "     ",
+                "  #r_",
+                "#####"
+            )
+        );
+    }
+
+    @Test
     public void Fall_onto_slope_down_left()
     {
         World world = createWorld(
             "  j  ",
             "     ",
             "  /# ",
+            "#####"
+        );
+
+        assertThat(
+            renderWorld( world, true, false ),
+            equalTo(
+                "  j  ",
+                "  f  ",
+                "  s# ",
+                "#####"
+            )
+        );
+
+        world.step();
+
+        assertThat(
+            renderWorld( world, true, false ),
+            equalTo(
+                "     ",
+                "     ",
+                " +j# ",
+                "#####"
+            )
+        );
+    }
+
+    @Test
+    public void Fall_onto_bridge_down_left()
+    {
+        World world = createWorld(
+            "  j  ",
+            "     ",
+            "  (# ",
             "#####"
         );
 
@@ -363,12 +429,78 @@ public class TestFalling
     }
 
     @Test
+    public void Fall_onto_bridge_up_right()
+    {
+        World world = createWorld(
+            "  r  ",
+            "     ",
+            "  (# ",
+            "#####"
+        );
+
+        assertThat(
+            renderWorld( world, true, false ),
+            equalTo(
+                "  r  ",
+                "  f  ",
+                "  d# ",
+                "#####"
+            )
+        );
+
+        world.step();
+
+        assertThat(
+            renderWorld( world, true, false ),
+            equalTo(
+                "     ",
+                "   ' ",
+                "  r# ",
+                "#####"
+            )
+        );
+    }
+
+    @Test
     public void Fall_onto_slope_up_left()
     {
         World world = createWorld(
             "   j ",
             "     ",
             "  #\\ ",
+            "#####"
+        );
+
+        assertThat(
+            renderWorld( world, true, false ),
+            equalTo(
+                "   j ",
+                "   f ",
+                "  #a ",
+                "#####"
+            )
+        );
+
+        world.step();
+
+        assertThat(
+            renderWorld( world, true, false ),
+            equalTo(
+                "     ",
+                "  !  ",
+                "  #j ",
+                "#####"
+            )
+        );
+    }
+
+    @Test
+    public void Fall_onto_bridge_up_left()
+    {
+        World world = createWorld(
+            "   j ",
+            "     ",
+            "  #) ",
             "#####"
         );
 
@@ -426,11 +558,71 @@ public class TestFalling
     }
 
     @Test
+    public void Fall_1_onto_bridge_down_right()
+    {
+        World world = createWorld(
+            "   r ",
+            "  #) ",
+            "#####"
+        );
+
+        assertThat(
+            renderWorld( world, true, false ),
+            equalTo(
+                "   r ",
+                "  #e ",
+                "#####"
+            )
+        );
+
+        world.step();
+
+        assertThat(
+            renderWorld( world, true, false ),
+            equalTo(
+                "     ",
+                "  #r_",
+                "#####"
+            )
+        );
+    }
+
+    @Test
     public void Fall_1_onto_slope_down_left()
     {
         World world = createWorld(
             "  j  ",
             "  /# ",
+            "#####"
+        );
+
+        assertThat(
+            renderWorld( world, true, false ),
+            equalTo(
+                "  j  ",
+                "  s# ",
+                "#####"
+            )
+        );
+
+        world.step();
+
+        assertThat(
+            renderWorld( world, true, false ),
+            equalTo(
+                "     ",
+                " +j# ",
+                "#####"
+            )
+        );
+    }
+
+    @Test
+    public void Fall_1_onto_bridge_down_left()
+    {
+        World world = createWorld(
+            "  j  ",
+            "  (# ",
             "#####"
         );
 
@@ -486,6 +678,36 @@ public class TestFalling
     }
 
     @Test
+    public void Fall_1_onto_bridge_up_right()
+    {
+        World world = createWorld(
+            "  r  ",
+            "  (# ",
+            "#####"
+        );
+
+        assertThat(
+            renderWorld( world, true, false ),
+            equalTo(
+                "  r  ",
+                "  d# ",
+                "#####"
+            )
+        );
+
+        world.step();
+
+        assertThat(
+            renderWorld( world, true, false ),
+            equalTo(
+                "   ' ",
+                "  r# ",
+                "#####"
+            )
+        );
+    }
+
+    @Test
     public void Fall_1_onto_slope_up_left()
     {
         World world = createWorld(
@@ -515,6 +737,35 @@ public class TestFalling
         );
     }
 
+    @Test
+    public void Fall_1_onto_bridge_up_left()
+    {
+        World world = createWorld(
+            "   j ",
+            "  #) ",
+            "#####"
+        );
+
+        assertThat(
+            renderWorld( world, true, false ),
+            equalTo(
+                "   j ",
+                "  #a ",
+                "#####"
+            )
+        );
+
+        world.step();
+
+        assertThat(
+            renderWorld( world, true, false ),
+            equalTo(
+                "  !  ",
+                "  #j ",
+                "#####"
+            )
+        );
+    }
 
     @Test
     public void Fall_to_death_onto_slopes()
@@ -584,6 +835,74 @@ public class TestFalling
         );
     }
 
+
+    @Test
+    public void Fall_to_death_onto_bridges()
+    {
+        // The animation for this is wrong so this test will need updating,
+        // but the behaviour must show the rabbits dying.
+
+        World world = createWorld(
+            "rrrr",
+            "    ",
+            "    ",
+            "    ",
+            "    ",
+            " () ",
+            "(##)",
+            "####"
+        );
+
+        world.step();
+        world.step();
+
+        assertThat(
+            renderWorld( world, true, false ),
+            equalTo(
+                "    ",
+                "    ",
+                "    ",
+                "    ",
+                "rrrr",
+                "fxxf",
+                "d##e",
+                "####"
+            )
+        );
+
+        world.step();
+
+        assertThat(
+            renderWorld( world, true, false ),
+            equalTo(
+                "    ",
+                "    ",
+                "    ",
+                "    ",
+                "    ",
+                " yy ",
+                "X##X",
+                "####"
+            )
+        );
+
+
+        world.step();
+
+        assertThat(
+            renderWorld( world, true, false ),
+            equalTo(
+                "    ",
+                "    ",
+                "    ",
+                "    ",
+                "    ",
+                " () ",
+                "(##)",
+                "####"
+            )
+        );
+    }
 
     @Test
     public void Multiple_falls_are_not_additive()

@@ -22,6 +22,17 @@ public class BlockRenderer
         {
             return '#';
         }
+        if ( block.type == Block.Type.bridge )
+        {
+            if ( block.riseDir == RIGHT )
+            {
+                return '(';
+            }
+            if ( block.riseDir == LEFT )
+            {
+                return ')';
+            }
+        }
         if ( block.riseDir == RIGHT )
         {
             return '/';

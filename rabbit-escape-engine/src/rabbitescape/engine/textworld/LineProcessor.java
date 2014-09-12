@@ -183,6 +183,18 @@ class LineProcessor
                 blocks.add( new Block( charNum, height, LEFT ) );
                 break;
             }
+            case '(':
+            {
+                blocks.add(
+                    new Block( charNum, height, RIGHT, Block.Type.bridge ) );
+                break;
+            }
+            case ')':
+            {
+                blocks.add(
+                    new Block( charNum, height, LEFT, Block.Type.bridge ) );
+                break;
+            }
             case 'r':
             {
                 rabbits.add( new Rabbit( charNum, height, RIGHT ) );

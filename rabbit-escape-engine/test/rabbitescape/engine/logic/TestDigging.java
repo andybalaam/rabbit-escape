@@ -10,6 +10,8 @@ import rabbitescape.engine.World;
 
 public class TestDigging
 {
+    // TODO: slopes and bridges
+
     @Test
     public void Dig_through_single_floor()
     {

@@ -10,6 +10,8 @@ import rabbitescape.engine.World;
 
 public class TestTokens
 {
+    // TODO: slopes and bridges
+
     @Test
     public void Tokens_fall_slowly_and_stop_on_ground()
     {

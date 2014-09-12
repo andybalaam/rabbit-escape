@@ -10,6 +10,8 @@ import rabbitescape.engine.World;
 
 public class TestBashing
 {
+    // TODO: slopes and bridges
+
     @Test
     public void Token_not_next_to_wall_makes_useless_bash()
     {
