@@ -2,7 +2,7 @@ package rabbitescape.engine;
 
 import static rabbitescape.engine.BehaviourTools.*;
 import static rabbitescape.engine.ChangeDescription.State.*;
-import static rabbitescape.engine.Direction.*;
+import static rabbitescape.engine.Block.Type.*;
 
 import rabbitescape.engine.ChangeDescription.State;
 
@@ -101,7 +101,7 @@ public class Falling implements Behaviour
             Block block2Down = world.getBlockAt( rabbit.x, rabbit.y + 2 );
             if ( block2Down != null )
             {
-                if ( block2Down.riseDir == DOWN ) // Flat block
+                if ( block2Down.type == solid_flat ) // Flat block
                 {
                     Block block1Down = world.getBlockAt(
                         rabbit.x, rabbit.y + 1 );
@@ -110,7 +110,7 @@ public class Falling implements Behaviour
                     {
                         return State.RABBIT_FALLING_1;
                     }
-                    else if ( block1Down.riseDir == rabbit.dir )
+                    else if ( block1Down.riseDir() == rabbit.dir )
                     {
                         return rl(
                             rabbit,
@@ -127,7 +127,7 @@ public class Falling implements Behaviour
                         );
                     }
                 }
-                else if( block2Down.riseDir == rabbit.dir )
+                else if( block2Down.riseDir() == rabbit.dir )
                 {
                     return rl(
                         rabbit,

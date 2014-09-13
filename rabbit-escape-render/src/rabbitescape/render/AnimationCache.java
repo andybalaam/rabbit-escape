@@ -29,6 +29,11 @@ public class AnimationCache
 
     public Animation get( String animationName )
     {
-        return animations.get( animationName );
+        Animation ret = animations.get( animationName );
+        if ( ret == null )
+        {
+            throw new AnimationLoader.AnimationNotFound( animationName );
+        }
+        return ret;
     }
 }

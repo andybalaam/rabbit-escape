@@ -2,6 +2,7 @@ package rabbitescape.engine;
 
 import static rabbitescape.engine.ChangeDescription.State.*;
 import static rabbitescape.engine.Direction.*;
+import static rabbitescape.engine.Block.Type.*;
 import rabbitescape.engine.ChangeDescription.State;
 
 public class Walking implements Behaviour
@@ -157,7 +158,7 @@ public class Walking implements Behaviour
         private boolean riseBlockAt( int x, int y )
         {
             Block block = world.getBlockAt( x, y );
-            return ( block != null && block.riseDir == rabbit.dir );
+            return ( block != null && block.riseDir() == rabbit.dir );
         }
 
         private boolean lowerBlockAt( int x, int y )
@@ -165,7 +166,7 @@ public class Walking implements Behaviour
             Block block = world.getBlockAt( x, y );
             return (
                    block != null
-                && block.riseDir == Direction.opposite( rabbit.dir )
+                && block.riseDir() == Direction.opposite( rabbit.dir )
             );
         }
 
@@ -174,8 +175,11 @@ public class Walking implements Behaviour
             Block block = world.getBlockAt( x, y );
             return (
                    block != null
-                && block.riseDir == Direction.opposite( rabbit.dir )
-                && block.type == Block.Type.solid
+                && block.riseDir() == Direction.opposite( rabbit.dir )
+                && (
+                          block.type == solid_up_right
+                       || block.type == solid_up_left
+               )
             );
         }
     }

@@ -18,33 +18,16 @@ public class BlockRenderer
 
     private static char charForBlock( Block block )
     {
-        if ( block.riseDir == DOWN )
+        switch ( block.type )
         {
-            return '#';
-        }
-        if ( block.type == Block.Type.bridge )
-        {
-            if ( block.riseDir == RIGHT )
-            {
-                return '(';
-            }
-            if ( block.riseDir == LEFT )
-            {
-                return ')';
-            }
-        }
-        if ( block.riseDir == RIGHT )
-        {
-            return '/';
-        }
-        if ( block.riseDir == LEFT )
-        {
-            return '\\';
-        }
-        else
-        {
-            throw new AssertionError(
-                "Unknown Block type: " + block.getClass() );
+            case solid_flat:      return '#';
+            case solid_up_right:  return '/';
+            case solid_up_left:   return '\\';
+            case bridge_up_right: return '(';
+            case bridge_up_left:  return ')';
+            default:
+                throw new AssertionError(
+                    "Unknown Block type: " + block.type );
         }
     }
 }

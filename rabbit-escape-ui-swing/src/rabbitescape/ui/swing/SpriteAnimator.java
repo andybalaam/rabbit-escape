@@ -122,28 +122,21 @@ public class SpriteAnimator
 
     private SwingBitmap bitmapForBlock( Block block )
     {
-        if ( block.type == Block.Type.bridge )
+        return bitmapCache.get( bitmapNameForBlock( block ) );
+    }
+
+    private String bitmapNameForBlock( Block block )
+    {
+        switch( block.type )
         {
-            if ( block.riseDir == RIGHT )
-            {
-                return bitmapCache.get( bridge_rising_right );
-            }
-            else if ( block.riseDir == LEFT )
-            {
-                return bitmapCache.get( bridge_rising_left );
-            }
+            case solid_flat:      return land_block;
+            case solid_up_right:  return land_rising_right;
+            case solid_up_left:   return land_rising_left;
+            case bridge_up_right: return bridge_rising_right;
+            case bridge_up_left:  return bridge_rising_left;
+            default:
+                throw new RuntimeException(
+                    "Unknown block type " + block.type );
         }
-        else
-        {
-            if ( block.riseDir == RIGHT )
-            {
-                return bitmapCache.get( land_rising_right );
-            }
-            else if ( block.riseDir == LEFT )
-            {
-                return bitmapCache.get( land_rising_left );
-            }
-        }
-        return bitmapCache.get( land_block );
     }
 }

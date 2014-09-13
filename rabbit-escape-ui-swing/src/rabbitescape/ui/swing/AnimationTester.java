@@ -1,21 +1,22 @@
 package rabbitescape.ui.swing;
 
+import static rabbitescape.engine.util.Util.*;
+
 import rabbitescape.engine.config.Config;
 import rabbitescape.engine.config.ConfigTools;
 import rabbitescape.engine.util.RealFileSystem;
-import rabbitescape.render.AnimationCache;
-import rabbitescape.render.AnimationLoader;
-import rabbitescape.render.BitmapCache;
+import rabbitescape.render.*;
 import rabbitescape.render.Renderer;
-import rabbitescape.render.Sprite;
 
 import javax.swing.*;
 
+import java.awt.*;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferStrategy;
 import java.util.*;
+import java.util.List;
 
 import static rabbitescape.engine.i18n.Translation.t;
 import static rabbitescape.render.AnimationLoader.*;
@@ -39,6 +40,8 @@ public class AnimationTester extends JFrame
     private static final String CFG_AT_ANIMATIONS =
         "animationtester.animations";
 
+    private static final String CFG_AT_BLOCKS = "animationtester.blocks";
+
     private static final String[][] defaultAnimationNames = new String[][] {
         new String[] { NONE, NONE, NONE },
         new String[] { NONE, NONE, NONE },
@@ -53,6 +56,12 @@ public class AnimationTester extends JFrame
         new String[] { NONE, NONE, NONE }
     };
 
+    private static final String[] defaultBlockNames = new String[] {
+        NONE, NONE, NONE,
+        "land-rising-left", NONE, "bridge-rising-right",
+        "land-block", "land-block", "land-block",
+    };
+
     private class Listener implements
         java.awt.event.MouseListener, ComponentListener
     {
@@ -63,19 +72,29 @@ public class AnimationTester extends JFrame
 
             String[] possibilties = animationCache.listAll();
 
-            JPanel threeDropDowns = new JPanel();
-            JList<String> list0 = addAnimationList(
-                threeDropDowns, possibilties, animationNames[i][0] );
+            JPanel dropDowns = new JPanel();
+            JList<String> list0 = addList(
+                dropDowns, possibilties, animationNames[ i ][ 0 ]
+            );
 
-            JList<String> list1 = addAnimationList(
-                threeDropDowns, possibilties, animationNames[i][1] );
+            JList<String> list1 = addList(
+                dropDowns, possibilties, animationNames[ i ][ 1 ]
+            );
 
-            JList<String> list2 = addAnimationList(
-                threeDropDowns, possibilties, animationNames[i][2] );
+            JList<String> list2 = addList(
+                dropDowns, possibilties, animationNames[ i ][ 2 ]
+            );
+
+            JList<String> blocksList = addList(
+                dropDowns, allBlocks, blockNames[ i ]
+            );
+
+            JScrollPane scrollPane = new JScrollPane( dropDowns );
+            scrollPane.setPreferredSize( new Dimension( 800, 500 ) );
 
             int retVal = JOptionPane.showOptionDialog(
                 AnimationTester.this,
-                threeDropDowns,
+                scrollPane,
                 "Change animation",
                 JOptionPane.OK_CANCEL_OPTION,
                 JOptionPane.PLAIN_MESSAGE,
@@ -92,15 +111,18 @@ public class AnimationTester extends JFrame
             animationNames[i][0] = noneForNull( list0.getSelectedValue() );
             animationNames[i][1] = noneForNull( list1.getSelectedValue() );
             animationNames[i][2] = noneForNull( list2.getSelectedValue() );
+            blockNames[i] = noneForNull( blocksList.getSelectedValue() );
 
-            saveAnimationsToConfig();
+            saveSelectionsToConfig();
             loadBitmaps();
         }
 
-        private void saveAnimationsToConfig()
+        private void saveSelectionsToConfig()
         {
             atConfig.set(
                 CFG_AT_ANIMATIONS, animationsToConfigString( animationNames ) );
+
+            atConfig.set( CFG_AT_BLOCKS, blocksToConfigString( blockNames ) );
 
             atConfig.save();
         }
@@ -117,8 +139,9 @@ public class AnimationTester extends JFrame
             }
         }
 
-        private JList<String> addAnimationList(
-            JPanel parent, String[] possibilities, String animation )
+        private JList<String> addList(
+            JPanel parent, String[] possibilities, String animation
+        )
         {
             JList<String> list = new JList<>( possibilities );
 
@@ -182,9 +205,18 @@ public class AnimationTester extends JFrame
     private SwingBitmapScaler scaler;
     private SwingPaint paint;
     private SwingAnimation[][] frames;
+    private SwingBitmap[] blockBitmaps;
     private final AnimationCache animationCache;
+    private final String[] allBlocks = new String[] {
+        "land-block",
+        "land-rising-right",
+        "land-rising-left",
+        "bridge-rising-right",
+        "bridge-rising-left",
+    };
 
     private final String[][] animationNames;
+    private final String[] blockNames;
 
     private static class InitUi implements Runnable
     {
@@ -239,6 +271,9 @@ public class AnimationTester extends JFrame
         this.animationNames = animationsFromConfig(
             atConfig.get( CFG_AT_ANIMATIONS ) );
 
+        this.blockNames = blocksFromConfig(
+            atConfig.get( CFG_AT_BLOCKS ) );
+
         int numTilesY = 3;
 
         setIgnoreRepaint( true );
@@ -291,6 +326,7 @@ public class AnimationTester extends JFrame
             bitmapLoader, 500 );
 
         frames = loadAllFrames( bitmapCache, animationNames );
+        blockBitmaps = loadAllBlockBitmaps( bitmapCache, blockNames );
     }
 
     private SwingAnimation[][] loadAllFrames(
@@ -322,6 +358,33 @@ public class AnimationTester extends JFrame
                     }
                 }
                 ++j;
+            }
+            ++i;
+        }
+        return ret;
+    }
+
+
+    private SwingBitmap[] loadAllBlockBitmaps(
+        BitmapCache<SwingBitmap> bitmapCache, String[] blockNames )
+    {
+        SwingBitmap[] ret = new SwingBitmap[blockNames.length];
+
+        int i = 0;
+        for ( String blockName : blockNames )
+        {
+            if ( !blockName.equals( NONE ) )
+            {
+                try
+                {
+                    ret[ i ] = bitmapCache.get(
+                        "/rabbitescape/ui/swing/images32/" + blockName + ".png"
+                    );
+                }
+                catch ( FailedToLoadImage e )
+                {
+                    e.printStackTrace();
+                }
             }
             ++i;
         }
@@ -403,6 +466,30 @@ public class AnimationTester extends JFrame
 
             List<Sprite> sprites = new ArrayList<>();
             int i = 0;
+            for ( SwingBitmap bmp : blockBitmaps )
+            {
+                if ( bmp == null )
+                {
+                    ++i;
+                    continue;
+                }
+
+                java.awt.Point loc = int2dim( i );
+                sprites.add(
+                    new Sprite(
+                        bmp,
+                        scaler,
+                        loc.x,
+                        loc.y,
+                        32,
+                        0,
+                        0
+                    )
+                );
+                ++i;
+            }
+
+            i = 0;
             for ( SwingAnimation[] bmpSets : frames )
             {
                 SwingAnimation bmps = bmpSets[frameSetNum];
@@ -486,6 +573,12 @@ public class AnimationTester extends JFrame
             + " (3 per tile)"
         );
 
+        definition.set(
+            CFG_AT_BLOCKS,
+            "",
+            "The blocks selected to play in the animation tester"
+        );
+
         return new Config( definition, new RealFileSystem(), CONFIG_PATH );
     }
 
@@ -503,6 +596,11 @@ public class AnimationTester extends JFrame
         }
 
         return ret.toString();
+    }
+
+    private static String blocksToConfigString( String[] blocks )
+    {
+        return join( " ", blocks );
     }
 
     private static String[][] animationsFromConfig( String cfgEntry )
@@ -532,4 +630,13 @@ public class AnimationTester extends JFrame
         return ret;
     }
 
+    private static String[] blocksFromConfig( String cfgEntry )
+    {
+        if ( cfgEntry.isEmpty() )
+        {
+            return defaultBlockNames;
+        }
+
+        return cfgEntry.split( " " );
+    }
 }

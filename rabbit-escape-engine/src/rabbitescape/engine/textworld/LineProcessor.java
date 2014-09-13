@@ -1,6 +1,7 @@
 package rabbitescape.engine.textworld;
 
 import static rabbitescape.engine.Direction.*;
+import static rabbitescape.engine.Block.Type.*;
 import static rabbitescape.engine.util.Util.*;
 
 import java.awt.Dimension;
@@ -170,29 +171,29 @@ class LineProcessor
             }
             case '#':
             {
-                blocks.add( new Block( charNum, height, DOWN ) );
+                blocks.add( new Block( charNum, height, solid_flat ) );
                 break;
             }
             case '/':
             {
-                blocks.add( new Block( charNum, height, RIGHT ) );
+                blocks.add( new Block( charNum, height, solid_up_right ) );
                 break;
             }
             case '\\':
             {
-                blocks.add( new Block( charNum, height, LEFT ) );
+                blocks.add( new Block( charNum, height, solid_up_left ) );
                 break;
             }
             case '(':
             {
                 blocks.add(
-                    new Block( charNum, height, RIGHT, Block.Type.bridge ) );
+                    new Block( charNum, height, bridge_up_right ) );
                 break;
             }
             case ')':
             {
                 blocks.add(
-                    new Block( charNum, height, LEFT, Block.Type.bridge ) );
+                    new Block( charNum, height, bridge_up_left ) );
                 break;
             }
             case 'r':

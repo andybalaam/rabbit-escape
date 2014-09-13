@@ -1,7 +1,7 @@
 package rabbitescape.engine;
 
 import static rabbitescape.engine.util.Util.*;
-import static rabbitescape.engine.Direction.*;
+import static rabbitescape.engine.Block.Type.*;
 
 import java.awt.Dimension;
 import java.util.ArrayList;
@@ -196,13 +196,13 @@ public class World
     public boolean flatBlockAt( int x, int y )
     {
         Block block = getBlockAt( x, y );
-        return ( block != null && block.riseDir == DOWN );
+        return ( block != null && block.type == solid_flat );
     }
 
     public boolean slopingBlockAt( int x, int y )
     {
         Block block = getBlockAt( x, y );
-        return ( block != null && block.riseDir != DOWN );
+        return ( block != null && block.type != solid_flat );
     }
 
     public Block getBlockAt( int x, int y )

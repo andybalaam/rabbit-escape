@@ -1,31 +1,46 @@
 package rabbitescape.engine;
 
+import static rabbitescape.engine.Direction.*;
+
 public class Block
 {
     public enum Type
     {
-        solid,
-        bridge,
+        solid_flat,
+        solid_up_right,
+        solid_up_left,
+        bridge_up_right,
+        bridge_up_left,
     }
 
     public final int x;
     public final int y;
-    public final Direction riseDir;  // DOWN for a flat block,
-                                     // RIGHT for sloping /
-                                     // LEFT  for sloping \
-
     public final Type type;
 
-    public Block( int x, int y, Direction riseDir )
-    {
-        this( x, y, riseDir, Type.solid );
-    }
-
-    public Block( int x, int y, Direction riseDir, Type type )
+    public Block( int x, int y, Type type )
     {
         this.x = x;
         this.y = y;
-        this.riseDir = riseDir;
         this.type = type;
+    }
+
+    public Direction riseDir()
+    {
+        switch ( type )
+        {
+            case solid_flat:
+                return DOWN;
+
+            case solid_up_right:
+            case bridge_up_right:
+                return RIGHT;
+
+            case solid_up_left:
+            case bridge_up_left:
+                return LEFT;
+
+            default:
+                throw new RuntimeException( "Unknown block type " + type );
+        }
     }
 }
