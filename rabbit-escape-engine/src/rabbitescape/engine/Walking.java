@@ -38,9 +38,10 @@ public class Walking implements Behaviour
                         RABBIT_RISING_AND_LOWERING_LEFT
                     );
                 }
-                else if(
-                      world.flatBlockAt( nextX, nextY )
-                    || lowerBlockAt( nextX, nextY )
+                else if
+                (
+                       world.flatBlockAt( nextX, nextY )
+                    || lowerSlopeAt( nextX, nextY )
                 )
                 {
                     return rl(
@@ -112,9 +113,10 @@ public class Walking implements Behaviour
                         RABBIT_LOWERING_LEFT_START
                     );
                 }
-                else if(
+                else if
+                (
                        world.flatBlockAt( nextX, nextY )
-                    || lowerBlockAt( nextX, nextY )
+                    || lowerSlopeAt( nextX, nextY )
                 )
                 {
                     return rl(
@@ -162,8 +164,18 @@ public class Walking implements Behaviour
         {
             Block block = world.getBlockAt( x, y );
             return (
-                block != null
+                   block != null
                 && block.riseDir == Direction.opposite( rabbit.dir )
+            );
+        }
+
+        private boolean lowerSlopeAt( int x, int y )
+        {
+            Block block = world.getBlockAt( x, y );
+            return (
+                   block != null
+                && block.riseDir == Direction.opposite( rabbit.dir )
+                && block.type == Block.Type.solid
             );
         }
     }

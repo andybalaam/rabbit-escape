@@ -122,6 +122,35 @@ public class TestWalking
     }
 
     @Test
+    public void Dont_turn_when_you_hit_the_back_of_a_bridge_on_left()
+    {
+        World world = createWorld(
+            " (j  ",
+            "#####"
+        );
+
+        world.step();
+
+        assertThat(
+            renderWorld( world, false, false ),
+            equalTo(
+                " j   ",
+                "#####"
+            )
+        );
+
+        world.step();
+
+        assertThat(
+            renderWorld( world, false, false ),
+            equalTo(
+                "j(   ",
+                "#####"
+            )
+        );
+    }
+
+    @Test
     public void Turn_when_you_hit_the_back_of_a_slope_on_right()
     {
         World world = createWorld(
@@ -136,6 +165,35 @@ public class TestWalking
             equalTo(
                 "  j\\",
                 "####"
+            )
+        );
+    }
+
+    @Test
+    public void Dont_turn_when_you_hit_the_back_of_a_slope_on_right()
+    {
+        World world = createWorld(
+            "  r) ",
+            "#####"
+        );
+
+        world.step();
+
+        assertThat(
+            renderWorld( world, false, false ),
+            equalTo(
+                "   r ",
+                "#####"
+            )
+        );
+
+        world.step();
+
+        assertThat(
+            renderWorld( world, false, false ),
+            equalTo(
+                "   )r",
+                "#####"
             )
         );
     }
@@ -752,6 +810,49 @@ public class TestWalking
     }
 
     @Test
+    public void Dont_turn_because_of_backbridge_on_a_slope_up_right()
+    {
+        World world = createWorld(
+            "   ) ",
+            " r/##",
+            "#####"
+        );
+
+        world.step();
+
+        assertThat(
+            renderWorld( world, false, false ),
+            equalTo(
+                "   ) ",
+                "  r##",
+                "#####"
+            )
+        );
+
+        world.step();
+
+        assertThat(
+            renderWorld( world, false, false ),
+            equalTo(
+                "   r ",
+                "  /##",
+                "#####"
+            )
+        );
+
+        world.step();
+
+        assertThat(
+            renderWorld( world, false, false ),
+            equalTo(
+                "   )r",
+                "  /##",
+                "#####"
+            )
+        );
+    }
+
+    @Test
     public void Turn_on_a_slope_up_left()
     {
         World world = createWorld(
@@ -887,6 +988,49 @@ public class TestWalking
                 "/   ",
                 "#r  ",
                 "####"
+            )
+        );
+    }
+
+    @Test
+    public void Dont_turn_because_of_backbridge_on_a_slope_up_left()
+    {
+        World world = createWorld(
+            " (   ",
+            "##\\j ",
+            "#####"
+        );
+
+        world.step();
+
+        assertThat(
+            renderWorld( world, false, false ),
+            equalTo(
+                " (   ",
+                "##j  ",
+                "#####"
+            )
+        );
+
+        world.step();
+
+        assertThat(
+            renderWorld( world, false, false ),
+            equalTo(
+                " j   ",
+                "##\\  ",
+                "#####"
+            )
+        );
+
+        world.step();
+
+        assertThat(
+            renderWorld( world, false, false ),
+            equalTo(
+                "j(   ",
+                "##\\  ",
+                "#####"
             )
         );
     }
