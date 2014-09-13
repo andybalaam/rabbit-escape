@@ -208,6 +208,7 @@ public class AnimationTester extends JFrame
     private SwingBitmap[] blockBitmaps;
     private final AnimationCache animationCache;
     private final String[] allBlocks = new String[] {
+        NONE,
         "land-block",
         "land-rising-right",
         "land-rising-left",
@@ -344,18 +345,17 @@ public class AnimationTester extends JFrame
             {
                 if ( !animationName.equals( NONE ) )
                 {
-                    try
+                    Animation animation = animationCache.get( animationName );
+                    if ( animation == null )
                     {
-                        ret[i][j] = new SwingAnimation(
-                            bitmapCache,
-                            animationCache.get( animationName )
-                        );
+                        ++j;
+                        continue;
                     }
-                    catch( AnimationNotFound e )
-                    {
-                        e.printStackTrace();
-                        ret[i][j] = null;
-                    }
+
+                    ret[i][j] = new SwingAnimation(
+                        bitmapCache,
+                        animation
+                    );
                 }
                 ++j;
             }

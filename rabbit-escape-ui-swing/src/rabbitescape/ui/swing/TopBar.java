@@ -7,8 +7,7 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.LayoutManager;
 
-import javax.swing.JLabel;
-import javax.swing.JPanel;
+import javax.swing.*;
 
 import rabbitescape.ui.swing.SwingGameLoop.StatsChangedListener;
 
@@ -70,8 +69,18 @@ public class TopBar implements StatsChangedListener
         setText( this.saved,   savedText,   saved );
     }
 
-    private void setText( JLabel label, String text, int num )
+    private void setText( final JLabel label, final String text, final int num )
     {
-        label.setText( t( text, newMap( "num", String.valueOf( num ) ) ) );
+        SwingUtilities.invokeLater(
+            new Runnable()
+            {
+                @Override
+                public void run()
+                {
+                    label.setText(
+                        t( text, newMap( "num", String.valueOf( num ) ) ) );
+                }
+            }
+        );
     }
 }

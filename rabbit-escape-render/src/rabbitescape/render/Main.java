@@ -15,6 +15,7 @@ public abstract class Main
 
     private static final int SUCCESS             = 0;
     private static final int FAILED_TO_LOAD_FILE = 1;
+    private static final int UNKNOWN_ERROR       = 42;
 
     private final FileSystem fs;
     private final PrintStream out;
@@ -51,6 +52,11 @@ public abstract class Main
         {
             out.println( e.translate( locale ) );
             return FAILED_TO_LOAD_FILE;
+        }
+        catch( Throwable e )
+        {
+            e.printStackTrace();
+            return UNKNOWN_ERROR;
         }
 
         return SUCCESS;
