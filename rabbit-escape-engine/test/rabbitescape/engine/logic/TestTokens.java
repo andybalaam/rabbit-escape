@@ -16,7 +16,7 @@ public class TestTokens
     public void Tokens_fall_slowly_and_stop_on_ground()
     {
         World world = createWorld(
-            " b ",
+            "bdi",
             "   ",
             "   ",
             "###"
@@ -25,8 +25,8 @@ public class TestTokens
         assertThat(
             renderWorld( world, true, false ),
             equalTo(
-                " b ",
-                " f ",
+                "bdi",
+                "fff",
                 "   ",
                 "###"
             )
@@ -38,8 +38,8 @@ public class TestTokens
             renderWorld( world, true, false ),
             equalTo(
                 "   ",
-                " b ",
-                " f ",
+                "bdi",
+                "fff",
                 "###"
             )
         );
@@ -51,7 +51,7 @@ public class TestTokens
             equalTo(
                 "   ",
                 "   ",
-                " b ",
+                "bdi",
                 "###"
             )
         );
@@ -63,7 +63,7 @@ public class TestTokens
             equalTo(
                 "   ",
                 "   ",
-                " b ",
+                "bdi",
                 "###"
             )
         );

@@ -59,7 +59,11 @@ public class Token extends Thing
     @Override
     public void step( World world )
     {
-        if ( state == TOKEN_BASH_FALLING || state == TOKEN_DIG_FALLING )
+        if (
+               state == TOKEN_BASH_FALLING
+            || state == TOKEN_DIG_FALLING
+            || state == TOKEN_BRIDGE_FALLING
+        )
         {
             ++y;
         }
