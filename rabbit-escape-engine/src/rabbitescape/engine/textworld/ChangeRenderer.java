@@ -154,21 +154,27 @@ public class ChangeRenderer
                 chars[change.y + 1][change.x] = 'D';
                 break;
             case RABBIT_BRIDGING_RIGHT_1:
+            case RABBIT_BRIDGING_DOWN_UP_RIGHT_1:
                 chars[change.y][change.x + 1] = 'B';
                 break;
             case RABBIT_BRIDGING_RIGHT_2:
+            case RABBIT_BRIDGING_DOWN_UP_RIGHT_2:
                 chars[change.y][change.x + 1] = '[';
                 break;
             case RABBIT_BRIDGING_RIGHT_3:
+            case RABBIT_BRIDGING_DOWN_UP_RIGHT_3:
                 chars[change.y][change.x + 1] = '{';
                 break;
             case RABBIT_BRIDGING_LEFT_1:
+            case RABBIT_BRIDGING_DOWN_UP_LEFT_1:
                 chars[change.y][change.x - 1] = 'E';
                 break;
             case RABBIT_BRIDGING_LEFT_2:
+            case RABBIT_BRIDGING_DOWN_UP_LEFT_2:
                 chars[change.y][change.x - 1] = ']';
                 break;
             case RABBIT_BRIDGING_LEFT_3:
+            case RABBIT_BRIDGING_DOWN_UP_LEFT_3:
                 chars[change.y][change.x - 1] = '}';
                 break;
             case RABBIT_BRIDGING_UP_RIGHT_1:

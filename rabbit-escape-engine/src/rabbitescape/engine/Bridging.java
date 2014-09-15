@@ -36,21 +36,34 @@ public class Bridging implements Behaviour
 
         Block hereBlock = world.getBlockAt( rabbit.x, rabbit.y );
 
-        boolean slope = (
+        boolean slopeUp = (
                ( hereBlock != null )
-            && ( hereBlock.riseDir() != Direction.DOWN )
+            && ( hereBlock.riseDir() == rabbit.dir )
+        );
+
+        boolean slopeDown = (
+               ( hereBlock != null )
+            && ( hereBlock.riseDir() == Direction.opposite( rabbit.dir ) )
         );
 
         switch( smallSteps )
         {
             case 4:
             {
-                if ( slope )
+                if ( slopeUp )
                 {
                     return BehaviourTools.rl(
                         rabbit,
                         RABBIT_BRIDGING_UP_RIGHT_1,
                         RABBIT_BRIDGING_UP_LEFT_1
+                    );
+                }
+                else if ( slopeDown )
+                {
+                    return BehaviourTools.rl(
+                        rabbit,
+                        RABBIT_BRIDGING_DOWN_UP_RIGHT_1,
+                        RABBIT_BRIDGING_DOWN_UP_LEFT_1
                     );
                 }
                 else
@@ -64,12 +77,20 @@ public class Bridging implements Behaviour
             }
             case 3:
             {
-                if ( slope )
+                if ( slopeUp )
                 {
                     return BehaviourTools.rl(
                         rabbit,
                         RABBIT_BRIDGING_UP_RIGHT_2,
                         RABBIT_BRIDGING_UP_LEFT_2
+                    );
+                }
+                else if ( slopeDown )
+                {
+                    return BehaviourTools.rl(
+                        rabbit,
+                        RABBIT_BRIDGING_DOWN_UP_RIGHT_2,
+                        RABBIT_BRIDGING_DOWN_UP_LEFT_2
                     );
                 }
                 else
@@ -83,12 +104,20 @@ public class Bridging implements Behaviour
             }
             case 2:
             {
-                if ( slope )
+                if ( slopeUp )
                 {
                     return BehaviourTools.rl(
                         rabbit,
                         RABBIT_BRIDGING_UP_RIGHT_3,
                         RABBIT_BRIDGING_UP_LEFT_3
+                    );
+                }
+                else if ( slopeDown )
+                {
+                    return BehaviourTools.rl(
+                        rabbit,
+                        RABBIT_BRIDGING_DOWN_UP_RIGHT_3,
+                        RABBIT_BRIDGING_DOWN_UP_LEFT_3
                     );
                 }
                 else
@@ -120,10 +149,15 @@ public class Bridging implements Behaviour
             case RABBIT_BRIDGING_UP_RIGHT_2:
             case RABBIT_BRIDGING_UP_LEFT_1:
             case RABBIT_BRIDGING_UP_LEFT_2:
+            case RABBIT_BRIDGING_DOWN_UP_RIGHT_1:
+            case RABBIT_BRIDGING_DOWN_UP_RIGHT_2:
+            case RABBIT_BRIDGING_DOWN_UP_LEFT_1:
+            case RABBIT_BRIDGING_DOWN_UP_LEFT_2:
             {
                 return true;
             }
             case RABBIT_BRIDGING_RIGHT_3:
+            case RABBIT_BRIDGING_DOWN_UP_RIGHT_3:
             {
                 world.changes.blocksToAdd.add(
                     new Block(
@@ -136,6 +170,7 @@ public class Bridging implements Behaviour
                 return true;
             }
             case RABBIT_BRIDGING_LEFT_3:
+            case RABBIT_BRIDGING_DOWN_UP_LEFT_3:
             {
                 world.changes.blocksToAdd.add(
                     new Block(
