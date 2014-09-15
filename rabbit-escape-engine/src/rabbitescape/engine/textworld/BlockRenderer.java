@@ -1,7 +1,5 @@
 package rabbitescape.engine.textworld;
 
-import static rabbitescape.engine.Direction.*;
-
 import java.util.List;
 
 import rabbitescape.engine.Block;
