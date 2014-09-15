@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-import static rabbitescape.engine.Direction.*;
-
 import rabbitescape.engine.*;
 import rabbitescape.render.Animation;
 import rabbitescape.render.AnimationCache;
