@@ -396,6 +396,8 @@ public class TestBridging
         );
     }
 
+    // TODO: Stop_bridging_when_hit_a_ceiling
+
     @Test
     public void Keep_bridging_when_skim_a_wall_top()
     {
