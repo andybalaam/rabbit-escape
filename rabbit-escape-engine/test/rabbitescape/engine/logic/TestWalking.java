@@ -695,7 +695,7 @@ public class TestWalking
             renderWorld( world, true, false ),
             equalTo(
                 "   #",
-                "  }#",
+                "  ?#",
                 "####"
             )
         );
@@ -749,7 +749,7 @@ public class TestWalking
             renderWorld( world, true, false ),
             equalTo(
                 "   #",
-                "  }#",
+                "  ?#",
                 "####"
             )
         );
@@ -878,7 +878,7 @@ public class TestWalking
             renderWorld( world, true, false ),
             equalTo(
                 "#   ",
-                "#{  ",
+                "#|  ",
                 "####"
             )
         );
@@ -932,7 +932,7 @@ public class TestWalking
             renderWorld( world, true, false ),
             equalTo(
                 "#   ",
-                "#{  ",
+                "#|  ",
                 "####"
             )
         );

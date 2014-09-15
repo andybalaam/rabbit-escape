@@ -119,7 +119,7 @@ public class TestTextWorldManip
                 " '   ",
                 "     ",
                 "     ",
-                "}    "
+                "?    "
             )
         );
     }
@@ -145,7 +145,7 @@ public class TestTextWorldManip
                 "   ! ",
                 "     ",
                 "     ",
-                "    {"
+                "    |"
             )
         );
     }

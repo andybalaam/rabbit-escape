@@ -26,7 +26,7 @@ public class ChangeRenderer
                 chars[change.y][change.x] = '|';
                 break;
             case RABBIT_TURNING_LEFT_TO_RIGHT_RISING:
-                chars[change.y][change.x] = '{';
+                chars[change.y][change.x] = '|';
                 break;
             case RABBIT_TURNING_LEFT_TO_RIGHT_LOWERING:
                 chars[change.y][change.x] = '[';
@@ -38,7 +38,7 @@ public class ChangeRenderer
                 chars[change.y][change.x] = '?';
                 break;
             case RABBIT_TURNING_RIGHT_TO_LEFT_RISING:
-                chars[change.y][change.x] = '}';
+                chars[change.y][change.x] = '?';
                 break;
             case RABBIT_TURNING_RIGHT_TO_LEFT_LOWERING:
                 chars[change.y][change.x] = ']';

@@ -41,6 +41,19 @@ public class Bridging implements Behaviour
             && ( hereBlock.riseDir() == rabbit.dir )
         );
 
+        int nextX = rabbit.x;
+        nextX += rabbit.dir == Direction.RIGHT ? 1 : -1;
+
+        int nextY = rabbit.y;
+        nextY += slopeUp ? -1 : 0;
+
+        Block nextBlock = world.getBlockAt( nextX, nextY );
+
+        if ( nextBlock != null && nextBlock.riseDir() != rabbit.dir )
+        {
+            return null; // We will be turning around - stop bridging
+        }
+
         boolean slopeDown = (
                ( hereBlock != null )
             && ( hereBlock.riseDir() == Direction.opposite( rabbit.dir ) )
@@ -211,5 +224,11 @@ public class Bridging implements Behaviour
                 return false;
             }
         }
+    }
+
+    public void stopBridging()
+    {
+        bigSteps = 0;
+        smallSteps = 0;
     }
 }
