@@ -30,6 +30,7 @@ public class Rabbit extends Thing
         ret.add( new Falling( digging ) );
         ret.add( new Bashing() );
         ret.add( digging );
+        ret.add( new Bridging() );
         ret.add( new Walking() );
 
         return ret;

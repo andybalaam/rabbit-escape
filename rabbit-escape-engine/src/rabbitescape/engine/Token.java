@@ -22,6 +22,7 @@ public class Token extends Thing
     {
         bash,
         dig,
+        bridge,
     }
 
     public final Type type;
@@ -36,8 +37,15 @@ public class Token extends Thing
     {
         switch( type )
         {
-            case bash: return moving ? TOKEN_BASH_FALLING : TOKEN_BASH_STILL;
-            case dig:  return moving ? TOKEN_DIG_FALLING  : TOKEN_DIG_STILL;
+            case bash:   return moving ?
+                TOKEN_BASH_FALLING : TOKEN_BASH_STILL;
+
+            case dig:    return moving ?
+                TOKEN_DIG_FALLING : TOKEN_DIG_STILL;
+
+            case bridge: return moving ?
+                TOKEN_BRIDGE_FALLING : TOKEN_BRIDGE_STILL;
+
             default: throw new UnknownType( type );
         }
     }

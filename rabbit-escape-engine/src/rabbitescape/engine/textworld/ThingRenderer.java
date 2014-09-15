@@ -56,8 +56,9 @@ public class ThingRenderer
     {
         switch ( thing.type )
         {
-            case bash: return 'b';
-            case dig:  return 'd';
+            case bash:   return 'b';
+            case dig:    return 'd';
+            case bridge: return 'i';
             default: throw new UnknownTokenType( thing.type );
         }
     }

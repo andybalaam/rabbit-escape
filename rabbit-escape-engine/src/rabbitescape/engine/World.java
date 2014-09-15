@@ -74,8 +74,9 @@ public class World
     {
         private final List<Rabbit> rabbitsToAdd    = new ArrayList<>();
         private final List<Rabbit> rabbitsToRemove = new ArrayList<>();
-        public final List<Thing>   thingsToAdd     = new ArrayList<>();
+        public final  List<Thing>  thingsToAdd     = new ArrayList<>();
         private final List<Thing>  thingsToRemove  = new ArrayList<>();
+        public final  List<Block>  blocksToAdd     = new ArrayList<>();
         private final List<Block>  blocksToRemove  = new ArrayList<>();
 
         public void apply( World world )
@@ -87,6 +88,7 @@ public class World
             }
             world.rabbits.addAll( rabbitsToAdd );
             world.things.addAll( thingsToAdd );
+            world.blocks.addAll( blocksToAdd );
 
             // Remove dead/saved rabbits, used tokens, dug out blocks
             world.rabbits.removeAll( rabbitsToRemove );
@@ -97,6 +99,7 @@ public class World
             rabbitsToRemove.clear();
             thingsToAdd.clear();
             thingsToRemove.clear();
+            blocksToAdd.clear();
             blocksToRemove.clear();
         }
     }

@@ -226,6 +226,11 @@ class LineProcessor
                 things.add( new Token( charNum, height, Token.Type.dig ) );
                 break;
             }
+            case 'i':
+            {
+                things.add( new Token( charNum, height, Token.Type.bridge ) );
+                break;
+            }
             default:
             {
                 throw new UnknownCharacter( lines, height, charNum );

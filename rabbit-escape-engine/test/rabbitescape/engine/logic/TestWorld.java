@@ -92,6 +92,7 @@ public class TestWorld
         World world = createWorld(
                 ":bash=5",
                 ":dig=3",
+                ":bridge=2",
                 "   ",
                 "###"
         );
@@ -105,6 +106,9 @@ public class TestWorld
 
         // The dig ability was unaffected
         assertThat( world.abilities.get( Token.Type.dig ), equalTo( 3 ) );
+
+        // The bridge ability was unaffected
+        assertThat( world.abilities.get( Token.Type.bridge ), equalTo( 2 ) );
     }
 
     @Test

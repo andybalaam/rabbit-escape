@@ -26,7 +26,7 @@ public class TestTokens
             renderWorld( world, true, false ),
             equalTo(
                 " b ",
-                " z ",
+                " f ",
                 "   ",
                 "###"
             )
@@ -39,7 +39,7 @@ public class TestTokens
             equalTo(
                 "   ",
                 " b ",
-                " z ",
+                " f ",
                 "###"
             )
         );
