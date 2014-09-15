@@ -60,6 +60,72 @@ public class TestUtil
     }
 
     @Test
+    public void Split_an_empty_string_gives_single_item_list()
+    {
+        assertThat( split( "", "x" ), equalTo( new String[] { "" } ) );
+    }
+
+    @Test
+    public void Split_returns_just_the_string_if_no_delim_found()
+    {
+        assertThat( split( "yy", "x" ), equalTo( new String[] { "yy" } ) );
+    }
+
+    @Test
+    public void Split_breaks_on_a_single_char_delim()
+    {
+        assertThat(
+            split( "abc\ndef", "\n" ),
+            equalTo( new String[] { "abc", "def" } )
+        );
+    }
+
+    @Test
+    public void Split_breaks_on_a_multiple_char_delim()
+    {
+        assertThat(
+            split( "ab|c|||d|ef", "|||" ),
+            equalTo( new String[] { "ab|c", "d|ef" } )
+        );
+    }
+
+    @Test
+    public void Split_breaks_at_beginning()
+    {
+        assertThat(
+            split( "||a||b", "||" ),
+            equalTo( new String[] { "", "a", "b" } )
+        );
+    }
+
+    @Test
+    public void Split_breaks_at_end()
+    {
+        assertThat(
+            split( "a||b||", "||" ),
+            equalTo( new String[] { "a", "b", "" } )
+        );
+    }
+
+    @Test
+    public void Split_breaks_consecutive_delimiters_into_empty_string_lists()
+    {
+        assertThat(
+            split( "a|||b|", "|" ),
+            equalTo( new String[] { "a", "", "", "b", "" } )
+        );
+    }
+
+    @Test
+    public void Split_breaks_consecutive_multi_delimiters_to_empty_strings()
+    {
+        assertThat(
+            split( "a||||||||||||b||||", "||||" ),
+            equalTo( new String[] { "a", "", "", "b", "" } )
+        );
+    }
+
+    @Test
     public void Empty_iterable_builds_into_empty_list()
     {
         Iterable<String> input = Arrays.asList( new String[] {} );

@@ -238,6 +238,33 @@ public class Util
         return ret.toString();
     }
 
+    /**
+     * Split input by finding all occurrences of delimiter.  Works like a
+     * sane version of String.split, but with no regular expressions.
+     *
+     * @param delimiter is not a regular expression, just a string.
+     *
+     * @return An array of strings that is always n + 1 long, where n is the
+     *         number of times the string delimiter appears in input.
+     */
+    public static String[] split( String input, String delimiter )
+    {
+        List<String> ret = new ArrayList<String>();
+
+        int lastI = 0;
+        int i = input.indexOf( delimiter );
+        while ( i != -1 )
+        {
+            ret.add( input.substring( lastI, i ) );
+            lastI = i + delimiter.length();
+            i = input.indexOf( delimiter, lastI );
+        }
+
+        ret.add( input.substring( lastI ) );
+
+        return ret.toArray( new String[ ret.size() ] );
+    }
+
     public static Iterable<Integer> range( final int max )
     {
         return new Iterable<Integer>()
