@@ -53,7 +53,12 @@ public class Token extends Thing
     @Override
     public void calcNewState( World world )
     {
-        state = state( type, !world.flatBlockAt( x, y + 1 ) );
+        boolean still = (
+               world.flatBlockAt( x, y + 1 )
+            || ( world.getBlockAt( x, y ) != null )
+        );
+
+        state = state( type, !still );
     }
 
     @Override

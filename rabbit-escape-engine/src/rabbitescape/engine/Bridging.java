@@ -17,7 +17,7 @@ public class Bridging implements Behaviour
         if ( token != null && token.type == bridge )
         {
             world.removeThing( token );
-            smallSteps = 5;
+            smallSteps = 4;
             bigSteps = 3;
         }
 
@@ -26,7 +26,7 @@ public class Bridging implements Behaviour
         if ( smallSteps <= 0 )
         {
             --bigSteps;
-            smallSteps = 4;
+            smallSteps = 3;
         }
 
         if ( bigSteps <= 0 )
@@ -61,7 +61,7 @@ public class Bridging implements Behaviour
 
         switch( smallSteps )
         {
-            case 4:
+            case 3:
             {
                 if ( slopeUp )
                 {
@@ -88,7 +88,7 @@ public class Bridging implements Behaviour
                     );
                 }
             }
-            case 3:
+            case 2:
             {
                 if ( slopeUp )
                 {
@@ -115,7 +115,7 @@ public class Bridging implements Behaviour
                     );
                 }
             }
-            case 2:
+            case 1:
             {
                 if ( slopeUp )
                 {
@@ -142,7 +142,7 @@ public class Bridging implements Behaviour
                     );
                 }
             }
-            default: // We do nothing for case 1 - just step up the bridge
+            default:
             {
                 return null;
             }
@@ -172,9 +172,10 @@ public class Bridging implements Behaviour
             case RABBIT_BRIDGING_RIGHT_3:
             case RABBIT_BRIDGING_DOWN_UP_RIGHT_3:
             {
+                rabbit.x++;
                 world.changes.blocksToAdd.add(
                     new Block(
-                        rabbit.x + 1,
+                        rabbit.x,
                         rabbit.y,
                         Block.Type.bridge_up_right
                     )
@@ -185,9 +186,10 @@ public class Bridging implements Behaviour
             case RABBIT_BRIDGING_LEFT_3:
             case RABBIT_BRIDGING_DOWN_UP_LEFT_3:
             {
+                rabbit.x--;
                 world.changes.blocksToAdd.add(
                     new Block(
-                        rabbit.x - 1,
+                        rabbit.x,
                         rabbit.y,
                         Block.Type.bridge_up_left
                     )
@@ -197,10 +199,12 @@ public class Bridging implements Behaviour
             }
             case RABBIT_BRIDGING_UP_RIGHT_3:
             {
+                rabbit.x++;
+                rabbit.y--;
                 world.changes.blocksToAdd.add(
                     new Block(
-                        rabbit.x + 1,
-                        rabbit.y - 1,
+                        rabbit.x,
+                        rabbit.y,
                         Block.Type.bridge_up_right
                     )
                 );
@@ -209,10 +213,12 @@ public class Bridging implements Behaviour
             }
             case RABBIT_BRIDGING_UP_LEFT_3:
             {
+                rabbit.x--;
+                rabbit.y--;
                 world.changes.blocksToAdd.add(
                     new Block(
-                        rabbit.x - 1,
-                        rabbit.y - 1,
+                        rabbit.x,
+                        rabbit.y,
                         Block.Type.bridge_up_left
                     )
                 );

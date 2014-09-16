@@ -96,6 +96,7 @@ public class SpriteAnimator
 
         if ( animation == null )
         {
+            System.out.println( "Missing animation for state " + thing.state );
             return;
         }
 
