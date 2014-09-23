@@ -24,6 +24,8 @@ and the classic text interface:
     #\ #\   /###########\   b###  O#
     ################################
 
+![](https://raw.githubusercontent.com/andybalaam/rabbit-escape/master/doc/minilevel/rabbitescape-minilevel-text.gif)
+
 Running
 -------
 
