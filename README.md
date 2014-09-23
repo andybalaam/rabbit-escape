@@ -8,7 +8,11 @@ by giving them special abilities.
 Screenshots
 -----------
 
-So far, there is only the text interface, which looks like this:
+So far, there is the Swing interface:
+
+![](https://raw.githubusercontent.com/andybalaam/rabbit-escape/master/doc/minilevel/rabbitescape-minilevel.gif)
+
+and the classic text interface:
 
     ################################
     # r                            #
