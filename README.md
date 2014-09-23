@@ -27,12 +27,11 @@ and the classic text interface:
 Running
 -------
 
-To run the text interface, do:
-
-    make run
-
-At the moment, there is no interaction, but some aspects of the gameplay
-can be seen in this view.  It is a bit like looking into the matrix, though.
+    make rungui          # The Swing interface on a test level
+    make runmenu         # Real levels in Swing via a menu
+    make run             # The classic non-interactive text interface
+    make runinteractive  # An interactive text UI
+    make runat           # The animation tester
 
 Developers
 ----------
