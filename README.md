@@ -8,11 +8,13 @@ by giving them special abilities.
 Screenshots
 -----------
 
-So far, there is the Swing interface:
+The goal of this project is to build an Android game.
+
+For now, there is the Swing interface:
 
 ![](https://raw.githubusercontent.com/andybalaam/rabbit-escape/master/doc/minilevel/rabbitescape-minilevel.gif)
 
-and the classic text interface:
+and, of course, text:
 
     ################################
     # r                            #
