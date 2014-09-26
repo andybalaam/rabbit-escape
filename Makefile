@@ -1,4 +1,6 @@
 
+VERSION=0.1
+
 CLASSPATH=rabbit-escape-engine/bin/:rabbit-escape-render/bin/:rabbit-escape-ui-text/bin/:rabbit-escape-ui-swing/bin/
 
 IMAGES32_DEST=rabbit-escape-ui-swing/src/rabbitescape/ui/swing/images32
@@ -14,6 +16,14 @@ $(IMAGES32_DEST)/%.png: images-src/%.svg
 	mkdir -p $(IMAGES32_DEST); inkscape $< --export-png=$@
 
 all: compile
+
+jar-generic: compile
+	mkdir -p dist
+	rm -f dist/rabbit-escape-generic-$(VERSION).jar
+	cd rabbit-escape-engine/bin; \
+		jar -cf ../../dist/rabbit-escape-generic-$(VERSION).jar `find ./`
+	cd rabbit-escape-render/bin; \
+		jar -uf ../../dist/rabbit-escape-generic-$(VERSION).jar `find ./`
 
 images: $(IMAGES32)
 
@@ -34,6 +44,7 @@ clean:
 		rabbit-escape-ui-text/bin/* \
 		rabbit-escape-ui-swing/bin/*
 	find ./ -name "ls.txt" -delete
+	rm -r dist
 
 clean-images:
 	rm -rf $(IMAGES32_DEST)/*
