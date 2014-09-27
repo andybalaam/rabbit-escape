@@ -1,7 +1,20 @@
-bin
-dist
-animations32
-images32
+bin/
+dist/
+animations32/
+images32/
 .idea/workspace.xml
 ls.txt
+
+# Android
+*.apk
+*.ap_
+*.dex
+bin/
+gen/
+.gradle/
+build/
+local.properties
+proguard/
+*.log
+
 

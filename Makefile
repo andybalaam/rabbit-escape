@@ -24,6 +24,7 @@ jar-generic: compile
 		jar -cf ../../dist/rabbit-escape-generic-$(VERSION).jar `find ./`
 	cd rabbit-escape-render/bin; \
 		jar -uf ../../dist/rabbit-escape-generic-$(VERSION).jar `find ./`
+	cp dist/rabbit-escape-generic-$(VERSION).jar rabbit-escape-ui-android/app/libs/
 
 images: $(IMAGES32)
 
