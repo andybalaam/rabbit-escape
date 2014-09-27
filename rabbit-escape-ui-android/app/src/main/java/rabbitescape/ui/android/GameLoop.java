@@ -13,20 +13,30 @@ import java.util.Random;
 
 public class GameLoop implements Runnable
 {
-    private final int num_balls = 500;
+    private final int num_balls = 20;
     private final long max_allowed_skips = 10;
     private final long simulation_time_step_ms = 5;
     private final long frame_time_ms = 20;
     private final SurfaceHolder surfaceHolder;
+    private int scrollX;
+    private int scrollY;
 
     private boolean running = true;
     private final Ball[] balls;
     private final Paint paint;
     private Bitmap ballBitmap;
+    private static int levelWidthPixels = 1000;
+    private static int levelHeightPixels = 500;
+    private int screenWidthPixels;
+    private int screenHeightPixels;
 
     public GameLoop( SurfaceHolder surfaceHolder, Resources resources )
     {
         this.surfaceHolder = surfaceHolder;
+        this.scrollX = 0;
+        this.scrollY = 0;
+        this.screenWidthPixels = 100;
+        this.screenHeightPixels = 100;
 
         Random rand = new Random();
 
@@ -103,14 +113,17 @@ public class GameLoop implements Runnable
 
     private void actuallyDrawGraphics( Canvas canvas )
     {
+        screenWidthPixels = canvas.getWidth();
+        screenHeightPixels = canvas.getHeight();
+
         canvas.drawColor( Color.WHITE );
 
         for ( Ball ball : balls )
         {
             canvas.drawBitmap(
                 ballBitmap,
-                -16f + ( ( ball.x / 100f ) * canvas.getWidth() ),
-                -16f + ( ( ball.y / 100f ) * canvas.getHeight() ),
+                -scrollX + -16f + ( ( ball.x / 100f ) * levelWidthPixels ),
+                -scrollY + -16f + ( ( ball.y / 100f ) * levelHeightPixels ),
                 paint
             );
         }
@@ -147,5 +160,29 @@ public class GameLoop implements Runnable
     public void pleaseStop()
     {
         running = false;
+    }
+
+    public void scrollBy( float x, float y )
+    {
+        scrollX += x;
+        scrollY += y;
+
+        if ( scrollX < 0 )
+        {
+            scrollX = 0;
+        }
+        else if ( scrollX > levelWidthPixels - screenWidthPixels )
+        {
+            scrollX = levelWidthPixels - screenWidthPixels;
+        }
+
+        if ( scrollY < 0 )
+        {
+            scrollY = 0;
+        }
+        else if ( scrollY > levelHeightPixels - screenHeightPixels )
+        {
+            scrollY = levelHeightPixels - screenHeightPixels;
+        }
     }
 }

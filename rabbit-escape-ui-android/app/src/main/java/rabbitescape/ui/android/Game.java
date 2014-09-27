@@ -6,7 +6,7 @@ import android.view.SurfaceHolder;
 public class Game
 {
     private final Thread thread;
-    private final GameLoop gameLoop;
+    public final GameLoop gameLoop;
 
     public Game( SurfaceHolder surfaceHolder, Resources resources )
     {
