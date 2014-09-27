@@ -11,7 +11,7 @@ public class Game
     public Game( SurfaceHolder surfaceHolder, Resources resources )
     {
         gameLoop = new GameLoop( surfaceHolder, resources );
-        thread = new Thread( gameLoop );
+        thread = new Thread( gameLoop, "GameLoop" );
     }
 
     public void start()
