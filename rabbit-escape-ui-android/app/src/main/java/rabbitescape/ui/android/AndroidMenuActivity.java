@@ -83,6 +83,8 @@ public class AndroidMenuActivity extends ActionBarActivity
                     if ( item.type != MenuItem.Type.MENU )
                     {
                         Log.i( "artific", item.type.name() );
+                        Intent intent = new Intent( parentActivity, AndroidGameActivity.class );
+                        startActivity( intent );
                     }
                     else
                     {
