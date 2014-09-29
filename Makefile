@@ -1,6 +1,4 @@
 
-VERSION=0.1
-
 CLASSPATH=rabbit-escape-engine/bin/:rabbit-escape-render/bin/:rabbit-escape-ui-text/bin/:rabbit-escape-ui-swing/bin/
 
 IMAGES32_DEST=rabbit-escape-ui-swing/src/rabbitescape/ui/swing/images32
@@ -17,14 +15,15 @@ $(IMAGES32_DEST)/%.png: images-src/%.svg
 
 all: compile
 
-jar-generic: compile
+dist: dist/rabbit-escape-generic.jar
+
+dist/rabbit-escape-generic.jar: compile
 	mkdir -p dist
-	rm -f dist/rabbit-escape-generic-$(VERSION).jar
+	rm -f dist/rabbit-escape-generic.jar
 	cd rabbit-escape-engine/bin; \
-		jar -cf ../../dist/rabbit-escape-generic-$(VERSION).jar `find ./`
+		jar -cf ../../dist/rabbit-escape-generic.jar `find ./`
 	cd rabbit-escape-render/bin; \
-		jar -uf ../../dist/rabbit-escape-generic-$(VERSION).jar `find ./`
-	cp dist/rabbit-escape-generic-$(VERSION).jar rabbit-escape-ui-android/app/libs/
+		jar -uf ../../dist/rabbit-escape-generic.jar `find ./`
 
 images: $(IMAGES32)
 
@@ -74,4 +73,11 @@ test: compile
 	# Work around what looks like an Ant 1.9 bug by including the classpath here
 	CLASSPATH=lib/org.hamcrest.core_1.3.0.jar:lib/junit.jar ant test
 
+# Android
+# -------
+
+rabbit-escape-ui-android/app/libs/rabbit-escape-generic.jar: dist/rabbit-escape-generic.jar
+	cp dist/rabbit-escape-generic.jar rabbit-escape-ui-android/app/libs/
+
+android-pre: rabbit-escape-ui-android/app/libs/rabbit-escape-generic.jar
 
