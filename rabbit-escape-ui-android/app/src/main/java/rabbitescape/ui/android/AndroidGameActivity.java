@@ -6,6 +6,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.RelativeLayout;
 
+import rabbitescape.engine.LoadWorldFile;
+import rabbitescape.engine.World;
+import rabbitescape.engine.util.RealFileSystem;
+
 
 public class AndroidGameActivity extends ActionBarActivity {
 
@@ -15,7 +19,9 @@ public class AndroidGameActivity extends ActionBarActivity {
         setContentView(R.layout.activity_android_game );
         RelativeLayout relativeLayout = (RelativeLayout)findViewById( R.id.relativeLayout );
 
-        relativeLayout.addView( new MySurfaceView( this, this.getResources() ) );
+        World world = new LoadWorldFile( new RealFileSystem() ).load( "test/level_01.rel" );
+
+        relativeLayout.addView( new MySurfaceView( this, this.getResources(), world ) );
     }
 
 

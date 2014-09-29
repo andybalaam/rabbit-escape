@@ -3,12 +3,12 @@ package rabbitescape.engine;
 import static rabbitescape.engine.util.Util.*;
 import static rabbitescape.engine.Block.Type.*;
 
-import java.awt.Dimension;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import rabbitescape.engine.err.RabbitEscapeException;
+import rabbitescape.engine.util.Dimension;
 
 public class World
 {

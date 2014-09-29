@@ -7,9 +7,12 @@ import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
+import rabbitescape.engine.World;
+
 public class MySurfaceView extends SurfaceView implements SurfaceHolder.Callback
 {
     private final Resources resources;
+    private final World world;
     private Game game;
     private float curX;
     private float curY;
@@ -17,10 +20,11 @@ public class MySurfaceView extends SurfaceView implements SurfaceHolder.Callback
     public float velY;
     private Flinger flinger;
 
-    public MySurfaceView( Context context, Resources resources )
+    public MySurfaceView( Context context, Resources resources, World world )
     {
         super( context );
         this.resources = resources;
+        this.world = world;
         game = null;
         curX = 0;
         curY = 0;
@@ -34,7 +38,7 @@ public class MySurfaceView extends SurfaceView implements SurfaceHolder.Callback
     @Override
     public void surfaceCreated( SurfaceHolder surfaceHolder )
     {
-        game = new Game( surfaceHolder,resources );
+        game = new Game( surfaceHolder,resources, world );
         game.start();
     }
 

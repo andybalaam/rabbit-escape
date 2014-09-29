@@ -4,7 +4,6 @@ import static rabbitescape.engine.Direction.*;
 import static rabbitescape.engine.Block.Type.*;
 import static rabbitescape.engine.util.Util.*;
 
-import java.awt.Dimension;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,6 +14,7 @@ import rabbitescape.engine.Exit;
 import rabbitescape.engine.Rabbit;
 import rabbitescape.engine.Thing;
 import rabbitescape.engine.Token;
+import rabbitescape.engine.util.Dimension;
 
 class LineProcessor
 {

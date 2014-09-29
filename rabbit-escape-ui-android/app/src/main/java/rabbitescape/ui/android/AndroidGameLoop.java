@@ -11,7 +11,11 @@ import android.view.SurfaceHolder;
 import java.util.Date;
 import java.util.Random;
 
-public class GameLoop implements Runnable
+import rabbitescape.engine.World;
+import rabbitescape.render.Renderer;
+import rabbitescape.render.Sprite;
+
+public class AndroidGameLoop implements Runnable
 {
     private final int num_balls = 20;
     private final long max_allowed_skips = 10;
@@ -23,14 +27,14 @@ public class GameLoop implements Runnable
 
     private boolean running = true;
     private final Ball[] balls;
-    private final Paint paint;
+    private final AndroidPaint paint;
     private Bitmap ballBitmap;
     private static int levelWidthPixels = 1000;
     private static int levelHeightPixels = 500;
     private int screenWidthPixels;
     private int screenHeightPixels;
 
-    public GameLoop( SurfaceHolder surfaceHolder, Resources resources )
+    public AndroidGameLoop( SurfaceHolder surfaceHolder, Resources resources, World world )
     {
         this.surfaceHolder = surfaceHolder;
         this.scrollX = 0;
@@ -46,7 +50,7 @@ public class GameLoop implements Runnable
             balls[i] = new Ball( rand );
         }
 
-        paint = new Paint();
+        paint = new AndroidPaint( new Paint() );
 
         ballBitmap = BitmapFactory.decodeResource( resources, R.drawable.ball );
     }
@@ -116,17 +120,27 @@ public class GameLoop implements Runnable
         screenWidthPixels = canvas.getWidth();
         screenHeightPixels = canvas.getHeight();
 
+        AndroidCanvas androidCanvas = new AndroidCanvas( canvas );
+        Renderer renderer = new Renderer( scrollX, scrollY, 32 );
+        int frameNum = 1;
+        //animator =
+        Sprite[] sprites = new Sprite[]
+        {
+            new Sprite(
+                new AndroidBitmap( ballBitmap ),
+                new AndroidBitmapScaler(),
+                1,
+                1,
+                32,
+                0,
+                0
+            )
+        };
+
         canvas.drawColor( Color.WHITE );
 
-        for ( Ball ball : balls )
-        {
-            canvas.drawBitmap(
-                ballBitmap,
-                -scrollX + -16f + ( ( ball.x / 100f ) * levelWidthPixels ),
-                -scrollY + -16f + ( ( ball.y / 100f ) * levelHeightPixels ),
-                paint
-            );
-        }
+        //renderer.render( androidCanvas, animator.getSprites( frameNum ), paint );
+        renderer.render( androidCanvas, sprites, paint );
     }
 
     private long doPhysics( long simulation_time, long frame_start_frame )

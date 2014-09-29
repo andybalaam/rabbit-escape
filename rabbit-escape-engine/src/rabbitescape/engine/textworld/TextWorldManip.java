@@ -1,9 +1,9 @@
 package rabbitescape.engine.textworld;
 
-import java.awt.Dimension;
 import java.util.*;
 
 import rabbitescape.engine.*;
+import rabbitescape.engine.util.Dimension;
 
 public class TextWorldManip
 {

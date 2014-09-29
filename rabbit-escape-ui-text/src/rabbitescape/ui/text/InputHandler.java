@@ -119,8 +119,8 @@ public class InputHandler
             x = parseCoordinate( input, "x", vals[1] );
             y = parseCoordinate( input, "y", vals[2] );
 
-            checkCoordinateInRange( x, input, "x", world.size.getWidth() );
-            checkCoordinateInRange( y, input, "y", world.size.getHeight() );
+            checkCoordinateInRange( x, input, "x", world.size.width );
+            checkCoordinateInRange( y, input, "y", world.size.height );
         }
 
         private void checkCoordinateInRange(
