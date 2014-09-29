@@ -6,6 +6,7 @@ images32/
 ls.txt
 
 # Android
+rabbit-escape-ui-android/app/libs/rabbit-escape-generic.jar
 *.apk
 *.ap_
 *.dex

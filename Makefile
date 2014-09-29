@@ -77,6 +77,7 @@ test: compile
 # -------
 
 rabbit-escape-ui-android/app/libs/rabbit-escape-generic.jar: dist/rabbit-escape-generic.jar
+	mkdir -p rabbit-escape-ui-android/app/libs/
 	cp dist/rabbit-escape-generic.jar rabbit-escape-ui-android/app/libs/
 
 android-pre: rabbit-escape-ui-android/app/libs/rabbit-escape-generic.jar
