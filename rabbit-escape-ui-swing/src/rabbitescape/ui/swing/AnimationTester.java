@@ -209,11 +209,11 @@ public class AnimationTester extends JFrame
     private final AnimationCache animationCache;
     private final String[] allBlocks = new String[] {
         NONE,
-        "land-block",
-        "land-rising-right",
-        "land-rising-left",
-        "bridge-rising-right",
-        "bridge-rising-left",
+        "land_block",
+        "land_rising_right",
+        "land_rising_left",
+        "bridge_rising_right",
+        "bridge_rising_left",
     };
 
     private final String[][] animationNames;

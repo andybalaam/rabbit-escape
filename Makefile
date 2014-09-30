@@ -44,7 +44,7 @@ clean:
 		rabbit-escape-ui-text/bin/* \
 		rabbit-escape-ui-swing/bin/*
 	find ./ -name "ls.txt" -delete
-	rm -r dist
+	rm -rf dist
 
 clean-images:
 	rm -rf $(IMAGES32_DEST)/*

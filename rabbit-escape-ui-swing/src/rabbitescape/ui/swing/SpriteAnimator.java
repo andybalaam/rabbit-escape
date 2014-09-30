@@ -37,19 +37,19 @@ public class SpriteAnimator
         this.bitmapCache = bitmapCache;
         this.animationCache = animationCache;
 
-        this.land_block = "/rabbitescape/ui/swing/images32/land-block.png";
+        this.land_block = "/rabbitescape/ui/swing/images32/land_block.png";
 
         this.land_rising_right =
-            "/rabbitescape/ui/swing/images32/land-rising-right.png";
+            "/rabbitescape/ui/swing/images32/land_rising_right.png";
 
         this.land_rising_left =
-            "/rabbitescape/ui/swing/images32/land-rising-left.png";
+            "/rabbitescape/ui/swing/images32/land_rising_left.png";
 
         this.bridge_rising_right =
-            "/rabbitescape/ui/swing/images32/bridge-rising-right.png";
+            "/rabbitescape/ui/swing/images32/bridge_rising_right.png";
 
         this.bridge_rising_left =
-            "/rabbitescape/ui/swing/images32/bridge-rising-left.png";
+            "/rabbitescape/ui/swing/images32/bridge_rising_left.png";
     }
 
     public Sprite[] getSprites( int frameNum )

@@ -45,18 +45,18 @@ class SideMenu
         this.panel = createPanel( contentPane );
 
         this.mute = addToggleButton(
-            "menu-unmuted",
-            "menu-muted",
+            "menu_unmuted",
+            "menu_muted",
             ConfigTools.getBool( uiConfig, CFG_MUTED )
         );
 
         addSpacer();
 
-        this.back = addButton( "menu-back" );
+        this.back = addButton( "menu_back" );
 
         addSpacer();
 
-        this.exit = addButton( "menu-exit" );
+        this.exit = addButton( "menu_exit" );
 
         addPanelInScrollPane( contentPane );
     }

@@ -63,12 +63,12 @@ class GameMenu
         this.panel = createPanel( contentPane );
 
         this.mute = addToggleButton(
-            "menu-unmuted",
-            "menu-muted",
+            "menu_unmuted",
+            "menu_muted",
             ConfigTools.getBool( uiConfig, CFG_MUTED )
         );
 
-        this.pause = addToggleButton( "menu-pause", "menu-unpause", false );
+        this.pause = addToggleButton( "menu_pause", "menu_unpause", false );
 
         addSpacer();
 
@@ -76,7 +76,7 @@ class GameMenu
 
         addSpacer();
 
-        this.exit = addButton( "menu-exit" );
+        this.exit = addButton( "menu_exit" );
 
         addPanelInScrollPane( contentPane );
     }
@@ -113,7 +113,7 @@ class GameMenu
 
         for ( Token.Type ability : sorted( abilityTypes.keySet() ) )
         {
-            String iconName = "ability-" + ability.toString();
+            String iconName = "ability_" + ability.toString();
 
             JToggleButton button = addToggleButton( iconName, null, false );
 
