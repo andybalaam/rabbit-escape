@@ -56,7 +56,7 @@ public class TestBitmapCache
         BitmapCache<FakeBitmap> cache = new BitmapCache<>( loader, 5 );
 
         // This is what we are testing - call get 3 times
-        cache.get( "a/b/foo.png" );
+        FakeBitmap b1 = cache.get( "a/b/foo.png" );
         cache.get( "a/b/foo.png" );
         cache.get( "a/b/foo.png" );
 
@@ -65,6 +65,9 @@ public class TestBitmapCache
             loader.loadCalls,
             equalToList( new String[] { "a/b/foo.png" } )
         );
+
+        // The bitmap was not recycled
+        assertThat( b1.recycled, is( false ) );
     }
 
     @Test
@@ -74,11 +77,11 @@ public class TestBitmapCache
         BitmapCache<FakeBitmap> cache = new BitmapCache<>( loader, 5 );
 
         // Get enough to fill the cache
-        cache.get( "a/b/foo01.png" );
-        cache.get( "a/b/foo02.png" );
-        cache.get( "a/b/foo03.png" );
-        cache.get( "a/b/foo04.png" );
-        cache.get( "a/b/foo05.png" );
+        FakeBitmap b1 = cache.get( "a/b/foo01.png" );
+        FakeBitmap b2 = cache.get( "a/b/foo02.png" );
+        FakeBitmap b3 = cache.get( "a/b/foo03.png" );
+        FakeBitmap b4 = cache.get( "a/b/foo04.png" );
+        FakeBitmap b5 = cache.get( "a/b/foo05.png" );
 
         // This is what we are testing: re-access foo02 and it should avoid
         // being purged
@@ -91,6 +94,12 @@ public class TestBitmapCache
         cache.get( "a/b/foo06.png" );
         cache.get( "a/b/foo07.png" );
         cache.get( "a/b/foo08.png" );
+
+        assertThat( b1.recycled, is( true ) );
+        assertThat( b2.recycled, is( false ) );
+        assertThat( b3.recycled, is( true ) );
+        assertThat( b4.recycled, is( true ) );
+        assertThat( b5.recycled, is( false ) );
 
         // Sanity
         assertThat( loader.loadCalls.size(), equalTo( 8 ) );
@@ -115,11 +124,14 @@ public class TestBitmapCache
         BitmapCache<FakeBitmap> cache = new BitmapCache<>( loader, 5 );
 
         // Get enough to fill the cache
-        cache.get( "a/b/foo01.png" );
-        cache.get( "a/b/foo02.png" );
-        cache.get( "a/b/foo03.png" );
-        cache.get( "a/b/foo04.png" );
-        cache.get( "a/b/foo05.png" );
+        FakeBitmap b1 = cache.get( "a/b/foo01.png" );
+        FakeBitmap b2 = cache.get( "a/b/foo02.png" );
+        FakeBitmap b3 = cache.get( "a/b/foo03.png" );
+        FakeBitmap b4 = cache.get( "a/b/foo04.png" );
+        FakeBitmap b5 = cache.get( "a/b/foo05.png" );
+
+        // Not recycled yet
+        assertThat( b1.recycled, is( false ) );
 
         // This is what we are testing: get another and the first bitmap
         // should get purged
@@ -128,6 +140,13 @@ public class TestBitmapCache
         // Sanity
         assertThat( loader.loadCalls.size(), equalTo( 6 ) );
         assertThat( loader.loadCalls.get( 5 ), equalTo( "a/b/foo06.png" ) );
+
+        // The first was recycled, others weren't
+        assertThat( b1.recycled, is( true ) );
+        assertThat( b2.recycled, is( false ) );
+        assertThat( b3.recycled, is( false ) );
+        assertThat( b4.recycled, is( false ) );
+        assertThat( b5.recycled, is( false ) );
 
         // Try and get the first - it should have to be reloaded
         cache.get( "a/b/foo01.png" );
@@ -141,10 +160,20 @@ public class TestBitmapCache
 
     private static class FakeBitmap implements Bitmap
     {
+        public boolean recycled = false;
+
         @Override
         public String name()
         {
             return "fake";
+        }
+
+        @Override
+        public void recycle()
+        {
+            assertThat( recycled, is( false ) );
+
+            recycled = true;
         }
     }
 

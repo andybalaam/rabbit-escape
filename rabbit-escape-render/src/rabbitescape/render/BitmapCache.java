@@ -31,7 +31,11 @@ public class BitmapCache<T extends Bitmap>
             if ( usedKeys.size() == size )
             {
                 String purgedKey = usedKeys.remove();
-                cache.remove( purgedKey );
+                T removed = cache.remove( purgedKey );
+                if ( removed != null )
+                {
+                    removed.recycle();
+                }
             }
 
             ret = loader.load( fileName );

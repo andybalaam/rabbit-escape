@@ -27,6 +27,12 @@ public class SwingBitmap implements Bitmap
         return name;
     }
 
+    @Override
+    public void recycle()
+    {
+        // We don't do anything here in the Swing world
+    }
+
     /*@Override
     public void drawBitmap( Bitmap bitmap, int x, int y )
     {

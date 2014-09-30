@@ -16,4 +16,10 @@ public class AndroidBitmap implements Bitmap
     {
         return null;
     }
+
+    @Override
+    public void recycle()
+    {
+        bitmap.recycle();
+    }
 }
