@@ -1,58 +1,43 @@
 package rabbitescape.ui.android;
 
 import android.content.res.Resources;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
+import android.util.Log;
 import android.view.SurfaceHolder;
 
 import java.util.Date;
-import java.util.Random;
 
 import rabbitescape.engine.World;
-import rabbitescape.render.Renderer;
-import rabbitescape.render.Sprite;
+import rabbitescape.render.BitmapCache;
 
 public class AndroidGameLoop implements Runnable
 {
-    private final int num_balls = 20;
-    private final long max_allowed_skips = 10;
-    private final long simulation_time_step_ms = 5;
-    private final long frame_time_ms = 20;
+    private static final long max_allowed_skips = 10;
+    private static final long simulation_time_step_ms = 70;
+    private static final long frame_time_ms = 70;
+
     private final SurfaceHolder surfaceHolder;
+    private final Physics physics;
+    private final Graphics graphics;
+
     private int scrollX;
     private int scrollY;
-
-    private boolean running = true;
-    private final Ball[] balls;
-    private final AndroidPaint paint;
-    private Bitmap ballBitmap;
-    private static int levelWidthPixels = 1000;
-    private static int levelHeightPixels = 500;
+    private boolean running;
     private int screenWidthPixels;
     private int screenHeightPixels;
 
-    public AndroidGameLoop( SurfaceHolder surfaceHolder, Resources resources, World world )
+    public AndroidGameLoop(
+        SurfaceHolder surfaceHolder, BitmapCache<AndroidBitmap> bitmapCache, World world )
     {
         this.surfaceHolder = surfaceHolder;
+        this.physics = new Physics( world );
+        this.graphics = new Graphics( bitmapCache, world );
+
         this.scrollX = 0;
         this.scrollY = 0;
         this.screenWidthPixels = 100;
         this.screenHeightPixels = 100;
-
-        Random rand = new Random();
-
-        this.balls = new Ball[num_balls];
-        for (int i = 0; i < num_balls; ++i)
-        {
-            balls[i] = new Ball( rand );
-        }
-
-        paint = new AndroidPaint( new Paint() );
-
-        ballBitmap = BitmapFactory.decodeResource( resources, R.drawable.ball );
+        this.running = true;
     }
 
     @Override
@@ -67,6 +52,12 @@ public class AndroidGameLoop implements Runnable
             simulation_time = doPhysics( simulation_time, frame_start_time );
             drawGraphics();
             frame_start_time = waitForNextFrame( frame_start_time );
+
+            if ( physics.finished() )
+            {
+                running = false;
+                Log.i( "artific", "Finished" );
+            }
         }
     }
 
@@ -120,27 +111,7 @@ public class AndroidGameLoop implements Runnable
         screenWidthPixels = canvas.getWidth();
         screenHeightPixels = canvas.getHeight();
 
-        AndroidCanvas androidCanvas = new AndroidCanvas( canvas );
-        Renderer renderer = new Renderer( scrollX, scrollY, 32 );
-        int frameNum = 1;
-        //animator =
-        Sprite[] sprites = new Sprite[]
-        {
-            new Sprite(
-                new AndroidBitmap( ballBitmap ),
-                new AndroidBitmapScaler(),
-                1,
-                1,
-                32,
-                0,
-                0
-            )
-        };
-
-        canvas.drawColor( Color.WHITE );
-
-        //renderer.render( androidCanvas, animator.getSprites( frameNum ), paint );
-        renderer.render( androidCanvas, sprites, paint );
+        graphics.draw( canvas, -scrollX, -scrollY, physics.frame );
     }
 
     private long doPhysics( long simulation_time, long frame_start_frame )
@@ -152,19 +123,12 @@ public class AndroidGameLoop implements Runnable
                 break;
             }
 
-            moveBalls();
+            physics.step();
+
             simulation_time += simulation_time_step_ms;
         }
 
         return simulation_time;
-    }
-
-    private void moveBalls()
-    {
-        for ( Ball ball : balls )
-        {
-            ball.step();
-        }
     }
 
     private void processInput()
@@ -181,22 +145,22 @@ public class AndroidGameLoop implements Runnable
         scrollX += x;
         scrollY += y;
 
-        if ( scrollX < 0 )
+        if ( scrollX < 0 || graphics.levelWidthPixels < screenWidthPixels )
         {
             scrollX = 0;
         }
-        else if ( scrollX > levelWidthPixels - screenWidthPixels )
+        else if ( scrollX > graphics.levelWidthPixels - screenWidthPixels )
         {
-            scrollX = levelWidthPixels - screenWidthPixels;
+            scrollX = graphics.levelWidthPixels - screenWidthPixels;
         }
 
-        if ( scrollY < 0 )
+        if ( scrollY < 0 || graphics.levelHeightPixels < screenHeightPixels )
         {
             scrollY = 0;
         }
-        else if ( scrollY > levelHeightPixels - screenHeightPixels )
+        else if ( scrollY > graphics.levelHeightPixels - screenHeightPixels )
         {
-            scrollY = levelHeightPixels - screenHeightPixels;
+            scrollY = graphics.levelHeightPixels - screenHeightPixels;
         }
     }
 }

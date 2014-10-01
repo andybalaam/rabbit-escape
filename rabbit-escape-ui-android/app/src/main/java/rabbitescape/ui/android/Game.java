@@ -4,15 +4,16 @@ import android.content.res.Resources;
 import android.view.SurfaceHolder;
 
 import rabbitescape.engine.World;
+import rabbitescape.render.BitmapCache;
 
 public class Game
 {
     private final Thread thread;
     public final AndroidGameLoop gameLoop;
 
-    public Game( SurfaceHolder surfaceHolder, Resources resources, World world )
+    public Game( SurfaceHolder surfaceHolder, BitmapCache<AndroidBitmap> bitmapCache, World world )
     {
-        gameLoop = new AndroidGameLoop( surfaceHolder, resources, world );
+        gameLoop = new AndroidGameLoop( surfaceHolder, bitmapCache, world );
         thread = new Thread( gameLoop, "GameLoop" );
     }
 

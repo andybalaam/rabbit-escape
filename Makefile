@@ -2,9 +2,12 @@
 CLASSPATH=rabbit-escape-engine/bin/:rabbit-escape-render/bin/:rabbit-escape-ui-text/bin/:rabbit-escape-ui-swing/bin/
 
 IMAGES32_DEST=rabbit-escape-ui-swing/src/rabbitescape/ui/swing/images32
+ANDROIDIMAGESMDPI_DEST=rabbit-escape-ui-android/app/src/main/res/drawable-mdpi
 
 IMAGESSRC := $(wildcard images-src/*.svg)
 IMAGES32 := $(IMAGESSRC:images-src/%.svg=$(IMAGES32_DEST)/%.png)
+
+ANDROIDIMAGESMDPI := $(IMAGESSRC:images-src/%.svg=$(ANDROIDIMAGESMDPI_DEST)/%.png)
 
 ANIMATIONS_DIR := rabbit-escape-render/src/rabbitescape/render/animations
 LEVELS_DIRS := $(wildcard rabbit-escape-engine/src/rabbitescape/levels/*) \
@@ -12,6 +15,9 @@ LEVELS_DIRS := $(wildcard rabbit-escape-engine/src/rabbitescape/levels/*) \
 
 $(IMAGES32_DEST)/%.png: images-src/%.svg
 	mkdir -p $(IMAGES32_DEST); inkscape $< --export-png=$@
+
+$(ANDROIDIMAGESMDPI_DEST)/%.png: images-src/%.svg
+	mkdir -p $(ANDROIDIMAGESMDPI_DEST); inkscape $< --export-png=$@
 
 all: compile
 
@@ -80,5 +86,7 @@ rabbit-escape-ui-android/app/libs/rabbit-escape-generic.jar: dist/rabbit-escape-
 	mkdir -p rabbit-escape-ui-android/app/libs/
 	cp dist/rabbit-escape-generic.jar rabbit-escape-ui-android/app/libs/
 
-android-pre: rabbit-escape-ui-android/app/libs/rabbit-escape-generic.jar
+android-images-mdpi: $(ANDROIDIMAGESMDPI)
+
+android-pre: android-images-mdpi rabbit-escape-ui-android/app/libs/rabbit-escape-generic.jar
 

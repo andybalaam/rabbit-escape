@@ -8,10 +8,11 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
 import rabbitescape.engine.World;
+import rabbitescape.render.BitmapCache;
 
 public class MySurfaceView extends SurfaceView implements SurfaceHolder.Callback
 {
-    private final Resources resources;
+    private final BitmapCache<AndroidBitmap> bitmapCache;
     private final World world;
     private Game game;
     private float curX;
@@ -20,10 +21,10 @@ public class MySurfaceView extends SurfaceView implements SurfaceHolder.Callback
     public float velY;
     private Flinger flinger;
 
-    public MySurfaceView( Context context, Resources resources, World world )
+    public MySurfaceView( Context context, BitmapCache<AndroidBitmap> bitmapCache, World world )
     {
         super( context );
-        this.resources = resources;
+        this.bitmapCache = bitmapCache;
         this.world = world;
         game = null;
         curX = 0;
@@ -38,7 +39,7 @@ public class MySurfaceView extends SurfaceView implements SurfaceHolder.Callback
     @Override
     public void surfaceCreated( SurfaceHolder surfaceHolder )
     {
-        game = new Game( surfaceHolder,resources, world );
+        game = new Game( surfaceHolder, bitmapCache, world );
         game.start();
     }
 

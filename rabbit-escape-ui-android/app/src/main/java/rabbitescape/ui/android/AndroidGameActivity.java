@@ -1,5 +1,6 @@
 package rabbitescape.ui.android;
 
+import android.content.res.Resources;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -9,6 +10,7 @@ import android.widget.RelativeLayout;
 import rabbitescape.engine.LoadWorldFile;
 import rabbitescape.engine.World;
 import rabbitescape.engine.util.RealFileSystem;
+import rabbitescape.render.BitmapCache;
 
 
 public class AndroidGameActivity extends ActionBarActivity {
@@ -21,9 +23,15 @@ public class AndroidGameActivity extends ActionBarActivity {
 
         World world = new LoadWorldFile( new RealFileSystem() ).load( "test/level_01.rel" );
 
-        relativeLayout.addView( new MySurfaceView( this, this.getResources(), world ) );
+        BitmapCache<AndroidBitmap> bitmapCache = createBitmapCache( this.getResources() );
+
+        relativeLayout.addView( new MySurfaceView( this, bitmapCache, world ) );
     }
 
+    private BitmapCache<AndroidBitmap> createBitmapCache( Resources resources )
+    {
+        return new BitmapCache<AndroidBitmap>( new AndroidBitmapLoader( resources ), 500 );
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

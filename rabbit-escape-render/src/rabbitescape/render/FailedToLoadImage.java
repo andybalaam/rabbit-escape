@@ -12,4 +12,9 @@ public class FailedToLoadImage extends RabbitEscapeException
         super( cause );
         this.imageName = imageName;
     }
+
+    public FailedToLoadImage( String imageName )
+    {
+        this.imageName = imageName;
+    }
 }

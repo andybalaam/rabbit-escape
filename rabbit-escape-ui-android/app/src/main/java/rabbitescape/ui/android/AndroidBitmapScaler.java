@@ -6,8 +6,12 @@ import rabbitescape.render.androidlike.Bitmap;
 public class AndroidBitmapScaler implements BitmapScaler
 {
     @Override
-    public Bitmap scale( Bitmap bitmap, double v )
+    public Bitmap scale( Bitmap originalBitmap, double scale )
     {
-        return bitmap; // TODO
+        if ( scale != 1.0 )
+        {
+            throw new RuntimeException( "TODO: scaling bitmaps on Android" );
+        }
+        return originalBitmap;
     }
 }
