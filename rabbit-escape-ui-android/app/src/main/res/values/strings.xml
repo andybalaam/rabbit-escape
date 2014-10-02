@@ -4,5 +4,7 @@
     <string name="app_name">Rabbit Escape</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_android_game">Rabbit Escape</string>
+    <string name="pause">pause</string>
+    <string name="mute">mute</string>
 
 </resources>
