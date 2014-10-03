@@ -6,21 +6,23 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import android.view.View;
 
+import rabbitescape.engine.Token;
 import rabbitescape.engine.World;
 import rabbitescape.render.BitmapCache;
 import rabbitescape.render.GameLoop;
 
-public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callback
+public class GameSurfaceView extends SurfaceView
+    implements
+        SurfaceHolder.Callback,
+        View.OnClickListener
 {
     private final BitmapCache<AndroidBitmap> bitmapCache;
     private final World world;
-    private Game game;
-    private float curX;
-    private float curY;
-    public float velX;
-    public float velY;
-    private Flinger flinger;
+    public Game game;
+    public Scrolling scrolling;
+    private Token.Type chosenAbility;
 
     public GameSurfaceView( Context context, BitmapCache<AndroidBitmap> bitmapCache, World world )
     {
@@ -28,11 +30,8 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
         this.bitmapCache = bitmapCache;
         this.world = world;
         game = null;
-        curX = 0;
-        curY = 0;
-        velX = 0;
-        velY = 0;
-        flinger = null;
+        scrolling = new Scrolling( this );
+        chosenAbility = null;
 
         getHolder().addCallback( this );
     }
@@ -42,65 +41,13 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
     {
         game = new Game( surfaceHolder, bitmapCache, world );
         game.start();
+
+        setOnClickListener( this );
     }
 
     @Override
     public void surfaceChanged( SurfaceHolder surfaceHolder, int i, int i2, int i3 )
     {
-    }
-
-    @Override
-    public boolean onTouchEvent( MotionEvent event )
-    {
-        if ( event.getAction() == MotionEvent.ACTION_DOWN )
-        {
-            cancelFlinger();
-
-            curX = event.getX();
-            curY = event.getY();
-
-            return true;
-        }
-        else if ( event.getAction() == MotionEvent.ACTION_MOVE )
-        {
-            cancelFlinger();
-
-            velX = curX - event.getX();
-            velY = curY - event.getY();
-            curX = event.getX();
-            curY = event.getY();
-
-            doScroll();
-
-            return true;
-        }
-        else if( event.getAction() == MotionEvent.ACTION_UP )
-        {
-            cancelFlinger();
-
-            flinger = new Flinger( this );
-            flinger.start();
-
-            return true;
-        }
-        else
-        {
-            return false;
-        }
-    }
-
-    private void cancelFlinger()
-    {
-        if ( flinger != null )
-        {
-            flinger.pleaseStop();
-            flinger = null;
-        }
-    }
-
-    public void doScroll()
-    {
-        game.gameLoop.scrollBy( velX, velY );
     }
 
     @Override
@@ -125,5 +72,32 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
         {
             return false;
         }
+    }
+
+    @Override
+    public void onClick( View view )
+    {
+        if ( chosenAbility == null )
+        {
+            return;
+        }
+
+        int numLeft = game.gameLoop.addToken( chosenAbility, scrolling.curX, scrolling.curY );
+
+        if ( numLeft == 0 )
+        {
+            //TODO disable button
+        }
+    }
+
+    @Override
+    public boolean onTouchEvent( MotionEvent event )
+    {
+        return scrolling.onTouchEvent( event );
+    }
+
+    public void chooseAbility( Token.Type ability )
+    {
+        chosenAbility = ability;
     }
 }

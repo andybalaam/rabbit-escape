@@ -11,6 +11,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 
+import java.util.Set;
+
 import rabbitescape.engine.LoadWorldFile;
 import rabbitescape.engine.Token;
 import rabbitescape.engine.World;
@@ -25,6 +27,7 @@ public class AndroidGameActivity extends ActionBarActivity
     private ImageView muteButton;
     private ImageView pauseButton;
     private GameSurfaceView gameSurface;
+    private Token.Type[] abilities;
 
     @Override
     protected void onCreate( Bundle savedInstanceState )
@@ -44,22 +47,24 @@ public class AndroidGameActivity extends ActionBarActivity
 
         World world = new LoadWorldFile( new RealFileSystem() ).load( "test/level_01.rel" );
 
-        createAbilityButtons( world, resources );
+        createAbilities( world, resources );
 
         gameSurface = new GameSurfaceView( this, createBitmapCache( resources ), world );
         topLayout.addView( gameSurface );
     }
 
-    private void createAbilityButtons( World world, Resources resources )
+    private void createAbilities( World world, Resources resources )
     {
         RadioGroup abilitiesGroup = (RadioGroup)findViewById( R.id.abilitiesGroup );
 
+        Set<Token.Type> keys = world.abilities.keySet();
+        abilities = new Token.Type[ keys.size() ];
         int i = 0;
-        for ( Token.Type ability : world.abilities.keySet() )
+        for ( Token.Type ability : keys )
         {
+            abilities[i] = ability;
             abilitiesGroup.addView(
                 new AbilityButton( this, resources, abilitiesGroup, ability.name(), i ) );
-
             ++i;
         }
 
@@ -69,6 +74,8 @@ public class AndroidGameActivity extends ActionBarActivity
                 @Override
                 public void onCheckedChanged( RadioGroup radioGroup, int buttonIndex )
                 {
+                    gameSurface.chooseAbility( abilities[buttonIndex] );
+
                     for ( int i = 0; i < radioGroup.getChildCount(); i++ )
                     {
                         AbilityButton button = (AbilityButton)( radioGroup.getChildAt( i ) );

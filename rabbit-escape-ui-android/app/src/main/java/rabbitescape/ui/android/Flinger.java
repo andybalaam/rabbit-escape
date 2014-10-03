@@ -6,12 +6,12 @@ public class Flinger implements Runnable
     private static final float min_vel       = 3f;
     private static final int   pause_time_ms = 10;
 
-    private final GameSurfaceView surfaceView;
+    private final Scrolling scrolling;
     private boolean running;
 
-    public Flinger( GameSurfaceView surfaceView )
+    public Flinger( Scrolling scrolling )
     {
-        this.surfaceView = surfaceView;
+        this.scrolling = scrolling;
         this.running = true;
     }
 
@@ -25,16 +25,16 @@ public class Flinger implements Runnable
     {
         while( running )
         {
-            surfaceView.velX *= slow_factor;
-            surfaceView.velY *= slow_factor;
+            scrolling.velX *= slow_factor;
+            scrolling.velY *= slow_factor;
 
-            if ( Math.abs( surfaceView.velX ) < min_vel && Math.abs( surfaceView.velY ) < min_vel )
+            if ( Math.abs( scrolling.velX ) < min_vel && Math.abs( scrolling.velY ) < min_vel )
             {
                 running = false;
                 break;
             }
 
-            surfaceView.doScroll();
+            scrolling.doScroll();
 
             try
             {

@@ -19,7 +19,7 @@ public class Graphics
     private final AnimationCache animationCache;
     private final BitmapCache<AndroidBitmap> bitmapCache;
     private final AndroidPaint paint;
-    private final int renderingTileSize;
+    public final int renderingTileSize;
     public final int levelWidthPixels;
     public final int levelHeightPixels;
 

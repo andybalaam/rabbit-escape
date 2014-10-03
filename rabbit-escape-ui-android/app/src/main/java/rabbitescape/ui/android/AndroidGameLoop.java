@@ -6,6 +6,7 @@ import android.view.SurfaceHolder;
 
 import java.util.Date;
 
+import rabbitescape.engine.Token;
 import rabbitescape.engine.World;
 import rabbitescape.render.BitmapCache;
 
@@ -197,5 +198,14 @@ public class AndroidGameLoop implements Runnable
         {
             scrollY = graphics.levelHeightPixels - screenHeightPixels;
         }
+    }
+
+    public int addToken( Token.Type ability, float pixelX, float pixelY )
+    {
+        return physics.addToken(
+            ability,
+            (int)( ( pixelX + scrollX ) / graphics.renderingTileSize ),
+            (int)( ( pixelY + scrollY ) / graphics.renderingTileSize )
+    );
     }
 }
