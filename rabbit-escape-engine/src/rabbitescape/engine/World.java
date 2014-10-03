@@ -4,6 +4,7 @@ import static rabbitescape.engine.util.Util.*;
 import static rabbitescape.engine.Block.Type.*;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -72,12 +73,12 @@ public class World
 
     public static class Changes
     {
-        private final List<Rabbit> rabbitsToAdd    = new ArrayList<>();
-        private final List<Rabbit> rabbitsToRemove = new ArrayList<>();
-        public final  List<Thing>  thingsToAdd     = new ArrayList<>();
-        private final List<Thing>  thingsToRemove  = new ArrayList<>();
-        public final  List<Block>  blocksToAdd     = new ArrayList<>();
-        private final List<Block>  blocksToRemove  = new ArrayList<>();
+        private final List<Rabbit> rabbitsToAdd    = syncList();
+        private final List<Rabbit> rabbitsToRemove = syncList();
+        public final  List<Thing>  thingsToAdd     = syncList();
+        private final List<Thing>  thingsToRemove  = syncList();
+        public final  List<Block>  blocksToAdd     = syncList();
+        private final List<Block>  blocksToRemove  = syncList();
 
         public void apply( World world )
         {
@@ -101,6 +102,11 @@ public class World
             thingsToRemove.clear();
             blocksToAdd.clear();
             blocksToRemove.clear();
+        }
+
+        private <T> List<T> syncList()
+        {
+            return Collections.synchronizedList( new ArrayList<T>() );
         }
     }
 

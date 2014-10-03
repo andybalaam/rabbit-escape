@@ -20,12 +20,13 @@ import rabbitescape.engine.util.RealFileSystem;
 import rabbitescape.render.BitmapCache;
 
 
-public class AndroidGameActivity extends ActionBarActivity
+public class AndroidGameActivity extends ActionBarActivity implements NumLeftListener
 {
     private boolean muted;
     private SharedPreferences prefs;
     private ImageView muteButton;
     private ImageView pauseButton;
+    private RadioGroup abilitiesGroup;
     private GameSurfaceView gameSurface;
     private Token.Type[] abilities;
 
@@ -47,16 +48,15 @@ public class AndroidGameActivity extends ActionBarActivity
 
         World world = new LoadWorldFile( new RealFileSystem() ).load( "test/level_01.rel" );
 
+        abilitiesGroup = (RadioGroup)findViewById( R.id.abilitiesGroup );
         createAbilities( world, resources );
 
-        gameSurface = new GameSurfaceView( this, createBitmapCache( resources ), world );
+        gameSurface = new GameSurfaceView( this, this, createBitmapCache( resources ), world );
         topLayout.addView( gameSurface );
     }
 
     private void createAbilities( World world, Resources resources )
     {
-        RadioGroup abilitiesGroup = (RadioGroup)findViewById( R.id.abilitiesGroup );
-
         Set<Token.Type> keys = world.abilities.keySet();
         abilities = new Token.Type[ keys.size() ];
         int i = 0;
@@ -74,7 +74,7 @@ public class AndroidGameActivity extends ActionBarActivity
                 @Override
                 public void onCheckedChanged( RadioGroup radioGroup, int buttonIndex )
                 {
-                    gameSurface.chooseAbility( abilities[buttonIndex] );
+                    gameSurface.chooseAbility( abilities[buttonIndex], buttonIndex );
 
                     for ( int i = 0; i < radioGroup.getChildCount(); i++ )
                     {
@@ -135,5 +135,16 @@ public class AndroidGameActivity extends ActionBarActivity
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void numLeft( int abilityIndex, int numLeft )
+    {
+        if ( numLeft == 0 )
+        {
+            AbilityButton button = (AbilityButton)( abilitiesGroup.getChildAt( abilityIndex ) );
+            button.disable();
+            button.setChecked( false );
+        }
     }
 }

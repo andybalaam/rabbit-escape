@@ -18,20 +18,29 @@ public class GameSurfaceView extends SurfaceView
         SurfaceHolder.Callback,
         View.OnClickListener
 {
+    private final NumLeftListener numLeftListener;
     private final BitmapCache<AndroidBitmap> bitmapCache;
     private final World world;
     public Game game;
     public Scrolling scrolling;
     private Token.Type chosenAbility;
+    private int chosenAbilityIndex;
 
-    public GameSurfaceView( Context context, BitmapCache<AndroidBitmap> bitmapCache, World world )
+    public GameSurfaceView(
+        Context context,
+        NumLeftListener numLeftListener,
+        BitmapCache<AndroidBitmap> bitmapCache,
+        World world
+    )
     {
         super( context );
+        this.numLeftListener = numLeftListener;
         this.bitmapCache = bitmapCache;
         this.world = world;
         game = null;
         scrolling = new Scrolling( this );
         chosenAbility = null;
+        chosenAbilityIndex = -1;
 
         getHolder().addCallback( this );
     }
@@ -84,10 +93,7 @@ public class GameSurfaceView extends SurfaceView
 
         int numLeft = game.gameLoop.addToken( chosenAbility, scrolling.curX, scrolling.curY );
 
-        if ( numLeft == 0 )
-        {
-            //TODO disable button
-        }
+        numLeftListener.numLeft( chosenAbilityIndex, numLeft );
     }
 
     @Override
@@ -96,8 +102,9 @@ public class GameSurfaceView extends SurfaceView
         return scrolling.onTouchEvent( event );
     }
 
-    public void chooseAbility( Token.Type ability )
+    public void chooseAbility( Token.Type ability, int abilityIndex )
     {
         chosenAbility = ability;
+        chosenAbilityIndex = abilityIndex;
     }
 }

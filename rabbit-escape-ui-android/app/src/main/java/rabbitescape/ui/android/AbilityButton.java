@@ -60,6 +60,15 @@ public class AbilityButton extends ImageButton
         );
     }
 
+    public void disable()
+    {
+        super.setEnabled( false );
+        setMinimumWidth( getWidth() );
+        setMinimumHeight( getHeight() );
+        setImageDrawable( null );
+        invalidate();
+    }
+
     public void setChecked( boolean checked )
     {
         if ( checked )
