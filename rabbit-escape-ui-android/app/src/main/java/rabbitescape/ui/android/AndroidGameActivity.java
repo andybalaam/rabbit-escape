@@ -10,6 +10,7 @@ import android.text.style.ImageSpan;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -49,27 +50,31 @@ public class AndroidGameActivity extends ActionBarActivity {
     private void createAbilityButtons( World world, Resources resources )
     {
         RadioGroup abilitiesGroup = (RadioGroup)findViewById( R.id.abilitiesGroup );
+
+        int i = 0;
         for ( Token.Type ability : world.abilities.keySet() )
         {
-            String name = ability.name();
+            abilitiesGroup.addView(
+                new AbilityButton( this, resources, abilitiesGroup, ability.name(), i ) );
 
-            ImageButton imgButton = new ImageButton( this );
-            imgButton.setImageDrawable(
-                resources.getDrawable(
-                    resources.getIdentifier(
-                        "ability_" + name,
-                        "drawable",
-                        "rabbitescape.ui.android"
-                    )
-                )
-            );
-
-            ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(
-                ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT );
-            imgButton.setLayoutParams( params );
-            imgButton.setContentDescription( name );
-            abilitiesGroup.addView( imgButton );
+            ++i;
         }
+
+        abilitiesGroup.setOnCheckedChangeListener(
+            new RadioGroup.OnCheckedChangeListener()
+            {
+                @Override
+                public void onCheckedChanged( RadioGroup radioGroup, int buttonIndex )
+                {
+                    for ( int i = 0; i < radioGroup.getChildCount(); i++ )
+                    {
+                        AbilityButton button = (AbilityButton)( radioGroup.getChildAt( i ) );
+
+                        button.setChecked( i == buttonIndex );
+                    }
+                }
+            }
+        );
     }
 
     private BitmapCache<AndroidBitmap> createBitmapCache( Resources resources )
