@@ -31,7 +31,8 @@
                 android:id="@+id/pauseButton"
                 android:src="@drawable/menu_pause"
                 android:layout_marginBottom="20dp"
-                android:contentDescription="@string/pause"/>
+                android:contentDescription="@string/pause"
+                android:onClick="onPauseClicked"/>
 
             <RadioGroup
                 android:layout_width="wrap_content"

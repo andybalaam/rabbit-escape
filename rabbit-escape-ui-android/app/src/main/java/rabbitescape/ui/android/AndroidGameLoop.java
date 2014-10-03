@@ -1,6 +1,5 @@
 package rabbitescape.ui.android;
 
-import android.content.res.Resources;
 import android.graphics.Canvas;
 import android.util.Log;
 import android.view.SurfaceHolder;
@@ -23,6 +22,7 @@ public class AndroidGameLoop implements Runnable
     private int scrollX;
     private int scrollY;
     private boolean running;
+    public boolean paused;
     private int screenWidthPixels;
     private int screenHeightPixels;
 
@@ -38,6 +38,7 @@ public class AndroidGameLoop implements Runnable
         this.screenWidthPixels = 100;
         this.screenHeightPixels = 100;
         this.running = true;
+        this.paused = false;
     }
 
     @Override
@@ -53,10 +54,44 @@ public class AndroidGameLoop implements Runnable
             drawGraphics();
             frame_start_time = waitForNextFrame( frame_start_time );
 
+            if ( paused )
+            {
+                pause();
+
+                // Reset the times to stop us thinking we've really lagged
+                simulation_time = new Date().getTime();
+                frame_start_time = simulation_time;
+            }
+
             if ( physics.finished() )
             {
                 running = false;
                 Log.i( "artific", "Finished" );
+            }
+        }
+    }
+
+    private void pause()
+    {
+        int prevScrollX = scrollX;
+        int prevScrollY = scrollY;
+
+        while ( paused )
+        {
+            try
+            {
+                Thread.sleep( 100 );
+            }
+            catch ( InterruptedException e )
+            {
+                // Ignore - no need to do anything if interrupted
+            }
+
+            if ( prevScrollX != scrollX || prevScrollY != scrollY )
+            {
+                drawGraphics();
+                prevScrollX = scrollX;
+                prevScrollY = scrollY;
             }
         }
     }

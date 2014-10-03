@@ -9,6 +9,7 @@ import android.view.SurfaceView;
 
 import rabbitescape.engine.World;
 import rabbitescape.render.BitmapCache;
+import rabbitescape.render.GameLoop;
 
 public class MySurfaceView extends SurfaceView implements SurfaceHolder.Callback
 {
@@ -51,8 +52,6 @@ public class MySurfaceView extends SurfaceView implements SurfaceHolder.Callback
     @Override
     public boolean onTouchEvent( MotionEvent event )
     {
-        Log.i( "artific", event.toString() );
-
         if ( event.getAction() == MotionEvent.ACTION_DOWN )
         {
             cancelFlinger();
@@ -112,5 +111,19 @@ public class MySurfaceView extends SurfaceView implements SurfaceHolder.Callback
             game.stop();
         }
         game = null;
+    }
+
+    public boolean togglePaused()
+    {
+        if ( game != null )
+        {
+            AndroidGameLoop gameLoop = game.gameLoop;
+            gameLoop.paused = !gameLoop.paused;
+            return gameLoop.paused;
+        }
+        else
+        {
+            return false;
+        }
     }
 }

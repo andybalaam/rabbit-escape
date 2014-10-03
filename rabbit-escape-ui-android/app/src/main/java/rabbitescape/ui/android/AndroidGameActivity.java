@@ -35,6 +35,8 @@ public class AndroidGameActivity extends ActionBarActivity
     private boolean muted;
     private SharedPreferences prefs;
     private ImageView muteButton;
+    private ImageView pauseButton;
+    private MySurfaceView gameSurface;
 
     @Override
     protected void onCreate( Bundle savedInstanceState )
@@ -43,19 +45,21 @@ public class AndroidGameActivity extends ActionBarActivity
         setContentView( R.layout.activity_android_game );
         Resources resources = getResources();
 
+        muteButton = (ImageView)findViewById( R.id.muteButton );
+        pauseButton = (ImageView)findViewById( R.id.pauseButton );
+        LinearLayout topLayout = (LinearLayout)findViewById( R.id.topLayout );
+
         prefs = getPreferences( MODE_PRIVATE );
         muted = prefs.getBoolean( "muted", false );
 
-        muteButton = (ImageView)findViewById( R.id.muteButton );
         updateMuteButton();
 
         World world = new LoadWorldFile( new RealFileSystem() ).load( "test/level_01.rel" );
 
         createAbilityButtons( world, resources );
-        BitmapCache<AndroidBitmap> bitmapCache = createBitmapCache( resources );
 
-        LinearLayout topLayout = (LinearLayout)findViewById( R.id.topLayout );
-        topLayout.addView( new MySurfaceView( this, bitmapCache, world ) );
+        gameSurface = new MySurfaceView( this, createBitmapCache( resources ), world );
+        topLayout.addView( gameSurface );
     }
 
     private void createAbilityButtons( World world, Resources resources )
@@ -107,6 +111,16 @@ public class AndroidGameActivity extends ActionBarActivity
         muteButton.setImageDrawable(
             getResources().getDrawable( muted ? R.drawable.menu_muted : R.drawable.menu_unmuted ) );
         muteButton.invalidate();
+    }
+
+    public void onPauseClicked( View view )
+    {
+        boolean paused = gameSurface.togglePaused();
+
+        pauseButton.setImageDrawable(
+            getResources().getDrawable( paused ? R.drawable.menu_unpause : R.drawable.menu_pause )
+        );
+        pauseButton.invalidate();
     }
 
     @Override
