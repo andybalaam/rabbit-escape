@@ -226,7 +226,7 @@ public class SwingGameLoop implements GameLoop
 
     public int addToken( Token.Type ability, Point pixelPosition )
     {
-        if ( world.abilities.get( ability ) > 0 )
+        if ( !paused && world.abilities.get( ability ) > 0 )
         {
             worldModifier.addToken(
                 pixelPosition.x / renderingTileSize,
