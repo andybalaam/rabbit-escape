@@ -202,6 +202,11 @@ public class AndroidGameLoop implements Runnable
 
     public int addToken( Token.Type ability, float pixelX, float pixelY )
     {
+        if ( paused )
+        {
+            return physics.world.abilities.get( ability );
+        }
+
         return physics.addToken(
             ability,
             (int)( ( pixelX + scrollX ) / graphics.renderingTileSize ),
