@@ -21,7 +21,9 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/muteButton"
                 android:src="@drawable/menu_unmuted"
-                android:contentDescription="@string/mute"/>
+                android:contentDescription="@string/mute"
+                android:onClick="onMuteClicked"
+                android:layout_marginTop="3dp"/>
 
             <ImageButton
                 android:layout_width="wrap_content"

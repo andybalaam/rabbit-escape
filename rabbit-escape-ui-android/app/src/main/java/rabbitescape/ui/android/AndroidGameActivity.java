@@ -28,7 +28,9 @@ import rabbitescape.engine.util.RealFileSystem;
 import rabbitescape.render.BitmapCache;
 
 
-public class AndroidGameActivity extends ActionBarActivity {
+public class AndroidGameActivity extends ActionBarActivity
+{
+    private boolean muted = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,6 +82,16 @@ public class AndroidGameActivity extends ActionBarActivity {
     private BitmapCache<AndroidBitmap> createBitmapCache( Resources resources )
     {
         return new BitmapCache<AndroidBitmap>( new AndroidBitmapLoader( resources ), 500 );
+    }
+
+    public void onMuteClicked( View view )
+    {
+        muted = !muted;
+
+        ImageButton muteButton = (ImageButton)view;
+        muteButton.setImageDrawable(
+            getResources().getDrawable( muted ? R.drawable.menu_muted : R.drawable.menu_unmuted ) );
+        muteButton.invalidate();
     }
 
     @Override
