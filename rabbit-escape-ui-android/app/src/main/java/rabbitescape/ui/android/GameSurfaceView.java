@@ -11,7 +11,7 @@ import rabbitescape.engine.World;
 import rabbitescape.render.BitmapCache;
 import rabbitescape.render.GameLoop;
 
-public class MySurfaceView extends SurfaceView implements SurfaceHolder.Callback
+public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callback
 {
     private final BitmapCache<AndroidBitmap> bitmapCache;
     private final World world;
@@ -22,7 +22,7 @@ public class MySurfaceView extends SurfaceView implements SurfaceHolder.Callback
     public float velY;
     private Flinger flinger;
 
-    public MySurfaceView( Context context, BitmapCache<AndroidBitmap> bitmapCache, World world )
+    public GameSurfaceView( Context context, BitmapCache<AndroidBitmap> bitmapCache, World world )
     {
         super( context );
         this.bitmapCache = bitmapCache;

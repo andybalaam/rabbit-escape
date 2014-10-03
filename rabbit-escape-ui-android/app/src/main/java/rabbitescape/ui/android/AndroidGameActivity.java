@@ -2,26 +2,14 @@ package rabbitescape.ui.android;
 
 import android.content.SharedPreferences;
 import android.content.res.Resources;
-import android.graphics.LightingColorFilter;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.text.SpannableString;
-import android.text.Spanned;
-import android.text.style.ImageSpan;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioGroup;
-import android.widget.RelativeLayout;
-import android.widget.ToggleButton;
-
-import java.util.Map;
 
 import rabbitescape.engine.LoadWorldFile;
 import rabbitescape.engine.Token;
@@ -36,7 +24,7 @@ public class AndroidGameActivity extends ActionBarActivity
     private SharedPreferences prefs;
     private ImageView muteButton;
     private ImageView pauseButton;
-    private MySurfaceView gameSurface;
+    private GameSurfaceView gameSurface;
 
     @Override
     protected void onCreate( Bundle savedInstanceState )
@@ -58,7 +46,7 @@ public class AndroidGameActivity extends ActionBarActivity
 
         createAbilityButtons( world, resources );
 
-        gameSurface = new MySurfaceView( this, createBitmapCache( resources ), world );
+        gameSurface = new GameSurfaceView( this, createBitmapCache( resources ), world );
         topLayout.addView( gameSurface );
     }
 

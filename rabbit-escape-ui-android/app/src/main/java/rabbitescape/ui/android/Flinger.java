@@ -6,10 +6,10 @@ public class Flinger implements Runnable
     private static final float min_vel       = 3f;
     private static final int   pause_time_ms = 10;
 
-    private final MySurfaceView surfaceView;
+    private final GameSurfaceView surfaceView;
     private boolean running;
 
-    public Flinger( MySurfaceView surfaceView )
+    public Flinger( GameSurfaceView surfaceView )
     {
         this.surfaceView = surfaceView;
         this.running = true;
