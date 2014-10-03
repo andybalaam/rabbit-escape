@@ -1,5 +1,6 @@
 package rabbitescape.ui.android;
 
+import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.graphics.LightingColorFilter;
 import android.support.v7.app.ActionBarActivity;
@@ -14,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
@@ -30,22 +32,29 @@ import rabbitescape.render.BitmapCache;
 
 public class AndroidGameActivity extends ActionBarActivity
 {
-    private boolean muted = false;
+    private boolean muted;
+    private SharedPreferences prefs;
+    private ImageView muteButton;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_android_game );
-        LinearLayout topLayout = (LinearLayout)findViewById( R.id.topLayout );
+    protected void onCreate( Bundle savedInstanceState )
+    {
+        super.onCreate( savedInstanceState );
+        setContentView( R.layout.activity_android_game );
+        Resources resources = getResources();
+
+        prefs = getPreferences( MODE_PRIVATE );
+        muted = prefs.getBoolean( "muted", false );
+
+        muteButton = (ImageView)findViewById( R.id.muteButton );
+        updateMuteButton();
 
         World world = new LoadWorldFile( new RealFileSystem() ).load( "test/level_01.rel" );
 
-        Resources resources = getResources();
-
         createAbilityButtons( world, resources );
-
         BitmapCache<AndroidBitmap> bitmapCache = createBitmapCache( resources );
 
+        LinearLayout topLayout = (LinearLayout)findViewById( R.id.topLayout );
         topLayout.addView( new MySurfaceView( this, bitmapCache, world ) );
     }
 
@@ -88,7 +97,13 @@ public class AndroidGameActivity extends ActionBarActivity
     {
         muted = !muted;
 
-        ImageButton muteButton = (ImageButton)view;
+        prefs.edit().putBoolean( "muted", muted ).commit();
+
+        updateMuteButton();
+    }
+
+    private void updateMuteButton()
+    {
         muteButton.setImageDrawable(
             getResources().getDrawable( muted ? R.drawable.menu_muted : R.drawable.menu_unmuted ) );
         muteButton.invalidate();
