@@ -8,10 +8,8 @@ public class AndroidBitmapScaler implements BitmapScaler
     @Override
     public Bitmap scale( Bitmap originalBitmap, double scale )
     {
-        if ( scale != 1.0 )
-        {
-            throw new RuntimeException( "TODO: scaling bitmaps on Android" );
-        }
+        // On Android, the bitmaps got scaled for us automatically, so we
+        // do nothing here.
         return originalBitmap;
     }
 }

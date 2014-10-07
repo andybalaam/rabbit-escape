@@ -2,6 +2,7 @@ package rabbitescape.ui.android;
 
 import android.content.Context;
 import android.content.res.Resources;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
@@ -22,6 +23,8 @@ public class GameSurfaceView extends SurfaceView
     private final NumLeftListener numLeftListener;
     private final BitmapCache<AndroidBitmap> bitmapCache;
     private final World world;
+    private final float displayDensity;
+
     public Game game;
     public Scrolling scrolling;
     private Token.Type chosenAbility;
@@ -31,13 +34,16 @@ public class GameSurfaceView extends SurfaceView
         Context context,
         NumLeftListener numLeftListener,
         BitmapCache<AndroidBitmap> bitmapCache,
-        World world
+        World world,
+        float displayDensity
     )
     {
         super( context );
         this.numLeftListener = numLeftListener;
         this.bitmapCache = bitmapCache;
         this.world = world;
+        this.displayDensity = displayDensity;
+
         game = null;
         scrolling = new Scrolling( this, ViewConfiguration.get( context ).getScaledTouchSlop() );
         chosenAbility = null;
@@ -49,7 +55,7 @@ public class GameSurfaceView extends SurfaceView
     @Override
     public void surfaceCreated( SurfaceHolder surfaceHolder )
     {
-        game = new Game( surfaceHolder, bitmapCache, world );
+        game = new Game( surfaceHolder, bitmapCache, world, displayDensity );
         game.start();
 
         setOnClickListener( this );

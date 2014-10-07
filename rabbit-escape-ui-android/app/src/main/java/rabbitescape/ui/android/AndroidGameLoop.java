@@ -28,11 +28,15 @@ public class AndroidGameLoop implements Runnable
     private int screenHeightPixels;
 
     public AndroidGameLoop(
-        SurfaceHolder surfaceHolder, BitmapCache<AndroidBitmap> bitmapCache, World world )
+        SurfaceHolder surfaceHolder,
+        BitmapCache<AndroidBitmap> bitmapCache,
+        World world,
+        float displayDensity
+    )
     {
         this.surfaceHolder = surfaceHolder;
         this.physics = new Physics( world );
-        this.graphics = new Graphics( bitmapCache, world );
+        this.graphics = new Graphics( bitmapCache, world, displayDensity );
 
         this.scrollX = 0;
         this.scrollY = 0;

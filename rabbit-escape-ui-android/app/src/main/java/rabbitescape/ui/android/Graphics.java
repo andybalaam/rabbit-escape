@@ -5,6 +5,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.util.DisplayMetrics;
 
 import rabbitescape.engine.World;
 import rabbitescape.render.AnimationCache;
@@ -23,13 +24,13 @@ public class Graphics
     public final int levelWidthPixels;
     public final int levelHeightPixels;
 
-    public Graphics( BitmapCache<AndroidBitmap> bitmapCache, World world )
+    public Graphics( BitmapCache<AndroidBitmap> bitmapCache, World world, float displayDensity )
     {
         this.world = world;
         this.bitmapCache = bitmapCache;
         this.animationCache = new AnimationCache( new AnimationLoader() );
         this.paint = new AndroidPaint( new Paint() );
-        this.renderingTileSize = 32;
+        this.renderingTileSize = (int)( 32 * displayDensity );
         this.levelWidthPixels = renderingTileSize * world.size.width;
         this.levelHeightPixels = renderingTileSize * world.size.height;
     }

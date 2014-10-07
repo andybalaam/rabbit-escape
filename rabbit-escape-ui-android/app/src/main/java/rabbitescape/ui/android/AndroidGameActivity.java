@@ -4,6 +4,7 @@ import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -51,7 +52,12 @@ public class AndroidGameActivity extends ActionBarActivity implements NumLeftLis
         abilitiesGroup = (RadioGroup)findViewById( R.id.abilitiesGroup );
         createAbilities( world, resources );
 
-        gameSurface = new GameSurfaceView( this, this, createBitmapCache( resources ), world );
+        DisplayMetrics metrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics( metrics );
+
+        gameSurface = new GameSurfaceView(
+            this, this, createBitmapCache( resources ), world, metrics.density );
+
         topLayout.addView( gameSurface );
     }
 

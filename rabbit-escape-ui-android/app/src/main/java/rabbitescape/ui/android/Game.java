@@ -11,9 +11,14 @@ public class Game
     private final Thread thread;
     public final AndroidGameLoop gameLoop;
 
-    public Game( SurfaceHolder surfaceHolder, BitmapCache<AndroidBitmap> bitmapCache, World world )
+    public Game(
+        SurfaceHolder surfaceHolder,
+        BitmapCache<AndroidBitmap> bitmapCache,
+        World world,
+        float displayDensity
+    )
     {
-        gameLoop = new AndroidGameLoop( surfaceHolder, bitmapCache, world );
+        gameLoop = new AndroidGameLoop( surfaceHolder, bitmapCache, world, displayDensity );
         thread = new Thread( gameLoop, "GameLoop" );
     }
 
