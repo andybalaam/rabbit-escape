@@ -1,5 +1,6 @@
 package rabbitescape.ui.android;
 
+import android.content.res.Resources;
 import android.view.MotionEvent;
 
 public class Scrolling
@@ -13,11 +14,14 @@ public class Scrolling
     private float origY = 0;
 
     private final GameSurfaceView view;
+    private final float squaredTouchSlop;
+
     private Flinger flinger = null;
 
-    public Scrolling( GameSurfaceView view )
+    public Scrolling( GameSurfaceView view, float touchSlop )
     {
         this.view = view;
+        this.squaredTouchSlop = touchSlop * touchSlop;
     }
 
     public boolean onTouchEvent( MotionEvent event )
@@ -49,7 +53,7 @@ public class Scrolling
             curX = event.getX();
             curY = event.getY();
 
-            if ( squaredDistance( origX, origY, curX, curY ) < 25.0f )
+            if ( squaredDistance( origX, origY, curX, curY ) < squaredTouchSlop )
             {
                 view.performClick();
             }

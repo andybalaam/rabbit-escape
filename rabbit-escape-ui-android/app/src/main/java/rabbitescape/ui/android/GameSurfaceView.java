@@ -7,6 +7,7 @@ import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
+import android.view.ViewConfiguration;
 
 import rabbitescape.engine.Token;
 import rabbitescape.engine.World;
@@ -38,7 +39,7 @@ public class GameSurfaceView extends SurfaceView
         this.bitmapCache = bitmapCache;
         this.world = world;
         game = null;
-        scrolling = new Scrolling( this );
+        scrolling = new Scrolling( this, ViewConfiguration.get( context ).getScaledTouchSlop() );
         chosenAbility = null;
         chosenAbilityIndex = -1;
 
