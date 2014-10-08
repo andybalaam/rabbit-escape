@@ -386,4 +386,71 @@ public class TestTextWorldManip
             equalTo( 10 )
         );
     }
+
+    @Test
+    public void Full_dump_shows_overlapping_things()
+    {
+        // Make an empty world
+        World world = createWorld(
+            "####",
+            "#  #",
+            "# /#",
+            "####"
+        );
+
+        // put 2 rabbits and 2 items all in the same place, on top of a block
+        world.rabbits.add( new Rabbit( 2, 2, Direction.RIGHT ) );
+        world.rabbits.add( new Rabbit( 2, 2, Direction.LEFT ) );
+        world.things.add( new Token( 2, 2, Token.Type.bash ) );
+        world.things.add( new Token( 2, 2, Token.Type.bridge ) );
+
+        assertThat(
+            renderCompleteWorld( world ),
+            equalTo(
+                "####",
+                "#  #",
+                "# *#",
+                "####",
+                ":*=/rjbi"
+            )
+        );
+    }
+
+    @Test
+    public void Multiple_overlapping_things_come_in_reading_order()
+    {
+        // Make an empty world
+        World world = createWorld(
+            "####",
+            "#  #",
+            "#\\/#",
+            "####"
+        );
+
+        // Rabbits in top left
+        world.rabbits.add( new Rabbit( 1, 1, Direction.RIGHT ) );
+        world.rabbits.add( new Rabbit( 1, 1, Direction.LEFT ) );
+
+        // bash and bridge in top right
+        world.things.add( new Token( 2, 1, Token.Type.bash ) );
+        world.things.add( new Token( 2, 1, Token.Type.bridge ) );
+
+        // dig in bottom left and bottom right
+        world.things.add( new Token( 1, 2, Token.Type.dig ) );
+        world.things.add( new Token( 2, 2, Token.Type.dig ) );
+
+        assertThat(
+            renderCompleteWorld( world ),
+            equalTo(
+                "####",
+                "#**#",
+                "#**#",
+                "####",
+                ":*=rj",
+                ":*=bi",
+                ":*=\\d",
+                ":*=/d"
+            )
+        );
+    }
 }

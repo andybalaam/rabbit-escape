@@ -72,7 +72,7 @@ public class TextWorldManip
     public static String[] renderWorld(
         World world, boolean showChanges, boolean coordinates )
     {
-        Chars chars = new Chars( world );
+        Chars chars = new Chars( world, false );
 
         BlockRenderer.render( chars, world.blocks );
         RabbitRenderer.render( chars, world.rabbits );
@@ -86,10 +86,21 @@ public class TextWorldManip
         return charsToStrings( chars, coordinates );
     }
 
+    public static String[] renderCompleteWorld( World world )
+    {
+        Chars chars = new Chars( world, true );
+
+        BlockRenderer.render( chars, world.blocks );
+        RabbitRenderer.render( chars, world.rabbits );
+        ThingRenderer.render( chars, world.things );
+
+        return charsToComplete( chars );
+    }
+
     public static String[] renderChangeDescription(
         World world, ChangeDescription desc, boolean coordinates )
     {
-        Chars chars = new Chars( world );
+        Chars chars = new Chars( world, false );
 
         ChangeRenderer.render( chars, desc );
 
@@ -112,7 +123,7 @@ public class TextWorldManip
         {
             String ans = new String( chars.line( lineNum ) );
 
-            if ( coordinates)
+            if ( coordinates )
             {
                 ans = formatRowNum( lineNum ) + " " + ans;
             }
@@ -125,6 +136,23 @@ public class TextWorldManip
         }
 
         return ret;
+    }
+
+    private static String[] charsToComplete( Chars chars )
+    {
+        List<String> ret = new ArrayList<String>();
+
+        for ( int lineNum = 0; lineNum < chars.numRows(); ++lineNum )
+        {
+            ret.add( new String( chars.line( lineNum ) ) );
+        }
+
+        for ( String starLine : chars.starLines() )
+        {
+            ret.add( ":*=" + starLine );
+        }
+
+        return ret.toArray( new String[ ret.size() ] );
     }
 
     private static void addColumnCoords( String[] ret, int width, int height )
