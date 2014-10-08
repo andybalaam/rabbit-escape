@@ -23,11 +23,11 @@ public class ThingRenderer
         private static final long serialVersionUID = 1L;
     }
 
-    public static void render( char[][] chars, List<Thing> things )
+    public static void render( Chars chars, List<Thing> things )
     {
         for ( Thing thing : things )
         {
-            chars[ thing.y ][ thing.x ] = charForThing( thing );
+            chars.set( thing.x, thing.y, charForThing( thing ) );
         }
     }
 

@@ -8,11 +8,11 @@ import rabbitescape.engine.Rabbit;
 
 public class RabbitRenderer
 {
-    public static void render( char[][] chars, List<Rabbit> rabbits )
+    public static void render( Chars chars, List<Rabbit> rabbits )
     {
         for ( Rabbit rabbit : rabbits )
         {
-            chars[ rabbit.y ][ rabbit.x ] = charForRabbit( rabbit );
+            chars.set( rabbit.x, rabbit.y, charForRabbit( rabbit ) );
         }
     }
 

@@ -6,11 +6,11 @@ import rabbitescape.engine.Block;
 
 public class BlockRenderer
 {
-    public static void render( char[][] chars, List<Block> blocks )
+    public static void render( Chars chars, List<Block> blocks )
     {
         for ( Block block : blocks )
         {
-            chars[ block.y ][ block.x ] = charForBlock( block );
+            chars.set( block.x, block.y, charForBlock( block ) );
         }
     }
 

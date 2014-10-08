@@ -72,7 +72,7 @@ public class TextWorldManip
     public static String[] renderWorld(
         World world, boolean showChanges, boolean coordinates )
     {
-        char[][] chars = emptyWorldChars( world );
+        Chars chars = new Chars( world );
 
         BlockRenderer.render( chars, world.blocks );
         RabbitRenderer.render( chars, world.rabbits );
@@ -89,7 +89,7 @@ public class TextWorldManip
     public static String[] renderChangeDescription(
         World world, ChangeDescription desc, boolean coordinates )
     {
-        char[][] chars = emptyWorldChars( world );
+        Chars chars = new Chars( world );
 
         ChangeRenderer.render( chars, desc );
 
@@ -97,9 +97,9 @@ public class TextWorldManip
     }
 
     private static String[] charsToStrings(
-        char[][] chars, boolean coordinates )
+        Chars chars, boolean coordinates )
     {
-        int len = chars.length;
+        int len = chars.numRows();
 
         if ( coordinates )
         {
@@ -108,9 +108,9 @@ public class TextWorldManip
 
         String[] ret = new String[len];
 
-        for ( int lineNum = 0; lineNum < chars.length; ++lineNum )
+        for ( int lineNum = 0; lineNum < chars.numRows(); ++lineNum )
         {
-            String ans = new String( chars[lineNum] );
+            String ans = new String( chars.line( lineNum ) );
 
             if ( coordinates)
             {
@@ -121,7 +121,7 @@ public class TextWorldManip
 
         if ( coordinates )
         {
-            addColumnCoords( ret, chars[0].length, chars.length );
+            addColumnCoords( ret, chars.numCols(), chars.numRows() );
         }
 
         return ret;
@@ -147,23 +147,5 @@ public class TextWorldManip
     private static String formatRowNum( int lineNum )
     {
         return String.format( "%02d", lineNum ).substring( 0, 2 );
-    }
-
-    private static char[][] emptyWorldChars( World world )
-    {
-        return filledChars(
-            world.size.height, world.size.width, ' ' );
-    }
-
-    private static char[][] filledChars( int height, int width, char c )
-    {
-        char[][] ret = new char[height][width];
-
-        for( int i = 0; i < height; ++i )
-        {
-            Arrays.fill( ret[i], c );
-        }
-
-        return ret;
     }
 }
