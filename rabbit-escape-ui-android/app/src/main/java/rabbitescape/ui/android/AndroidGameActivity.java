@@ -25,9 +25,12 @@ public class AndroidGameActivity extends ActionBarActivity implements NumLeftLis
 {
     private boolean muted;
     private SharedPreferences prefs;
+
     private ImageView muteButton;
     private ImageView pauseButton;
+    private LinearLayout topLayout;
     private RadioGroup abilitiesGroup;
+
     private GameSurfaceView gameSurface;
     private Token.Type[] abilities;
 
@@ -35,39 +38,40 @@ public class AndroidGameActivity extends ActionBarActivity implements NumLeftLis
     protected void onCreate( Bundle savedInstanceState )
     {
         super.onCreate( savedInstanceState );
-        setContentView( R.layout.activity_android_game );
-        Resources resources = getResources();
 
-        muteButton = (ImageView)findViewById( R.id.muteButton );
-        pauseButton = (ImageView)findViewById( R.id.pauseButton );
-        LinearLayout topLayout = (LinearLayout)findViewById( R.id.topLayout );
+        staticInit();
+        buildDynamicUi( getResources(), loadWorld() );
+        restoreFromState( savedInstanceState );
+    }
 
-        prefs = getPreferences( MODE_PRIVATE );
-        muted = prefs.getBoolean( "muted", false );
+    private World loadWorld()
+    {
+        return new LoadWorldFile( new RealFileSystem() ).load( "test/level_01.rel" );
+    }
 
-        updateMuteButton();
-
-        World world = new LoadWorldFile( new RealFileSystem() ).load( "test/level_01.rel" );
-
-        abilitiesGroup = (RadioGroup)findViewById( R.id.abilitiesGroup );
-        createAbilities( world, resources );
-
+    private void buildDynamicUi( Resources resources, World world )
+    {
         DisplayMetrics metrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics( metrics );
+
+        createAbilities( world, resources );
 
         gameSurface = new GameSurfaceView(
             this, this, createBitmapCache( resources ), world, metrics.density );
 
         topLayout.addView( gameSurface );
+    }
 
-        if ( savedInstanceState != null )
-        {
-            int checkedAbility = savedInstanceState.getInt( "checkedAbilityIndex", -1 );
-            if ( checkedAbility != -1 )
-            {
-                abilitiesGroup.check( checkedAbility );
-            }
-        }
+    private void staticInit()
+    {
+        prefs = getPreferences( MODE_PRIVATE );
+
+        setContentView( R.layout.activity_android_game );
+
+        muteButton = (ImageView)findViewById( R.id.muteButton );
+        pauseButton = (ImageView)findViewById( R.id.pauseButton );
+        topLayout = (LinearLayout)findViewById( R.id.topLayout );
+        abilitiesGroup = (RadioGroup)findViewById( R.id.abilitiesGroup );
     }
 
     private void createAbilities( World world, Resources resources )
@@ -144,6 +148,21 @@ public class AndroidGameActivity extends ActionBarActivity implements NumLeftLis
         outState.putInt( "checkedAbilityIndex", checkedAbilityIndex() );
 
         // Mute state is stored in a preference, so no need to store it here.
+    }
+
+    private void restoreFromState( Bundle savedInstanceState )
+    {
+        muted = prefs.getBoolean( "muted", false );
+        updateMuteButton();
+
+        if ( savedInstanceState != null )
+        {
+            int checkedAbility = savedInstanceState.getInt( "checkedAbilityIndex", -1 );
+            if ( checkedAbility != -1 )
+            {
+                abilitiesGroup.check( checkedAbility );
+            }
+        }
     }
 
     private int checkedAbilityIndex()
