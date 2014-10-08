@@ -22,6 +22,7 @@ public class AbilityButton extends ImageButton
     private final RadioGroup group;
     private final String ability;
     private final int buttonIndex;
+    private boolean checked;
 
     public AbilityButton(
         Context context, Resources resources, RadioGroup group, String ability, int buttonIndex )
@@ -30,6 +31,7 @@ public class AbilityButton extends ImageButton
         this.group = group;
         this.ability = ability;
         this.buttonIndex = buttonIndex;
+        this.checked = false;
 
         setImage( resources );
         setUpLayout();
@@ -71,6 +73,8 @@ public class AbilityButton extends ImageButton
 
     public void setChecked( boolean checked )
     {
+        this.checked = checked;
+
         if ( checked )
         {
             getBackground().setColorFilter( 0x770000FF, PorterDuff.Mode.SRC_ATOP );
@@ -80,5 +84,10 @@ public class AbilityButton extends ImageButton
             getBackground().clearColorFilter();
         }
         invalidate();
+    }
+
+    public boolean isChecked()
+    {
+        return checked;
     }
 }

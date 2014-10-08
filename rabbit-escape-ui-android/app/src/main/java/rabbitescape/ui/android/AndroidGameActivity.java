@@ -59,6 +59,15 @@ public class AndroidGameActivity extends ActionBarActivity implements NumLeftLis
             this, this, createBitmapCache( resources ), world, metrics.density );
 
         topLayout.addView( gameSurface );
+
+        if ( savedInstanceState != null )
+        {
+            int checkedAbility = savedInstanceState.getInt( "checkedAbilityIndex", -1 );
+            if ( checkedAbility != -1 )
+            {
+                abilitiesGroup.check( checkedAbility );
+            }
+        }
     }
 
     private void createAbilities( World world, Resources resources )
@@ -122,6 +131,34 @@ public class AndroidGameActivity extends ActionBarActivity implements NumLeftLis
             getResources().getDrawable( paused ? R.drawable.menu_unpause : R.drawable.menu_pause )
         );
         pauseButton.invalidate();
+    }
+
+    @Override
+    public void onSaveInstanceState( Bundle outState )
+    {
+        super.onSaveInstanceState( outState );
+        // The super call will call onSaveInstanceState on:
+        // - GameSurfaceView
+        // - each AbilityButton (but we do the saving here because it's easier
+
+        outState.putInt( "checkedAbilityIndex", checkedAbilityIndex() );
+
+        // Mute state is stored in a preference, so no need to store it here.
+    }
+
+    private int checkedAbilityIndex()
+    {
+        for ( int i = 0; i < abilitiesGroup.getChildCount(); i++ )
+        {
+            AbilityButton button = (AbilityButton)( abilitiesGroup.getChildAt( i ) );
+
+            if ( button.isChecked() )
+            {
+                return i;
+            }
+        }
+
+        return -1;
     }
 
     @Override
