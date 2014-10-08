@@ -4,6 +4,7 @@ import static rabbitescape.engine.Direction.*;
 import static rabbitescape.engine.Block.Type.*;
 import static rabbitescape.engine.util.Util.*;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -18,6 +19,18 @@ import rabbitescape.engine.util.Dimension;
 
 class LineProcessor
 {
+    private static class Point
+    {
+        public final int x;
+        public final int y;
+
+        public Point( int x, int y )
+        {
+            this.x = x;
+            this.y = y;
+        }
+    }
+
     private final List<Block> blocks;
     private final List<Rabbit> rabbits;
     private final List<Thing> things;
@@ -25,10 +38,12 @@ class LineProcessor
     private final String[] lines;
     private final Map<String, String>  m_metaStrings;
     private final Map<String, Integer> m_metaInts;
+    private final List<Point> starPoints;
 
     private int width;
     private int height;
     private int lineNum;
+    private int currentStarPoint;
 
     public LineProcessor(
         List<Block> blocks,
@@ -45,10 +60,12 @@ class LineProcessor
         this.lines = lines;
         this.m_metaStrings = new HashMap<>();
         this.m_metaInts    = new HashMap<>();
+        starPoints = new ArrayList<Point>();
 
         width = -1;
         height = 0;
         lineNum = 0;
+        currentStarPoint = 0;
 
         process();
     }
@@ -98,6 +115,11 @@ class LineProcessor
             }
             ++lineNum;
         }
+
+        if ( starPoints.size() > currentStarPoint )
+        {
+            throw new TooManyStars( lines );
+        }
     }
 
     private void processMetaLine( String line )
@@ -122,6 +144,20 @@ class LineProcessor
         else if ( TextWorldManip.ABILITIES.contains( key ) )
         {
             abilities.put( Token.Type.valueOf( key ), toInt( value ) );
+        }
+        else if ( key.equals( "*" ) )
+        {
+            if ( currentStarPoint >= starPoints.size() )
+            {
+                throw new NotEnoughStars( lines, lineNum );
+            }
+
+            Point p = starPoints.get( currentStarPoint );
+            for ( char ch : asChars( value ) )
+            {
+                processChar( ch, p.x, p.y );
+            }
+            ++currentStarPoint;
         }
         else
         {
@@ -155,13 +191,13 @@ class LineProcessor
         int charNum = 0;
         for ( char c : asChars( line ) )
         {
-            processChar( charNum, c );
+            processChar( c, charNum, height );
             ++charNum;
         }
         ++height;
     }
 
-    private void processChar( int charNum, char c )
+    private void processChar( char c, int x, int y )
     {
         switch( c )
         {
@@ -171,69 +207,74 @@ class LineProcessor
             }
             case '#':
             {
-                blocks.add( new Block( charNum, height, solid_flat ) );
+                blocks.add( new Block( x, y, solid_flat ) );
                 break;
             }
             case '/':
             {
-                blocks.add( new Block( charNum, height, solid_up_right ) );
+                blocks.add( new Block( x, y, solid_up_right ) );
                 break;
             }
             case '\\':
             {
-                blocks.add( new Block( charNum, height, solid_up_left ) );
+                blocks.add( new Block( x, y, solid_up_left ) );
                 break;
             }
             case '(':
             {
                 blocks.add(
-                    new Block( charNum, height, bridge_up_right ) );
+                    new Block( x, y, bridge_up_right ) );
                 break;
             }
             case ')':
             {
                 blocks.add(
-                    new Block( charNum, height, bridge_up_left ) );
+                    new Block( x, y, bridge_up_left ) );
                 break;
             }
             case 'r':
             {
-                rabbits.add( new Rabbit( charNum, height, RIGHT ) );
+                rabbits.add( new Rabbit( x, y, RIGHT ) );
                 break;
             }
             case 'j':
             {
-                rabbits.add( new Rabbit( charNum, height, LEFT ) );
+                rabbits.add( new Rabbit( x, y, LEFT ) );
                 break;
             }
             case 'Q':
             {
-                things.add( new Entrance( charNum, height ) );
+                things.add( new Entrance( x, y ) );
                 break;
             }
             case 'O':
             {
-                things.add( new Exit( charNum, height ) );
+                things.add( new Exit( x, y ) );
                 break;
             }
             case 'b':
             {
-                things.add( new Token( charNum, height, Token.Type.bash ) );
+                things.add( new Token( x, y, Token.Type.bash ) );
                 break;
             }
             case 'd':
             {
-                things.add( new Token( charNum, height, Token.Type.dig ) );
+                things.add( new Token( x, y, Token.Type.dig ) );
                 break;
             }
             case 'i':
             {
-                things.add( new Token( charNum, height, Token.Type.bridge ) );
+                things.add( new Token( x, y, Token.Type.bridge ) );
+                break;
+            }
+            case '*':
+            {
+                starPoints.add( new Point( x, y ) );
                 break;
             }
             default:
             {
-                throw new UnknownCharacter( lines, height, charNum );
+                throw new UnknownCharacter( lines, x, y );
             }
         }
     }

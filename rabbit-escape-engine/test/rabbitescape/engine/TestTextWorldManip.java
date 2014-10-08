@@ -453,4 +453,56 @@ public class TestTextWorldManip
             )
         );
     }
+
+    @Test
+    public void Overlap_meta_lines_can_come_straight_after_their_stars()
+    {
+        // This is what we are testing: we can have * meta lines any time
+        // after the * they refer to
+        World world = createWorld(
+            "####",
+            "#**#",
+            ":*=rj",
+            ":*=bi",
+            "#**#",
+            "####",
+            ":*=\\d",
+            ":*=/d"
+        );
+
+        // Result is the same as if they came at the end
+        assertThat(
+            renderCompleteWorld( world ),
+            equalTo(
+                "####",
+                "#**#",
+                "#**#",
+                "####",
+                ":*=rj",
+                ":*=bi",
+                ":*=\\d",
+                ":*=/d"
+            )
+        );
+    }
+
+    @Test
+    public void Round_trip_world_with_overlaps()
+    {
+        String[] lines = {
+            "####",
+            "#**#",
+            "#**#",
+            "####",
+            ":*=rj",
+            ":*=bi",
+            ":*=\\d",
+            ":*=/d"
+        };
+
+        assertThat(
+            renderCompleteWorld( createWorld( lines ) ),
+            equalTo( lines )
+        );
+    }
 }
