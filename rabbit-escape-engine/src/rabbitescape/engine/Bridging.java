@@ -16,7 +16,7 @@ public class Bridging implements Behaviour
         Token token = world.getTokenAt( rabbit.x, rabbit.y );
         if ( token != null && token.type == bridge )
         {
-            world.changes.removeThing( token );
+            world.changes.removeToken( token );
             smallSteps = 4;
             bigSteps = 3;
         }

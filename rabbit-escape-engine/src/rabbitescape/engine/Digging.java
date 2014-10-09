@@ -17,7 +17,7 @@ public class Digging implements Behaviour
         Token token = world.getTokenAt( rabbit.x, rabbit.y );
         if ( token != null && token.type == dig )
         {
-            world.changes.removeThing( token );
+            world.changes.removeToken( token );
             justPickedUpToken = true;
         }
 
