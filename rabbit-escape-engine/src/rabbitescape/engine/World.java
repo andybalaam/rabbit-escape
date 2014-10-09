@@ -227,8 +227,9 @@ public class World
         return null;
     }
 
-    public void addRabbit( Rabbit rabbit )
+    public void enterRabbit( Rabbit rabbit )
     {
+        --rabbitsStillToEnter;
         changes.rabbitsToAdd.add( rabbit );
     }
 

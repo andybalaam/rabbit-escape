@@ -36,9 +36,8 @@ public class Entrance extends Thing
         if ( timeToNextRabbit == 0 )
         {
             timeToNextRabbit = delay;
-            --world.rabbitsStillToEnter;
 
-            world.addRabbit( new Rabbit( x, y + 1, RIGHT ) );
+            world.enterRabbit( new Rabbit( x, y + 1, RIGHT ) );
         }
         --timeToNextRabbit;
     }
