@@ -17,7 +17,7 @@ public class AndroidGameLoop implements Runnable
 {
     // Constants
     public  static final String STATE_WORLD    = "rabbitescape.world";
-    private static final String STATE_PAUSED   = "rabbitescape.paused";
+    public  static final String STATE_PAUSED   = "rabbitescape.paused";
     private static final String STATE_SCROLL_X = "rabbitescape.scrollx";
     private static final String STATE_SCROLL_Y = "rabbitescape.scrolly";
     private static final long max_allowed_skips = 10;

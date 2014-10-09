@@ -160,8 +160,11 @@ public class AndroidGameActivity extends ActionBarActivity implements NumLeftLis
 
     public void onPauseClicked( View view )
     {
-        boolean paused = gameSurface.togglePaused();
+        updatePauseButton( gameSurface.togglePaused() );
+    }
 
+    private void updatePauseButton( boolean paused )
+    {
         pauseButton.setImageDrawable(
             getResources().getDrawable( paused ? R.drawable.menu_unpause : R.drawable.menu_pause )
         );
@@ -198,6 +201,12 @@ public class AndroidGameActivity extends ActionBarActivity implements NumLeftLis
             {
                 abilitiesGroup.check( checkedAbility );
             }
+
+            // Cheating here by pulling the pause state out, even though it is
+            // pulled out in AndroidGameLoop.  That happens later, so is inconvenient
+            // for us to wait for.
+            updatePauseButton(
+                savedInstanceState.getBoolean( AndroidGameLoop.STATE_PAUSED, false ) );
         }
     }
 
