@@ -87,6 +87,7 @@ public class TestWorldChanges
         // There should have been no concurrent modification problems
 
         // Last step to make sure we have registered all changes
+        world.step();
 
         // All 200 adds should have worked
         assertThat( world.abilities.get( Token.Type.bash ), equalTo( 1 ) );
