@@ -24,6 +24,10 @@ import rabbitescape.render.BitmapCache;
 
 public class AndroidGameActivity extends ActionBarActivity implements NumLeftListener
 {
+    public static final String INTENT_LEVEL = "level";
+    public static final String PREFS_MUTED = "muted";
+    public static final String STATE_CHECKED_ABILITY_INDEX = "checkedAbilityIndex";
+
     private boolean muted;
     private SharedPreferences prefs;
 
@@ -47,7 +51,7 @@ public class AndroidGameActivity extends ActionBarActivity implements NumLeftLis
 
     private World loadWorld( Intent intent )
     {
-        String levelFileName = intent.getStringExtra( "level" );
+        String levelFileName = intent.getStringExtra( INTENT_LEVEL );
 
         return new LoadWorldFile( new RealFileSystem() ).load( levelFileName );
     }
@@ -118,7 +122,7 @@ public class AndroidGameActivity extends ActionBarActivity implements NumLeftLis
     {
         muted = !muted;
 
-        prefs.edit().putBoolean( "muted", muted ).commit();
+        prefs.edit().putBoolean( PREFS_MUTED, muted ).commit();
 
         updateMuteButton();
     }
@@ -148,19 +152,19 @@ public class AndroidGameActivity extends ActionBarActivity implements NumLeftLis
         // - GameSurfaceView
         // - each AbilityButton (but we do the saving here because it's easier
 
-        outState.putInt( "checkedAbilityIndex", checkedAbilityIndex() );
+        outState.putInt( STATE_CHECKED_ABILITY_INDEX, checkedAbilityIndex() );
 
         // Mute state is stored in a preference, so no need to store it here.
     }
 
     private void restoreFromState( Bundle savedInstanceState )
     {
-        muted = prefs.getBoolean( "muted", false );
+        muted = prefs.getBoolean( PREFS_MUTED, false );
         updateMuteButton();
 
         if ( savedInstanceState != null )
         {
-            int checkedAbility = savedInstanceState.getInt( "checkedAbilityIndex", -1 );
+            int checkedAbility = savedInstanceState.getInt( STATE_CHECKED_ABILITY_INDEX, -1 );
             if ( checkedAbility != -1 )
             {
                 abilitiesGroup.check( checkedAbility );

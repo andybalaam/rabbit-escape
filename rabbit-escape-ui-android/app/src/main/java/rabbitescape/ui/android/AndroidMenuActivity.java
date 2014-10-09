@@ -83,7 +83,7 @@ public class AndroidMenuActivity extends ActionBarActivity
                     if ( item.type != MenuItem.Type.MENU )
                     {
                         Intent intent = new Intent( parentActivity, AndroidGameActivity.class );
-                        intent.putExtra( "level", "test/level_01.rel" );
+                        intent.putExtra( AndroidGameActivity.INTENT_LEVEL, "test/level_01.rel" );
                         startActivity( intent );
                     }
                     else
