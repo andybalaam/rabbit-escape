@@ -32,7 +32,6 @@ public class AndroidGameActivity extends ActionBarActivity implements NumLeftLis
     public static final String INTENT_LEVEL = "rabbitescape.level";
     public static final String PREFS_MUTED = "rabbitescape.muted";
     public static final String STATE_CHECKED_ABILITY_INDEX = "rabbitescape.checkedAbilityIndex";
-    public static final String STATE_WORLD                 = "rabbitescape.world";
 
     // System
     private SharedPreferences prefs;
@@ -46,7 +45,6 @@ public class AndroidGameActivity extends ActionBarActivity implements NumLeftLis
     private LinearLayout topLayout;
     private RadioGroup abilitiesGroup;
 
-    private World world;
     private GameSurfaceView gameSurface;
     private Token.Type[] abilities;
 
@@ -56,7 +54,7 @@ public class AndroidGameActivity extends ActionBarActivity implements NumLeftLis
         super.onCreate( savedInstanceState );
 
         staticInit();
-        world = loadWorld( getIntent(), savedInstanceState );
+        World world = loadWorld( getIntent(), savedInstanceState );
         buildDynamicUi( getResources(), world, savedInstanceState );
         restoreFromState( savedInstanceState );
     }
@@ -65,7 +63,7 @@ public class AndroidGameActivity extends ActionBarActivity implements NumLeftLis
     {
         if ( savedInstanceState != null )
         {
-            String savedWorld = savedInstanceState.getString( STATE_WORLD );
+            String savedWorld = savedInstanceState.getString( AndroidGameLoop.STATE_WORLD );
             if ( savedWorld != null )
             {
                 return TextWorldManip.createWorld( split( savedWorld, "\n" ) );
@@ -179,9 +177,6 @@ public class AndroidGameActivity extends ActionBarActivity implements NumLeftLis
         // - each AbilityButton (but we do the saving here because it's easier
 
         outState.putInt( STATE_CHECKED_ABILITY_INDEX, checkedAbilityIndex() );
-
-        outState.putString(
-            STATE_WORLD, join( "\n", TextWorldManip.renderCompleteWorld( world, true ) ) );
 
         if ( gameSurface != null )
         {

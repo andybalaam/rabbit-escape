@@ -11,12 +11,15 @@ import rabbitescape.engine.Token;
 import rabbitescape.engine.World;
 import rabbitescape.render.BitmapCache;
 
+import static android.text.TextUtils.join;
+
 public class AndroidGameLoop implements Runnable
 {
     // Constants
-    private static final java.lang.String STATE_PAUSED   = "rabbitescape.paused";
-    private static final java.lang.String STATE_SCROLL_X = "rabbitescape.scrollx";
-    private static final java.lang.String STATE_SCROLL_Y = "rabbitescape.scrolly";
+    public  static final String STATE_WORLD    = "rabbitescape.world";
+    private static final String STATE_PAUSED   = "rabbitescape.paused";
+    private static final String STATE_SCROLL_X = "rabbitescape.scrollx";
+    private static final String STATE_SCROLL_Y = "rabbitescape.scrolly";
     private static final long max_allowed_skips = 10;
     private static final long simulation_time_step_ms = 70;
     private static final long frame_time_ms = 70;
@@ -34,6 +37,8 @@ public class AndroidGameLoop implements Runnable
     private int screenWidthPixels;
     private int screenHeightPixels;
     private boolean checkScroll;
+
+    public final WorldSaver worldSaver;
 
     public AndroidGameLoop(
         SurfaceHolder surfaceHolder,
@@ -65,6 +70,7 @@ public class AndroidGameLoop implements Runnable
         this.screenWidthPixels = 100;
         this.screenHeightPixels = 100;
         this.running = true;
+        this.worldSaver = new WorldSaver( world );
     }
 
     @Override
@@ -76,6 +82,7 @@ public class AndroidGameLoop implements Runnable
         while( running )
         {
             processInput();
+            worldSaver.check();
             simulation_time = doPhysics( simulation_time, frame_start_time );
             drawGraphics();
             frame_start_time = waitForNextFrame( frame_start_time );
@@ -104,14 +111,8 @@ public class AndroidGameLoop implements Runnable
 
         while ( paused && running )
         {
-            try
-            {
-                Thread.sleep( 100 );
-            }
-            catch ( InterruptedException e )
-            {
-                // Ignore - no need to do anything if interrupted
-            }
+            worldSaver.waitUnlessSaveSignal( 100 );
+            worldSaver.check();
 
             if ( prevScrollX != scrollX || prevScrollY != scrollY )
             {
@@ -131,16 +132,9 @@ public class AndroidGameLoop implements Runnable
 
         if ( wait_time > 0 )
         {
-            try
-            {
-                Thread.sleep( wait_time );
-            }
-            catch ( InterruptedException e )
-            {
-                // Should never happen
-                e.printStackTrace();
-            }
+            worldSaver.waitUnlessSaveSignal( wait_time );
         }
+        worldSaver.check();
 
         return next_frame_start_time;
     }
@@ -246,6 +240,7 @@ public class AndroidGameLoop implements Runnable
 
     public void onSaveInstanceState( Bundle outState )
     {
+        outState.putString( STATE_WORLD, join( "\n", worldSaver.waitUntilSaved() ) );
         outState.putBoolean( STATE_PAUSED, paused );
         outState.putInt( STATE_SCROLL_X, scrollX );
         outState.putInt( STATE_SCROLL_Y, scrollY );
