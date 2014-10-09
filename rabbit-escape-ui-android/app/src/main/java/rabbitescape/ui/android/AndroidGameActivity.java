@@ -1,5 +1,6 @@
 package rabbitescape.ui.android;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.support.v7.app.ActionBarActivity;
@@ -40,13 +41,15 @@ public class AndroidGameActivity extends ActionBarActivity implements NumLeftLis
         super.onCreate( savedInstanceState );
 
         staticInit();
-        buildDynamicUi( getResources(), loadWorld() );
+        buildDynamicUi( getResources(), loadWorld( getIntent() ) );
         restoreFromState( savedInstanceState );
     }
 
-    private World loadWorld()
+    private World loadWorld( Intent intent )
     {
-        return new LoadWorldFile( new RealFileSystem() ).load( "test/level_01.rel" );
+        String levelFileName = intent.getStringExtra( "level" );
+
+        return new LoadWorldFile( new RealFileSystem() ).load( levelFileName );
     }
 
     private void buildDynamicUi( Resources resources, World world )
