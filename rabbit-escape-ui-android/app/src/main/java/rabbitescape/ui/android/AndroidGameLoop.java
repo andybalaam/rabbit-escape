@@ -33,6 +33,7 @@ public class AndroidGameLoop implements Runnable
     private boolean running;
     private int screenWidthPixels;
     private int screenHeightPixels;
+    private boolean checkScroll;
 
     public AndroidGameLoop(
         SurfaceHolder surfaceHolder,
@@ -51,13 +52,14 @@ public class AndroidGameLoop implements Runnable
             this.paused = savedInstanceState.getBoolean( STATE_PAUSED, false );
             this.scrollX = savedInstanceState.getInt( STATE_SCROLL_X, 0 );
             this.scrollY = savedInstanceState.getInt( STATE_SCROLL_Y, 0);
-            scrollBy( 0, 0 ); // Ensure we are not off the edge
+            this.checkScroll = true;
         }
         else
         {
             this.paused = false;
             this.scrollX = 0;
             this.scrollY = 0;
+            this.checkScroll = false;
         }
 
         this.screenWidthPixels = 100;
@@ -169,6 +171,11 @@ public class AndroidGameLoop implements Runnable
     {
         screenWidthPixels = canvas.getWidth();
         screenHeightPixels = canvas.getHeight();
+        if ( checkScroll )
+        {
+            scrollBy( 0, 0 );
+            checkScroll = false;
+        }
 
         graphics.draw( canvas, -scrollX, -scrollY, physics.frame );
     }
