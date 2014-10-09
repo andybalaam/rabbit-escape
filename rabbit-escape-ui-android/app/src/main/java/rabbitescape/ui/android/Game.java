@@ -1,6 +1,7 @@
 package rabbitescape.ui.android;
 
 import android.content.res.Resources;
+import android.os.Bundle;
 import android.view.SurfaceHolder;
 
 import rabbitescape.engine.World;
@@ -8,17 +9,23 @@ import rabbitescape.render.BitmapCache;
 
 public class Game
 {
-    private final Thread thread;
+    // Saved state (saved by GameSurfaceView)
     public final AndroidGameLoop gameLoop;
+
+    // Transient state
+    private final Thread thread;
 
     public Game(
         SurfaceHolder surfaceHolder,
         BitmapCache<AndroidBitmap> bitmapCache,
         World world,
-        float displayDensity
+        float displayDensity,
+        Bundle savedInstanceState
     )
     {
-        gameLoop = new AndroidGameLoop( surfaceHolder, bitmapCache, world, displayDensity );
+        gameLoop = new AndroidGameLoop(
+            surfaceHolder, bitmapCache, world, displayDensity, savedInstanceState );
+
         thread = new Thread( gameLoop, "GameLoop" );
     }
 

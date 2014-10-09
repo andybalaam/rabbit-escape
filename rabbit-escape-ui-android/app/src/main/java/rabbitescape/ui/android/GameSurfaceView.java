@@ -2,6 +2,7 @@ package rabbitescape.ui.android;
 
 import android.content.Context;
 import android.content.res.Resources;
+import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -20,22 +21,28 @@ public class GameSurfaceView extends SurfaceView
         SurfaceHolder.Callback,
         View.OnClickListener
 {
-    private final NumLeftListener numLeftListener;
-    private final BitmapCache<AndroidBitmap> bitmapCache;
+    // Saved state (saved by AndroidGameActivity)
     private final World world;
-    private final float displayDensity;
-
-    public Game game;
-    public Scrolling scrolling;
     private Token.Type chosenAbility;
     private int chosenAbilityIndex;
+
+    // Saved state
+    public Game game;
+
+    // Transient state
+    private final NumLeftListener numLeftListener;
+    private final BitmapCache<AndroidBitmap> bitmapCache;
+    private final float displayDensity;
+    private final Bundle savedInstanceState;
+    private final Scrolling scrolling;
 
     public GameSurfaceView(
         Context context,
         NumLeftListener numLeftListener,
         BitmapCache<AndroidBitmap> bitmapCache,
         World world,
-        float displayDensity
+        float displayDensity,
+        Bundle savedInstanceState
     )
     {
         super( context );
@@ -43,6 +50,7 @@ public class GameSurfaceView extends SurfaceView
         this.bitmapCache = bitmapCache;
         this.world = world;
         this.displayDensity = displayDensity;
+        this.savedInstanceState = savedInstanceState;
 
         game = null;
         scrolling = new Scrolling( this, ViewConfiguration.get( context ).getScaledTouchSlop() );
@@ -55,7 +63,7 @@ public class GameSurfaceView extends SurfaceView
     @Override
     public void surfaceCreated( SurfaceHolder surfaceHolder )
     {
-        game = new Game( surfaceHolder, bitmapCache, world, displayDensity );
+        game = new Game( surfaceHolder, bitmapCache, world, displayDensity, savedInstanceState );
         game.start();
 
         setOnClickListener( this );
@@ -93,7 +101,7 @@ public class GameSurfaceView extends SurfaceView
     @Override
     public void onClick( View view )
     {
-        if ( chosenAbility == null )
+        if ( game == null || chosenAbility == null )
         {
             return;
         }
@@ -113,5 +121,13 @@ public class GameSurfaceView extends SurfaceView
     {
         chosenAbility = ability;
         chosenAbilityIndex = abilityIndex;
+    }
+
+    public void onSaveInstanceState( Bundle outState )
+    {
+        if ( game != null )
+        {
+            game.gameLoop.onSaveInstanceState( outState );
+        }
     }
 }

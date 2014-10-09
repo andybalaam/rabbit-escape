@@ -18,24 +18,35 @@ import java.util.Set;
 import rabbitescape.engine.LoadWorldFile;
 import rabbitescape.engine.Token;
 import rabbitescape.engine.World;
+import rabbitescape.engine.textworld.TextWorldManip;
 import rabbitescape.engine.util.RealFileSystem;
 import rabbitescape.render.BitmapCache;
+
+import static android.text.TextUtils.join;
+import static android.text.TextUtils.split;
 
 
 public class AndroidGameActivity extends ActionBarActivity implements NumLeftListener
 {
+    // Constants
     public static final String INTENT_LEVEL = "rabbitescape.level";
     public static final String PREFS_MUTED = "rabbitescape.muted";
     public static final String STATE_CHECKED_ABILITY_INDEX = "rabbitescape.checkedAbilityIndex";
+    public static final String STATE_WORLD                 = "rabbitescape.world";
 
-    private boolean muted;
+    // System
     private SharedPreferences prefs;
+
+    // Saved state
+    private boolean muted;
+
 
     private ImageView muteButton;
     private ImageView pauseButton;
     private LinearLayout topLayout;
     private RadioGroup abilitiesGroup;
 
+    private World world;
     private GameSurfaceView gameSurface;
     private Token.Type[] abilities;
 
@@ -45,18 +56,27 @@ public class AndroidGameActivity extends ActionBarActivity implements NumLeftLis
         super.onCreate( savedInstanceState );
 
         staticInit();
-        buildDynamicUi( getResources(), loadWorld( getIntent() ) );
+        world = loadWorld( getIntent(), savedInstanceState );
+        buildDynamicUi( getResources(), world, savedInstanceState );
         restoreFromState( savedInstanceState );
     }
 
-    private World loadWorld( Intent intent )
+    private World loadWorld( Intent intent, Bundle savedInstanceState )
     {
-        String levelFileName = intent.getStringExtra( INTENT_LEVEL );
+        if ( savedInstanceState != null )
+        {
+            String savedWorld = savedInstanceState.getString( STATE_WORLD );
+            if ( savedWorld != null )
+            {
+                return TextWorldManip.createWorld( split( savedWorld, "\n" ) );
+            }
+        }
 
+        String levelFileName = intent.getStringExtra( INTENT_LEVEL );
         return new LoadWorldFile( new RealFileSystem() ).load( levelFileName );
     }
 
-    private void buildDynamicUi( Resources resources, World world )
+    private void buildDynamicUi( Resources resources, World world, Bundle savedInstanceState )
     {
         DisplayMetrics metrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics( metrics );
@@ -64,7 +84,13 @@ public class AndroidGameActivity extends ActionBarActivity implements NumLeftLis
         createAbilities( world, resources );
 
         gameSurface = new GameSurfaceView(
-            this, this, createBitmapCache( resources ), world, metrics.density );
+            this,
+            this,
+            createBitmapCache( resources ),
+            world,
+            metrics.density,
+            savedInstanceState
+        );
 
         topLayout.addView( gameSurface );
     }
@@ -153,6 +179,14 @@ public class AndroidGameActivity extends ActionBarActivity implements NumLeftLis
         // - each AbilityButton (but we do the saving here because it's easier
 
         outState.putInt( STATE_CHECKED_ABILITY_INDEX, checkedAbilityIndex() );
+
+        outState.putString(
+            STATE_WORLD, join( "\n", TextWorldManip.renderCompleteWorld( world ) ) );
+
+        if ( gameSurface != null )
+        {
+            gameSurface.onSaveInstanceState( outState );
+        }
 
         // Mute state is stored in a preference, so no need to store it here.
     }

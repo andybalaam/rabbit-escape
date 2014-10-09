@@ -1,6 +1,7 @@
 package rabbitescape.ui.android;
 
 import android.graphics.Canvas;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.SurfaceHolder;
 
@@ -12,18 +13,24 @@ import rabbitescape.render.BitmapCache;
 
 public class AndroidGameLoop implements Runnable
 {
+    // Constants
+    private static final java.lang.String STATE_PAUSED   = "rabbitescape.paused";
+    private static final java.lang.String STATE_SCROLL_X = "rabbitescape.scrollx";
+    private static final java.lang.String STATE_SCROLL_Y = "rabbitescape.scrolly";
     private static final long max_allowed_skips = 10;
     private static final long simulation_time_step_ms = 70;
     private static final long frame_time_ms = 70;
 
+    // Saved state
+    public boolean paused;
+    private int scrollX;
+    private int scrollY;
+
+    // Transient state
     private final SurfaceHolder surfaceHolder;
     private final Physics physics;
     private final Graphics graphics;
-
-    private int scrollX;
-    private int scrollY;
     private boolean running;
-    public boolean paused;
     private int screenWidthPixels;
     private int screenHeightPixels;
 
@@ -31,19 +38,31 @@ public class AndroidGameLoop implements Runnable
         SurfaceHolder surfaceHolder,
         BitmapCache<AndroidBitmap> bitmapCache,
         World world,
-        float displayDensity
+        float displayDensity,
+        Bundle savedInstanceState
     )
     {
         this.surfaceHolder = surfaceHolder;
         this.physics = new Physics( world );
         this.graphics = new Graphics( bitmapCache, world, displayDensity );
 
-        this.scrollX = 0;
-        this.scrollY = 0;
+        if ( savedInstanceState != null )
+        {
+            this.paused = savedInstanceState.getBoolean( STATE_PAUSED, false );
+            this.scrollX = savedInstanceState.getInt( STATE_SCROLL_X, 0 );
+            this.scrollY = savedInstanceState.getInt( STATE_SCROLL_Y, 0);
+            scrollBy( 0, 0 ); // Ensure we are not off the edge
+        }
+        else
+        {
+            this.paused = false;
+            this.scrollX = 0;
+            this.scrollY = 0;
+        }
+
         this.screenWidthPixels = 100;
         this.screenHeightPixels = 100;
         this.running = true;
-        this.paused = false;
     }
 
     @Override
@@ -216,5 +235,12 @@ public class AndroidGameLoop implements Runnable
             (int)( ( pixelX + scrollX ) / graphics.renderingTileSize ),
             (int)( ( pixelY + scrollY ) / graphics.renderingTileSize )
     );
+    }
+
+    public void onSaveInstanceState( Bundle outState )
+    {
+        outState.putBoolean( STATE_PAUSED, paused );
+        outState.putInt( STATE_SCROLL_X, scrollX );
+        outState.putInt( STATE_SCROLL_Y, scrollY );
     }
 }
