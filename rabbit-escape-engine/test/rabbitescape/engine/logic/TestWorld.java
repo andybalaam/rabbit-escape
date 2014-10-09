@@ -98,7 +98,7 @@ public class TestWorld
         );
 
         // This is what we are testing
-        world.addToken(0, 0, Token.Type.bash);
+        world.changes.addToken( 0, 0, Token.Type.bash );
         world.step();
 
         // There should be one less bash
@@ -121,7 +121,7 @@ public class TestWorld
         );
 
         // Use up the last bash
-        world.addToken( 0, 0, Token.Type.bash );
+        world.changes.addToken( 0, 0, Token.Type.bash );
         world.step();
 
         // Sanity
@@ -131,7 +131,7 @@ public class TestWorld
         World.UnableToAddToken caughtException = null;
         try
         {
-            world.addToken( 1, 0, Token.Type.bash );
+            world.changes.addToken( 1, 0, Token.Type.bash );
         }
         catch ( World.UnableToAddToken e )
         {

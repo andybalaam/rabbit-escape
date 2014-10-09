@@ -37,7 +37,7 @@ public class Entrance extends Thing
         {
             timeToNextRabbit = delay;
 
-            world.enterRabbit( new Rabbit( x, y + 1, RIGHT ) );
+            world.changes.enterRabbit( new Rabbit( x, y + 1, RIGHT ) );
         }
         --timeToNextRabbit;
     }

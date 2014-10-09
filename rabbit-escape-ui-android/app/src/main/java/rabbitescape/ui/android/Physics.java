@@ -25,7 +25,7 @@ public class Physics
 
         public synchronized void addToken( int x, int y, Token.Type type )
         {
-            world.addToken( x, y, type );
+            world.changes.addToken( x, y, type );
         }
     }
 

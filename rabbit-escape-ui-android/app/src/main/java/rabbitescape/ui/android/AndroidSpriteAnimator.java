@@ -59,7 +59,7 @@ public class AndroidSpriteAnimator
             addThing( frameNum, thing, ret );
         }
 
-        for ( Thing thing : world.changes.thingsToAdd )
+        for ( Thing thing : world.changes.tokensAboutToAppear() )
         {
             addThing( frameNum, thing, ret );
         }

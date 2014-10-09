@@ -19,7 +19,7 @@ public class Bashing implements Behaviour
         Token token = world.getTokenAt( rabbit.x, rabbit.y );
         if ( token != null && token.type == bash )
         {
-            world.removeThing( token );
+            world.changes.removeThing( token );
             justPickedUpToken = true;
         }
 
@@ -55,7 +55,7 @@ public class Bashing implements Behaviour
             case RABBIT_BASHING_RIGHT:
             case RABBIT_BASHING_LEFT:
             {
-                world.removeBlockAt( destX( rabbit ), rabbit.y );
+                world.changes.removeBlockAt( destX( rabbit ), rabbit.y );
                 return true;
             }
             case RABBIT_BASHING_USELESSLY_RIGHT:

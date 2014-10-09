@@ -29,12 +29,12 @@ public class Falling implements Behaviour
         {
             case RABBIT_DYING_OF_FALLING:
             {
-                world.killRabbit( rabbit );
+                world.changes.killRabbit( rabbit );
                 return true;
             }
             case RABBIT_DYING_OF_FALLING_2:
             {
-                world.killRabbit( rabbit );
+                world.changes.killRabbit( rabbit );
                 return true;
             }
             case RABBIT_FALLING:

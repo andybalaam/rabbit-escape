@@ -26,7 +26,7 @@ public class Exiting implements Behaviour
     {
         if ( state == RABBIT_ENTERING_EXIT )
         {
-            world.saveRabbit( rabbit );
+            world.changes.saveRabbit( rabbit );
             return true;
         }
         else

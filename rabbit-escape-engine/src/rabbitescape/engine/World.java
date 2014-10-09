@@ -73,14 +73,21 @@ public class World
 
     public static class Changes
     {
+        private final World world;
+
         private final List<Rabbit> rabbitsToAdd    = syncList();
         private final List<Rabbit> rabbitsToRemove = syncList();
-        public final  List<Thing>  thingsToAdd     = syncList();
+        private final List<Thing>  thingsToAdd     = syncList();
         private final List<Thing>  thingsToRemove  = syncList();
-        public final  List<Block>  blocksToAdd     = syncList();
+        private final List<Block>  blocksToAdd     = syncList();
         private final List<Block>  blocksToRemove  = syncList();
 
-        public void apply( World world )
+        public Changes( World world )
+        {
+            this.world = world;
+        }
+
+        public void apply()
         {
             // Add any new things
             for ( Rabbit rabbit : rabbitsToAdd )
@@ -108,6 +115,70 @@ public class World
         {
             return Collections.synchronizedList( new ArrayList<T>() );
         }
+
+        public void addBlock( Block block )
+        {
+            blocksToAdd.add( block );
+        }
+
+        public void killRabbit( Rabbit rabbit )
+        {
+            ++world.num_killed;
+            rabbitsToRemove.add( rabbit );
+        }
+
+        public void enterRabbit( Rabbit rabbit )
+        {
+            --world.num_waiting;
+            rabbitsToAdd.add( rabbit );
+        }
+
+        public void saveRabbit( Rabbit rabbit )
+        {
+            ++world.num_saved;
+            rabbitsToRemove.add( rabbit );
+        }
+
+
+        public void addToken( int x, int y, Token.Type type )
+        throws UnableToAddToken
+        {
+            Integer numLeft = world.abilities.get( type );
+
+            if ( numLeft == null )
+            {
+                throw new NoSuchAbilityInThisWorld( type );
+            }
+
+            if ( numLeft == 0 )
+            {
+                throw new NoneOfThisAbilityLeft( type );
+            }
+
+            thingsToAdd.add( new Token( x, y, type ) );
+            world.abilities.put( type, numLeft - 1 );
+        }
+
+        public void removeThing( Thing thing )
+        {
+            thingsToRemove.add( thing );
+        }
+
+        public void removeBlockAt( int x, int y )
+        {
+            Block block = world.getBlockAt( x, y );
+            if ( block == null )
+            {
+                throw new NoBlockFound( x, y );
+            }
+            blocksToRemove.add( block );
+        }
+
+        public List<Thing> tokensAboutToAppear()
+        {
+            return new ArrayList<Thing>( thingsToAdd );
+        }
+
     }
 
     public final Dimension size;
@@ -154,7 +225,7 @@ public class World
         this.num_killed = num_killed;
         this.num_waiting = num_waiting;
 
-        this.changes = new Changes();
+        this.changes = new Changes( this );
 
         init();
     }
@@ -179,14 +250,14 @@ public class World
             thing.step(this);
         }
 
-        changes.apply( this );
+        changes.apply();
 
         for ( Thing thing : allThings() )
         {
             thing.calcNewState( this );
         }
 
-        changes.apply( this );
+        changes.apply();
     }
 
     public ChangeDescription describeChanges()
@@ -229,58 +300,6 @@ public class World
             }
         }
         return null;
-    }
-
-    public void enterRabbit( Rabbit rabbit )
-    {
-        --this.num_waiting;
-        changes.rabbitsToAdd.add( rabbit );
-    }
-
-    public void saveRabbit( Rabbit rabbit )
-    {
-        ++num_saved;
-        changes.rabbitsToRemove.add( rabbit );
-    }
-
-    public void killRabbit( Rabbit rabbit )
-    {
-        ++num_killed;
-        changes.rabbitsToRemove.add( rabbit );
-    }
-
-    public void addToken( int x, int y, Token.Type type )
-    throws UnableToAddToken
-    {
-        Integer numLeft = abilities.get( type );
-
-        if ( numLeft == null )
-        {
-            throw new NoSuchAbilityInThisWorld( type );
-        }
-
-        if ( numLeft == 0 )
-        {
-            throw new NoneOfThisAbilityLeft( type );
-        }
-
-        changes.thingsToAdd.add( new Token( x, y, type ) );
-        abilities.put( type, numLeft - 1 );
-    }
-
-    public void removeThing( Thing thing )
-    {
-        changes.thingsToRemove.add( thing );
-    }
-
-    public void removeBlockAt( int x, int y )
-    {
-        Block block = getBlockAt( x, y );
-        if ( block == null )
-        {
-            throw new NoBlockFound( x, y );
-        }
-        changes.blocksToRemove.add( block );
     }
 
     public boolean finished()

@@ -16,7 +16,7 @@ public class Bridging implements Behaviour
         Token token = world.getTokenAt( rabbit.x, rabbit.y );
         if ( token != null && token.type == bridge )
         {
-            world.removeThing( token );
+            world.changes.removeThing( token );
             smallSteps = 4;
             bigSteps = 3;
         }
@@ -173,7 +173,7 @@ public class Bridging implements Behaviour
             case RABBIT_BRIDGING_DOWN_UP_RIGHT_3:
             {
                 rabbit.x++;
-                world.changes.blocksToAdd.add(
+                world.changes.addBlock(
                     new Block(
                         rabbit.x,
                         rabbit.y,
@@ -187,7 +187,7 @@ public class Bridging implements Behaviour
             case RABBIT_BRIDGING_DOWN_UP_LEFT_3:
             {
                 rabbit.x--;
-                world.changes.blocksToAdd.add(
+                world.changes.addBlock(
                     new Block(
                         rabbit.x,
                         rabbit.y,
@@ -201,7 +201,7 @@ public class Bridging implements Behaviour
             {
                 rabbit.x++;
                 rabbit.y--;
-                world.changes.blocksToAdd.add(
+                world.changes.addBlock(
                     new Block(
                         rabbit.x,
                         rabbit.y,
@@ -215,7 +215,7 @@ public class Bridging implements Behaviour
             {
                 rabbit.x--;
                 rabbit.y--;
-                world.changes.blocksToAdd.add(
+                world.changes.addBlock(
                     new Block(
                         rabbit.x,
                         rabbit.y,

@@ -173,7 +173,7 @@ public class InputHandler
             Command command = new Command( input, world );
             if ( command.item.equals( "bash" ) )
             {
-                world.addToken( command.x, command.y, Token.Type.bash );
+                world.changes.addToken( command.x, command.y, Token.Type.bash );
             }
             else
             {
