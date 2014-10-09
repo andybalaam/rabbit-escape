@@ -100,7 +100,7 @@ public class AndroidGameLoop implements Runnable
         int prevScrollX = scrollX;
         int prevScrollY = scrollY;
 
-        while ( paused )
+        while ( paused && running )
         {
             try
             {
