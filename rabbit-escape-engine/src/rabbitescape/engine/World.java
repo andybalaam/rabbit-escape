@@ -116,15 +116,15 @@ public class World
     public final List<Thing> things;
     public final Map<Token.Type, Integer> abilities;
     public final String name;
-    public final int numRabbits;
-    public final int requiredNumSavedRabbits;
-    public final int rabbitDelay;
+    public final int num_rabbits;
+    public final int num_to_save;
+    public final int rabbit_delay;
+
+    public int num_saved;
+    public int num_killed;
+    public int num_waiting;
 
     public final Changes changes;
-
-    public int numSavedRabbits;
-    public int numKilledRabbits;
-    public int rabbitsStillToEnter;
 
     public World(
         Dimension size,
@@ -133,8 +133,12 @@ public class World
         List<Thing> things,
         Map<Token.Type, Integer> abilities,
         String name,
-        int numRabbits,
-        int rabbitDelay
+        int num_rabbits,
+        int num_to_save,
+        int rabbit_delay,
+        int num_saved,
+        int num_killed,
+        int num_waiting
     )
     {
         this.size = size;
@@ -143,14 +147,14 @@ public class World
         this.things = things;
         this.abilities = abilities;
         this.name = name;
-        this.numRabbits = numRabbits;
-        this.requiredNumSavedRabbits = 1;
-        this.rabbitDelay = rabbitDelay;
-        this.changes = new Changes();
+        this.num_rabbits = num_rabbits;
+        this.num_to_save = num_to_save;
+        this.rabbit_delay = rabbit_delay;
+        this.num_saved = num_saved;
+        this.num_killed = num_killed;
+        this.num_waiting = num_waiting;
 
-        numSavedRabbits = 0;
-        numKilledRabbits = 0;
-        rabbitsStillToEnter = numRabbits;
+        this.changes = new Changes();
 
         init();
     }
@@ -229,19 +233,19 @@ public class World
 
     public void enterRabbit( Rabbit rabbit )
     {
-        --rabbitsStillToEnter;
+        --this.num_waiting;
         changes.rabbitsToAdd.add( rabbit );
     }
 
     public void saveRabbit( Rabbit rabbit )
     {
-        ++numSavedRabbits;
+        ++num_saved;
         changes.rabbitsToRemove.add( rabbit );
     }
 
     public void killRabbit( Rabbit rabbit )
     {
-        ++numKilledRabbits;
+        ++num_killed;
         changes.rabbitsToRemove.add( rabbit );
     }
 
@@ -281,7 +285,7 @@ public class World
 
     public boolean finished()
     {
-        return ( rabbits.size() == 0 && rabbitsStillToEnter <= 0 );
+        return ( rabbits.size() == 0 && this.num_waiting <= 0 );
     }
 
     public Token getTokenAt( int x, int y )
@@ -299,12 +303,12 @@ public class World
 
     public boolean success()
     {
-        return numSavedRabbits > requiredNumSavedRabbits;
+        return num_saved > num_to_save;
     }
 
     public int numRabbitsOut()
     {
-        return numRabbits -
-            ( rabbitsStillToEnter + numKilledRabbits + numSavedRabbits );
+        return num_rabbits -
+            ( this.num_waiting + num_killed + num_saved );
     }
 }

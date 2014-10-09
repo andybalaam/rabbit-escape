@@ -69,14 +69,14 @@ public class TestExit
         );
 
         world.step();
-        assertThat( world.numSavedRabbits, equalTo( 0 ) );
+        assertThat( world.num_saved, equalTo( 0 ) );
         world.step();
-        assertThat( world.numSavedRabbits, equalTo( 1 ) );
+        assertThat( world.num_saved, equalTo( 1 ) );
         world.step();
-        assertThat( world.numSavedRabbits, equalTo( 2 ) );
+        assertThat( world.num_saved, equalTo( 2 ) );
         world.step();
-        assertThat( world.numSavedRabbits, equalTo( 3 ) );
+        assertThat( world.num_saved, equalTo( 3 ) );
         world.step();
-        assertThat( world.numSavedRabbits, equalTo( 4 ) );
+        assertThat( world.num_saved, equalTo( 4 ) );
     }
 }

@@ -181,7 +181,7 @@ public class AndroidGameActivity extends ActionBarActivity implements NumLeftLis
         outState.putInt( STATE_CHECKED_ABILITY_INDEX, checkedAbilityIndex() );
 
         outState.putString(
-            STATE_WORLD, join( "\n", TextWorldManip.renderCompleteWorld( world ) ) );
+            STATE_WORLD, join( "\n", TextWorldManip.renderCompleteWorld( world, true ) ) );
 
         if ( gameSurface != null )
         {

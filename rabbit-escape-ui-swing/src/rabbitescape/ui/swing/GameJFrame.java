@@ -203,7 +203,7 @@ public class GameJFrame extends JFrame
 
         this.topBar = new TopBar(
             backgroundColor,
-            gameLoop.world.requiredNumSavedRabbits,
+            gameLoop.world.num_to_save,
             middlePanel
         );
 

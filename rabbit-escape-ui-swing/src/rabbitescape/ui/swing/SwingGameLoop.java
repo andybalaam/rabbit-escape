@@ -253,9 +253,9 @@ public class SwingGameLoop implements GameLoop
         for ( StatsChangedListener listener : statsListeners )
         {
             listener.changed(
-                world.rabbitsStillToEnter,
+                world.num_waiting,
                 world.numRabbitsOut(),
-                world.numSavedRabbits
+                world.num_saved
             );
         }
     }

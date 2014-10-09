@@ -2,18 +2,28 @@ package rabbitescape.engine.textworld;
 
 import java.util.*;
 
+import static rabbitescape.engine.util.Util.*;
+
 import rabbitescape.engine.*;
 import rabbitescape.engine.util.Dimension;
 
 public class TextWorldManip
 {
-    private static final String num_rabbits  = "num_rabbits";
-    private static final String rabbit_delay = "rabbit_delay";
     private static final String name         = "name";
+    private static final String num_rabbits  = "num_rabbits";
+    private static final String num_to_save  = "num_to_save";
+    private static final String rabbit_delay = "rabbit_delay";
+    private static final String num_saved    = "num_saved";
+    private static final String num_killed   = "num_killed";
+    private static final String num_waiting  = "num_waiting";
 
     public static final List<String> META_INTS = Arrays.asList(
         num_rabbits,
-        rabbit_delay
+        num_to_save,
+        rabbit_delay,
+        num_saved,
+        num_killed,
+        num_waiting
     );
 
     public static final List<String> META_STRINGS = Arrays.asList(
@@ -43,15 +53,21 @@ public class TextWorldManip
         LineProcessor processor = new LineProcessor(
             blocks, rabbits, things, abilities, lines );
 
+        int num_rabs = processor.metaInt( num_rabbits,  10 );
+
         return new World(
             processor.size(),
             blocks,
             rabbits,
             things,
             abilities,
-            processor.metaString( "name",        "Untitled" ),
-            processor.metaInt(    "num_rabbits",  10 ),
-            processor.metaInt(    "rabbit_delay", 4 )
+            processor.metaString( name, "Untitled" ),
+            num_rabs,
+            processor.metaInt( num_to_save,  1 ),
+            processor.metaInt( rabbit_delay, 4 ),
+            processor.metaInt( num_saved, 0 ),
+            processor.metaInt( num_killed, 0 ),
+            processor.metaInt( num_waiting, num_rabs )
         );
     }
 
@@ -65,7 +81,11 @@ public class TextWorldManip
             new HashMap<Token.Type, Integer>(),
             "Empty World",
             0,
-            1
+            1,
+            4,
+            0,
+            0,
+            0
         );
     }
 
@@ -86,7 +106,7 @@ public class TextWorldManip
         return charsToStrings( chars, coordinates );
     }
 
-    public static String[] renderCompleteWorld( World world )
+    public static String[] renderCompleteWorld( World world, boolean meta )
     {
         Chars chars = new Chars( world, true );
 
@@ -94,7 +114,64 @@ public class TextWorldManip
         RabbitRenderer.render( chars, world.rabbits );
         ThingRenderer.render( chars, world.things );
 
-        return charsToComplete( chars );
+        String[] things = charsToComplete( chars );
+
+        if ( meta )
+        {
+            return concat( metaLines( world ), things );
+        }
+        else
+        {
+            return things;
+        }
+    }
+
+    private static String[] metaLines( World world )
+    {
+        List<String> ret = new ArrayList<String>();
+
+        ret.add( metaLine( name,         world.name ) );
+        ret.add( metaLine( num_rabbits,  world.num_rabbits ) );
+        ret.add( metaLine( num_to_save,  world.num_to_save ) );
+        ret.add( metaLine( rabbit_delay, world.rabbit_delay ) );
+        ret.add( metaLine( num_saved,    world.num_saved ) );
+        ret.add( metaLine( num_killed,   world.num_killed ) );
+        ret.add( metaLine( num_waiting,  world.num_waiting ) );
+
+        abilityMetaLines( world, ret );
+
+        return ret.toArray( new String[ret.size()] );
+    }
+
+    private static void abilityMetaLines( World world, List<String> ret )
+    {
+        List<Token.Type> abilityNames = new ArrayList<Token.Type>(
+            world.abilities.keySet() );
+
+        Comparator<Token.Type> alphabetical = new Comparator<Token.Type>()
+        {
+            @Override
+            public int compare( Token.Type o1, Token.Type o2 )
+            {
+                return o1.name().compareTo( o2.name() );
+            }
+        };
+        Collections.sort( abilityNames, alphabetical );
+
+        for ( Token.Type t : abilityNames )
+        {
+            ret.add( metaLine( t.name(), world.abilities.get( t ) ) );
+        }
+    }
+
+    private static String metaLine( String name, int value )
+    {
+        return metaLine( name, Integer.toString( value ) );
+    }
+
+    private static String metaLine( String name, String value )
+    {
+        return ":" + name + "=" + value;
     }
 
     public static String[] renderChangeDescription(

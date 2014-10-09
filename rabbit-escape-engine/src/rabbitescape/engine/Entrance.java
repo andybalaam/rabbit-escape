@@ -21,14 +21,14 @@ public class Entrance extends Thing
     {
         if ( delay == -1 )
         {
-            delay = world.rabbitDelay;
+            delay = world.rabbit_delay;
         }
     }
 
     @Override
     public void step( World world )
     {
-        if ( world.rabbitsStillToEnter <= 0 )
+        if ( world.num_waiting <= 0 )
         {
             return;
         }

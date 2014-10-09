@@ -382,7 +382,7 @@ public class TestTextWorldManip
         };
 
         assertThat(
-            createWorld( lines ).numRabbits,
+            createWorld( lines ).num_rabbits,
             equalTo( 10 )
         );
     }
@@ -405,7 +405,7 @@ public class TestTextWorldManip
         world.things.add( new Token( 2, 2, Token.Type.bridge ) );
 
         assertThat(
-            renderCompleteWorld( world ),
+            renderCompleteWorld( world, false ),
             equalTo(
                 "####",
                 "#  #",
@@ -440,7 +440,7 @@ public class TestTextWorldManip
         world.things.add( new Token( 2, 2, Token.Type.dig ) );
 
         assertThat(
-            renderCompleteWorld( world ),
+            renderCompleteWorld( world, false ),
             equalTo(
                 "####",
                 "#**#",
@@ -472,7 +472,7 @@ public class TestTextWorldManip
 
         // Result is the same as if they came at the end
         assertThat(
-            renderCompleteWorld( world ),
+            renderCompleteWorld( world, false ),
             equalTo(
                 "####",
                 "#**#",
@@ -501,7 +501,37 @@ public class TestTextWorldManip
         };
 
         assertThat(
-            renderCompleteWorld( createWorld( lines ) ),
+            renderCompleteWorld( createWorld( lines ), false ),
+            equalTo( lines )
+        );
+    }
+
+    @Test
+    public void Round_trip_world_with_metadata()
+    {
+        String[] lines = {
+            ":name=My Round Trip",
+            ":num_rabbits=25",
+            ":num_to_save=4",
+            ":rabbit_delay=2",
+            ":num_saved=5",
+            ":num_killed=4",
+            ":num_waiting=16",
+            ":bash=1",
+            ":bridge=3",
+            ":dig=2",
+            "####",
+            "#**#",
+            "#**#",
+            "####",
+            ":*=rj",
+            ":*=bi",
+            ":*=\\d",
+            ":*=/d"
+        };
+
+        assertThat(
+            renderCompleteWorld( createWorld( lines ), true ),
             equalTo( lines )
         );
     }
