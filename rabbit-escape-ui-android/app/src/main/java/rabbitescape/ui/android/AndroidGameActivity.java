@@ -24,9 +24,9 @@ import rabbitescape.render.BitmapCache;
 
 public class AndroidGameActivity extends ActionBarActivity implements NumLeftListener
 {
-    public static final String INTENT_LEVEL = "level";
-    public static final String PREFS_MUTED = "muted";
-    public static final String STATE_CHECKED_ABILITY_INDEX = "checkedAbilityIndex";
+    public static final String INTENT_LEVEL = "rabbitescape.level";
+    public static final String PREFS_MUTED = "rabbitescape.muted";
+    public static final String STATE_CHECKED_ABILITY_INDEX = "rabbitescape.checkedAbilityIndex";
 
     private boolean muted;
     private SharedPreferences prefs;
