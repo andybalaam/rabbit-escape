@@ -51,10 +51,33 @@ public class WorldChanges
         blocksToRemove.clear();
     }
 
+    public synchronized void revert()
+    {
+        revertEnterRabbits();
+        revertKillRabbits();
+        revertSaveRabbits();
+        revertAddTokens();
+        tokensToRemove.clear();
+        blocksToAdd.clear();
+        blocksToRemove.clear();
+    }
+
+    private synchronized void revertEnterRabbits()
+    {
+        world.num_waiting += rabbitsToEnter.size();
+        rabbitsToEnter.clear();
+    }
+
     public synchronized void enterRabbit( Rabbit rabbit )
     {
         --world.num_waiting;
         rabbitsToEnter.add( rabbit );
+    }
+
+    private synchronized void revertKillRabbits()
+    {
+        world.num_killed -= rabbitsToKill.size();
+        rabbitsToKill.clear();
     }
 
     public synchronized void killRabbit( Rabbit rabbit )
@@ -63,10 +86,25 @@ public class WorldChanges
         rabbitsToKill.add( rabbit );
     }
 
+    private void revertSaveRabbits()
+    {
+        world.num_saved -= rabbitsToSave.size();
+        rabbitsToSave.clear();
+    }
+
     public synchronized void saveRabbit( Rabbit rabbit )
     {
         ++world.num_saved;
         rabbitsToSave.add( rabbit );
+    }
+
+    private synchronized void revertAddTokens()
+    {
+        for ( Token t : tokensToAdd )
+        {
+            world.abilities.put( t.type, world.abilities.get( t.type ) + 1 );
+        }
+        tokensToAdd.clear();
     }
 
     public synchronized void addToken( int x, int y, Token.Type type )
