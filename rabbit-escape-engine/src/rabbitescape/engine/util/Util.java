@@ -526,4 +526,13 @@ public class Util
         }
         return streamLines( name, res );
     }
+
+    public static <T> T[] concat( T[] left, T[] right )
+    {
+        return list(
+            chain(
+                Arrays.asList( left ), Arrays.asList( right )
+            )
+        ).toArray( left );
+    }
 }

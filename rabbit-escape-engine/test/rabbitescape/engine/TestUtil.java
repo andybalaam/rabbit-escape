@@ -580,4 +580,36 @@ public class TestUtil
     {
         resourceLines( "/rabbitescape/engine/NONEXISTENT.rel" );
     }
+
+    @Test
+    public void Concat_empty_arrays_gives_empty()
+    {
+        assertThat(
+            concat( new Integer[0], new Integer[0] ),
+            equalTo( new Integer[0] )
+        );
+    }
+
+    @Test
+    public void Concat_empty_onto_something_gives_something()
+    {
+        assertThat(
+            concat( new Double[0], new Double[] { 3.0, 4.0 } ),
+            equalTo( new Double[] { 3.0, 4.0 } )
+        );
+
+        assertThat(
+            concat( new String[] { "1", "2" }, new String[0] ),
+            equalTo( new String[] { "1", "2" } )
+        );
+    }
+
+    @Test
+    public void Concat_two_arrays_gives_their_contents_joined()
+    {
+        assertThat(
+            concat( new String[] { "4" }, new String[] { "3", "2", "1" } ),
+            equalTo( new String[] { "4", "3", "2", "1" } )
+        );
+    }
 }
