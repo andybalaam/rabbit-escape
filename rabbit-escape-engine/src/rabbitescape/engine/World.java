@@ -3,8 +3,6 @@ package rabbitescape.engine;
 import static rabbitescape.engine.util.Util.*;
 import static rabbitescape.engine.Block.Type.*;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -71,116 +69,6 @@ public class World
         }
     }
 
-    public static class Changes
-    {
-        private final World world;
-
-        private final List<Rabbit> rabbitsToAdd    = syncList();
-        private final List<Rabbit> rabbitsToRemove = syncList();
-        private final List<Thing>  thingsToAdd     = syncList();
-        private final List<Thing>  thingsToRemove  = syncList();
-        private final List<Block>  blocksToAdd     = syncList();
-        private final List<Block>  blocksToRemove  = syncList();
-
-        public Changes( World world )
-        {
-            this.world = world;
-        }
-
-        public void apply()
-        {
-            // Add any new things
-            for ( Rabbit rabbit : rabbitsToAdd )
-            {
-                rabbit.calcNewState( world );
-            }
-            world.rabbits.addAll( rabbitsToAdd );
-            world.things.addAll( thingsToAdd );
-            world.blocks.addAll( blocksToAdd );
-
-            // Remove dead/saved rabbits, used tokens, dug out blocks
-            world.rabbits.removeAll( rabbitsToRemove );
-            world.things.removeAll(  thingsToRemove );
-            world.blocks.removeAll(  blocksToRemove );
-
-            rabbitsToAdd.clear();
-            rabbitsToRemove.clear();
-            thingsToAdd.clear();
-            thingsToRemove.clear();
-            blocksToAdd.clear();
-            blocksToRemove.clear();
-        }
-
-        private <T> List<T> syncList()
-        {
-            return Collections.synchronizedList( new ArrayList<T>() );
-        }
-
-        public void addBlock( Block block )
-        {
-            blocksToAdd.add( block );
-        }
-
-        public void killRabbit( Rabbit rabbit )
-        {
-            ++world.num_killed;
-            rabbitsToRemove.add( rabbit );
-        }
-
-        public void enterRabbit( Rabbit rabbit )
-        {
-            --world.num_waiting;
-            rabbitsToAdd.add( rabbit );
-        }
-
-        public void saveRabbit( Rabbit rabbit )
-        {
-            ++world.num_saved;
-            rabbitsToRemove.add( rabbit );
-        }
-
-
-        public void addToken( int x, int y, Token.Type type )
-        throws UnableToAddToken
-        {
-            Integer numLeft = world.abilities.get( type );
-
-            if ( numLeft == null )
-            {
-                throw new NoSuchAbilityInThisWorld( type );
-            }
-
-            if ( numLeft == 0 )
-            {
-                throw new NoneOfThisAbilityLeft( type );
-            }
-
-            thingsToAdd.add( new Token( x, y, type ) );
-            world.abilities.put( type, numLeft - 1 );
-        }
-
-        public void removeThing( Thing thing )
-        {
-            thingsToRemove.add( thing );
-        }
-
-        public void removeBlockAt( int x, int y )
-        {
-            Block block = world.getBlockAt( x, y );
-            if ( block == null )
-            {
-                throw new NoBlockFound( x, y );
-            }
-            blocksToRemove.add( block );
-        }
-
-        public List<Thing> tokensAboutToAppear()
-        {
-            return new ArrayList<Thing>( thingsToAdd );
-        }
-
-    }
-
     public final Dimension size;
     public final List<Block> blocks;
     public final List<Rabbit> rabbits;
@@ -195,7 +83,7 @@ public class World
     public int num_killed;
     public int num_waiting;
 
-    public final Changes changes;
+    public final WorldChanges changes;
 
     public World(
         Dimension size,
@@ -225,7 +113,7 @@ public class World
         this.num_killed = num_killed;
         this.num_waiting = num_waiting;
 
-        this.changes = new Changes( this );
+        this.changes = new WorldChanges( this );
 
         init();
     }
