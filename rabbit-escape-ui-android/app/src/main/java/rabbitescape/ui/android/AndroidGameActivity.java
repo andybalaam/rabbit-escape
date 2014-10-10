@@ -18,6 +18,7 @@ import java.util.Set;
 import rabbitescape.engine.LoadWorldFile;
 import rabbitescape.engine.Token;
 import rabbitescape.engine.World;
+import rabbitescape.engine.err.RabbitEscapeException;
 import rabbitescape.engine.textworld.TextWorldManip;
 import rabbitescape.engine.util.RealFileSystem;
 import rabbitescape.render.BitmapCache;
@@ -124,7 +125,7 @@ public class AndroidGameActivity extends ActionBarActivity implements NumLeftLis
                 @Override
                 public void onCheckedChanged( RadioGroup radioGroup, int buttonIndex )
                 {
-                    gameSurface.chooseAbility( abilities[buttonIndex], buttonIndex );
+                    gameSurface.chooseAbility( abilities[buttonIndex] );
 
                     for ( int i = 0; i < radioGroup.getChildCount(); i++ )
                     {
@@ -245,13 +246,37 @@ public class AndroidGameActivity extends ActionBarActivity implements NumLeftLis
     }
 
     @Override
-    public void numLeft( int abilityIndex, int numLeft )
+    public void numLeft( Token.Type ability, int numLeft )
     {
         if ( numLeft == 0 )
         {
-            AbilityButton button = (AbilityButton)( abilitiesGroup.getChildAt( abilityIndex ) );
+            AbilityButton button = buttonForAbility( ability );
             button.disable();
             button.setChecked( false );
         }
+    }
+
+    public static class UnrecognisedAbility extends RabbitEscapeException
+    {
+        public Token.Type ability;
+
+        public UnrecognisedAbility( Token.Type ability )
+        {
+            this.ability = ability;
+        }
+    }
+
+    private AbilityButton buttonForAbility( Token.Type ability )
+    {
+        int i = 0;
+        for ( Token.Type ab : abilities )
+        {
+            if ( ab == ability )
+            {
+                return (AbilityButton)abilitiesGroup.getChildAt( i );
+            }
+            ++i;
+        }
+        throw new UnrecognisedAbility( ability );
     }
 }

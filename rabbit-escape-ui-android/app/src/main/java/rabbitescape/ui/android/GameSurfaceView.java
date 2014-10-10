@@ -11,6 +11,8 @@ import android.view.SurfaceView;
 import android.view.View;
 import android.view.ViewConfiguration;
 
+import java.util.Map;
+
 import rabbitescape.engine.Token;
 import rabbitescape.engine.World;
 import rabbitescape.render.BitmapCache;
@@ -24,7 +26,6 @@ public class GameSurfaceView extends SurfaceView
     // Saved state (saved by AndroidGameActivity)
     private final World world;
     private Token.Type chosenAbility;
-    private int chosenAbilityIndex;
 
     // Saved state
     public Game game;
@@ -55,7 +56,6 @@ public class GameSurfaceView extends SurfaceView
         game = null;
         scrolling = new Scrolling( this, ViewConfiguration.get( context ).getScaledTouchSlop() );
         chosenAbility = null;
-        chosenAbilityIndex = -1;
 
         getHolder().addCallback( this );
     }
@@ -67,6 +67,11 @@ public class GameSurfaceView extends SurfaceView
         game.start();
 
         setOnClickListener( this );
+
+        for ( Map.Entry<Token.Type, Integer> e : world.abilities.entrySet() )
+        {
+            numLeftListener.numLeft( e.getKey(), e.getValue() );
+        }
     }
 
     @Override
@@ -108,7 +113,7 @@ public class GameSurfaceView extends SurfaceView
 
         int numLeft = game.gameLoop.addToken( chosenAbility, scrolling.curX, scrolling.curY );
 
-        numLeftListener.numLeft( chosenAbilityIndex, numLeft );
+        numLeftListener.numLeft( chosenAbility, numLeft );
     }
 
     @Override
@@ -117,10 +122,9 @@ public class GameSurfaceView extends SurfaceView
         return scrolling.onTouchEvent( event );
     }
 
-    public void chooseAbility( Token.Type ability, int abilityIndex )
+    public void chooseAbility( Token.Type ability )
     {
         chosenAbility = ability;
-        chosenAbilityIndex = abilityIndex;
     }
 
     public void onSaveInstanceState( Bundle outState )

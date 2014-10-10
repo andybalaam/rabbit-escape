@@ -4,5 +4,5 @@ import rabbitescape.engine.Token;
 
 public interface NumLeftListener
 {
-    void numLeft( int abilityIndex, int numLeft );
+    void numLeft( Token.Type ability, int numLeft );
 }

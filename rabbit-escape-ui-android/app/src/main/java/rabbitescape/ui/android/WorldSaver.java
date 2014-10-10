@@ -33,16 +33,18 @@ public class WorldSaver
         }
     }
 
+    private final World world;
+    private final AndroidGameLoop gameLoop;
+
     private Signal requestSave = new Signal();
     private Signal saved = new Signal();
-
-    private final World world;
     private boolean saveWorld = false;
     public String[] savedWorld = null;
 
-    public WorldSaver( World world )
+    public WorldSaver( World world, AndroidGameLoop gameLoop )
     {
         this.world = world;
+        this.gameLoop = gameLoop;
     }
 
     /**
@@ -54,10 +56,15 @@ public class WorldSaver
         if ( saveWorld )
         {
             saveWorld = false;
-            world.changes.revert();
-            savedWorld = TextWorldManip.renderCompleteWorld( world, true );
+            savedWorld = actuallySaveWorld();
             saved.speak();
         }
+    }
+
+    private String[] actuallySaveWorld()
+    {
+        world.changes.revert();
+        return TextWorldManip.renderCompleteWorld( world, true );
     }
 
     /**
@@ -79,6 +86,11 @@ public class WorldSaver
      */
     public String[] waitUntilSaved()
     {
+        if ( !gameLoop.isRunning() )
+        {
+            return actuallySaveWorld();
+        }
+
         saveWorld = true;
         requestSave.speak();
         while ( savedWorld == null )

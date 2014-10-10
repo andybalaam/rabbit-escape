@@ -70,7 +70,7 @@ public class AndroidGameLoop implements Runnable
         this.screenWidthPixels = 100;
         this.screenHeightPixels = 100;
         this.running = true;
-        this.worldSaver = new WorldSaver( world );
+        this.worldSaver = new WorldSaver( world, this );
     }
 
     @Override
@@ -244,5 +244,10 @@ public class AndroidGameLoop implements Runnable
         outState.putBoolean( STATE_PAUSED, paused );
         outState.putInt( STATE_SCROLL_X, scrollX );
         outState.putInt( STATE_SCROLL_Y, scrollY );
+    }
+
+    public boolean isRunning()
+    {
+        return running;
     }
 }
