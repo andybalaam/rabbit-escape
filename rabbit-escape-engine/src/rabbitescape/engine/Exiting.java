@@ -1,6 +1,9 @@
 package rabbitescape.engine;
 
 import static rabbitescape.engine.ChangeDescription.State.*;
+
+import java.util.Map;
+
 import rabbitescape.engine.ChangeDescription.State;
 
 public class Exiting implements Behaviour
@@ -35,4 +38,13 @@ public class Exiting implements Behaviour
         }
     }
 
+    @Override
+    public void saveState( Map<String, String> saveState )
+    {
+    }
+
+    @Override
+    public void restoreFromState( Map<String, String> saveState )
+    {
+    }
 }

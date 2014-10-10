@@ -12,7 +12,12 @@ public class RabbitRenderer
     {
         for ( Rabbit rabbit : rabbits )
         {
-            chars.set( rabbit.x, rabbit.y, charForRabbit( rabbit ) );
+            chars.set(
+                rabbit.x,
+                rabbit.y,
+                charForRabbit( rabbit ),
+                rabbit.saveState()
+            );
         }
     }
 

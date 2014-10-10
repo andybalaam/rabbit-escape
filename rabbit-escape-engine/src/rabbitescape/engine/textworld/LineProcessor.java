@@ -35,14 +35,14 @@ class LineProcessor
     private final List<Rabbit> rabbits;
     private final List<Thing> things;
     private final Map<Token.Type, Integer> abilities;
-    private final String[] lines;
+    public  final String[] lines;
     private final Map<String, String>  m_metaStrings;
     private final Map<String, Integer> m_metaInts;
     private final List<Point> starPoints;
 
     private int width;
     private int height;
-    private int lineNum;
+    public  int lineNum;
     private int currentStarPoint;
 
     public LineProcessor(
@@ -153,10 +153,9 @@ class LineProcessor
             }
 
             Point p = starPoints.get( currentStarPoint );
-            for ( char ch : asChars( value ) )
-            {
-                processChar( ch, p.x, p.y );
-            }
+
+            new ItemsLineProcessor( this, p.x, p.y, value ).process();
+
             ++currentStarPoint;
         }
         else
@@ -188,17 +187,19 @@ class LineProcessor
             throw new WrongLineLength( lines, lineNum );
         }
 
-        int charNum = 0;
-        for ( char c : asChars( line ) )
+        int i = 0;
+        for ( char ch : asChars( line ) )
         {
-            processChar( c, charNum, height );
-            ++charNum;
+            processChar( ch, i, height );
+            ++i;
         }
         ++height;
     }
 
-    private void processChar( char c, int x, int y )
+    public Thing processChar( char c, int x, int y )
     {
+        Thing ret = null;
+
         switch( c )
         {
             case ' ':
@@ -234,37 +235,46 @@ class LineProcessor
             }
             case 'r':
             {
-                rabbits.add( new Rabbit( x, y, RIGHT ) );
+                Rabbit r = new Rabbit( x, y, RIGHT );
+                ret = r;
+                rabbits.add( r );
                 break;
             }
             case 'j':
             {
-                rabbits.add( new Rabbit( x, y, LEFT ) );
+                Rabbit r = new Rabbit( x, y, LEFT );;
+                ret = r;
+                rabbits.add( r );
                 break;
             }
             case 'Q':
             {
-                things.add( new Entrance( x, y ) );
+                ret = new Entrance( x, y );
+                things.add( ret );
                 break;
             }
             case 'O':
             {
-                things.add( new Exit( x, y ) );
+                ret = new Exit( x, y );
+                things.add( ret );
                 break;
             }
             case 'b':
             {
-                things.add( new Token( x, y, Token.Type.bash ) );
+                ret = new Token( x, y, Token.Type.bash );
+                things.add( ret );
                 break;
             }
             case 'd':
             {
-                things.add( new Token( x, y, Token.Type.dig ) );
+                ret = new Token( x, y, Token.Type.dig );
+                things.add( ret );
                 break;
             }
             case 'i':
             {
-                things.add( new Token( x, y, Token.Type.bridge ) );
+                ret = new Token( x, y, Token.Type.bridge );
+                things.add( ret );
                 break;
             }
             case '*':
@@ -274,8 +284,9 @@ class LineProcessor
             }
             default:
             {
-                throw new UnknownCharacter( lines, x, y );
+                throw new UnknownCharacter( lines, lineNum, x );
             }
         }
+        return ret;
     }
 }

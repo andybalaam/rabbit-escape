@@ -5,6 +5,8 @@ import static rabbitescape.engine.ChangeDescription.State.*;
 import static rabbitescape.engine.Direction.*;
 import static rabbitescape.engine.Token.Type.*;
 
+import java.util.Map;
+
 import rabbitescape.engine.ChangeDescription.State;
 
 public class Bashing implements Behaviour
@@ -73,5 +75,24 @@ public class Bashing implements Behaviour
     private int destX( Rabbit rabbit )
     {
         return ( rabbit.dir == RIGHT ) ? rabbit.x + 1 : rabbit.x - 1;
+    }
+
+    @Override
+    public void saveState( Map<String, String> saveState )
+    {
+        BehaviourTools.addToStateIfGtZero(
+            saveState, "Bashing.stepsOfBashing", stepsOfBashing );
+    }
+
+    @Override
+    public void restoreFromState( Map<String, String> saveState )
+    {
+        stepsOfBashing = BehaviourTools.restoreFromState(
+            saveState, "Bashing.stepsOfBashing", stepsOfBashing );
+
+        if ( stepsOfBashing > 0 )
+        {
+            ++stepsOfBashing;
+        }
     }
 }

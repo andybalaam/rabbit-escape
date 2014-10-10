@@ -3,6 +3,9 @@ package rabbitescape.engine;
 import static rabbitescape.engine.ChangeDescription.State.*;
 import static rabbitescape.engine.Direction.*;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class Entrance extends Thing
 {
     private int delay;
@@ -40,5 +43,21 @@ public class Entrance extends Thing
             world.changes.enterRabbit( new Rabbit( x, y + 1, RIGHT ) );
         }
         --timeToNextRabbit;
+    }
+
+    @Override
+    public Map<String, String> saveState()
+    {
+        Map<String, String> ret = new HashMap<String, String>();
+        BehaviourTools.addToStateIfGtZero(
+            ret, "Entrance.timeToNextRabbit", timeToNextRabbit );
+        return ret;
+    }
+
+    @Override
+    public void restoreFromState( Map<String, String> state )
+    {
+        timeToNextRabbit = BehaviourTools.restoreFromState(
+            state, "Entrance.timeToNextRabbit", timeToNextRabbit );
     }
 }

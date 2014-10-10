@@ -6,7 +6,12 @@ import static rabbitescape.engine.ChangeDescription.State.*;
 import static rabbitescape.engine.Tools.*;
 import static rabbitescape.engine.textworld.TextWorldManip.*;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.junit.Test;
+
+import rabbitescape.engine.textworld.ItemsLineProcessor;
 
 public class TestTextWorldManip
 {
@@ -528,6 +533,81 @@ public class TestTextWorldManip
             ":*=bi",
             ":*=\\d",
             ":*=/d"
+        };
+
+        assertThat(
+            renderCompleteWorld( createWorld( lines ), true ),
+            equalTo( lines )
+        );
+    }
+
+    @Test
+    public void State_map_from_empty_string_is_empty()
+    {
+        assertThat(
+            ItemsLineProcessor.stateMap( "" ),
+            equalTo( map() )
+        );
+    }
+
+    @Test
+    public void Single_field_state_map()
+    {
+        assertThat(
+            ItemsLineProcessor.stateMap( "adsfg.foo:9" ),
+            equalTo( map( "adsfg.foo", "9" ) )
+        );
+    }
+
+    @Test
+    public void Multiple_field_state_map()
+    {
+        assertThat(
+            ItemsLineProcessor.stateMap( "adsfg.foo:9,x:6,Agf.d.9:10" ),
+            equalTo(
+                map(
+                    "adsfg.foo", "9",
+                    "x",         "6",
+                    "Agf.d.9",   "10"
+                )
+            )
+        );
+    }
+
+    private static Map<String, String> map( String... keysAndValues )
+    {
+        assert ( keysAndValues.length % 2 ) == 0;
+
+        Map<String, String> ret = new HashMap<String, String>();
+
+        for ( int i = 0; i < keysAndValues.length; i += 2 )
+        {
+            ret.put( keysAndValues[i], keysAndValues[i+1] );
+        }
+
+        return ret;
+    }
+
+    @Test
+    public void Round_trip_world_with_state()
+    {
+        String[] lines = {
+            ":name=My Round Trip",
+            ":num_rabbits=25",
+            ":num_to_save=4",
+            ":rabbit_delay=2",
+            ":num_saved=5",
+            ":num_killed=4",
+            ":num_waiting=16",
+            ":bash=1",
+            ":bridge=3",
+            ":dig=2",
+            "####",
+            "#  #",
+            "#**#",
+            "####",
+            ":*=r{Bashing.stepsOfBashing:1,Digging.stepsOfDigging:2}Q{Entrance.timeToNextRabbit:3}",
+            ":*=j{Bridging.bigSteps:1,Bridging.smallSteps:1}",
         };
 
         assertThat(

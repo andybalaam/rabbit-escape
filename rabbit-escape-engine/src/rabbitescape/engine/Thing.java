@@ -1,5 +1,7 @@
 package rabbitescape.engine;
 
+import java.util.Map;
+
 import rabbitescape.engine.ChangeDescription.State;
 
 public abstract class Thing
@@ -17,4 +19,6 @@ public abstract class Thing
 
     public abstract void calcNewState( World world );
     public abstract void step( World world );
+    public abstract Map<String, String> saveState();
+    public abstract void restoreFromState( Map<String, String> state );
 }

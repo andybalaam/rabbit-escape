@@ -71,9 +71,16 @@ public class Chars
 
     public void set( int x, int y, char ch )
     {
+        set( x, y, ch, null );
+    }
+
+    public void set( int x, int y, char ch, Map<String, String> state )
+    {
+        String thisState = encodeState( state );
+
         char currentCh = impl[y][x];
 
-        if ( currentCh == ' ' || !starsMode )
+        if ( !starsMode || ( thisState == "" && ( currentCh == ' ' ) ) )
         {
             impl[y][x] = ch;
         }
@@ -86,14 +93,46 @@ public class Chars
             {
                 starString = "";
             }
-            if ( currentCh != '*' )
+            impl[y][x] = '*';
+            if ( currentCh != '*' && currentCh != ' ' )
             {
                 starString += currentCh;
-                impl[y][x] = '*';
             }
-            starString += ch;
+            starString += ch + thisState;
 
             stars.put( p, starString );
+        }
+    }
+
+    private String encodeState( Map<String, String> state )
+    {
+        if ( state == null || state.size() == 0 )
+        {
+            return "";
+        }
+        else
+        {
+            StringBuilder ret = new StringBuilder();
+
+            ret.append( '{' );
+            boolean begin = true;
+            for ( Map.Entry<String, String> e : new TreeMap<String, String>( state ).entrySet() )
+            {
+                if ( !begin )
+                {
+                    ret.append( ',' );
+                }
+                else
+                {
+                    begin = false;
+                }
+                ret.append( e.getKey() );
+                ret.append( ':' );
+                ret.append( e.getValue() );
+            }
+            ret.append( '}' );
+
+            return ret.toString();
         }
     }
 

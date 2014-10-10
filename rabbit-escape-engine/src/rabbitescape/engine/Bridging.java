@@ -3,6 +3,8 @@ package rabbitescape.engine;
 import static rabbitescape.engine.ChangeDescription.State.*;
 import static rabbitescape.engine.Token.Type.*;
 
+import java.util.Map;
+
 import rabbitescape.engine.ChangeDescription.State;
 
 public class Bridging implements Behaviour
@@ -31,6 +33,7 @@ public class Bridging implements Behaviour
 
         if ( bigSteps <= 0 )
         {
+            smallSteps = 0;
             return null;
         }
 
@@ -236,5 +239,30 @@ public class Bridging implements Behaviour
     {
         bigSteps = 0;
         smallSteps = 0;
+    }
+
+    @Override
+    public void saveState( Map<String, String> saveState )
+    {
+        BehaviourTools.addToStateIfGtZero(
+            saveState, "Bridging.bigSteps", bigSteps );
+
+        BehaviourTools.addToStateIfGtZero(
+            saveState, "Bridging.smallSteps", smallSteps );
+    }
+
+    @Override
+    public void restoreFromState( Map<String, String> saveState )
+    {
+        bigSteps = BehaviourTools.restoreFromState(
+            saveState, "Bridging.bigSteps", bigSteps );
+
+        smallSteps = BehaviourTools.restoreFromState(
+            saveState, "Bridging.smallSteps", smallSteps );
+
+        if ( smallSteps > 0 )
+        {
+            ++smallSteps;
+        }
     }
 }

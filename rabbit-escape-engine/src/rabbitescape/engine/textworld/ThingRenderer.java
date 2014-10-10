@@ -27,7 +27,8 @@ public class ThingRenderer
     {
         for ( Thing thing : things )
         {
-            chars.set( thing.x, thing.y, charForThing( thing ) );
+            chars.set(
+                thing.x, thing.y, charForThing( thing ), thing.saveState() );
         }
     }
 

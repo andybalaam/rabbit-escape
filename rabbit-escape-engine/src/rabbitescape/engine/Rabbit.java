@@ -3,7 +3,9 @@ package rabbitescape.engine;
 import static rabbitescape.engine.ChangeDescription.State.*;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import rabbitescape.engine.ChangeDescription.State;
 
@@ -61,6 +63,28 @@ public class Rabbit extends Thing
             {
                 break;
             }
+        }
+    }
+
+    @Override
+    public Map<String, String> saveState()
+    {
+        Map<String, String> ret = new HashMap<String, String>();
+
+        for ( Behaviour behaviour : behaviours )
+        {
+            behaviour.saveState( ret );
+        }
+
+        return ret;
+    }
+
+    @Override
+    public void restoreFromState( Map<String, String> state )
+    {
+        for ( Behaviour behaviour : behaviours )
+        {
+            behaviour.restoreFromState( state );
         }
     }
 }

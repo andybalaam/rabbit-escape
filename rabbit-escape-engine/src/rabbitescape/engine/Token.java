@@ -1,6 +1,10 @@
 package rabbitescape.engine;
 
 import static rabbitescape.engine.ChangeDescription.State.*;
+
+import java.util.HashMap;
+import java.util.Map;
+
 import rabbitescape.engine.ChangeDescription.State;
 import rabbitescape.engine.err.RabbitEscapeException;
 
@@ -72,5 +76,16 @@ public class Token extends Thing
         {
             ++y;
         }
+    }
+
+    @Override
+    public Map<String, String> saveState()
+    {
+        return new HashMap<String, String>();
+    }
+
+    @Override
+    public void restoreFromState( Map<String, String> state )
+    {
     }
 }

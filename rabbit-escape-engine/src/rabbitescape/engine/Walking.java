@@ -3,6 +3,9 @@ package rabbitescape.engine;
 import static rabbitescape.engine.ChangeDescription.State.*;
 import static rabbitescape.engine.Direction.*;
 import static rabbitescape.engine.Block.Type.*;
+
+import java.util.Map;
+
 import rabbitescape.engine.ChangeDescription.State;
 
 public class Walking implements Behaviour
@@ -263,5 +266,15 @@ public class Walking implements Behaviour
                 );
             }
         }
+    }
+
+    @Override
+    public void saveState( Map<String, String> saveState )
+    {
+    }
+
+    @Override
+    public void restoreFromState( Map<String, String> saveState )
+    {
     }
 }

@@ -2,6 +2,9 @@ package rabbitescape.engine;
 
 import static rabbitescape.engine.ChangeDescription.State.*;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class Exit extends Thing
 {
     public Exit( int x, int y )
@@ -16,6 +19,17 @@ public class Exit extends Thing
 
     @Override
     public void step( World world )
+    {
+    }
+
+    @Override
+    public Map<String, String> saveState()
+    {
+        return new HashMap<String, String>();
+    }
+
+    @Override
+    public void restoreFromState( Map<String, String> state )
     {
     }
 }

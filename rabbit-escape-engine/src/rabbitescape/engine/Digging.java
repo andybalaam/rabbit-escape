@@ -3,6 +3,8 @@ package rabbitescape.engine;
 import static rabbitescape.engine.ChangeDescription.State.*;
 import static rabbitescape.engine.Token.Type.*;
 
+import java.util.Map;
+
 import rabbitescape.engine.ChangeDescription.State;
 
 public class Digging implements Behaviour
@@ -54,5 +56,24 @@ public class Digging implements Behaviour
     public void stopDigging()
     {
         stepsOfDigging = 0;
+    }
+
+    @Override
+    public void saveState( Map<String, String> saveState )
+    {
+        BehaviourTools.addToStateIfGtZero(
+            saveState, "Digging.stepsOfDigging", stepsOfDigging );
+    }
+
+    @Override
+    public void restoreFromState( Map<String, String> saveState )
+    {
+        stepsOfDigging = BehaviourTools.restoreFromState(
+            saveState, "Digging.stepsOfDigging", stepsOfDigging );
+
+        if ( stepsOfDigging > 0 )
+        {
+            ++stepsOfDigging;
+        }
     }
 }
