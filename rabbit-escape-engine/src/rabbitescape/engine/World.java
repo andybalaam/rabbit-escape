@@ -69,6 +69,13 @@ public class World
         }
     }
 
+    public enum CompletionState
+    {
+        RUNNING,
+        WON,
+        LOST
+    }
+
     public final Dimension size;
     public final List<Block> blocks;
     public final List<Rabbit> rabbits;
@@ -128,7 +135,7 @@ public class World
 
     public void step()
     {
-        if ( finished() )
+        if ( completionState() != CompletionState.RUNNING )
         {
             throw new DontStepAfterFinish( name );
         }
@@ -190,9 +197,23 @@ public class World
         return null;
     }
 
-    public boolean finished()
+    public CompletionState completionState()
     {
-        return ( rabbits.size() == 0 && this.num_waiting <= 0 );
+        if ( rabbits.size() == 0 && this.num_waiting <= 0 )
+        {
+            if ( num_saved >= num_to_save )
+            {
+                return CompletionState.WON;
+            }
+            else
+            {
+                return CompletionState.LOST;
+            }
+        }
+        else
+        {
+            return CompletionState.RUNNING;
+        }
     }
 
     public Token getTokenAt( int x, int y )
@@ -206,11 +227,6 @@ public class World
             }
         }
         return null;
-    }
-
-    public boolean success()
-    {
-        return num_saved > num_to_save;
     }
 
     public int numRabbitsOut()

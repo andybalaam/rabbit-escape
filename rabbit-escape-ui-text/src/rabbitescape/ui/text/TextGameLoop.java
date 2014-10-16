@@ -4,6 +4,7 @@ import static rabbitescape.engine.i18n.Translation.*;
 import static rabbitescape.engine.util.Util.*;
 
 import rabbitescape.engine.World;
+import rabbitescape.engine.World.CompletionState;
 import rabbitescape.engine.textworld.TextWorldManip;
 import rabbitescape.render.GameLoop;
 
@@ -27,7 +28,7 @@ public class TextGameLoop implements GameLoop
             useInput = true;
         }
 
-        while( !world.finished() )
+        while( world.completionState() == CompletionState.RUNNING )
         {
             try
             {
@@ -83,7 +84,7 @@ public class TextGameLoop implements GameLoop
     @Override
     public void showResult()
     {
-        if ( world.success() )
+        if ( world.completionState() == CompletionState.WON )
         {
             terminal.out.println( t( "You won!" ) );
         }

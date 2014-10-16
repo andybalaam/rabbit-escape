@@ -4,6 +4,7 @@ import static org.hamcrest.MatcherAssert.*;
 import static org.hamcrest.CoreMatchers.*;
 import static rabbitescape.engine.util.Util.*;
 import static rabbitescape.engine.textworld.TextWorldManip.*;
+import static rabbitescape.engine.World.CompletionState.*;
 
 import org.junit.Test;
 
@@ -56,22 +57,52 @@ public class TestWorld
         world.step(); // First one over the exit
 
         fiveSteps( world );
-        assertThat( world.finished(), is( false ) );
+        assertThat( world.completionState(), equalTo( RUNNING ) );
 
         fiveSteps( world );
-        assertThat( world.finished(), is( false ) );
+        assertThat( world.completionState(), equalTo( RUNNING ) );
 
         fiveSteps( world );
-        assertThat( world.finished(), is( false ) );
+        assertThat( world.completionState(), equalTo( RUNNING ) );
 
         fiveSteps( world );
-        assertThat( world.finished(), is( false ) );
+        assertThat( world.completionState(), equalTo( RUNNING ) );
 
         // Fifth one over the exit: send it in
         world.step();
 
         // We should now be finished
-        assertThat( world.finished(), is( true ) );
+        assertThat( world.completionState(), equalTo( WON ) );
+    }
+
+    @Test
+    public void World_reports_won_when_enough_rabbits_saved()
+    {
+        World world = createWorld(
+            ":num_rabbits=0",
+            ":num_saved=2",
+            ":num_to_save=2",
+            "   ",
+            "###"
+        );
+
+        // We should now be finished
+        assertThat( world.completionState(), equalTo( WON ) );
+    }
+
+    @Test
+    public void World_reports_lost_when_not_enough_rabbits_saved()
+    {
+        World world = createWorld(
+            ":num_rabbits=0",
+            ":num_saved=2",
+            ":num_to_save=3",
+            "   ",
+            "###"
+        );
+
+        // We should now be finished
+        assertThat( world.completionState(), equalTo( LOST ) );
     }
 
     @Test

@@ -53,7 +53,7 @@ public class Physics
 
     public boolean finished()
     {
-        return world.finished();
+        return world.completionState() != World.CompletionState.RUNNING;
     }
 
 

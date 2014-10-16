@@ -2,8 +2,11 @@ package rabbitescape.ui.swing;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.FontMetrics;
 import java.awt.Graphics2D;
 import java.awt.Point;
+import java.awt.RenderingHints;
 import java.awt.image.BufferStrategy;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,6 +15,7 @@ import java.util.Map;
 import rabbitescape.engine.ChangeDescription;
 import rabbitescape.engine.Token;
 import rabbitescape.engine.World;
+import rabbitescape.engine.World.CompletionState;
 import rabbitescape.render.AnimationCache;
 import rabbitescape.render.AnimationLoader;
 import rabbitescape.render.BitmapCache;
@@ -51,6 +55,7 @@ public class SwingGameLoop implements GameLoop
     }
 
     private static final int framesPerStep = 10;
+    private static final Color overlay = new Color( 0.5f, 0.5f, 0.5f, 0.5f );
 
     public final World world;
     private final WorldModifier worldModifier;
@@ -110,8 +115,11 @@ public class SwingGameLoop implements GameLoop
 
         while( running )
         {
-            worldModifier.step();
-            notifyStatsListeners();
+            if ( world.completionState() == CompletionState.RUNNING )
+            {
+                worldModifier.step();
+                notifyStatsListeners();
+            }
             ChangeDescription changes = world.describeChanges();
 
             final SpriteAnimator animator = new SpriteAnimator(
@@ -120,7 +128,14 @@ public class SwingGameLoop implements GameLoop
             for ( int f = 0; running && f < framesPerStep; ++f )
             {
                 new DrawFrame(
-                    strategy, jframe.canvas, renderer, animator, f ).run();
+                    strategy,
+                    jframe.canvas,
+                    renderer,
+                    animator,
+                    f,
+                    world.completionState(),
+                    true
+                ).run();
 
                 sleep( 50 );
 
@@ -130,9 +145,9 @@ public class SwingGameLoop implements GameLoop
                 }
             }
 
-            if ( world.finished() )
+            if ( world.completionState() != CompletionState.RUNNING )
             {
-                running = false;
+                paused = true;
             }
         }
     }
@@ -156,13 +171,17 @@ public class SwingGameLoop implements GameLoop
         private final Renderer renderer;
         private final SpriteAnimator animator;
         private final int frameNum;
+        private final CompletionState completionState;
+        private final boolean moreLevels;
 
         public DrawFrame(
             BufferStrategy strategy,
             java.awt.Canvas canvas,
             Renderer renderer,
             SpriteAnimator animator,
-            int frameNum
+            int frameNum,
+            CompletionState completionState,
+            boolean moreLevels
         )
         {
             super( strategy );
@@ -170,58 +189,98 @@ public class SwingGameLoop implements GameLoop
             this.renderer = renderer;
             this.animator = animator;
             this.frameNum = frameNum;
+            this.completionState = completionState;
+            this.moreLevels = moreLevels;
         }
 
         @Override
         void draw( Graphics2D g )
         {
-            g.setPaint( Color.WHITE );
+            fillCanvas( g, Color.WHITE );
+
+            SwingCanvas swingCanvas = new SwingCanvas( g );
+
+            renderer.render(
+                swingCanvas,
+                animator.getSprites( frameNum ),
+                unusedPaint
+            );
+
+            if ( completionState != CompletionState.RUNNING )
+            {
+                drawResult( g );
+            }
+        }
+
+        private void fillCanvas( Graphics2D g, Color paint )
+        {
+            g.setPaint( paint );
             g.fillRect(
                 0,
                 0,
                 canvas.getWidth(),
                 canvas.getHeight()
             );
+        }
 
-            SwingCanvas canvas = new SwingCanvas( g );
+        private void drawResult( Graphics2D g )
+        {
+            fillCanvas( g, overlay );
 
-            renderer.render(
-                canvas,
-                animator.getSprites( frameNum ),
-                unusedPaint
+            String msg1;
+            String msg2;
+            if ( completionState == CompletionState.WON )
+            {
+                if ( moreLevels )
+                {
+                    msg1 = "You won!";
+                    msg2 = "Click to continue.";
+                }
+                else
+                {
+                    msg1 = "You finished this section!";
+                    msg2 = "Click to go back.";
+                }
+            }
+            else
+            {
+                msg1 = "You lost.";
+                msg2 = "Click to try again.";
+            }
+
+            writeText( g, msg1, 0.5, 0.06 );
+            writeText( g, msg2, 0.7, 0.03 );
+        }
+
+        private void writeText(
+            Graphics2D g, String msg, double pos, double size )
+        {
+            g.setRenderingHint(
+                RenderingHints.KEY_TEXT_ANTIALIASING,
+                RenderingHints.VALUE_TEXT_ANTIALIAS_ON
+            );
+
+            g.setPaint( Color.BLACK );
+
+            int fontSize = (int)( canvas.getWidth() * size );
+
+            Font f = new Font( Font.SANS_SERIF, Font.PLAIN, fontSize );
+            g.setFont( f );
+            FontMetrics metrics = g.getFontMetrics( f );
+
+            g.drawString(
+                msg,
+                ( canvas.getWidth()  - metrics.stringWidth( msg ) ) / 2,
+                (int)( canvas.getHeight() * pos )
             );
         }
+
     }
 
     @Override
     public void showResult()
     {
-        final String msg;
-        if ( world.success() )
-        {
-            msg = "You won!";
-        }
-        else
-        {
-            msg = "You lost.";
-        }
-
-        new BufferedDraw( jframe.canvas.getBufferStrategy() )
-        {
-            @Override
-            void draw( Graphics2D g )
-            {
-                g.drawString( msg, 20, 50 );
-            }
-        }.run();
-
-        try
-        {
-            Thread.sleep( 2000 );
-        }
-        catch ( InterruptedException ignored )
-        {
-        }
+        // Nothing to do here - we showed the result while we were still running
     }
 
     public int addToken( Token.Type ability, Point pixelPosition )
