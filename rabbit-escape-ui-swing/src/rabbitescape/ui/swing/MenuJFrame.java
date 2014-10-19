@@ -291,7 +291,7 @@ public class MenuJFrame extends JFrame
                     fs, out, locale, bitmapCache, uiConfig ).launchGame(
                         new String[] { item.fileName },
                         new CompletedLevelWinListener(
-                            item.fileName, item.levelNumber, levelsCompleted )
+                            item.levelsDir, item.levelNumber, levelsCompleted )
                     );
 
                 return null;

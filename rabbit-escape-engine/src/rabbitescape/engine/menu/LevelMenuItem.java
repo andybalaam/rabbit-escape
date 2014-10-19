@@ -5,9 +5,11 @@ import static rabbitescape.engine.util.Util.*;
 public class LevelMenuItem extends MenuItem
 {
     public final String fileName;
+    public final String levelsDir;
     public final int levelNumber;
 
-    public LevelMenuItem( String fileName, int number, boolean enabled )
+    public LevelMenuItem(
+        String fileName, String levelsDir, int number, boolean enabled )
     {
         super(
             "Level ${number}",
@@ -17,6 +19,7 @@ public class LevelMenuItem extends MenuItem
         );
 
         this.fileName = fileName;
+        this.levelsDir = levelsDir;
         this.levelNumber = number;
     }
 

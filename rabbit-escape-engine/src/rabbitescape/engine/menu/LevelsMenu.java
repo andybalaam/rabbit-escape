@@ -35,6 +35,7 @@ public class LevelsMenu extends Menu
         {
             ret[i-1] = new LevelMenuItem(
                 levelsDir + "/" + fileName + ".rel",
+                levelsDir,
                 i,
                 i <= levelsCompleted.highestLevelCompleted( levelsDir ) + 1
             );

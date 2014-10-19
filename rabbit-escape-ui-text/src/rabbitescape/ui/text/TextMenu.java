@@ -114,7 +114,7 @@ public class TextMenu
             .launchGame(
                 new String[] { levelItem.fileName, "--interactive" },
                 new CompletedLevelWinListener(
-                    levelItem.fileName, levelItem.levelNumber, levelsCompleted )
+                    levelItem.levelsDir, levelItem.levelNumber, levelsCompleted )
             );
     }
 
