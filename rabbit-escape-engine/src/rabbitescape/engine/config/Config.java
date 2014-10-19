@@ -11,7 +11,7 @@ import java.util.TreeSet;
 import rabbitescape.engine.err.RabbitEscapeException;
 import rabbitescape.engine.util.FileSystem;
 
-public class Config
+public class Config implements IConfig
 {
     public static class UnknownKey extends RabbitEscapeException
     {
@@ -127,6 +127,7 @@ public class Config
         }
     }
 
+    @Override
     public void set( String key, String value )
     {
         definition.checkKeyExists( key ); // Check the key exists
@@ -136,6 +137,7 @@ public class Config
         }
     }
 
+    @Override
     public String get( String key )
     {
         String ret = values.get( key );
@@ -150,6 +152,7 @@ public class Config
         }
     }
 
+    @Override
     public void save()
     {
         try
