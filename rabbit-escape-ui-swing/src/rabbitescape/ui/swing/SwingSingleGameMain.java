@@ -5,6 +5,7 @@ import java.util.Locale;
 
 import javax.swing.SwingUtilities;
 
+import rabbitescape.engine.LevelWinListener;
 import rabbitescape.engine.World;
 import rabbitescape.engine.config.Config;
 import rabbitescape.engine.util.FileSystem;
@@ -45,12 +46,12 @@ public class SwingSingleGameMain extends Main
     }
 
     @Override
-    public GameLoop createGameLoop( World world )
+    public GameLoop createGameLoop( World world, LevelWinListener winListener )
     {
         SwingGameInit init = new SwingGameInit( bitmapCache, uiConfig );
 
         SwingUtilities.invokeLater( init );
 
-        return new SwingGameLoop( init, world );
+        return new SwingGameLoop( init, world, winListener );
     }
 }

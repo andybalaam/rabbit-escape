@@ -3,6 +3,7 @@ package rabbitescape.ui.text;
 import java.io.PrintStream;
 import java.util.Locale;
 
+import rabbitescape.engine.LevelWinListener;
 import rabbitescape.engine.World;
 import rabbitescape.engine.i18n.Translation;
 import rabbitescape.engine.util.FileSystem;
@@ -29,9 +30,12 @@ public class TextSingleGameMain extends Main
     }
 
     @Override
-    public GameLoop createGameLoop( World world )
+    public GameLoop createGameLoop( World world, LevelWinListener winListener )
     {
         return new TextGameLoop(
-            world, new Terminal( System.in, System.out, Locale.getDefault() ) );
+            world,
+            winListener,
+            new Terminal( System.in, System.out, Locale.getDefault() )
+        );
     }
 }

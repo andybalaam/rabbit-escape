@@ -13,6 +13,7 @@ import android.view.ViewConfiguration;
 
 import java.util.Map;
 
+import rabbitescape.engine.LevelWinListener;
 import rabbitescape.engine.Token;
 import rabbitescape.engine.World;
 import rabbitescape.render.BitmapCache;
@@ -33,6 +34,7 @@ public class GameSurfaceView extends SurfaceView
     // Transient state
     private final NumLeftListener numLeftListener;
     private final BitmapCache<AndroidBitmap> bitmapCache;
+    private final LevelWinListener winListener;
     private final float displayDensity;
     private final Bundle savedInstanceState;
     private final Scrolling scrolling;
@@ -42,6 +44,7 @@ public class GameSurfaceView extends SurfaceView
         NumLeftListener numLeftListener,
         BitmapCache<AndroidBitmap> bitmapCache,
         World world,
+        LevelWinListener winListener,
         float displayDensity,
         Bundle savedInstanceState
     )
@@ -50,6 +53,7 @@ public class GameSurfaceView extends SurfaceView
         this.numLeftListener = numLeftListener;
         this.bitmapCache = bitmapCache;
         this.world = world;
+        this.winListener = winListener;
         this.displayDensity = displayDensity;
         this.savedInstanceState = savedInstanceState;
 
@@ -63,7 +67,9 @@ public class GameSurfaceView extends SurfaceView
     @Override
     public void surfaceCreated( SurfaceHolder surfaceHolder )
     {
-        game = new Game( surfaceHolder, bitmapCache, world, displayDensity, savedInstanceState );
+        game = new Game(
+            surfaceHolder, bitmapCache, world, winListener, displayDensity, savedInstanceState );
+
         game.start();
 
         setOnClickListener( this );

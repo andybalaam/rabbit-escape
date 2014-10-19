@@ -113,7 +113,8 @@ public class TextMenu
         new TextSingleGameMain( fs, terminal.out, terminal.locale )
             .launchGame(
                 new String[] { levelItem.fileName, "--interactive" },
-                new CompletedLevelWinListener( levelItem, levelsCompleted )
+                new CompletedLevelWinListener(
+                    levelItem.fileName, levelItem.levelNumber, levelsCompleted )
             );
     }
 

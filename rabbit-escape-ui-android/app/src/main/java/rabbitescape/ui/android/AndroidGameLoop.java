@@ -7,6 +7,7 @@ import android.view.SurfaceHolder;
 
 import java.util.Date;
 
+import rabbitescape.engine.LevelWinListener;
 import rabbitescape.engine.Token;
 import rabbitescape.engine.World;
 import rabbitescape.render.BitmapCache;
@@ -44,12 +45,13 @@ public class AndroidGameLoop implements Runnable
         SurfaceHolder surfaceHolder,
         BitmapCache<AndroidBitmap> bitmapCache,
         World world,
+        LevelWinListener winListener,
         float displayDensity,
         Bundle savedInstanceState
     )
     {
         this.surfaceHolder = surfaceHolder;
-        this.physics = new Physics( world );
+        this.physics = new Physics( world, winListener );
         this.graphics = new Graphics( bitmapCache, world, displayDensity );
 
         if ( savedInstanceState != null )

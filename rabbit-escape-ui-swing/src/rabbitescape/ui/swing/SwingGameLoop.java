@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Map;
 
 import rabbitescape.engine.ChangeDescription;
+import rabbitescape.engine.LevelWinListener;
 import rabbitescape.engine.Token;
 import rabbitescape.engine.World;
 import rabbitescape.engine.World.CompletionState;
@@ -58,6 +59,7 @@ public class SwingGameLoop implements GameLoop
     private static final Color overlay = new Color( 0.5f, 0.5f, 0.5f, 0.5f );
 
     public final World world;
+    private final LevelWinListener winListener;
     private final WorldModifier worldModifier;
     private boolean running;
     private boolean paused;
@@ -67,9 +69,11 @@ public class SwingGameLoop implements GameLoop
     private final GameJFrame jframe;
     private final BitmapCache<SwingBitmap> bitmapCache;
 
-    public SwingGameLoop( SwingGameInit init, World world )
+    public SwingGameLoop(
+        SwingGameInit init, World world, LevelWinListener winListener )
     {
         this.world = world;
+        this.winListener = winListener;
         this.worldModifier = new WorldModifier( world );
         this.running = true;
         this.paused = false;
@@ -118,6 +122,7 @@ public class SwingGameLoop implements GameLoop
             if ( world.completionState() == CompletionState.RUNNING )
             {
                 worldModifier.step();
+                checkWon();
                 notifyStatsListeners();
             }
             ChangeDescription changes = world.describeChanges();
@@ -149,6 +154,14 @@ public class SwingGameLoop implements GameLoop
             {
                 paused = true;
             }
+        }
+    }
+
+    private void checkWon()
+    {
+        if ( world.completionState() == CompletionState.WON )
+        {
+            winListener.won();
         }
     }
 

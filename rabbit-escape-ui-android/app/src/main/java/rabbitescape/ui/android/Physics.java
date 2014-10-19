@@ -1,5 +1,6 @@
 package rabbitescape.ui.android;
 
+import rabbitescape.engine.LevelWinListener;
 import rabbitescape.engine.Token;
 import rabbitescape.engine.World;
 
@@ -31,12 +32,14 @@ public class Physics
 
     public int frame;
     public final World world;
+    private final LevelWinListener winListener;
     private final WorldModifier worldModifier;
 
-    public Physics( World world )
+    public Physics( World world, LevelWinListener winListener )
     {
         this.frame = 0;
         this.world = world;
+        this.winListener = winListener;
         this.worldModifier = new WorldModifier( world );
     }
 
@@ -48,6 +51,15 @@ public class Physics
         {
             frame = 0;
             worldModifier.step();
+            checkWon();
+        }
+    }
+
+    private void checkWon()
+    {
+        if ( world.completionState() == World.CompletionState.WON )
+        {
+            winListener.won();
         }
     }
 

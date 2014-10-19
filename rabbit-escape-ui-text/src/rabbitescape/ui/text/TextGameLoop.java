@@ -3,6 +3,7 @@ package rabbitescape.ui.text;
 import static rabbitescape.engine.i18n.Translation.*;
 import static rabbitescape.engine.util.Util.*;
 
+import rabbitescape.engine.LevelWinListener;
 import rabbitescape.engine.World;
 import rabbitescape.engine.World.CompletionState;
 import rabbitescape.engine.textworld.TextWorldManip;
@@ -11,11 +12,14 @@ import rabbitescape.render.GameLoop;
 public class TextGameLoop implements GameLoop
 {
     private final World world;
+    private final LevelWinListener winListener;
     private final Terminal terminal;
 
-    public TextGameLoop( World world, Terminal terminal )
+    public TextGameLoop(
+        World world, LevelWinListener winListener, Terminal terminal )
     {
         this.world = world;
+        this.winListener = winListener;
         this.terminal = terminal;
     }
 
@@ -61,6 +65,15 @@ public class TextGameLoop implements GameLoop
             }
 
             world.step();
+            checkWon();
+        }
+    }
+
+    private void checkWon()
+    {
+        if ( world.completionState() == CompletionState.WON )
+        {
+            winListener.won();
         }
     }
 

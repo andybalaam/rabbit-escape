@@ -290,7 +290,8 @@ public class MenuJFrame extends JFrame
                 new SwingSingleGameMain(
                     fs, out, locale, bitmapCache, uiConfig ).launchGame(
                         new String[] { item.fileName },
-                        new CompletedLevelWinListener( item, levelsCompleted )
+                        new CompletedLevelWinListener(
+                            item.fileName, item.levelNumber, levelsCompleted )
                     );
 
                 return null;

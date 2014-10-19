@@ -15,10 +15,13 @@ import android.widget.RadioGroup;
 
 import java.util.Set;
 
+import rabbitescape.engine.CompletedLevelWinListener;
 import rabbitescape.engine.LoadWorldFile;
 import rabbitescape.engine.Token;
 import rabbitescape.engine.World;
 import rabbitescape.engine.err.RabbitEscapeException;
+import rabbitescape.engine.menu.LevelMenuItem;
+import rabbitescape.engine.menu.LevelsCompleted;
 import rabbitescape.engine.textworld.TextWorldManip;
 import rabbitescape.engine.util.RealFileSystem;
 import rabbitescape.render.BitmapCache;
@@ -30,12 +33,14 @@ import static android.text.TextUtils.split;
 public class AndroidGameActivity extends ActionBarActivity implements NumLeftListener
 {
     // Constants
-    public static final String INTENT_LEVEL = "rabbitescape.level";
+    public static final String INTENT_LEVEL        = "rabbitescape.level";
+    public static final String INTENT_LEVEL_NUMBER = "rabbitescape.levelnumber";
     public static final String PREFS_MUTED = "rabbitescape.muted";
     public static final String STATE_CHECKED_ABILITY_INDEX = "rabbitescape.checkedAbilityIndex";
 
     // System
     private SharedPreferences prefs;
+    private LevelsCompleted levelsCompleted;
 
     // Saved state
     private boolean muted;
@@ -54,13 +59,17 @@ public class AndroidGameActivity extends ActionBarActivity implements NumLeftLis
     {
         super.onCreate( savedInstanceState );
 
+        Intent intent = getIntent();
+        String levelFileName = intent.getStringExtra( INTENT_LEVEL );
+        int    levelNum      = intent.getIntExtra( INTENT_LEVEL_NUMBER, 0 );
+
         staticInit();
-        World world = loadWorld( getIntent(), savedInstanceState );
-        buildDynamicUi( getResources(), world, savedInstanceState );
+        World world = loadWorld( levelFileName, savedInstanceState );
+        buildDynamicUi( getResources(), world, levelFileName, levelNum, savedInstanceState );
         restoreFromState( savedInstanceState );
     }
 
-    private World loadWorld( Intent intent, Bundle savedInstanceState )
+    private World loadWorld( String levelFileName, Bundle savedInstanceState )
     {
         if ( savedInstanceState != null )
         {
@@ -71,11 +80,16 @@ public class AndroidGameActivity extends ActionBarActivity implements NumLeftLis
             }
         }
 
-        String levelFileName = intent.getStringExtra( INTENT_LEVEL );
         return new LoadWorldFile( new RealFileSystem() ).load( levelFileName );
     }
 
-    private void buildDynamicUi( Resources resources, World world, Bundle savedInstanceState )
+    private void buildDynamicUi(
+        Resources resources,
+        World world,
+        String levelFileName,
+        int levelNum,
+        Bundle savedInstanceState
+    )
     {
         DisplayMetrics metrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics( metrics );
@@ -87,6 +101,7 @@ public class AndroidGameActivity extends ActionBarActivity implements NumLeftLis
             this,
             createBitmapCache( resources ),
             world,
+            new CompletedLevelWinListener( levelFileName, levelNum, levelsCompleted ),
             metrics.density,
             savedInstanceState
         );
@@ -97,6 +112,7 @@ public class AndroidGameActivity extends ActionBarActivity implements NumLeftLis
     private void staticInit()
     {
         prefs = getPreferences( MODE_PRIVATE );
+        levelsCompleted = new AndroidPreferencesBasedLevelsCompleted();
 
         setContentView( R.layout.activity_android_game );
 
