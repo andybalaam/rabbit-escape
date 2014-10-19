@@ -6,11 +6,13 @@ import java.util.Stack;
 import static rabbitescape.engine.util.Util.*;
 import static rabbitescape.engine.i18n.Translation.*;
 
+import rabbitescape.engine.CompletedLevelWinListener;
 import rabbitescape.engine.config.Config;
 import rabbitescape.engine.err.RabbitEscapeException;
 import rabbitescape.engine.menu.AboutText;
 import rabbitescape.engine.menu.ConfigBasedLevelsCompleted;
 import rabbitescape.engine.menu.LevelMenuItem;
+import rabbitescape.engine.menu.LevelsCompleted;
 import rabbitescape.engine.menu.Menu;
 import rabbitescape.engine.menu.MenuDefinition;
 import rabbitescape.engine.menu.MenuItem;
@@ -45,19 +47,18 @@ public class TextMenu
 
     private final FileSystem fs;
     private final Terminal terminal;
-    private final Config config;
+    private final LevelsCompleted levelsCompleted;
 
     public TextMenu( FileSystem fs, Terminal terminal, Config config )
     {
         this.fs = fs;
         this.terminal = terminal;
-        this.config = config;
+        this.levelsCompleted = new ConfigBasedLevelsCompleted( config );
     }
 
     public void run()
     {
-        Menu menu = MenuDefinition.mainMenu(
-            new ConfigBasedLevelsCompleted( config ) );
+        Menu menu = MenuDefinition.mainMenu( levelsCompleted );
 
         Stack<Menu> stack = new Stack<>();
         stack.push( menu );
@@ -110,7 +111,10 @@ public class TextMenu
         LevelMenuItem levelItem = (LevelMenuItem)item;
 
         new TextSingleGameMain( fs, terminal.out, terminal.locale )
-            .launchGame( new String[] { levelItem.fileName, "--interactive" } );
+            .launchGame(
+                new String[] { levelItem.fileName, "--interactive" },
+                new CompletedLevelWinListener( levelItem, levelsCompleted )
+            );
     }
 
     private void about()

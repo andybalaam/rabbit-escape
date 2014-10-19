@@ -29,12 +29,14 @@ import javax.swing.SwingWorker;
 import static rabbitescape.engine.i18n.Translation.*;
 import static rabbitescape.ui.swing.SwingConfigSetup.*;
 
+import rabbitescape.engine.CompletedLevelWinListener;
 import rabbitescape.engine.config.Config;
 import rabbitescape.engine.config.ConfigTools;
 import rabbitescape.engine.err.RabbitEscapeException;
 import rabbitescape.engine.menu.AboutText;
 import rabbitescape.engine.menu.ConfigBasedLevelsCompleted;
 import rabbitescape.engine.menu.LevelMenuItem;
+import rabbitescape.engine.menu.LevelsCompleted;
 import rabbitescape.engine.menu.Menu;
 import rabbitescape.engine.menu.MenuDefinition;
 import rabbitescape.engine.menu.MenuItem;
@@ -149,6 +151,7 @@ public class MenuJFrame extends JFrame
     private final Stack<Menu> stack;
     private final Config uiConfig;
     private final JPanel menuPanel;
+    private final LevelsCompleted levelsCompleted;
     private final SideMenu sidemenu;
 
     public MenuJFrame(
@@ -166,6 +169,7 @@ public class MenuJFrame extends JFrame
         this.stack = new Stack<>();
         this.uiConfig = uiConfig;
         this.menuPanel = new JPanel( new GridBagLayout() );
+        this.levelsCompleted = new ConfigBasedLevelsCompleted( uiConfig );
 
         stack.push(
             MenuDefinition.mainMenu(
@@ -285,7 +289,9 @@ public class MenuJFrame extends JFrame
             {
                 new SwingSingleGameMain(
                     fs, out, locale, bitmapCache, uiConfig ).launchGame(
-                        new String[] { item.fileName } );
+                        new String[] { item.fileName },
+                        new CompletedLevelWinListener( item, levelsCompleted )
+                    );
 
                 return null;
             }

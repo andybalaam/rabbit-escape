@@ -10,6 +10,7 @@ import java.util.Locale;
 
 import org.junit.Test;
 
+import rabbitescape.engine.IgnoreLevelWinListener;
 import rabbitescape.engine.util.FakeFileSystem;
 import rabbitescape.engine.util.FileSystem;
 import rabbitescape.engine.util.NothingExistsFileSystem;
@@ -22,9 +23,11 @@ public class TestMain
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         FileSystem fs = new NothingExistsFileSystem();
 
-        TextSingleGameMain main = new TextSingleGameMain( fs, new PrintStream( out ), Locale.ENGLISH );
+        TextSingleGameMain main = new TextSingleGameMain(
+            fs, new PrintStream( out ), Locale.ENGLISH );
 
-        int status = main.launchGame( new String[] { "file1" } );
+        int status = main.launchGame(
+            new String[] { "file1" }, new IgnoreLevelWinListener() );
 
         assertThat( status, not( equalTo( 0 ) ) );
 
@@ -47,7 +50,8 @@ public class TestMain
         TextSingleGameMain main = new TextSingleGameMain(
             fs, new PrintStream( out ), Locale.ENGLISH );
 
-        int status = main.launchGame( new String[] { "file1" } );
+        int status = main.launchGame(
+            new String[] { "file1" }, new IgnoreLevelWinListener() );
 
         assertThat( status, not( equalTo( 0 ) ) );
 
@@ -72,7 +76,8 @@ public class TestMain
         TextSingleGameMain main = new TextSingleGameMain(
             fs, new PrintStream( out ), Locale.ENGLISH );
 
-        int status = main.launchGame( new String[] { "file1" } );
+        int status = main.launchGame(
+            new String[] { "file1" }, new IgnoreLevelWinListener() );
 
         assertThat( status, not( equalTo( 0 ) ) );
 

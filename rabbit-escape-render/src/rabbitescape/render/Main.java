@@ -5,6 +5,8 @@ import static rabbitescape.engine.util.Util.*;
 import java.io.PrintStream;
 import java.util.Locale;
 
+import rabbitescape.engine.IgnoreLevelWinListener;
+import rabbitescape.engine.LevelWinListener;
 import rabbitescape.engine.LoadWorldFile;
 import rabbitescape.engine.World;
 import rabbitescape.engine.util.FileSystem;
@@ -30,17 +32,19 @@ public abstract class Main
 
     public void run( String[] args )
     {
-        int status = launchGame( args );
+        int status = launchGame( args, new IgnoreLevelWinListener() );
         System.exit( status );
     }
 
-    public int launchGame( String[] args )
+    public int launchGame( String[] args, LevelWinListener winListener )
     {
         reAssert( args.length >= 1 );
 
         try
         {
-            World world = new LoadWorldFile( fs ).load( args[0] );
+            String levelName = args[0];
+
+            World world = new LoadWorldFile( fs ).load( levelName );
 
             GameLoop gameLoop = createGameLoop( world );
 
