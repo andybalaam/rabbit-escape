@@ -9,6 +9,8 @@ ANDROIDIMAGESXHDPI_DEST=rabbit-escape-ui-android/app/src/main/res/drawable-xhdpi
 IMAGESSRC := $(wildcard images-src/*.svg)
 IMAGES32 := $(IMAGESSRC:images-src/%.svg=$(IMAGES32_DEST)/%.png)
 
+MUSICSRC := $(wildcard music-src/*.flac)
+
 ANDROIDIMAGESMDPI := $(IMAGESSRC:images-src/%.svg=$(ANDROIDIMAGESMDPI_DEST)/%.png)
 ANDROIDIMAGESHDPI := $(IMAGESSRC:images-src/%.svg=$(ANDROIDIMAGESHDPI_DEST)/%.png)
 ANDROIDIMAGESXHDPI := $(IMAGESSRC:images-src/%.svg=$(ANDROIDIMAGESXHDPI_DEST)/%.png)
@@ -29,6 +31,9 @@ $(ANDROIDIMAGESHDPI_DEST)/%.png: images-src/%.svg
 $(ANDROIDIMAGESXHDPI_DEST)/%.png: images-src/%.svg
 	mkdir -p $(ANDROIDIMAGESXHDPI_DEST); inkscape $< --export-png=$@ --export-dpi=180
 
+#$(MUSICOGG_DEST)/%.ogg: music-src/%.flac
+#	mkdir -p $(MUSICOGG_DEST); avconv -i $< -c:a libvorbis -q:a 1 $@
+
 all: compile
 
 dist: dist/rabbit-escape-generic.jar
@@ -42,6 +47,8 @@ dist/rabbit-escape-generic.jar: compile
 		jar -uf ../../dist/rabbit-escape-generic.jar `find ./`
 
 images: $(IMAGES32)
+
+#music: $(MUSICOGG)
 
 %/ls.txt: %/*.re*
 	ls $(@D) --hide=ls.txt > $(@D)/ls.txt

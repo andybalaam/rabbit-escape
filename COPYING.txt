@@ -1,11 +1,14 @@
 Rabbit Escape
 Copyright(c) 2014 by Andy Balaam
+Music copyright(c) 2006 by tryad
 
 All code released under GPL v2 or later.
 All graphics, animations and levels released under CC-BY-NC 2.0.
+All music redistributed under CC-BY-SA 3.0.
 
 https://www.gnu.org/licenses/old-licenses/gpl-2.0.txt
 https://creativecommons.org/licenses/by-nc/2.0/
+https://creativecommons.org/licenses/by-sa/3.0/
 
 This means you may not distribute the graphics, animations and levels
 for commercial purposes.  I chose a non-commercial license to prevent

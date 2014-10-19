@@ -42,4 +42,10 @@ Developers
 
 See [INSTALL.md](https://github.com/andybalaam/rabbit-escape/blob/master/INSTALL.md).
 
+Credits
+-------
+
+Code, graphics, sound effects by [Andy Balaam](http://www.artificialworlds.net).
+
+Music samples by [tryad](http://tryad.org/).
 
