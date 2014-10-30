@@ -6,9 +6,11 @@ import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.LayoutManager;
+import java.util.Map;
 
 import javax.swing.*;
 
+import rabbitescape.engine.Token;
 import rabbitescape.ui.swing.SwingGameLoop.StatsChangedListener;
 
 import static rabbitescape.engine.i18n.Translation.t;
@@ -21,12 +23,16 @@ public class TopBar implements StatsChangedListener
     private static final String savedText   = "Saved: ${num}";
     private static final String needText    = "Need to save: ${num}";
 
+    private static final String abilityText =
+        "${ability} (${numLeft} left)";
+
     private final Color backgroundColor;
     private final JPanel panel;
     private final JLabel waiting;
     private final JLabel out;
     private final JLabel saved;
     private final JLabel need;
+    private final JLabel ability;
 
     public TopBar(
         Color backgroundColor, int numToSave, Container contentPane )
@@ -38,7 +44,9 @@ public class TopBar implements StatsChangedListener
         this.out     = addLabel( outText );
         this.saved   = addLabel( savedText );
         this.need    = addLabel( needText );
-        setText( this.need, needText, numToSave );
+        setCountText( this.need, needText, numToSave );
+
+        this.ability = addLabel( "" );
     }
 
     private JPanel createPanel( Container contentPane )
@@ -64,12 +72,36 @@ public class TopBar implements StatsChangedListener
     @Override
     public void changed( int waiting, int out, int saved )
     {
-        setText( this.waiting, waitingText, waiting );
-        setText( this.out,     outText,     out );
-        setText( this.saved,   savedText,   saved );
+        setCountText( this.waiting, waitingText, waiting );
+        setCountText( this.out,     outText,     out );
+        setCountText( this.saved,   savedText,   saved );
     }
 
-    private void setText( final JLabel label, final String text, final int num )
+    public void abilityChanged( Token.Type ability, int numLeft )
+    {
+        setAbilityText( this.ability, abilityText, ability.name(), numLeft );
+    }
+
+    private void setCountText( JLabel label, String text, int num )
+    {
+        setText( label, text, newMap( "num", String.valueOf( num ) ) );
+    }
+
+    private void setAbilityText(
+        JLabel label, String text, String ability, int numLeft )
+    {
+        setText(
+            label,
+            text,
+            newMap( "ability", ability, "numLeft", String.valueOf( numLeft ) )
+        );
+    }
+
+    private void setText(
+        final JLabel label,
+        final String text,
+        final Map<String, Object> params
+    )
     {
         SwingUtilities.invokeLater(
             new Runnable()
@@ -77,10 +109,10 @@ public class TopBar implements StatsChangedListener
                 @Override
                 public void run()
                 {
-                    label.setText(
-                        t( text, newMap( "num", String.valueOf( num ) ) ) );
+                    label.setText( t( text, params ) );
                 }
             }
         );
     }
+
 }

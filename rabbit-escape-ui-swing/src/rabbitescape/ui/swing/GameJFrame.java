@@ -253,10 +253,20 @@ public class GameJFrame extends JFrame
         {
             menu.abilities.get( chosenAbility ).setEnabled( false );
         }
+
+        updateChosenAbility();
     }
 
     protected void chooseAbility( Token.Type ability )
     {
         chosenAbility = ability;
+
+        updateChosenAbility();
+    }
+
+    private void updateChosenAbility()
+    {
+        topBar.abilityChanged(
+            chosenAbility, gameLoop.world.abilities.get( chosenAbility ) );
     }
 }
