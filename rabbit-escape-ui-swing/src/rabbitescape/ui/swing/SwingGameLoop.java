@@ -1,5 +1,7 @@
 package rabbitescape.ui.swing;
 
+import static rabbitescape.engine.i18n.Translation.t;
+
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -138,8 +140,7 @@ public class SwingGameLoop implements GameLoop
                     renderer,
                     animator,
                     f,
-                    world.completionState(),
-                    true
+                    world.completionState()
                 ).run();
 
                 sleep( 50 );
@@ -185,7 +186,6 @@ public class SwingGameLoop implements GameLoop
         private final SpriteAnimator animator;
         private final int frameNum;
         private final CompletionState completionState;
-        private final boolean moreLevels;
 
         public DrawFrame(
             BufferStrategy strategy,
@@ -193,8 +193,7 @@ public class SwingGameLoop implements GameLoop
             Renderer renderer,
             SpriteAnimator animator,
             int frameNum,
-            CompletionState completionState,
-            boolean moreLevels
+            CompletionState completionState
         )
         {
             super( strategy );
@@ -203,7 +202,6 @@ public class SwingGameLoop implements GameLoop
             this.animator = animator;
             this.frameNum = frameNum;
             this.completionState = completionState;
-            this.moreLevels = moreLevels;
         }
 
         @Override
@@ -240,29 +238,18 @@ public class SwingGameLoop implements GameLoop
         {
             fillCanvas( g, overlay );
 
-            String msg1;
-            String msg2;
+            String msg;
             if ( completionState == CompletionState.WON )
             {
-                if ( moreLevels )
-                {
-                    msg1 = "You won!";
-                    msg2 = "Click to continue.";
-                }
-                else
-                {
-                    msg1 = "You finished this section!";
-                    msg2 = "Click to go back.";
-                }
+                msg = t( "You won!" );
             }
             else
             {
-                msg1 = "You lost.";
-                msg2 = "Click to try again.";
+                msg = t( "You lost." );
             }
 
-            writeText( g, msg1, 0.5, 0.06 );
-            writeText( g, msg2, 0.7, 0.03 );
+            writeText( g, msg, 0.5, 0.06 );
+            writeText( g, t( "Click to continue." ), 0.7, 0.03 );
         }
 
         private void writeText(

@@ -20,6 +20,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
 import rabbitescape.engine.Token;
+import rabbitescape.engine.World;
 import rabbitescape.engine.config.Config;
 import rabbitescape.engine.config.ConfigTools;
 import rabbitescape.render.BitmapCache;
@@ -235,6 +236,11 @@ public class GameJFrame extends JFrame
 
     private void click( Point pixelPosition )
     {
+        if ( gameLoop.world.completionState() != World.CompletionState.RUNNING )
+        {
+            exit();
+        }
+
         if ( chosenAbility == null )
         {
             return;
