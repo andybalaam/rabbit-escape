@@ -18,7 +18,8 @@ public class MenuItem
     public final String name;
     public final Type type;
     public final Map<String, Object> nameParams;
-    public final boolean enabled;
+
+    public boolean enabled;
 
     public MenuItem( String name, Menu target, boolean enabled )
     {

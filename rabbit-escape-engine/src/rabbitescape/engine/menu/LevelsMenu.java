@@ -17,12 +17,20 @@ public class LevelsMenu extends Menu
         }
     }
 
+    private final String levelsDir;
+    private final LevelsCompleted levelsCompleted;
+
     public LevelsMenu( String levelsDir, LevelsCompleted levelsCompleted )
     {
         super( "Choose a level:", menuItems( levelsDir, levelsCompleted ) );
+
+        this.levelsDir = levelsDir;
+        this.levelsCompleted = levelsCompleted;
+
+        refresh();
     }
 
-    public static MenuItem[] menuItems(
+    private static MenuItem[] menuItems(
         String levelsDir, LevelsCompleted levelsCompleted )
     {
         String[] levelFileNames = levelsInResource(
@@ -37,7 +45,7 @@ public class LevelsMenu extends Menu
                 levelsDir + "/" + fileName + ".rel",
                 levelsDir,
                 i,
-                i <= levelsCompleted.highestLevelCompleted( levelsDir ) + 1
+                true
             );
 
             ++i;
@@ -63,6 +71,19 @@ public class LevelsMenu extends Menu
         catch ( ReadingResourceFailed e )
         {
             throw new ErrorLoadingLevelList( e );
+        }
+    }
+
+    @Override
+    public void refresh()
+    {
+        int i = 1;
+        for ( MenuItem item : items )
+        {
+            item.enabled = (
+                i <= levelsCompleted.highestLevelCompleted( levelsDir ) + 1 );
+
+            ++i;
         }
     }
 }

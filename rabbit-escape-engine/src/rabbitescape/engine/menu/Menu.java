@@ -10,4 +10,12 @@ public class Menu
         this.intro = intro;
         this.items = items;
     }
+
+    /**
+     * Overridden by subclasses that need to refresh their items when
+     * something changes.
+     */
+    public void refresh()
+    {
+    }
 }

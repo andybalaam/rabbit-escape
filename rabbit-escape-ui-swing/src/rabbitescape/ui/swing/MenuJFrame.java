@@ -30,6 +30,8 @@ import static rabbitescape.engine.i18n.Translation.*;
 import static rabbitescape.ui.swing.SwingConfigSetup.*;
 
 import rabbitescape.engine.CompletedLevelWinListener;
+import rabbitescape.engine.LevelWinListener;
+import rabbitescape.engine.MultiLevelWinListener;
 import rabbitescape.engine.config.Config;
 import rabbitescape.engine.config.ConfigTools;
 import rabbitescape.engine.err.RabbitEscapeException;
@@ -241,6 +243,13 @@ public class MenuJFrame extends JFrame
         revalidate();
     }
 
+    public void refreshEnabledItems()
+    {
+        Menu menu = stack.lastElement();
+        menu.refresh();
+        placeMenu();
+    }
+
     private GridBagConstraints constraints( int i )
     {
         return new GridBagConstraints(
@@ -290,13 +299,21 @@ public class MenuJFrame extends JFrame
                 new SwingSingleGameMain(
                     fs, out, locale, bitmapCache, uiConfig ).launchGame(
                         new String[] { item.fileName },
-                        new CompletedLevelWinListener(
-                            item.levelsDir, item.levelNumber, levelsCompleted )
+                        winListeners( item )
                     );
 
                 return null;
             }
         }.execute();
+    }
+
+    protected LevelWinListener winListeners( LevelMenuItem item )
+    {
+        return new MultiLevelWinListener(
+            new CompletedLevelWinListener(
+                item.levelsDir, item.levelNumber, levelsCompleted ),
+            new UpdateSwingMenuLevelWinListener( this )
+        );
     }
 
     private void about()
