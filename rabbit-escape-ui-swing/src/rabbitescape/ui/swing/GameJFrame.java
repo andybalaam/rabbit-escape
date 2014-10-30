@@ -218,6 +218,7 @@ public class GameJFrame extends JFrame
         if ( gameLoop != null )
         {
             gameLoop.stop();
+            gameLoop.setPaused( false );
         }
 
         dispose();
