@@ -329,7 +329,7 @@ public class TestBridging
     // TODO: Stop_bridging_when_hit_a_ceiling
 
     @Test
-    public void Keep_bridging_when_skim_a_wall_top()
+    public void Stop_bridging_when_skim_a_wall_top()
     {
         assertWorldEvolvesLike(
             "            " + "\n" +
@@ -367,7 +367,7 @@ public class TestBridging
             "# j      r #" + "\n" +
             "############",
 
-            "E          B" + "\n" +
+            "!          '" + "\n" +
             "#j        r#" + "\n" +
             "# )      ( #" + "\n" +
             "############"

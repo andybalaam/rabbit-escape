@@ -57,6 +57,16 @@ public class Bridging implements Behaviour
             return null; // We will be turning around - stop bridging
         }
 
+        Block belowNextBlock = world.getBlockAt( nextX, rabbit.y );
+        if (
+               belowNextBlock != null
+            && belowNextBlock.type == Block.Type.solid_flat
+        )
+        {
+            bigSteps = 0;
+            return null;
+        }
+
         boolean slopeDown = (
                ( hereBlock != null )
             && ( hereBlock.riseDir() == Direction.opposite( rabbit.dir ) )
