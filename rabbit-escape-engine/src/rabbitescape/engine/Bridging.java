@@ -54,6 +54,7 @@ public class Bridging implements Behaviour
 
         if ( nextBlock != null && nextBlock.riseDir() != rabbit.dir )
         {
+            bigSteps = 0;
             return null; // We will be turning around - stop bridging
         }
 
@@ -64,7 +65,7 @@ public class Bridging implements Behaviour
         )
         {
             bigSteps = 0;
-            return null;
+            return null; // We skimmed the top of a wall - stop bridging
         }
 
         boolean slopeDown = (
