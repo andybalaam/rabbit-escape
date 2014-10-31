@@ -3,8 +3,9 @@ package rabbitescape.engine.logic;
 import static org.hamcrest.MatcherAssert.*;
 import static rabbitescape.engine.Tools.*;
 import static rabbitescape.engine.textworld.TextWorldManip.*;
+import static rabbitescape.engine.util.WorldAssertions.*;
 
-import org.junit.Test;
+import org.junit.*;
 
 import rabbitescape.engine.World;
 
@@ -1947,6 +1948,24 @@ public class TestWalking
                 " /) ",
                 "   #"
             )
+        );
+    }
+
+    @Test @Ignore // Currently we jump onto the slope - need this so we can fall
+    public void Walk_below_bridge()
+    {
+        assertWorldEvolvesLike(
+            "#       #" + "\n" +
+            "# ( j   #" + "\n" +
+            "#########",
+
+            "#       #" + "\n" +
+            "# <j    #" + "\n" +
+            "#########",
+
+            "#       #" + "\n" +
+            "#<j     #" + "\n" +
+            "#########"
         );
     }
 }
