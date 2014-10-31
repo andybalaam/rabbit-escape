@@ -334,6 +334,112 @@ public class TestBridging
         );
     }
 
+    @Test
+    public void Dont_stop_bridging_when_2_above_head_at_start()
+    {
+        assertWorldEvolvesLike(
+            "# #      # #" + "\n" +
+            "#          #" + "\n" +
+            "# ij    ri #" + "\n" +
+            "############",
+
+            "# #      # #" + "\n" +
+            "#          #" + "\n" +
+            "#Ej      rB#" + "\n" +
+            "############"
+        );
+    }
+
+    @Test
+    public void Stop_bridging_when_hit_head_here_at_start()
+    {
+        assertWorldEvolvesLike(
+            "# #      # #" + "\n" +
+            "# ij    ri #" + "\n" +
+            "############",
+
+            "# #      # #" + "\n" +
+            "#<j      r>#" + "\n" +
+            "############"
+        );
+    }
+
+    @Test
+    public void Stop_bridging_when_hit_head_in_front_at_start()
+    {
+        assertWorldEvolvesLike(
+            "##        ##" + "\n" +
+            "# ij    ri #" + "\n" +
+            "############",
+
+            "##        ##" + "\n" +
+            "#<j      r>#" + "\n" +
+            "############"
+        );
+    }
+
+    @Test
+    public void Stop_bridging_when_hit_head_here_later()
+    {
+        assertWorldEvolvesLike(
+            "#  #    #  #" + "\n" +
+            "#          #" + "\n" +
+            "#   ijri   #" + "\n" +
+            "############",
+
+            "#  #    #  #" + "\n" +
+            "#          #" + "\n" +
+            "#  Ej  rB  #" + "\n" +
+            "############",
+
+            "#  #    #  #" + "\n" +
+            "#          #" + "\n" +
+            "#  ]j  r[  #" + "\n" +
+            "############",
+
+            "#  #    #  #" + "\n" +
+            "#          #" + "\n" +
+            "#  }j  r{  #" + "\n" +
+            "############",
+
+            "#  #    #  #" + "\n" +
+            "# !      ' #" + "\n" +
+            "#  j    r  #" + "\n" +
+            "############"
+        );
+    }
+
+    @Test
+    public void Stop_bridging_when_hit_head_in_front_later()
+    {
+        assertWorldEvolvesLike(
+            "# #      # #" + "\n" +
+            "#          #" + "\n" +
+            "#   ijri   #" + "\n" +
+            "############",
+
+            "# #      # #" + "\n" +
+            "#          #" + "\n" +
+            "#  Ej  rB  #" + "\n" +
+            "############",
+
+            "# #      # #" + "\n" +
+            "#          #" + "\n" +
+            "#  ]j  r[  #" + "\n" +
+            "############",
+
+            "# #      # #" + "\n" +
+            "#          #" + "\n" +
+            "#  }j  r{  #" + "\n" +
+            "############",
+
+            "# #      # #" + "\n" +
+            "# !      ' #" + "\n" +
+            "#  j    r  #" + "\n" +
+            "############"
+        );
+    }
+
     // TODO: Stop_bridging_when_hit_a_ceiling
 
     @Test

@@ -34,7 +34,7 @@ public class Bridging implements Behaviour
         if ( bigSteps <= 0 )
         {
             smallSteps = 0;
-            return null;
+            return null;   // Finished bridging
         }
 
         Block hereBlock = world.getBlockAt( rabbit.x, rabbit.y );
@@ -51,21 +51,38 @@ public class Bridging implements Behaviour
         nextY += slopeUp ? -1 : 0;
 
         Block nextBlock = world.getBlockAt( nextX, nextY );
-
-        if ( nextBlock != null && nextBlock.riseDir() != rabbit.dir )
-        {
-            bigSteps = 0;
-            return null; // We will be turning around - stop bridging
-        }
-
         Block belowNextBlock = world.getBlockAt( nextX, rabbit.y );
+        Block aboveHereBlock = world.getBlockAt( rabbit.x, rabbit.y - 1 );
+        Block twoAboveHereBlock = world.getBlockAt( rabbit.x, rabbit.y - 2 );
+        Block aboveNextBlock = world.getBlockAt( nextX, nextY - 1 );
+
         if (
-               belowNextBlock != null
-            && belowNextBlock.type == Block.Type.solid_flat
+            (
+                   // Something in the way
+                   nextBlock != null
+                && nextBlock.riseDir() != rabbit.dir
+            ) || (
+                   // Clip land
+                   belowNextBlock != null
+                && belowNextBlock.type == Block.Type.solid_flat
+            ) || (
+                   // Bang head here
+                   aboveHereBlock != null
+                && aboveHereBlock.type == Block.Type.solid_flat
+            ) || (
+                    // Bang head next
+                    aboveNextBlock != null
+                 && aboveNextBlock.type == Block.Type.solid_flat
+            ) || (
+                    // Bang head here, mid-build
+                    bigSteps < 3
+                 && twoAboveHereBlock != null
+                 && twoAboveHereBlock.type == Block.Type.solid_flat
+            )
         )
         {
-            bigSteps = 0;
-            return null; // We skimmed the top of a wall - stop bridging
+            bigSteps = 0; // Stop bridging
+            return null;
         }
 
         boolean slopeDown = (
