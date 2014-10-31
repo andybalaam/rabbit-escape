@@ -5,6 +5,7 @@ import static rabbitescape.engine.Token.Type.*;
 
 import java.util.Map;
 
+import rabbitescape.engine.Block.Type;
 import rabbitescape.engine.ChangeDescription.State;
 
 public class Bridging implements Behaviour
@@ -64,7 +65,7 @@ public class Bridging implements Behaviour
             ) || (
                    // Clip land
                    belowNextBlock != null
-                && belowNextBlock.type == Block.Type.solid_flat
+                && belowNextBlock.riseDir() != rabbit.dir
             ) || (
                    // Bang head here
                    aboveHereBlock != null
@@ -72,7 +73,7 @@ public class Bridging implements Behaviour
             ) || (
                     // Bang head next
                     aboveNextBlock != null
-                 && aboveNextBlock.type == Block.Type.solid_flat
+                 && isSolid( aboveNextBlock )
             ) || (
                     // Bang head here, mid-build
                     bigSteps < 3
@@ -178,6 +179,15 @@ public class Bridging implements Behaviour
                 return null;
             }
         }
+    }
+
+    private boolean isSolid( Block block )
+    {
+        return (
+               block.type == Type.solid_flat
+            || block.type == Type.solid_up_left
+            || block.type == Type.solid_up_right
+        );
     }
 
     @Override
