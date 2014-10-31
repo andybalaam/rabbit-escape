@@ -13,6 +13,7 @@ Later
 - Ability to play custom levels
 - Level editor
 - Sound effects
+- Fail to bridge action when bridge placed next to wall?
 
 Release 0.2 (Android)
 ---------------------
@@ -37,10 +38,8 @@ Release 0.1 (Playable)
 - action:climb
 - graphics:block
 - action:block
-- Bug: rabbit turns before it notices to bridge
-- "Fail to bridge" action when bridge placed next to wall?
-- Bug: bridging should stop when joins land or bridge
-- Bug: bridging should stop when bumps head
+- ~~Bug: bridging should stop when joins land or bridge~~
+- ~~Bug: bridging should stop when bumps head~~
 - Bug: walking past a bridger should not jump up onto bridge
 - Bug: should fall when meeting bridge sloping towards you
 - Bug: handle digging into slope
