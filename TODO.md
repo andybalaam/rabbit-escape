@@ -44,6 +44,11 @@ Release 0.1 (Playable)
 - Bug: should fall when meeting bridge sloping towards you
 - Bug: handle digging into slope
 - Bug: handle bashing into slope
+- Bridger unable to use token should not pick it up.  This means dropping a
+  token next to a wall makes you bridge away from the wall.
+- How to handle bridging out of a 1-wide hole?  Maybe picking up a bridge
+  token next to a wall makes you bridge backwards immediately?  Maybe try
+  to avoid 1-wide holes for now.
 - ~~Beginner levels for dig, bash, bridge~~
 - ~~Handle digging out of screen~~
 - ~~graphics:bridge~~
