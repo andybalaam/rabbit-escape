@@ -14,6 +14,7 @@ Later
 - Level editor
 - Sound effects
 - Fail to bridge action when bridge placed next to wall?
+- Animate falling onto slopes
 
 Release 0.2 (Android)
 ---------------------
@@ -41,7 +42,7 @@ Release 0.1 (Playable)
 - ~~Bug: bridging should stop when joins land or bridge~~
 - ~~Bug: bridging should stop when bumps head~~
 - Bug: walking past a bridger should not jump up onto bridge
-- Bug: should fall when meeting bridge sloping towards you
+- ~~Bug: should fall when meeting bridge sloping towards you~~
 - Bug: handle digging into slope
 - Bug: handle bashing into slope
 - Bridger unable to use token should not pick it up.  This means dropping a

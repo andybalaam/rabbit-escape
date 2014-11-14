@@ -1951,7 +1951,7 @@ public class TestWalking
         );
     }
 
-    @Test @Ignore // Currently we jump onto the slope - need this so we can fall
+    @Test
     public void Walk_below_bridge()
     {
         assertWorldEvolvesLike(
@@ -1965,6 +1965,28 @@ public class TestWalking
 
             "#       #" + "\n" +
             "#<j     #" + "\n" +
+            "#########"
+        );
+    }
+
+    @Test
+    public void Fall_below_bridge()
+    {
+        assertWorldEvolvesLike(
+            "# ( j   #" + "\n" +
+            "#  ##   #" + "\n" +
+            "#########",
+
+            "# <j    #" + "\n" +
+            "#  ##   #" + "\n" +
+            "#########",
+
+            "# j     #" + "\n" +
+            "# f##   #" + "\n" +
+            "#########",
+
+            "# (     #" + "\n" +
+            "#<j##   #" + "\n" +
             "#########"
         );
     }

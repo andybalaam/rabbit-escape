@@ -158,8 +158,11 @@ public class Falling implements Behaviour
         int below = rabbit.y + 1;
         //noinspection RedundantIfStatement
         if (
-               world.flatBlockAt( rabbit.x, below )
-            || world.slopingBlockAt( rabbit.x, rabbit.y )
+              world.flatBlockAt( rabbit.x, below )
+           || (
+                  !underBridge( rabbit )
+               && world.slopingBlockAt( rabbit.x, rabbit.y )
+           )
         )
         {
             return false;
@@ -168,6 +171,13 @@ public class Falling implements Behaviour
         return true;
     }
 
+    private boolean underBridge( Rabbit rabbit )
+    {
+        return (
+               rabbit.state == RABBIT_WALKING_UNDER_BRIDGE_LEFT
+            || rabbit.state == RABBIT_WALKING_UNDER_BRIDGE_RIGHT
+        );
+    }
 
     @Override
     public void saveState( Map<String, String> saveState )

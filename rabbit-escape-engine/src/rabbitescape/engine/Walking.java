@@ -128,6 +128,13 @@ public class Walking implements Behaviour
                         RABBIT_TURNING_LEFT_TO_RIGHT
                     );
                 }
+                else if( lowerBridgeAt( nextX, nextY ) )
+                {
+                    return rl(
+                        RABBIT_WALKING_UNDER_BRIDGE_RIGHT,
+                        RABBIT_WALKING_UNDER_BRIDGE_LEFT
+                    );
+                }
                 else
                 {
                     return rl(
@@ -155,7 +162,18 @@ public class Walking implements Behaviour
 
         private boolean lowering()
         {
-            return lowerBlockAt( rabbit.x, rabbit.y );
+            return (
+                   !underBridge( rabbit )
+                && lowerBlockAt( rabbit.x, rabbit.y )
+            );
+        }
+
+        private boolean underBridge( Rabbit rabbit )
+        {
+            return (
+                   rabbit.state == RABBIT_WALKING_UNDER_BRIDGE_LEFT
+                || rabbit.state == RABBIT_WALKING_UNDER_BRIDGE_RIGHT
+            );
         }
 
         private boolean riseBlockAt( int x, int y )
@@ -171,6 +189,19 @@ public class Walking implements Behaviour
                    block != null
                 && block.riseDir() == Direction.opposite( rabbit.dir )
             );
+        }
+
+        private boolean lowerBridgeAt( int x, int y )
+        {
+            Block block = world.getBlockAt( x, y );
+            return (
+                block != null
+             && block.riseDir() == Direction.opposite( rabbit.dir )
+             && (
+                    block.type == bridge_up_left
+                 || block.type == bridge_up_right
+             )
+         );
         }
 
         private boolean lowerSlopeAt( int x, int y )
@@ -201,6 +232,7 @@ public class Walking implements Behaviour
             case RABBIT_RISING_LEFT_START:
             case RABBIT_LOWERING_LEFT_END:
             case RABBIT_WALKING_LEFT:
+            case RABBIT_WALKING_UNDER_BRIDGE_LEFT:
             case RABBIT_LOWERING_AND_RISING_LEFT:
             case RABBIT_RISING_AND_LOWERING_LEFT:
             {
@@ -210,6 +242,7 @@ public class Walking implements Behaviour
             case RABBIT_RISING_RIGHT_START:
             case RABBIT_LOWERING_RIGHT_END:
             case RABBIT_WALKING_RIGHT:
+            case RABBIT_WALKING_UNDER_BRIDGE_RIGHT:
             case RABBIT_LOWERING_AND_RISING_RIGHT:
             case RABBIT_RISING_AND_LOWERING_RIGHT:
             {
