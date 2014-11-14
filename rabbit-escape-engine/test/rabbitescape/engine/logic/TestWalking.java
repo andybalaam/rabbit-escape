@@ -1992,6 +1992,24 @@ public class TestWalking
     }
 
     @Test
+    public void Walk_below_bridge_rising()
+    {
+        assertWorldEvolvesLike(
+            "# (     #" + "\n" +
+            "###)j ###" + "\n" +
+            "#########",
+
+            "# !     #" + "\n" +
+            "###j  ###" + "\n" +
+            "#########",
+
+            "#<j     #" + "\n" +
+            "###)  ###" + "\n" +
+            "#########"
+        );
+    }
+
+    @Test
     public void Fall_below_bridge()
     {
         assertWorldEvolvesLike(
@@ -2009,6 +2027,50 @@ public class TestWalking
 
             "# (     #" + "\n" +
             "#<j##   #" + "\n" +
+            "#########"
+        );
+    }
+
+    @Test
+    public void Fall_below_bridge_lowering()
+    {
+        assertWorldEvolvesLike(
+            "#    j  #" + "\n" +
+            "# ((##  #" + "\n" +
+            "## ######" + "\n" +
+            "## ######",
+
+            "#   j   #" + "\n" +
+            "# (=##  #" + "\n" +
+            "## ######" + "\n" +
+            "## ######",
+
+            "#       #" + "\n" +
+            "# +j##  #" + "\n" +
+            "## ######" + "\n" +
+            "## ######",
+
+            "#       #" + "\n" +
+            "# j(##  #" + "\n" +
+            "##f######" + "\n" +
+            "##f######"
+        );
+    }
+
+    @Test
+    public void Fall_below_bridge_rising()
+    {
+        assertWorldEvolvesLike(
+            "# (     #" + "\n" +
+            "## )j ###" + "\n" +
+            "#########",
+
+            "# !     #" + "\n" +
+            "## j  ###" + "\n" +
+            "#########",
+
+            "# j     #" + "\n" +
+            "##f)  ###" + "\n" +
             "#########"
         );
     }

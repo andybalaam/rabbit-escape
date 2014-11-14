@@ -231,15 +231,27 @@ public class Walking implements Behaviour
                 ++rabbit.x;
                 return true;
             }
-            case RABBIT_RISING_LEFT_CONTINUE:
             case RABBIT_RISING_LEFT_END:
+            {
+                --rabbit.y;
+                --rabbit.x;
+                checkUnderBridge( world, rabbit );
+                return true;
+            }
+            case RABBIT_RISING_LEFT_CONTINUE:
             {
                 --rabbit.y;
                 --rabbit.x;
                 return true;
             }
-            case RABBIT_RISING_RIGHT_CONTINUE:
             case RABBIT_RISING_RIGHT_END:
+            {
+                --rabbit.y;
+                ++rabbit.x;
+                checkUnderBridge( world, rabbit );
+                return true;
+            }
+            case RABBIT_RISING_RIGHT_CONTINUE:
             {
                 --rabbit.y;
                 ++rabbit.x;
