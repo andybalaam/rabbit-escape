@@ -160,7 +160,7 @@ public class Falling implements Behaviour
         if (
               world.flatBlockAt( rabbit.x, below )
            || (
-                  !underBridge( rabbit )
+                  !rabbit.underBridge
                && world.slopingBlockAt( rabbit.x, rabbit.y )
            )
         )
@@ -169,14 +169,6 @@ public class Falling implements Behaviour
         }
 
         return true;
-    }
-
-    private boolean underBridge( Rabbit rabbit )
-    {
-        return (
-               rabbit.state == RABBIT_WALKING_UNDER_BRIDGE_LEFT
-            || rabbit.state == RABBIT_WALKING_UNDER_BRIDGE_RIGHT
-        );
     }
 
     @Override

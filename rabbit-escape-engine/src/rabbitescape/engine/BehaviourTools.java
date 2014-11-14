@@ -22,6 +22,16 @@ public class BehaviourTools
         }
     }
 
+    public static void addToStateIfTrue(
+        Map<String, String> saveState, String key, boolean value
+    )
+    {
+        if ( value )
+        {
+            saveState.put( key, Boolean.toString( value ) );
+        }
+    }
+
     public static int restoreFromState(
         Map<String, String> saveState, String key, int defaultValue )
     {
@@ -36,6 +46,20 @@ public class BehaviourTools
             {
                 throw new BadSavedState( e, saveState );
             }
+        }
+        else
+        {
+            return defaultValue;
+        }
+    }
+
+    public static boolean restoreFromState(
+        Map<String, String> saveState, String key, boolean defaultValue )
+    {
+        String val = saveState.get( key );
+        if ( val != null )
+        {
+            return Boolean.valueOf( val );
         }
         else
         {

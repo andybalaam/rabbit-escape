@@ -128,13 +128,6 @@ public class Walking implements Behaviour
                         RABBIT_TURNING_LEFT_TO_RIGHT
                     );
                 }
-                else if( lowerBridgeAt( nextX, nextY ) )
-                {
-                    return rl(
-                        RABBIT_WALKING_UNDER_BRIDGE_RIGHT,
-                        RABBIT_WALKING_UNDER_BRIDGE_LEFT
-                    );
-                }
                 else
                 {
                     return rl(
@@ -163,16 +156,8 @@ public class Walking implements Behaviour
         private boolean lowering()
         {
             return (
-                   !underBridge( rabbit )
+                   !rabbit.underBridge
                 && lowerBlockAt( rabbit.x, rabbit.y )
-            );
-        }
-
-        private boolean underBridge( Rabbit rabbit )
-        {
-            return (
-                   rabbit.state == RABBIT_WALKING_UNDER_BRIDGE_LEFT
-                || rabbit.state == RABBIT_WALKING_UNDER_BRIDGE_RIGHT
             );
         }
 
@@ -227,12 +212,24 @@ public class Walking implements Behaviour
     @Override
     public boolean behave( World world, Rabbit rabbit, State state )
     {
+        rabbit.underBridge = false;
+
         switch ( state )
         {
+            case RABBIT_WALKING_LEFT:
+            {
+                --rabbit.x;
+                checkUnderBridge( world, rabbit );
+                return true;
+            }
+            case RABBIT_WALKING_RIGHT:
+            {
+                ++rabbit.x;
+                checkUnderBridge( world, rabbit );
+                return true;
+            }
             case RABBIT_RISING_LEFT_START:
             case RABBIT_LOWERING_LEFT_END:
-            case RABBIT_WALKING_LEFT:
-            case RABBIT_WALKING_UNDER_BRIDGE_LEFT:
             case RABBIT_LOWERING_AND_RISING_LEFT:
             case RABBIT_RISING_AND_LOWERING_LEFT:
             {
@@ -241,8 +238,6 @@ public class Walking implements Behaviour
             }
             case RABBIT_RISING_RIGHT_START:
             case RABBIT_LOWERING_RIGHT_END:
-            case RABBIT_WALKING_RIGHT:
-            case RABBIT_WALKING_UNDER_BRIDGE_RIGHT:
             case RABBIT_LOWERING_AND_RISING_RIGHT:
             case RABBIT_RISING_AND_LOWERING_RIGHT:
             {
@@ -298,6 +293,21 @@ public class Walking implements Behaviour
                     + " but we are in state " + state.name()
                 );
             }
+        }
+    }
+
+    private void checkUnderBridge( World world, Rabbit rabbit )
+    {
+        Block thisBlock = world.getBlockAt( rabbit.x, rabbit.y );
+        if (
+               thisBlock != null
+            && (
+                   thisBlock.type == bridge_up_right
+                || thisBlock.type == bridge_up_left
+            )
+        )
+        {
+            rabbit.underBridge = true;
         }
     }
 

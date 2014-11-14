@@ -14,11 +14,13 @@ public class Rabbit extends Thing
     private final List<Behaviour> behaviours;
 
     public Direction dir;
+    public boolean underBridge;
 
     public Rabbit( int x, int y, Direction dir )
     {
         super( x, y, RABBIT_WALKING_LEFT );
         this.dir = dir;
+        this.underBridge = false;
         behaviours = createBehaviours();
     }
 
@@ -72,6 +74,8 @@ public class Rabbit extends Thing
     {
         Map<String, String> ret = new HashMap<String, String>();
 
+        BehaviourTools.addToStateIfTrue( ret, "underBridge", underBridge );
+
         for ( Behaviour behaviour : behaviours )
         {
             behaviour.saveState( ret );
@@ -83,6 +87,9 @@ public class Rabbit extends Thing
     @Override
     public void restoreFromState( Map<String, String> state )
     {
+        underBridge = BehaviourTools.restoreFromState(
+            state, "underBridge", false );
+
         for ( Behaviour behaviour : behaviours )
         {
             behaviour.restoreFromState( state );

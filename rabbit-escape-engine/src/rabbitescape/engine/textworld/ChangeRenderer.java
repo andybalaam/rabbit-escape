@@ -20,7 +20,6 @@ public class ChangeRenderer
             case NOTHING:
                 break;
             case RABBIT_WALKING_LEFT:
-            case RABBIT_WALKING_UNDER_BRIDGE_LEFT:
                 chars.set( change.x-1, change.y, '<' );
                 break;
             case RABBIT_TURNING_LEFT_TO_RIGHT:
@@ -33,7 +32,6 @@ public class ChangeRenderer
                 chars.set( change.x, change.y, '[' );
                 break;
             case RABBIT_WALKING_RIGHT:
-            case RABBIT_WALKING_UNDER_BRIDGE_RIGHT:
                 chars.set( change.x + 1, change.y, '>' );
                 break;
             case RABBIT_TURNING_RIGHT_TO_LEFT:

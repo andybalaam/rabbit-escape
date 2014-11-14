@@ -602,13 +602,13 @@ public class TestTextWorldManip
             ":bash=1",
             ":bridge=3",
             ":dig=2",
-            "######",
-            "#    #",
-            "#    #",
-            "# ** #",
-            "######",
+            "#######",
+            "#     #",
+            "#     #",
+            "# * * #",
+            "#######",
             ":*=r{Bashing.stepsOfBashing:1,Digging.stepsOfDigging:2}Q{Entrance.timeToNextRabbit:3}",
-            ":*=j{Bridging.bigSteps:1,Bridging.smallSteps:1}",
+            ":*=(j{Bridging.bigSteps:1,Bridging.smallSteps:1,underBridge:true}",
         };
 
         assertThat(
