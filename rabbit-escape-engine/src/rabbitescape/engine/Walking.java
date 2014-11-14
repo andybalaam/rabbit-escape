@@ -75,7 +75,7 @@ public class Walking implements Behaviour
                 }
                 else if(
                         world.flatBlockAt( nextX, rabbit.y )
-                     || lowerBlockAt( nextX, rabbit.y )
+                     || lowerSlopeAt( nextX, rabbit.y )
                  )
                  {
                      return rl(
@@ -176,19 +176,6 @@ public class Walking implements Behaviour
             );
         }
 
-        private boolean lowerBridgeAt( int x, int y )
-        {
-            Block block = world.getBlockAt( x, y );
-            return (
-                block != null
-             && block.riseDir() == Direction.opposite( rabbit.dir )
-             && (
-                    block.type == bridge_up_left
-                 || block.type == bridge_up_right
-             )
-         );
-        }
-
         private boolean lowerSlopeAt( int x, int y )
         {
             Block block = world.getBlockAt( x, y );
@@ -217,19 +204,20 @@ public class Walking implements Behaviour
         switch ( state )
         {
             case RABBIT_WALKING_LEFT:
+            case RABBIT_LOWERING_LEFT_END:
             {
                 --rabbit.x;
                 checkUnderBridge( world, rabbit );
                 return true;
             }
             case RABBIT_WALKING_RIGHT:
+            case RABBIT_LOWERING_RIGHT_END:
             {
                 ++rabbit.x;
                 checkUnderBridge( world, rabbit );
                 return true;
             }
             case RABBIT_RISING_LEFT_START:
-            case RABBIT_LOWERING_LEFT_END:
             case RABBIT_LOWERING_AND_RISING_LEFT:
             case RABBIT_RISING_AND_LOWERING_LEFT:
             {
@@ -237,7 +225,6 @@ public class Walking implements Behaviour
                 return true;
             }
             case RABBIT_RISING_RIGHT_START:
-            case RABBIT_LOWERING_RIGHT_END:
             case RABBIT_LOWERING_AND_RISING_RIGHT:
             case RABBIT_RISING_AND_LOWERING_RIGHT:
             {

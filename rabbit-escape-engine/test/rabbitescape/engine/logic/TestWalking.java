@@ -1970,6 +1970,28 @@ public class TestWalking
     }
 
     @Test
+    public void Walk_below_bridge_lowering()
+    {
+        assertWorldEvolvesLike(
+            "#    j  #" + "\n" +
+            "# ((##  #" + "\n" +
+            "#########",
+
+            "#   j   #" + "\n" +
+            "# (=##  #" + "\n" +
+            "#########",
+
+            "#       #" + "\n" +
+            "# +j##  #" + "\n" +
+            "#########",
+
+            "#       #" + "\n" +
+            "#<j(##  #" + "\n" +
+            "#########"
+        );
+    }
+
+    @Test
     public void Fall_below_bridge()
     {
         assertWorldEvolvesLike(
