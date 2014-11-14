@@ -11,6 +11,91 @@ public class WorldAssertions
     public static void assertWorldEvolvesLike(
         String initialState, String... laterStates )
     {
+        doAssertWorldEvolvesLike(         initialState, laterStates );
+        doAssertMirroredWorldEvolvesLike( initialState, laterStates );
+    }
+
+    private static void doAssertMirroredWorldEvolvesLike(
+        String initialState, String[] laterStates )
+    {
+        doAssertWorldEvolvesLike(
+            mirror( initialState ), mirror( laterStates ) );
+    }
+
+    public static String[] mirror( String... states )
+    {
+        return map( new MirrorState(), states, new String[0] );
+    }
+
+    public static String mirror( String state )
+    {
+        return new MirrorState().apply( state );
+    }
+
+    private static class MirrorLine implements Function<String, String>
+    {
+        @Override
+        public String apply( String input )
+        {
+            return swapChars( new StringBuilder( input ).reverse().toString() );
+        }
+
+        private String swapChars( String input )
+        {
+            char[] ret = new char[input.length()];
+
+            for( int i = 0; i < ret.length; ++i )
+            {
+                ret[i] = swapChar( input.charAt( i ) );
+            }
+
+            return new String( ret );
+        }
+
+        private char swapChar( char c )
+        {
+            switch ( c )
+            {
+                case 'r': return 'j';    case 'j': return 'r';
+                case '/': return '\\';   case '\\': return '/';
+                case '(': return ')';    case ')': return '(';
+                case '<': return '>';    case '>': return '<';
+                case '|': return '?';    case '?': return '|';
+                case '[': return ']';    case ']': return '[';
+                case '$': return '^';    case '^': return '$';
+                case '\'': return '!';   case '!': return '\'';
+                case '-': return '=';    case '=': return '-';
+                case '@': return '%';    case '%': return '@';
+                case '_': return '+';    case '+': return '_';
+                case ',': return '.';    case '.': return ',';
+                case '&': return '*';    case '*': return '&';
+                case 'e': return 's';    case 's': return 'e';
+                case 'd': return 'a';    case 'a': return 'd';
+                case 'K': return 'W';    case 'W': return 'K';
+                case 'I': return 'J';    case 'J': return 'I';
+                case 'B': return 'E';    case 'E': return 'B';
+                case '{': return '}';    case '}': return '{';
+                case '~': return '`';    case '`': return '~';
+                default: return c;
+            }
+        }
+    }
+
+    private static class MirrorState implements Function<String, String>
+    {
+        @Override
+        public String apply( String state )
+        {
+            return join(
+                "\n",
+                map( new MirrorLine(), split( state, "\n" ), new String[0] )
+            );
+        }
+    }
+
+    private static void doAssertWorldEvolvesLike(
+        String initialState, String[] laterStates )
+    {
         World world = createWorld( split( initialState, "\n" ) );
 
         for ( String state : laterStates )
