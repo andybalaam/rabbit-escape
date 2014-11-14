@@ -523,6 +523,15 @@ public class TestUtil
     }
 
     @Test
+    public void Apply_a_function_to_each_array_element_with_map()
+    {
+        assertThat(
+            map( stringise(), new Integer[]{ 3, -4, 5 }, new String[0] ),
+            equalTo( new String[] { "3", "-4", "5" } )
+        );
+    }
+
+    @Test
     public void Sorted_empty_list_is_empty()
     {
         assertThat(

@@ -89,6 +89,20 @@ public class Util
         return ret;
     }
 
+    public static <T, R> R[] map(
+        Function<T, R> function, T[] input, R[] retType )
+    {
+        List<R> ret = new ArrayList<>();
+
+        for ( T t : input )
+        {
+            ret.add( function.apply( t ) );
+        }
+
+        return ret.toArray( retType );
+    }
+
+
     public static <T> List<T> list( Iterable<T> input )
     {
         List<T> ret = new ArrayList<>();
