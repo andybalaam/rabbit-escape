@@ -193,6 +193,19 @@ public class Bridging implements Behaviour
     @Override
     public boolean behave( World world, Rabbit rabbit, State state )
     {
+        boolean handled = moveRabbit( world, rabbit, state );
+
+        if ( handled )
+        {
+            // If we're bridging, we're on a slope
+            rabbit.onSlope = true;
+        }
+
+        return handled;
+    }
+
+    private boolean moveRabbit( World world, Rabbit rabbit, State state )
+    {
         switch ( state )
         {
             case RABBIT_BRIDGING_RIGHT_1:

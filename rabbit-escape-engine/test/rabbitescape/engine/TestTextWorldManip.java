@@ -608,7 +608,7 @@ public class TestTextWorldManip
             "# * * #",
             "#######",
             ":*=r{Bashing.stepsOfBashing:1,Digging.stepsOfDigging:2}Q{Entrance.timeToNextRabbit:3}",
-            ":*=(j{Bridging.bigSteps:1,Bridging.smallSteps:1,underBridge:true}",
+            ":*=(j{Bridging.bigSteps:1,Bridging.smallSteps:1,onSlope:true}",
         };
 
         assertThat(

@@ -150,13 +150,16 @@ public class Walking implements Behaviour
 
         private boolean rising()
         {
-            return riseBlockAt( rabbit.x, rabbit.y );
+            return (
+                rabbit.onSlope
+                && riseBlockAt( rabbit.x, rabbit.y )
+            );
         }
 
         private boolean lowering()
         {
             return (
-                   !rabbit.underBridge
+                   rabbit.onSlope
                 && lowerBlockAt( rabbit.x, rabbit.y )
             );
         }
@@ -199,22 +202,24 @@ public class Walking implements Behaviour
     @Override
     public boolean behave( World world, Rabbit rabbit, State state )
     {
-        rabbit.underBridge = false;
-
         switch ( state )
         {
             case RABBIT_WALKING_LEFT:
-            case RABBIT_LOWERING_LEFT_END:
             {
                 --rabbit.x;
-                checkUnderBridge( world, rabbit );
+                rabbit.onSlope = false;
                 return true;
             }
             case RABBIT_WALKING_RIGHT:
-            case RABBIT_LOWERING_RIGHT_END:
             {
                 ++rabbit.x;
-                checkUnderBridge( world, rabbit );
+                rabbit.onSlope = false;
+                return true;
+            }
+            case RABBIT_LOWERING_LEFT_END:
+            {
+                --rabbit.x;
+                rabbit.onSlope = false;
                 return true;
             }
             case RABBIT_RISING_LEFT_START:
@@ -222,6 +227,13 @@ public class Walking implements Behaviour
             case RABBIT_RISING_AND_LOWERING_LEFT:
             {
                 --rabbit.x;
+                rabbit.onSlope = true;
+                return true;
+            }
+            case RABBIT_LOWERING_RIGHT_END:
+            {
+                ++rabbit.x;
+                rabbit.onSlope = false;
                 return true;
             }
             case RABBIT_RISING_RIGHT_START:
@@ -229,32 +241,35 @@ public class Walking implements Behaviour
             case RABBIT_RISING_AND_LOWERING_RIGHT:
             {
                 ++rabbit.x;
+                rabbit.onSlope = true;
                 return true;
             }
             case RABBIT_RISING_LEFT_END:
             {
                 --rabbit.y;
                 --rabbit.x;
-                checkUnderBridge( world, rabbit );
+                rabbit.onSlope = false;
                 return true;
             }
             case RABBIT_RISING_LEFT_CONTINUE:
             {
                 --rabbit.y;
                 --rabbit.x;
+                rabbit.onSlope = true;
                 return true;
             }
             case RABBIT_RISING_RIGHT_END:
             {
                 --rabbit.y;
                 ++rabbit.x;
-                checkUnderBridge( world, rabbit );
+                rabbit.onSlope = false;
                 return true;
             }
             case RABBIT_RISING_RIGHT_CONTINUE:
             {
                 --rabbit.y;
                 ++rabbit.x;
+                rabbit.onSlope = true;
                 return true;
             }
             case RABBIT_LOWERING_LEFT_CONTINUE:
@@ -262,6 +277,7 @@ public class Walking implements Behaviour
             {
                 ++rabbit.y;
                 --rabbit.x;
+                rabbit.onSlope = true;
                 return true;
             }
             case RABBIT_LOWERING_RIGHT_CONTINUE:
@@ -269,6 +285,7 @@ public class Walking implements Behaviour
             {
                 ++rabbit.y;
                 ++rabbit.x;
+                rabbit.onSlope = true;
                 return true;
             }
             case RABBIT_TURNING_LEFT_TO_RIGHT:
@@ -292,21 +309,6 @@ public class Walking implements Behaviour
                     + " but we are in state " + state.name()
                 );
             }
-        }
-    }
-
-    private void checkUnderBridge( World world, Rabbit rabbit )
-    {
-        Block thisBlock = world.getBlockAt( rabbit.x, rabbit.y );
-        if (
-               thisBlock != null
-            && (
-                   thisBlock.type == bridge_up_right
-                || thisBlock.type == bridge_up_left
-            )
-        )
-        {
-            rabbit.underBridge = true;
         }
     }
 

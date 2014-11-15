@@ -3,6 +3,7 @@ package rabbitescape.engine.logic;
 import static org.hamcrest.MatcherAssert.*;
 import static rabbitescape.engine.Tools.*;
 import static rabbitescape.engine.textworld.TextWorldManip.*;
+import static rabbitescape.engine.util.WorldAssertions.*;
 
 import org.junit.Test;
 
@@ -965,6 +966,52 @@ public class TestFalling
                 " r>  ",  // Not dead
                 "#####"
             )
+        );
+    }
+
+    @Test
+    public void Fall_off_the_end_of_a_rise()
+    {
+        assertWorldEvolvesLike(
+            "      " + "\n" +
+            " r /  " + "\n" +
+            "######",
+
+            "      " + "\n" +
+            "  r~  " + "\n" +
+            "######",
+
+            "    ' " + "\n" +
+            "   r  " + "\n" +
+            "######",
+
+            "    r " + "\n" +
+            "   /f " + "\n" +
+            "######"
+        );
+    }
+
+    @Test
+    public void Fall_off_the_end_of_a_slide()
+    {
+        assertWorldEvolvesLike(
+            " r    " + "\n" +
+            " #)   " + "\n" +
+            "      " + "\n" +
+            "      " + "\n" +
+            "      ",
+
+            "      " + "\n" +
+            " #r_  " + "\n" +
+            "      " + "\n" +
+            "      " + "\n" +
+            "      ",
+
+            "      " + "\n" +
+            " #)r  " + "\n" +
+            "   f  " + "\n" +
+            "   f  " + "\n" +
+            "      "
         );
     }
 }

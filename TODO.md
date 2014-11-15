@@ -41,7 +41,7 @@ Release 0.1 (Playable)
 - action:block
 - ~~Bug: bridging should stop when joins land or bridge~~
 - ~~Bug: bridging should stop when bumps head~~
-- Bug: walking past a bridger should not jump up onto bridge
+- ~~Bug: walking past a bridger should not jump up onto bridge~~
 - ~~Bug: should fall when meeting bridge sloping towards you~~
 - Bug: handle digging into slope
 - Bug: handle bashing into slope

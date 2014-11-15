@@ -27,6 +27,27 @@ public class Falling implements Behaviour
     @Override
     public boolean behave( World world, Rabbit rabbit, State state )
     {
+        boolean handled = moveRabbit( world, rabbit, state );
+
+        if ( handled )
+        {
+            // Whenever we fall onto a slope, we are on top of it
+            Block thisBlock = world.getBlockAt( rabbit.x, rabbit.y );
+            if ( thisBlock != null && thisBlock.type != solid_flat )
+            {
+                rabbit.onSlope = true;
+            }
+            else
+            {
+                rabbit.onSlope = false;
+            }
+        }
+
+        return handled;
+    }
+
+    private boolean moveRabbit( World world, Rabbit rabbit, State state )
+    {
         switch ( state )
         {
             case RABBIT_DYING_OF_FALLING:
@@ -159,10 +180,7 @@ public class Falling implements Behaviour
         //noinspection RedundantIfStatement
         if (
               world.flatBlockAt( rabbit.x, below )
-           || (
-                  !rabbit.underBridge
-               && world.slopingBlockAt( rabbit.x, rabbit.y )
-           )
+           || rabbit.onSlope
         )
         {
             return false;

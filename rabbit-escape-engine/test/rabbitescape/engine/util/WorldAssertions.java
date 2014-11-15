@@ -4,6 +4,9 @@ import static org.hamcrest.MatcherAssert.*;
 import static rabbitescape.engine.Tools.*;
 import static rabbitescape.engine.textworld.TextWorldManip.*;
 import static rabbitescape.engine.util.Util.*;
+
+import java.util.Collections;
+
 import rabbitescape.engine.World;
 
 public class WorldAssertions
@@ -11,7 +14,7 @@ public class WorldAssertions
     public static void assertWorldEvolvesLike(
         String initialState, String... laterStates )
     {
-        doAssertWorldEvolvesLike(         initialState, laterStates );
+        doAssertWorldEvolvesLike(         initialState, laterStates, false );
         doAssertMirroredWorldEvolvesLike( initialState, laterStates );
     }
 
@@ -19,7 +22,7 @@ public class WorldAssertions
         String initialState, String[] laterStates )
     {
         doAssertWorldEvolvesLike(
-            mirror( initialState ), mirror( laterStates ) );
+            mirror( initialState ), mirror( laterStates ), true );
     }
 
     public static String[] mirror( String... states )
@@ -94,9 +97,14 @@ public class WorldAssertions
     }
 
     private static void doAssertWorldEvolvesLike(
-        String initialState, String[] laterStates )
+        String initialState, String[] laterStates, boolean reverseOrder )
     {
         World world = createWorld( split( initialState, "\n" ) );
+
+        if ( reverseOrder )
+        {
+            Collections.reverse( world.rabbits );
+        }
 
         for ( String state : laterStates )
         {
