@@ -293,6 +293,7 @@ public class Walking implements Behaviour
             case RABBIT_TURNING_LEFT_TO_RIGHT_LOWERING:
             {
                 rabbit.dir = RIGHT;
+                checkJumpOntoSlope( world, rabbit );
                 return true;
             }
             case RABBIT_TURNING_RIGHT_TO_LEFT:
@@ -300,6 +301,7 @@ public class Walking implements Behaviour
             case RABBIT_TURNING_RIGHT_TO_LEFT_LOWERING:
             {
                 rabbit.dir = LEFT;
+                checkJumpOntoSlope( world, rabbit );
                 return true;
             }
             default:
@@ -310,6 +312,37 @@ public class Walking implements Behaviour
                 );
             }
         }
+    }
+
+    /**
+     * If we turn around near a slope, we jump onto it
+     */
+    private void checkJumpOntoSlope( World world, Rabbit rabbit )
+    {
+        Block thisBlock = world.getBlockAt( rabbit.x, rabbit.y );
+        if ( isBridge( thisBlock ) )
+        {
+            Block aboveBlock = world.getBlockAt( rabbit.x, rabbit.y - 1 );
+            if ( rabbit.onSlope && isBridge( aboveBlock ) )
+            {
+                rabbit.y--;
+            }
+            else
+            {
+                rabbit.onSlope = true;
+            }
+        }
+    }
+
+    private boolean isBridge( Block block )
+    {
+        return (
+               block != null
+            && (
+                   block.type == bridge_up_left
+                || block.type == bridge_up_right
+            )
+        );
     }
 
     @Override

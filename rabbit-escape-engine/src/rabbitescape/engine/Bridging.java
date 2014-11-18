@@ -69,26 +69,61 @@ public class Bridging implements Behaviour
              )
         )
         {
+            Block thisBlock = world.getBlockAt( rabbit.x, rabbit.y );
+
             switch( smallSteps )
             {
                 case 3:
-                    return BehaviourTools.rl(
-                        rabbit,
-                        RABBIT_BRIDGING_IN_CORNER_LEFT_1,  // Opposite dirs!
-                        RABBIT_BRIDGING_IN_CORNER_RIGHT_1
-                    );
+                    if ( isSlope( thisBlock ) )
+                    {
+                        return BehaviourTools.rl(
+                            rabbit,
+                            RABBIT_BRIDGING_IN_CORNER_UP_LEFT_1,
+                            RABBIT_BRIDGING_IN_CORNER_UP_RIGHT_1
+                        );
+                    }
+                    else
+                    {
+                        return BehaviourTools.rl(
+                            rabbit,
+                            RABBIT_BRIDGING_IN_CORNER_LEFT_1,  // Opposite dirs!
+                            RABBIT_BRIDGING_IN_CORNER_RIGHT_1
+                        );
+                    }
                 case 2:
-                    return BehaviourTools.rl(
-                        rabbit,
-                        RABBIT_BRIDGING_IN_CORNER_LEFT_2,  // Opposite dirs!
-                        RABBIT_BRIDGING_IN_CORNER_RIGHT_2
-                    );
+                    if ( isSlope( thisBlock ) )
+                    {
+                        return BehaviourTools.rl(
+                            rabbit,
+                            RABBIT_BRIDGING_IN_CORNER_UP_LEFT_2,
+                            RABBIT_BRIDGING_IN_CORNER_UP_RIGHT_2
+                        );
+                    }
+                    else
+                    {
+                        return BehaviourTools.rl(
+                            rabbit,
+                            RABBIT_BRIDGING_IN_CORNER_LEFT_2,  // Opposite dirs!
+                            RABBIT_BRIDGING_IN_CORNER_RIGHT_2
+                        );
+                    }
                 case 1:
-                    return BehaviourTools.rl(
-                        rabbit,
-                        RABBIT_BRIDGING_IN_CORNER_LEFT_3,  // Opposite dirs!
-                        RABBIT_BRIDGING_IN_CORNER_RIGHT_3
-                    );
+                    if ( isSlope( thisBlock ) )
+                    {
+                        return BehaviourTools.rl(
+                            rabbit,
+                            RABBIT_BRIDGING_IN_CORNER_UP_LEFT_3,
+                            RABBIT_BRIDGING_IN_CORNER_UP_RIGHT_3
+                        );
+                    }
+                    else
+                    {
+                        return BehaviourTools.rl(
+                            rabbit,
+                            RABBIT_BRIDGING_IN_CORNER_LEFT_3,  // Opposite dirs!
+                            RABBIT_BRIDGING_IN_CORNER_RIGHT_3
+                        );
+                    }
             }
         }
 
@@ -221,6 +256,11 @@ public class Bridging implements Behaviour
         }
     }
 
+    private boolean isSlope( Block thisBlock )
+    {
+        return ( thisBlock != null && thisBlock.type != solid_flat );
+    }
+
     private boolean isSolid( Block block )
     {
         return (
@@ -264,6 +304,10 @@ public class Bridging implements Behaviour
             case RABBIT_BRIDGING_IN_CORNER_LEFT_1:
             case RABBIT_BRIDGING_IN_CORNER_RIGHT_2:
             case RABBIT_BRIDGING_IN_CORNER_LEFT_2:
+            case RABBIT_BRIDGING_IN_CORNER_UP_RIGHT_1:
+            case RABBIT_BRIDGING_IN_CORNER_UP_LEFT_1:
+            case RABBIT_BRIDGING_IN_CORNER_UP_RIGHT_2:
+            case RABBIT_BRIDGING_IN_CORNER_UP_LEFT_2:
             {
                 return true;
             }
@@ -338,6 +382,32 @@ public class Bridging implements Behaviour
             case RABBIT_BRIDGING_IN_CORNER_LEFT_3:
             {
                 rabbit.dir = Direction.opposite( rabbit.dir );
+                world.changes.addBlock(
+                    new Block(
+                        rabbit.x,
+                        rabbit.y,
+                        Block.Type.bridge_up_left
+                    )
+                );
+                return true;
+            }
+            case RABBIT_BRIDGING_IN_CORNER_UP_RIGHT_3:
+            {
+                rabbit.dir = Direction.opposite( rabbit.dir );
+                rabbit.y--;
+                world.changes.addBlock(
+                    new Block(
+                        rabbit.x,
+                        rabbit.y,
+                        Block.Type.bridge_up_right
+                    )
+                );
+                return true;
+            }
+            case RABBIT_BRIDGING_IN_CORNER_UP_LEFT_3:
+            {
+                rabbit.dir = Direction.opposite( rabbit.dir );
+                rabbit.y--;
                 world.changes.addBlock(
                     new Block(
                         rabbit.x,

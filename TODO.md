@@ -15,6 +15,7 @@ Later
 - Sound effects
 - Fail to bridge action when bridge placed next to wall?
 - Animate falling onto slopes
+- Separate rabbits who find themselves on top of each other.
 
 Release 0.2 (Android)
 ---------------------
@@ -46,7 +47,7 @@ Release 0.1 (Playable)
 - ~~Bug: should fall when meeting bridge sloping towards you~~
 - Bug: handle digging into slope
 - Bug: handle bashing into slope
-- Can bridge out of a 1-wide hole.
+- ~~Can bridge out of a 1-wide hole.~~
 - ~~Bridge token next to a wall makes you bridge the other way~~
 - ~~Beginner levels for dig, bash, bridge~~
 - ~~Handle digging out of screen~~
