@@ -1,5 +1,5 @@
 :num_rabbits=2
-:rabbit_delay=8
+:rabbit_delay=1
 :bridge=15
 ########################
 #                      #
