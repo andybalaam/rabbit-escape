@@ -16,6 +16,7 @@ Later
 - Fail to bridge action when bridge placed next to wall?
 - Animate falling onto slopes
 - Separate rabbits who find themselves on top of each other.
+- More colourful?
 
 Release 0.2 (Android)
 ---------------------
@@ -29,6 +30,7 @@ Release 0.1 (Playable)
 ----------------------
 
 - Enough levels to be a game
+- Improve ability graphics
 - User-facing web site
 - Docs on making levels
 - Check all possible states have graphics
