@@ -195,6 +195,24 @@ public class ChangeRenderer
             case RABBIT_BRIDGING_UP_LEFT_3:
                 chars.set( change.x - 1, change.y - 1, '}' );
                 break;
+            case RABBIT_BRIDGING_IN_CORNER_RIGHT_1:
+                chars.set( change.x, change.y, 'B' );
+                break;
+            case RABBIT_BRIDGING_IN_CORNER_RIGHT_2:
+                chars.set( change.x, change.y, '[' );
+                break;
+            case RABBIT_BRIDGING_IN_CORNER_RIGHT_3:
+                chars.set( change.x, change.y, '{' );
+                break;
+            case RABBIT_BRIDGING_IN_CORNER_LEFT_1:
+                chars.set( change.x, change.y, 'E' );
+                break;
+            case RABBIT_BRIDGING_IN_CORNER_LEFT_2:
+                chars.set( change.x, change.y, ']' );
+                break;
+            case RABBIT_BRIDGING_IN_CORNER_LEFT_3:
+                chars.set( change.x, change.y, '}' );
+                break;
             case TOKEN_BASH_STILL:
                 break;
             case TOKEN_BASH_FALLING:

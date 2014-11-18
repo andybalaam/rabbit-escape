@@ -39,17 +39,15 @@ Release 0.1 (Playable)
 - action:climb
 - graphics:block
 - action:block
+- Bug: encountering a bridge near a wall should make you climb onto it.
 - ~~Bug: bridging should stop when joins land or bridge~~
 - ~~Bug: bridging should stop when bumps head~~
 - ~~Bug: walking past a bridger should not jump up onto bridge~~
 - ~~Bug: should fall when meeting bridge sloping towards you~~
 - Bug: handle digging into slope
 - Bug: handle bashing into slope
-- Bridger unable to use token should not pick it up.  This means dropping a
-  token next to a wall makes you bridge away from the wall.
-- How to handle bridging out of a 1-wide hole?  Maybe picking up a bridge
-  token next to a wall makes you bridge backwards immediately?  Maybe try
-  to avoid 1-wide holes for now.
+- Can bridge out of a 1-wide hole.
+- ~~Bridge token next to a wall makes you bridge the other way~~
 - ~~Beginner levels for dig, bash, bridge~~
 - ~~Handle digging out of screen~~
 - ~~graphics:bridge~~

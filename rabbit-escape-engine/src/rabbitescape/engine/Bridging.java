@@ -2,6 +2,7 @@ package rabbitescape.engine;
 
 import static rabbitescape.engine.ChangeDescription.State.*;
 import static rabbitescape.engine.Token.Type.*;
+import static rabbitescape.engine.Block.Type.*;
 
 import java.util.Map;
 
@@ -52,6 +53,45 @@ public class Bridging implements Behaviour
         nextY += slopeUp ? -1 : 0;
 
         Block nextBlock = world.getBlockAt( nextX, nextY );
+
+        if (
+            (
+               bigSteps == 3
+            )
+            &&
+            (
+                   nextBlock != null
+                &&
+                (
+                       nextBlock.riseDir() != rabbit.dir
+                    || nextBlock.type == solid_flat
+                )
+             )
+        )
+        {
+            switch( smallSteps )
+            {
+                case 3:
+                    return BehaviourTools.rl(
+                        rabbit,
+                        RABBIT_BRIDGING_IN_CORNER_LEFT_1,  // Opposite dirs!
+                        RABBIT_BRIDGING_IN_CORNER_RIGHT_1
+                    );
+                case 2:
+                    return BehaviourTools.rl(
+                        rabbit,
+                        RABBIT_BRIDGING_IN_CORNER_LEFT_2,  // Opposite dirs!
+                        RABBIT_BRIDGING_IN_CORNER_RIGHT_2
+                    );
+                case 1:
+                    return BehaviourTools.rl(
+                        rabbit,
+                        RABBIT_BRIDGING_IN_CORNER_LEFT_3,  // Opposite dirs!
+                        RABBIT_BRIDGING_IN_CORNER_RIGHT_3
+                    );
+            }
+        }
+
         Block belowNextBlock = world.getBlockAt( nextX, rabbit.y );
         Block aboveHereBlock = world.getBlockAt( rabbit.x, rabbit.y - 1 );
         Block twoAboveHereBlock = world.getBlockAt( rabbit.x, rabbit.y - 2 );
@@ -220,6 +260,10 @@ public class Bridging implements Behaviour
             case RABBIT_BRIDGING_DOWN_UP_RIGHT_2:
             case RABBIT_BRIDGING_DOWN_UP_LEFT_1:
             case RABBIT_BRIDGING_DOWN_UP_LEFT_2:
+            case RABBIT_BRIDGING_IN_CORNER_RIGHT_1:
+            case RABBIT_BRIDGING_IN_CORNER_LEFT_1:
+            case RABBIT_BRIDGING_IN_CORNER_RIGHT_2:
+            case RABBIT_BRIDGING_IN_CORNER_LEFT_2:
             {
                 return true;
             }
@@ -277,6 +321,30 @@ public class Bridging implements Behaviour
                     )
                 );
 
+                return true;
+            }
+            case RABBIT_BRIDGING_IN_CORNER_RIGHT_3:
+            {
+                rabbit.dir = Direction.opposite( rabbit.dir );
+                world.changes.addBlock(
+                    new Block(
+                        rabbit.x,
+                        rabbit.y,
+                        Block.Type.bridge_up_right
+                    )
+                );
+                return true;
+            }
+            case RABBIT_BRIDGING_IN_CORNER_LEFT_3:
+            {
+                rabbit.dir = Direction.opposite( rabbit.dir );
+                world.changes.addBlock(
+                    new Block(
+                        rabbit.x,
+                        rabbit.y,
+                        Block.Type.bridge_up_left
+                    )
+                );
                 return true;
             }
             default:
