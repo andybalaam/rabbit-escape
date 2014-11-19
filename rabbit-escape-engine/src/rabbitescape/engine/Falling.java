@@ -113,7 +113,10 @@ public class Falling implements Behaviour
 
         if (
                ( heightFallen + 1 > fatalHeight )              // Going to die
-            && ( world.flatBlockAt( rabbit.x, rabbit.y + 2 ) ) // during step
+            && (                                               // during step
+                   world.flatBlockAt( rabbit.x, rabbit.y + 2 )
+                || world.getBlockAt( rabbit.x, rabbit.y + 1 ) != null
+            )
         )
         {
             // TODO: handle falling onto slopes
@@ -121,34 +124,35 @@ public class Falling implements Behaviour
         }
         else
         {
+            Block block1Down = world.getBlockAt(
+                rabbit.x, rabbit.y + 1 );
+
+            if ( block1Down != null )
+            {
+                if ( block1Down.riseDir() == rabbit.dir )
+                {
+                    return rl(
+                        rabbit,
+                        RABBIT_FALLING_1_ONTO_RISE_RIGHT,
+                        RABBIT_FALLING_1_ONTO_RISE_LEFT
+                    );
+                }
+                else // Must be a slope in the opposite direction
+                {
+                    return rl(
+                        rabbit,
+                        RABBIT_FALLING_1_ONTO_LOWER_RIGHT,
+                        RABBIT_FALLING_1_ONTO_LOWER_LEFT
+                    );
+                }
+            }
+
             Block block2Down = world.getBlockAt( rabbit.x, rabbit.y + 2 );
             if ( block2Down != null )
             {
                 if ( block2Down.type == solid_flat ) // Flat block
                 {
-                    Block block1Down = world.getBlockAt(
-                        rabbit.x, rabbit.y + 1 );
-
-                    if ( block1Down == null )
-                    {
-                        return State.RABBIT_FALLING_1;
-                    }
-                    else if ( block1Down.riseDir() == rabbit.dir )
-                    {
-                        return rl(
-                            rabbit,
-                            RABBIT_FALLING_1_ONTO_RISE_RIGHT,
-                            RABBIT_FALLING_1_ONTO_RISE_LEFT
-                        );
-                    }
-                    else // Must be a slope in the opposite direction
-                    {
-                        return rl(
-                            rabbit,
-                            RABBIT_FALLING_1_ONTO_LOWER_RIGHT,
-                            RABBIT_FALLING_1_ONTO_LOWER_LEFT
-                        );
-                    }
+                    return State.RABBIT_FALLING_1;
                 }
                 else if( block2Down.riseDir() == rabbit.dir )
                 {

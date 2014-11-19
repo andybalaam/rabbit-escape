@@ -302,18 +302,18 @@ public class TestFalling
     {
         World world = createWorld(
             "   r ",
-            "     ",
-            "  #) ",
-            "#####"
+            "  )  ",
+            "   ) ",
+            "    )"
         );
 
         assertThat(
             renderWorld( world, true, false ),
             equalTo(
                 "   r ",
-                "   f ",
-                "  #e ",
-                "#####"
+                "  )f ",
+                "   e ",
+                "    )"
             )
         );
 
@@ -323,10 +323,75 @@ public class TestFalling
             renderWorld( world, true, false ),
             equalTo(
                 "     ",
-                "     ",
-                "  #r_",
-                "#####"
+                "  )  ",
+                "   r ",
+                "    @"
             )
+        );
+    }
+
+    @Test
+    public void Fall_odd_to_death_on_bridge()
+    {
+        assertWorldEvolvesLike(
+            "r r" + "\n" +
+            "   " + "\n" +
+            "   " + "\n" +
+            "   " + "\n" +
+            "   " + "\n" +
+            ") (",
+
+            "   " + "\n" +
+            "   " + "\n" +
+            "r r" + "\n" +
+            "f f" + "\n" +
+            "f f" + "\n" +
+            ") (",
+
+            "   " + "\n" +
+            "   " + "\n" +
+            "   " + "\n" +
+            "   " + "\n" +
+            "r r" + "\n" +
+            "x x"
+        );
+    }
+
+    @Test
+    public void Fall_even_to_death_on_bridge()
+    {
+        assertWorldEvolvesLike(
+            "r r" + "\n" +
+            "   " + "\n" +
+            "   " + "\n" +
+            "   " + "\n" +
+            "   " + "\n" +
+            "   " + "\n" +
+            ") (",
+
+            "   " + "\n" +
+            "   " + "\n" +
+            "r r" + "\n" +
+            "f f" + "\n" +
+            "f f" + "\n" +
+            "   " + "\n" +
+            ") (",
+
+            "   " + "\n" +
+            "   " + "\n" +
+            "   " + "\n" +
+            "   " + "\n" +
+            "r r" + "\n" +
+            "f f" + "\n" +
+            "e d",             // TODO: should die here?
+
+            "   " + "\n" +
+            "   " + "\n" +
+            "   " + "\n" +
+            "   " + "\n" +
+            "   " + "\n" +
+            "   " + "\n" +
+            "X X"
         );
     }
 
@@ -559,92 +624,30 @@ public class TestFalling
     }
 
     @Test
-    public void Fall_1_onto_bridge_down_right()
+    public void Fall_1_onto_bridge_down()
     {
-        World world = createWorld(
-            "   r ",
-            "  #) ",
-            "#####"
-        );
+        assertWorldEvolvesLike(
+            "   r " + "\n" +
+            "   ) " + "\n" +
+            "     ",
 
-        assertThat(
-            renderWorld( world, true, false ),
-            equalTo(
-                "   r ",
-                "  #e ",
-                "#####"
-            )
-        );
-
-        world.step();
-
-        assertThat(
-            renderWorld( world, true, false ),
-            equalTo(
-                "     ",
-                "  #r_",
-                "#####"
-            )
+            "     " + "\n" +
+            "   r_" + "\n" +
+            "     "
         );
     }
 
     @Test
-    public void Fall_1_onto_slope_down_left()
+    public void Fall_1_onto_slope_down()
     {
-        World world = createWorld(
-            "  j  ",
-            "  /# ",
-            "#####"
-        );
+        assertWorldEvolvesLike(
+            "   j " + "\n" +
+            "   / " + "\n" +
+            "     ",
 
-        assertThat(
-            renderWorld( world, true, false ),
-            equalTo(
-                "  j  ",
-                "  s# ",
-                "#####"
-            )
-        );
-
-        world.step();
-
-        assertThat(
-            renderWorld( world, true, false ),
-            equalTo(
-                "     ",
-                " +j# ",
-                "#####"
-            )
-        );
-    }
-
-    @Test
-    public void Fall_1_onto_bridge_down_left()
-    {
-        World world = createWorld(
-            "  j  ",
-            "  (# ",
-            "#####"
-        );
-
-        assertThat(
-            renderWorld( world, true, false ),
-            equalTo(
-                "  j  ",
-                "  s# ",
-                "#####"
-            )
-        );
-
-        world.step();
-
-        assertThat(
-            renderWorld( world, true, false ),
-            equalTo(
-                "     ",
-                " +j# ",
-                "#####"
-            )
+            "     " + "\n" +
+            "  +j " + "\n" +
+            "     "
         );
     }
 
