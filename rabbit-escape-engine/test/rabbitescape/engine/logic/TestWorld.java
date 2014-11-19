@@ -172,6 +172,59 @@ public class TestWorld
         assertThat( caughtException, notNullValue() );
     }
 
+    @Test
+    public void Cant_find_token_if_already_removed()
+    {
+        World world = createWorld(
+            " i ",
+            "###"
+        );
+
+        Token token = world.getTokenAt( 1, 0 );
+
+        // Sanity
+        assertThat( token, is( notNullValue() ) );
+
+        // Remove it
+        world.changes.removeToken( token );
+
+        // This is what we are testing: it's gone
+        assertThat( world.getTokenAt( 1, 0 ), is( nullValue() ) );
+
+        // Sanity: after a step it's still gone
+        world.step();
+        assertThat( world.getTokenAt( 1, 0 ), is( nullValue() ) );
+    }
+
+    @Test
+    public void Can_find_token_if_there_were_2_and_only_1_is_removed()
+    {
+        World world = createWorld(
+            " i ",
+            "###"
+        );
+
+        world.things.add( new Token( 1, 0, Token.Type.bridge ) );
+
+        Token token = world.getTokenAt( 1, 0 );
+
+        // Sanity
+        assertThat( token, is( notNullValue() ) );
+
+        // Remove one token
+        world.changes.removeToken( token );
+
+        // This is what we are testing: there's another
+        Token token2 = world.getTokenAt( 1, 0 );
+        assertThat( token2, is( notNullValue() ) );
+
+        // Remove that one too
+        world.changes.removeToken( token2 );
+
+        // Now there's nothing left
+        assertThat( world.getTokenAt( 1, 0 ), is( nullValue() ) );
+    }
+
     // ---
 
     private void fiveSteps( World world )

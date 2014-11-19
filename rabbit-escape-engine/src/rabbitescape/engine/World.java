@@ -223,7 +223,10 @@ public class World
         {
             if ( thing.x == x && thing.y == y && thing instanceof Token )
             {
-                return (Token)thing;
+                if ( !changes.tokensToRemove.contains( thing ) )
+                {
+                    return (Token)thing;
+                }
             }
         }
         return null;

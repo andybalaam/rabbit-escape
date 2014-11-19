@@ -1,8 +1,15 @@
 package rabbitescape.engine.logic;
 
+import static org.hamcrest.MatcherAssert.*;
+import static rabbitescape.engine.textworld.TextWorldManip.*;
 import static rabbitescape.engine.util.WorldAssertions.*;
+import static rabbitescape.engine.Tools.*;
 
 import org.junit.Test;
+
+import rabbitescape.engine.Direction;
+import rabbitescape.engine.Rabbit;
+import rabbitescape.engine.World;
 
 public class TestBridging
 {
@@ -1206,6 +1213,65 @@ public class TestBridging
             "##(##" + "\n" +
             "##)##" + "\n" +
             "#####"
+        );
+    }
+
+    @Test
+    public void Two_rabbits_cant_pick_up_the_same_token()
+    {
+        World world = createWorld(
+            "         ",
+            "         ",
+            "  i      ",
+            "#########"
+        );
+
+        // Add 2 rabbits in the same place
+        world.rabbits.add( new Rabbit( 2, 2, Direction.RIGHT ) );
+        world.rabbits.add( new Rabbit( 2, 2, Direction.RIGHT ) );
+
+        world.step();
+        assertThat(
+            renderWorld( world, false, false ),
+            equalTo(
+                "         ",
+                "         ",
+                " ri      ",
+                "#########"
+            )
+        );
+
+        world.step();
+        assertThat(
+            renderWorld( world, true, false ),
+            equalTo(
+                "         ",
+                "         ",
+                "  r>     ",  // One is walking, one is bridging
+                "#########"
+            )
+        );
+
+        world.step();
+        assertThat(
+            renderWorld( world, true, false ),
+            equalTo(
+                "         ",
+                "         ",
+                "  r[>    ",
+                "#########"
+            )
+        );
+
+        world.step();
+        assertThat(
+            renderWorld( world, true, false ),
+            equalTo(
+                "         ",
+                "         ",
+                "  r{r>   ",
+                "#########"
+            )
         );
     }
 }

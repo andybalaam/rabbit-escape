@@ -16,7 +16,7 @@ public class WorldChanges
     private final List<Rabbit> rabbitsToKill  = new ArrayList<Rabbit>();
     private final List<Rabbit> rabbitsToSave  = new ArrayList<Rabbit>();
     private final List<Token>  tokensToAdd    = new ArrayList<Token>();
-    private final List<Token>  tokensToRemove = new ArrayList<Token>();
+    public  final List<Token>  tokensToRemove = new ArrayList<Token>();
     private final List<Block>  blocksToAdd    = new ArrayList<Block>();
     private final List<Block>  blocksToRemove = new ArrayList<Block>();
 
