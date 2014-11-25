@@ -3,6 +3,7 @@ package rabbitescape.engine.logic;
 import static org.hamcrest.MatcherAssert.*;
 import static rabbitescape.engine.Tools.*;
 import static rabbitescape.engine.textworld.TextWorldManip.*;
+import static rabbitescape.engine.util.WorldAssertions.*;
 
 import org.junit.Test;
 
@@ -10,8 +11,6 @@ import rabbitescape.engine.World;
 
 public class TestBashing
 {
-    // TODO: slopes and bridges
-
     @Test
     public void Token_not_next_to_wall_makes_useless_bash()
     {
@@ -216,6 +215,175 @@ public class TestBashing
                         "   <j# #r>   ",
                         "#############"
                 )
+        );
+    }
+
+    @Test
+    public void Bash_through_single_slope()
+    {
+        assertWorldEvolvesLike(
+            " rb/   " + "\n" +
+            "#######",
+
+            "  rK   " + "\n" +
+            "#######",
+
+            "  r>   " + "\n" +
+            "#######",
+
+            "   r>  " + "\n" +
+            "#######",
+
+            "    r> " + "\n" +
+            "#######"
+        );
+    }
+
+    @Test
+    public void Bash_through_slope_plus_blocks()
+    {
+        assertWorldEvolvesLike(
+            " rb/#\\  " + "\n" +
+            "########",
+
+            "  rK#\\  " + "\n" +
+            "########",
+
+            "  r>#\\  " + "\n" +
+            "########",
+
+            "   rK\\  " + "\n" +
+            "########",
+
+            "   r>\\  " + "\n" +
+            "########",
+
+            "    rK  " + "\n" +
+            "########",
+
+            "    r>  " + "\n" +
+            "########",
+
+            "     r> " + "\n" +
+            "########",
+
+            "      r>" + "\n" +
+            "########"
+        );
+    }
+
+    @Test
+    public void Bash_on_single_slope()
+    {
+        assertWorldEvolvesLike(
+            "    /  " + "\n" +
+            "  r*   " + "\n" + // Bash token on a slope
+            "#######" + "\n" +
+            ":*=b/",
+
+            "    K  " + "\n" +
+            "   r   " + "\n" +
+            "#######",
+
+            "   r>  " + "\n" +
+            "   /   " + "\n" +
+            "#######",
+
+            "    r  " + "\n" +
+            "   /f  " + "\n" +
+            "#######"
+        );
+    }
+
+    @Test
+    public void Bash_on_single_bridge()
+    {
+        assertWorldEvolvesLike(
+            "    (  " + "\n" +
+            "  r*   " + "\n" + // Bash token on a slope
+            "#######" + "\n" +
+            ":*=b(",
+
+            "    K  " + "\n" +
+            "   r   " + "\n" +
+            "#######",
+
+            "   r>  " + "\n" +
+            "   (   " + "\n" +
+            "#######",
+
+            "    r  " + "\n" +
+            "   (f  " + "\n" +
+            "#######"
+        );
+    }
+
+    @Test
+    public void Bash_on_slope_followed_by_blocks()
+    {
+        assertWorldEvolvesLike(
+            "    /  " + "\n" +
+            "  r*#  " + "\n" + // Bash token on a slope
+            "#######" + "\n" +
+            ":*=b/",
+
+            "    K  " + "\n" +
+            "   r#  " + "\n" +
+            "#######",
+
+            "   r>  " + "\n" +
+            "   /#  " + "\n" +
+            "#######",
+
+            "    r> " + "\n" +
+            "   /#  " + "\n" +
+            "#######"
+        );
+    }
+
+    @Test
+    public void Bash_on_slope_plus_blocks()
+    {
+        assertWorldEvolvesLike(
+            "    /# " + "\n" +
+            "  r*## " + "\n" + // Bash token on a slope
+            "#######" + "\n" +
+            ":*=b/",
+
+            "    K# " + "\n" +
+            "   r## " + "\n" +
+            "#######",
+
+            "   r># " + "\n" +
+            "   /## " + "\n" +
+            "#######",
+
+            "    rK " + "\n" +
+            "   /## " + "\n" +
+            "#######"
+        );
+    }
+
+    @Test
+    public void Bash_on_bridge_plus_blocks()
+    {
+        assertWorldEvolvesLike(
+            "    (# " + "\n" +
+            "  r*## " + "\n" + // Bash token on a slope
+            "#######" + "\n" +
+            ":*=b(",
+
+            "    K# " + "\n" +
+            "   r## " + "\n" +
+            "#######",
+
+            "   r># " + "\n" +
+            "   (## " + "\n" +
+            "#######",
+
+            "    rK " + "\n" +
+            "   (## " + "\n" +
+            "#######"
         );
     }
 }

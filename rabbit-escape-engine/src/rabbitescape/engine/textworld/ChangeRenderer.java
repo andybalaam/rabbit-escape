@@ -144,6 +144,12 @@ public class ChangeRenderer
             case RABBIT_BASHING_LEFT:
                 chars.set( change.x - 1, change.y, 'W' );
                 break;
+            case RABBIT_BASHING_UP_RIGHT:
+                chars.set( change.x + 1, change.y - 1, 'K' );
+                break;
+            case RABBIT_BASHING_UP_LEFT:
+                chars.set( change.x - 1, change.y - 1, 'W' );
+                break;
             case RABBIT_BASHING_USELESSLY_RIGHT:
                 chars.set( change.x + 1, change.y, 'I' );
                 break;

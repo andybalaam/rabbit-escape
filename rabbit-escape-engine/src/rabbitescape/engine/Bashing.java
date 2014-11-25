@@ -27,7 +27,22 @@ public class Bashing implements Behaviour
 
         if ( justPickedUpToken || stepsOfBashing > 0 )
         {
-            if ( world.getBlockAt( destX( rabbit ), rabbit.y ) != null )
+            Block hereBlock = world.getBlockAt( rabbit.x, rabbit.y );
+
+            int nextX = destX( rabbit );
+
+            if (
+                   rising( rabbit, hereBlock )
+                && world.getBlockAt( nextX, rabbit.y - 1 ) != null )
+            {
+                stepsOfBashing = 2;
+                return rl(
+                    rabbit,
+                    RABBIT_BASHING_UP_RIGHT,
+                    RABBIT_BASHING_UP_LEFT
+                );
+            }
+            else if ( world.getBlockAt( nextX, rabbit.y ) != null )
             {
                 stepsOfBashing = 2;
                 return rl(
@@ -49,6 +64,15 @@ public class Bashing implements Behaviour
         return null;
     }
 
+    private boolean rising( Rabbit rabbit, Block hereBlock )
+    {
+        return (
+               rabbit.onSlope
+            && hereBlock != null
+            && hereBlock.riseDir() == rabbit.dir
+        );
+    }
+
     @Override
     public boolean behave( World world, Rabbit rabbit, State state )
     {
@@ -58,6 +82,13 @@ public class Bashing implements Behaviour
             case RABBIT_BASHING_LEFT:
             {
                 world.changes.removeBlockAt( destX( rabbit ), rabbit.y );
+                return true;
+            }
+            case RABBIT_BASHING_UP_RIGHT:
+            case RABBIT_BASHING_UP_LEFT:
+            {
+                world.changes.removeBlockAt( destX( rabbit ), rabbit.y - 1 );
+                rabbit.y -= 1;
                 return true;
             }
             case RABBIT_BASHING_USELESSLY_RIGHT:
