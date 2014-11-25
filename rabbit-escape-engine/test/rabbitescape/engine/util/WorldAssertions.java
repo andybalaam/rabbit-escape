@@ -40,7 +40,18 @@ public class WorldAssertions
         @Override
         public String apply( String input )
         {
-            return swapChars( new StringBuilder( input ).reverse().toString() );
+            if ( input.startsWith( ":*=" ) )
+            {
+                return (
+                      input.substring( 0, 3 )
+                    + swapChars( input.substring( 3 ) )
+                );
+            }
+            else
+            {
+                return swapChars(
+                    new StringBuilder( input ).reverse().toString() );
+            }
         }
 
         private String swapChars( String input )

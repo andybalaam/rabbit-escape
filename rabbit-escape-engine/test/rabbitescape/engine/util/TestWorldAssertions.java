@@ -83,4 +83,38 @@ public class TestWorldAssertions
             )
         );
     }
+
+    @Test
+    public void Colon_star_lines_are_preserved()
+    {
+        assertThat(
+            WorldAssertions.mirror(
+                  "*   \n"
+                + "    \n"
+                + ":*=bi"
+            ),
+            equalTo(
+                  "   *\n"
+                + "    \n"
+                + ":*=bi"
+            )
+        );
+    }
+
+    @Test
+    public void Colon_star_lines_are_mirrored()
+    {
+        assertThat(
+            WorldAssertions.mirror(
+                  "*   \n"
+                + "    \n"
+                + ":*=br"
+            ),
+            equalTo(
+                  "   *\n"
+                + "    \n"
+                + ":*=bj"
+            )
+        );
+    }
 }
