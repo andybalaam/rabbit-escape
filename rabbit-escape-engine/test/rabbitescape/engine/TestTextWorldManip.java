@@ -294,7 +294,7 @@ public class TestTextWorldManip
         assertThat(
             renderChangeDescription( world, desc, false ),
             equalTo(
-                " & * ",
+                " & m ",
                 "     "
             )
         );

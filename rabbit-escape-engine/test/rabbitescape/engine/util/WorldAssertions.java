@@ -71,7 +71,7 @@ public class WorldAssertions
                 case '@': return '%';    case '%': return '@';
                 case '_': return '+';    case '+': return '_';
                 case ',': return '.';    case '.': return ',';
-                case '&': return '*';    case '*': return '&';
+                case '&': return 'm';    case 'm': return '&';
                 case 'e': return 's';    case 's': return 'e';
                 case 'd': return 'a';    case 'a': return 'd';
                 case 'K': return 'W';    case 'W': return 'K';

@@ -1551,7 +1551,7 @@ public class TestWalking
             renderWorld( world, true, false ),
             equalTo(
                 "    ",
-                " *j ",
+                " mj ",
                 "####"
             )
         );
@@ -1583,7 +1583,7 @@ public class TestWalking
             renderWorld( world, true, false ),
             equalTo(
                 "    ",
-                " *j ",
+                " mj ",
                 "####"
             )
         );
