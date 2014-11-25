@@ -105,7 +105,7 @@ public class ChangeRenderer
                 break;
             case RABBIT_FALLING_ONTO_RISE_RIGHT:
                 chars.set( change.x, change.y + 1, 'f' );
-                chars.set( change.x, change.y + 2, 'd' );
+                chars.set( change.x, change.y + 2, 'h' );
                 break;
             case RABBIT_FALLING_ONTO_RISE_LEFT:
                 chars.set( change.x, change.y + 1, 'f' );
@@ -121,7 +121,7 @@ public class ChangeRenderer
                 chars.set( change.x, change.y + 1, 's' );
                 break;
             case RABBIT_FALLING_1_ONTO_RISE_RIGHT:
-                chars.set( change.x, change.y + 1, 'd' );
+                chars.set( change.x, change.y + 1, 'h' );
                 break;
             case RABBIT_FALLING_1_ONTO_RISE_LEFT:
                 chars.set( change.x, change.y + 1, 'a' );

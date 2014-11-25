@@ -84,7 +84,7 @@ public class WorldAssertions
                 case ',': return '.';    case '.': return ',';
                 case '&': return 'm';    case 'm': return '&';
                 case 'e': return 's';    case 's': return 'e';
-                case 'd': return 'a';    case 'a': return 'd';
+                case 'h': return 'a';    case 'a': return 'h';
                 case 'K': return 'W';    case 'W': return 'K';
                 case 'I': return 'J';    case 'J': return 'I';
                 case 'B': return 'E';    case 'E': return 'B';

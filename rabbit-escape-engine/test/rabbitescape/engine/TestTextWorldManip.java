@@ -319,8 +319,8 @@ public class TestTextWorldManip
             renderChangeDescription( world, desc, false ),
             equalTo(
                 "        ",
-                "ffffedsa",
-                "edsa    "
+                "ffffehsa",
+                "ehsa    "
             )
         );
     }

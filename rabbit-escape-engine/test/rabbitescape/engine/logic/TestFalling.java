@@ -383,7 +383,7 @@ public class TestFalling
             "   " + "\n" +
             "r r" + "\n" +
             "f f" + "\n" +
-            "e d",             // TODO: should die here?
+            "e h",             // TODO: should die here?
 
             "   " + "\n" +
             "   " + "\n" +
@@ -476,7 +476,7 @@ public class TestFalling
             equalTo(
                 "  r  ",
                 "  f  ",
-                "  d# ",
+                "  h# ",
                 "#####"
             )
         );
@@ -509,7 +509,7 @@ public class TestFalling
             equalTo(
                 "  r  ",
                 "  f  ",
-                "  d# ",
+                "  h# ",
                 "#####"
             )
         );
@@ -664,7 +664,7 @@ public class TestFalling
             renderWorld( world, true, false ),
             equalTo(
                 "  r  ",
-                "  d# ",
+                "  h# ",
                 "#####"
             )
         );
@@ -694,7 +694,7 @@ public class TestFalling
             renderWorld( world, true, false ),
             equalTo(
                 "  r  ",
-                "  d# ",
+                "  h# ",
                 "#####"
             )
         );
@@ -800,7 +800,7 @@ public class TestFalling
                 "    ",
                 "rrrr",
                 "fxxf",
-                "d##e",
+                "h##e",
                 "####"
             )
         );
@@ -869,7 +869,7 @@ public class TestFalling
                 "    ",
                 "rrrr",
                 "fxxf",
-                "d##e",
+                "h##e",
                 "####"
             )
         );
