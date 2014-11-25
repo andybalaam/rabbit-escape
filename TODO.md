@@ -42,7 +42,7 @@ Release 0.1 (Playable)
 - action:climb
 - graphics:block
 - action:block
-- Bug: handle digging into slope
+- ~~Bug: handle digging into slope~~
 - ~~Bug: handle bashing into slope~~
 - ~~Bug: 2 rabbits on top of each other both become bridgers.~~
 - ~~Bug: encountering a bridge near a wall should make you climb onto it.~~

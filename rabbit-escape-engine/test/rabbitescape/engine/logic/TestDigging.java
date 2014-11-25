@@ -3,6 +3,7 @@ package rabbitescape.engine.logic;
 import static org.hamcrest.MatcherAssert.*;
 import static rabbitescape.engine.Tools.*;
 import static rabbitescape.engine.textworld.TextWorldManip.*;
+import static rabbitescape.engine.util.WorldAssertions.*;
 
 import org.junit.Test;
 
@@ -10,8 +11,6 @@ import rabbitescape.engine.World;
 
 public class TestDigging
 {
-    // TODO: slopes and bridges
-
     @Test
     public void Dig_through_single_floor()
     {
@@ -313,6 +312,204 @@ public class TestDigging
                 " r>",
                 "###"
             )
+        );
+    }
+
+    @Test
+    public void Dig_through_single_slope()
+    {
+        assertWorldEvolvesLike(
+            " r " + "\n" +
+            " * " + "\n" +
+            "   " + "\n" +
+            "###" + "\n" +
+            ":*=d/",
+
+            "   " + "\n" +
+            " D " + "\n" +
+            "   " + "\n" +
+            "###",
+
+            "   " + "\n" +
+            " r " + "\n" +
+            " f " + "\n" +
+            "###"
+        );
+    }
+
+    @Test
+    public void Dig_through_single_bridge()
+    {
+        assertWorldEvolvesLike(
+            " r " + "\n" +
+            " * " + "\n" +
+            "   " + "\n" +
+            "###" + "\n" +
+            ":*=d(",
+
+            "   " + "\n" +
+            " D " + "\n" +
+            "   " + "\n" +
+            "###",
+
+            "   " + "\n" +
+            " r " + "\n" +
+            " f " + "\n" +
+            "###"
+        );
+    }
+
+    @Test
+    public void Dig_through_slope_plus_blocks()
+    {
+        assertWorldEvolvesLike(
+            " r " + "\n" +
+            " * " + "\n" +
+            " # " + "\n" +
+            " # " + "\n" +
+            "   " + "\n" +
+            "###" + "\n" +
+            ":*=d/",
+
+            "   " + "\n" +
+            " D " + "\n" +
+            " # " + "\n" +
+            " # " + "\n" +
+            "   " + "\n" +
+            "###",
+
+            "   " + "\n" +
+            " r " + "\n" +
+            " D " + "\n" +
+            " # " + "\n" +
+            "   " + "\n" +
+            "###",
+
+            "   " + "\n" +
+            " r " + "\n" +
+            " f " + "\n" +
+            " # " + "\n" +
+            "   " + "\n" +
+            "###",
+
+            "   " + "\n" +
+            "   " + "\n" +
+            " r " + "\n" +
+            " D " + "\n" +
+            "   " + "\n" +
+            "###",
+
+            "   " + "\n" +
+            "   " + "\n" +
+            " r " + "\n" +
+            " f " + "\n" +
+            " f " + "\n" +
+            "###"
+        );
+    }
+
+    @Test
+    public void Dig_through_bridge_plus_blocks()
+    {
+        assertWorldEvolvesLike(
+            " r " + "\n" +
+            " * " + "\n" +
+            " # " + "\n" +
+            " # " + "\n" +
+            "   " + "\n" +
+            "###" + "\n" +
+            ":*=d(",
+
+            "   " + "\n" +
+            " D " + "\n" +
+            " # " + "\n" +
+            " # " + "\n" +
+            "   " + "\n" +
+            "###",
+
+            "   " + "\n" +
+            " r " + "\n" +
+            " D " + "\n" +
+            " # " + "\n" +
+            "   " + "\n" +
+            "###",
+
+            "   " + "\n" +
+            " r " + "\n" +
+            " f " + "\n" +
+            " # " + "\n" +
+            "   " + "\n" +
+            "###",
+
+            "   " + "\n" +
+            "   " + "\n" +
+            " r " + "\n" +
+            " D " + "\n" +
+            "   " + "\n" +
+            "###",
+
+            "   " + "\n" +
+            "   " + "\n" +
+            " r " + "\n" +
+            " f " + "\n" +
+            " f " + "\n" +
+            "###"
+        );
+    }
+
+    @Test
+    public void Dig_through_bridge_plus_bridges()
+    {
+        assertWorldEvolvesLike(
+            " r " + "\n" +
+            " * " + "\n" +
+            " ( " + "\n" +
+            " ( " + "\n" +
+            "   " + "\n" +
+            "###" + "\n" +
+            ":*=d(",
+
+            "   " + "\n" +
+            " D " + "\n" +
+            " ( " + "\n" +
+            " ( " + "\n" +
+            "   " + "\n" +
+            "###",
+
+            "   " + "\n" +
+            " r " + "\n" +
+            " h " + "\n" +
+            " ( " + "\n" +
+            "   " + "\n" +
+            "###",
+
+            "   " + "\n" +
+            "   " + "\n" +
+            " D " + "\n" +
+            " ( " + "\n" +
+            "   " + "\n" +
+            "###",
+
+            "   " + "\n" +
+            "   " + "\n" +
+            " r " + "\n" +
+            " h " + "\n" +
+            "   " + "\n" +
+            "###",
+
+            "   " + "\n" +
+            "   " + "\n" +
+            "   " + "\n" +
+            " D " + "\n" +
+            "   " + "\n" +
+            "###",
+
+            "   " + "\n" +
+            "   " + "\n" +
+            "   " + "\n" +
+            " r " + "\n" +
+            " f " + "\n" +
+            "###"
         );
     }
 }

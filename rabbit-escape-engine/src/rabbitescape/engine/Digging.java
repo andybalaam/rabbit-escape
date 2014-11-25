@@ -25,7 +25,15 @@ public class Digging implements Behaviour
 
         if ( justPickedUpToken || stepsOfDigging > 0 )
         {
-            if ( world.getBlockAt( rabbit.x, rabbit.y + 1 ) != null )
+            if (
+                   rabbit.onSlope
+                && world.getBlockAt( rabbit.x, rabbit.y ) != null
+            )
+            {
+                stepsOfDigging = 2;
+                return RABBIT_DIGGING_ON_SLOPE;
+            }
+            else if ( world.getBlockAt( rabbit.x, rabbit.y + 1 ) != null )
             {
                 stepsOfDigging = 2;
                 return RABBIT_DIGGING;
@@ -44,6 +52,12 @@ public class Digging implements Behaviour
             case RABBIT_DIGGING:
             {
                 world.changes.removeBlockAt( rabbit.x, rabbit.y + 1 );
+                return true;
+            }
+            case RABBIT_DIGGING_ON_SLOPE:
+            {
+                world.changes.removeBlockAt( rabbit.x, rabbit.y );
+                rabbit.onSlope = false;
                 return true;
             }
             default:

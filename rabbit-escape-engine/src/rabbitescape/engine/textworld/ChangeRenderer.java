@@ -159,6 +159,9 @@ public class ChangeRenderer
             case RABBIT_DIGGING:
                 chars.set( change.x, change.y + 1, 'D' );
                 break;
+            case RABBIT_DIGGING_ON_SLOPE:
+                chars.set( change.x, change.y, 'D' );
+                break;
             case RABBIT_BRIDGING_RIGHT_1:
             case RABBIT_BRIDGING_DOWN_UP_RIGHT_1:
                 chars.set( change.x + 1, change.y, 'B' );
