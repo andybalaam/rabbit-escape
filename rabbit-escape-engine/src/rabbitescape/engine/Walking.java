@@ -28,7 +28,19 @@ public class Walking implements Behaviour
                 int nextX = destX();
                 int nextY = rabbit.y - 1;
 
-                if ( riseBlockAt( nextX, nextY ) )
+                if
+                (
+                       world.flatBlockAt( nextX, nextY )
+                    || lowerSlopeAt( nextX, nextY )
+                    || blockerAt( nextX, nextY )
+                )
+                {
+                    return rl(
+                        RABBIT_TURNING_RIGHT_TO_LEFT_RISING,
+                        RABBIT_TURNING_LEFT_TO_RIGHT_RISING
+                    );
+                }
+                else if ( riseBlockAt( nextX, nextY ) )
                 {
                     return rl(
                         RABBIT_RISING_RIGHT_CONTINUE,
@@ -40,17 +52,6 @@ public class Walking implements Behaviour
                     return rl(
                         RABBIT_RISING_AND_LOWERING_RIGHT,
                         RABBIT_RISING_AND_LOWERING_LEFT
-                    );
-                }
-                else if
-                (
-                       world.flatBlockAt( nextX, nextY )
-                    || lowerSlopeAt( nextX, nextY )
-                )
-                {
-                    return rl(
-                        RABBIT_TURNING_RIGHT_TO_LEFT_RISING,
-                        RABBIT_TURNING_LEFT_TO_RIGHT_RISING
                     );
                 }
                 else
@@ -66,23 +67,24 @@ public class Walking implements Behaviour
                 int nextX = destX();
                 int nextY = rabbit.y + 1;
 
-                if ( riseBlockAt( nextX, rabbit.y ) )
+                if(
+                       world.flatBlockAt( nextX, rabbit.y )
+                    || lowerSlopeAt( nextX, rabbit.y )
+                    || blockerAt( nextX, nextY )
+                )
+                {
+                    return rl(
+                        RABBIT_TURNING_RIGHT_TO_LEFT_LOWERING,
+                        RABBIT_TURNING_LEFT_TO_RIGHT_LOWERING
+                    );
+                }
+                else if ( riseBlockAt( nextX, rabbit.y ) )
                 {
                     return rl(
                         RABBIT_LOWERING_AND_RISING_RIGHT,
                         RABBIT_LOWERING_AND_RISING_LEFT
                     );
                 }
-                else if(
-                        world.flatBlockAt( nextX, rabbit.y )
-                     || lowerSlopeAt( nextX, rabbit.y )
-                 )
-                 {
-                     return rl(
-                         RABBIT_TURNING_RIGHT_TO_LEFT_LOWERING,
-                         RABBIT_TURNING_LEFT_TO_RIGHT_LOWERING
-                     );
-                 }
                 else if ( lowerBlockAt( nextX, nextY ) )
                 {
                     return rl(
@@ -92,10 +94,20 @@ public class Walking implements Behaviour
                 }
                 else
                 {
-                    return rl(
-                        RABBIT_LOWERING_RIGHT_END,
-                        RABBIT_LOWERING_LEFT_END
-                    );
+                    if ( blockerAt( nextX, rabbit.y ) )
+                    {
+                        return rl(
+                            RABBIT_TURNING_RIGHT_TO_LEFT_LOWERING,
+                            RABBIT_TURNING_LEFT_TO_RIGHT_LOWERING
+                        );
+                    }
+                    else
+                    {
+                        return rl(
+                            RABBIT_LOWERING_RIGHT_END,
+                            RABBIT_LOWERING_LEFT_END
+                        );
+                    }
                 }
             }
             else  // On flat ground now
@@ -103,7 +115,19 @@ public class Walking implements Behaviour
                 int nextX = destX();
                 int nextY = rabbit.y;
 
-                if ( riseBlockAt( nextX, nextY ) )
+                if
+                (
+                       world.flatBlockAt( nextX, nextY )
+                    || lowerSlopeAt( nextX, nextY )
+                    || blockerAt( nextX, nextY )
+                )
+                {
+                    return rl(
+                        RABBIT_TURNING_RIGHT_TO_LEFT,
+                        RABBIT_TURNING_LEFT_TO_RIGHT
+                    );
+                }
+                else if ( riseBlockAt( nextX, nextY ) )
                 {
                     return rl(
                         RABBIT_RISING_RIGHT_START,
@@ -112,21 +136,20 @@ public class Walking implements Behaviour
                 }
                 else if ( lowerBlockAt( nextX, rabbit.y + 1 ) )
                 {
-                    return rl(
-                        RABBIT_LOWERING_RIGHT_START,
-                        RABBIT_LOWERING_LEFT_START
-                    );
-                }
-                else if
-                (
-                       world.flatBlockAt( nextX, nextY )
-                    || lowerSlopeAt( nextX, nextY )
-                )
-                {
-                    return rl(
-                        RABBIT_TURNING_RIGHT_TO_LEFT,
-                        RABBIT_TURNING_LEFT_TO_RIGHT
-                    );
+                    if ( blockerAt( nextX, rabbit.y + 1 ) )
+                    {
+                        return rl(
+                            RABBIT_TURNING_RIGHT_TO_LEFT,
+                            RABBIT_TURNING_LEFT_TO_RIGHT
+                        );
+                    }
+                    else
+                    {
+                        return rl(
+                            RABBIT_LOWERING_RIGHT_START,
+                            RABBIT_LOWERING_LEFT_START
+                        );
+                    }
                 }
                 else
                 {
@@ -136,6 +159,19 @@ public class Walking implements Behaviour
                     );
                 }
             }
+        }
+
+        private boolean blockerAt( int nextX, int nextY )
+        {
+            Rabbit[] rabbits = world.getRabbitsAt( nextX, nextY );
+            for ( Rabbit r : rabbits )
+            {
+                if ( r.state == RABBIT_BLOCKING )
+                {
+                    return true;
+                }
+            }
+            return false;
         }
 
         private int destX()

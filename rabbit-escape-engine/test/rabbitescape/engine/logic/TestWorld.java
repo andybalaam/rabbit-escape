@@ -5,9 +5,11 @@ import static org.hamcrest.CoreMatchers.*;
 import static rabbitescape.engine.util.Util.*;
 import static rabbitescape.engine.textworld.TextWorldManip.*;
 import static rabbitescape.engine.World.CompletionState.*;
+import static rabbitescape.engine.ChangeDescription.State.*;
 
 import org.junit.Test;
 
+import rabbitescape.engine.Rabbit;
 import rabbitescape.engine.Token;
 import rabbitescape.engine.World;
 import rabbitescape.engine.World.DontStepAfterFinish;
@@ -223,6 +225,43 @@ public class TestWorld
 
         // Now there's nothing left
         assertThat( world.getTokenAt( 1, 0 ), is( nullValue() ) );
+    }
+
+    @Test
+    public void No_rabbits_at_a_location_gives_empty_array()
+    {
+        World world = createWorld(
+            "*i ",
+            "###",
+            ":*=rr"  // 2 rabbits in the same place
+        );
+
+        world.step();  // Now 1 is a bridger
+
+        // This is what we are testing: there are no rabbits in the empty square
+        Rabbit[] rabbits = world.getRabbitsAt( 2, 0 );
+
+        assertThat( rabbits.length, equalTo( 0 ) );
+    }
+
+    @Test
+    public void Can_find_all_rabbits_at_a_location()
+    {
+        World world = createWorld(
+            "*i ",
+            "###",
+            ":*=rr"  // 2 rabbits in the same place
+        );
+
+        world.step();  // Now 1 is a bridger
+
+        // This is what we are testing: ask what's in the rabbitty square
+        Rabbit[] rabbits = world.getRabbitsAt( 1, 0 );
+
+        assertThat( rabbits[0].state, equalTo( RABBIT_BRIDGING_RIGHT_1 ) );
+        assertThat( rabbits[1].state, equalTo( RABBIT_WALKING_RIGHT ) );
+
+        assertThat( rabbits.length, equalTo( 2 ) );
     }
 
     // ---

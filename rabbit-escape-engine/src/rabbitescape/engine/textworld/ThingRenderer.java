@@ -60,6 +60,7 @@ public class ThingRenderer
             case bash:   return 'b';
             case dig:    return 'd';
             case bridge: return 'i';
+            case block:  return 'k';
             default: throw new UnknownTokenType( thing.type );
         }
     }

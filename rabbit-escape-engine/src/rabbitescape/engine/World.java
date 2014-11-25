@@ -3,6 +3,7 @@ package rabbitescape.engine;
 import static rabbitescape.engine.util.Util.*;
 import static rabbitescape.engine.Block.Type.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -230,6 +231,21 @@ public class World
             }
         }
         return null;
+    }
+
+    public Rabbit[] getRabbitsAt( int x, int y )
+    {
+        List<Rabbit> ret = new ArrayList<Rabbit>();
+
+        for ( Rabbit rabbit : rabbits )
+        {
+            if ( rabbit.x == x && rabbit.y == y )
+            {
+                ret.add( rabbit );
+            }
+        }
+
+        return ret.toArray( new Rabbit[ret.size()] );
     }
 
     public int numRabbitsOut()

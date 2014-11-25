@@ -84,6 +84,7 @@ public class ChangeDescription
         RABBIT_BRIDGING_DOWN_UP_LEFT_1,
         RABBIT_BRIDGING_DOWN_UP_LEFT_2,
         RABBIT_BRIDGING_DOWN_UP_LEFT_3,
+        RABBIT_BLOCKING,
         RABBIT_OUT_OF_BOUNDS,
         TOKEN_BASH_STILL,
         TOKEN_BASH_FALLING,
@@ -91,6 +92,8 @@ public class ChangeDescription
         TOKEN_DIG_FALLING,
         TOKEN_BRIDGE_STILL,
         TOKEN_BRIDGE_FALLING,
+        TOKEN_BLOCK_STILL,
+        TOKEN_BLOCK_FALLING,
         ENTRANCE,
         EXIT,
     }

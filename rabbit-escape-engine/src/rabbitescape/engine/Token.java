@@ -27,6 +27,7 @@ public class Token extends Thing
         bash,
         dig,
         bridge,
+        block,
     }
 
     public final Type type;
@@ -49,6 +50,9 @@ public class Token extends Thing
 
             case bridge: return moving ?
                 TOKEN_BRIDGE_FALLING : TOKEN_BRIDGE_STILL;
+
+            case block: return moving ?
+                TOKEN_BLOCK_FALLING : TOKEN_BLOCK_STILL;
 
             default: throw new UnknownType( type );
         }

@@ -35,13 +35,14 @@ Release 0.1 (Playable)
 - Docs on making levels
 - Check all possible states have graphics
 - Ability to kill all remaining rabbits
+- Fix walking animation to be touching ground
 - action:unblock
 - graphics:float
 - action:float
 - graphics:climb
 - action:climb
 - graphics:block
-- action:block
+- ~~action:block~~
 - ~~Bug: handle digging into slope~~
 - ~~Bug: handle bashing into slope~~
 - ~~Bug: 2 rabbits on top of each other both become bridgers.~~

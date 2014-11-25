@@ -328,18 +328,19 @@ public class TestTextWorldManip
     @Test
     public void Tokens_falling()
     {
-        World world = createEmptyWorld( 3, 2 );
+        World world = createEmptyWorld( 4, 2 );
 
         ChangeDescription desc = new ChangeDescription();
         desc.add( 0, 0, TOKEN_BASH_FALLING );
         desc.add( 1, 0, TOKEN_DIG_FALLING );
         desc.add( 2, 0, TOKEN_BRIDGE_FALLING );
+        desc.add( 3, 0, TOKEN_BLOCK_FALLING );
 
         assertThat(
             renderChangeDescription( world, desc, false ),
             equalTo(
-                "   ",
-                "fff"
+                "    ",
+                "ffff"
             )
         );
     }
