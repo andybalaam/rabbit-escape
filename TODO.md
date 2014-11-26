@@ -33,13 +33,13 @@ Release 0.1 (Playable)
 ----------------------
 
 - Enough levels to be a game
-- Improve ability graphics
+- ~~Improve ability graphics~~
 - User-facing web site
 - Docs on making levels
 - Check all possible states have graphics
 - Ability to kill all remaining rabbits
-- Fix walking animation to be touching ground
-- action:unblock
+- ~~Fix walking animation to be touching ground~~
+- action:explode?
 - graphics:float
 - action:float
 - graphics:climb
