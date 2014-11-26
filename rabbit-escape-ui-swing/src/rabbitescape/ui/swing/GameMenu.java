@@ -35,7 +35,7 @@ class GameMenu
 
     public JToggleButton mute;
     public JToggleButton pause;
-    public final JButton exit;
+    public final JButton back;
 
 
     private final BitmapCache<SwingBitmap> bitmapCache;
@@ -76,7 +76,7 @@ class GameMenu
 
         addSpacer();
 
-        this.exit = addButton( "menu_exit" );
+        this.back = addButton( "menu_back" );
 
         addPanelInScrollPane( contentPane );
     }

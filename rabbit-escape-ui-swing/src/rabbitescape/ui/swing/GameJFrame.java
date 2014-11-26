@@ -142,7 +142,7 @@ public class GameJFrame extends JFrame
             }
         } );
 
-        menu.exit.addActionListener( new ActionListener()
+        menu.back.addActionListener( new ActionListener()
         {
             @Override
             public void actionPerformed( ActionEvent evt )
