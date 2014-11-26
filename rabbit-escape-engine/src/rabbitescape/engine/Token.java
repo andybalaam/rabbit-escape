@@ -76,6 +76,7 @@ public class Token extends Thing
                state == TOKEN_BASH_FALLING
             || state == TOKEN_DIG_FALLING
             || state == TOKEN_BRIDGE_FALLING
+            || state == TOKEN_BLOCK_FALLING
         )
         {
             ++y;
