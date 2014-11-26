@@ -17,6 +17,8 @@ Later
 - Animate falling onto slopes
 - Separate rabbits who find themselves on top of each other.
 - More colourful?
+- Allow continuing bridgers
+- Fix many things not animating nicely
 
 Release 0.2 (Android)
 ---------------------
