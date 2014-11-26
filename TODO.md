@@ -19,6 +19,7 @@ Later
 - More colourful?
 - Allow continuing bridgers
 - Fix many things not animating nicely
+- Speed up time?
 
 Release 0.2 (Android)
 ---------------------
@@ -43,7 +44,7 @@ Release 0.1 (Playable)
 - action:float
 - graphics:climb
 - action:climb
-- graphics:block
+- ~~graphics:block~~
 - ~~action:block~~
 - ~~Bug: handle digging into slope~~
 - ~~Bug: handle bashing into slope~~
