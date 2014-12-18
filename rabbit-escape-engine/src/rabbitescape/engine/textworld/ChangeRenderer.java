@@ -156,6 +156,26 @@ public class ChangeRenderer
             case RABBIT_BASHING_USELESSLY_LEFT:
                 chars.set( change.x - 1, change.y, 'J' );
                 break;
+            case RABBIT_CLIMBING_LEFT_START:
+                chars.set( change.x, change.y, 'T' );
+                break;
+            case RABBIT_CLIMBING_LEFT_CONTINUE_1:
+            case RABBIT_CLIMBING_LEFT_CONTINUE_2:
+                chars.set( change.x, change.y, 'Y' );
+                break;
+            case RABBIT_CLIMBING_LEFT_END:
+                chars.set( change.x, change.y, 'U' );
+                break;
+            case RABBIT_CLIMBING_RIGHT_START:
+                chars.set( change.x, change.y, 'G' );
+                break;
+            case RABBIT_CLIMBING_RIGHT_CONTINUE_1:
+            case RABBIT_CLIMBING_RIGHT_CONTINUE_2:
+                chars.set( change.x, change.y, 'H' );
+                break;
+            case RABBIT_CLIMBING_RIGHT_END:
+                chars.set( change.x, change.y, 'L' );
+                break;
             case RABBIT_DIGGING:
                 chars.set( change.x, change.y + 1, 'D' );
                 break;

@@ -368,6 +368,30 @@ public class TestTextWorldManip
     }
 
     @Test
+    public void Climbing()
+    {
+        World world = createEmptyWorld( 16, 2 );
+
+        ChangeDescription desc = new ChangeDescription();
+        desc.add(  1, 0, RABBIT_CLIMBING_LEFT_START );
+        desc.add(  3, 0, RABBIT_CLIMBING_LEFT_CONTINUE_1 );
+        desc.add(  5, 0, RABBIT_CLIMBING_LEFT_CONTINUE_2 );
+        desc.add(  7, 0, RABBIT_CLIMBING_LEFT_END );
+        desc.add(  9, 0, RABBIT_CLIMBING_RIGHT_START );
+        desc.add( 11, 0, RABBIT_CLIMBING_RIGHT_CONTINUE_1 );
+        desc.add( 13, 0, RABBIT_CLIMBING_RIGHT_CONTINUE_2 );
+        desc.add( 15, 0, RABBIT_CLIMBING_RIGHT_END );
+
+        assertThat(
+            renderChangeDescription( world, desc, false ),
+            equalTo(
+                " T Y Y U G H H L",
+                "                "
+            )
+        );
+    }
+
+    @Test
     public void Can_provide_world_name()
     {
         String[] lines = {
