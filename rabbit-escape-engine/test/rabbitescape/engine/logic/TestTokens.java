@@ -1,12 +1,8 @@
 package rabbitescape.engine.logic;
 
-import static org.hamcrest.MatcherAssert.*;
-import static rabbitescape.engine.Tools.*;
-import static rabbitescape.engine.textworld.TextWorldManip.*;
+import static rabbitescape.engine.util.WorldAssertions.*;
 
 import org.junit.Test;
-
-import rabbitescape.engine.World;
 
 public class TestTokens
 {
@@ -15,57 +11,36 @@ public class TestTokens
     @Test
     public void Tokens_fall_slowly_and_stop_on_ground()
     {
-        World world = createWorld(
-            "bdik",
-            "    ",
-            "    ",
-            "####"
-        );
+        assertWorldEvolvesLike(
+            "bdikc" + "\n" +
+            "     " + "\n" +
+            "     " + "\n" +
+            "     " + "\n" +
+            "#####",
 
-        assertThat(
-            renderWorld( world, true, false ),
-            equalTo(
-                "bdik",
-                "ffff",
-                "    ",
-                "####"
-            )
-        );
+            "     " + "\n" +
+            "bdikc" + "\n" +
+            "fffff" + "\n" +
+            "     " + "\n" +
+            "#####",
 
-        world.step();
+            "     " + "\n" +
+            "     " + "\n" +
+            "bdikc" + "\n" +
+            "fffff" + "\n" +
+            "#####",
 
-        assertThat(
-            renderWorld( world, true, false ),
-            equalTo(
-                "    ",
-                "bdik",
-                "ffff",
-                "####"
-            )
-        );
+            "     " + "\n" +
+            "     " + "\n" +
+            "     " + "\n" +
+            "bdikc" + "\n" +
+            "#####",
 
-        world.step();
-
-        assertThat(
-            renderWorld( world, true, false ),
-            equalTo(
-                "    ",
-                "    ",
-                "bdik",
-                "####"
-            )
-        );
-
-        world.step();
-
-        assertThat(
-            renderWorld( world, true, false ),
-            equalTo(
-                "    ",
-                "    ",
-                "bdik",
-                "####"
-            )
+            "     " + "\n" +
+            "     " + "\n" +
+            "     " + "\n" +
+            "bdikc" + "\n" +
+            "#####"
         );
     }
 }

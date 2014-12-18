@@ -20,7 +20,7 @@ public class TestTextWorldManip
     {
         String[] lines = {
             "###########",
-            "#  Q      #",
+            "#  Q    c #",
             "#\\      i/#",
             "#  O     d#",
             "#r j )(  b#",

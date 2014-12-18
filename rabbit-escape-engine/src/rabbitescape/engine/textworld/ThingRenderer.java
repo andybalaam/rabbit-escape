@@ -61,6 +61,7 @@ public class ThingRenderer
             case dig:    return 'd';
             case bridge: return 'i';
             case block:  return 'k';
+            case climb:  return 'c';
             default: throw new UnknownTokenType( thing.type );
         }
     }

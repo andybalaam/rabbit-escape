@@ -94,6 +94,8 @@ public class ChangeDescription
         TOKEN_BRIDGE_FALLING,
         TOKEN_BLOCK_STILL,
         TOKEN_BLOCK_FALLING,
+        TOKEN_CLIMB_STILL,
+        TOKEN_CLIMB_FALLING,
         ENTRANCE,
         EXIT,
     }
