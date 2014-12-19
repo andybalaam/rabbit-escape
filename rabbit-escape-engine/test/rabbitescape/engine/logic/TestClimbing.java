@@ -654,4 +654,25 @@ public class TestClimbing
         );
     }
 
+    @Test
+    public void Dont_pick_up_climb_token_if_already_a_climber()
+    {
+        assertWorldEvolvesLike(
+            "     " + "\n" +
+            "rcc  " + "\n" +
+            "#####",
+
+            "     " + "\n" +
+            " r>  " + "\n" +
+            "#####",
+
+            "     " + "\n" +
+            "  c> " + "\n" +
+            "#####",
+
+            "     " + "\n" +
+            "  cr>" + "\n" +
+            "#####"
+        );
+    }
 }

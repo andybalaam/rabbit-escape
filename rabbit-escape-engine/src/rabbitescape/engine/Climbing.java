@@ -19,7 +19,7 @@ public class Climbing implements Behaviour
     public State newState( Rabbit rabbit, World world )
     {
         Token token = world.getTokenAt( rabbit.x, rabbit.y );
-        if ( token != null && token.type == climb )
+        if ( !hasAbility && token != null && token.type == climb )
         {
             world.changes.removeToken( token );
             hasAbility = true;
