@@ -4,7 +4,7 @@ INSTALL
 Prerequisites
 -------------
 
-    sudo apt-get install openjdk-7-jdk ant libav-tools inkscape
+    sudo apt-get install git make openjdk-7-jdk ant libav-tools inkscape
 
 Run tests
 ---------
