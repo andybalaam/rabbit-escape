@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Rabbit Escape Android Game (inspired by Lemmings and Pingus)</title>
+<style>
+html
+{
+    padding: 0px;
+    margin: 0px;
+}
+
+body
+{
+    font-family: Ubuntu, Verdana, Arial, sans-serif;
+    font-size: 1.2em;
+    background-color: rgb( 23, 43, 243 );
+    padding: 0px;
+    margin: 0px;
+    color: rgb( 20, 11, 34 );
+}
+
+#main
+{
+    max-width: 800px;
+    margin: auto;
+}
+
+h1
+{
+    font-size: 4em;
+    font-weight: normal;
+    width: 100%;
+    margin: 0px;
+    padding: 20px;
+    text-align: center;
+    background-color: rgb( 224, 238, 0 );
+}
+
+a
+{
+    text-decoration: none;
+    color: inherit;
+}
+
+p,.p
+{
+    margin: 0px;
+    width: 100%;
+    padding: 20px;
+    text-align: center;
+}
+
+#slogan
+{
+    background-color: rgb( 90, 90, 88 );
+    color: rgb( 180, 195, 215 );
+}
+
+.downloads-text
+{
+    background-color: rgb( 180, 195, 215 );
+    color: rgb( 90, 90, 88 );
+}
+
+.downloads
+{
+    background-color: rgb( 0, 190, 0 );
+}
+
+.download
+{
+    background-color: rgb( 180, 195, 215 );
+    display: inline-block;
+    border: 2px solid rgb( 90, 192, 107 );
+    width: 130px;
+    height: 140px;
+    margin: 0px 20px;
+    padding: 5px;
+}
+
+.download.buy
+{
+    width: 200px;
+    height: 85px;
+    padding: 10px;
+}
+
+.download:hover
+{
+    background-color: rgb( 50, 240, 55 );
+    border-color: rgb( 25, 215, 27 );
+}
+
+.download a:hover
+{
+    color: rgb( 23, 43, 243 );
+}
+
+.demo-intro
+{
+    background-color: rgb( 254, 108, 0 );
+}
+
+#demo
+{
+    background-color: rgb( 255, 255, 255 );
+}
+
+#create-levels
+{
+    background-color: rgb( 90, 90, 88 );
+    color: rgb( 180, 195, 215 );
+}
+</style>
+</head>
+<body>
+<div id="main">
+<h1>Rabbit Escape</h1>
+<p id="slogan">A game of rescuing rabbits, inspired by Lemmings and Pingus.</p>
+<p class="downloads-text">Buy it on:</p>
+<div class="downloads p">
+    <div class="download buy"><a href="#"><img src="play.png"/></a><br/><a href="#">Play Store</a></div>
+</div>
+<p class="downloads-text">Download it free for:</p>
+<div class="downloads p">
+    <div class="download"><a href="#"><img src="android.png"/></a><br/><a href="#">Android</a></div>
+    <div class="download"><a href="#"><img src="linux.png"/></a><br/><a href="#">Linux</a></div>
+    <div class="download"><a href="#"><img src="windows.png"/></a><br/><a href="#">Windows</a></div>
+    <div class="download"><a href="#"><img src="mac.png"/></a><br/><a href="#">Mac</a></div>
+</div>
+<p class="demo-intro">Control your rabbits by dropping tokens that give them special abilities:</p>
+<p id="demo"><img src="demo.gif"/></p>
+<p class="demo-intro">See whether you can get them to the exit without killing them first!</p>
+<p id="create-levels">Create your own levels by making a text file in Notepad!</p>
+</div>
+</body>
+</html>

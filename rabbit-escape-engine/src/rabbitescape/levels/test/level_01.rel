@@ -1,13 +1,14 @@
-:num_rabbits=1
-:bash=10
+:num_rabbits=2
+:bash=1
 :dig=1
-:bridge=20
-:climb=20
-##       ##
-#         #
-#         #
-#         #
-#         #
-#  /      #
-#rc#      #
-###########
+:bridge=1
+:climb=1
+:rabbit_delay=6
+   Q                     
+                    ###  
+                    #    
+      #  /#\i #     #    
+   #### ##### #  #  #    
+#  c  c ##### # b#  #    
+#########################
+                         
