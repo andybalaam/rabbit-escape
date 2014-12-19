@@ -13,10 +13,21 @@ public class Bridging implements Behaviour
 {
     private int smallSteps = 0;
     private int bigSteps = 0;
+    private final Climbing climbing;
+
+    public Bridging( Climbing climbing )
+    {
+        this.climbing = climbing;
+    }
 
     @Override
     public State newState( Rabbit rabbit, World world )
     {
+        if ( climbing.abilityActive )
+        {
+            return null;
+        }
+
         Token token = world.getTokenAt( rabbit.x, rabbit.y );
         if ( token != null && token.type == bridge )
         {

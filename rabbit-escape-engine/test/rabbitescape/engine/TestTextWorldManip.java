@@ -370,23 +370,24 @@ public class TestTextWorldManip
     @Test
     public void Climbing()
     {
-        World world = createEmptyWorld( 16, 2 );
+        World world = createEmptyWorld( 17, 3 );
 
         ChangeDescription desc = new ChangeDescription();
-        desc.add(  1, 0, RABBIT_CLIMBING_LEFT_START );
-        desc.add(  3, 0, RABBIT_CLIMBING_LEFT_CONTINUE_1 );
-        desc.add(  5, 0, RABBIT_CLIMBING_LEFT_CONTINUE_2 );
-        desc.add(  7, 0, RABBIT_CLIMBING_LEFT_END );
-        desc.add(  9, 0, RABBIT_CLIMBING_RIGHT_START );
-        desc.add( 11, 0, RABBIT_CLIMBING_RIGHT_CONTINUE_1 );
-        desc.add( 13, 0, RABBIT_CLIMBING_RIGHT_CONTINUE_2 );
-        desc.add( 15, 0, RABBIT_CLIMBING_RIGHT_END );
+        desc.add(  1, 1, RABBIT_CLIMBING_LEFT_START );
+        desc.add(  3, 1, RABBIT_CLIMBING_LEFT_CONTINUE_1 );
+        desc.add(  5, 1, RABBIT_CLIMBING_LEFT_CONTINUE_2 );
+        desc.add(  7, 1, RABBIT_CLIMBING_LEFT_END );
+        desc.add(  9, 1, RABBIT_CLIMBING_RIGHT_START );
+        desc.add( 11, 1, RABBIT_CLIMBING_RIGHT_CONTINUE_1 );
+        desc.add( 13, 1, RABBIT_CLIMBING_RIGHT_CONTINUE_2 );
+        desc.add( 15, 1, RABBIT_CLIMBING_RIGHT_END );
 
         assertThat(
             renderChangeDescription( world, desc, false ),
             equalTo(
-                " T Y Y U G H H L",
-                "                "
+                "   Y YU    F F  L",
+                " T       G       ",
+                "                 "
             )
         );
     }
@@ -627,13 +628,15 @@ public class TestTextWorldManip
             ":bash=1",
             ":bridge=3",
             ":dig=2",
-            "#######",
-            "#     #",
-            "#     #",
-            "# * * #",
-            "#######",
+            "###########",
+            "#         #",
+            "#         #",
+            "# * * * * #",
+            "###########",
             ":*=r{Bashing.stepsOfBashing:1,Digging.stepsOfDigging:2}Q{Entrance.timeToNextRabbit:3}",
-            ":*=(j{Bridging.bigSteps:1,Bridging.smallSteps:1,onSlope:true}",
+            ":*=j{Bridging.bigSteps:1,Bridging.smallSteps:1,onSlope:true}",
+            ":*=j{Climbing.hasAbility:true}",
+            ":*=j{Climbing.abilityActive:true,Climbing.hasAbility:true}",
         };
 
         assertThat(

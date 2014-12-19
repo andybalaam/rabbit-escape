@@ -28,15 +28,17 @@ public class Rabbit extends Thing
     {
         List<Behaviour> ret = new ArrayList<>();
 
-        Digging digging = new Digging();
+        Climbing climbing = new Climbing();
+        Digging digging = new Digging( climbing );
 
         ret.add( new OutOfBounds() );
         ret.add( new Exiting() );
-        ret.add( new Falling( digging ) );
-        ret.add( new Bashing() );
+        ret.add( new Falling( digging, climbing ) );
+        ret.add( new Bashing( climbing ) );
         ret.add( digging );
-        ret.add( new Bridging() );
-        ret.add( new Blocking() );
+        ret.add( new Bridging( climbing ) );
+        ret.add( new Blocking( climbing ) );
+        ret.add( climbing );
         ret.add( new Walking() );
 
         return ret;

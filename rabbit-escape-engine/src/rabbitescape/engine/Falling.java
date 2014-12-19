@@ -15,13 +15,16 @@ public class Falling implements Behaviour
     private int heightFallen = 0;
 
     private final Digging digging;
+    private final Climbing climbing;
 
     /**
      * @param digging a Digging to cancel if we fall >1 block
+     * @param climbing 
      */
-    public Falling( Digging digging )
+    public Falling( Digging digging, Climbing climbing )
     {
         this.digging = digging;
+        this.climbing = climbing;
     }
 
     @Override
@@ -93,6 +96,11 @@ public class Falling implements Behaviour
     @Override
     public State newState( Rabbit rabbit, World world )
     {
+        if ( climbing.abilityActive )
+        {
+            return null;
+        }
+
         if ( !falling( rabbit, world ) )
         {
             if ( heightFallen > fatalHeight )

@@ -88,6 +88,9 @@ public class WorldAssertions
                 case 'K': return 'W';    case 'W': return 'K';
                 case 'I': return 'J';    case 'J': return 'I';
                 case 'B': return 'E';    case 'E': return 'B';
+                case 'G': return 'T';    case 'T': return 'G';
+                case 'Y': return 'F';    case 'F': return 'Y';
+                case 'U': return 'L';    case 'L': return 'U';
                 case '{': return '}';    case '}': return '{';
                 case '~': return '`';    case '`': return '~';
                 default: return c;

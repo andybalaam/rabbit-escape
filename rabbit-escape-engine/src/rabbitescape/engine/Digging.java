@@ -10,10 +10,21 @@ import rabbitescape.engine.ChangeDescription.State;
 public class Digging implements Behaviour
 {
     private int stepsOfDigging;
+    private final Climbing climbing;
+
+    public Digging( Climbing climbing )
+    {
+        this.climbing = climbing;
+    }
 
     @Override
     public State newState( Rabbit rabbit, World world )
     {
+        if ( climbing.abilityActive )
+        {
+            return null;
+        }
+
         boolean justPickedUpToken = false;
 
         Token token = world.getTokenAt( rabbit.x, rabbit.y );
