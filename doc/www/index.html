@@ -241,10 +241,19 @@ function scroll()
     }
 }
 
+function doScroll( direction )
+{
+    window.scrollBy( 0, direction * 0.5 * window.innerHeight );
+}
+
 function load()
 {
     uparrow   = document.getElementById( "uparrow" );
     downarrow = document.getElementById( "downarrow" );
+
+    uparrow.onclick   = function() { doScroll( -1 ) };
+    downarrow.onclick = function() { doScroll(  1 ) };
+
     scroll();
 }
 
