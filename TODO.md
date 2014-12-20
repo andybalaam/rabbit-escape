@@ -32,18 +32,24 @@ Release 0.2 (Android)
 Release 0.1 (Playable)
 ----------------------
 
+- Fix bug on PC missing updates
 - Enough levels to be a game
-- ~~Improve ability graphics~~
-- User-facing web site
 - Docs on making levels
+- Docs on installing
 - Check all possible states have graphics
 - Ability to kill all remaining rabbits
-- ~~Fix walking animation to be touching ground~~
 - action:explode?
 - graphics:float
 - action:float
-- graphics:climb
-- action:climb
+
+Release 0.0.5 (alpha)
+---------------------
+
+- ~~User-facing web site~~
+- ~~Improve ability graphics~~
+- ~~Fix walking animation to be touching ground~~
+- ~~graphics:climb~~
+- ~~action:climb~~
 - ~~graphics:block~~
 - ~~action:block~~
 - ~~Bug: handle digging into slope~~
