@@ -34,9 +34,11 @@ $(ANDROIDIMAGESXHDPI_DEST)/%.png: images-src/%.svg
 #$(MUSICOGG_DEST)/%.ogg: music-src/%.flac
 #	mkdir -p $(MUSICOGG_DEST); avconv -i $< -c:a libvorbis -q:a 1 $@
 
+VERSION=0.0.5
+
 all: compile
 
-dist: dist/rabbit-escape-generic.jar
+dist: dist/rabbit-escape-generic.jar dist/rabbit-escape-${VERSION}.jar
 
 dist/rabbit-escape-generic.jar: compile
 	mkdir -p dist
@@ -45,6 +47,19 @@ dist/rabbit-escape-generic.jar: compile
 		jar -cf ../../dist/rabbit-escape-generic.jar `find ./`
 	cd rabbit-escape-render/bin; \
 		jar -uf ../../dist/rabbit-escape-generic.jar `find ./`
+
+dist/rabbit-escape-${VERSION}.jar: compile
+	mkdir -p dist
+	rm -f dist/rabbit-escape-${VERSION}.jar
+	cd rabbit-escape-engine/bin; \
+		jar -cf ../../dist/rabbit-escape-${VERSION}.jar `find ./`
+	cd rabbit-escape-render/bin; \
+		jar -uf ../../dist/rabbit-escape-${VERSION}.jar `find ./`
+	cd rabbit-escape-ui-text/bin; \
+		jar -uf ../../dist/rabbit-escape-${VERSION}.jar `find ./`
+	cd rabbit-escape-ui-swing/bin; \
+		jar -uf ../../dist/rabbit-escape-${VERSION}.jar `find ./`
+	jar -ufm dist/rabbit-escape-${VERSION}.jar MANIFEST.MF
 
 images: $(IMAGES32)
 
