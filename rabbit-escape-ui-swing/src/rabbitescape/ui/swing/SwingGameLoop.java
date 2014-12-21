@@ -7,7 +7,6 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics2D;
-import java.awt.Point;
 import java.awt.RenderingHints;
 import java.awt.image.BufferStrategy;
 import java.util.ArrayList;
@@ -90,11 +89,12 @@ public class SwingGameLoop implements GameLoop
 
         jframe.setGameLoop( this );
 
-        jframe.canvas.setPreferredSize(
+        jframe.setWorldSize(
             new Dimension(
-                renderingTileSize * world.size.width,
-                renderingTileSize * world.size.height
-            )
+                world.size.width,
+                world.size.height
+            ),
+            renderingTileSize
         );
     }
 
@@ -114,7 +114,8 @@ public class SwingGameLoop implements GameLoop
         int imagesTileSize = 32;
 
         BufferStrategy strategy = jframe.canvas.getBufferStrategy();
-        Renderer renderer = new Renderer( 0, 0, renderingTileSize );
+        Renderer renderer = new Renderer(
+            -jframe.scrollX, -jframe.scrollY, renderingTileSize );
 
         AnimationCache animationCache = new AnimationCache(
             new AnimationLoader() );
@@ -134,6 +135,8 @@ public class SwingGameLoop implements GameLoop
 
             for ( int f = 0; running && f < framesPerStep; ++f )
             {
+                renderer.setOffset( -jframe.scrollX, -jframe.scrollY );
+
                 new DrawFrame(
                     strategy,
                     jframe.canvas,
@@ -283,15 +286,11 @@ public class SwingGameLoop implements GameLoop
         // Nothing to do here - we showed the result while we were still running
     }
 
-    public int addToken( Token.Type ability, Point pixelPosition )
+    public int addToken( Token.Type ability, int gridX, int gridY )
     {
         if ( !paused && world.abilities.get( ability ) > 0 )
         {
-            worldModifier.addToken(
-                pixelPosition.x / renderingTileSize,
-                pixelPosition.y / renderingTileSize,
-                ability
-            );
+            worldModifier.addToken( gridX, gridY, ability );
         }
 
         return world.abilities.get( ability );

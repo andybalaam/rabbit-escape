@@ -26,13 +26,14 @@ Release 0.2 (Android)
 
 - Android menus launch real levels
 - Android menus update when you win
+- Centre the game canvas when smaller than the window
 - ~~Android game loop~~
 - ~~Android graphics~~
 
 Release 0.1 (Playable)
 ----------------------
 
-- Fix bug on PC missing updates
+- Disallow dropping tokens outside game area
 - Enough levels to be a game
 - Docs on making levels
 - Docs on installing
@@ -41,6 +42,7 @@ Release 0.1 (Playable)
 - action:explode?
 - graphics:float
 - action:float
+- ~~Fix bug on PC missing updates~~
 
 Release 0.0.5 (alpha)
 ---------------------

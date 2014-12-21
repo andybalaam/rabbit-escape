@@ -5,8 +5,8 @@ import rabbitescape.render.androidlike.Paint;
 
 public class Renderer
 {
-    private final int offsetX;
-    private final int offsetY;
+    private int offsetX;
+    private int offsetY;
     private final int tileSize;
 
     public Renderer( int offsetX, int offsetY, int tileSize )
@@ -29,5 +29,11 @@ public class Renderer
                 paint
             );
         }
+    }
+
+    public void setOffset( int offsetX, int offsetY )
+    {
+        this.offsetX = offsetX;
+        this.offsetY = offsetY;
     }
 }

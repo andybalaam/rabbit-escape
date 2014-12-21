@@ -11,13 +11,17 @@ import java.awt.Dimension;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.AdjustmentEvent;
+import java.awt.event.AdjustmentListener;
 import java.awt.event.ComponentEvent;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseWheelEvent;
+import java.awt.event.MouseWheelListener;
 import java.awt.event.WindowEvent;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
+import javax.swing.JScrollBar;
 
 import rabbitescape.engine.Token;
 import rabbitescape.engine.World;
@@ -29,7 +33,7 @@ public class GameJFrame extends JFrame
 {
     private static final long serialVersionUID = 1L;
 
-    private class Listener extends EmptyListener
+    private class Listener extends EmptyListener implements MouseWheelListener
     {
         @Override
         public void windowClosing( WindowEvent e )
@@ -51,12 +55,27 @@ public class GameJFrame extends JFrame
             ConfigTools.setInt( uiConfig, CFG_GAME_WINDOW_WIDTH,  getWidth() );
             ConfigTools.setInt( uiConfig, CFG_GAME_WINDOW_HEIGHT, getHeight() );
             uiConfig.save();
+            adjustScrollBars();
         }
 
         @Override
         public void mouseClicked( MouseEvent e )
         {
             click( e.getPoint() );
+        }
+
+        @Override
+        public void mouseWheelMoved( MouseWheelEvent e )
+        {
+            if ( e.getScrollType() == MouseWheelEvent.WHEEL_UNIT_SCROLL )
+            {
+                canvasScrollBarY.setValue(
+                    canvasScrollBarY.getValue() + (
+                          e.getUnitsToScroll()
+                        * canvasScrollBarY.getUnitIncrement()
+                    )
+                );
+            }
         }
     }
 
@@ -65,15 +84,22 @@ public class GameJFrame extends JFrame
     private final Container contentPane;
     private final JPanel middlePanel;
     private final Dimension buttonSizeInPixels;
-    private final Dimension worldSizeInPixels;
+    private Dimension worldSizeInPixels;
+    private int worldTileSizeInPixels;
     private final Config uiConfig;
     private final BitmapCache<SwingBitmap> bitmapCache;
     public final Canvas canvas;
+    private JScrollBar canvasScrollBarX;
+    private JScrollBar canvasScrollBarY;
     private GameMenu menu;
     private TopBar topBar;
 
     private Token.Type chosenAbility;
     private SwingGameLoop gameLoop;
+
+    // Modified in Swing event thread, read in game loop thread
+    public int scrollX;
+    public int scrollY;
 
     public GameJFrame( Config uiConfig, BitmapCache<SwingBitmap> bitmapCache )
     {
@@ -85,9 +111,14 @@ public class GameJFrame extends JFrame
         this.gameLoop = null;
 
         this.buttonSizeInPixels = new Dimension( 32, 32 );
-        this.worldSizeInPixels = new Dimension( 400, 200 );
+        this.worldTileSizeInPixels = 32;
+        this.worldSizeInPixels = new Dimension( 400, 200 ); // Temporary guess
+
+        this.scrollX = 0;
+        this.scrollY = 0;
 
         this.canvas = initUi();
+        adjustScrollBars();
         this.menu = null;
         this.topBar = null;
     }
@@ -119,10 +150,30 @@ public class GameJFrame extends JFrame
         canvas.setIgnoreRepaint( true );
         canvas.setPreferredSize( worldSizeInPixels );
 
-        JScrollPane scrollPane = new JScrollPane( canvas );
-        contentPane.add( scrollPane, BorderLayout.CENTER );
+        canvasScrollBarX = new JScrollBar( JScrollBar.HORIZONTAL );
+        canvasScrollBarY = new JScrollBar( JScrollBar.VERTICAL );
+
+        JPanel canvasPanel = new JPanel( new BorderLayout() );
+        canvasPanel.add( canvas, BorderLayout.CENTER );
+        canvasPanel.add( canvasScrollBarX, BorderLayout.SOUTH );
+        canvasPanel.add( canvasScrollBarY, BorderLayout.EAST );
+
+        contentPane.add( canvasPanel, BorderLayout.CENTER );
 
         return canvas;
+    }
+
+    private void adjustScrollBars()
+    {
+        canvasScrollBarX.setMaximum( worldSizeInPixels.width );
+        canvasScrollBarX.setVisibleAmount( canvas.getWidth() );
+        canvasScrollBarX.setBlockIncrement( (int)( canvas.getWidth() * 0.9 ) );
+        canvasScrollBarX.setUnitIncrement( worldTileSizeInPixels );
+
+        canvasScrollBarY.setMaximum( worldSizeInPixels.height );
+        canvasScrollBarY.setVisibleAmount( canvas.getHeight() );
+        canvasScrollBarY.setBlockIncrement( (int)( canvas.getHeight() * 0.9 ) );
+        canvasScrollBarY.setUnitIncrement( worldTileSizeInPixels );
     }
 
     private void initListeners()
@@ -131,6 +182,7 @@ public class GameJFrame extends JFrame
         addWindowListener( listener );
         addComponentListener( listener );
         canvas.addMouseListener( listener );
+        canvas.addMouseWheelListener( listener );
         gameLoop.addStatsChangedListener( this.topBar );
 
         menu.addAbilitiesListener( new GameMenu.AbilityChangedListener()
@@ -168,6 +220,28 @@ public class GameJFrame extends JFrame
                 setPaused( menu.pause.isSelected() );
             }
         } );
+
+        canvasScrollBarX.addAdjustmentListener(
+            new AdjustmentListener()
+            {
+                @Override
+                public void adjustmentValueChanged( AdjustmentEvent e )
+                {
+                    scrollX = e.getValue();
+                }
+            }
+        );
+
+        canvasScrollBarY.addAdjustmentListener(
+            new AdjustmentListener()
+            {
+                @Override
+                public void adjustmentValueChanged( AdjustmentEvent e )
+                {
+                    scrollY = e.getValue();
+                }
+            }
+        );
     }
 
     private void setBoundsFromConfig()
@@ -213,6 +287,20 @@ public class GameJFrame extends JFrame
         initListeners();
     }
 
+    public void setWorldSize(
+        Dimension worldGridSize, int worldTileSizeInPixels )
+    {
+        this.worldSizeInPixels = new Dimension(
+            worldGridSize.width * worldTileSizeInPixels,
+            worldGridSize.height * worldTileSizeInPixels
+        );
+
+        this.worldTileSizeInPixels = worldTileSizeInPixels;
+
+        canvas.setPreferredSize( worldSizeInPixels );
+        adjustScrollBars();
+    }
+
     private void exit()
     {
         if ( gameLoop != null )
@@ -247,7 +335,10 @@ public class GameJFrame extends JFrame
             return;
         }
 
-        int numLeft = gameLoop.addToken( chosenAbility, pixelPosition );
+        int gridX = ( pixelPosition.x + scrollX ) / worldTileSizeInPixels;
+        int gridY = ( pixelPosition.y + scrollY ) / worldTileSizeInPixels;
+
+        int numLeft = gameLoop.addToken( chosenAbility, gridX, gridY );
 
         if ( numLeft == 0 )
         {
