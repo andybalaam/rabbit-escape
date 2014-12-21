@@ -128,6 +128,12 @@ public class WorldChanges
             throw new CantAddTokenOutsideWorld( type, x, y, world.size );
         }
 
+        Block block = world.getBlockAt( x, y );
+        if ( block != null && block.type == Block.Type.solid_flat )
+        {
+            return;
+        }
+
         tokensToAdd.add( new Token( x, y, type ) );
         world.abilities.put( type, numLeft - 1 );
     }

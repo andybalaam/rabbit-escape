@@ -41,6 +41,7 @@ Release 0.1 (Playable)
 - action:explode?
 - graphics:float
 - action:float
+- ~~Prevent adding tokens inside solid blocks~~
 - ~~Disallow dropping tokens outside game area, and them falling outside~~
 - ~~Fix bug on PC missing updates~~
 

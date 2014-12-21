@@ -28,7 +28,7 @@ public class TestWorldChanges
         {
             for ( int i = 0; i < 100; ++i )
             {
-                world.changes.addToken( 3, 3, Token.Type.bash );
+                world.changes.addToken( 3, 0, Token.Type.bash );
             }
         }
     }
