@@ -70,6 +70,24 @@ public class World
         }
     }
 
+    public static class CantAddTokenOutsideWorld extends UnableToAddToken
+    {
+        private static final long serialVersionUID = 1L;
+
+        public final int x;
+        public final int y;
+        public final Dimension worldSize;
+
+        public CantAddTokenOutsideWorld(
+            Token.Type ability, int x, int y, Dimension worldSize )
+        {
+            super( ability );
+            this.x = x;
+            this.y = y;
+            this.worldSize = worldSize;
+        }
+    }
+
     public enum CompletionState
     {
         RUNNING,

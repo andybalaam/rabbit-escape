@@ -33,7 +33,6 @@ Release 0.2 (Android)
 Release 0.1 (Playable)
 ----------------------
 
-- Disallow dropping tokens outside game area
 - Enough levels to be a game
 - Docs on making levels
 - Docs on installing
@@ -42,6 +41,7 @@ Release 0.1 (Playable)
 - action:explode?
 - graphics:float
 - action:float
+- ~~Disallow dropping tokens outside game area, and them falling outside~~
 - ~~Fix bug on PC missing updates~~
 
 Release 0.0.5 (alpha)

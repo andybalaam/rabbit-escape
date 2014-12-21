@@ -3,6 +3,7 @@ package rabbitescape.engine;
 import java.util.ArrayList;
 import java.util.List;
 
+import rabbitescape.engine.World.CantAddTokenOutsideWorld;
 import rabbitescape.engine.World.NoBlockFound;
 import rabbitescape.engine.World.NoSuchAbilityInThisWorld;
 import rabbitescape.engine.World.NoneOfThisAbilityLeft;
@@ -120,6 +121,11 @@ public class WorldChanges
         if ( numLeft == 0 )
         {
             throw new NoneOfThisAbilityLeft( type );
+        }
+
+        if ( x < 0 || y < 0 || x >= world.size.width || y >= world.size.height )
+        {
+            throw new CantAddTokenOutsideWorld( type, x, y, world.size );
         }
 
         tokensToAdd.add( new Token( x, y, type ) );

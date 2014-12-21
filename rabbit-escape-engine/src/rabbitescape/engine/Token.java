@@ -85,6 +85,11 @@ public class Token extends Thing
         )
         {
             ++y;
+
+            if ( y >= world.size.height )
+            {
+                world.changes.removeToken( this );
+            }
         }
     }
 

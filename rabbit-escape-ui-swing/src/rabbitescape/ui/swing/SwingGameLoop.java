@@ -288,7 +288,14 @@ public class SwingGameLoop implements GameLoop
 
     public int addToken( Token.Type ability, int gridX, int gridY )
     {
-        if ( !paused && world.abilities.get( ability ) > 0 )
+        if (
+            !paused
+            && world.abilities.get( ability ) > 0
+            && gridX >= 0
+            && gridY >= 0
+            && gridX < world.size.width
+            && gridY < world.size.height
+        )
         {
             worldModifier.addToken( gridX, gridY, ability );
         }
