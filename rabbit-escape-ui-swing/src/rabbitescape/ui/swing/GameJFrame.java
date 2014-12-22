@@ -225,7 +225,7 @@ public class GameJFrame extends JFrame
             @Override
             public void actionPerformed( ActionEvent evt )
             {
-                setPaused( menu.pause.isSelected() );
+                gameLoop.world.setPaused( menu.pause.isSelected() );
             }
         } );
 
@@ -314,7 +314,7 @@ public class GameJFrame extends JFrame
         if ( gameLoop != null )
         {
             gameLoop.stop();
-            gameLoop.setPaused( false );
+            gameLoop.world.setPaused( false );
         }
 
         dispose();
@@ -325,19 +325,20 @@ public class GameJFrame extends JFrame
         switch ( gameLoop.world.completionState() )
         {
             case RUNNING:
+            case PAUSED:
             {
                 gameLoop.world.setReadyToExplodeAll( true );
                 break;
             }
             case READY_TO_EXPLODE_ALL:
             {
-                gameLoop.setPaused( false );
+                gameLoop.world.setPaused( false );
                 gameLoop.world.changes.explodeAllRabbits();
                 gameLoop.world.setReadyToExplodeAll( false );
             }
             default:
             {
-                // Don't do anything if we're not running or about to explode
+                // Don't do anything if we've finished already
             }
         }
     }
@@ -351,11 +352,6 @@ public class GameJFrame extends JFrame
     {
         ConfigTools.setBool( uiConfig, CFG_MUTED, muted );
         uiConfig.save();
-    }
-
-    private void setPaused( boolean paused )
-    {
-        gameLoop.setPaused( paused );
     }
 
     private void click( Point pixelPosition )

@@ -63,7 +63,6 @@ public class SwingGameLoop implements GameLoop
     private final LevelWinListener winListener;
     private final WorldModifier worldModifier;
     private boolean running;
-    private boolean paused;
     private final int renderingTileSize;
     private final List<StatsChangedListener> statsListeners;
 
@@ -77,7 +76,6 @@ public class SwingGameLoop implements GameLoop
         this.winListener = winListener;
         this.worldModifier = new WorldModifier( world );
         this.running = true;
-        this.paused = false;
         this.renderingTileSize = 32;
         this.statsListeners = new ArrayList<>();
 
@@ -103,11 +101,6 @@ public class SwingGameLoop implements GameLoop
         running = false;
     }
 
-    public void setPaused( boolean paused )
-    {
-        this.paused = paused;
-    }
-
     @Override
     public void run( String[] args )
     {
@@ -122,7 +115,7 @@ public class SwingGameLoop implements GameLoop
 
         while( running )
         {
-            if ( !paused && world.completionState() == CompletionState.RUNNING )
+            if ( world.completionState() == CompletionState.RUNNING )
             {
                 worldModifier.step();
                 checkWon();
@@ -150,10 +143,7 @@ public class SwingGameLoop implements GameLoop
                 ).run();
 
 
-                if (
-                       !paused
-                    && world.completionState() == CompletionState.RUNNING
-                )
+                if ( world.completionState() == CompletionState.RUNNING )
                 {
                     // If not paused, go on to the next frame
                     ++f;
@@ -226,10 +216,7 @@ public class SwingGameLoop implements GameLoop
                 unusedPaint
             );
 
-            if ( completionState != CompletionState.RUNNING )
-            {
-                drawResult( g );
-            }
+            drawResult( g );
         }
 
         private void fillCanvas( Graphics2D g, Color paint )
@@ -252,9 +239,13 @@ public class SwingGameLoop implements GameLoop
 
         private void drawResult( Graphics2D g )
         {
-            fillCanvas( g, overlay );
-
             OverlayMessage message = messageForState();
+            if ( message.heading == null )
+            {
+                return;
+            }
+
+            fillCanvas( g, overlay );
 
             writeText( g, message.heading, 0.5, 0.06 );
             writeText( g, message.text1,   0.7, 0.03 );
@@ -270,6 +261,12 @@ public class SwingGameLoop implements GameLoop
             OverlayMessage message = new OverlayMessage();
             switch( completionState )
             {
+                case RUNNING:
+                case PAUSED:
+                {
+                    // No overlay in these cases
+                    break;
+                }
                 case WON:
                 {
                     message.heading = t( "You won!" );
@@ -338,7 +335,7 @@ public class SwingGameLoop implements GameLoop
     public int addToken( Token.Type ability, int gridX, int gridY )
     {
         if (
-            !paused
+               world.completionState() == CompletionState.RUNNING
             && world.abilities.get( ability ) > 0
             && gridX >= 0
             && gridY >= 0
