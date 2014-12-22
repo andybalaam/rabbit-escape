@@ -9,13 +9,15 @@ import rabbitescape.engine.util.Dimension;
 
 public class TextWorldManip
 {
-    private static final String name         = "name";
-    private static final String num_rabbits  = "num_rabbits";
-    private static final String num_to_save  = "num_to_save";
-    private static final String rabbit_delay = "rabbit_delay";
-    private static final String num_saved    = "num_saved";
-    private static final String num_killed   = "num_killed";
-    private static final String num_waiting  = "num_waiting";
+    private static final String name                 = "name";
+    private static final String num_rabbits          = "num_rabbits";
+    private static final String num_to_save          = "num_to_save";
+    private static final String rabbit_delay         = "rabbit_delay";
+    private static final String num_saved            = "num_saved";
+    private static final String num_killed           = "num_killed";
+    private static final String num_waiting          = "num_waiting";
+    private static final String paused               = "paused";
+    private static final String ready_to_explode_all = "ready_to_explode_all";
 
     public static final List<String> META_INTS = Arrays.asList(
         num_rabbits,
@@ -28,6 +30,11 @@ public class TextWorldManip
 
     public static final List<String> META_STRINGS = Arrays.asList(
         name
+    );
+
+    public static final List<String> META_BOOLS = Arrays.asList(
+        paused,
+        ready_to_explode_all
     );
 
     public static final List<String> ABILITIES = abilitiesList();
@@ -67,7 +74,9 @@ public class TextWorldManip
             processor.metaInt( rabbit_delay, 4 ),
             processor.metaInt( num_saved, 0 ),
             processor.metaInt( num_killed, 0 ),
-            processor.metaInt( num_waiting, num_rabs )
+            processor.metaInt( num_waiting, num_rabs ),
+            processor.metaBool( paused, false ),
+            processor.metaBool( ready_to_explode_all, false )
         );
     }
 
@@ -85,7 +94,9 @@ public class TextWorldManip
             4,
             0,
             0,
-            0
+            0,
+            false,
+            false
         );
     }
 
@@ -137,6 +148,8 @@ public class TextWorldManip
         ret.add( metaLine( num_saved,    world.num_saved ) );
         ret.add( metaLine( num_killed,   world.num_killed ) );
         ret.add( metaLine( num_waiting,  world.num_waiting ) );
+        ret.add( metaLine( paused,       world.paused ) );
+        ret.add( metaLine( ready_to_explode_all, world.readyToExplodeAll ) );
 
         abilityMetaLines( world, ret );
 
@@ -172,6 +185,11 @@ public class TextWorldManip
     private static String metaLine( String name, String value )
     {
         return ":" + name + "=" + value;
+    }
+
+    private static String metaLine( String name, boolean value )
+    {
+        return ":" + name + "=" + Boolean.toString( value );
     }
 
     public static String[] renderChangeDescription(

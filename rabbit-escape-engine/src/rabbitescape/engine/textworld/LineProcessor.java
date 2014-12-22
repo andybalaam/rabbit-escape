@@ -38,6 +38,7 @@ class LineProcessor
     public  final String[] lines;
     private final Map<String, String>  m_metaStrings;
     private final Map<String, Integer> m_metaInts;
+    private final Map<String, Boolean> m_metaBools;
     private final List<Point> starPoints;
 
     private int width;
@@ -60,6 +61,7 @@ class LineProcessor
         this.lines = lines;
         this.m_metaStrings = new HashMap<>();
         this.m_metaInts    = new HashMap<>();
+        this.m_metaBools   = new HashMap<>();
         starPoints = new ArrayList<Point>();
 
         width = -1;
@@ -86,6 +88,19 @@ class LineProcessor
     public int metaInt( String key, int def )
     {
         Integer ret = m_metaInts.get( key );
+        if ( ret == null )
+        {
+            return def;
+        }
+        else
+        {
+            return ret;
+        }
+    }
+
+    public boolean metaBool( String key, boolean def )
+    {
+        Boolean ret = m_metaBools.get( key );
         if ( ret == null )
         {
             return def;
@@ -141,6 +156,10 @@ class LineProcessor
         {
             m_metaStrings.put( key, value );
         }
+        else if ( TextWorldManip.META_BOOLS.contains( key ) )
+        {
+            m_metaBools.put( key, toBool( value ) );
+        }
         else if ( TextWorldManip.ABILITIES.contains( key ) )
         {
             abilities.put( Token.Type.valueOf( key ), toInt( value ) );
@@ -173,6 +192,26 @@ class LineProcessor
         catch( NumberFormatException e )
         {
             throw new NonIntegerMetaValue( lines, lineNum );
+        }
+    }
+
+    private boolean toBool( String value )
+    {
+        if ( value == null )
+        {
+            throw new NullBooleanMetaValue( lines, lineNum );
+        }
+        else if ( value.equals( "true" ) )
+        {
+            return true;
+        }
+        else if ( value.equals( "false" ) )
+        {
+            return false;
+        }
+        else
+        {
+            throw new NonBooleanMetaValue( lines, lineNum );
         }
     }
 

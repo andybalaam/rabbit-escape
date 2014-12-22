@@ -110,8 +110,8 @@ public class World
     public int num_saved;
     public int num_killed;
     public int num_waiting;
-    private boolean readyToExplodeAll;
-    private boolean paused;
+    public boolean paused;
+    public boolean readyToExplodeAll;
 
     public final WorldChanges changes;
 
@@ -127,7 +127,9 @@ public class World
         int rabbit_delay,
         int num_saved,
         int num_killed,
-        int num_waiting
+        int num_waiting,
+        boolean paused,
+        boolean readyToExplodeAll
     )
     {
         this.size = size;
@@ -142,8 +144,8 @@ public class World
         this.num_saved = num_saved;
         this.num_killed = num_killed;
         this.num_waiting = num_waiting;
-        this.readyToExplodeAll = false;
-        this.paused = false;
+        this.paused = paused;
+        this.readyToExplodeAll = readyToExplodeAll;
 
         this.changes = new WorldChanges( this );
 
