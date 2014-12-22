@@ -35,6 +35,7 @@ class GameMenu
 
     public JToggleButton mute;
     public JToggleButton pause;
+    public final JButton explodeAll;
     public final JButton back;
 
 
@@ -76,7 +77,8 @@ class GameMenu
 
         addSpacer();
 
-        this.back = addButton( "menu_back" );
+        this.explodeAll = addButton( "menu_explode_all" );
+        this.back       = addButton( "menu_back" );
 
         addPanelInScrollPane( contentPane );
     }

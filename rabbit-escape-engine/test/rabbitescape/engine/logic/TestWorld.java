@@ -3,6 +3,7 @@ package rabbitescape.engine.logic;
 import static org.hamcrest.MatcherAssert.*;
 import static org.hamcrest.CoreMatchers.*;
 import static rabbitescape.engine.util.Util.*;
+import static rabbitescape.engine.Tools.*;
 import static rabbitescape.engine.textworld.TextWorldManip.*;
 import static rabbitescape.engine.World.CompletionState.*;
 import static rabbitescape.engine.ChangeDescription.State.*;
@@ -13,6 +14,7 @@ import rabbitescape.engine.Rabbit;
 import rabbitescape.engine.Token;
 import rabbitescape.engine.World;
 import rabbitescape.engine.World.DontStepAfterFinish;
+import rabbitescape.engine.textworld.TextWorldManip;
 
 public class TestWorld
 {
@@ -262,6 +264,39 @@ public class TestWorld
         assertThat( rabbits[1].state, equalTo( RABBIT_WALKING_RIGHT ) );
 
         assertThat( rabbits.length, equalTo( 2 ) );
+    }
+
+    @Test
+    public void Explode_all_rabbits_explodes_all_rabbits()
+    {
+        World world = createWorld(
+            "#r#r#r#r#r#",
+            "###########"
+        );
+
+        world.step();
+
+        // Sanity: 5 rabbits alive
+        assertThat( world.rabbits.size(), equalTo( 5 ) );
+
+        // This is what we are testing: explode them all
+        world.changes.explodeAllRabbits();
+        world.step();
+
+        // They are exploding
+        assertThat(
+            TextWorldManip.renderWorld( world, true, false ),
+            equalTo(
+                "#P#P#P#P#P#",
+                "###########"
+            )
+        );
+
+        // And after another time step...
+        world.step();
+
+        // ... they are dead
+        assertThat( world.rabbits.size(), equalTo( 0 ) );
     }
 
     // ---

@@ -24,7 +24,6 @@ import javax.swing.JPanel;
 import javax.swing.JScrollBar;
 
 import rabbitescape.engine.Token;
-import rabbitescape.engine.World;
 import rabbitescape.engine.config.Config;
 import rabbitescape.engine.config.ConfigTools;
 import rabbitescape.render.BitmapCache;
@@ -203,6 +202,15 @@ public class GameJFrame extends JFrame
             }
         } );
 
+        menu.explodeAll.addActionListener( new ActionListener()
+        {
+            @Override
+            public void actionPerformed( ActionEvent evt )
+            {
+                explodeAllClicked();
+            }
+        } );
+
         menu.mute.addActionListener( new ActionListener()
         {
             @Override
@@ -312,6 +320,33 @@ public class GameJFrame extends JFrame
         dispose();
     }
 
+    private void explodeAllClicked()
+    {
+        switch ( gameLoop.world.completionState() )
+        {
+            case RUNNING:
+            {
+                gameLoop.world.setReadyToExplodeAll( true );
+                break;
+            }
+            case READY_TO_EXPLODE_ALL:
+            {
+                gameLoop.setPaused( false );
+                gameLoop.world.changes.explodeAllRabbits();
+                gameLoop.world.setReadyToExplodeAll( false );
+            }
+            default:
+            {
+                // Don't do anything if we're not running or about to explode
+            }
+        }
+    }
+
+    private void cancelExplodeAll()
+    {
+        gameLoop.world.setReadyToExplodeAll( false );
+    }
+
     private void setMuted( boolean muted )
     {
         ConfigTools.setBool( uiConfig, CFG_MUTED, muted );
@@ -325,9 +360,23 @@ public class GameJFrame extends JFrame
 
     private void click( Point pixelPosition )
     {
-        if ( gameLoop.world.completionState() != World.CompletionState.RUNNING )
+        switch( gameLoop.world.completionState() )
         {
-            exit();
+            case LOST:
+            case WON:
+            {
+                exit();
+                return;
+            }
+            case READY_TO_EXPLODE_ALL:
+            {
+                cancelExplodeAll();
+                return;
+            }
+            default:
+            {
+                // Continue to the normal click behaviour
+            }
         }
 
         if ( chosenAbility == null )

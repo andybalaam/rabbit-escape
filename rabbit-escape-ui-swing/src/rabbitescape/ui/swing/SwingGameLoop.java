@@ -122,7 +122,7 @@ public class SwingGameLoop implements GameLoop
 
         while( running )
         {
-            if ( world.completionState() == CompletionState.RUNNING )
+            if ( !paused && world.completionState() == CompletionState.RUNNING )
             {
                 worldModifier.step();
                 checkWon();
@@ -133,9 +133,12 @@ public class SwingGameLoop implements GameLoop
             final SpriteAnimator animator = new SpriteAnimator(
                 world, changes, imagesTileSize, bitmapCache, animationCache );
 
-            for ( int f = 0; running && f < framesPerStep; ++f )
+            int f = 0;
+            while ( running && f < framesPerStep )
             {
                 renderer.setOffset( -jframe.scrollX, -jframe.scrollY );
+
+                sleep( 50 );
 
                 new DrawFrame(
                     strategy,
@@ -146,17 +149,20 @@ public class SwingGameLoop implements GameLoop
                     world.completionState()
                 ).run();
 
-                sleep( 50 );
 
-                while ( paused )
+                if (
+                       !paused
+                    && world.completionState() == CompletionState.RUNNING
+                )
                 {
+                    // If not paused, go on to the next frame
+                    ++f;
+                }
+                else
+                {
+                    // Slow the frame rate when paused
                     sleep( 500 );
                 }
-            }
-
-            if ( world.completionState() != CompletionState.RUNNING )
-            {
-                paused = true;
             }
         }
     }
@@ -237,22 +243,65 @@ public class SwingGameLoop implements GameLoop
             );
         }
 
+        private static class OverlayMessage
+        {
+            public String heading;
+            public String text1;
+            public String text2;
+        }
+
         private void drawResult( Graphics2D g )
         {
             fillCanvas( g, overlay );
 
-            String msg;
-            if ( completionState == CompletionState.WON )
-            {
-                msg = t( "You won!" );
-            }
-            else
-            {
-                msg = t( "You lost." );
-            }
+            OverlayMessage message = messageForState();
 
-            writeText( g, msg, 0.5, 0.06 );
-            writeText( g, t( "Click to continue." ), 0.7, 0.03 );
+            writeText( g, message.heading, 0.5, 0.06 );
+            writeText( g, message.text1,   0.7, 0.03 );
+
+            if ( message.text2 != null )
+            {
+                writeText( g, message.text2, 0.76, 0.03 );
+            }
+        }
+
+        private OverlayMessage messageForState()
+        {
+            OverlayMessage message = new OverlayMessage();
+            switch( completionState )
+            {
+                case WON:
+                {
+                    message.heading = t( "You won!" );
+                    message.text1   = t( "Click the screen to continue." );
+                    break;
+                }
+                case READY_TO_EXPLODE_ALL:
+                {
+                    message.heading = t( "Explode all rabbits?" );
+
+                    message.text1   = t(
+                        "Click the explode button again to explode all rabbits,"
+                    );
+
+                    message.text2   = t( "or click the screen to cancel." );
+
+                    break;
+                }
+                case LOST:
+                {
+                    message.heading = t( "You lost." );
+                    message.text1   = t( "Click the screen to continue." );
+
+                    break;
+                }
+                default:
+                {
+                    throw new AssertionError(
+                        "Unknown completion state: " + completionState );
+                }
+            }
+            return message;
         }
 
         private void writeText(

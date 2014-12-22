@@ -91,6 +91,7 @@ public class World
     public enum CompletionState
     {
         RUNNING,
+        READY_TO_EXPLODE_ALL,
         WON,
         LOST
     }
@@ -108,6 +109,7 @@ public class World
     public int num_saved;
     public int num_killed;
     public int num_waiting;
+    private boolean readyToExplodeAll;
 
     public final WorldChanges changes;
 
@@ -138,6 +140,7 @@ public class World
         this.num_saved = num_saved;
         this.num_killed = num_killed;
         this.num_waiting = num_waiting;
+        this.readyToExplodeAll = false;
 
         this.changes = new WorldChanges( this );
 
@@ -218,7 +221,11 @@ public class World
 
     public CompletionState completionState()
     {
-        if ( rabbits.size() == 0 && this.num_waiting <= 0 )
+        if ( readyToExplodeAll )
+        {
+            return CompletionState.READY_TO_EXPLODE_ALL;
+        }
+        else if ( rabbits.size() == 0 && this.num_waiting <= 0 )
         {
             if ( num_saved >= num_to_save )
             {
@@ -270,5 +277,10 @@ public class World
     {
         return num_rabbits -
             ( this.num_waiting + num_killed + num_saved );
+    }
+
+    public void setReadyToExplodeAll( boolean readyToExplodeAll )
+    {
+        this.readyToExplodeAll = readyToExplodeAll;
     }
 }

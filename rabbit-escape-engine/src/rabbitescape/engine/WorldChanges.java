@@ -3,6 +3,7 @@ package rabbitescape.engine;
 import java.util.ArrayList;
 import java.util.List;
 
+import rabbitescape.engine.ChangeDescription.State;
 import rabbitescape.engine.World.CantAddTokenOutsideWorld;
 import rabbitescape.engine.World.NoBlockFound;
 import rabbitescape.engine.World.NoSuchAbilityInThisWorld;
@@ -20,6 +21,8 @@ public class WorldChanges
     public  final List<Token>  tokensToRemove = new ArrayList<Token>();
     private final List<Block>  blocksToAdd    = new ArrayList<Block>();
     private final List<Block>  blocksToRemove = new ArrayList<Block>();
+
+    private boolean explodeAll = false;
 
     public WorldChanges( World world )
     {
@@ -50,6 +53,20 @@ public class WorldChanges
         tokensToRemove.clear();
         blocksToAdd.clear();
         blocksToRemove.clear();
+
+        if ( explodeAll )
+        {
+            doExplodeAll();
+        }
+    }
+
+    private void doExplodeAll()
+    {
+        world.num_waiting = 0;
+        for ( Rabbit rabbit : world.rabbits )
+        {
+            rabbit.state = State.RABBIT_EXPLODING;
+        }
     }
 
     public synchronized void revert()
@@ -161,5 +178,10 @@ public class WorldChanges
     public synchronized List<Thing> tokensAboutToAppear()
     {
         return new ArrayList<Thing>( tokensToAdd );
+    }
+
+    public synchronized void explodeAllRabbits()
+    {
+        explodeAll = true;
     }
 }
