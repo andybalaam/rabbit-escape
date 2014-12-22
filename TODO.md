@@ -38,7 +38,7 @@ Release 0.1 (Playable)
 - Enough levels to be a game
 - Docs on making levels
 - Docs on installing
-- Check all possible states have graphics
+- ~~Check all possible states have graphics~~
 - ~~Ability to kill all remaining rabbits~~
 - ~~action:explode?~~
 - ~~Prevent adding tokens inside solid blocks~~
