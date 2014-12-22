@@ -96,6 +96,7 @@ public class ChangeDescription
         RABBIT_CLIMBING_RIGHT_BANG_HEAD,
         RABBIT_BLOCKING,
         RABBIT_OUT_OF_BOUNDS,
+        RABBIT_EXPLODING,
         TOKEN_BASH_STILL,
         TOKEN_BASH_FALLING,
         TOKEN_DIG_STILL,
@@ -106,6 +107,8 @@ public class ChangeDescription
         TOKEN_BLOCK_FALLING,
         TOKEN_CLIMB_STILL,
         TOKEN_CLIMB_FALLING,
+        TOKEN_EXPLODE_FALLING,
+        TOKEN_EXPLODE_STILL,
         ENTRANCE,
         EXIT,
     }

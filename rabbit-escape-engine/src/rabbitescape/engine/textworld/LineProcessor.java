@@ -289,6 +289,12 @@ class LineProcessor
                 things.add( ret );
                 break;
             }
+            case 'p':
+            {
+                ret = new Token( x, y, Token.Type.explode );
+                things.add( ret );
+                break;
+            }
             case '*':
             {
                 starPoints.add( new Point( x, y ) );

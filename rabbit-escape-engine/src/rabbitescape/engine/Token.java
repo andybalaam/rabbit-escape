@@ -29,6 +29,7 @@ public class Token extends Thing
         bridge,
         block,
         climb,
+        explode,
     }
 
     public final Type type;
@@ -58,6 +59,9 @@ public class Token extends Thing
             case climb: return moving ?
                 TOKEN_CLIMB_FALLING : TOKEN_CLIMB_STILL;
 
+            case explode: return moving ?
+                TOKEN_EXPLODE_FALLING : TOKEN_EXPLODE_STILL;
+
             default: throw new UnknownType( type );
         }
     }
@@ -82,6 +86,7 @@ public class Token extends Thing
             || state == TOKEN_BRIDGE_FALLING
             || state == TOKEN_BLOCK_FALLING
             || state == TOKEN_CLIMB_FALLING
+            || state == TOKEN_EXPLODE_FALLING
         )
         {
             ++y;

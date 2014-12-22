@@ -19,35 +19,35 @@ public class TestTokens
     public void Tokens_fall_slowly_and_stop_on_ground()
     {
         assertWorldEvolvesLike(
-            "bdikc" + "\n" +
-            "     " + "\n" +
-            "     " + "\n" +
-            "     " + "\n" +
-            "#####",
+            "bdikcp" + "\n" +
+            "      " + "\n" +
+            "      " + "\n" +
+            "      " + "\n" +
+            "######",
 
-            "     " + "\n" +
-            "bdikc" + "\n" +
-            "fffff" + "\n" +
-            "     " + "\n" +
-            "#####",
+            "      " + "\n" +
+            "bdikcp" + "\n" +
+            "ffffff" + "\n" +
+            "      " + "\n" +
+            "######",
 
-            "     " + "\n" +
-            "     " + "\n" +
-            "bdikc" + "\n" +
-            "fffff" + "\n" +
-            "#####",
+            "      " + "\n" +
+            "      " + "\n" +
+            "bdikcp" + "\n" +
+            "ffffff" + "\n" +
+            "######",
 
-            "     " + "\n" +
-            "     " + "\n" +
-            "     " + "\n" +
-            "bdikc" + "\n" +
-            "#####",
+            "      " + "\n" +
+            "      " + "\n" +
+            "      " + "\n" +
+            "bdikcp" + "\n" +
+            "######",
 
-            "     " + "\n" +
-            "     " + "\n" +
-            "     " + "\n" +
-            "bdikc" + "\n" +
-            "#####"
+            "      " + "\n" +
+            "      " + "\n" +
+            "      " + "\n" +
+            "bdikcp" + "\n" +
+            "######"
         );
     }
 

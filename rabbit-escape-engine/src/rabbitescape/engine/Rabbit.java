@@ -31,6 +31,7 @@ public class Rabbit extends Thing
         Climbing climbing = new Climbing();
         Digging digging = new Digging( climbing );
 
+        ret.add( new Exploding() );
         ret.add( new OutOfBounds() );
         ret.add( new Exiting() );
         ret.add( new Falling( digging, climbing ) );

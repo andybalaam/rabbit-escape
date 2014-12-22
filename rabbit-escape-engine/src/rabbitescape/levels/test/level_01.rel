@@ -3,6 +3,7 @@
 :dig=1
 :bridge=1
 :climb=1
+:explode=10
 :rabbit_delay=6
    Q                     
                     ###  
