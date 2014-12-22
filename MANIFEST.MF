@@ -1,0 +1,3 @@
+Main-Class: rabbitescape.ui.swing.SwingMain
+
+
