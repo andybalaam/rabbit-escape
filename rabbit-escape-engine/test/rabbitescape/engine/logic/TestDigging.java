@@ -257,6 +257,32 @@ public class TestDigging
     }
 
     @Test
+    public void Stop_after_single_slope()
+    {
+        assertWorldEvolvesLike(
+            " dj" + "\n" +
+            " /#" + "\n" +
+            "   " + "\n" +
+            "###",
+
+            "   " + "\n" +
+            " D#" + "\n" +
+            "   " + "\n" +
+            "###",
+
+            "   " + "\n" +
+            " j#" + "\n" +
+            " f " + "\n" +
+            "###",
+
+            "   " + "\n" +
+            "  #" + "\n" +
+            "<j " + "\n" +
+            "###"
+        );
+    }
+
+    @Test
     public void Stop_after_single_gap_after_multilevel_dig()
     {
         World world = createWorld(

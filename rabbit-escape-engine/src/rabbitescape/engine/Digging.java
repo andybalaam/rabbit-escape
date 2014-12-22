@@ -41,7 +41,7 @@ public class Digging implements Behaviour
                 && world.getBlockAt( rabbit.x, rabbit.y ) != null
             )
             {
-                stepsOfDigging = 2;
+                stepsOfDigging = 1;
                 return RABBIT_DIGGING_ON_SLOPE;
             }
             else if ( world.getBlockAt( rabbit.x, rabbit.y + 1 ) != null )

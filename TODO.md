@@ -40,7 +40,7 @@ Release 0.1 (Playable)
 - Docs on installing
 - Per-level messages
 - Make bridge token next to wall build forwards
-- Fix bug where digging through slope then falling keeps digging.
+- ~~Fix bug where digging through slope then falling keeps digging.~~
 - ~~Check all possible states have graphics~~
 - ~~Ability to kill all remaining rabbits~~
 - ~~action:explode?~~
