@@ -1,4 +1,5 @@
 :num_rabbits=3
+:num_to_save=1
 :bash=10
 ###########
 # #   Q   #
