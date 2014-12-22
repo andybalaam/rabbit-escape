@@ -95,6 +95,7 @@ public class AndroidGameActivity extends ActionBarActivity implements NumLeftLis
         getWindowManager().getDefaultDisplay().getMetrics( metrics );
 
         createAbilities( world, resources );
+        updatePauseButton( world.paused );
 
         gameSurface = new GameSurfaceView(
             this,
@@ -218,12 +219,6 @@ public class AndroidGameActivity extends ActionBarActivity implements NumLeftLis
             {
                 abilitiesGroup.check( checkedAbility );
             }
-
-            // Cheating here by pulling the pause state out, even though it is
-            // pulled out in AndroidGameLoop.  That happens later, so is inconvenient
-            // for us to wait for.
-            updatePauseButton(
-                savedInstanceState.getBoolean( AndroidGameLoop.STATE_PAUSED, false ) );
         }
     }
 

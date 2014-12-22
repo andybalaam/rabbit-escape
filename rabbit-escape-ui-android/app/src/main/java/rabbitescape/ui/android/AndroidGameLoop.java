@@ -18,7 +18,6 @@ public class AndroidGameLoop implements Runnable
 {
     // Constants
     public  static final String STATE_WORLD    = "rabbitescape.world";
-    public  static final String STATE_PAUSED   = "rabbitescape.paused";
     private static final String STATE_SCROLL_X = "rabbitescape.scrollx";
     private static final String STATE_SCROLL_Y = "rabbitescape.scrolly";
     private static final long max_allowed_skips = 10;
@@ -26,7 +25,6 @@ public class AndroidGameLoop implements Runnable
     private static final long frame_time_ms = 70;
 
     // Saved state
-    public boolean paused;
     private int scrollX;
     private int scrollY;
 
@@ -56,14 +54,12 @@ public class AndroidGameLoop implements Runnable
 
         if ( savedInstanceState != null )
         {
-            this.paused = savedInstanceState.getBoolean( STATE_PAUSED, false );
             this.scrollX = savedInstanceState.getInt( STATE_SCROLL_X, 0 );
             this.scrollY = savedInstanceState.getInt( STATE_SCROLL_Y, 0);
             this.checkScroll = true;
         }
         else
         {
-            this.paused = false;
             this.scrollX = 0;
             this.scrollY = 0;
             this.checkScroll = false;
@@ -89,7 +85,7 @@ public class AndroidGameLoop implements Runnable
             drawGraphics();
             frame_start_time = waitForNextFrame( frame_start_time );
 
-            if ( paused )
+            if ( !gameRunning() )
             {
                 pause();
 
@@ -111,7 +107,7 @@ public class AndroidGameLoop implements Runnable
         int prevScrollX = scrollX;
         int prevScrollY = scrollY;
 
-        while ( paused && running )
+        while ( !gameRunning() && running )
         {
             worldSaver.waitUnlessSaveSignal( 100 );
             worldSaver.check();
@@ -228,7 +224,7 @@ public class AndroidGameLoop implements Runnable
 
     public int addToken( Token.Type ability, float pixelX, float pixelY )
     {
-        if ( paused )
+        if ( !gameRunning() )
         {
             return physics.world.abilities.get( ability );
         }
@@ -240,10 +236,24 @@ public class AndroidGameLoop implements Runnable
     );
     }
 
+    public void setPaused( boolean paused )
+    {
+        physics.world.paused = paused;
+    }
+
+    public boolean paused()
+    {
+        return physics.world.paused;
+    }
+
+    public boolean gameRunning()
+    {
+        return ( physics.world.completionState() == World.CompletionState.RUNNING );
+    }
+
     public void onSaveInstanceState( Bundle outState )
     {
         outState.putString( STATE_WORLD, join( "\n", worldSaver.waitUntilSaved() ) );
-        outState.putBoolean( STATE_PAUSED, paused );
         outState.putInt( STATE_SCROLL_X, scrollX );
         outState.putInt( STATE_SCROLL_Y, scrollY );
     }

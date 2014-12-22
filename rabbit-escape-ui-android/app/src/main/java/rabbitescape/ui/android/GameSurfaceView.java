@@ -100,8 +100,8 @@ public class GameSurfaceView extends SurfaceView
         if ( game != null )
         {
             AndroidGameLoop gameLoop = game.gameLoop;
-            gameLoop.paused = !gameLoop.paused;
-            return gameLoop.paused;
+            gameLoop.setPaused( !gameLoop.paused() );
+            return gameLoop.paused();
         }
         else
         {
