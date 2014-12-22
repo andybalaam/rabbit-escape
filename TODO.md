@@ -20,6 +20,8 @@ Later
 - Allow continuing bridgers
 - Fix many things not animating nicely
 - Speed up time?
+- graphics:float
+- action:float
 
 Release 0.2 (Android)
 ---------------------
@@ -37,10 +39,8 @@ Release 0.1 (Playable)
 - Docs on making levels
 - Docs on installing
 - Check all possible states have graphics
-- Ability to kill all remaining rabbits
-- action:explode?
-- graphics:float
-- action:float
+- ~~Ability to kill all remaining rabbits~~
+- ~~action:explode?~~
 - ~~Prevent adding tokens inside solid blocks~~
 - ~~Disallow dropping tokens outside game area, and them falling outside~~
 - ~~Fix bug on PC missing updates~~
