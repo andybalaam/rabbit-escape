@@ -71,14 +71,14 @@ public class SpriteAnimator
             );
         }
 
-        for ( Rabbit rabbit : world.rabbits )
-        {
-            drawThing( frameNum, ret, rabbit );
-        }
-
         for ( Thing thing : world.things )
         {
             drawThing( frameNum, ret, thing );
+        }
+
+        for ( Rabbit rabbit : world.rabbits )
+        {
+            drawThing( frameNum, ret, rabbit );
         }
 
         for ( Thing thing : world.changes.tokensAboutToAppear() )
