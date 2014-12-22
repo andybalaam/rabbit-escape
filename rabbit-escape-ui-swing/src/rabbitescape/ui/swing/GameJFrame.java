@@ -335,10 +335,12 @@ public class GameJFrame extends JFrame
                 gameLoop.world.setPaused( false );
                 gameLoop.world.changes.explodeAllRabbits();
                 gameLoop.world.setReadyToExplodeAll( false );
+                break;
             }
             default:
             {
                 // Don't do anything if we've finished already
+                break;
             }
         }
     }
