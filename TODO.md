@@ -38,6 +38,9 @@ Release 0.1 (Playable)
 - Enough levels to be a game
 - Docs on making levels
 - Docs on installing
+- Per-level messages
+- Make bridge token next to wall build forwards
+- Fix bug where digging through slope then falling keeps digging.
 - ~~Check all possible states have graphics~~
 - ~~Ability to kill all remaining rabbits~~
 - ~~action:explode?~~
