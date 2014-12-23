@@ -11,8 +11,17 @@ import rabbitescape.engine.ChangeDescription.State;
 
 public class Bridging implements Behaviour
 {
+    enum BridgeType
+    {
+        ALONG,
+        UP,
+        DOWN_UP
+    }
+
     private int smallSteps = 0;
     private int bigSteps = 0;
+    private BridgeType bridgeType = BridgeType.ALONG;
+
     private final Climbing climbing;
 
     public Bridging( Climbing climbing )
@@ -33,14 +42,17 @@ public class Bridging implements Behaviour
         if ( bigSteps <= 0 )
             // Only pick up a token if we've finished, and we can bridge
         {
-            State possibleState = bridgingState( rabbit, world, 3, 3 );
+            State possibleState = bridgingState(
+                rabbit, world, 3, 3, bridgeType );
+
             if ( possibleState != null )
             {
                 checkForToken( rabbit, world );
             }
         }
 
-        State ret = bridgingState( rabbit, world, bigSteps, smallSteps );
+        State ret = bridgingState(
+            rabbit, world, bigSteps, smallSteps, bridgeType );
 
         if ( ret == null )
         {
@@ -57,7 +69,7 @@ public class Bridging implements Behaviour
     }
 
     private static State bridgingState(
-        Rabbit rabbit, World world, int bs, int ss )
+        Rabbit rabbit, World world, int bs, int ss, BridgeType bt )
     {
         Block hereBlock = world.getBlockAt( rabbit.x, rabbit.y );
 
@@ -136,56 +148,62 @@ public class Bridging implements Behaviour
             }
             case 2:
             {
-                if ( slopeUp )
+                switch( bt )
                 {
-                    return BehaviourTools.rl(
-                        rabbit,
-                        RABBIT_BRIDGING_UP_RIGHT_2,
-                        RABBIT_BRIDGING_UP_LEFT_2
-                    );
-                }
-                else if ( slopeDown )
-                {
-                    return BehaviourTools.rl(
-                        rabbit,
-                        RABBIT_BRIDGING_DOWN_UP_RIGHT_2,
-                        RABBIT_BRIDGING_DOWN_UP_LEFT_2
-                    );
-                }
-                else
-                {
-                    return BehaviourTools.rl(
-                        rabbit,
-                        RABBIT_BRIDGING_RIGHT_2,
-                        RABBIT_BRIDGING_LEFT_2
-                    );
+                    case ALONG:
+                    {
+                        return BehaviourTools.rl(
+                            rabbit,
+                            RABBIT_BRIDGING_RIGHT_2,
+                            RABBIT_BRIDGING_LEFT_2
+                        );
+                    }
+                    case UP:
+                    {
+                        return BehaviourTools.rl(
+                            rabbit,
+                            RABBIT_BRIDGING_UP_RIGHT_2,
+                            RABBIT_BRIDGING_UP_LEFT_2
+                        );
+                    }
+                    case DOWN_UP:
+                    {
+                        return BehaviourTools.rl(
+                            rabbit,
+                            RABBIT_BRIDGING_DOWN_UP_RIGHT_2,
+                            RABBIT_BRIDGING_DOWN_UP_LEFT_2
+                        );
+                    }
                 }
             }
             case 1:
             {
-                if ( slopeUp )
+                switch( bt )
                 {
-                    return BehaviourTools.rl(
-                        rabbit,
-                        RABBIT_BRIDGING_UP_RIGHT_3,
-                        RABBIT_BRIDGING_UP_LEFT_3
-                    );
-                }
-                else if ( slopeDown )
-                {
-                    return BehaviourTools.rl(
-                        rabbit,
-                        RABBIT_BRIDGING_DOWN_UP_RIGHT_3,
-                        RABBIT_BRIDGING_DOWN_UP_LEFT_3
-                    );
-                }
-                else
-                {
-                    return BehaviourTools.rl(
-                        rabbit,
-                        RABBIT_BRIDGING_RIGHT_3,
-                        RABBIT_BRIDGING_LEFT_3
-                    );
+                    case ALONG:
+                    {
+                        return BehaviourTools.rl(
+                            rabbit,
+                            RABBIT_BRIDGING_RIGHT_3,
+                            RABBIT_BRIDGING_LEFT_3
+                        );
+                    }
+                    case UP:
+                    {
+                        return BehaviourTools.rl(
+                            rabbit,
+                            RABBIT_BRIDGING_UP_RIGHT_3,
+                            RABBIT_BRIDGING_UP_LEFT_3
+                        );
+                    }
+                    case DOWN_UP:
+                    {
+                        return BehaviourTools.rl(
+                            rabbit,
+                            RABBIT_BRIDGING_DOWN_UP_RIGHT_3,
+                            RABBIT_BRIDGING_DOWN_UP_LEFT_3
+                        );
+                    }
                 }
             }
             default:
@@ -386,14 +404,26 @@ public class Bridging implements Behaviour
             case RABBIT_BRIDGING_RIGHT_2:
             case RABBIT_BRIDGING_LEFT_1:
             case RABBIT_BRIDGING_LEFT_2:
+            {
+                bridgeType = BridgeType.ALONG;
+                return true;
+            }
             case RABBIT_BRIDGING_UP_RIGHT_1:
             case RABBIT_BRIDGING_UP_RIGHT_2:
             case RABBIT_BRIDGING_UP_LEFT_1:
             case RABBIT_BRIDGING_UP_LEFT_2:
+            {
+                bridgeType = BridgeType.UP;
+                return true;
+            }
             case RABBIT_BRIDGING_DOWN_UP_RIGHT_1:
             case RABBIT_BRIDGING_DOWN_UP_RIGHT_2:
             case RABBIT_BRIDGING_DOWN_UP_LEFT_1:
             case RABBIT_BRIDGING_DOWN_UP_LEFT_2:
+            {
+                bridgeType = BridgeType.DOWN_UP;
+                return true;
+            }
             case RABBIT_BRIDGING_IN_CORNER_RIGHT_1:
             case RABBIT_BRIDGING_IN_CORNER_LEFT_1:
             case RABBIT_BRIDGING_IN_CORNER_RIGHT_2:
@@ -403,6 +433,7 @@ public class Bridging implements Behaviour
             case RABBIT_BRIDGING_IN_CORNER_UP_RIGHT_2:
             case RABBIT_BRIDGING_IN_CORNER_UP_LEFT_2:
             {
+                bridgeType = BridgeType.ALONG;
                 return true;
             }
             case RABBIT_BRIDGING_RIGHT_3:
@@ -527,6 +558,13 @@ public class Bridging implements Behaviour
     @Override
     public void saveState( Map<String, String> saveState )
     {
+        BehaviourTools.addToStateIfNotDefault(
+            saveState,
+            "Bridging.bridgeType",
+            bridgeType.toString(),
+            BridgeType.ALONG.toString()
+        );
+
         BehaviourTools.addToStateIfGtZero(
             saveState, "Bridging.bigSteps", bigSteps );
 
@@ -537,6 +575,11 @@ public class Bridging implements Behaviour
     @Override
     public void restoreFromState( Map<String, String> saveState )
     {
+        bridgeType = BridgeType.valueOf(
+            BehaviourTools.restoreFromState(
+                saveState, "Bridging.bridgeType", bridgeType.toString() )
+        );
+
         bigSteps = BehaviourTools.restoreFromState(
             saveState, "Bridging.bigSteps", bigSteps );
 

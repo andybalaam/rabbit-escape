@@ -13,6 +13,15 @@ public class BehaviourTools
         return rabbit.dir == RIGHT ? rightState : leftState;
     }
 
+    static void addToStateIfNotDefault(
+        Map<String, String> saveState, String key, String value, String def )
+    {
+        if ( !def.equals( value  ) )
+        {
+            saveState.put( key, value );
+        }
+    }
+
     static void addToStateIfGtZero(
         Map<String, String> saveState, String key, int value )
     {
@@ -29,6 +38,20 @@ public class BehaviourTools
         if ( value )
         {
             saveState.put( key, Boolean.toString( value ) );
+        }
+    }
+
+    public static String restoreFromState(
+        Map<String, String> saveState, String key, String defaultValue )
+    {
+        String val = saveState.get( key );
+        if ( val != null )
+        {
+            return val;
+        }
+        else
+        {
+            return defaultValue;
         }
     }
 
