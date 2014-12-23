@@ -5,7 +5,7 @@ import static rabbitescape.engine.textworld.TextWorldManip.*;
 import static rabbitescape.engine.util.WorldAssertions.*;
 import static rabbitescape.engine.Tools.*;
 
-import org.junit.Test;
+import org.junit.*;
 
 import rabbitescape.engine.Direction;
 import rabbitescape.engine.Rabbit;
@@ -369,7 +369,7 @@ public class TestBridging
     }
 
     @Test
-    public void Stop_bridging_when_hit_head_in_front_at_start()
+    public void Dont_bridge_when_hit_head_in_front_at_start()
     {
         assertWorldEvolvesLike(
             "##        ##" + "\n" +
@@ -377,7 +377,7 @@ public class TestBridging
             "############",
 
             "##        ##" + "\n" +
-            "#<j      r>#" + "\n" +
+            "#<i      i>#" + "\n" +
             "############"
         );
     }
@@ -524,7 +524,7 @@ public class TestBridging
     }
 
     @Test
-    public void Stop_bridging_and_turn_when_hit_back_slope()
+    public void Dont_bridge_and_turn_when_hit_back_slope()
     {
         assertWorldEvolvesLike(
             "#   /   \\   #" + "\n" +
@@ -534,12 +534,12 @@ public class TestBridging
 
             "#   /   \\   #" + "\n" +
             "#  /     \\  #" + "\n" +
-            "# /<j   r>\\ #" + "\n" +
+            "# /<i   i>\\ #" + "\n" +
             "#############",
 
             "#   /   \\   #" + "\n" +
             "#  /     \\  #" + "\n" +
-            "# /|     ?\\ #" + "\n" +
+            "# /|i   i?\\ #" + "\n" +
             "#############"
         );
     }
@@ -959,6 +959,42 @@ public class TestBridging
     }
 
     @Test
+    public void Bridge_token_next_to_short_wall_makes_you_bridge_towards_it()
+    {
+        assertWorldEvolvesLike(
+            "#      #" + "\n" +
+            "#      #" + "\n" +
+            "#      #" + "\n" +
+            "#ri#   #" + "\n" +
+            "########",
+
+            "#      #" + "\n" +
+            "#      #" + "\n" +
+            "#      #" + "\n" +
+            "# B#   #" + "\n" +
+            "########",
+
+            "#      #" + "\n" +
+            "#      #" + "\n" +
+            "#      #" + "\n" +
+            "# [#   #" + "\n" +
+            "########",
+
+            "#      #" + "\n" +
+            "#      #" + "\n" +
+            "#      #" + "\n" +
+            "# {#   #" + "\n" +
+            "########",
+
+            "#      #" + "\n" +
+            "#      #" + "\n" +
+            "#  '   #" + "\n" +
+            "# r#   #" + "\n" +
+            "########"
+        );
+    }
+
+    @Test
     public void Bridge_token_next_to_back_slope_makes_you_bridge_towards_it()
     {
         assertWorldEvolvesLike(
@@ -995,12 +1031,212 @@ public class TestBridging
     }
 
     @Test
+    public void Bridge_token_at_top_of_bridge_continues()
+    {
+        assertWorldEvolvesLike(
+            "#       #" + "\n" +
+            "#   i   #" + "\n" +
+            "#   (   #" + "\n" +
+            "# r(    #" + "\n" +
+            "#########",
+
+            "#       #" + "\n" +
+            "#       #" + "\n" +
+            "#   $   #" + "\n" +
+            "#  r    #" + "\n" +
+            "#########",
+
+            "#       #" + "\n" +
+            "#    B  #" + "\n" +
+            "#   r   #" + "\n" +
+            "#  (    #" + "\n" +
+            "#########",
+
+            "#       #" + "\n" +
+            "#    [  #" + "\n" +
+            "#   r   #" + "\n" +
+            "#  (    #" + "\n" +
+            "#########",
+
+            "#       #" + "\n" +
+            "#    {  #" + "\n" +
+            "#   r   #" + "\n" +
+            "#  (    #" + "\n" +
+            "#########",
+
+            "#     B #" + "\n" +
+            "#    r  #" + "\n" +
+            "#   (   #" + "\n" +
+            "#  (    #" + "\n" +
+            "#########"
+        );
+    }
+
+    @Test
+    public void Bridge_token_at_top_of_bridge_by_wall_continues_reversed()
+    {
+        assertWorldEvolvesLike(
+            "#       #" + "\n" +
+            "#      i#" + "\n" +
+            "#      (#" + "\n" +
+            "#    r( #" + "\n" +
+            "#########",
+
+            "#       #" + "\n" +
+            "#       #" + "\n" +
+            "#      $#" + "\n" +
+            "#     r #" + "\n" +
+            "#########",
+
+            "#       #" + "\n" +
+            "#       #" + "\n" +
+            "#      ?#" + "\n" +
+            "#     ( #" + "\n" +
+            "#########",
+
+            "#       #" + "\n" +
+            "#       #" + "\n" +
+            "#     Ej#" + "\n" +
+            "#     ( #" + "\n" +
+            "#########"
+        );
+    }
+
+    @Test
+    public void Bridger_ignores_bridging_tokens()
+    {
+        assertWorldEvolvesLike(
+            "   i     " + "\n" +
+            "         " + "\n" +
+            "         " + "\n" +
+            "         " + "\n" +
+            "  i      " + "\n" +
+            "         " + "\n" +
+            "         " + "\n" +
+            "         " + "\n" +
+            "ri       " + "\n" +
+            "#########",
+
+            "         " + "\n" +
+            "   i     " + "\n" +
+            "   f     " + "\n" +
+            "         " + "\n" +
+            "         " + "\n" +
+            "  i      " + "\n" +
+            "  f      " + "\n" +
+            "         " + "\n" +
+            " rB      " + "\n" +
+            "#########",
+
+            "         " + "\n" +
+            "         " + "\n" +
+            "   i     " + "\n" +
+            "   f     " + "\n" +
+            "         " + "\n" +
+            "         " + "\n" +
+            "  i      " + "\n" +
+            "  f      " + "\n" +
+            " r[      " + "\n" +
+            "#########",
+
+            "         " + "\n" +
+            "         " + "\n" +
+            "         " + "\n" +
+            "   i     " + "\n" +
+            "   f     " + "\n" +
+            "         " + "\n" +
+            "         " + "\n" +
+            "  i      " + "\n" +
+            " rf      " + "\n" +
+            "#########",
+
+            "         " + "\n" +
+            "         " + "\n" +
+            "         " + "\n" +
+            "         " + "\n" +
+            "   i     " + "\n" +
+            "   f     " + "\n" +
+            "         " + "\n" +
+            "   B     " + "\n" +
+            "  i      " + "\n" +
+            "#########",
+
+            "         " + "\n" +
+            "         " + "\n" +
+            "         " + "\n" +
+            "         " + "\n" +
+            "         " + "\n" +
+            "   i     " + "\n" +
+            "   f     " + "\n" +
+            "   [     " + "\n" +
+            "  i      " + "\n" +
+            "#########",
+
+            "         " + "\n" +
+            "         " + "\n" +
+            "         " + "\n" +
+            "         " + "\n" +
+            "         " + "\n" +
+            "         " + "\n" +
+            "   i     " + "\n" +
+            "   f     " + "\n" +
+            "  i      " + "\n" +
+            "#########",
+
+            "         " + "\n" +
+            "         " + "\n" +
+            "         " + "\n" +
+            "         " + "\n" +
+            "         " + "\n" +
+            "         " + "\n" +
+            "    B    " + "\n" +
+            "   i     " + "\n" +
+            "  i      " + "\n" +
+            "#########",
+
+            "         " + "\n" +
+            "         " + "\n" +
+            "         " + "\n" +
+            "         " + "\n" +
+            "         " + "\n" +
+            "         " + "\n" +
+            "    [    " + "\n" +
+            "   i     " + "\n" +
+            "  i      " + "\n" +
+            "#########",
+
+            "         " + "\n" +
+            "         " + "\n" +
+            "         " + "\n" +
+            "         " + "\n" +
+            "         " + "\n" +
+            "         " + "\n" +
+            "    {    " + "\n" +
+            "   i     " + "\n" +
+            "  i      " + "\n" +
+            "#########",
+
+            "         " + "\n" +
+            "         " + "\n" +
+            "         " + "\n" +
+            "         " + "\n" +
+            "         " + "\n" +
+            "     '   " + "\n" +
+            "    r    " + "\n" +
+            "   i     " + "\n" +
+            "  i      " + "\n" +
+            "#########"
+        );
+    }
+
+    @Test
     public void Bridge_out_of_a_hole()
     {
         // Drop bridge tokens on a rabbit in a hole
 
         assertWorldEvolvesLike(
             "  i  " + "\n" +
+            "     " + "\n" +
             "     " + "\n" +
             "     " + "\n" +
             "     " + "\n" +
@@ -1016,6 +1252,7 @@ public class TestBridging
             "  f  " + "\n" +
             "     " + "\n" +
             "     " + "\n" +
+            "     " + "\n" +
             "  i  " + "\n" +
             "##f##" + "\n" +
             "## ##" + "\n" +
@@ -1028,6 +1265,7 @@ public class TestBridging
             "  f  " + "\n" +
             "     " + "\n" +
             "     " + "\n" +
+            "     " + "\n" +
             "##i##" + "\n" +
             "##f##" + "\n" +
             "##[##" + "\n" +
@@ -1038,6 +1276,7 @@ public class TestBridging
             "     " + "\n" +
             "  i  " + "\n" +
             "  f  " + "\n" +
+            "     " + "\n" +
             "     " + "\n" +
             "## ##" + "\n" +
             "##i##" + "\n" +
@@ -1050,9 +1289,10 @@ public class TestBridging
             "     " + "\n" +
             "  i  " + "\n" +
             "  f  " + "\n" +
+            "     " + "\n" +
             "## ##" + "\n" +
-            "##B##" + "\n" +
-            "##r##" + "\n" +
+            "## ##" + "\n" +
+            "##?##" + "\n" +
             "#####",
 
             "     " + "\n" +
@@ -1061,11 +1301,25 @@ public class TestBridging
             "     " + "\n" +
             "     " + "\n" +
             "  i  " + "\n" +
-            "##f##" + "\n" +
-            "##[##" + "\n" +
-            "##r##" + "\n" +
+            "  f  " + "\n" +
+            "## ##" + "\n" +
+            "##E##" + "\n" +
+            "##j##" + "\n" +
             "#####",
 
+            "     " + "\n" +
+            "     " + "\n" +
+            "     " + "\n" +
+            "     " + "\n" +
+            "     " + "\n" +
+            "     " + "\n" +
+            "  i  " + "\n" +
+            "##f##" + "\n" +
+            "##]##" + "\n" +
+            "##j##" + "\n" +
+            "#####",
+
+            "     " + "\n" +
             "     " + "\n" +
             "     " + "\n" +
             "     " + "\n" +
@@ -1074,9 +1328,22 @@ public class TestBridging
             "     " + "\n" +
             "##i##" + "\n" +
             "##f##" + "\n" + // Finish second bridge
-            "##r##" + "\n" +
+            "##j##" + "\n" +
             "#####",
 
+            "     " + "\n" +
+            "     " + "\n" +
+            "     " + "\n" +
+            "     " + "\n" +
+            "     " + "\n" +
+            "     " + "\n" +
+            "     " + "\n" +
+            "## ##" + "\n" +
+            "##|##" + "\n" +
+            "##(##" + "\n" +
+            "#####",
+
+            "     " + "\n" +
             "     " + "\n" +
             "     " + "\n" +
             "     " + "\n" +
@@ -1094,6 +1361,7 @@ public class TestBridging
             "     " + "\n" +
             "     " + "\n" +
             "     " + "\n" +
+            "     " + "\n" +
             "##[##" + "\n" +
             "##r##" + "\n" +
             "##(##" + "\n" +
@@ -1105,11 +1373,13 @@ public class TestBridging
             "     " + "\n" +
             "     " + "\n" +
             "     " + "\n" +
-            "##{##" + "\n" + // Finish third bridge
+            "     " + "\n" +
+            "##{##" + "\n" +
             "##r##" + "\n" +
             "##(##" + "\n" +
             "#####",
 
+            "     " + "\n" +
             "     " + "\n" +
             "     " + "\n" +
             "     " + "\n" +
@@ -1117,7 +1387,7 @@ public class TestBridging
             "     " + "\n" +
             "   ' " + "\n" +
             "##r##" + "\n" +
-            "##(##" + "\n" +
+            "##)##" + "\n" +
             "##(##" + "\n" +
             "#####",
 
@@ -1126,9 +1396,10 @@ public class TestBridging
             "     " + "\n" +
             "     " + "\n" +
             "     " + "\n" +
+            "     " + "\n" +
             "   r>" + "\n" +
             "##(##" + "\n" +
-            "##(##" + "\n" +
+            "##)##" + "\n" +
             "##(##" + "\n" +
             "#####"
         );

@@ -28,20 +28,23 @@ public class Bridging implements Behaviour
             return null;
         }
 
-        Token token = world.getTokenAt( rabbit.x, rabbit.y );
-        if ( token != null && token.type == bridge )
+        nextStep();
+
+        if ( bigSteps <= 0 )
+            // Only pick up a token if we've finished, and we can bridge
         {
-            world.changes.removeToken( token );
-            smallSteps = 4;
-            bigSteps = 3;
+            State possibleState = bridgingState( rabbit, world, 3, 3 );
+            if ( possibleState != null )
+            {
+                checkForToken( rabbit, world );
+            }
         }
 
-        --smallSteps;
+        State ret = bridgingState( rabbit, world, bigSteps, smallSteps );
 
-        if ( smallSteps <= 0 )
+        if ( ret == null )
         {
-            --bigSteps;
-            smallSteps = 3;
+            bigSteps = 0;
         }
 
         if ( bigSteps <= 0 )
@@ -50,97 +53,28 @@ public class Bridging implements Behaviour
             return null;   // Finished bridging
         }
 
+        return ret;
+    }
+
+    private static State bridgingState(
+        Rabbit rabbit, World world, int bs, int ss )
+    {
         Block hereBlock = world.getBlockAt( rabbit.x, rabbit.y );
 
-        boolean slopeUp = (
-               ( hereBlock != null )
-            && ( hereBlock.riseDir() == rabbit.dir )
-        );
-
-        int nextX = rabbit.x;
-        nextX += rabbit.dir == Direction.RIGHT ? 1 : -1;
-
-        int nextY = rabbit.y;
-        nextY += slopeUp ? -1 : 0;
-
-        Block nextBlock = world.getBlockAt( nextX, nextY );
-
-        if (
-            (
-               bigSteps == 3
-            )
-            &&
-            (
-                   nextBlock != null
-                &&
-                (
-                       nextBlock.riseDir() != rabbit.dir
-                    || nextBlock.type == solid_flat
-                )
-             )
-        )
+        if ( startingIntoToWall( world, rabbit, bs ) )
         {
-            Block thisBlock = world.getBlockAt( rabbit.x, rabbit.y );
-
-            switch( smallSteps )
-            {
-                case 3:
-                    if ( isSlope( thisBlock ) )
-                    {
-                        return BehaviourTools.rl(
-                            rabbit,
-                            RABBIT_BRIDGING_IN_CORNER_UP_RIGHT_1,
-                            RABBIT_BRIDGING_IN_CORNER_UP_LEFT_1
-                        );
-                    }
-                    else
-                    {
-                        return BehaviourTools.rl(
-                            rabbit,
-                            RABBIT_BRIDGING_IN_CORNER_RIGHT_1,
-                            RABBIT_BRIDGING_IN_CORNER_LEFT_1
-                        );
-                    }
-                case 2:
-                    if ( isSlope( thisBlock ) )
-                    {
-                        return BehaviourTools.rl(
-                            rabbit,
-                            RABBIT_BRIDGING_IN_CORNER_UP_RIGHT_2,
-                            RABBIT_BRIDGING_IN_CORNER_UP_LEFT_2
-                        );
-                    }
-                    else
-                    {
-                        return BehaviourTools.rl(
-                            rabbit,
-                            RABBIT_BRIDGING_IN_CORNER_RIGHT_2,
-                            RABBIT_BRIDGING_IN_CORNER_LEFT_2
-                        );
-                    }
-                case 1:
-                    if ( isSlope( thisBlock ) )
-                    {
-                        return BehaviourTools.rl(
-                            rabbit,
-                            RABBIT_BRIDGING_IN_CORNER_UP_RIGHT_3,
-                            RABBIT_BRIDGING_IN_CORNER_UP_LEFT_3
-                        );
-                    }
-                    else
-                    {
-                        return BehaviourTools.rl(
-                            rabbit,
-                            RABBIT_BRIDGING_IN_CORNER_RIGHT_3,
-                            RABBIT_BRIDGING_IN_CORNER_LEFT_3
-                        );
-                    }
-            }
+            return stateIntoWall( rabbit, world, ss );
         }
 
-        Block belowNextBlock = world.getBlockAt( nextX, rabbit.y );
+        boolean slopeUp = isSlopeUp( rabbit, hereBlock );
+        int nx = nextX( rabbit );
+        int ny = nextY( rabbit, slopeUp );
+
+        Block nextBlock = world.getBlockAt( nx, ny );
+
+        Block belowNextBlock = world.getBlockAt( nx, rabbit.y );
         Block twoAboveHereBlock = world.getBlockAt( rabbit.x, rabbit.y - 2 );
-        Block aboveNextBlock = world.getBlockAt( nextX, nextY - 1 );
+        Block aboveNextBlock = world.getBlockAt( nx, ny - 1 );
 
         if (
             (
@@ -157,14 +91,13 @@ public class Bridging implements Behaviour
                  && isSolid( aboveNextBlock )
             ) || (
                     // Bang head here, mid-build
-                    bigSteps < 3
+                    bs < 3
                  && twoAboveHereBlock != null
                  && twoAboveHereBlock.type == Block.Type.solid_flat
             )
         )
         {
-            bigSteps = 0; // Stop bridging
-            return null;
+            return null; // Stop bridging
         }
 
         boolean slopeDown = (
@@ -172,7 +105,7 @@ public class Bridging implements Behaviour
             && ( hereBlock.riseDir() == Direction.opposite( rabbit.dir ) )
         );
 
-        switch( smallSteps )
+        switch( ss )
         {
             case 3:
             {
@@ -262,12 +195,167 @@ public class Bridging implements Behaviour
         }
     }
 
-    private boolean isSlope( Block thisBlock )
+    private static State stateIntoWall( Rabbit rabbit, World world, int ss )
+    {
+        Block thisBlock = world.getBlockAt( rabbit.x, rabbit.y );
+
+        boolean slopeUp = isSlopeUp( rabbit, thisBlock );
+        int bx = behindX( rabbit );
+        int ny = nextY( rabbit, slopeUp );
+
+        if ( isSlope( thisBlock ) && world.getBlockAt( bx, ny ) == null )
+        {
+            return null;
+        }
+
+        switch( ss )
+        {
+            case 3:
+            {
+                if ( isSlope( thisBlock ) )
+                {
+                    return BehaviourTools.rl(
+                        rabbit,
+                        RABBIT_BRIDGING_IN_CORNER_UP_RIGHT_1,
+                        RABBIT_BRIDGING_IN_CORNER_UP_LEFT_1
+                    );
+                }
+                else
+                {
+                    return BehaviourTools.rl(
+                        rabbit,
+                        RABBIT_BRIDGING_IN_CORNER_RIGHT_1,
+                        RABBIT_BRIDGING_IN_CORNER_LEFT_1
+                    );
+                }
+            }
+            case 2:
+            {
+                if ( isSlope( thisBlock ) )
+                {
+                    return BehaviourTools.rl(
+                        rabbit,
+                        RABBIT_BRIDGING_IN_CORNER_UP_RIGHT_2,
+                        RABBIT_BRIDGING_IN_CORNER_UP_LEFT_2
+                    );
+                }
+                else
+                {
+                    return BehaviourTools.rl(
+                        rabbit,
+                        RABBIT_BRIDGING_IN_CORNER_RIGHT_2,
+                        RABBIT_BRIDGING_IN_CORNER_LEFT_2
+                    );
+                }
+            }
+            case 1:
+            {
+                if ( isSlope( thisBlock ) )
+                {
+                    return BehaviourTools.rl(
+                        rabbit,
+                        RABBIT_BRIDGING_IN_CORNER_UP_RIGHT_3,
+                        RABBIT_BRIDGING_IN_CORNER_UP_LEFT_3
+                    );
+                }
+                else
+                {
+                    return BehaviourTools.rl(
+                        rabbit,
+                        RABBIT_BRIDGING_IN_CORNER_RIGHT_3,
+                        RABBIT_BRIDGING_IN_CORNER_LEFT_3
+                    );
+                }
+            }
+            default:
+            {
+                return null;
+            }
+        }
+    }
+
+    private static boolean startingIntoToWall(
+        World world,
+        Rabbit rabbit,
+        int bs
+    )
+    {
+        Block hereBlock = world.getBlockAt( rabbit.x, rabbit.y );
+
+        boolean slopeUp = isSlopeUp( rabbit, hereBlock );
+        int nx = nextX( rabbit );
+        int ny = nextY( rabbit, slopeUp );
+
+        Block nextBlock = world.getBlockAt( nx, ny );
+
+        return (
+           bs == 3
+        )
+        &&
+        (
+               nextBlock != null
+            &&
+            (
+                   nextBlock.riseDir() != rabbit.dir
+                || nextBlock.type == solid_flat
+            )
+         );
+    }
+
+    private static boolean isSlopeUp( Rabbit rabbit, Block hereBlock )
+    {
+        return ( hereBlock != null )
+          && ( hereBlock.riseDir() == rabbit.dir );
+    }
+
+    private static int nextY( Rabbit rabbit, boolean slopeUp )
+    {
+        int ret = rabbit.y;
+        ret += slopeUp ? -1 : 0;
+        return ret;
+    }
+
+    private static int nextX( Rabbit rabbit )
+    {
+        int ret = rabbit.x;
+        ret += rabbit.dir == Direction.RIGHT ? 1 : -1;
+        return ret;
+    }
+
+    private static int behindX( Rabbit rabbit )
+    {
+        int ret = rabbit.x;
+        ret += rabbit.dir == Direction.RIGHT ? -1 : 1;
+        return ret;
+    }
+
+    private void checkForToken( Rabbit rabbit, World world )
+    {
+        Token token = world.getTokenAt( rabbit.x, rabbit.y );
+        if ( token != null && token.type == bridge )
+        {
+            world.changes.removeToken( token );
+            smallSteps = 3;
+            bigSteps = 3;
+        }
+    }
+
+    private void nextStep()
+    {
+        --smallSteps;
+        if ( smallSteps <= 0 )
+        {
+            --bigSteps;
+            smallSteps = 3;
+        }
+    }
+
+    private static boolean isSlope( Block thisBlock )
     {
         return ( thisBlock != null && thisBlock.type != solid_flat );
     }
 
-    private boolean isSolid( Block block )
+    private static boolean isSolid( Block block )
     {
         return (
                block.type == Type.solid_flat
