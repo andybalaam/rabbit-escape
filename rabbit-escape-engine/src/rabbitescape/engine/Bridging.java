@@ -139,7 +139,6 @@ public class Bridging implements Behaviour
         }
 
         Block belowNextBlock = world.getBlockAt( nextX, rabbit.y );
-        Block aboveHereBlock = world.getBlockAt( rabbit.x, rabbit.y - 1 );
         Block twoAboveHereBlock = world.getBlockAt( rabbit.x, rabbit.y - 2 );
         Block aboveNextBlock = world.getBlockAt( nextX, nextY - 1 );
 
@@ -152,10 +151,6 @@ public class Bridging implements Behaviour
                    // Clip land
                    belowNextBlock != null
                 && belowNextBlock.riseDir() != rabbit.dir
-            ) || (
-                   // Bang head here
-                   aboveHereBlock != null
-                && aboveHereBlock.type == Block.Type.solid_flat
             ) || (
                     // Bang head next
                     aboveNextBlock != null

@@ -353,15 +353,17 @@ public class TestBridging
     }
 
     @Test
-    public void Stop_bridging_when_hit_head_here_at_start()
+    public void Can_bridge_out_from_under_block()
     {
         assertWorldEvolvesLike(
-            "# #      # #" + "\n" +
-            "# ij    ri #" + "\n" +
+            "#          #" + "\n" +
+            "# #        #" + "\n" +
+            "#ri        #" + "\n" +
             "############",
 
-            "# #      # #" + "\n" +
-            "#<j      r>#" + "\n" +
+            "#          #" + "\n" +
+            "# #        #" + "\n" +
+            "# rB       #" + "\n" +
             "############"
         );
     }
