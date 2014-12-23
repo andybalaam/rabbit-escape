@@ -174,6 +174,10 @@ public class Bridging implements Behaviour
                             RABBIT_BRIDGING_DOWN_UP_LEFT_2
                         );
                     }
+                    default:
+                    {
+                        throw new AssertionError( "Unexpected bridge type: " + bt );
+                    }
                 }
             }
             case 1:
@@ -203,6 +207,10 @@ public class Bridging implements Behaviour
                             RABBIT_BRIDGING_DOWN_UP_RIGHT_3,
                             RABBIT_BRIDGING_DOWN_UP_LEFT_3
                         );
+                    }
+                    default:
+                    {
+                        throw new AssertionError( "Unexpected bridge type: " + bt );
                     }
                 }
             }
