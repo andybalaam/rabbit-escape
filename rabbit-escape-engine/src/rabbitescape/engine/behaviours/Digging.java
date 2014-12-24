@@ -10,39 +10,36 @@ import rabbitescape.engine.ChangeDescription.State;
 import rabbitescape.engine.Rabbit;
 import rabbitescape.engine.Token;
 import rabbitescape.engine.World;
-import rabbitescape.engine.behaviours.Climbing;
 
 public class Digging implements Behaviour
 {
     private final Climbing climbing;
-    private boolean justPickedUpToken;
 
     public Digging( Climbing climbing )
     {
         this.climbing = climbing;
     }
 
-    public void checkForToken( Rabbit rabbit, World world )
+    public boolean checkTriggered( Rabbit rabbit, World world )
     {
-        justPickedUpToken = false;
-
         if ( climbing.abilityActive )
         {
-            return;
+            return false;
         }
 
         Token token = world.getTokenAt( rabbit.x, rabbit.y );
         if ( token != null && token.type == dig )
         {
             world.changes.removeToken( token );
-            justPickedUpToken = true;
+            return true;
         }
+        return false;
     }
 
     @Override
     public State newState( Rabbit rabbit, World world )
     {
-        checkForToken( rabbit, world );
+        boolean triggered = checkTriggered( rabbit, world );
 
         if ( rabbit.state == RABBIT_DIGGING )
         {
@@ -50,7 +47,7 @@ public class Digging implements Behaviour
         }
 
         if (
-               justPickedUpToken
+               triggered
             || rabbit.state == RABBIT_DIGGING_2
             || rabbit.state == RABBIT_DIGGING_ON_SLOPE
         )

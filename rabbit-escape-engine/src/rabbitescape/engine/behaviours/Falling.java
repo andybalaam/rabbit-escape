@@ -8,8 +8,6 @@ import java.util.Map;
 
 import rabbitescape.engine.*;
 import rabbitescape.engine.ChangeDescription.State;
-import rabbitescape.engine.behaviours.Climbing;
-import rabbitescape.engine.behaviours.Digging;
 
 public class Falling implements Behaviour
 {
@@ -95,15 +93,32 @@ public class Falling implements Behaviour
         }
     }
 
-    @Override
-    public State newState( Rabbit rabbit, World world )
+    boolean checkTriggered( Rabbit rabbit, World world )
     {
         if ( climbing.abilityActive || rabbit.state == RABBIT_DIGGING )
         {
-            return null;
+            return false;
         }
 
-        if ( !falling( rabbit, world ) )
+        int below = rabbit.y + 1;
+        //noinspection RedundantIfStatement
+        if (
+            world.flatBlockAt( rabbit.x, below )
+            || rabbit.onSlope
+            )
+        {
+            return false;
+        }
+
+        return true;
+    }
+
+    @Override
+    public State newState( Rabbit rabbit, World world )
+    {
+        boolean triggered = checkTriggered( rabbit, world );
+
+        if ( !triggered )
         {
             if ( heightFallen > fatalHeight )
             {
@@ -186,21 +201,6 @@ public class Falling implements Behaviour
                 return State.RABBIT_FALLING;
             }
         }
-    }
-
-    boolean falling( Rabbit rabbit, World world )
-    {
-        int below = rabbit.y + 1;
-        //noinspection RedundantIfStatement
-        if (
-              world.flatBlockAt( rabbit.x, below )
-           || rabbit.onSlope
-        )
-        {
-            return false;
-        }
-
-        return true;
     }
 
     @Override

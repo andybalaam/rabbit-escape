@@ -11,16 +11,22 @@ import rabbitescape.engine.World;
 
 public class OutOfBounds implements Behaviour
 {
-
-    @Override
-    public State newState( Rabbit rabbit, World world )
+    private boolean checkTriggered( Rabbit rabbit, World world )
     {
-        if (
+        return (
                rabbit.x < 0
             || rabbit.x >= world.size.width
             || rabbit.y < 0
             || rabbit.y >= world.size.height
-        )
+        );
+    }
+
+    @Override
+    public State newState( Rabbit rabbit, World world )
+    {
+        boolean triggered = checkTriggered( rabbit, world );
+
+        if ( triggered )
         {
             return RABBIT_OUT_OF_BOUNDS;
         }
