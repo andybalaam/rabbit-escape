@@ -103,9 +103,9 @@ public class Falling extends Behaviour
         int below = rabbit.y + 1;
         //noinspection RedundantIfStatement
         if (
-            world.flatBlockAt( rabbit.x, below )
+               world.flatBlockAt( rabbit.x, below )
             || rabbit.onSlope
-            )
+        )
         {
             return false;
         }

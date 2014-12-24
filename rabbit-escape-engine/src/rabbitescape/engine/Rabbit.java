@@ -51,7 +51,16 @@ public class Rabbit extends Thing
     {
         for ( Behaviour behaviour : behaviours )
         {
+            behaviour.triggered = false;
+        }
+
+        for ( Behaviour behaviour : behaviours )
+        {
             behaviour.triggered = behaviour.checkTriggered( this, world );
+            if ( behaviour.triggered )
+            {
+                break;
+            }
             // TODO: cancel all others
         }
 
