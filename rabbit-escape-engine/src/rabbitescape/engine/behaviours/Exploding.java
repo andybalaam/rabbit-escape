@@ -1,33 +1,26 @@
-package rabbitescape.engine;
+package rabbitescape.engine.behaviours;
 
-import static rabbitescape.engine.ChangeDescription.State.*;
 import static rabbitescape.engine.Token.Type.*;
+import static rabbitescape.engine.ChangeDescription.State.*;
 
 import java.util.Map;
 
+import rabbitescape.engine.Behaviour;
 import rabbitescape.engine.ChangeDescription.State;
+import rabbitescape.engine.Rabbit;
+import rabbitescape.engine.Token;
+import rabbitescape.engine.World;
 
-public class Blocking implements Behaviour
+public class Exploding implements Behaviour
 {
-    private final Climbing climbing;
     private boolean justPickedUpToken;
 
-    public Blocking( Climbing climbing )
-    {
-        this.climbing = climbing;
-    }
-
-    private void checkForToken( Rabbit rabbit, World world )
+    public void checkForToken( Rabbit rabbit, World world )
     {
         justPickedUpToken = false;
 
-        if ( climbing.abilityActive )
-        {
-            return;
-        }
-
         Token token = world.getTokenAt( rabbit.x, rabbit.y );
-        if ( token != null && token.type == block )
+        if ( token != null && token.type == explode )
         {
             world.changes.removeToken( token );
             justPickedUpToken = true;
@@ -39,18 +32,23 @@ public class Blocking implements Behaviour
     {
         checkForToken( rabbit, world );
 
-        if ( justPickedUpToken || rabbit.state == RABBIT_BLOCKING )
+        if ( justPickedUpToken )
         {
-            return RABBIT_BLOCKING;
+            return RABBIT_EXPLODING;
         }
-
         return null;
     }
 
     @Override
     public boolean behave( World world, Rabbit rabbit, State state )
     {
-        return ( state == RABBIT_BLOCKING );
+        if ( state == RABBIT_EXPLODING )
+        {
+            world.changes.killRabbit( rabbit );
+            return true;
+        }
+
+        return false;
     }
 
     @Override

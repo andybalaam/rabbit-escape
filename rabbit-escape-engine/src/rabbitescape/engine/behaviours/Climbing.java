@@ -1,4 +1,4 @@
-package rabbitescape.engine;
+package rabbitescape.engine.behaviours;
 
 import static rabbitescape.engine.BehaviourTools.*;
 import static rabbitescape.engine.Block.Type.*;
@@ -8,6 +8,7 @@ import static rabbitescape.engine.Token.Type.*;
 
 import java.util.Map;
 
+import rabbitescape.engine.*;
 import rabbitescape.engine.ChangeDescription.State;
 
 public class Climbing implements Behaviour

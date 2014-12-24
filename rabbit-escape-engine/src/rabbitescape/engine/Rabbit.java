@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 import rabbitescape.engine.ChangeDescription.State;
+import rabbitescape.engine.behaviours.*;
 
 public class Rabbit extends Thing
 {

@@ -1,4 +1,4 @@
-package rabbitescape.engine;
+package rabbitescape.engine.behaviours;
 
 import static rabbitescape.engine.BehaviourTools.*;
 import static rabbitescape.engine.ChangeDescription.State.*;
@@ -6,7 +6,10 @@ import static rabbitescape.engine.Block.Type.*;
 
 import java.util.Map;
 
+import rabbitescape.engine.*;
 import rabbitescape.engine.ChangeDescription.State;
+import rabbitescape.engine.behaviours.Climbing;
+import rabbitescape.engine.behaviours.Digging;
 
 public class Falling implements Behaviour
 {
@@ -204,7 +207,8 @@ public class Falling implements Behaviour
     public void saveState( Map<String, String> saveState )
     {
         BehaviourTools.addToStateIfGtZero(
-            saveState, "Falling.heightFallen", heightFallen );
+            saveState, "Falling.heightFallen", heightFallen
+        );
     }
 
     @Override

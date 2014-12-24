@@ -1,11 +1,16 @@
-package rabbitescape.engine;
+package rabbitescape.engine.behaviours;
 
 import static rabbitescape.engine.ChangeDescription.State.*;
 import static rabbitescape.engine.Token.Type.*;
 
 import java.util.Map;
 
+import rabbitescape.engine.Behaviour;
 import rabbitescape.engine.ChangeDescription.State;
+import rabbitescape.engine.Rabbit;
+import rabbitescape.engine.Token;
+import rabbitescape.engine.World;
+import rabbitescape.engine.behaviours.Climbing;
 
 public class Digging implements Behaviour
 {

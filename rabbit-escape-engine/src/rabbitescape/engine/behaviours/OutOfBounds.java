@@ -1,10 +1,13 @@
-package rabbitescape.engine;
+package rabbitescape.engine.behaviours;
 
 import static rabbitescape.engine.ChangeDescription.State.*;
 
 import java.util.Map;
 
+import rabbitescape.engine.Behaviour;
 import rabbitescape.engine.ChangeDescription.State;
+import rabbitescape.engine.Rabbit;
+import rabbitescape.engine.World;
 
 public class OutOfBounds implements Behaviour
 {

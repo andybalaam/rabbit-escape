@@ -13,8 +13,9 @@ public class BehaviourTools
         return rabbit.dir == RIGHT ? rightState : leftState;
     }
 
-    static void addToStateIfNotDefault(
-        Map<String, String> saveState, String key, String value, String def )
+    public static void addToStateIfNotDefault(
+        Map<String, String> saveState, String key, String value, String def
+    )
     {
         if ( !def.equals( value  ) )
         {
@@ -22,8 +23,9 @@ public class BehaviourTools
         }
     }
 
-    static void addToStateIfGtZero(
-        Map<String, String> saveState, String key, int value )
+    public static void addToStateIfGtZero(
+        Map<String, String> saveState, String key, int value
+    )
     {
         if ( value > 0 )
         {

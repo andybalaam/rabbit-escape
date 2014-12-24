@@ -1,9 +1,10 @@
-package rabbitescape.engine;
+package rabbitescape.engine.behaviours;
 
 import static rabbitescape.engine.ChangeDescription.State.*;
 
 import java.util.Map;
 
+import rabbitescape.engine.*;
 import rabbitescape.engine.ChangeDescription.State;
 
 public class Exiting implements Behaviour
