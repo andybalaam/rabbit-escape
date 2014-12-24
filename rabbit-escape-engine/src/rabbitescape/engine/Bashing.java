@@ -13,21 +13,21 @@ public class Bashing implements Behaviour
 {
     private int stepsOfBashing;
     private final Climbing climbing;
+    private boolean justPickedUpToken;
 
     public Bashing( Climbing climbing )
     {
         this.climbing = climbing;
     }
 
-    @Override
-    public State newState( Rabbit rabbit, World world )
+    private void checkForToken( Rabbit rabbit, World world )
     {
         if ( climbing.abilityActive )
         {
-            return null;
+            return;
         }
 
-        boolean justPickedUpToken = false;
+        justPickedUpToken = false;
 
         Token token = world.getTokenAt( rabbit.x, rabbit.y );
         if ( token != null && token.type == bash )
@@ -35,6 +35,12 @@ public class Bashing implements Behaviour
             world.changes.removeToken( token );
             justPickedUpToken = true;
         }
+    }
+
+    @Override
+    public State newState( Rabbit rabbit, World world )
+    {
+        checkForToken( rabbit, world );
 
         if ( justPickedUpToken || stepsOfBashing > 0 )
         {

@@ -10,28 +10,36 @@ import rabbitescape.engine.ChangeDescription.State;
 public class Blocking implements Behaviour
 {
     private final Climbing climbing;
+    private boolean justPickedUpToken;
 
     public Blocking( Climbing climbing )
     {
         this.climbing = climbing;
     }
 
-    @Override
-    public State newState( Rabbit rabbit, World world )
+    private void checkForToken( Rabbit rabbit, World world )
     {
+        justPickedUpToken = false;
+
         if ( climbing.abilityActive )
         {
-            return null;
+            return;
         }
 
         Token token = world.getTokenAt( rabbit.x, rabbit.y );
         if ( token != null && token.type == block )
         {
             world.changes.removeToken( token );
-            return RABBIT_BLOCKING;
+            justPickedUpToken = true;
         }
+    }
 
-        if( rabbit.state == RABBIT_BLOCKING )
+    @Override
+    public State newState( Rabbit rabbit, World world )
+    {
+        checkForToken( rabbit, world );
+
+        if ( justPickedUpToken || rabbit.state == RABBIT_BLOCKING )
         {
             return RABBIT_BLOCKING;
         }
@@ -42,14 +50,7 @@ public class Blocking implements Behaviour
     @Override
     public boolean behave( World world, Rabbit rabbit, State state )
     {
-        if ( state == RABBIT_BLOCKING )
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
+        return ( state == RABBIT_BLOCKING );
     }
 
     @Override

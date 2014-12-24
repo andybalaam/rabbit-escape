@@ -18,12 +18,7 @@ public class Climbing implements Behaviour
     @Override
     public State newState( Rabbit rabbit, World world )
     {
-        Token token = world.getTokenAt( rabbit.x, rabbit.y );
-        if ( !hasAbility && token != null && token.type == climb )
-        {
-            world.changes.removeToken( token );
-            hasAbility = true;
-        }
+        checkForToken( rabbit, world );
 
         if ( !hasAbility )
         {
@@ -43,6 +38,16 @@ public class Climbing implements Behaviour
                 return newStateCont2( rabbit, world );
             default:
                 return newStateNotClimbing( rabbit, world );
+        }
+    }
+
+    private void checkForToken( Rabbit rabbit, World world )
+    {
+        Token token = world.getTokenAt( rabbit.x, rabbit.y );
+        if ( !hasAbility && token != null && token.type == climb )
+        {
+            world.changes.removeToken( token );
+            hasAbility = true;
         }
     }
 

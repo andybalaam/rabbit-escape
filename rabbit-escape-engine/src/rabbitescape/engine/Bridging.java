@@ -29,12 +29,11 @@ public class Bridging implements Behaviour
         this.climbing = climbing;
     }
 
-    @Override
-    public State newState( Rabbit rabbit, World world )
+    public void checkForToken( Rabbit rabbit, World world )
     {
         if ( climbing.abilityActive )
         {
-            return null;
+            return;
         }
 
         nextStep();
@@ -47,9 +46,15 @@ public class Bridging implements Behaviour
 
             if ( possibleState != null )
             {
-                checkForToken( rabbit, world );
+                doCheckForToken( rabbit, world );
             }
         }
+    }
+
+    @Override
+    public State newState( Rabbit rabbit, World world )
+    {
+        checkForToken( rabbit, world );
 
         State ret = bridgingState(
             rabbit, world, bigSteps, smallSteps, bridgeType );
@@ -355,7 +360,7 @@ public class Bridging implements Behaviour
         return ret;
     }
 
-    private void checkForToken( Rabbit rabbit, World world )
+    private void doCheckForToken( Rabbit rabbit, World world )
     {
         Token token = world.getTokenAt( rabbit.x, rabbit.y );
         if ( token != null && token.type == bridge )

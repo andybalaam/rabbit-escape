@@ -9,13 +9,27 @@ import rabbitescape.engine.ChangeDescription.State;
 
 public class Exploding implements Behaviour
 {
-    @Override
-    public State newState( Rabbit rabbit, World world )
+    private boolean justPickedUpToken;
+
+    public void checkForToken( Rabbit rabbit, World world )
     {
+        justPickedUpToken = false;
+
         Token token = world.getTokenAt( rabbit.x, rabbit.y );
         if ( token != null && token.type == explode )
         {
             world.changes.removeToken( token );
+            justPickedUpToken = true;
+        }
+    }
+
+    @Override
+    public State newState( Rabbit rabbit, World world )
+    {
+        checkForToken( rabbit, world );
+
+        if ( justPickedUpToken )
+        {
             return RABBIT_EXPLODING;
         }
         return null;

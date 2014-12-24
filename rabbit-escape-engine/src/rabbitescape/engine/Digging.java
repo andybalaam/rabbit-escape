@@ -11,21 +11,21 @@ public class Digging implements Behaviour
 {
     private int stepsOfDigging;
     private final Climbing climbing;
+    private boolean justPickedUpToken;
 
     public Digging( Climbing climbing )
     {
         this.climbing = climbing;
     }
 
-    @Override
-    public State newState( Rabbit rabbit, World world )
+    public void checkForToken( Rabbit rabbit, World world )
     {
+        justPickedUpToken = false;
+
         if ( climbing.abilityActive )
         {
-            return null;
+            return;
         }
-
-        boolean justPickedUpToken = false;
 
         Token token = world.getTokenAt( rabbit.x, rabbit.y );
         if ( token != null && token.type == dig )
@@ -33,6 +33,12 @@ public class Digging implements Behaviour
             world.changes.removeToken( token );
             justPickedUpToken = true;
         }
+    }
+
+    @Override
+    public State newState( Rabbit rabbit, World world )
+    {
+        checkForToken( rabbit, world );
 
         if ( justPickedUpToken || stepsOfDigging > 0 )
         {
