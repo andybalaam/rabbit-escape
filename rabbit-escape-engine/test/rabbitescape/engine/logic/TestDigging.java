@@ -40,9 +40,9 @@ public class TestDigging
         assertThat(
             renderWorld( world, true, false ),
             equalTo(
-                " r ",
-                "#f#",
-                " f ",
+                "   ",
+                "#D#",
+                "   ",
                 "   ",
                 "###"
             )
@@ -54,8 +54,8 @@ public class TestDigging
             renderWorld( world, true, false ),
             equalTo(
                 "   ",
-                "# #",
-                " r ",
+                "#r#",
+                " f ",
                 " f ",
                 "###"
             )
@@ -108,8 +108,8 @@ public class TestDigging
         assertThat(
             renderWorld( world, true, false ),
             equalTo(
-                " r ",
-                "#f#",
+                "   ",
+                "#D#",
                 "###",
                 "###",
                 "   ",
@@ -139,8 +139,8 @@ public class TestDigging
             renderWorld( world, true, false ),
             equalTo(
                 "   ",
-                "#r#",
-                "#f#",
+                "# #",
+                "#D#",
                 "###",
                 "   ",
                 "   ",
@@ -170,24 +170,24 @@ public class TestDigging
             equalTo(
                 "   ",
                 "# #",
+                "# #",
+                "#D#",
+                "   ",
+                "   ",
+                "###"
+            )
+        );
+
+        world.step();
+
+        assertThat(
+            renderWorld( world, true, false ),
+            equalTo(
+                "   ",
+                "# #",
+                "# #",
                 "#r#",
-                "#f#",
                 " f ",
-                "   ",
-                "###"
-            )
-        );
-
-        world.step();
-
-        assertThat(
-            renderWorld( world, true, false ),
-            equalTo(
-                "   ",
-                "# #",
-                "# #",
-                "# #",
-                " r ",
                 " f ",
                 "###"
             )
@@ -236,8 +236,20 @@ public class TestDigging
         assertThat(
             renderWorld( world, true, false ),
             equalTo(
-                " r ",
-                "#f#",
+                "   ",
+                "#D#",
+                "   ",
+                "###"
+            )
+        );
+
+        world.step();
+
+        assertThat(
+            renderWorld( world, true, false ),
+            equalTo(
+                "   ",
+                "#r#",
                 " f ",
                 "###"
             )
@@ -319,13 +331,25 @@ public class TestDigging
             equalTo(
                 "   ",
                 "# #",
+                "# #",
+                "#D#",
+                "   ",
+                "###"
+            )
+        );
+        world.step();
+
+        assertThat(
+            renderWorld( world, true, false ),
+            equalTo(
+                "   ",
+                "# #",
+                "# #",
                 "#r#",
-                "#f#",
                 " f ",
                 "###"
             )
         );
-
         world.step();
 
         assertThat(
@@ -412,8 +436,8 @@ public class TestDigging
             "###",
 
             "   " + "\n" +
-            " r " + "\n" +
-            " f " + "\n" +
+            "   " + "\n" +
+            " D " + "\n" +
             " # " + "\n" +
             "   " + "\n" +
             "###",
@@ -427,8 +451,15 @@ public class TestDigging
 
             "   " + "\n" +
             "   " + "\n" +
+            "   " + "\n" +
+            " D " + "\n" +
+            "   " + "\n" +
+            "###",
+
+            "   " + "\n" +
+            "   " + "\n" +
+            "   " + "\n" +
             " r " + "\n" +
-            " f " + "\n" +
             " f " + "\n" +
             "###"
         );
@@ -461,8 +492,8 @@ public class TestDigging
             "###",
 
             "   " + "\n" +
-            " r " + "\n" +
-            " f " + "\n" +
+            "   " + "\n" +
+            " D " + "\n" +
             " # " + "\n" +
             "   " + "\n" +
             "###",
@@ -476,8 +507,15 @@ public class TestDigging
 
             "   " + "\n" +
             "   " + "\n" +
+            "   " + "\n" +
+            " D " + "\n" +
+            "   " + "\n" +
+            "###",
+
+            "   " + "\n" +
+            "   " + "\n" +
+            "   " + "\n" +
             " r " + "\n" +
-            " f " + "\n" +
             " f " + "\n" +
             "###"
         );
@@ -510,31 +548,10 @@ public class TestDigging
             "###",
 
             "   " + "\n" +
-            "   " + "\n" +
-            " D " + "\n" +
+            "  '" + "\n" +
+            " r " + "\n" + // Starts walking
             " ( " + "\n" +
             "   " + "\n" +
-            "###",
-
-            "   " + "\n" +
-            "   " + "\n" +
-            " r " + "\n" +
-            " h " + "\n" +
-            "   " + "\n" +
-            "###",
-
-            "   " + "\n" +
-            "   " + "\n" +
-            "   " + "\n" +
-            " D " + "\n" +
-            "   " + "\n" +
-            "###",
-
-            "   " + "\n" +
-            "   " + "\n" +
-            "   " + "\n" +
-            " r " + "\n" +
-            " f " + "\n" +
             "###"
         );
     }

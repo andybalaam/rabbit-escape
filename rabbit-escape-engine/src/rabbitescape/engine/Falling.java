@@ -69,7 +69,6 @@ public class Falling implements Behaviour
             case RABBIT_FALLING_ONTO_RISE_RIGHT:
             case RABBIT_FALLING_ONTO_RISE_LEFT:
             {
-                digging.stopDigging();
                 heightFallen += 2;
                 rabbit.y = rabbit.y + 2;
                 return true;
@@ -96,7 +95,7 @@ public class Falling implements Behaviour
     @Override
     public State newState( Rabbit rabbit, World world )
     {
-        if ( climbing.abilityActive )
+        if ( climbing.abilityActive || rabbit.state == RABBIT_DIGGING )
         {
             return null;
         }

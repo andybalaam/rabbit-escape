@@ -639,7 +639,7 @@ public class TestTextWorldManip
             "#         #",
             "# * * * * #",
             "###########",
-            ":*=r{Bashing.stepsOfBashing:1,Digging.stepsOfDigging:2}Q{Entrance.timeToNextRabbit:3}",
+            ":*=r{Bashing.stepsOfBashing:1}Q{Entrance.timeToNextRabbit:3}",
             ":*=j{Bridging.bigSteps:1,Bridging.bridgeType:DOWN_UP,Bridging.smallSteps:1,onSlope:true}",
             ":*=j{Climbing.hasAbility:true}",
             ":*=j{Climbing.abilityActive:true,Climbing.hasAbility:true}",

@@ -9,7 +9,6 @@ import rabbitescape.engine.ChangeDescription.State;
 
 public class Digging implements Behaviour
 {
-    private int stepsOfDigging;
     private final Climbing climbing;
     private boolean justPickedUpToken;
 
@@ -40,24 +39,30 @@ public class Digging implements Behaviour
     {
         checkForToken( rabbit, world );
 
-        if ( justPickedUpToken || stepsOfDigging > 0 )
+        if ( rabbit.state == RABBIT_DIGGING )
+        {
+            return RABBIT_DIGGING_2;
+        }
+
+        if (
+               justPickedUpToken
+            || rabbit.state == RABBIT_DIGGING_2
+            || rabbit.state == RABBIT_DIGGING_ON_SLOPE
+        )
         {
             if (
                    rabbit.onSlope
                 && world.getBlockAt( rabbit.x, rabbit.y ) != null
             )
             {
-                stepsOfDigging = 1;
                 return RABBIT_DIGGING_ON_SLOPE;
             }
             else if ( world.getBlockAt( rabbit.x, rabbit.y + 1 ) != null )
             {
-                stepsOfDigging = 2;
                 return RABBIT_DIGGING;
             }
         }
 
-        --stepsOfDigging;
         return null;
     }
 
@@ -69,12 +74,17 @@ public class Digging implements Behaviour
             case RABBIT_DIGGING:
             {
                 world.changes.removeBlockAt( rabbit.x, rabbit.y + 1 );
+                ++rabbit.y;
                 return true;
             }
             case RABBIT_DIGGING_ON_SLOPE:
             {
                 world.changes.removeBlockAt( rabbit.x, rabbit.y );
                 rabbit.onSlope = false;
+                return true;
+            }
+            case RABBIT_DIGGING_2:
+            {
                 return true;
             }
             default:
@@ -84,27 +94,13 @@ public class Digging implements Behaviour
         }
     }
 
-    public void stopDigging()
-    {
-        stepsOfDigging = 0;
-    }
-
     @Override
     public void saveState( Map<String, String> saveState )
     {
-        BehaviourTools.addToStateIfGtZero(
-            saveState, "Digging.stepsOfDigging", stepsOfDigging );
     }
 
     @Override
     public void restoreFromState( Map<String, String> saveState )
     {
-        stepsOfDigging = BehaviourTools.restoreFromState(
-            saveState, "Digging.stepsOfDigging", stepsOfDigging );
-
-        if ( stepsOfDigging > 0 )
-        {
-            ++stepsOfDigging;
-        }
     }
 }
