@@ -12,6 +12,11 @@ import rabbitescape.engine.World;
 public class OutOfBounds extends Behaviour
 {
     @Override
+    public void cancel()
+    {
+    }
+
+    @Override
     public boolean checkTriggered( Rabbit rabbit, World world )
     {
         return (

@@ -21,6 +21,12 @@ public class Bashing extends Behaviour
     }
 
     @Override
+    public void cancel()
+    {
+        stepsOfBashing = 0;
+    }
+
+    @Override
     public boolean checkTriggered( Rabbit rabbit, World world )
     {
         if ( climbing.abilityActive )

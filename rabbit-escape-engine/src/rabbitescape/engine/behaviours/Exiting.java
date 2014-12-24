@@ -10,6 +10,11 @@ import rabbitescape.engine.ChangeDescription.State;
 public class Exiting extends Behaviour
 {
     @Override
+    public void cancel()
+    {
+    }
+
+    @Override
     public boolean checkTriggered( Rabbit rabbit, World world )
     {
         for ( Thing thing : world.things )

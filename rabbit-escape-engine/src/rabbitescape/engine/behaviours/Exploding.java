@@ -14,6 +14,11 @@ import rabbitescape.engine.World;
 public class Exploding extends Behaviour
 {
     @Override
+    public void cancel()
+    {
+    }
+
+    @Override
     public boolean checkTriggered( Rabbit rabbit, World world )
     {
         Token token = world.getTokenAt( rabbit.x, rabbit.y );

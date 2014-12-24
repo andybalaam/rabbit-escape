@@ -30,6 +30,13 @@ public class Bridging extends Behaviour
         this.climbing = climbing;
     }
 
+    @Override
+    public void cancel()
+    {
+        bigSteps = 0;
+        smallSteps = 0;
+    }
+
     public boolean checkTriggered( Rabbit rabbit, World world )
     {
         if ( climbing.abilityActive )

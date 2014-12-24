@@ -15,16 +15,16 @@ public class Falling extends Behaviour
 
     private int heightFallen = 0;
 
-    private final Digging digging;
     private final Climbing climbing;
 
-    /**
-     * @param digging a Digging to cancel if we fall >1 block
-     */
     public Falling( Digging digging, Climbing climbing )
     {
-        this.digging = digging;
         this.climbing = climbing;
+    }
+
+    @Override
+    public void cancel()
+    {
     }
 
     @Override

@@ -13,6 +13,7 @@ public abstract class Behaviour
 
     public abstract boolean behave( World world, Rabbit rabbit, State state );
     public abstract boolean checkTriggered( Rabbit rabbit, World world );
+    public abstract void cancel();
 
     public void saveState( Map<String, String> saveState )
     {

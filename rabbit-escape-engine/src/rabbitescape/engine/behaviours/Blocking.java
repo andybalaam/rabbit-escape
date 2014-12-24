@@ -18,6 +18,11 @@ public class Blocking extends Behaviour
     }
 
     @Override
+    public void cancel()
+    {
+    }
+
+    @Override
     public boolean checkTriggered( Rabbit rabbit, World world )
     {
         if ( climbing.abilityActive )

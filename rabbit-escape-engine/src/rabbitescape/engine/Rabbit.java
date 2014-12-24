@@ -59,9 +59,9 @@ public class Rabbit extends Thing
             behaviour.triggered = behaviour.checkTriggered( this, world );
             if ( behaviour.triggered )
             {
+                cancelAllBehavioursExcept( behaviour );
                 break;
             }
-            // TODO: cancel all others
         }
 
         boolean done = false;
@@ -74,6 +74,17 @@ public class Rabbit extends Thing
             {
                 state = thisState;
                 done = true;
+            }
+        }
+    }
+
+    private void cancelAllBehavioursExcept( Behaviour exception )
+    {
+        for ( Behaviour behaviour : behaviours )
+        {
+            if ( behaviour != exception )
+            {
+                behaviour.cancel();
             }
         }
     }

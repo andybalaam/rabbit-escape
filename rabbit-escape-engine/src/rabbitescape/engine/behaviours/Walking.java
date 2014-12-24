@@ -11,6 +11,11 @@ import rabbitescape.engine.ChangeDescription.State;
 
 public class Walking extends Behaviour
 {
+    @Override
+    public void cancel()
+    {
+    }
+
     private static class StateCalc
     {
         private final Rabbit rabbit;

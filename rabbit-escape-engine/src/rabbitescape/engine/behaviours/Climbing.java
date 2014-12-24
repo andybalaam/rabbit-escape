@@ -17,6 +17,12 @@ public class Climbing extends Behaviour
     public boolean abilityActive = false;
 
     @Override
+    public void cancel()
+    {
+        abilityActive = false;
+    }
+
+    @Override
     public boolean checkTriggered( Rabbit rabbit, World world )
     {
         Token token = world.getTokenAt( rabbit.x, rabbit.y );

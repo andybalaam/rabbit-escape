@@ -21,6 +21,11 @@ public class Digging extends Behaviour
     }
 
     @Override
+    public void cancel()
+    {
+    }
+
+    @Override
     public boolean checkTriggered( Rabbit rabbit, World world )
     {
         if ( climbing.abilityActive )
