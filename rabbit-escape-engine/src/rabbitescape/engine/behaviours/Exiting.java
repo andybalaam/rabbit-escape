@@ -7,16 +7,17 @@ import java.util.Map;
 import rabbitescape.engine.*;
 import rabbitescape.engine.ChangeDescription.State;
 
-public class Exiting implements Behaviour
+public class Exiting extends Behaviour
 {
+    @Override
     public boolean checkTriggered( Rabbit rabbit, World world )
     {
         for ( Thing thing : world.things )
         {
             if (
-                ( thing instanceof Exit )
+                   ( thing instanceof Exit )
                 && ( thing.x == rabbit.x && thing.y == rabbit.y )
-                )
+            )
             {
                 return true;
             }
@@ -25,10 +26,8 @@ public class Exiting implements Behaviour
     }
 
     @Override
-    public State newState( Rabbit rabbit, World world )
+    public State newState( Rabbit rabbit, World world, boolean triggered )
     {
-        boolean triggered = checkTriggered( rabbit, world );
-
         if ( triggered )
         {
             return RABBIT_ENTERING_EXIT;
@@ -48,15 +47,5 @@ public class Exiting implements Behaviour
         {
             return false;
         }
-    }
-
-    @Override
-    public void saveState( Map<String, String> saveState )
-    {
-    }
-
-    @Override
-    public void restoreFromState( Map<String, String> saveState )
-    {
     }
 }

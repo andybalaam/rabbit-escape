@@ -8,7 +8,7 @@ import java.util.Map;
 import rabbitescape.engine.*;
 import rabbitescape.engine.ChangeDescription.State;
 
-public class Blocking implements Behaviour
+public class Blocking extends Behaviour
 {
     private final Climbing climbing;
 
@@ -17,7 +17,8 @@ public class Blocking implements Behaviour
         this.climbing = climbing;
     }
 
-    private boolean checkTriggered( Rabbit rabbit, World world )
+    @Override
+    public boolean checkTriggered( Rabbit rabbit, World world )
     {
         if ( climbing.abilityActive )
         {
@@ -30,14 +31,13 @@ public class Blocking implements Behaviour
             world.changes.removeToken( token );
             return true;
         }
+
         return false;
     }
 
     @Override
-    public State newState( Rabbit rabbit, World world )
+    public State newState( Rabbit rabbit, World world, boolean triggered )
     {
-        boolean triggered = checkTriggered( rabbit, world );
-
         if ( triggered || rabbit.state == RABBIT_BLOCKING )
         {
             return RABBIT_BLOCKING;
@@ -50,15 +50,5 @@ public class Blocking implements Behaviour
     public boolean behave( World world, Rabbit rabbit, State state )
     {
         return ( state == RABBIT_BLOCKING );
-    }
-
-    @Override
-    public void saveState( Map<String, String> saveState )
-    {
-    }
-
-    @Override
-    public void restoreFromState( Map<String, String> saveState )
-    {
     }
 }

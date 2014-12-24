@@ -10,7 +10,7 @@ import java.util.Map;
 import rabbitescape.engine.*;
 import rabbitescape.engine.ChangeDescription.State;
 
-public class Bashing implements Behaviour
+public class Bashing extends Behaviour
 {
     private int stepsOfBashing;
     private final Climbing climbing;
@@ -20,7 +20,8 @@ public class Bashing implements Behaviour
         this.climbing = climbing;
     }
 
-    private boolean checkTriggered( Rabbit rabbit, World world )
+    @Override
+    public boolean checkTriggered( Rabbit rabbit, World world )
     {
         if ( climbing.abilityActive )
         {
@@ -38,10 +39,8 @@ public class Bashing implements Behaviour
     }
 
     @Override
-    public State newState( Rabbit rabbit, World world )
+    public State newState( Rabbit rabbit, World world, boolean triggered )
     {
-        boolean triggered = checkTriggered( rabbit, world );
-
         if ( triggered || stepsOfBashing > 0 )
         {
             Block hereBlock = world.getBlockAt( rabbit.x, rabbit.y );

@@ -9,7 +9,7 @@ import java.util.Map;
 import rabbitescape.engine.*;
 import rabbitescape.engine.ChangeDescription.State;
 
-public class Walking implements Behaviour
+public class Walking extends Behaviour
 {
     private static class StateCalc
     {
@@ -231,7 +231,13 @@ public class Walking implements Behaviour
     }
 
     @Override
-    public State newState( Rabbit rabbit, World world )
+    public boolean checkTriggered( Rabbit rabbit, World world )
+    {
+        return false; // To avoid cancelling other behaviours, return false
+    }
+
+    @Override
+    public State newState( Rabbit rabbit, World world, boolean triggered )
     {
         return new StateCalc( rabbit, world ).newState();
     }
@@ -380,15 +386,5 @@ public class Walking implements Behaviour
                 || block.type == bridge_up_right
             )
         );
-    }
-
-    @Override
-    public void saveState( Map<String, String> saveState )
-    {
-    }
-
-    @Override
-    public void restoreFromState( Map<String, String> saveState )
-    {
     }
 }

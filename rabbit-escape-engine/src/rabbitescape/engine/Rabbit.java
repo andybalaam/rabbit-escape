@@ -49,10 +49,18 @@ public class Rabbit extends Thing
     @Override
     public void calcNewState( World world )
     {
+        for ( Behaviour behaviour : behaviours )
+        {
+            behaviour.triggered = behaviour.checkTriggered( this, world );
+            // TODO: cancel all others
+        }
+
         boolean done = false;
         for ( Behaviour behaviour : behaviours )
         {
-            State thisState = behaviour.newState( this, world );
+            State thisState = behaviour.newState(
+                this, world, behaviour.triggered );
+
             if ( thisState != null && !done )
             {
                 state = thisState;

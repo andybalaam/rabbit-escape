@@ -11,8 +11,9 @@ import rabbitescape.engine.Rabbit;
 import rabbitescape.engine.Token;
 import rabbitescape.engine.World;
 
-public class Exploding implements Behaviour
+public class Exploding extends Behaviour
 {
+    @Override
     public boolean checkTriggered( Rabbit rabbit, World world )
     {
         Token token = world.getTokenAt( rabbit.x, rabbit.y );
@@ -25,10 +26,8 @@ public class Exploding implements Behaviour
     }
 
     @Override
-    public State newState( Rabbit rabbit, World world )
+    public State newState( Rabbit rabbit, World world, boolean triggered )
     {
-        boolean triggered = checkTriggered( rabbit, world );
-
         if ( triggered )
         {
             return RABBIT_EXPLODING;
@@ -46,15 +45,5 @@ public class Exploding implements Behaviour
         }
 
         return false;
-    }
-
-    @Override
-    public void saveState( Map<String, String> saveState )
-    {
-    }
-
-    @Override
-    public void restoreFromState( Map<String, String> saveState )
-    {
     }
 }

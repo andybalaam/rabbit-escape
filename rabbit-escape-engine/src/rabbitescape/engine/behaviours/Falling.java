@@ -9,7 +9,7 @@ import java.util.Map;
 import rabbitescape.engine.*;
 import rabbitescape.engine.ChangeDescription.State;
 
-public class Falling implements Behaviour
+public class Falling extends Behaviour
 {
     private static final int fatalHeight = 4;
 
@@ -20,7 +20,6 @@ public class Falling implements Behaviour
 
     /**
      * @param digging a Digging to cancel if we fall >1 block
-     * @param climbing 
      */
     public Falling( Digging digging, Climbing climbing )
     {
@@ -93,7 +92,8 @@ public class Falling implements Behaviour
         }
     }
 
-    boolean checkTriggered( Rabbit rabbit, World world )
+    @Override
+    public boolean checkTriggered( Rabbit rabbit, World world )
     {
         if ( climbing.abilityActive || rabbit.state == RABBIT_DIGGING )
         {
@@ -114,10 +114,8 @@ public class Falling implements Behaviour
     }
 
     @Override
-    public State newState( Rabbit rabbit, World world )
+    public State newState( Rabbit rabbit, World world, boolean triggered )
     {
-        boolean triggered = checkTriggered( rabbit, world );
-
         if ( !triggered )
         {
             if ( heightFallen > fatalHeight )

@@ -10,7 +10,7 @@ import rabbitescape.engine.*;
 import rabbitescape.engine.Block.Type;
 import rabbitescape.engine.ChangeDescription.State;
 
-public class Bridging implements Behaviour
+public class Bridging extends Behaviour
 {
     enum BridgeType
     {
@@ -53,18 +53,14 @@ public class Bridging implements Behaviour
                     world.changes.removeToken( token );
                     return true;
                 }
-                return false;
             }
         }
-
         return false;
     }
 
     @Override
-    public State newState( Rabbit rabbit, World world )
+    public State newState( Rabbit rabbit, World world, boolean triggered )
     {
-        boolean triggered = checkTriggered( rabbit, world );
-
         if ( triggered )
         {
             smallSteps = 3;
@@ -564,12 +560,6 @@ public class Bridging implements Behaviour
                 return false;
             }
         }
-    }
-
-    public void stopBridging()
-    {
-        bigSteps = 0;
-        smallSteps = 0;
     }
 
     @Override

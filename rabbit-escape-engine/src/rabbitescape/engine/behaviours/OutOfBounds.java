@@ -9,9 +9,10 @@ import rabbitescape.engine.ChangeDescription.State;
 import rabbitescape.engine.Rabbit;
 import rabbitescape.engine.World;
 
-public class OutOfBounds implements Behaviour
+public class OutOfBounds extends Behaviour
 {
-    private boolean checkTriggered( Rabbit rabbit, World world )
+    @Override
+    public boolean checkTriggered( Rabbit rabbit, World world )
     {
         return (
                rabbit.x < 0
@@ -22,10 +23,8 @@ public class OutOfBounds implements Behaviour
     }
 
     @Override
-    public State newState( Rabbit rabbit, World world )
+    public State newState( Rabbit rabbit, World world, boolean triggered )
     {
-        boolean triggered = checkTriggered( rabbit, world );
-
         if ( triggered )
         {
             return RABBIT_OUT_OF_BOUNDS;
@@ -50,15 +49,4 @@ public class OutOfBounds implements Behaviour
             }
         }
     }
-
-    @Override
-    public void saveState( Map<String, String> saveState )
-    {
-    }
-
-    @Override
-    public void restoreFromState( Map<String, String> saveState )
-    {
-    }
-
 }

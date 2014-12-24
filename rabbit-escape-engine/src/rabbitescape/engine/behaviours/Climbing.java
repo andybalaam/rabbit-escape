@@ -11,16 +11,26 @@ import java.util.Map;
 import rabbitescape.engine.*;
 import rabbitescape.engine.ChangeDescription.State;
 
-public class Climbing implements Behaviour
+public class Climbing extends Behaviour
 {
     boolean hasAbility = false;
     public boolean abilityActive = false;
 
     @Override
-    public State newState( Rabbit rabbit, World world )
+    public boolean checkTriggered( Rabbit rabbit, World world )
     {
-        boolean triggered = checkTriggered( rabbit, world );
+        Token token = world.getTokenAt( rabbit.x, rabbit.y );
+        if ( !hasAbility && token != null && token.type == climb )
+        {
+            world.changes.removeToken( token );
+            return true;
+        }
+        return false;
+    }
 
+    @Override
+    public State newState( Rabbit rabbit, World world, boolean triggered )
+    {
         if ( triggered )
         {
             hasAbility = true;
@@ -45,17 +55,6 @@ public class Climbing implements Behaviour
             default:
                 return newStateNotClimbing( rabbit, world );
         }
-    }
-
-    private boolean checkTriggered( Rabbit rabbit, World world )
-    {
-        Token token = world.getTokenAt( rabbit.x, rabbit.y );
-        if ( !hasAbility && token != null && token.type == climb )
-        {
-            world.changes.removeToken( token );
-            return true;
-        }
-        return false;
     }
 
     private State newStateStart( Rabbit rabbit, World world )

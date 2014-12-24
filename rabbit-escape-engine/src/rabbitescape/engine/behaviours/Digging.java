@@ -11,7 +11,7 @@ import rabbitescape.engine.Rabbit;
 import rabbitescape.engine.Token;
 import rabbitescape.engine.World;
 
-public class Digging implements Behaviour
+public class Digging extends Behaviour
 {
     private final Climbing climbing;
 
@@ -20,6 +20,7 @@ public class Digging implements Behaviour
         this.climbing = climbing;
     }
 
+    @Override
     public boolean checkTriggered( Rabbit rabbit, World world )
     {
         if ( climbing.abilityActive )
@@ -33,14 +34,13 @@ public class Digging implements Behaviour
             world.changes.removeToken( token );
             return true;
         }
+
         return false;
     }
 
     @Override
-    public State newState( Rabbit rabbit, World world )
+    public State newState( Rabbit rabbit, World world, boolean triggered )
     {
-        boolean triggered = checkTriggered( rabbit, world );
-
         if ( rabbit.state == RABBIT_DIGGING )
         {
             return RABBIT_DIGGING_2;
@@ -94,15 +94,5 @@ public class Digging implements Behaviour
                 return false;
             }
         }
-    }
-
-    @Override
-    public void saveState( Map<String, String> saveState )
-    {
-    }
-
-    @Override
-    public void restoreFromState( Map<String, String> saveState )
-    {
     }
 }
