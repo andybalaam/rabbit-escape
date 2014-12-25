@@ -17,7 +17,7 @@ public class Falling extends Behaviour
 
     private final Climbing climbing;
 
-    public Falling( Digging digging, Climbing climbing )
+    public Falling( Climbing climbing )
     {
         this.climbing = climbing;
     }
