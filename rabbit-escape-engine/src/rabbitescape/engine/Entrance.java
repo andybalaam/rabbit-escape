@@ -49,15 +49,17 @@ public class Entrance extends Thing
     public Map<String, String> saveState()
     {
         Map<String, String> ret = new HashMap<String, String>();
-        BehaviourTools.addToStateIfGtZero(
-            ret, "Entrance.timeToNextRabbit", timeToNextRabbit );
+        BehaviourState.addToStateIfGtZero(
+            ret, "Entrance.timeToNextRabbit", timeToNextRabbit
+        );
         return ret;
     }
 
     @Override
     public void restoreFromState( Map<String, String> state )
     {
-        timeToNextRabbit = BehaviourTools.restoreFromState(
-            state, "Entrance.timeToNextRabbit", timeToNextRabbit );
+        timeToNextRabbit = BehaviourState.restoreFromState(
+            state, "Entrance.timeToNextRabbit", timeToNextRabbit
+        );
     }
 }

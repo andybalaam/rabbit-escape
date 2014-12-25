@@ -133,15 +133,17 @@ public class Bashing extends Behaviour
     @Override
     public void saveState( Map<String, String> saveState )
     {
-        BehaviourTools.addToStateIfGtZero(
-            saveState, "Bashing.stepsOfBashing", stepsOfBashing );
+        BehaviourState.addToStateIfGtZero(
+            saveState, "Bashing.stepsOfBashing", stepsOfBashing
+        );
     }
 
     @Override
     public void restoreFromState( Map<String, String> saveState )
     {
-        stepsOfBashing = BehaviourTools.restoreFromState(
-            saveState, "Bashing.stepsOfBashing", stepsOfBashing );
+        stepsOfBashing = BehaviourState.restoreFromState(
+            saveState, "Bashing.stepsOfBashing", stepsOfBashing
+        );
 
         if ( stepsOfBashing > 0 )
         {

@@ -107,7 +107,7 @@ public class Rabbit extends Thing
     {
         Map<String, String> ret = new HashMap<String, String>();
 
-        BehaviourTools.addToStateIfTrue( ret, "onSlope", onSlope );
+        BehaviourState.addToStateIfTrue( ret, "onSlope", onSlope );
 
         for ( Behaviour behaviour : behaviours )
         {
@@ -120,8 +120,9 @@ public class Rabbit extends Thing
     @Override
     public void restoreFromState( Map<String, String> state )
     {
-        onSlope = BehaviourTools.restoreFromState(
-            state, "onSlope", false );
+        onSlope = BehaviourState.restoreFromState(
+            state, "onSlope", false
+        );
 
         for ( Behaviour behaviour : behaviours )
         {

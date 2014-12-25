@@ -204,7 +204,7 @@ public class Falling extends Behaviour
     @Override
     public void saveState( Map<String, String> saveState )
     {
-        BehaviourTools.addToStateIfGtZero(
+        BehaviourState.addToStateIfGtZero(
             saveState, "Falling.heightFallen", heightFallen
         );
     }
@@ -212,7 +212,8 @@ public class Falling extends Behaviour
     @Override
     public void restoreFromState( Map<String, String> saveState )
     {
-        heightFallen = BehaviourTools.restoreFromState(
-            saveState, "Falling.heightFallen", heightFallen );
+        heightFallen = BehaviourState.restoreFromState(
+            saveState, "Falling.heightFallen", heightFallen
+        );
     }
 }

@@ -572,33 +572,38 @@ public class Bridging extends Behaviour
     @Override
     public void saveState( Map<String, String> saveState )
     {
-        BehaviourTools.addToStateIfNotDefault(
+        BehaviourState.addToStateIfNotDefault(
             saveState,
             "Bridging.bridgeType",
             bridgeType.toString(),
             BridgeType.ALONG.toString()
         );
 
-        BehaviourTools.addToStateIfGtZero(
-            saveState, "Bridging.bigSteps", bigSteps );
+        BehaviourState.addToStateIfGtZero(
+            saveState, "Bridging.bigSteps", bigSteps
+        );
 
-        BehaviourTools.addToStateIfGtZero(
-            saveState, "Bridging.smallSteps", smallSteps );
+        BehaviourState.addToStateIfGtZero(
+            saveState, "Bridging.smallSteps", smallSteps
+        );
     }
 
     @Override
     public void restoreFromState( Map<String, String> saveState )
     {
         bridgeType = BridgeType.valueOf(
-            BehaviourTools.restoreFromState(
-                saveState, "Bridging.bridgeType", bridgeType.toString() )
+            BehaviourState.restoreFromState(
+                saveState, "Bridging.bridgeType", bridgeType.toString()
+            )
         );
 
-        bigSteps = BehaviourTools.restoreFromState(
-            saveState, "Bridging.bigSteps", bigSteps );
+        bigSteps = BehaviourState.restoreFromState(
+            saveState, "Bridging.bigSteps", bigSteps
+        );
 
-        smallSteps = BehaviourTools.restoreFromState(
-            saveState, "Bridging.smallSteps", smallSteps );
+        smallSteps = BehaviourState.restoreFromState(
+            saveState, "Bridging.smallSteps", smallSteps
+        );
 
         if ( smallSteps > 0 )
         {
