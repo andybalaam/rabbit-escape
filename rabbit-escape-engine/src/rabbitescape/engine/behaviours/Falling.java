@@ -134,6 +134,8 @@ public class Falling extends Behaviour
             return null;
         }
 
+        BehaviourTools t = new BehaviourTools( rabbit );
+
         if (
                ( heightFallen + 1 > fatalHeight )              // Going to die
             && (                                               // during step
@@ -154,16 +156,14 @@ public class Falling extends Behaviour
             {
                 if ( block1Down.riseDir() == rabbit.dir )
                 {
-                    return rl(
-                        rabbit,
+                    return t.rl(
                         RABBIT_FALLING_1_ONTO_RISE_RIGHT,
                         RABBIT_FALLING_1_ONTO_RISE_LEFT
                     );
                 }
                 else // Must be a slope in the opposite direction
                 {
-                    return rl(
-                        rabbit,
+                    return t.rl(
                         RABBIT_FALLING_1_ONTO_LOWER_RIGHT,
                         RABBIT_FALLING_1_ONTO_LOWER_LEFT
                     );
@@ -179,16 +179,14 @@ public class Falling extends Behaviour
                 }
                 else if( block2Down.riseDir() == rabbit.dir )
                 {
-                    return rl(
-                        rabbit,
+                    return t.rl(
                         RABBIT_FALLING_ONTO_RISE_RIGHT,
                         RABBIT_FALLING_ONTO_RISE_LEFT
                     );
                 }
                 else
                 {
-                    return rl(
-                        rabbit,
+                    return t.rl(
                         RABBIT_FALLING_ONTO_LOWER_RIGHT,
                         RABBIT_FALLING_ONTO_LOWER_LEFT
                     );

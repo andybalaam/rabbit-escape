@@ -1,6 +1,5 @@
 package rabbitescape.engine.behaviours;
 
-import static rabbitescape.engine.BehaviourTools.*;
 import static rabbitescape.engine.Block.Type.*;
 import static rabbitescape.engine.ChangeDescription.State.*;
 import static rabbitescape.engine.Direction.*;
@@ -47,62 +46,60 @@ public class Climbing extends Behaviour
             return null;
         }
 
+        BehaviourTools t = new BehaviourTools( rabbit );
+
         switch ( rabbit.state )
         {
             case RABBIT_CLIMBING_RIGHT_START:
             case RABBIT_CLIMBING_LEFT_START:
-                return newStateStart( rabbit, world );
+                return newStateStart( t, rabbit, world );
             case RABBIT_CLIMBING_RIGHT_CONTINUE_1:
             case RABBIT_CLIMBING_LEFT_CONTINUE_1:
-                return newStateCont1( rabbit, world );
+                return newStateCont1( t );
             case RABBIT_CLIMBING_RIGHT_CONTINUE_2:
             case RABBIT_CLIMBING_LEFT_CONTINUE_2:
-                return newStateCont2( rabbit, world );
+                return newStateCont2( t, rabbit, world );
             default:
-                return newStateNotClimbing( rabbit, world );
+                return newStateNotClimbing( t, rabbit, world );
         }
     }
 
-    private State newStateStart( Rabbit rabbit, World world )
+    private State newStateStart( BehaviourTools t, Rabbit rabbit, World world )
     {
         Block endBlock = world.getBlockAt( destX( rabbit ), rabbit.y - 1 );
 
         if ( isWall( rabbit, endBlock ) )
         {
-            return rl(
-                rabbit,
+            return t.rl(
                 RABBIT_CLIMBING_RIGHT_CONTINUE_2,
                 RABBIT_CLIMBING_LEFT_CONTINUE_2
             );
         }
         else
         {
-            return rl(
-                rabbit,
+            return t.rl(
                 RABBIT_CLIMBING_RIGHT_END,
                 RABBIT_CLIMBING_LEFT_END
             );
         }
     }
 
-    private State newStateCont1( Rabbit rabbit, World world )
+    private State newStateCont1( BehaviourTools t )
     {
-        return rl(
-            rabbit,
+        return t.rl(
             RABBIT_CLIMBING_RIGHT_CONTINUE_2,
             RABBIT_CLIMBING_LEFT_CONTINUE_2
         );
     }
 
-    private State newStateCont2( Rabbit rabbit, World world )
+    private State newStateCont2( BehaviourTools t, Rabbit rabbit, World world )
     {
         Block aboveBlock = world.getBlockAt( rabbit.x, rabbit.y - 1 );
 
         if ( isRoof( aboveBlock ) )
         {
             abilityActive = false;
-            return rl(
-                rabbit,
+            return t.rl(
                 RABBIT_CLIMBING_RIGHT_BANG_HEAD,
                 RABBIT_CLIMBING_LEFT_BANG_HEAD
             );
@@ -112,23 +109,22 @@ public class Climbing extends Behaviour
 
         if ( isWall( rabbit, endBlock ) )
         {
-            return rl(
-                rabbit,
+            return t.rl(
                 RABBIT_CLIMBING_RIGHT_CONTINUE_1,
                 RABBIT_CLIMBING_LEFT_CONTINUE_1
             );
         }
         else
         {
-            return rl(
-                rabbit,
+            return t.rl(
                 RABBIT_CLIMBING_RIGHT_END,
                 RABBIT_CLIMBING_LEFT_END
             );
         }
     }
 
-    private State newStateNotClimbing( Rabbit rabbit, World world )
+    private State newStateNotClimbing(
+        BehaviourTools t, Rabbit rabbit, World world )
     {
         int nextX = destX( rabbit );
         int nextY = destY( rabbit, world );
@@ -137,8 +133,7 @@ public class Climbing extends Behaviour
 
         if ( !isRoof( aboveBlock ) && isWall( rabbit, nextBlock ) )
         {
-            return rl(
-                rabbit,
+            return t.rl(
                 RABBIT_CLIMBING_RIGHT_START,
                 RABBIT_CLIMBING_LEFT_START
             );

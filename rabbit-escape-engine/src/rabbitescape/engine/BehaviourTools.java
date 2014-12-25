@@ -11,8 +11,7 @@ public class BehaviourTools
         this.rabbit = rabbit;
     }
 
-    public static ChangeDescription.State rl(
-        Rabbit rabbit,
+    public ChangeDescription.State rl(
         ChangeDescription.State rightState,
         ChangeDescription.State leftState
     )

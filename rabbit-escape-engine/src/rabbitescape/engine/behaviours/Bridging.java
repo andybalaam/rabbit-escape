@@ -49,8 +49,10 @@ public class Bridging extends Behaviour
         if ( bigSteps <= 0 )
             // Only pick up a token if we've finished, and we can bridge
         {
+            BehaviourTools t = new BehaviourTools( rabbit );
+
             State possibleState = bridgingState(
-                rabbit, world, 3, 3, bridgeType );
+                t, rabbit, world, 3, 3, bridgeType );
 
             if ( possibleState != null )
             {
@@ -74,8 +76,10 @@ public class Bridging extends Behaviour
             bigSteps = 3;
         }
 
+        BehaviourTools t = new BehaviourTools( rabbit );
+
         State ret = bridgingState(
-            rabbit, world, bigSteps, smallSteps, bridgeType );
+            t, rabbit, world, bigSteps, smallSteps, bridgeType );
 
         if ( ret == null )
         {
@@ -92,13 +96,19 @@ public class Bridging extends Behaviour
     }
 
     private static State bridgingState(
-        Rabbit rabbit, World world, int bs, int ss, BridgeType bt )
+        BehaviourTools t,
+        Rabbit rabbit,
+        World world,
+        int bs,
+        int ss,
+        BridgeType bt
+    )
     {
         Block hereBlock = world.getBlockAt( rabbit.x, rabbit.y );
 
         if ( startingIntoToWall( world, rabbit, bs ) )
         {
-            return stateIntoWall( rabbit, world, ss );
+            return stateIntoWall( t, rabbit, world, ss );
         }
 
         boolean slopeUp = isSlopeUp( rabbit, hereBlock );
@@ -146,24 +156,21 @@ public class Bridging extends Behaviour
             {
                 if ( slopeUp )
                 {
-                    return BehaviourTools.rl(
-                        rabbit,
+                    return t.rl(
                         RABBIT_BRIDGING_UP_RIGHT_1,
                         RABBIT_BRIDGING_UP_LEFT_1
                     );
                 }
                 else if ( slopeDown )
                 {
-                    return BehaviourTools.rl(
-                        rabbit,
+                    return t.rl(
                         RABBIT_BRIDGING_DOWN_UP_RIGHT_1,
                         RABBIT_BRIDGING_DOWN_UP_LEFT_1
                     );
                 }
                 else
                 {
-                    return BehaviourTools.rl(
-                        rabbit,
+                    return t.rl(
                         RABBIT_BRIDGING_RIGHT_1,
                         RABBIT_BRIDGING_LEFT_1
                     );
@@ -175,24 +182,21 @@ public class Bridging extends Behaviour
                 {
                     case ALONG:
                     {
-                        return BehaviourTools.rl(
-                            rabbit,
+                        return t.rl(
                             RABBIT_BRIDGING_RIGHT_2,
                             RABBIT_BRIDGING_LEFT_2
                         );
                     }
                     case UP:
                     {
-                        return BehaviourTools.rl(
-                            rabbit,
+                        return t.rl(
                             RABBIT_BRIDGING_UP_RIGHT_2,
                             RABBIT_BRIDGING_UP_LEFT_2
                         );
                     }
                     case DOWN_UP:
                     {
-                        return BehaviourTools.rl(
-                            rabbit,
+                        return t.rl(
                             RABBIT_BRIDGING_DOWN_UP_RIGHT_2,
                             RABBIT_BRIDGING_DOWN_UP_LEFT_2
                         );
@@ -209,24 +213,21 @@ public class Bridging extends Behaviour
                 {
                     case ALONG:
                     {
-                        return BehaviourTools.rl(
-                            rabbit,
+                        return t.rl(
                             RABBIT_BRIDGING_RIGHT_3,
                             RABBIT_BRIDGING_LEFT_3
                         );
                     }
                     case UP:
                     {
-                        return BehaviourTools.rl(
-                            rabbit,
+                        return t.rl(
                             RABBIT_BRIDGING_UP_RIGHT_3,
                             RABBIT_BRIDGING_UP_LEFT_3
                         );
                     }
                     case DOWN_UP:
                     {
-                        return BehaviourTools.rl(
-                            rabbit,
+                        return t.rl(
                             RABBIT_BRIDGING_DOWN_UP_RIGHT_3,
                             RABBIT_BRIDGING_DOWN_UP_LEFT_3
                         );
@@ -244,7 +245,8 @@ public class Bridging extends Behaviour
         }
     }
 
-    private static State stateIntoWall( Rabbit rabbit, World world, int ss )
+    private static State stateIntoWall(
+        BehaviourTools t, Rabbit rabbit, World world, int ss )
     {
         Block thisBlock = world.getBlockAt( rabbit.x, rabbit.y );
 
@@ -263,16 +265,14 @@ public class Bridging extends Behaviour
             {
                 if ( isSlope( thisBlock ) )
                 {
-                    return BehaviourTools.rl(
-                        rabbit,
+                    return t.rl(
                         RABBIT_BRIDGING_IN_CORNER_UP_RIGHT_1,
                         RABBIT_BRIDGING_IN_CORNER_UP_LEFT_1
                     );
                 }
                 else
                 {
-                    return BehaviourTools.rl(
-                        rabbit,
+                    return t.rl(
                         RABBIT_BRIDGING_IN_CORNER_RIGHT_1,
                         RABBIT_BRIDGING_IN_CORNER_LEFT_1
                     );
@@ -282,16 +282,14 @@ public class Bridging extends Behaviour
             {
                 if ( isSlope( thisBlock ) )
                 {
-                    return BehaviourTools.rl(
-                        rabbit,
+                    return t.rl(
                         RABBIT_BRIDGING_IN_CORNER_UP_RIGHT_2,
                         RABBIT_BRIDGING_IN_CORNER_UP_LEFT_2
                     );
                 }
                 else
                 {
-                    return BehaviourTools.rl(
-                        rabbit,
+                    return t.rl(
                         RABBIT_BRIDGING_IN_CORNER_RIGHT_2,
                         RABBIT_BRIDGING_IN_CORNER_LEFT_2
                     );
@@ -301,16 +299,14 @@ public class Bridging extends Behaviour
             {
                 if ( isSlope( thisBlock ) )
                 {
-                    return BehaviourTools.rl(
-                        rabbit,
+                    return t.rl(
                         RABBIT_BRIDGING_IN_CORNER_UP_RIGHT_3,
                         RABBIT_BRIDGING_IN_CORNER_UP_LEFT_3
                     );
                 }
                 else
                 {
-                    return BehaviourTools.rl(
-                        rabbit,
+                    return t.rl(
                         RABBIT_BRIDGING_IN_CORNER_RIGHT_3,
                         RABBIT_BRIDGING_IN_CORNER_LEFT_3
                     );

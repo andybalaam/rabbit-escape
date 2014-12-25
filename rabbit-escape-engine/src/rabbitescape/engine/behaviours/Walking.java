@@ -16,11 +16,13 @@ public class Walking extends Behaviour
 
     private static class StateCalc
     {
+        private final BehaviourTools t;
         private final Rabbit rabbit;
         private final World world;
 
         StateCalc( Rabbit rabbit, World world )
         {
+            this.t = new BehaviourTools( rabbit );
             this.rabbit = rabbit;
             this.world = world;
         }
@@ -185,7 +187,7 @@ public class Walking extends Behaviour
 
         private State rl( State rightState, State leftState )
         {
-            return BehaviourTools.rl( rabbit, rightState, leftState );
+            return t.rl( rightState, leftState );
         }
 
         private boolean rising()

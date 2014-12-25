@@ -53,13 +53,14 @@ public class Bashing extends Behaviour
 
             int nextX = destX( rabbit );
 
+            BehaviourTools t = new BehaviourTools( rabbit );
+
             if (
                    rising( rabbit, hereBlock )
                 && world.getBlockAt( nextX, rabbit.y - 1 ) != null )
             {
                 stepsOfBashing = 2;
-                return rl(
-                    rabbit,
+                return t.rl(
                     RABBIT_BASHING_UP_RIGHT,
                     RABBIT_BASHING_UP_LEFT
                 );
@@ -67,16 +68,14 @@ public class Bashing extends Behaviour
             else if ( world.getBlockAt( nextX, rabbit.y ) != null )
             {
                 stepsOfBashing = 2;
-                return rl(
-                    rabbit,
+                return t.rl(
                     RABBIT_BASHING_RIGHT,
                     RABBIT_BASHING_LEFT
                 );
             }
             else if ( triggered )
             {
-                return rl(
-                    rabbit,
+                return t.rl(
                     RABBIT_BASHING_USELESSLY_RIGHT,
                     RABBIT_BASHING_USELESSLY_LEFT
                 );
