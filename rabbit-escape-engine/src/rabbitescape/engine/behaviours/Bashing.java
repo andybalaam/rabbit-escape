@@ -34,14 +34,9 @@ public class Bashing extends Behaviour
             return false;
         }
 
-        Token token = world.getTokenAt( rabbit.x, rabbit.y );
-        if ( token != null && token.type == bash )
-        {
-            world.changes.removeToken( token );
-            return true;
-        }
+        BehaviourTools t = new BehaviourTools( rabbit, world );
 
-        return false;
+        return t.pickUpToken( bash );
     }
 
     @Override

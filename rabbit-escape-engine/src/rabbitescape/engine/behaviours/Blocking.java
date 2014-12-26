@@ -30,14 +30,9 @@ public class Blocking extends Behaviour
             return false;
         }
 
-        Token token = world.getTokenAt( rabbit.x, rabbit.y );
-        if ( token != null && token.type == block )
-        {
-            world.changes.removeToken( token );
-            return true;
-        }
+        BehaviourTools t = new BehaviourTools( rabbit, world );
 
-        return false;
+        return t.pickUpToken( block );
     }
 
     @Override

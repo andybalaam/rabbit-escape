@@ -5,11 +5,8 @@ import static rabbitescape.engine.ChangeDescription.State.*;
 
 import java.util.Map;
 
-import rabbitescape.engine.Behaviour;
+import rabbitescape.engine.*;
 import rabbitescape.engine.ChangeDescription.State;
-import rabbitescape.engine.Rabbit;
-import rabbitescape.engine.Token;
-import rabbitescape.engine.World;
 
 public class Exploding extends Behaviour
 {
@@ -21,13 +18,8 @@ public class Exploding extends Behaviour
     @Override
     public boolean checkTriggered( Rabbit rabbit, World world )
     {
-        Token token = world.getTokenAt( rabbit.x, rabbit.y );
-        if ( token != null && token.type == explode )
-        {
-            world.changes.removeToken( token );
-            return true;
-        }
-        return false;
+        BehaviourTools t = new BehaviourTools( rabbit, world );
+        return t.pickUpToken( explode, true );
     }
 
     @Override

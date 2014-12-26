@@ -54,14 +54,9 @@ public class Bridging extends Behaviour
             State possibleState = bridgingState(
                 t, rabbit, world, 3, 3, bridgeType );
 
-            if ( possibleState != null )
+            if ( possibleState != null ) // Only pick up if we can bridge
             {
-                Token token = world.getTokenAt( rabbit.x, rabbit.y );
-                if ( token != null && token.type == bridge )
-                {
-                    world.changes.removeToken( token );
-                    return true;
-                }
+                return t.pickUpToken( bridge );
             }
         }
         return false;

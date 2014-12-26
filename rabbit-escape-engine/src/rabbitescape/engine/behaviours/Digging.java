@@ -5,11 +5,8 @@ import static rabbitescape.engine.Token.Type.*;
 
 import java.util.Map;
 
-import rabbitescape.engine.Behaviour;
+import rabbitescape.engine.*;
 import rabbitescape.engine.ChangeDescription.State;
-import rabbitescape.engine.Rabbit;
-import rabbitescape.engine.Token;
-import rabbitescape.engine.World;
 
 public class Digging extends Behaviour
 {
@@ -33,14 +30,8 @@ public class Digging extends Behaviour
             return false;
         }
 
-        Token token = world.getTokenAt( rabbit.x, rabbit.y );
-        if ( token != null && token.type == dig )
-        {
-            world.changes.removeToken( token );
-            return true;
-        }
-
-        return false;
+        BehaviourTools t = new BehaviourTools( rabbit, world );
+        return t.pickUpToken( dig );
     }
 
     @Override
