@@ -39,11 +39,6 @@ public class Bridging extends Behaviour
 
     public boolean checkTriggered( Rabbit rabbit, World world )
     {
-        if ( climbing.abilityActive )
-        {
-            return false;
-        }
-
         nextStep();
 
         if ( bigSteps <= 0 )

@@ -23,11 +23,6 @@ public class Digging extends Behaviour
     @Override
     public boolean checkTriggered( Rabbit rabbit, World world )
     {
-        if ( climbing.abilityActive )
-        {
-            return false;
-        }
-
         BehaviourTools t = new BehaviourTools( rabbit, world );
         return t.pickUpToken( dig );
     }
