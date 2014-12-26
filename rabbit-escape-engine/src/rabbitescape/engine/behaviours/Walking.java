@@ -17,43 +17,39 @@ public class Walking extends Behaviour
     private static class StateCalc
     {
         private final BehaviourTools t;
-        private final Rabbit rabbit;
-        private final World world;
 
-        StateCalc( Rabbit rabbit, World world )
+        StateCalc( BehaviourTools t )
         {
-            this.t = new BehaviourTools( rabbit, world );
-            this.rabbit = rabbit;
-            this.world = world;
+            this.t = t;
         }
 
         public State newState()
         {
-            if ( rising() )
+            if ( t.isOnUpSlope() )
             {
-                int nextX = destX();
-                int nextY = rabbit.y - 1;
+                Block aboveNext = t.blockAboveNext();
+                int nextX = t.nextX();
+                int nextY = t.rabbit.y - 1;
 
                 if
-                (
-                       world.flatBlockAt( nextX, nextY )
-                    || lowerSlopeAt( nextX, nextY )
+                    (
+                       t.isWall( aboveNext )
                     || blockerAt( nextX, nextY )
-                )
+                    )
                 {
                     return rl(
                         RABBIT_TURNING_RIGHT_TO_LEFT_RISING,
                         RABBIT_TURNING_LEFT_TO_RIGHT_RISING
                     );
                 }
-                else if ( riseBlockAt( nextX, nextY ) )
+                else if ( t.isUpSlope( aboveNext ) )
                 {
                     return rl(
                         RABBIT_RISING_RIGHT_CONTINUE,
                         RABBIT_RISING_LEFT_CONTINUE
                     );
                 }
-                else if ( lowerBlockAt( nextX, rabbit.y ) )
+                else if ( t.isDownSlope( t.blockNext() ) )
                 {
                     return rl(
                         RABBIT_RISING_AND_LOWERING_RIGHT,
@@ -68,30 +64,31 @@ public class Walking extends Behaviour
                     );
                 }
             }
-            else if( lowering() )
+            else if ( t.isOnDownSlope() )
             {
-                int nextX = destX();
-                int nextY = rabbit.y + 1;
+                int nextX = t.nextX();
+                int nextY = t.rabbit.y + 1;
+                Block next = t.blockNext();
+                Block belowNext = t.blockBelowNext();
 
-                if(
-                       world.flatBlockAt( nextX, rabbit.y )
-                    || lowerSlopeAt( nextX, rabbit.y )
+                if (
+                       t.isWall( next )
                     || blockerAt( nextX, nextY )
-                )
+                    )
                 {
                     return rl(
                         RABBIT_TURNING_RIGHT_TO_LEFT_LOWERING,
                         RABBIT_TURNING_LEFT_TO_RIGHT_LOWERING
                     );
                 }
-                else if ( riseBlockAt( nextX, rabbit.y ) )
+                else if ( t.isUpSlope( next ) )
                 {
                     return rl(
                         RABBIT_LOWERING_AND_RISING_RIGHT,
                         RABBIT_LOWERING_AND_RISING_LEFT
                     );
                 }
-                else if ( lowerBlockAt( nextX, nextY ) )
+                else if ( t.isDownSlope( belowNext ) )
                 {
                     return rl(
                         RABBIT_LOWERING_RIGHT_CONTINUE,
@@ -100,7 +97,7 @@ public class Walking extends Behaviour
                 }
                 else
                 {
-                    if ( blockerAt( nextX, rabbit.y ) )
+                    if ( blockerAt( nextX, t.rabbit.y ) )
                     {
                         return rl(
                             RABBIT_TURNING_RIGHT_TO_LEFT_LOWERING,
@@ -118,31 +115,31 @@ public class Walking extends Behaviour
             }
             else  // On flat ground now
             {
-                int nextX = destX();
-                int nextY = rabbit.y;
+                int nextX = t.nextX();
+                int nextY = t.rabbit.y;
+                Block next = t.blockNext();
 
                 if
-                (
-                       world.flatBlockAt( nextX, nextY )
-                    || lowerSlopeAt( nextX, nextY )
+                    (
+                       t.isWall( next )
                     || blockerAt( nextX, nextY )
-                )
+                    )
                 {
                     return rl(
                         RABBIT_TURNING_RIGHT_TO_LEFT,
                         RABBIT_TURNING_LEFT_TO_RIGHT
                     );
                 }
-                else if ( riseBlockAt( nextX, nextY ) )
+                else if ( t.isUpSlope( next ) )
                 {
                     return rl(
                         RABBIT_RISING_RIGHT_START,
                         RABBIT_RISING_LEFT_START
                     );
                 }
-                else if ( lowerBlockAt( nextX, rabbit.y + 1 ) )
+                else if ( t.isDownSlope( t.blockBelowNext() ) )
                 {
-                    if ( blockerAt( nextX, rabbit.y + 1 ) )
+                    if ( blockerAt( nextX, t.rabbit.y + 1 ) )
                     {
                         return rl(
                             RABBIT_TURNING_RIGHT_TO_LEFT,
@@ -169,7 +166,7 @@ public class Walking extends Behaviour
 
         private boolean blockerAt( int nextX, int nextY )
         {
-            Rabbit[] rabbits = world.getRabbitsAt( nextX, nextY );
+            Rabbit[] rabbits = t.world.getRabbitsAt( nextX, nextY );
             for ( Rabbit r : rabbits )
             {
                 if ( r.state == RABBIT_BLOCKING )
@@ -180,58 +177,9 @@ public class Walking extends Behaviour
             return false;
         }
 
-        private int destX()
-        {
-            return ( rabbit.dir == RIGHT ) ? rabbit.x + 1 : rabbit.x - 1;
-        }
-
         private State rl( State rightState, State leftState )
         {
             return t.rl( rightState, leftState );
-        }
-
-        private boolean rising()
-        {
-            return (
-                rabbit.onSlope
-                && riseBlockAt( rabbit.x, rabbit.y )
-            );
-        }
-
-        private boolean lowering()
-        {
-            return (
-                   rabbit.onSlope
-                && lowerBlockAt( rabbit.x, rabbit.y )
-            );
-        }
-
-        private boolean riseBlockAt( int x, int y )
-        {
-            Block block = world.getBlockAt( x, y );
-            return ( block != null && block.riseDir() == rabbit.dir );
-        }
-
-        private boolean lowerBlockAt( int x, int y )
-        {
-            Block block = world.getBlockAt( x, y );
-            return (
-                   block != null
-                && block.riseDir() == Direction.opposite( rabbit.dir )
-            );
-        }
-
-        private boolean lowerSlopeAt( int x, int y )
-        {
-            Block block = world.getBlockAt( x, y );
-            return (
-                   block != null
-                && block.riseDir() == Direction.opposite( rabbit.dir )
-                && (
-                          block.type == solid_up_right
-                       || block.type == solid_up_left
-               )
-            );
         }
     }
 
@@ -242,9 +190,9 @@ public class Walking extends Behaviour
     }
 
     @Override
-    public State newState( Rabbit rabbit, World world, boolean triggered )
+    public State newState( BehaviourTools t, boolean triggered )
     {
-        return new StateCalc( rabbit, world ).newState();
+        return new StateCalc( t ).newState();
     }
 
     @Override

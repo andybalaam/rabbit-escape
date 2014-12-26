@@ -2,9 +2,8 @@ package rabbitescape.engine.behaviours;
 
 import static rabbitescape.engine.ChangeDescription.State.*;
 
-import java.util.Map;
-
 import rabbitescape.engine.Behaviour;
+import rabbitescape.engine.BehaviourTools;
 import rabbitescape.engine.ChangeDescription.State;
 import rabbitescape.engine.Rabbit;
 import rabbitescape.engine.World;
@@ -28,7 +27,9 @@ public class OutOfBounds extends Behaviour
     }
 
     @Override
-    public State newState( Rabbit rabbit, World world, boolean triggered )
+    public State newState(
+        BehaviourTools t, boolean triggered
+    )
     {
         if ( triggered )
         {

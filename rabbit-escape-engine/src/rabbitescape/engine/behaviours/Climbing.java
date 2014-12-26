@@ -1,6 +1,5 @@
 package rabbitescape.engine.behaviours;
 
-import static rabbitescape.engine.Block.Type.*;
 import static rabbitescape.engine.ChangeDescription.State.*;
 import static rabbitescape.engine.Direction.*;
 import static rabbitescape.engine.Token.Type.*;
@@ -30,7 +29,7 @@ public class Climbing extends Behaviour
     }
 
     @Override
-    public State newState( Rabbit rabbit, World world, boolean triggered )
+    public State newState( BehaviourTools t, boolean triggered )
     {
         if ( triggered )
         {
@@ -42,29 +41,27 @@ public class Climbing extends Behaviour
             return null;
         }
 
-        BehaviourTools t = new BehaviourTools( rabbit, world );
-
-        switch ( rabbit.state )
+        switch ( t.rabbit.state )
         {
             case RABBIT_CLIMBING_RIGHT_START:
             case RABBIT_CLIMBING_LEFT_START:
-                return newStateStart( t, rabbit, world );
+                return newStateStart( t );
             case RABBIT_CLIMBING_RIGHT_CONTINUE_1:
             case RABBIT_CLIMBING_LEFT_CONTINUE_1:
                 return newStateCont1( t );
             case RABBIT_CLIMBING_RIGHT_CONTINUE_2:
             case RABBIT_CLIMBING_LEFT_CONTINUE_2:
-                return newStateCont2( t, rabbit, world );
+                return newStateCont2( t );
             default:
-                return newStateNotClimbing( t, rabbit, world );
+                return newStateNotClimbing( t );
         }
     }
 
-    private State newStateStart( BehaviourTools t, Rabbit rabbit, World world )
+    private State newStateStart( BehaviourTools t )
     {
-        Block endBlock = world.getBlockAt( destX( rabbit ), rabbit.y - 1 );
+        Block endBlock = t.blockAboveNext();
 
-        if ( isWall( rabbit, endBlock ) )
+        if ( t.isWall( endBlock ) )
         {
             return t.rl(
                 RABBIT_CLIMBING_RIGHT_CONTINUE_2,
@@ -88,11 +85,11 @@ public class Climbing extends Behaviour
         );
     }
 
-    private State newStateCont2( BehaviourTools t, Rabbit rabbit, World world )
+    private State newStateCont2( BehaviourTools t )
     {
-        Block aboveBlock = world.getBlockAt( rabbit.x, rabbit.y - 1 );
+        Block aboveBlock = t.blockAbove();
 
-        if ( isRoof( aboveBlock ) )
+        if ( t.isRoof( aboveBlock ) )
         {
             abilityActive = false;
             return t.rl(
@@ -101,9 +98,9 @@ public class Climbing extends Behaviour
             );
         }
 
-        Block endBlock = world.getBlockAt( destX( rabbit ), rabbit.y - 1 );
+        Block endBlock = t.blockAboveNext();
 
-        if ( isWall( rabbit, endBlock ) )
+        if ( t.isWall( endBlock ) )
         {
             return t.rl(
                 RABBIT_CLIMBING_RIGHT_CONTINUE_1,
@@ -119,15 +116,14 @@ public class Climbing extends Behaviour
         }
     }
 
-    private State newStateNotClimbing(
-        BehaviourTools t, Rabbit rabbit, World world )
+    private State newStateNotClimbing( BehaviourTools t )
     {
-        int nextX = destX( rabbit );
-        int nextY = destY( rabbit, world );
-        Block nextBlock = world.getBlockAt( nextX, nextY );
-        Block aboveBlock = world.getBlockAt( rabbit.x, rabbit.y - 1 );
+        int nextX = t.nextX();
+        int nextY = t.nextY();
+        Block nextBlock = t.world.getBlockAt( nextX, nextY );
+        Block aboveBlock = t.world.getBlockAt( t.rabbit.x, t.rabbit.y - 1 );
 
-        if ( !isRoof( aboveBlock ) && isWall( rabbit, nextBlock ) )
+        if ( !t.isRoof( aboveBlock ) && t.isWall( nextBlock ) )
         {
             return t.rl(
                 RABBIT_CLIMBING_RIGHT_START,
@@ -138,84 +134,11 @@ public class Climbing extends Behaviour
         return null;
     }
 
-    private boolean isRoof( Block block )
-    {
-        return
-        (
-               block != null
-            && (
-                   block.type == solid_flat
-                || block.type == solid_up_left
-                || block.type == solid_up_right
-            )
-        );
-    }
-
-    private boolean isWall( Rabbit rabbit, Block block )
-    {
-        return
-        (
-               block != null
-            && (
-                block.type == solid_flat
-                || (
-                       block.riseDir() == opposite( rabbit.dir )
-                    && isSolid( block )
-                )
-            )
-        );
-    }
-
-    private boolean isSolid( Block block )
-    {
-        return (
-               block.type == solid_flat
-            || block.type == solid_up_left
-            || block.type == solid_up_right
-        );
-    }
-
-    private int destX( Rabbit rabbit )
-    {
-        return ( rabbit.dir == RIGHT ) ? rabbit.x + 1 : rabbit.x - 1;
-    }
-
-    private int destY( Rabbit rabbit, World world )
-    {
-        if ( goingUpSlope( rabbit, world ) )
-        {
-            return rabbit.y - 1;
-        }
-        else
-        {
-            return rabbit.y;
-        }
-    }
-
-    private boolean goingUpSlope( Rabbit rabbit, World world )
-    {
-        if ( rabbit.onSlope )
-        {
-            if( isUpSlope( rabbit, world ) )
-            {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    private boolean isUpSlope( Rabbit rabbit, World world )
-    {
-        Block thisBlock = world.getBlockAt( rabbit.x, rabbit.y );
-
-        return (
-            thisBlock != null && thisBlock.riseDir() == rabbit.dir
-        );
-    }
-
     @Override
     public boolean behave( World world, Rabbit rabbit, State state )
     {
+        BehaviourTools t = new BehaviourTools( rabbit, world );
+
         switch ( state )
         {
             case RABBIT_CLIMBING_RIGHT_START:
@@ -227,9 +150,9 @@ public class Climbing extends Behaviour
             case RABBIT_CLIMBING_RIGHT_END:
             case RABBIT_CLIMBING_LEFT_END:
             {
-                rabbit.x = destX( rabbit );
+                rabbit.x = t.nextX();
                 --rabbit.y;
-                if ( isUpSlope( rabbit, world ) )
+                if ( t.hereIsUpSlope() )
                 {
                     rabbit.onSlope = true;
                 }

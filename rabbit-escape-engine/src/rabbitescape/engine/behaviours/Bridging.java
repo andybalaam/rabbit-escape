@@ -51,8 +51,7 @@ public class Bridging extends Behaviour
         {
             BehaviourTools t = new BehaviourTools( rabbit, world );
 
-            State possibleState = bridgingState(
-                t, rabbit, world, 3, 3, bridgeType );
+            State possibleState = bridgingState( t, 3, 3, bridgeType );
 
             if ( possibleState != null ) // Only pick up if we can bridge
             {
@@ -63,7 +62,7 @@ public class Bridging extends Behaviour
     }
 
     @Override
-    public State newState( Rabbit rabbit, World world, boolean triggered )
+    public State newState( BehaviourTools t, boolean triggered )
     {
         if ( triggered )
         {
@@ -71,10 +70,7 @@ public class Bridging extends Behaviour
             bigSteps = 3;
         }
 
-        BehaviourTools t = new BehaviourTools( rabbit, world );
-
-        State ret = bridgingState(
-            t, rabbit, world, bigSteps, smallSteps, bridgeType );
+        State ret = bridgingState( t, bigSteps, smallSteps, bridgeType );
 
         if ( ret == null )
         {
@@ -92,14 +88,15 @@ public class Bridging extends Behaviour
 
     private static State bridgingState(
         BehaviourTools t,
-        Rabbit rabbit,
-        World world,
         int bs,
         int ss,
         BridgeType bt
     )
     {
-        Block hereBlock = world.getBlockAt( rabbit.x, rabbit.y );
+        Block hereBlock = t.blockHere();
+
+        Rabbit rabbit = t.rabbit;
+        World world = t.world;
 
         if ( startingIntoToWall( world, rabbit, bs ) )
         {

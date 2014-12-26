@@ -199,18 +199,6 @@ public class World
         return chain( rabbits, things );
     }
 
-    public boolean flatBlockAt( int x, int y )
-    {
-        Block block = getBlockAt( x, y );
-        return ( block != null && block.type == solid_flat );
-    }
-
-    public boolean slopingBlockAt( int x, int y )
-    {
-        Block block = getBlockAt( x, y );
-        return ( block != null && block.type != solid_flat );
-    }
-
     public Block getBlockAt( int x, int y )
     {
         // TODO: faster

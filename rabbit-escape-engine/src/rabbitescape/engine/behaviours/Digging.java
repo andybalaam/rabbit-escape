@@ -3,8 +3,6 @@ package rabbitescape.engine.behaviours;
 import static rabbitescape.engine.ChangeDescription.State.*;
 import static rabbitescape.engine.Token.Type.*;
 
-import java.util.Map;
-
 import rabbitescape.engine.*;
 import rabbitescape.engine.ChangeDescription.State;
 
@@ -35,27 +33,24 @@ public class Digging extends Behaviour
     }
 
     @Override
-    public State newState( Rabbit rabbit, World world, boolean triggered )
+    public State newState( BehaviourTools t, boolean triggered )
     {
-        if ( rabbit.state == RABBIT_DIGGING )
+        if ( t.rabbit.state == RABBIT_DIGGING )
         {
             return RABBIT_DIGGING_2;
         }
 
         if (
                triggered
-            || rabbit.state == RABBIT_DIGGING_2
-            || rabbit.state == RABBIT_DIGGING_ON_SLOPE
+            || t.rabbit.state == RABBIT_DIGGING_2
+            || t.rabbit.state == RABBIT_DIGGING_ON_SLOPE
         )
         {
-            if (
-                   rabbit.onSlope
-                && world.getBlockAt( rabbit.x, rabbit.y ) != null
-            )
+            if ( t.rabbit.onSlope && t.blockHere() != null )
             {
                 return RABBIT_DIGGING_ON_SLOPE;
             }
-            else if ( world.getBlockAt( rabbit.x, rabbit.y + 1 ) != null )
+            else if ( t.blockBelow() != null )
             {
                 return RABBIT_DIGGING;
             }

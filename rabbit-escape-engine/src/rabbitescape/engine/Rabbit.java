@@ -68,7 +68,7 @@ public class Rabbit extends Thing
         for ( Behaviour behaviour : behaviours )
         {
             State thisState = behaviour.newState(
-                this, world, behaviour.triggered );
+                new BehaviourTools( this, world ), behaviour.triggered );
 
             if ( thisState != null && !done )
             {

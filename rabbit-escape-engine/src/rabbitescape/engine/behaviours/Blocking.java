@@ -3,8 +3,6 @@ package rabbitescape.engine.behaviours;
 import static rabbitescape.engine.ChangeDescription.State.*;
 import static rabbitescape.engine.Token.Type.*;
 
-import java.util.Map;
-
 import rabbitescape.engine.*;
 import rabbitescape.engine.ChangeDescription.State;
 
@@ -36,9 +34,9 @@ public class Blocking extends Behaviour
     }
 
     @Override
-    public State newState( Rabbit rabbit, World world, boolean triggered )
+    public State newState( BehaviourTools t, boolean triggered )
     {
-        if ( triggered || rabbit.state == RABBIT_BLOCKING )
+        if ( triggered || t.rabbit.state == RABBIT_BLOCKING )
         {
             return RABBIT_BLOCKING;
         }

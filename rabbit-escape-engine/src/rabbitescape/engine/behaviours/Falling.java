@@ -1,6 +1,5 @@
 package rabbitescape.engine.behaviours;
 
-import static rabbitescape.engine.BehaviourTools.*;
 import static rabbitescape.engine.ChangeDescription.State.*;
 import static rabbitescape.engine.Block.Type.*;
 
@@ -100,10 +99,11 @@ public class Falling extends Behaviour
             return false;
         }
 
-        int below = rabbit.y + 1;
+        BehaviourTools t = new BehaviourTools( rabbit, world );
+
         //noinspection RedundantIfStatement
         if (
-               world.flatBlockAt( rabbit.x, below )
+               t.isFlat( t.blockBelow() )
             || rabbit.onSlope
         )
         {
@@ -114,7 +114,7 @@ public class Falling extends Behaviour
     }
 
     @Override
-    public State newState( Rabbit rabbit, World world, boolean triggered )
+    public State newState( BehaviourTools t, boolean triggered )
     {
         if ( !triggered )
         {
@@ -134,13 +134,11 @@ public class Falling extends Behaviour
             return null;
         }
 
-        BehaviourTools t = new BehaviourTools( rabbit, world );
-
         if (
                ( heightFallen + 1 > fatalHeight )              // Going to die
             && (                                               // during step
-                   world.flatBlockAt( rabbit.x, rabbit.y + 2 )
-                || world.getBlockAt( rabbit.x, rabbit.y + 1 ) != null
+                   t.isFlat( t.block2Below() )
+                || t.blockBelow() != null
             )
         )
         {
@@ -149,12 +147,11 @@ public class Falling extends Behaviour
         }
         else
         {
-            Block block1Down = world.getBlockAt(
-                rabbit.x, rabbit.y + 1 );
+            Block below = t.blockBelow();
 
-            if ( block1Down != null )
+            if ( below != null )
             {
-                if ( block1Down.riseDir() == rabbit.dir )
+                if ( t.isUpSlope( below ) )
                 {
                     return t.rl(
                         RABBIT_FALLING_1_ONTO_RISE_RIGHT,
@@ -170,14 +167,14 @@ public class Falling extends Behaviour
                 }
             }
 
-            Block block2Down = world.getBlockAt( rabbit.x, rabbit.y + 2 );
-            if ( block2Down != null )
+            Block twoBelow = t.block2Below();
+            if ( twoBelow != null )
             {
-                if ( block2Down.type == solid_flat ) // Flat block
+                if ( t.isFlat( twoBelow ) ) // Flat block
                 {
                     return State.RABBIT_FALLING_1;
                 }
-                else if( block2Down.riseDir() == rabbit.dir )
+                else if( t.isUpSlope( twoBelow ) )
                 {
                     return t.rl(
                         RABBIT_FALLING_ONTO_RISE_RIGHT,

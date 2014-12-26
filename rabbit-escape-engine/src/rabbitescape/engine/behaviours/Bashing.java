@@ -1,6 +1,5 @@
 package rabbitescape.engine.behaviours;
 
-import static rabbitescape.engine.BehaviourTools.*;
 import static rabbitescape.engine.ChangeDescription.State.*;
 import static rabbitescape.engine.Direction.*;
 import static rabbitescape.engine.Token.Type.*;
@@ -40,19 +39,14 @@ public class Bashing extends Behaviour
     }
 
     @Override
-    public State newState( Rabbit rabbit, World world, boolean triggered )
+    public State newState( BehaviourTools t, boolean triggered )
     {
         if ( triggered || stepsOfBashing > 0 )
         {
-            Block hereBlock = world.getBlockAt( rabbit.x, rabbit.y );
-
-            int nextX = destX( rabbit );
-
-            BehaviourTools t = new BehaviourTools( rabbit, world );
-
             if (
-                   rising( rabbit, hereBlock )
-                && world.getBlockAt( nextX, rabbit.y - 1 ) != null )
+                   t.isOnUpSlope()
+                && t.blockAboveNext() != null
+            )
             {
                 stepsOfBashing = 2;
                 return t.rl(
@@ -60,7 +54,7 @@ public class Bashing extends Behaviour
                     RABBIT_BASHING_UP_LEFT
                 );
             }
-            else if ( world.getBlockAt( nextX, rabbit.y ) != null )
+            else if ( t.blockNext() != null )
             {
                 stepsOfBashing = 2;
                 return t.rl(
@@ -78,15 +72,6 @@ public class Bashing extends Behaviour
         }
         --stepsOfBashing;
         return null;
-    }
-
-    private boolean rising( Rabbit rabbit, Block hereBlock )
-    {
-        return (
-               rabbit.onSlope
-            && hereBlock != null
-            && hereBlock.riseDir() == rabbit.dir
-        );
     }
 
     @Override

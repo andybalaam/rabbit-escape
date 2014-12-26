@@ -2,8 +2,6 @@ package rabbitescape.engine.behaviours;
 
 import static rabbitescape.engine.ChangeDescription.State.*;
 
-import java.util.Map;
-
 import rabbitescape.engine.*;
 import rabbitescape.engine.ChangeDescription.State;
 
@@ -31,7 +29,7 @@ public class Exiting extends Behaviour
     }
 
     @Override
-    public State newState( Rabbit rabbit, World world, boolean triggered )
+    public State newState( BehaviourTools t, boolean triggered )
     {
         if ( triggered )
         {

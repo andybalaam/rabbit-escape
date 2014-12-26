@@ -70,7 +70,7 @@ public class Token extends Thing
     public void calcNewState( World world )
     {
         boolean still = (
-               world.flatBlockAt( x, y + 1 )
+               BehaviourTools.s_isFlat( world.getBlockAt( x, y + 1 ) )
             || ( world.getBlockAt( x, y ) != null )
         );
 
