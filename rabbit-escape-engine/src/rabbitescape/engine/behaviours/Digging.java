@@ -9,6 +9,7 @@ import rabbitescape.engine.ChangeDescription.State;
 public class Digging extends Behaviour
 {
     private final Climbing climbing;
+    private boolean cancelled;
 
     public Digging( Climbing climbing )
     {
@@ -18,11 +19,14 @@ public class Digging extends Behaviour
     @Override
     public void cancel()
     {
+        cancelled = true;
     }
 
     @Override
     public boolean checkTriggered( Rabbit rabbit, World world )
     {
+        cancelled = false;
+
         BehaviourTools t = new BehaviourTools( rabbit, world );
         return t.pickUpToken( dig );
     }
@@ -30,6 +34,11 @@ public class Digging extends Behaviour
     @Override
     public State newState( BehaviourTools t, boolean triggered )
     {
+        if ( cancelled )
+        {
+            return null;
+        }
+
         if ( t.rabbit.state == RABBIT_DIGGING )
         {
             return RABBIT_DIGGING_2;
