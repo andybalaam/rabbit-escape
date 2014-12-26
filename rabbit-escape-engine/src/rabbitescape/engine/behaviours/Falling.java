@@ -134,7 +134,7 @@ public class Falling extends Behaviour
             return null;
         }
 
-        BehaviourTools t = new BehaviourTools( rabbit );
+        BehaviourTools t = new BehaviourTools( rabbit, world );
 
         if (
                ( heightFallen + 1 > fatalHeight )              // Going to die

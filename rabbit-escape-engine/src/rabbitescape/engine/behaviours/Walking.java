@@ -22,7 +22,7 @@ public class Walking extends Behaviour
 
         StateCalc( Rabbit rabbit, World world )
         {
-            this.t = new BehaviourTools( rabbit );
+            this.t = new BehaviourTools( rabbit, world );
             this.rabbit = rabbit;
             this.world = world;
         }

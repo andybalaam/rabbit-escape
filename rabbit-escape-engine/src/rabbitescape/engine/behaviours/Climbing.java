@@ -24,13 +24,9 @@ public class Climbing extends Behaviour
     @Override
     public boolean checkTriggered( Rabbit rabbit, World world )
     {
-        Token token = world.getTokenAt( rabbit.x, rabbit.y );
-        if ( !hasAbility && token != null && token.type == climb )
-        {
-            world.changes.removeToken( token );
-            return true;
-        }
-        return false;
+        BehaviourTools t = new BehaviourTools( rabbit, world );
+
+        return !hasAbility && t.pickUpToken( climb );
     }
 
     @Override
@@ -46,7 +42,7 @@ public class Climbing extends Behaviour
             return null;
         }
 
-        BehaviourTools t = new BehaviourTools( rabbit );
+        BehaviourTools t = new BehaviourTools( rabbit, world );
 
         switch ( rabbit.state )
         {

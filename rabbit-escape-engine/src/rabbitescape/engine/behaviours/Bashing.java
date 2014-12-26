@@ -53,7 +53,7 @@ public class Bashing extends Behaviour
 
             int nextX = destX( rabbit );
 
-            BehaviourTools t = new BehaviourTools( rabbit );
+            BehaviourTools t = new BehaviourTools( rabbit, world );
 
             if (
                    rising( rabbit, hereBlock )

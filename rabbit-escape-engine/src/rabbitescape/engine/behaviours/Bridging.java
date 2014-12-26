@@ -49,7 +49,7 @@ public class Bridging extends Behaviour
         if ( bigSteps <= 0 )
             // Only pick up a token if we've finished, and we can bridge
         {
-            BehaviourTools t = new BehaviourTools( rabbit );
+            BehaviourTools t = new BehaviourTools( rabbit, world );
 
             State possibleState = bridgingState(
                 t, rabbit, world, 3, 3, bridgeType );
@@ -76,7 +76,7 @@ public class Bridging extends Behaviour
             bigSteps = 3;
         }
 
-        BehaviourTools t = new BehaviourTools( rabbit );
+        BehaviourTools t = new BehaviourTools( rabbit, world );
 
         State ret = bridgingState(
             t, rabbit, world, bigSteps, smallSteps, bridgeType );
