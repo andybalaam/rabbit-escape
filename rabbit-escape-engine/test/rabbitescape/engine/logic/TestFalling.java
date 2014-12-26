@@ -1017,4 +1017,51 @@ public class TestFalling
             "      "
         );
     }
+
+    @Test
+    public void Dont_pick_up_tokens_when_falling_except_explode()
+    {
+        assertWorldEvolvesLike(
+            "rrrrrr" + "\n" +
+            "bdikcp" + "\n" +
+            "      " + "\n" +
+            "      " + "\n" +
+            "      " + "\n" +
+            "      " + "\n" +
+            "      " + "\n" +
+            "      " + "\n" +
+            "      ",
+
+            "      " + "\n" +
+            "      " + "\n" +
+            "bdikrP" + "\n" +
+            "fffff " + "\n" +
+            "fffff " + "\n" +
+            "      " + "\n" +
+            "      " + "\n" +
+            "      " + "\n" +
+            "      ",
+
+            "      " + "\n" +
+            "      " + "\n" +
+            "      " + "\n" +
+            "bdik  " + "\n" +
+            "ffffr " + "\n" +
+            "fffff " + "\n" +
+            "fffff " + "\n" +
+            "      " + "\n" +
+            "      ",
+
+            "      " + "\n" +
+            "      " + "\n" +
+            "      " + "\n" +
+            "      " + "\n" +
+            "bdik  " + "\n" +
+            "ffff  " + "\n" +
+            "rrrrr " + "\n" +
+            "fffff " + "\n" +
+            "fffff "
+        );
+    }
+
 }

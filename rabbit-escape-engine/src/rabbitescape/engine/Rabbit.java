@@ -13,6 +13,7 @@ import rabbitescape.engine.behaviours.*;
 public class Rabbit extends Thing
 {
     private final List<Behaviour> behaviours;
+    private final List<Behaviour> behavioursTriggerOrder;
 
     public Direction dir;
     public boolean onSlope;
@@ -22,45 +23,63 @@ public class Rabbit extends Thing
         super( x, y, RABBIT_WALKING_LEFT );
         this.dir = dir;
         this.onSlope = false;
-        behaviours = createBehaviours();
+        behaviours = new ArrayList<>();
+        behavioursTriggerOrder = new ArrayList<>();
+        createBehaviours();
     }
 
-    private static List<Behaviour> createBehaviours()
+    private void createBehaviours()
     {
-        List<Behaviour> ret = new ArrayList<>();
-
         Climbing climbing = new Climbing();
         Digging digging = new Digging( climbing );
+        Exploding exploding = new Exploding();
+        OutOfBounds outOfBounds = new OutOfBounds();
+        Exiting exiting = new Exiting();
+        Falling falling = new Falling( climbing );
+        Bashing bashing = new Bashing( climbing );
+        Bridging bridging = new Bridging( climbing );
+        Blocking blocking = new Blocking( climbing );
+        Walking walking = new Walking();
 
-        ret.add( new Exploding() );
-        ret.add( new OutOfBounds() );
-        ret.add( new Exiting() );
-        ret.add( new Falling( climbing ) );
-        ret.add( new Bashing( climbing ) );
-        ret.add( digging );
-        ret.add( new Bridging( climbing ) );
-        ret.add( new Blocking( climbing ) );
-        ret.add( climbing );
-        ret.add( new Walking() );
+        behavioursTriggerOrder.add( exploding );
+        behavioursTriggerOrder.add( outOfBounds );
+        behavioursTriggerOrder.add( exiting );
+        behavioursTriggerOrder.add( climbing );
+        behavioursTriggerOrder.add( falling );
+        behavioursTriggerOrder.add( bashing );
+        behavioursTriggerOrder.add( digging );
+        behavioursTriggerOrder.add( bridging );
+        behavioursTriggerOrder.add( blocking );
+        behavioursTriggerOrder.add( walking );
 
-        return ret;
+        behaviours.add( exploding );
+        behaviours.add( outOfBounds );
+        behaviours.add( exiting );
+        behaviours.add( falling );
+        behaviours.add( bashing );
+        behaviours.add( digging );
+        behaviours.add( bridging );
+        behaviours.add( blocking );
+        behaviours.add( climbing );
+        behaviours.add( walking );
+
+        assert behavioursTriggerOrder.size() == behaviours.size();
     }
 
     @Override
     public void calcNewState( World world )
     {
-        for ( Behaviour behaviour : behaviours )
+        for ( Behaviour behaviour : behavioursTriggerOrder )
         {
             behaviour.triggered = false;
         }
 
-        for ( Behaviour behaviour : behaviours )
+        for ( Behaviour behaviour : behavioursTriggerOrder )
         {
             behaviour.triggered = behaviour.checkTriggered( this, world );
             if ( behaviour.triggered )
             {
                 cancelAllBehavioursExcept( behaviour );
-                break;
             }
         }
 
