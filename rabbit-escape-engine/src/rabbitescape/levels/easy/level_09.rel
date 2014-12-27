@@ -1,0 +1,10 @@
+:num_rabbits=4
+:climb=20
+:num_to_save=4
+:rabbit_delay=5
+##############
+#            #
+# Q  #       #
+#    #  #    #
+#    #  #  O #
+##############
