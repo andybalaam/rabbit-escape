@@ -22,6 +22,8 @@ Later
 - Speed up time?
 - graphics:float
 - action:float
+- Fix desktop UI glitches e.g. slow mouse wheel scrolling in menus,
+  stuff disappearing
 
 Release 0.2 (Android)
 ---------------------
@@ -35,7 +37,9 @@ Release 0.2 (Android)
 Release 0.1 (Playable)
 ----------------------
 
-- Enough levels to be a game
+- 20 easy levels
+- 20 medium levels
+- 20 hard levels
 - Docs on making levels
 - Docs on installing
 - Per-level messages
