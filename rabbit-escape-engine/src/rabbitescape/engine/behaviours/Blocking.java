@@ -8,13 +8,6 @@ import rabbitescape.engine.ChangeDescription.State;
 
 public class Blocking extends Behaviour
 {
-    private final Climbing climbing;
-
-    public Blocking( Climbing climbing )
-    {
-        this.climbing = climbing;
-    }
-
     @Override
     public void cancel()
     {

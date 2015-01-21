@@ -12,12 +12,6 @@ import rabbitescape.engine.ChangeDescription.State;
 public class Bashing extends Behaviour
 {
     private int stepsOfBashing;
-    private final Climbing climbing;
-
-    public Bashing( Climbing climbing )
-    {
-        this.climbing = climbing;
-    }
 
     @Override
     public void cancel()

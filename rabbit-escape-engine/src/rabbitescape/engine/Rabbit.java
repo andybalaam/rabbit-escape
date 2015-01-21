@@ -31,14 +31,14 @@ public class Rabbit extends Thing
     private void createBehaviours()
     {
         Climbing climbing = new Climbing();
-        Digging digging = new Digging( climbing );
+        Digging digging = new Digging();
         Exploding exploding = new Exploding();
         OutOfBounds outOfBounds = new OutOfBounds();
         Exiting exiting = new Exiting();
         Falling falling = new Falling( climbing );
-        Bashing bashing = new Bashing( climbing );
-        Bridging bridging = new Bridging( climbing );
-        Blocking blocking = new Blocking( climbing );
+        Bashing bashing = new Bashing();
+        Bridging bridging = new Bridging();
+        Blocking blocking = new Blocking();
         Walking walking = new Walking();
 
         behavioursTriggerOrder.add( exploding );

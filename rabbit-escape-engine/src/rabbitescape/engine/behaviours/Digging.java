@@ -8,13 +8,7 @@ import rabbitescape.engine.ChangeDescription.State;
 
 public class Digging extends Behaviour
 {
-    private final Climbing climbing;
     private boolean cancelled;
-
-    public Digging( Climbing climbing )
-    {
-        this.climbing = climbing;
-    }
 
     @Override
     public void cancel()

@@ -1,10 +1,6 @@
 package rabbitescape.engine;
 
-import static rabbitescape.engine.Direction.*;
-
 import java.util.Map;
-
-import rabbitescape.engine.ChangeDescription.State;
 
 public class BehaviourState
 {

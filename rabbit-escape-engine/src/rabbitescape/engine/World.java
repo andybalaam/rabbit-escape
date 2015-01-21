@@ -1,7 +1,6 @@
 package rabbitescape.engine;
 
 import static rabbitescape.engine.util.Util.*;
-import static rabbitescape.engine.Block.Type.*;
 
 import java.util.ArrayList;
 import java.util.List;

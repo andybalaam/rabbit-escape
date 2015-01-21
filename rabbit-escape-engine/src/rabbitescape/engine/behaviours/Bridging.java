@@ -23,13 +23,6 @@ public class Bridging extends Behaviour
     private int bigSteps = 0;
     private BridgeType bridgeType = BridgeType.ALONG;
 
-    private final Climbing climbing;
-
-    public Bridging( Climbing climbing )
-    {
-        this.climbing = climbing;
-    }
-
     @Override
     public void cancel()
     {
@@ -37,6 +30,7 @@ public class Bridging extends Behaviour
         smallSteps = 0;
     }
 
+    @Override
     public boolean checkTriggered( Rabbit rabbit, World world )
     {
         nextStep();
