@@ -37,7 +37,7 @@ Release 0.2 (Android)
 Release 0.1 (Playable)
 ----------------------
 
-- 20 easy levels
+- ~~20 easy levels~~
 - 20 medium levels
 - 20 hard levels
 - Docs on making levels
