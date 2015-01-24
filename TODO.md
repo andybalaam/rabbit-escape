@@ -38,11 +38,12 @@ Release 0.1 (Playable)
 ----------------------
 
 - ~~20 easy levels~~
-- 20 medium levels
+- ~~20 medium levels~~
 - 20 hard levels
 - Docs on making levels
 - Docs on installing
 - Per-level messages
+- Squares shown in the background
 - ~~Make bridge token next to wall build forwards~~
 - ~~Fix bug where digging through slope then falling keeps digging.~~
 - ~~Check all possible states have graphics~~
