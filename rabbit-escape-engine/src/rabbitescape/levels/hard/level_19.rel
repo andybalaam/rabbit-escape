@@ -1,0 +1,17 @@
+:num_rabbits=5
+:rabbit_delay=10
+:num_to_save=5
+:bridge=5
+:climb=5
+:dig=5
+:block=5
+:explode=5
+##############
+#            #
+#            #
+#   ######   #
+#   ######   #
+# Q ######   #
+#   ######   #
+#   #      O #
+##############
