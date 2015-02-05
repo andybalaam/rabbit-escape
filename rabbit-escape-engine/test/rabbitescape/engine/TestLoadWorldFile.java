@@ -15,4 +15,13 @@ public class TestLoadWorldFile
             equalTo( new String[] { "a", "b", "c" } )
         );
     }
+
+    @Test
+    public void Pretty_name_from_file_name()
+    {
+        assertThat(
+            LoadWorldFile.levelName( "easy/level_01.rel" ),
+            equalTo( "easy level 1" )
+        );
+    }
 }

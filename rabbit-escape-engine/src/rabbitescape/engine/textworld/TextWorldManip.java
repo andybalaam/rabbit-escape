@@ -56,6 +56,12 @@ public class TextWorldManip
     public static World createWorld( String... lines )
         throws WrongLineLength, UnknownCharacter
     {
+        return createWorldWithName( "", lines );
+    }
+
+    public static World createWorldWithName(
+        String nameIfNoneSupplied, String... lines )
+    {
         List<Block> blocks = new ArrayList<>();
         List<Rabbit> rabbits = new ArrayList<>();
         List<Thing> things = new ArrayList<>();
@@ -72,7 +78,7 @@ public class TextWorldManip
             rabbits,
             things,
             abilities,
-            processor.metaString( name, "" ),
+            processor.metaString( name, nameIfNoneSupplied ),
             processor.metaString( description, "" ),
             num_rabs,
             processor.metaInt( num_to_save,  1 ),

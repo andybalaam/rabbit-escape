@@ -393,6 +393,28 @@ public class TestTextWorldManip
     }
 
     @Test
+    public void Can_supply_default_name()
+    {
+        assertThat(
+            createWorldWithName( "defname", new String[] {} ).name,
+            equalTo( "defname" )
+        );
+    }
+
+    @Test
+    public void Default_name_is_ignored_if_name_property_found()
+    {
+        String[] lines = {
+            ":name=bar"
+        };
+
+        assertThat(
+            createWorldWithName( "defname", lines ).name,
+            equalTo( "bar" )
+        );
+    }
+
+    @Test
     public void Can_provide_world_name()
     {
         String[] lines = {

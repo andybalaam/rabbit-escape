@@ -69,12 +69,21 @@ public class LoadWorldFile
     {
         try
         {
-            return TextWorldManip.createWorld( loadLines( fileName ) );
+            return TextWorldManip.createWorldWithName(
+                levelName( fileName ), loadLines( fileName ) );
         }
         catch( RabbitEscapeException e )
         {
             throw new Failed( fileName, e );
         }
+    }
+
+    public static String levelName( String fileName )
+    {
+        return fileName
+            .replaceAll( "\\.rel$", "" )
+            .replaceAll( "[/_]", " " )
+            .replaceAll( "0+(\\d+)", "$1" );
     }
 
     private String[] loadLines( String fileName )
