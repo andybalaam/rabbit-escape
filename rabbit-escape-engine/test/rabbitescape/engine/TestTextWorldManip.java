@@ -406,6 +406,19 @@ public class TestTextWorldManip
     }
 
     @Test
+    public void Can_provide_world_description()
+    {
+        String[] lines = {
+            ":description=Go here, then there"
+        };
+
+        assertThat(
+            createWorld( lines ).description,
+            equalTo( "Go here, then there" )
+        );
+    }
+
+    @Test
     public void Can_provide_number_of_rabbits()
     {
         String[] lines = {
@@ -541,7 +554,8 @@ public class TestTextWorldManip
     public void Round_trip_world_with_metadata()
     {
         String[] lines = {
-            ":name=My Round Trip",
+            ":name=My X Trip",
+            ":description=X around",
             ":num_rabbits=25",
             ":num_to_save=4",
             ":rabbit_delay=2",
@@ -624,6 +638,7 @@ public class TestTextWorldManip
     {
         String[] lines = {
             ":name=My Round Trip",
+            ":description=Go around",
             ":num_rabbits=25",
             ":num_to_save=4",
             ":rabbit_delay=2",

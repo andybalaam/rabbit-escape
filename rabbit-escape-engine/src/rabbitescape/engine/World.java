@@ -103,6 +103,7 @@ public class World
     public final List<Thing> things;
     public final Map<Token.Type, Integer> abilities;
     public final String name;
+    public final String description;
     public final int num_rabbits;
     public final int num_to_save;
     public final int rabbit_delay;
@@ -124,6 +125,7 @@ public class World
         List<Thing> things,
         Map<Token.Type, Integer> abilities,
         String name,
+        String description,
         int num_rabbits,
         int num_to_save,
         int rabbit_delay,
@@ -141,6 +143,7 @@ public class World
         this.things = things;
         this.abilities = abilities;
         this.name = name;
+        this.description = description;
         this.num_rabbits = num_rabbits;
         this.num_to_save = num_to_save;
         this.rabbit_delay = rabbit_delay;

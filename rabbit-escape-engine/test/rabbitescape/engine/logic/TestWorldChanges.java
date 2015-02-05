@@ -100,7 +100,8 @@ public class TestWorldChanges
     {
         String[] worldText = new String[]
         {
-            ":name=My Round Trip",
+            ":name=My Round X",
+            ":description=Go and\nreturn",
             ":num_rabbits=25",
             ":num_to_save=4",
             ":rabbit_delay=2",

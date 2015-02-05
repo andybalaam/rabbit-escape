@@ -10,6 +10,7 @@ import rabbitescape.engine.util.Dimension;
 public class TextWorldManip
 {
     private static final String name                 = "name";
+    private static final String description          = "description";
     private static final String num_rabbits          = "num_rabbits";
     private static final String num_to_save          = "num_to_save";
     private static final String rabbit_delay         = "rabbit_delay";
@@ -30,7 +31,8 @@ public class TextWorldManip
     );
 
     public static final List<String> META_STRINGS = Arrays.asList(
-        name
+        name,
+        description
     );
 
     public static final List<String> META_BOOLS = Arrays.asList(
@@ -70,7 +72,8 @@ public class TextWorldManip
             rabbits,
             things,
             abilities,
-            processor.metaString( name, "Untitled" ),
+            processor.metaString( name, "" ),
+            processor.metaString( description, "" ),
             num_rabs,
             processor.metaInt( num_to_save,  1 ),
             processor.metaInt( rabbit_delay, 4 ),
@@ -92,6 +95,7 @@ public class TextWorldManip
             new ArrayList<Thing>(),
             new HashMap<Token.Type, Integer>(),
             "Empty World",
+            "",
             0,
             1,
             4,
@@ -146,6 +150,7 @@ public class TextWorldManip
         List<String> ret = new ArrayList<String>();
 
         ret.add( metaLine( name,         world.name ) );
+        ret.add( metaLine( description,  world.description ) );
         ret.add( metaLine( num_rabbits,  world.num_rabbits ) );
         ret.add( metaLine( num_to_save,  world.num_to_save ) );
         ret.add( metaLine( rabbit_delay, world.rabbit_delay ) );
