@@ -5,6 +5,8 @@ Rabbit Escape is a mobile game inspired by Lemmings and Pingus
 in which you must rescue some rabbits from a hostile environment
 by giving them special abilities.
 
+Find out more at ![](http://artificialworlds.net/rabbit-escape).
+
 Screenshots
 -----------
 
@@ -31,10 +33,8 @@ and, of course, text:
 Running
 -------
 
-    make rungui          # The Swing interface on a test level
-    make runmenu         # Real levels in Swing via a menu
-    make run             # The classic non-interactive text interface
-    make runinteractive  # An interactive text UI
+    make rungui          # Launch Swing GUI
+    make runmenu         # Launch text interface
     make runat           # The animation tester
 
 Developers
