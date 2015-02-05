@@ -57,7 +57,7 @@ public class SwingGameLoop implements GameLoop
     }
 
     private static final int framesPerStep = 10;
-    private static final Color overlay = new Color( 0.5f, 0.5f, 0.5f, 0.5f );
+    private static final Color overlay = new Color( 0.7f, 0.7f, 0.7f, 0.8f );
 
     public final World world;
     private final LevelWinListener winListener;
@@ -311,7 +311,19 @@ public class SwingGameLoop implements GameLoop
         private void introMessage( OverlayMessage message, World world )
         {
             message.heading = t( world.name );
-            message.text1   = t( "Click the screen to continue." );
+            if ( world.description.isEmpty() )
+            {
+                message.text1 = t( "Click the screen to continue." );
+            }
+            else
+            {
+                String[] lines = world.description.split( "\\\\n", 2 );
+                message.text1 = lines[0];
+                if ( lines.length == 2 )
+                {
+                    message.text2 = lines[1];
+                }
+            }
         }
 
         private void writeText(
