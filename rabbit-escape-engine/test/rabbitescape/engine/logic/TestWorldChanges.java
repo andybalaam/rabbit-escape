@@ -68,6 +68,7 @@ public class TestWorldChanges
             "  r ",
             "####"
         );
+        world.setIntro( false );
 
         world.abilities.put( Token.Type.bash, 201 );
 
@@ -106,6 +107,7 @@ public class TestWorldChanges
             ":num_saved=5",
             ":num_killed=4",
             ":num_waiting=16",
+            ":intro=false",
             ":paused=false",
             ":ready_to_explode_all=false",
             ":bash=1",

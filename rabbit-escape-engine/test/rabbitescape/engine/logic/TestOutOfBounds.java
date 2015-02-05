@@ -55,6 +55,7 @@ public class TestOutOfBounds
     private void assertRabbitDeadAfter( int stepsToDeath, String... worldLines )
     {
         World world = createWorld( worldLines );
+        world.setIntro( false );
 
         for ( int i = 1; i < stepsToDeath; ++i )
         {

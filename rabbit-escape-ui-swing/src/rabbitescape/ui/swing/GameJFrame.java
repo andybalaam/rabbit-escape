@@ -350,6 +350,11 @@ public class GameJFrame extends JFrame
         gameLoop.world.setReadyToExplodeAll( false );
     }
 
+    private void leaveIntro()
+    {
+        gameLoop.world.setIntro( false );
+    }
+
     private void setMuted( boolean muted )
     {
         ConfigTools.setBool( uiConfig, CFG_MUTED, muted );
@@ -364,6 +369,11 @@ public class GameJFrame extends JFrame
             case WON:
             {
                 exit();
+                return;
+            }
+            case INTRO:
+            {
+                leaveIntro();
                 return;
             }
             case READY_TO_EXPLODE_ALL:

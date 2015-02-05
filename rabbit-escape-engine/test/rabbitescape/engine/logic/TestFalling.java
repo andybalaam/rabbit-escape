@@ -21,6 +21,7 @@ public class TestFalling
             "     ",
             "#####"
         );
+        world.setIntro( false );
 
         world.step();
 
@@ -46,6 +47,7 @@ public class TestFalling
             "     ",
             "#####"
         );
+        world.setIntro( false );
 
         assertThat(
             renderWorld( world, true, false ),
@@ -83,6 +85,7 @@ public class TestFalling
             "     ",
             "#####"
         );
+        world.setIntro( false );
 
         assertThat(
             renderWorld( world, true, false ),
@@ -138,6 +141,7 @@ public class TestFalling
             "     ",
             "#####"
         );
+        world.setIntro( false );
 
         world.step();     // Falling
         world.step();
@@ -216,6 +220,7 @@ public class TestFalling
             "     ",
             "#####"
         );
+        world.setIntro( false );
 
         world.step();
         world.step();
@@ -273,6 +278,7 @@ public class TestFalling
             "  #\\ ",
             "#####"
         );
+        world.setIntro( false );
 
         assertThat(
             renderWorld( world, true, false ),
@@ -306,6 +312,7 @@ public class TestFalling
             "   ) ",
             "    )"
         );
+        world.setIntro( false );
 
         assertThat(
             renderWorld( world, true, false ),
@@ -404,6 +411,7 @@ public class TestFalling
             "  /# ",
             "#####"
         );
+        world.setIntro( false );
 
         assertThat(
             renderWorld( world, true, false ),
@@ -437,6 +445,7 @@ public class TestFalling
             "  (# ",
             "#####"
         );
+        world.setIntro( false );
 
         assertThat(
             renderWorld( world, true, false ),
@@ -470,6 +479,7 @@ public class TestFalling
             "  /# ",
             "#####"
         );
+        world.setIntro( false );
 
         assertThat(
             renderWorld( world, true, false ),
@@ -503,6 +513,7 @@ public class TestFalling
             "  (# ",
             "#####"
         );
+        world.setIntro( false );
 
         assertThat(
             renderWorld( world, true, false ),
@@ -536,6 +547,7 @@ public class TestFalling
             "  #\\ ",
             "#####"
         );
+        world.setIntro( false );
 
         assertThat(
             renderWorld( world, true, false ),
@@ -569,6 +581,7 @@ public class TestFalling
             "  #) ",
             "#####"
         );
+        world.setIntro( false );
 
         assertThat(
             renderWorld( world, true, false ),
@@ -601,6 +614,7 @@ public class TestFalling
             "  #\\ ",
             "#####"
         );
+        world.setIntro( false );
 
         assertThat(
             renderWorld( world, true, false ),
@@ -659,6 +673,7 @@ public class TestFalling
             "  /# ",
             "#####"
         );
+        world.setIntro( false );
 
         assertThat(
             renderWorld( world, true, false ),
@@ -689,6 +704,7 @@ public class TestFalling
             "  (# ",
             "#####"
         );
+        world.setIntro( false );
 
         assertThat(
             renderWorld( world, true, false ),
@@ -719,6 +735,7 @@ public class TestFalling
             "  #\\ ",
             "#####"
         );
+        world.setIntro( false );
 
         assertThat(
             renderWorld( world, true, false ),
@@ -749,6 +766,7 @@ public class TestFalling
             "  #) ",
             "#####"
         );
+        world.setIntro( false );
 
         assertThat(
             renderWorld( world, true, false ),
@@ -787,6 +805,7 @@ public class TestFalling
             "/##\\",
             "####"
         );
+        world.setIntro( false );
 
         world.step();
         world.step();
@@ -856,6 +875,7 @@ public class TestFalling
             "(##)",
             "####"
         );
+        world.setIntro( false );
 
         world.step();
         world.step();
@@ -921,6 +941,7 @@ public class TestFalling
             "     ",
             "#####"
         );
+        world.setIntro( false );
 
         world.step();     // Falling
         world.step();

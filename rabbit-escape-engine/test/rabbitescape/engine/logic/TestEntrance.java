@@ -21,6 +21,7 @@ public class TestEntrance
             "     ",
             "#####"
         );
+        world.setIntro( false );
 
         world.step();
 
@@ -45,6 +46,7 @@ public class TestEntrance
             "                ",
             "################"
         );
+        world.setIntro( false );
 
         fiveSteps( world );
 
@@ -80,6 +82,7 @@ public class TestEntrance
             "                ",
             "################"
         );
+        world.setIntro( false );
 
         fiveSteps( world );
 
@@ -115,6 +118,7 @@ public class TestEntrance
             "                ",
             "################"
         );
+        world.setIntro( false );
 
         fiveSteps( world );
 
@@ -150,6 +154,7 @@ public class TestEntrance
             "                ",
             "################"
         );
+        world.setIntro( false );
 
         fiveSteps( world );
 

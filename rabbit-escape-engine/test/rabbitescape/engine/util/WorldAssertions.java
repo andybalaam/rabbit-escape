@@ -114,6 +114,7 @@ public class WorldAssertions
         String initialState, String[] laterStates, boolean reverseOrder )
     {
         World world = createWorld( split( initialState, "\n" ) );
+        world.setIntro( false );
 
         if ( reverseOrder )
         {

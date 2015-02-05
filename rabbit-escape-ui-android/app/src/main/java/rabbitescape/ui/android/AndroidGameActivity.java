@@ -65,6 +65,7 @@ public class AndroidGameActivity extends ActionBarActivity implements NumLeftLis
 
         staticInit();
         World world = loadWorld( levelFileName, savedInstanceState );
+        world.setIntro( false ); // TODO: support an intro screen
         buildDynamicUi( getResources(), world, levelFileName, levelNum, savedInstanceState );
         restoreFromState( savedInstanceState );
     }

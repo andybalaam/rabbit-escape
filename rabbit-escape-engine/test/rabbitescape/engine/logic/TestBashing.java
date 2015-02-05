@@ -18,6 +18,7 @@ public class TestBashing
             " rb   bj ",
             "#########"
         );
+        world.setIntro( false );
 
         world.step();
 
@@ -47,6 +48,7 @@ public class TestBashing
             " rb#     #bj ",
             "#############"
         );
+        world.setIntro( false );
 
         world.step();
 
@@ -86,6 +88,7 @@ public class TestBashing
             " rb###     ###bj ",
             "#################"
         );
+        world.setIntro( false );
 
         world.step();
 
@@ -166,6 +169,7 @@ public class TestBashing
                 " rb# # # #bj ",
                 "#############"
         );
+        world.setIntro( false );
 
         world.step();
 

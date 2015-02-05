@@ -139,7 +139,7 @@ public class SwingGameLoop implements GameLoop
                     renderer,
                     animator,
                     f,
-                    world.completionState()
+                    world
                 ).run();
 
 
@@ -184,7 +184,7 @@ public class SwingGameLoop implements GameLoop
         private final Renderer renderer;
         private final SpriteAnimator animator;
         private final int frameNum;
-        private final CompletionState completionState;
+        private final World world;
 
         public DrawFrame(
             BufferStrategy strategy,
@@ -192,7 +192,7 @@ public class SwingGameLoop implements GameLoop
             Renderer renderer,
             SpriteAnimator animator,
             int frameNum,
-            CompletionState completionState
+            World world
         )
         {
             super( strategy );
@@ -200,7 +200,7 @@ public class SwingGameLoop implements GameLoop
             this.renderer = renderer;
             this.animator = animator;
             this.frameNum = frameNum;
-            this.completionState = completionState;
+            this.world = world;
         }
 
         @Override
@@ -259,12 +259,17 @@ public class SwingGameLoop implements GameLoop
         private OverlayMessage messageForState()
         {
             OverlayMessage message = new OverlayMessage();
-            switch( completionState )
+            switch( world.completionState() )
             {
                 case RUNNING:
                 case PAUSED:
                 {
                     // No overlay in these cases
+                    break;
+                }
+                case INTRO:
+                {
+                    introMessage( message, world );
                     break;
                 }
                 case WON:
@@ -295,10 +300,18 @@ public class SwingGameLoop implements GameLoop
                 default:
                 {
                     throw new AssertionError(
-                        "Unknown completion state: " + completionState );
+                        "Unknown completion state: "
+                        + world.completionState()
+                    );
                 }
             }
             return message;
+        }
+
+        private void introMessage( OverlayMessage message, World world )
+        {
+            message.heading = t( world.name );
+            message.text1   = t( "Click the screen to continue." );
         }
 
         private void writeText(

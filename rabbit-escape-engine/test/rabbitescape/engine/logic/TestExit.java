@@ -18,6 +18,7 @@ public class TestExit
             "r  O ",
             "#####"
         );
+        world.setIntro( false );
 
         world.step();
 
@@ -67,6 +68,7 @@ public class TestExit
             "Ojjjj   ",
             "########"
         );
+        world.setIntro( false );
 
         world.step();
         assertThat( world.num_saved, equalTo( 0 ) );

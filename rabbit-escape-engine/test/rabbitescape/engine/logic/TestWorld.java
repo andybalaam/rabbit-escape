@@ -27,6 +27,7 @@ public class TestWorld
             "   O ",
             "#####"
         );
+        world.setIntro( false );
 
         world.step();
         world.step();
@@ -57,6 +58,7 @@ public class TestWorld
             " O ",  // Exit right below entrance
             "###"
         );
+        world.setIntro( false );
 
         world.step(); // First one over the exit
 
@@ -89,6 +91,7 @@ public class TestWorld
             "   ",
             "###"
         );
+        world.setIntro( false );
 
         // We should now be finished
         assertThat( world.completionState(), equalTo( WON ) );
@@ -104,6 +107,7 @@ public class TestWorld
             "   ",
             "###"
         );
+        world.setIntro( false );
 
         // We should now be finished
         assertThat( world.completionState(), equalTo( LOST ) );
@@ -131,6 +135,7 @@ public class TestWorld
                 "   ",
                 "###"
         );
+        world.setIntro( false );
 
         // This is what we are testing
         world.changes.addToken( 0, 0, Token.Type.bash );
@@ -154,6 +159,7 @@ public class TestWorld
                 "   ",
                 "###"
         );
+        world.setIntro( false );
 
         // Use up the last bash
         world.changes.addToken( 0, 0, Token.Type.bash );
@@ -183,6 +189,7 @@ public class TestWorld
             " i ",
             "###"
         );
+        world.setIntro( false );
 
         Token token = world.getTokenAt( 1, 0 );
 
@@ -237,6 +244,7 @@ public class TestWorld
             "###",
             ":*=rr"  // 2 rabbits in the same place
         );
+        world.setIntro( false );
 
         world.step();  // Now 1 is a bridger
 
@@ -254,6 +262,7 @@ public class TestWorld
             "###",
             ":*=rr"  // 2 rabbits in the same place
         );
+        world.setIntro( false );
 
         world.step();  // Now 1 is a bridger
 
@@ -273,6 +282,7 @@ public class TestWorld
             "#r#r#r#r#r#",
             "###########"
         );
+        world.setIntro( false );
 
         world.step();
 

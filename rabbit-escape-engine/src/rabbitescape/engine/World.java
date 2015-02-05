@@ -89,6 +89,7 @@ public class World
 
     public enum CompletionState
     {
+        INTRO,
         RUNNING,
         PAUSED,
         READY_TO_EXPLODE_ALL,
@@ -109,6 +110,8 @@ public class World
     public int num_saved;
     public int num_killed;
     public int num_waiting;
+
+    public boolean intro;
     public boolean paused;
     public boolean readyToExplodeAll;
 
@@ -127,6 +130,7 @@ public class World
         int num_saved,
         int num_killed,
         int num_waiting,
+        boolean intro,
         boolean paused,
         boolean readyToExplodeAll
     )
@@ -143,6 +147,7 @@ public class World
         this.num_saved = num_saved;
         this.num_killed = num_killed;
         this.num_waiting = num_waiting;
+        this.intro = intro;
         this.paused = paused;
         this.readyToExplodeAll = readyToExplodeAll;
 
@@ -213,7 +218,11 @@ public class World
 
     public CompletionState completionState()
     {
-        if ( readyToExplodeAll )
+        if ( intro )
+        {
+            return CompletionState.INTRO;
+        }
+        else if ( readyToExplodeAll )
         {
             return CompletionState.READY_TO_EXPLODE_ALL;
         }
@@ -283,5 +292,10 @@ public class World
     public void setPaused( boolean paused )
     {
         this.paused = paused;
+    }
+
+    public void setIntro( boolean intro )
+    {
+        this.intro = intro;
     }
 }
