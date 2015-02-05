@@ -1,3 +1,5 @@
+:name=Saw tooth
+:description=Bridge, climb, bridge.
 :num_rabbits=2
 :num_to_save=2
 :climb=2

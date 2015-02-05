@@ -1,3 +1,5 @@
+:name=Cliff face
+:description=Get the hang of placing bridging tokens at the end of a\nbridge.  Use a blocker to slow the others down.
 :num_rabbits=12
 :num_to_save=11
 :climb=20

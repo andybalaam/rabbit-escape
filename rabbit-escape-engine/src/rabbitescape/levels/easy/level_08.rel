@@ -1,3 +1,5 @@
+:name=Dig quick
+:description=Quick, dig before it's too late!
 :num_rabbits=1
 :dig=2
 :num_to_save=1

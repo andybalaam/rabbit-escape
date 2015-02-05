@@ -1,3 +1,5 @@
+:name=Three strikes
+:description=You will need several different abilities\nto get past each of the towers in your way.
 :num_rabbits=2
 :num_to_save=2
 :climb=2

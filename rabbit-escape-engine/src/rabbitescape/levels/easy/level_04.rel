@@ -1,3 +1,5 @@
+:name=Block before you drop
+:description=Drop blocking tokens to stop rabbits falling off.\nBlow up your blockers at the end.
 :num_rabbits=10
 :num_to_save=2
 :rabbit_delay=5

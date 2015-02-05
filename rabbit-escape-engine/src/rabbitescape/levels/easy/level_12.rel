@@ -1,3 +1,5 @@
+:name=Across the void
+:description=Build lots of bridges to get across\nwithout falling out of the world.
 :num_rabbits=5
 :num_to_save=2
 :rabbit_delay=4

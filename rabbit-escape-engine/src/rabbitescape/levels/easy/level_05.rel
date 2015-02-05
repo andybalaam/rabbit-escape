@@ -1,3 +1,5 @@
+:name=Get down
+:description=Place digging tokens in the right places\nto avoid falling too far.
 :num_rabbits=10
 :rabbit_delay=5
 :num_to_save=10

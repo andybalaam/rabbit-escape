@@ -1,3 +1,5 @@
+:name=Climbing practice
+:description=Place climbing tokens to give your rabbits\nthe ability to get over things.
 :num_rabbits=4
 :climb=20
 :num_to_save=4

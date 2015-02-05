@@ -1,3 +1,5 @@
+:name=Give us a leg up
+:description=You'll need to work together to get three of your\nrabbits to the exit!
 :num_rabbits=4
 :num_to_save=3
 :climb=3

@@ -1,3 +1,5 @@
+:name=Come together
+:description=You don't have enough diggers to take\neveryone straight down.  What will you do?
 :num_rabbits=20
 :num_to_save=15
 :dig=2

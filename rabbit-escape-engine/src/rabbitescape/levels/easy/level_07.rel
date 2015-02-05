@@ -1,3 +1,5 @@
+:name=Get in the burrow
+:description=You will need to dig accurately\nto get your rabbits home.
 :bash=1
 :dig=2
 :num_rabbits=20
