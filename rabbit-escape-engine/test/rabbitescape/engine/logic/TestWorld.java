@@ -114,6 +114,21 @@ public class TestWorld
     }
 
     @Test
+    public void World_is_in_intro_status_at_the_start()
+    {
+        World world = createWorld(
+            ":num_rabbits=0",
+            ":num_saved=2",
+            ":num_to_save=3",
+            "   ",
+            "###"
+        );
+
+        // We should now be finished
+        assertThat( world.completionState(), equalTo( INTRO ) );
+    }
+
+    @Test
     public void World_stores_number_of_abilities()
     {
         World world = createWorld(
