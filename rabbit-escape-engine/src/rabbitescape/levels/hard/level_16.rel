@@ -1,16 +1,21 @@
-:name=Minecraft
-:num_rabbits=1
-:num_to_save=1
-:bridge=2
-:dig=4
-:bash=4
-:climb=4
-##########################
-##  ##  ##  ##############
-#   #   #   ##############
-#                        #
-#                        #
-#Q                       #
-#                      O #
-#    /#ppp#ppp#ppp#ppp####
-##########################
+:name=Makes Me Cross
+:num_rabbits=5
+:num_to_save=5
+:rabbit_delay=1
+:climb=10
+:bridge=10
+:bash=10
+:dig=10
+:explode=10
+:block=10
+             ####
+                #
+   Q            #
+                #
+   \            #
+   #\        O  #
+   ##\       ####
+    ##\         #
+     ##\        #
+      ##\       #
+                #
