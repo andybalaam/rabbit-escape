@@ -83,7 +83,7 @@ public class GameJFrame extends JFrame
     private final Container contentPane;
     private final JPanel middlePanel;
     private final Dimension buttonSizeInPixels;
-    private Dimension worldSizeInPixels;
+    public Dimension worldSizeInPixels;
     private int worldTileSizeInPixels;
     private final Config uiConfig;
     private final BitmapCache<SwingBitmap> bitmapCache;
@@ -392,8 +392,11 @@ public class GameJFrame extends JFrame
             return;
         }
 
-        int gridX = ( pixelPosition.x + scrollX ) / worldTileSizeInPixels;
-        int gridY = ( pixelPosition.y + scrollY ) / worldTileSizeInPixels;
+        int gridX = ( pixelPosition.x - gameLoop.renderer.offsetX )
+            / worldTileSizeInPixels;
+
+        int gridY = ( pixelPosition.y - gameLoop.renderer.offsetY )
+            / worldTileSizeInPixels;
 
         int numLeft = gameLoop.addToken( chosenAbility, gridX, gridY );
 

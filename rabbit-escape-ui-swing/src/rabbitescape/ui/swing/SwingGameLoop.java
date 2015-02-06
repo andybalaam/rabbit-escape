@@ -68,6 +68,7 @@ public class SwingGameLoop implements GameLoop
 
     private final GameJFrame jframe;
     private final BitmapCache<SwingBitmap> bitmapCache;
+    public final Renderer renderer;
 
     public SwingGameLoop(
         SwingGameInit init, World world, LevelWinListener winListener )
@@ -84,6 +85,8 @@ public class SwingGameLoop implements GameLoop
 
         this.jframe = uiPieces.jframe;
         this.bitmapCache = uiPieces.bitmapCache;
+
+        this.renderer = new Renderer( 0, 0, renderingTileSize );
 
         jframe.setGameLoop( this );
 
@@ -107,8 +110,6 @@ public class SwingGameLoop implements GameLoop
         int imagesTileSize = 32;
 
         BufferStrategy strategy = jframe.canvas.getBufferStrategy();
-        Renderer renderer = new Renderer(
-            -jframe.scrollX, -jframe.scrollY, renderingTileSize );
 
         AnimationCache animationCache = new AnimationCache(
             new AnimationLoader() );
@@ -129,7 +130,7 @@ public class SwingGameLoop implements GameLoop
             int f = 0;
             while ( running && f < framesPerStep )
             {
-                renderer.setOffset( -jframe.scrollX, -jframe.scrollY );
+                setRendererOffset( renderer );
 
                 sleep( 50 );
 
@@ -154,6 +155,34 @@ public class SwingGameLoop implements GameLoop
                     sleep( 500 );
                 }
             }
+        }
+    }
+
+    private void setRendererOffset( Renderer renderer )
+    {
+        renderer.setOffset(
+            calcOffset(
+                jframe.scrollX,
+                jframe.canvas.getWidth(),
+                jframe.worldSizeInPixels.width
+            ),
+            calcOffset(
+                jframe.scrollY,
+                jframe.canvas.getHeight(),
+                jframe.worldSizeInPixels.height
+            )
+        );
+    }
+
+    private int calcOffset( int scroll, int canvasSize, int worldSize )
+    {
+        if ( worldSize < canvasSize )
+        {
+            return ( ( canvasSize - worldSize ) / 2 );
+        }
+        else
+        {
+            return -scroll;
         }
     }
 
