@@ -1,5 +1,5 @@
 :name=Digging practice
-:description=Click the orange button on the left, then click\nsomewhere to drop a digging token for a rabbit.
+:description=Choose the orange circle button on the left, then click\nsomewhere to drop token to make your rabbit dig.
 :num_rabbits=3
 :num_to_save=1
 :dig=5
