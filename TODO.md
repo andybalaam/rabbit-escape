@@ -30,19 +30,20 @@ Release 0.2 (Android)
 
 - Android menus launch real levels
 - Android menus update when you win
-- Centre the game canvas when smaller than the window
 - ~~Android game loop~~
 - ~~Android graphics~~
 
 Release 0.1 (Playable)
 ----------------------
 
+- Centre the game canvas when smaller than the window
+- Order and name all levels
 - ~~20 easy levels~~
 - ~~20 medium levels~~
-- 20 hard levels
+- ~~20 hard levels~~
 - Docs on making levels
 - Docs on installing
-- Per-level messages
+- ~~Per-level messages~~
 - Squares shown in the background
 - ~~Make bridge token next to wall build forwards~~
 - ~~Fix bug where digging through slope then falling keeps digging.~~
