@@ -36,15 +36,15 @@ Release 0.2 (Android)
 Release 0.1 (Playable)
 ----------------------
 
+- Docs on making levels
+- Docs on installing
+- Squares shown in the background
 - Centre the game canvas when smaller than the window
-- Order and name all levels
+- ~~Order and name all levels~~
 - ~~20 easy levels~~
 - ~~20 medium levels~~
 - ~~20 hard levels~~
-- Docs on making levels
-- Docs on installing
 - ~~Per-level messages~~
-- Squares shown in the background
 - ~~Make bridge token next to wall build forwards~~
 - ~~Fix bug where digging through slope then falling keeps digging.~~
 - ~~Check all possible states have graphics~~
