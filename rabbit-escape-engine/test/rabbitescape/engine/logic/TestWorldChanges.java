@@ -131,7 +131,7 @@ public class TestWorldChanges
         world.changes.saveRabbit( rabbit1 );
         world.changes.addToken( 2, 1, Token.Type.bash );
         world.changes.removeToken( tok0 );
-        world.changes.addBlock( new Block( 1, 1, Block.Type.solid_flat ) );
+        world.changes.addBlock( new Block( 1, 1, Block.Type.solid_flat, 0 ) );
         world.changes.removeBlockAt( 0, 0 );
 
         // This is what we are testing - revert the changes

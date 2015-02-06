@@ -16,6 +16,7 @@ import rabbitescape.engine.Rabbit;
 import rabbitescape.engine.Thing;
 import rabbitescape.engine.Token;
 import rabbitescape.engine.util.Dimension;
+import rabbitescape.engine.util.VariantGenerator;
 
 class LineProcessor
 {
@@ -51,7 +52,8 @@ class LineProcessor
         List<Rabbit> rabbits,
         List<Thing> things,
         Map<Token.Type, Integer> abilities,
-        String[] lines
+        String[] lines,
+        VariantGenerator variantGen
     )
     {
         this.blocks = blocks;
@@ -69,7 +71,7 @@ class LineProcessor
         lineNum = 0;
         currentStarPoint = 0;
 
-        process();
+        process( variantGen );
     }
 
     public String metaString( String key, String def )
@@ -116,17 +118,17 @@ class LineProcessor
         return new Dimension( width, height );
     }
 
-    private void process()
+    private void process( VariantGenerator variantGen )
     {
         for ( String line : lines )
         {
             if ( line.startsWith( ":" ) )
             {
-                processMetaLine( line );
+                processMetaLine( line, variantGen );
             }
             else
             {
-                processItemsLine( line );
+                processItemsLine( line, variantGen );
             }
             ++lineNum;
         }
@@ -137,7 +139,7 @@ class LineProcessor
         }
     }
 
-    private void processMetaLine( String line )
+    private void processMetaLine( String line, VariantGenerator variantGen )
     {
         String[] splitLine = line.substring( 1 ).split( "=" );
         if ( splitLine.length != 2 )
@@ -173,7 +175,8 @@ class LineProcessor
 
             Point p = starPoints.get( currentStarPoint );
 
-            new ItemsLineProcessor( this, p.x, p.y, value ).process();
+            new ItemsLineProcessor( this, p.x, p.y, value )
+                .process( variantGen );
 
             ++currentStarPoint;
         }
@@ -215,7 +218,7 @@ class LineProcessor
         }
     }
 
-    private void processItemsLine( String line )
+    private void processItemsLine( String line, VariantGenerator variantGen )
     {
         if ( width == -1 )
         {
@@ -229,13 +232,14 @@ class LineProcessor
         int i = 0;
         for ( char ch : asChars( line ) )
         {
-            processChar( ch, i, height );
+            processChar( ch, i, height, variantGen );
             ++i;
         }
         ++height;
     }
 
-    public Thing processChar( char c, int x, int y )
+    public Thing processChar(
+        char c, int x, int y, VariantGenerator variantGen )
     {
         Thing ret = null;
 
@@ -247,29 +251,32 @@ class LineProcessor
             }
             case '#':
             {
-                blocks.add( new Block( x, y, solid_flat ) );
+                blocks.add(
+                    new Block( x, y, solid_flat, variantGen.next( 4 ) ) );
                 break;
             }
             case '/':
             {
-                blocks.add( new Block( x, y, solid_up_right ) );
+                blocks.add(
+                    new Block( x, y, solid_up_right, variantGen.next( 4 ) ) );
                 break;
             }
             case '\\':
             {
-                blocks.add( new Block( x, y, solid_up_left ) );
+                blocks.add(
+                    new Block( x, y, solid_up_left, variantGen.next( 4 ) ) );
                 break;
             }
             case '(':
             {
                 blocks.add(
-                    new Block( x, y, bridge_up_right ) );
+                    new Block( x, y, bridge_up_right, 0 ) );
                 break;
             }
             case ')':
             {
                 blocks.add(
-                    new Block( x, y, bridge_up_left ) );
+                    new Block( x, y, bridge_up_left, 0 ) );
                 break;
             }
             case 'r':

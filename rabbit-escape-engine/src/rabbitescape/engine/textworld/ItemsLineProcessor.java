@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import rabbitescape.engine.Thing;
+import rabbitescape.engine.util.VariantGenerator;
 
 public class ItemsLineProcessor
 {
@@ -32,7 +33,7 @@ public class ItemsLineProcessor
         this.stateString = null;
     }
 
-    public void process()
+    public void process( VariantGenerator variantGen )
     {
         for ( char c : asChars( value ) )
         {
@@ -63,7 +64,7 @@ public class ItemsLineProcessor
             }
             else
             {
-                currentThing = lineProcessor.processChar( c, x, y );
+                currentThing = lineProcessor.processChar( c, x, y, variantGen );
             }
         }
     }

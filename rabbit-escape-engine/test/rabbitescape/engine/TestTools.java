@@ -114,4 +114,47 @@ public class TestTools
             ) )
         );
     }
+
+    @Test
+    public void Larger_is_greater_than_smaller()
+    {
+        assertThat(  0, greaterThan(  -1 ) );
+        assertThat( 10, greaterThan(   1 ) );
+        assertThat(  1, greaterThan(   0 ) );
+        assertThat( 10, greaterThan( -50 ) );
+    }
+
+    @Test( expected = AssertionError.class )
+    public void Smaller_is_not_greater_than_larger()
+    {
+        assertThat( -1, greaterThan( 0 ) );
+    }
+
+    @Test( expected = AssertionError.class )
+    public void Equal_is_not_greater_than()
+    {
+        assertThat( 10, greaterThan( 10 ) );
+    }
+
+
+    @Test
+    public void Samller_is_less_than_larger()
+    {
+        assertThat(  -1, lessThan(  0 ) );
+        assertThat(   1, lessThan( 10 ) );
+        assertThat(   0, lessThan(  1 ) );
+        assertThat( -50, lessThan( 10 ) );
+    }
+
+    @Test( expected = AssertionError.class )
+    public void Larger_is_not_less_than_smaller()
+    {
+        assertThat( 0, lessThan( -1 ) );
+    }
+
+    @Test( expected = AssertionError.class )
+    public void Equal_is_not_less_than()
+    {
+        assertThat( 10, lessThan( 10 ) );
+    }
 }

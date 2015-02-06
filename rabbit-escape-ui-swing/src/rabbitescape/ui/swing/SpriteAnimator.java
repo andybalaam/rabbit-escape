@@ -14,9 +14,9 @@ public class SpriteAnimator
 {
     private final World world;
     private final SwingBitmapScaler scaler;
-    private final String land_block;
-    private final String land_rising_right;
-    private final String land_rising_left;
+    private final String[] land_block;
+    private final String[] land_rising_right;
+    private final String[] land_rising_left;
     private final String bridge_rising_right;
     private final String bridge_rising_left;
     private final int tileSize;
@@ -37,13 +37,29 @@ public class SpriteAnimator
         this.bitmapCache = bitmapCache;
         this.animationCache = animationCache;
 
-        this.land_block = "/rabbitescape/ui/swing/images32/land_block.png";
+        this.land_block = new String[]
+        {
+            "/rabbitescape/ui/swing/images32/land_block_1.png",
+            "/rabbitescape/ui/swing/images32/land_block_2.png",
+            "/rabbitescape/ui/swing/images32/land_block_3.png",
+            "/rabbitescape/ui/swing/images32/land_block_4.png",
+        };
 
-        this.land_rising_right =
-            "/rabbitescape/ui/swing/images32/land_rising_right.png";
+        this.land_rising_right = new String[]
+        {
+            "/rabbitescape/ui/swing/images32/land_rising_right_1.png",
+            "/rabbitescape/ui/swing/images32/land_rising_right_2.png",
+            "/rabbitescape/ui/swing/images32/land_rising_right_3.png",
+            "/rabbitescape/ui/swing/images32/land_rising_right_4.png"
+        };
 
-        this.land_rising_left =
-            "/rabbitescape/ui/swing/images32/land_rising_left.png";
+        this.land_rising_left = new String[]
+        {
+            "/rabbitescape/ui/swing/images32/land_rising_left_1.png",
+            "/rabbitescape/ui/swing/images32/land_rising_left_2.png",
+            "/rabbitescape/ui/swing/images32/land_rising_left_3.png",
+            "/rabbitescape/ui/swing/images32/land_rising_left_4.png"
+        };
 
         this.bridge_rising_right =
             "/rabbitescape/ui/swing/images32/bridge_rising_right.png";
@@ -128,9 +144,9 @@ public class SpriteAnimator
     {
         switch( block.type )
         {
-            case solid_flat:      return land_block;
-            case solid_up_right:  return land_rising_right;
-            case solid_up_left:   return land_rising_left;
+            case solid_flat:      return land_block[block.variant];
+            case solid_up_right:  return land_rising_right[block.variant];
+            case solid_up_left:   return land_rising_left[block.variant];
             case bridge_up_right: return bridge_rising_right;
             case bridge_up_left:  return bridge_rising_left;
             default:

@@ -209,9 +209,18 @@ public class AnimationTester extends JFrame
     private final AnimationCache animationCache;
     private final String[] allBlocks = new String[] {
         NONE,
-        "land_block",
-        "land_rising_right",
-        "land_rising_left",
+        "land_block_1",
+        "land_block_2",
+        "land_block_3",
+        "land_block_4",
+        "land_rising_right_1",
+        "land_rising_right_2",
+        "land_rising_right_3",
+        "land_rising_right_4",
+        "land_rising_left_1",
+        "land_rising_left_2",
+        "land_rising_left_3",
+        "land_rising_left_4",
         "bridge_rising_right",
         "bridge_rising_left",
     };

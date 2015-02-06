@@ -16,12 +16,14 @@ public class Block
     public final int x;
     public final int y;
     public final Type type;
+    public final int variant;
 
-    public Block( int x, int y, Type type )
+    public Block( int x, int y, Type type, int variant )
     {
         this.x = x;
         this.y = y;
         this.type = type;
+        this.variant = variant;
     }
 
     public Direction riseDir()

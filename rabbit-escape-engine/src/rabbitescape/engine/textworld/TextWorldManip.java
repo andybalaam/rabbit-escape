@@ -6,6 +6,7 @@ import static rabbitescape.engine.util.Util.*;
 
 import rabbitescape.engine.*;
 import rabbitescape.engine.util.Dimension;
+import rabbitescape.engine.util.VariantGenerator;
 
 public class TextWorldManip
 {
@@ -67,8 +68,16 @@ public class TextWorldManip
         List<Thing> things = new ArrayList<>();
         Map<Token.Type, Integer> abilities = new HashMap<>();
 
+        int variantSeed = 0;
+
         LineProcessor processor = new LineProcessor(
-            blocks, rabbits, things, abilities, lines );
+            blocks,
+            rabbits,
+            things,
+            abilities,
+            lines,
+            new VariantGenerator( variantSeed )
+        );
 
         int num_rabs = processor.metaInt( num_rabbits,  10 );
 

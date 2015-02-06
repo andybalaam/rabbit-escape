@@ -6,14 +6,20 @@ ANDROIDIMAGESMDPI_DEST=rabbit-escape-ui-android/app/src/main/res/drawable-mdpi
 ANDROIDIMAGESHDPI_DEST=rabbit-escape-ui-android/app/src/main/res/drawable-hdpi
 ANDROIDIMAGESXHDPI_DEST=rabbit-escape-ui-android/app/src/main/res/drawable-xhdpi
 
-IMAGESSRC := $(wildcard images-src/*.svg)
-IMAGES32 := $(IMAGESSRC:images-src/%.svg=$(IMAGES32_DEST)/%.png)
+SVGIMAGESSRC := $(wildcard images-src/*.svg)
+SVGIMAGES32 := $(SVGIMAGESSRC:images-src/%.svg=$(IMAGES32_DEST)/%.png)
+
+PNGIMAGESSRC := $(wildcard images-src/*.png)
+PNGIMAGES32 := $(PNGIMAGESSRC:images-src/%.png=$(IMAGES32_DEST)/%.png)
 
 MUSICSRC := $(wildcard music-src/*.flac)
 
-ANDROIDIMAGESMDPI := $(IMAGESSRC:images-src/%.svg=$(ANDROIDIMAGESMDPI_DEST)/%.png)
-ANDROIDIMAGESHDPI := $(IMAGESSRC:images-src/%.svg=$(ANDROIDIMAGESHDPI_DEST)/%.png)
-ANDROIDIMAGESXHDPI := $(IMAGESSRC:images-src/%.svg=$(ANDROIDIMAGESXHDPI_DEST)/%.png)
+SVGANDROIDIMAGESMDPI  := $(SVGIMAGESSRC:images-src/%.svg=$(ANDROIDIMAGESMDPI_DEST)/%.png)
+SVGANDROIDIMAGESHDPI  := $(SVGIMAGESSRC:images-src/%.svg=$(ANDROIDIMAGESHDPI_DEST)/%.png)
+SVGANDROIDIMAGESXHDPI := $(SVGIMAGESSRC:images-src/%.svg=$(ANDROIDIMAGESXHDPI_DEST)/%.png)
+PNGANDROIDIMAGESMDPI  := $(PNGIMAGESSRC:images-src/%.png=$(ANDROIDIMAGESMDPI_DEST)/%.png)
+PNGANDROIDIMAGESHDPI  := $(PNGIMAGESSRC:images-src/%.png=$(ANDROIDIMAGESHDPI_DEST)/%.png)
+PNGANDROIDIMAGESXHDPI := $(PNGIMAGESSRC:images-src/%.png=$(ANDROIDIMAGESXHDPI_DEST)/%.png)
 
 ANIMATIONS_DIR := rabbit-escape-render/src/rabbitescape/render/animations
 LEVELS_DIRS := $(wildcard rabbit-escape-engine/src/rabbitescape/levels/*) \
@@ -21,6 +27,9 @@ LEVELS_DIRS := $(wildcard rabbit-escape-engine/src/rabbitescape/levels/*) \
 
 $(IMAGES32_DEST)/%.png: images-src/%.svg
 	mkdir -p $(IMAGES32_DEST); inkscape $< --export-png=$@ --export-dpi=90
+
+$(IMAGES32_DEST)/%.png: images-src/%.png
+	mkdir -p $(IMAGES32_DEST); convert $< -resize 12.5% $@
 
 $(ANDROIDIMAGESMDPI_DEST)/%.png: images-src/%.svg
 	mkdir -p $(ANDROIDIMAGESMDPI_DEST); inkscape $< --export-png=$@ --export-dpi=90
@@ -31,10 +40,19 @@ $(ANDROIDIMAGESHDPI_DEST)/%.png: images-src/%.svg
 $(ANDROIDIMAGESXHDPI_DEST)/%.png: images-src/%.svg
 	mkdir -p $(ANDROIDIMAGESXHDPI_DEST); inkscape $< --export-png=$@ --export-dpi=180
 
+$(ANDROIDIMAGESMDPI_DEST)/%.png: images-src/%.png
+	mkdir -p $(ANDROIDIMAGESMDPI_DEST); convert $< -resize 12.5% $@
+
+$(ANDROIDIMAGESHDPI_DEST)/%.png: images-src/%.png
+	mkdir -p $(ANDROIDIMAGESMDPI_DEST); convert $< -resize 18.75% $@
+
+$(ANDROIDIMAGESXHDPI_DEST)/%.png: images-src/%.png
+	mkdir -p $(ANDROIDIMAGESMDPI_DEST); convert $< -resize 25% $@
+
 #$(MUSICOGG_DEST)/%.ogg: music-src/%.flac
 #	mkdir -p $(MUSICOGG_DEST); avconv -i $< -c:a libvorbis -q:a 1 $@
 
-VERSION=0.0.5
+VERSION=0.1
 
 all: compile
 
@@ -61,7 +79,7 @@ dist/rabbit-escape-${VERSION}.jar: compile
 		jar -uf ../../dist/rabbit-escape-${VERSION}.jar `find ./`
 	jar -ufm dist/rabbit-escape-${VERSION}.jar MANIFEST.MF
 
-images: $(IMAGES32)
+images: $(SVGIMAGES32) $(PNGIMAGES32)
 
 #music: $(MUSICOGG)
 
@@ -118,9 +136,9 @@ rabbit-escape-ui-android/app/libs/rabbit-escape-generic.jar: dist/rabbit-escape-
 	mkdir -p rabbit-escape-ui-android/app/libs/
 	cp dist/rabbit-escape-generic.jar rabbit-escape-ui-android/app/libs/
 
-android-images-mdpi: $(ANDROIDIMAGESMDPI)
-android-images-hdpi: $(ANDROIDIMAGESHDPI)
-android-images-xhdpi: $(ANDROIDIMAGESXHDPI)
+android-images-mdpi:  $(SVGANDROIDIMAGESMDPI)  $(PNGANDROIDIMAGESMDPI)
+android-images-hdpi:  $(SVGANDROIDIMAGESHDPI)  $(PNGANDROIDIMAGESHDPI)
+android-images-xhdpi: $(SVGANDROIDIMAGESXHDPI) $(PNGANDROIDIMAGESXHDPI)
 
 android-images: android-images-mdpi android-images-hdpi android-images-xhdpi
 

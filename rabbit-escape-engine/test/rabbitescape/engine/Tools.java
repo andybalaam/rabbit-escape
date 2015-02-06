@@ -57,4 +57,56 @@ public class Tools
             }
         };
     }
+
+    public static Matcher<Integer> greaterThan( final int i )
+    {
+        return new BaseMatcher<Integer>()
+        {
+            @Override
+            public boolean matches( Object other )
+            {
+                if ( other instanceof Integer )
+                {
+                    Integer o = (Integer)other;
+                    return ( o > i );
+                }
+                else
+                {
+                    return false;
+                }
+            }
+
+            @Override
+            public void describeTo( Description desc )
+            {
+                desc.appendText( "greater than " + i );
+            }
+        };
+    }
+
+    public static Matcher<Integer> lessThan( final int i )
+    {
+        return new BaseMatcher<Integer>()
+        {
+            @Override
+            public boolean matches( Object other )
+            {
+                if ( other instanceof Integer )
+                {
+                    Integer o = (Integer)other;
+                    return ( o < i );
+                }
+                else
+                {
+                    return false;
+                }
+            }
+
+            @Override
+            public void describeTo( Description desc )
+            {
+                desc.appendText( "less than " + i );
+            }
+        };
+    }
 }

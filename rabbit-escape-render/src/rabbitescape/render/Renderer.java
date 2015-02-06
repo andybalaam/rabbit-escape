@@ -7,7 +7,7 @@ public class Renderer
 {
     public int offsetX;
     public int offsetY;
-    private final int tileSize;
+    public final int tileSize;
 
     public Renderer( int offsetX, int offsetY, int tileSize )
     {

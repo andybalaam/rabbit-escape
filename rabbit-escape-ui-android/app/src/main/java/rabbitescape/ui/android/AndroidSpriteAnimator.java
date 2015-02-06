@@ -120,9 +120,9 @@ public class AndroidSpriteAnimator
     {
         switch( block.type )
         {
-            case solid_flat:      return "land_block";
-            case solid_up_right:  return "land_rising_right";
-            case solid_up_left:   return "land_rising_left";
+            case solid_flat:      return "land_block_1"; // TODO: vary these like in desktop version
+            case solid_up_right:  return "land_rising_right_1";
+            case solid_up_left:   return "land_rising_left_1";
             case bridge_up_right: return "bridge_rising_right";
             case bridge_up_left:  return "bridge_rising_left";
             default:

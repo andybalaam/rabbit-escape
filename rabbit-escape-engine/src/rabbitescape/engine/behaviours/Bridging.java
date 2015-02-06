@@ -441,7 +441,8 @@ public class Bridging extends Behaviour
                     new Block(
                         rabbit.x,
                         rabbit.y,
-                        Block.Type.bridge_up_right
+                        Block.Type.bridge_up_right,
+                        0
                     )
                 );
 
@@ -455,7 +456,8 @@ public class Bridging extends Behaviour
                     new Block(
                         rabbit.x,
                         rabbit.y,
-                        Block.Type.bridge_up_left
+                        Block.Type.bridge_up_left,
+                        0
                     )
                 );
 
@@ -469,7 +471,8 @@ public class Bridging extends Behaviour
                     new Block(
                         rabbit.x,
                         rabbit.y,
-                        Block.Type.bridge_up_right
+                        Block.Type.bridge_up_right,
+                        0
                     )
                 );
 
@@ -483,7 +486,8 @@ public class Bridging extends Behaviour
                     new Block(
                         rabbit.x,
                         rabbit.y,
-                        Block.Type.bridge_up_left
+                        Block.Type.bridge_up_left,
+                        0
                     )
                 );
 
@@ -496,7 +500,8 @@ public class Bridging extends Behaviour
                     new Block(
                         rabbit.x,
                         rabbit.y,
-                        Block.Type.bridge_up_right
+                        Block.Type.bridge_up_right,
+                        0
                     )
                 );
                 return true;
@@ -508,7 +513,8 @@ public class Bridging extends Behaviour
                     new Block(
                         rabbit.x,
                         rabbit.y,
-                        Block.Type.bridge_up_left
+                        Block.Type.bridge_up_left,
+                        0
                     )
                 );
                 return true;
@@ -521,7 +527,8 @@ public class Bridging extends Behaviour
                     new Block(
                         rabbit.x,
                         rabbit.y,
-                        Block.Type.bridge_up_right
+                        Block.Type.bridge_up_right,
+                        0
                     )
                 );
                 return true;
@@ -534,7 +541,8 @@ public class Bridging extends Behaviour
                     new Block(
                         rabbit.x,
                         rabbit.y,
-                        Block.Type.bridge_up_left
+                        Block.Type.bridge_up_left,
+                        0
                     )
                 );
                 return true;
