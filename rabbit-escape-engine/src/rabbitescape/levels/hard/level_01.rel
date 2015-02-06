@@ -1,3 +1,4 @@
+:name=Crowd
 :num_rabbits=30
 :num_to_save=30
 :rabbit_delay=1

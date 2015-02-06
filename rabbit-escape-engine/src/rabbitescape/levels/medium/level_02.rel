@@ -1,3 +1,5 @@
+:name=Placement
+:description=Be precise
 :num_rabbits=3
 :num_to_save=3
 :rabbit_delay=2

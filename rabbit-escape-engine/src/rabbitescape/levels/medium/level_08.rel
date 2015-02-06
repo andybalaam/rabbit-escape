@@ -1,3 +1,4 @@
+:name=Panic!
 :num_rabbits=20
 :num_to_save=11
 :rabbit_delay=8
