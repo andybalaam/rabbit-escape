@@ -1,15 +1,10 @@
-:name=Rescuer
+:name=One Pop Shot
 :num_rabbits=2
-:num_to_save=2
-:dig=1
-:bridge=1
-:bash=1
+:num_to_save=1
 :explode=1
-:block=1
-:climb=1
 ##################
 #  Q             #
-#                #
+#       d        #
 ##################
 #       #        #
 #       #        #
@@ -17,5 +12,5 @@
 #       #        #
 #  Q    #        #
 #       #        #
-#      /#\     O #
+#       #      O #
 ##################
