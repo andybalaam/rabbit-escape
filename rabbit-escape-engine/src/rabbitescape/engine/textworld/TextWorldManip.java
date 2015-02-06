@@ -68,7 +68,7 @@ public class TextWorldManip
         List<Thing> things = new ArrayList<>();
         Map<Token.Type, Integer> abilities = new HashMap<>();
 
-        int variantSeed = 0;
+        int variantSeed = 0; // TODO: world property for the seed?
 
         LineProcessor processor = new LineProcessor(
             blocks,
