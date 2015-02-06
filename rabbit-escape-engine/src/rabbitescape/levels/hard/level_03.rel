@@ -1,21 +1,20 @@
-:name=Rescuer
-:num_rabbits=2
-:num_to_save=2
-:dig=1
+:name=Quadrabbit
+:num_rabbits=4
+:num_to_save=4
+:bash=3
 :bridge=1
-:bash=1
-:explode=1
-:block=1
-:climb=1
-##################
-#  Q             #
-#                #
-##################
-#       #        #
-#       #        #
-#       #        #
-#       #        #
-#  Q    #        #
-#       #        #
-#      /#\     O #
-##################
+:climb=2
+:block=4
+:explode=4
+############
+#    ##    #
+# Q  ##  Q #
+#    ##    #
+#    ##    #
+#    ##)   #
+#   ( # )  #
+#####O# ####
+# Q ###  Q #
+#    ##    #
+#    ##    #
+############
