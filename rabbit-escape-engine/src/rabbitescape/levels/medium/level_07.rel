@@ -1,13 +1,13 @@
 :num_rabbits=12
-:num_to_save=11
-:climb=20
-:bridge=1
+:num_to_save=10
+:climb=2
+:bridge=5
 :block=20
 :dig=20
 :bash=20
 :explode=20
 ######################
-#                /   #
+#                /#  #
 #                / (O#
 #                /# ##
 #                /#  #

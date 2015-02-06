@@ -1,5 +1,5 @@
 :num_rabbits=2
-:num_to_save=3
+:num_to_save=2
 :bridge=4
 :dig=1
 :bash=1
