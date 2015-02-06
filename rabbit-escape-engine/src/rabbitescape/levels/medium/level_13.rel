@@ -1,20 +1,13 @@
-:name=Three Down
-:num_rabbits=4
-:num_to_save=4
-:climb=3
-:bridge=3
-:bash=3
-:dig=3
-:explode=3
-:block=3
+:name=Turn around, rabbit ears
+:num_rabbits=2
+:rabbit_delay=10
+:num_to_save=2
+:bridge=1
 #################
-#  Q           O#
-#           / /##
-#          /#/###
-########### #####
-#           #####
-#           #####
-#  Q Q Q    #####
-#           #####
-#           #####
+#Q  #  #  #  #  #
+#               #
+###             #
+#               #
+# ######### #####
+#       O#      #
 #################

@@ -1,14 +1,18 @@
-:name=Assist
-:num_rabbits=2
+:name=Flag
+:num_rabbits=5
 :rabbit_delay=10
-:num_to_save=1
-:bridge=1
-:block=1
-:bash=1
-:explode=1
-##################
-#Q         #O    #
-#          ##    #
-#                #
-#               # 
-##################
+:num_to_save=5
+:bridge=5
+:climb=5
+:dig=5
+:block=5
+:explode=5
+##############
+#            #
+#            #
+#   ######   #
+#   ######   #
+# Q ######   #
+#   ######   #
+#   #      O #
+##############
