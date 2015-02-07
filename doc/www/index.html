@@ -39,6 +39,40 @@ a
     margin: auto;
 }
 
+.disabledcontainer
+{
+    display: inline-block;
+    position: relative;
+}
+
+.disabled
+{
+    font-size: 120%;
+    font-weight: bold;
+    text-shadow: 0em 0em 0.1em white;
+    top: 0;
+    left: 0;
+    position: absolute;
+    z-index: 10;
+    padding-top: 20%;
+    padding-left: 5%;
+    padding-right: 5%;
+    width: 90%;
+    height: 80%;
+    background-color: rgba( 180, 180, 180, 0.8 );
+    box-shadow:
+         0.1em  0.0em 0.1em rgba( 180, 180, 180, 0.5 ),
+        -0.1em  0.0em 0.1em rgba( 180, 180, 180, 0.5 ),
+         0.0em  0.1em 0.1em rgba( 180, 180, 180, 0.5 ),
+         0.0em -0.1em 0.1em rgba( 180, 180, 180, 0.5 );
+}
+
+.disabled.buy
+{
+    padding-top: 5%;
+    height: 95%;
+}
+
 /* --- */
 
 #title
@@ -137,6 +171,11 @@ h1
     height: 140px;
     margin: 0px 20px;
     padding: 5px;
+}
+
+.download.buy
+{
+    height: 80px;
 }
 
 .download:hover
@@ -302,11 +341,18 @@ window.onscroll = scroll;
 <div id="installstripe" class="stripe"><div class="text">
 <p><img src="rabbitescape-24.png" class="logo"/>Buy Rabbit Escape:</p>
 <div class="downloads p">
-    <div class="download buy"><a href="#"><img src="play.png"/></a><br/><a href="#">Play Store</a></div>
+    <div class="disabledcontainer">
+        <div class="disabled buy">Coming soon!</div>
+            <div class="download buy"><a href="#"><img src="play.png"/></a><br/><a href="#">Buy on Play Store</a></div>
+    </div>
+    <!--div class="download buy"><a href="https://www.patreon.com/andybalaam"><img src="patreon.png"/></a><br/><a href="https://www.patreon.com/andybalaam">Donate on Patreon</a></div-->
 </div>
 <p class="downloads-text">Download the full version for free:</p>
 <div>
-    <div class="download"><a href="#"><img src="android.png"/></a><br/><a href="#">Android</a></div>
+    <div class="disabledcontainer">
+        <div class="disabled">Coming soon!</div>
+        <div class="download"><a href="#"><img src="android.png"/></a><br/><a href="#">Android</a></div>
+    </div>
     <div class="download"><a href="#"><img src="linux.png"/></a><br/><a href="#">Linux</a></div>
     <div class="download"><a href="#"><img src="windows.png"/></a><br/><a href="#">Windows</a></div>
     <div class="download"><a href="#"><img src="mac.png"/></a><br/><a href="#">Mac</a></div>
@@ -327,6 +373,7 @@ window.onscroll = scroll;
 look at <a href="https://www.youtube.com/user/ajbalaam">Andy Balaam's YouTube videos</a>.</p>
 <p>For more on programming and Linux, including the Raspberry Pi, read
 <a href="http://www.artificialworlds.net/blog">Andy Balaam's blog</a>.</p>
+<p>If you want to, you can <a href="https://www.patreon.com/andybalaam">support Andy Balaam on Patreon</a>.</p>
 </div></div>
 <div id="copyright" class="stripe"><div class="text wide">
 <p>Rabbit Escape is copyright (c) 2014-2015 by Andy Balaam and the Rabbit Escape developers.  The source code released under the GNU General Public License v2, or, at your option, any later version.  The level designs, images and sound effects are released under the Creative Commons CC-BY-NC 2.0 license.  The music is by <a href="http://tryad.org/">tryad</a>, used under the Creative Commons CC-BY-SA 3.0 license.  Read the full <a href="https://github.com/andybalaam/rabbit-escape/blob/master/COPYING.txt">COPYING.txt</a> for details.</p>

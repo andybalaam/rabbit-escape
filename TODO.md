@@ -38,7 +38,8 @@ Release 0.1 (Playable)
 
 - Docs on making levels
 - Docs on installing
-- Squares shown in the background
+- ~~Pencil-style blocks~~
+- ~~Squares shown in the background~~
 - ~~Centre the game canvas when smaller than the window~~
 - ~~Order and name all levels~~
 - ~~20 easy levels~~
