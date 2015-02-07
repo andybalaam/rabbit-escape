@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Download Rabbit Escape for Linux</title>
+<link rel="stylesheet" href="style.css"/>
+<script src="script.js"></script>
+<style>
+body
+{
+    text-align: left;
+}
+h1
+{
+    font-size: 2.5em;
+}
+.text
+{
+    max-width: 30em;
+}
+</style>
+</head>
+<body>
+<div id="title" class="stripe"><div class="text">
+<h1><img src="rabbitescape-84.png"/>Rabbit Escape on Linux</h1>
+</div></div>
+
+<div id="explanation" class="stripe"><div class="text">
+<p class="backlink"><a href="index.html">&lt; &lt; &lt;Back to the Rabbit Escape main page</a></p>
+<h2>Download it</h2>
+<h2>Run it</h2>
+<p>On most versions of Linux, you can just double-click on the file you downloaded and it will run.</p>
+<p>If that doesn't work, try right-clicking and choosing e.g. "OpenJDK Java 7 Runtime".  You may need to mark it as executable first.</p>
+<p>If that doesn't work, open a Terminal and type (change "Downloads" to something else if you saved it in a different place):</p>
+<p class="cmdline">cd Downloads</p>
+<p>Then run Rabbit Escape it by typing:</p>
+<p class="cmdline">java -jar rabbit-escape-*.jar</p>
+<p>If that doesn't work, you may need to install Java, so read the next section.</p>
+</div></div>
+
+<a name="installjava"/>
+<div id="moreinfo" class="stripe"><div class="text">
+<h2>Is Java Installed?</h2>
+<p>It's quite likely you already have java installed.  If not, to be able to play Rabbit Escape you need to install Java version 6 or above.</p>
+<p>To find out, open a Terminal and type:</p>
+<p class="cmdline">java -version</p>
+<p>If you see something like <span class="package">java version "1.7.0_75"</span> (plus loads more stuff), then you are all set.</p>
+<p>If you see something like <span class="package">No command 'java' found</span> (or similar, possibly with loads more stuff too), java is not installed and you should keep reading.</p>
+</div></div>
+
+<div id="installstripe" class="stripe"><div class="text">
+<h2>Install Java on Ubuntu/Debian/Mint</h2>
+<p>If you use Ubuntu, Debian or Mint, install the <span class="package">openjdk-7-jre</span> package by opening a Terminal and typing:</p>
+<p class="cmdline">sudo apt-get install openjdk-7-jre</p>
+<p>More info: <a href="https://help.ubuntu.com/community/Java">Java on Ubuntu</a>, <a href="https://wiki.debian.org/Java">Java on Debian</a>.</p>
+
+<h2>Install Java on Fedora/RedHat/CentOS</h2>
+<p>If you use Fedora (and possibly RedHat or CentOS) install the <span class="package">java-1.7.0-openjdk</span> package by opening a Terminal and typing:</p>
+<p class="cmdline">su -c "yum install java-1.7.0-openjdk"</p>
+<p>More info: <a href="https://fedoraproject.org/wiki/Java">Java on Fedora</a>, <a href="http://wiki.centos.org/HowTos/JavaOnCentOS">Java on CentOS</a>.</p>
+
+<h2>Install Java on Arch</h2>
+<p>If you use Arch Linux, install the <span class="package">jre7-openjdk</span> package.</p>
+<p>More info: <a href="https://wiki.archlinux.org/index.php/Java">Java on Arch</a>.</p>
+
+<h2>Other</h2>
+<p>If you're on a different Linux distribution, check the documentation, or download Java directly from Oracle by following the instructions on <a href="http://java.com">java.com</a>.</p>
+
+</div></div>
+<div id="links" class="stripe"><div class="text">
+<p>If you can't get Rabbit Escape to work, please contact me on <a href="mailto:rabbitescape@artificialworlds.net">rabbitescape@artificialworlds.net</a> and I'll try to help.</p>
+<p>If you can provide instructions for a different Linux distribution, or you can help us improve these instructions, please let me know.</p>
+</div></div>
+<div id="contact" class="stripe"><div class="text">
+<p class="backlink"><a href="index.html">&lt; &lt; &lt;Back to the Rabbit Escape main page</a></p>
+</div></div>
+<img src="uparrow.png"   id="uparrow"/>
+<img src="downarrow.png" id="downarrow"/>
+</body>
+</html>
