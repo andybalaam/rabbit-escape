@@ -93,12 +93,11 @@ h1
     text-align: left;
 }
 
-#downloadbutton
+.downloadbutton
 {
     display: block;
-    margin-top: 3em;
+    width: 25%;
     margin-bottom: 1em;
-    width: 20%;
     border-radius: 0.4em;
     color: rgb( 5, 10, 15 );
     padding: 0.6em 2em;
@@ -108,7 +107,13 @@ h1
     font-size: 90%;
 }
 
-#downloadbutton:hover
+.downloadbutton.downloadbuttonmain
+{
+    margin-top: 3em;
+    width: 20%;
+}
+
+.downloadbutton:hover
 {
     background-color: rgb( 218, 84, 24 );
 }
