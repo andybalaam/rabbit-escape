@@ -9,7 +9,8 @@ all: $(GIF1) $(GIF2)
 $(GIF1): rabbitescape-minilevel-recording.mkv
 	rm -rf $(FRAMES)
 	mkdir -p $(FRAMES)
-	avconv -i $< -r 10 -vf crop=342:310:48:30 -ss 00:00:02.500 $(FRAMES)/frame-%04d.png
+	avconv -i $< -r 10 -ss 00:00:02.000 -t 00:00:17.700 $(FRAMES)/frame-%04d.png
+	#avconv -i $< -r 10 -vf crop=342:310:48:30 -ss 00:00:02.000 $(FRAMES)/frame-%04d.png
 	mkdir -p $(DOC)
 	convert -layers Optimize $(FRAMES)/*.png $@
 
