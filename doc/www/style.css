@@ -13,7 +13,7 @@ body
     color: rgb( 89, 89, 86 );
     padding: 0px;
     margin: 0px;
-    text-align: center;
+    text-align: left;
 }
 
 a
@@ -30,7 +30,7 @@ a
 
 .text
 {
-    max-width: 40em;
+    max-width: 30em;
     margin: auto;
 }
 
@@ -79,7 +79,7 @@ a
 h1
 {
     font-weight: 200;
-    font-size: 3.5em;
+    font-size: 2.2em;
     margin-top: 0em;
     margin-left: -0.25em;
     margin-bottom: 0.5em;
@@ -96,7 +96,7 @@ h1
 .downloadbutton
 {
     display: block;
-    width: 25%;
+    width: 30%;
     margin-bottom: 1em;
     border-radius: 0.4em;
     color: rgb( 5, 10, 15 );
