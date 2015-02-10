@@ -66,10 +66,11 @@ class GameMenu
         this.mute = addToggleButton(
             "menu_unmuted",
             "menu_muted",
-            ConfigTools.getBool( uiConfig, CFG_MUTED )
+            ConfigTools.getBool( uiConfig, CFG_MUTED ),
+            "mute" //TODO NLS
         );
 
-        this.pause = addToggleButton( "menu_pause", "menu_unpause", false );
+        this.pause = addToggleButton( "menu_pause", "menu_unpause", false, "pause");//TODO NLS
 
         addSpacer();
 
@@ -117,7 +118,7 @@ class GameMenu
         {
             String iconName = "ability_" + ability.toString();
 
-            JToggleButton button = addToggleButton( iconName, null, false );
+            JToggleButton button = addToggleButton( iconName, null, false, ability.toString());
 
             ret.put( ability, button );
 
@@ -138,7 +139,8 @@ class GameMenu
     private JToggleButton addToggleButton(
         String unSelectedImage,
         String selectedImage,
-        boolean selected
+        boolean selected,
+        String description
     )
     {
         JToggleButton button = new JToggleButton( getIcon( unSelectedImage ) );
@@ -146,6 +148,7 @@ class GameMenu
         button.setBackground( backgroundColor );
         button.setBorderPainted( false );
         button.setSelected( selected );
+        button.setToolTipText(description);
 
         if ( selectedImage != null )
         {
