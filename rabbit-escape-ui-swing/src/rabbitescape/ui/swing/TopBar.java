@@ -18,21 +18,18 @@ import static rabbitescape.engine.util.Util.*;
 
 public class TopBar implements StatsChangedListener
 {
-    private static final String waitingText = "Waiting: ${num}";
-    private static final String outText     = "Out: ${num}";
-    private static final String savedText   = "Saved: ${num}";
-    private static final String needText    = "Need to save: ${num}";
+    private static final String outText     = "Out: ${num1} / ${num2}";
+    private static final String savedText   = "Saved: ${num1} / ${num2}";
 
     private static final String abilityText =
         "${ability} (${numLeft} left)";
 
     private final Color backgroundColor;
     private final JPanel panel;
-    private final JLabel waiting;
     private final JLabel out;
     private final JLabel saved;
-    private final JLabel need;
     private final JLabel ability;
+    private final int numToSave;
 
     public TopBar(
         Color backgroundColor, int numToSave, Container contentPane )
@@ -40,11 +37,11 @@ public class TopBar implements StatsChangedListener
         this.backgroundColor = backgroundColor;
         this.panel = createPanel( contentPane );
 
-        this.waiting = addLabel( waitingText );
         this.out     = addLabel( outText );
         this.saved   = addLabel( savedText );
-        this.need    = addLabel( needText );
-        setCountText( this.need, needText, numToSave );
+        setCountText( this.saved, savedText, 0, numToSave );
+        setCountText( this.out, outText, 0, 0 );
+        this.numToSave = numToSave;
 
         this.ability = addLabel( "" );
     }
@@ -72,9 +69,8 @@ public class TopBar implements StatsChangedListener
     @Override
     public void changed( int waiting, int out, int saved )
     {
-        setCountText( this.waiting, waitingText, waiting );
-        setCountText( this.out,     outText,     out );
-        setCountText( this.saved,   savedText,   saved );
+        setCountText( this.out,     outText,     out, waiting+out );
+        setCountText( this.saved,   savedText,   saved, numToSave );
     }
 
     public void abilityChanged( Token.Type ability, int numLeft )
@@ -82,9 +78,9 @@ public class TopBar implements StatsChangedListener
         setAbilityText( this.ability, abilityText, ability.name(), numLeft );
     }
 
-    private void setCountText( JLabel label, String text, int num )
+    private void setCountText( JLabel label, String text, int num1, int num2 )
     {
-        setText( label, text, newMap( "num", String.valueOf( num ) ) );
+        setText( label, text, newMap( "num1", String.valueOf( num1 ), "num2", String.valueOf(num2) ) );
     }
 
     private void setAbilityText(
