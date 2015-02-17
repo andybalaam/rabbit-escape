@@ -114,7 +114,7 @@ public class AndroidGameActivity extends ActionBarActivity implements NumLeftLis
     private void staticInit()
     {
         prefs = getPreferences( MODE_PRIVATE );
-        levelsCompleted = new AndroidPreferencesBasedLevelsCompleted();
+        levelsCompleted = new AndroidPreferencesBasedLevelsCompleted( prefs );
 
         setContentView( R.layout.activity_android_game );
 

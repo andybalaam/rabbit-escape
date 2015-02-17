@@ -4,12 +4,12 @@ import android.content.Intent;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import rabbitescape.engine.menu.LevelMenuItem;
 import rabbitescape.engine.menu.Menu;
 import rabbitescape.engine.menu.MenuDefinition;
 import rabbitescape.engine.menu.MenuItem;
@@ -22,13 +22,16 @@ public class AndroidMenuActivity extends ActionBarActivity
 
     private int[] positions;
 
-    private Menu mainMenu = MenuDefinition.mainMenu( new AndroidPreferencesBasedLevelsCompleted() );
+    private Menu mainMenu = null;
 
     @Override
     protected void onCreate( Bundle savedInstanceState )
     {
         super.onCreate( savedInstanceState );
         setContentView( R.layout.activity_android_menu );
+
+        mainMenu = MenuDefinition.mainMenu(
+            new AndroidPreferencesBasedLevelsCompleted( getPreferences( MODE_PRIVATE ) ) );
 
         Intent intent = getIntent();
         positions = intent.getIntArrayExtra( POSITION );
@@ -46,7 +49,13 @@ public class AndroidMenuActivity extends ActionBarActivity
         final Menu menu = navigateToMenu( positions );
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(
-            this, android.R.layout.simple_list_item_1, itemsAsStrings( menu ) );
+            this, android.R.layout.simple_list_item_1, itemsAsStrings( menu ) )
+        {
+            public boolean isEnabled( int position )
+            {
+                return menu.items[position].enabled;
+            }
+        };
 
         ListView listView = (ListView)findViewById( R.id.listView );
         listView.setAdapter( adapter );
@@ -80,22 +89,61 @@ public class AndroidMenuActivity extends ActionBarActivity
                     AdapterView<?> adapterView, View view, int position, long id )
                 {
                     MenuItem item = menu.items[position];
-                    if ( item.type != MenuItem.Type.MENU )
+                    switch( item.type )
                     {
-                        Intent intent = new Intent( parentActivity, AndroidGameActivity.class );
-                        intent.putExtra( AndroidGameActivity.INTENT_LEVEL, "test/level_01.rel" );
-                        intent.putExtra( AndroidGameActivity.INTENT_LEVEL_NUMBER, 1 );
-                        startActivity( intent );
-                    }
-                    else
-                    {
-                        Intent intent = new Intent( parentActivity, AndroidMenuActivity.class );
-                        intent.putExtra( POSITION, appendToArray( positions, position ) );
-                        startActivity( intent );
+                        case MENU:
+                        {
+                            Intent intent = new Intent( parentActivity, AndroidMenuActivity.class );
+                            intent.putExtra( POSITION, appendToArray( positions, position ) );
+                            startActivity( intent );
+                            return;
+                        }
+                        case ABOUT:
+                        {
+                            about( parentActivity );
+                            return;
+                        }
+                        case LEVEL:
+                        {
+                            level( parentActivity, (LevelMenuItem)item );
+                            return;
+                        }
+                        case QUIT:
+                        {
+                            exit();
+                            return;
+                        }
+                        case DEMO:
+                        {
+                            return;
+                        }
+                        default:
+                        {
+                            throw new UnknownMenuItemType( item );
+                        }
                     }
                 }
             }
         );
+    }
+
+    private void exit()
+    {
+        finish();
+    }
+
+    private void about( AndroidMenuActivity parentActivity )
+    {
+        Intent intent = new Intent( parentActivity, AndroidAboutActivity.class );
+        startActivity( intent );
+    }
+
+    private void level( AndroidMenuActivity parentActivity, LevelMenuItem item )
+    {
+        Intent intent = new Intent( parentActivity, AndroidGameActivity.class );
+        intent.putExtra( AndroidGameActivity.INTENT_LEVEL,        item.fileName );
+        intent.putExtra( AndroidGameActivity.INTENT_LEVEL_NUMBER, item.levelNumber );
+        startActivity( intent );
     }
 
     private int[] appendToArray( int[] positions, int position )

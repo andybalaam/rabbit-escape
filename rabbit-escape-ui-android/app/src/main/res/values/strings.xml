@@ -6,5 +6,6 @@
     <string name="title_activity_android_game">Rabbit Escape</string>
     <string name="pause">pause</string>
     <string name="mute">mute</string>
+    <string name="title_activity_android_about">About Rabbit Escape</string>
 
 </resources>

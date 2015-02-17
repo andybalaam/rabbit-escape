@@ -1,19 +1,27 @@
 package rabbitescape.ui.android;
 
+import android.content.SharedPreferences;
+
 import rabbitescape.engine.menu.LevelsCompleted;
 
 public class AndroidPreferencesBasedLevelsCompleted implements LevelsCompleted
 {
-    // TODO - implement this
+    private final SharedPreferences m_prefs;
 
-    @Override
-    public int highestLevelCompleted( String s )
+    public AndroidPreferencesBasedLevelsCompleted( SharedPreferences _prefs )
     {
-        return 0;
+        m_prefs = _prefs;
     }
 
     @Override
-    public void setCompletedLevel( String s, int i )
+    public int highestLevelCompleted( String levelsDir )
     {
+        return m_prefs.getInt( "levels.completed." + levelsDir, 0 );
+    }
+
+    @Override
+    public void setCompletedLevel( String levelsDir, int i )
+    {
+        m_prefs.edit().putInt( "levels.completed." + levelsDir, i ).commit();
     }
 }

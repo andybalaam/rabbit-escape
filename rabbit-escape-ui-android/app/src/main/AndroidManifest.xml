@@ -19,6 +19,10 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".AndroidAboutActivity"
+            android:label="@string/title_activity_android_about" >
+        </activity>
+        <activity
             android:name=".AndroidGameActivity"
             android:label="@string/title_activity_android_game" >
         </activity>
