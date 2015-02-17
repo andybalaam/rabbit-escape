@@ -90,7 +90,10 @@ animations: $(ANIMATIONS_DIR)/ls.txt
 
 levels: $(patsubst %, %/ls.txt, $(LEVELS_DIRS))
 
-compile: images animations levels
+versioncheck:
+	grep "version = \"${VERSION}\"" rabbit-escape-engine/src/rabbitescape/engine/menu/AboutText.java
+
+compile: images animations levels versioncheck
 	ant compile
 
 clean:
