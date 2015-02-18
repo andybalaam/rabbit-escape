@@ -5,9 +5,11 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import rabbitescape.engine.menu.LevelMenuItem;
 import rabbitescape.engine.menu.Menu;
@@ -48,17 +50,8 @@ public class AndroidMenuActivity extends ActionBarActivity
 
         final Menu menu = navigateToMenu( positions );
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(
-            this, android.R.layout.simple_list_item_1, itemsAsStrings( menu ) )
-        {
-            public boolean isEnabled( int position )
-            {
-                return menu.items[position].enabled;
-            }
-        };
-
         ListView listView = (ListView)findViewById( R.id.listView );
-        listView.setAdapter( adapter );
+        listView.setAdapter( new MenuListAdapter( this, menu ) );
 
         addItemListener( menu, listView );
     }
