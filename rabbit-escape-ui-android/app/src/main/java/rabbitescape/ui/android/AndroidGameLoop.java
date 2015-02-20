@@ -30,7 +30,7 @@ public class AndroidGameLoop implements Runnable
 
     // Transient state
     private final SurfaceHolder surfaceHolder;
-    private final Physics physics;
+    public final Physics physics;
     private final Graphics graphics;
     private boolean running;
     private int screenWidthPixels;

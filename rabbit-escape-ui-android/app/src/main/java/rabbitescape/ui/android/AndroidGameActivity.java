@@ -1,5 +1,7 @@
 package rabbitescape.ui.android;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
@@ -20,14 +22,13 @@ import rabbitescape.engine.LoadWorldFile;
 import rabbitescape.engine.Token;
 import rabbitescape.engine.World;
 import rabbitescape.engine.err.RabbitEscapeException;
-import rabbitescape.engine.menu.LevelMenuItem;
 import rabbitescape.engine.menu.LevelsCompleted;
 import rabbitescape.engine.textworld.TextWorldManip;
 import rabbitescape.engine.util.RealFileSystem;
 import rabbitescape.render.BitmapCache;
 
-import static android.text.TextUtils.join;
 import static android.text.TextUtils.split;
+import static rabbitescape.engine.i18n.Translation.t;
 
 
 public class AndroidGameActivity extends ActionBarActivity implements NumLeftListener
@@ -191,6 +192,63 @@ public class AndroidGameActivity extends ActionBarActivity implements NumLeftLis
             getResources().getDrawable( paused ? R.drawable.menu_unpause : R.drawable.menu_pause )
         );
         pauseButton.invalidate();
+    }
+
+    public void onExplodeAllClicked( View view )
+    {
+        World world = gameSurface.game.gameLoop.physics.world;
+
+        switch ( world.completionState() )
+        {
+            case RUNNING:
+            case PAUSED:
+            {
+                showReadyToExplodeDialog( world );
+                break;
+            }
+            default:
+            {
+                break;
+            }
+        }
+    }
+
+    private void setPaused( boolean paused )
+    {
+        World world = gameSurface.game.gameLoop.physics.world;
+
+        world.setPaused( paused );
+        updatePauseButton( paused );
+    }
+
+    private void showReadyToExplodeDialog( final World world )
+    {
+        DialogInterface.OnClickListener onCancel = new DialogInterface.OnClickListener()
+        {
+            @Override
+            public void onClick( DialogInterface dialogInterface, int i )
+            {
+                setPaused( false );
+            }
+        };
+
+        DialogInterface.OnClickListener onExplode = new DialogInterface.OnClickListener()
+        {
+            @Override
+            public void onClick( DialogInterface dialogInterface, int i )
+            {
+                setPaused( false );
+                world.changes.explodeAllRabbits();
+            }
+        };
+
+        setPaused( true );
+        new AlertDialog.Builder( this )
+            .setMessage( t( "Explode all rabbits?" ) )
+            .setNegativeButton( t( "Cancel" ), onCancel )
+            .setPositiveButton( t( "Explode!" ), onExplode )
+            .create()
+            .show();
     }
 
     @Override

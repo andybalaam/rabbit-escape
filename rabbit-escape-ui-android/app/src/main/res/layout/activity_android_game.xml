@@ -39,6 +39,15 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/abilitiesGroup"/>
 
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/explodeAllButton"
+                android:src="@drawable/menu_explode_all"
+                android:layout_marginBottom="20dp"
+                android:contentDescription="@string/pause"
+                android:onClick="onExplodeAllClicked"/>
+
         </LinearLayout>
     </ScrollView>
 
