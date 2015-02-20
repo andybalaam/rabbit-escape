@@ -1,5 +1,5 @@
 :name=Build your way out
-:description=Drop building tokens to help\nyour rabbits past obstacles.
+:description=Drop bridging tokens to help\nyour rabbits past obstacles.
 :num_rabbits=2
 :num_to_save=2
 :rabbit_delay=1
