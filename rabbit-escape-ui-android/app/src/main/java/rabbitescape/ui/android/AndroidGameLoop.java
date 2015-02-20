@@ -97,7 +97,6 @@ public class AndroidGameLoop implements Runnable
             if ( physics.finished() )
             {
                 running = false;
-                Log.i( "artific", "Finished" );
             }
         }
     }

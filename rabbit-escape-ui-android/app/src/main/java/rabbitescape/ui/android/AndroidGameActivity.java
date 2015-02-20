@@ -18,7 +18,9 @@ import android.widget.RadioGroup;
 import java.util.Set;
 
 import rabbitescape.engine.CompletedLevelWinListener;
+import rabbitescape.engine.LevelWinListener;
 import rabbitescape.engine.LoadWorldFile;
+import rabbitescape.engine.MultiLevelWinListener;
 import rabbitescape.engine.Token;
 import rabbitescape.engine.World;
 import rabbitescape.engine.err.RabbitEscapeException;
@@ -102,12 +104,17 @@ public class AndroidGameActivity extends ActionBarActivity implements NumLeftLis
         createAbilities( world, resources );
         updatePauseButton( world.paused );
 
+        LevelWinListener winListener = new MultiLevelWinListener(
+            new CompletedLevelWinListener( levelsDir, levelNum, levelsCompleted ),
+            new AndroidAlertWinListener( this )
+        );
+
         gameSurface = new GameSurfaceView(
             this,
             this,
             createBitmapCache( resources ),
             world,
-            new CompletedLevelWinListener( levelsDir, levelNum, levelsCompleted ),
+            winListener,
             metrics.density,
             savedInstanceState
         );

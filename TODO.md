@@ -28,8 +28,15 @@ Later
 Release 0.2 (Android)
 ---------------------
 
-- Android menus launch real levels
-- Android menus update when you win
+- Graph paper background
+- Centre level in window
+- Varied block images
+- Message at the start of a level
+- Message when you lose
+- ~~Message when you win~~
+- ~~Explode all button~~
+- ~~Android menus launch real levels~~
+- ~~Android menus update when you win~~
 - ~~Android game loop~~
 - ~~Android graphics~~
 
