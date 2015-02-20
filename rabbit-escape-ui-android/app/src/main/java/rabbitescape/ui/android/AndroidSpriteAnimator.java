@@ -42,6 +42,8 @@ public class AndroidSpriteAnimator
 
     public Sprite[] getSprites( int frameNum )
     {
+        // TODO: share with swing.SpriteAnimator
+
         List<Sprite> ret = new ArrayList<Sprite>();
 
         for ( Block block : world.blocks )

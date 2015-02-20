@@ -28,7 +28,7 @@ Later
 Release 0.2 (Android)
 ---------------------
 
-- Graph paper background
+- ~~Graph paper background~~
 - ~~Centre level in window~~
 - Varied block images
 - ~~Draw rabbits in front of objects~~
