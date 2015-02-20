@@ -29,7 +29,7 @@ Release 0.2 (Android)
 ---------------------
 
 - Graph paper background
-- Centre level in window
+- ~~Centre level in window~~
 - Varied block images
 - ~~Draw rabbits in front of objects~~
 - ~~Message at the start of a level~~

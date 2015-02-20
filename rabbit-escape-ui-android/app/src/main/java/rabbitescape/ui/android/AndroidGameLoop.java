@@ -52,17 +52,18 @@ public class AndroidGameLoop implements Runnable
         this.physics = new Physics( world, winListener );
         this.graphics = new Graphics( bitmapCache, world, displayDensity );
 
+        this.checkScroll = true;
+
         if ( savedInstanceState != null )
         {
             this.scrollX = savedInstanceState.getInt( STATE_SCROLL_X, 0 );
             this.scrollY = savedInstanceState.getInt( STATE_SCROLL_Y, 0);
-            this.checkScroll = true;
+
         }
         else
         {
             this.scrollX = 0;
             this.scrollY = 0;
-            this.checkScroll = false;
         }
 
         this.screenWidthPixels = 100;
@@ -202,7 +203,11 @@ public class AndroidGameLoop implements Runnable
         scrollX += x;
         scrollY += y;
 
-        if ( scrollX < 0 || graphics.levelWidthPixels < screenWidthPixels )
+        if ( graphics.levelWidthPixels < screenWidthPixels )
+        {
+            scrollX = -( screenWidthPixels - graphics.levelWidthPixels ) / 2;
+        }
+        else if ( scrollX < 0  )
         {
             scrollX = 0;
         }
@@ -211,7 +216,11 @@ public class AndroidGameLoop implements Runnable
             scrollX = graphics.levelWidthPixels - screenWidthPixels;
         }
 
-        if ( scrollY < 0 || graphics.levelHeightPixels < screenHeightPixels )
+        if ( graphics.levelHeightPixels < screenHeightPixels )
+        {
+            scrollY = -( screenHeightPixels - graphics.levelHeightPixels ) / 2;
+        }
+        else if ( scrollY < 0 )
         {
             scrollY = 0;
         }
