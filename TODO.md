@@ -28,6 +28,8 @@ Later
 Release 0.2 (Android)
 ---------------------
 
+- Info about how many to save etc.
+- Info num tokens you have
 - ~~Graph paper background~~
 - ~~Centre level in window~~
 - ~~Varied block images~~
