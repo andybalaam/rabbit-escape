@@ -72,7 +72,10 @@ public class AndroidGameActivity extends ActionBarActivity implements NumLeftLis
         buildDynamicUi( getResources(), world, levelsDir, levelNum, savedInstanceState );
         restoreFromState( savedInstanceState );
 
-        Dialogs.intro( this, world );
+        if ( world.completionState() == World.CompletionState.INTRO )
+        {
+            Dialogs.intro( this, world );
+        }
     }
 
     private World loadWorld( String levelFileName, Bundle savedInstanceState )
