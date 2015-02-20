@@ -1,7 +1,5 @@
 package rabbitescape.ui.android;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
@@ -74,30 +72,7 @@ public class AndroidGameActivity extends ActionBarActivity implements NumLeftLis
         buildDynamicUi( getResources(), world, levelsDir, levelNum, savedInstanceState );
         restoreFromState( savedInstanceState );
 
-        showIntroAlert( world );
-    }
-
-    private void showIntroAlert( final World world )
-    {
-        DialogInterface.OnClickListener onOk = new DialogInterface.OnClickListener()
-        {
-            @Override
-            public void onClick( DialogInterface dialogInterface, int i )
-            {
-                setPaused( world, false );
-            }
-        };
-
-        world.setIntro( false );  // We can't use onDismiss, so we can't guarantee to unintro
-        setPaused( world, true ); // ourselves.  Instead, use pause so the user can always
-                                  // unpause manually if needed.
-
-        new AlertDialog.Builder( this )
-            .setTitle( t( world.name ) )
-            .setMessage( t( world.description ).replaceAll( "\\\\n", " " ) )
-            .setPositiveButton( t( "Start" ), onOk )
-            .create()
-            .show();
+        Dialogs.intro( this, world );
     }
 
     private World loadWorld( String levelFileName, Bundle savedInstanceState )
@@ -234,7 +209,7 @@ public class AndroidGameActivity extends ActionBarActivity implements NumLeftLis
             case RUNNING:
             case PAUSED:
             {
-                showReadyToExplodeDialog( world );
+                Dialogs.explode( this, world );
                 break;
             }
             default:
@@ -244,40 +219,10 @@ public class AndroidGameActivity extends ActionBarActivity implements NumLeftLis
         }
     }
 
-    private void setPaused( World world, boolean paused )
+    public void setPaused( World world, boolean paused )
     {
         world.setPaused( paused );
         updatePauseButton( paused );
-    }
-
-    private void showReadyToExplodeDialog( final World world )
-    {
-        DialogInterface.OnClickListener onCancel = new DialogInterface.OnClickListener()
-        {
-            @Override
-            public void onClick( DialogInterface dialogInterface, int i )
-            {
-                setPaused( world, false );
-            }
-        };
-
-        DialogInterface.OnClickListener onExplode = new DialogInterface.OnClickListener()
-        {
-            @Override
-            public void onClick( DialogInterface dialogInterface, int i )
-            {
-                setPaused( world, false );
-                world.changes.explodeAllRabbits();
-            }
-        };
-
-        setPaused( world, true );
-        new AlertDialog.Builder( this )
-            .setMessage( t( "Explode all rabbits?" ) )
-            .setNegativeButton( t( "Cancel" ), onCancel )
-            .setPositiveButton( t( "Explode!" ), onExplode )
-            .create()
-            .show();
     }
 
     @Override
