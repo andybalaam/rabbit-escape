@@ -46,6 +46,7 @@ Release 0.2 (Android)
 Release 0.1 (Playable)
 ----------------------
 
+- Don''t scroll to the top of the list after you''ve won a level
 - Docs on making levels
 - Docs on installing
 - ~~Pencil-style blocks~~
