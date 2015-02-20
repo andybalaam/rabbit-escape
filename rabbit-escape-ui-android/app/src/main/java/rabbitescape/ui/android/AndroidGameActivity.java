@@ -71,9 +71,33 @@ public class AndroidGameActivity extends ActionBarActivity implements NumLeftLis
 
         staticInit();
         World world = loadWorld( levelFileName, savedInstanceState );
-        world.setIntro( false ); // TODO: support an intro screen
         buildDynamicUi( getResources(), world, levelsDir, levelNum, savedInstanceState );
         restoreFromState( savedInstanceState );
+
+        showIntroAlert( world );
+    }
+
+    private void showIntroAlert( final World world )
+    {
+        DialogInterface.OnClickListener onOk = new DialogInterface.OnClickListener()
+        {
+            @Override
+            public void onClick( DialogInterface dialogInterface, int i )
+            {
+                setPaused( world, false );
+            }
+        };
+
+        world.setIntro( false );  // We can't use onDismiss, so we can't guarantee to unintro
+        setPaused( world, true ); // ourselves.  Instead, use pause so the user can always
+                                  // unpause manually if needed.
+
+        new AlertDialog.Builder( this )
+            .setTitle( t( world.name ) )
+            .setMessage( t( world.description ).replaceAll( "\\\\n", " " ) )
+            .setPositiveButton( t( "Start" ), onOk )
+            .create()
+            .show();
     }
 
     private World loadWorld( String levelFileName, Bundle savedInstanceState )
@@ -220,10 +244,8 @@ public class AndroidGameActivity extends ActionBarActivity implements NumLeftLis
         }
     }
 
-    private void setPaused( boolean paused )
+    private void setPaused( World world, boolean paused )
     {
-        World world = gameSurface.game.gameLoop.physics.world;
-
         world.setPaused( paused );
         updatePauseButton( paused );
     }
@@ -235,7 +257,7 @@ public class AndroidGameActivity extends ActionBarActivity implements NumLeftLis
             @Override
             public void onClick( DialogInterface dialogInterface, int i )
             {
-                setPaused( false );
+                setPaused( world, false );
             }
         };
 
@@ -244,12 +266,12 @@ public class AndroidGameActivity extends ActionBarActivity implements NumLeftLis
             @Override
             public void onClick( DialogInterface dialogInterface, int i )
             {
-                setPaused( false );
+                setPaused( world, false );
                 world.changes.explodeAllRabbits();
             }
         };
 
-        setPaused( true );
+        setPaused( world, true );
         new AlertDialog.Builder( this )
             .setMessage( t( "Explode all rabbits?" ) )
             .setNegativeButton( t( "Cancel" ), onCancel )
