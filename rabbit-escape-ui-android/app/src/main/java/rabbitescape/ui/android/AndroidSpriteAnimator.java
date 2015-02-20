@@ -25,6 +25,33 @@ public class AndroidSpriteAnimator
     private final AnimationCache animationCache;
     private final AndroidBitmapScaler scaler;
 
+    private static final String[] land_block = new String[]
+    {
+        "land_block_1",
+        "land_block_2",
+        "land_block_3",
+        "land_block_4",
+    };
+
+    private static final String[] land_rising_right = new String[]
+    {
+        "land_rising_right_1",
+        "land_rising_right_2",
+        "land_rising_right_3",
+        "land_rising_right_4"
+    };
+
+    private static final String[] land_rising_left = new String[]
+    {
+        "land_rising_left_1",
+        "land_rising_left_2",
+        "land_rising_left_3",
+        "land_rising_left_4"
+    };
+
+    private static final String bridge_rising_right = "bridge_rising_right";
+    private static final String bridge_rising_left  = "bridge_rising_left";
+
     public AndroidSpriteAnimator(
         World world,
         ChangeDescription changeDescription,
@@ -122,11 +149,11 @@ public class AndroidSpriteAnimator
     {
         switch( block.type )
         {
-            case solid_flat:      return "land_block_1"; // TODO: vary these like in desktop version
-            case solid_up_right:  return "land_rising_right_1";
-            case solid_up_left:   return "land_rising_left_1";
-            case bridge_up_right: return "bridge_rising_right";
-            case bridge_up_left:  return "bridge_rising_left";
+            case solid_flat:      return land_block[block.variant];
+            case solid_up_right:  return land_rising_right[block.variant];
+            case solid_up_left:   return land_rising_left[block.variant];
+            case bridge_up_right: return bridge_rising_right;
+            case bridge_up_left:  return bridge_rising_left;
             default:
                 throw new RuntimeException(
                     "Unknown block type " + block.type );
