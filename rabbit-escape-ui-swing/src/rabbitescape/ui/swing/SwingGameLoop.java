@@ -188,9 +188,22 @@ public class SwingGameLoop implements GameLoop
 
     private void checkWon()
     {
-        if ( world.completionState() == CompletionState.WON )
+        switch ( world.completionState() )
         {
-            winListener.won();
+            case WON:
+            {
+                winListener.won();
+                break;
+            }
+            case LOST:
+            {
+                winListener.lost();
+                break;
+            }
+            default:
+            {
+                break;
+            }
         }
     }
 

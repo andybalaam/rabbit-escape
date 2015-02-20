@@ -57,9 +57,22 @@ public class Physics
 
     private void checkWon()
     {
-        if ( world.completionState() == World.CompletionState.WON )
+        switch ( world.completionState() )
         {
-            winListener.won();
+            case WON:
+            {
+                winListener.won();
+                break;
+            }
+            case LOST:
+            {
+                winListener.lost();
+                break;
+            }
+            default:
+            {
+                break;
+            }
         }
     }
 

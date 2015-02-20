@@ -16,4 +16,9 @@ public class UpdateSwingMenuLevelWinListener implements LevelWinListener
     {
         menuJFrame.refreshEnabledItems();
     }
+
+    @Override
+    public void lost()
+    {
+    }
 }

@@ -6,4 +6,9 @@ public class IgnoreLevelWinListener implements LevelWinListener
     public void won()
     {
     }
+
+    @Override
+    public void lost()
+    {
+    }
 }

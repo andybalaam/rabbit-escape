@@ -27,4 +27,9 @@ public class CompletedLevelWinListener implements LevelWinListener
             levelsCompleted.setCompletedLevel( levelsDir, levelNumber );
         }
     }
+
+    @Override
+    public void lost()
+    {
+    }
 }

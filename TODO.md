@@ -31,8 +31,9 @@ Release 0.2 (Android)
 - Graph paper background
 - Centre level in window
 - Varied block images
+- Draw rabbits in front of objects
 - Message at the start of a level
-- Message when you lose
+- ~~Message when you lose~~
 - ~~Message when you win~~
 - ~~Explode all button~~
 - ~~Android menus launch real levels~~

@@ -19,32 +19,38 @@ public class AndroidAlertWinListener implements LevelWinListener
     @Override
     public void won()
     {
+        showAlert( t( "Well done, you won!" ), t( "Great!" ) );
+    }
+
+    @Override
+    public void lost()
+    {
+        showAlert( t( "Bad luck, you didn't save enough." ), t( "OK" ) );
+    }
+
+    private void showAlert( final String message, final String ok )
+    {
         activity.runOnUiThread(
             new Runnable()
             {
                 public void run()
                 {
-                    showAlert();
+                    DialogInterface.OnClickListener onOk = new DialogInterface.OnClickListener()
+                    {
+                        @Override
+                        public void onClick( DialogInterface dialogInterface, int i )
+                        {
+                            activity.finish();
+                        }
+                    };
+
+                    new AlertDialog.Builder( activity )
+                        .setMessage( message )
+                        .setPositiveButton( ok, onOk )
+                        .create()
+                        .show();
                 }
             }
         );
-    }
-
-    private void showAlert()
-    {
-        DialogInterface.OnClickListener onOk = new DialogInterface.OnClickListener()
-        {
-            @Override
-            public void onClick( DialogInterface dialogInterface, int i )
-            {
-                activity.finish();
-            }
-        };
-
-        new AlertDialog.Builder( activity )
-            .setMessage( t( "Well done, you won!" ) )
-            .setPositiveButton( t( "I am great" ), onOk )
-            .create()
-            .show();
     }
 }
