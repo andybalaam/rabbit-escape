@@ -49,14 +49,14 @@ public class AndroidSpriteAnimator
             addBlock( ret, block );
         }
 
-        for ( Rabbit rabbit : world.rabbits )
-        {
-            addThing( frameNum, rabbit, ret );
-        }
-
         for ( Thing thing : world.things )
         {
             addThing( frameNum, thing, ret );
+        }
+
+        for ( Rabbit rabbit : world.rabbits )
+        {
+            addThing( frameNum, rabbit, ret );
         }
 
         for ( Thing thing : world.changes.tokensAboutToAppear() )
