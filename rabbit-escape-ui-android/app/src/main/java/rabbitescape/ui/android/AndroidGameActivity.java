@@ -33,10 +33,12 @@ import static android.text.TextUtils.split;
 public class AndroidGameActivity extends ActionBarActivity implements NumLeftListener
 {
     // Constants
+    public static final String INTENT_LEVELS_DIR   = "rabbitescape.levelsdir";
     public static final String INTENT_LEVEL        = "rabbitescape.level";
     public static final String INTENT_LEVEL_NUMBER = "rabbitescape.levelnumber";
     public static final String PREFS_MUTED = "rabbitescape.muted";
     public static final String STATE_CHECKED_ABILITY_INDEX = "rabbitescape.checkedAbilityIndex";
+
 
     // System
     private SharedPreferences prefs;
@@ -60,13 +62,14 @@ public class AndroidGameActivity extends ActionBarActivity implements NumLeftLis
         super.onCreate( savedInstanceState );
 
         Intent intent = getIntent();
+        String levelsDir     = intent.getStringExtra( INTENT_LEVELS_DIR );
         String levelFileName = intent.getStringExtra( INTENT_LEVEL );
         int    levelNum      = intent.getIntExtra( INTENT_LEVEL_NUMBER, 0 );
 
         staticInit();
         World world = loadWorld( levelFileName, savedInstanceState );
         world.setIntro( false ); // TODO: support an intro screen
-        buildDynamicUi( getResources(), world, levelFileName, levelNum, savedInstanceState );
+        buildDynamicUi( getResources(), world, levelsDir, levelNum, savedInstanceState );
         restoreFromState( savedInstanceState );
     }
 
@@ -87,7 +90,7 @@ public class AndroidGameActivity extends ActionBarActivity implements NumLeftLis
     private void buildDynamicUi(
         Resources resources,
         World world,
-        String levelFileName,
+        String levelsDir,
         int levelNum,
         Bundle savedInstanceState
     )
@@ -103,7 +106,7 @@ public class AndroidGameActivity extends ActionBarActivity implements NumLeftLis
             this,
             createBitmapCache( resources ),
             world,
-            new CompletedLevelWinListener( levelFileName, levelNum, levelsCompleted ),
+            new CompletedLevelWinListener( levelsDir, levelNum, levelsCompleted ),
             metrics.density,
             savedInstanceState
         );
