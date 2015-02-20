@@ -5,18 +5,13 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import rabbitescape.engine.menu.LevelMenuItem;
 import rabbitescape.engine.menu.Menu;
 import rabbitescape.engine.menu.MenuDefinition;
 import rabbitescape.engine.menu.MenuItem;
-
-import static rabbitescape.engine.i18n.Translation.t;
 
 public class AndroidMenuActivity extends ActionBarActivity
 {
@@ -54,20 +49,6 @@ public class AndroidMenuActivity extends ActionBarActivity
         listView.setAdapter( new MenuListAdapter( this, menu ) );
 
         addItemListener( menu, listView );
-    }
-
-    private String[] itemsAsStrings( Menu menu )
-    {
-        String[] ret = new String[ menu.items.length ];
-
-        for ( int i = 0; i < menu.items.length; ++i )
-        {
-            MenuItem item = menu.items[i];
-
-            ret[i] = t( item.name, item.nameParams );
-        }
-
-        return ret;
     }
 
     private void addItemListener( final Menu menu, ListView listView )
