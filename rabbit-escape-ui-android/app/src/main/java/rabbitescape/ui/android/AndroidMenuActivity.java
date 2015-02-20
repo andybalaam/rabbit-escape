@@ -19,7 +19,8 @@ public class AndroidMenuActivity extends ActionBarActivity
 
     private int[] positions;
 
-    private Menu mainMenu = null;
+    private Menu menu = null;
+    private ListView listView = null;
 
     @Override
     protected void onCreate( Bundle savedInstanceState )
@@ -27,8 +28,11 @@ public class AndroidMenuActivity extends ActionBarActivity
         super.onCreate( savedInstanceState );
         setContentView( R.layout.activity_android_menu );
 
-        mainMenu = MenuDefinition.mainMenu(
-            new AndroidPreferencesBasedLevelsCompleted( getPreferences( MODE_PRIVATE ) ) );
+        Menu mainMenu = MenuDefinition.mainMenu(
+            new AndroidPreferencesBasedLevelsCompleted(
+                getSharedPreferences( "rabbitescape", MODE_PRIVATE )
+            )
+        );
 
         Intent intent = getIntent();
         positions = intent.getIntArrayExtra( POSITION );
@@ -43,12 +47,18 @@ public class AndroidMenuActivity extends ActionBarActivity
             actionBar.setDisplayHomeAsUpEnabled( true );
         }
 
-        final Menu menu = navigateToMenu( positions );
+        menu = navigateToMenu( positions, mainMenu );
 
-        ListView listView = (ListView)findViewById( R.id.listView );
-        listView.setAdapter( new MenuListAdapter( this, menu ) );
-
+        listView = (ListView)findViewById( R.id.listView );
         addItemListener( menu, listView );
+    }
+
+    @Override
+    public void onResume()
+    {
+        super.onResume();
+        menu.refresh();
+        listView.setAdapter( new MenuListAdapter( this, menu ) );
     }
 
     private void addItemListener( final Menu menu, ListView listView )
@@ -136,7 +146,7 @@ public class AndroidMenuActivity extends ActionBarActivity
         return ret;
     }
 
-    private Menu navigateToMenu( int[] positions )
+    private Menu navigateToMenu( int[] positions, Menu mainMenu )
     {
         Menu ret = mainMenu;
         for ( int pos : positions )

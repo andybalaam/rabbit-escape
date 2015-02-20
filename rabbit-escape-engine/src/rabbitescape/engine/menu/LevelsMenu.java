@@ -77,12 +77,13 @@ public class LevelsMenu extends Menu
     @Override
     public void refresh()
     {
+        int lastEnabled =
+            levelsCompleted.highestLevelCompleted( levelsDir ) + 1;
+
         int i = 1;
         for ( MenuItem item : items )
         {
-            item.enabled = (
-                i <= levelsCompleted.highestLevelCompleted( levelsDir ) + 1 );
-
+            item.enabled = ( i <= lastEnabled );
             ++i;
         }
     }
