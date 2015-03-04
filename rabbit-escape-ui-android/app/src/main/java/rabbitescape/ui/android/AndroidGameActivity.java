@@ -9,10 +9,12 @@ import android.util.DisplayMetrics;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 
+import java.util.Map;
 import java.util.Set;
 
 import rabbitescape.engine.CompletedLevelWinListener;
@@ -49,8 +51,8 @@ public class AndroidGameActivity extends ActionBarActivity implements NumLeftLis
     private boolean muted;
 
 
-    private ImageView muteButton;
-    private ImageView pauseButton;
+    private Button muteButton;
+    private Button pauseButton;
     private LinearLayout topLayout;
     private RadioGroup abilitiesGroup;
 
@@ -131,22 +133,31 @@ public class AndroidGameActivity extends ActionBarActivity implements NumLeftLis
 
         setContentView( R.layout.activity_android_game );
 
-        muteButton = (ImageView)findViewById( R.id.muteButton );
-        pauseButton = (ImageView)findViewById( R.id.pauseButton );
+        muteButton = (Button)findViewById( R.id.muteButton );
+        pauseButton = (Button)findViewById( R.id.pauseButton );
         topLayout = (LinearLayout)findViewById( R.id.topLayout );
         abilitiesGroup = (RadioGroup)findViewById( R.id.abilitiesGroup );
     }
 
     private void createAbilities( World world, Resources resources )
     {
-        Set<Token.Type> keys = world.abilities.keySet();
-        abilities = new Token.Type[ keys.size() ];
+        Set<Map.Entry<Token.Type, Integer>> entries = world.abilities.entrySet();
+        abilities = new Token.Type[ entries.size() ];
+
         int i = 0;
-        for ( Token.Type ability : keys )
+        for ( Map.Entry<Token.Type, Integer> entry : entries )
         {
-            abilities[i] = ability;
+            abilities[i] = entry.getKey();
             abilitiesGroup.addView(
-                new AbilityButton( this, resources, abilitiesGroup, ability.name(), i ) );
+                new AbilityButton(
+                    this,
+                    resources,
+                    abilitiesGroup,
+                    entry.getKey().name(),
+                    entry.getValue(),
+                    i
+                )
+            );
             ++i;
         }
 
@@ -185,8 +196,12 @@ public class AndroidGameActivity extends ActionBarActivity implements NumLeftLis
 
     private void updateMuteButton()
     {
-        muteButton.setImageDrawable(
-            getResources().getDrawable( muted ? R.drawable.menu_muted : R.drawable.menu_unmuted ) );
+        muteButton.setCompoundDrawablesWithIntrinsicBounds(
+            getResources().getDrawable( muted ? R.drawable.menu_muted : R.drawable.menu_unmuted ),
+            null,
+            null,
+            null
+        );
         muteButton.invalidate();
     }
 
@@ -197,8 +212,11 @@ public class AndroidGameActivity extends ActionBarActivity implements NumLeftLis
 
     private void updatePauseButton( boolean paused )
     {
-        pauseButton.setImageDrawable(
-            getResources().getDrawable( paused ? R.drawable.menu_unpause : R.drawable.menu_pause )
+        pauseButton.setCompoundDrawablesWithIntrinsicBounds(
+            getResources().getDrawable( paused ? R.drawable.menu_unpause : R.drawable.menu_pause ),
+            null,
+            null,
+            null
         );
         pauseButton.invalidate();
     }
@@ -298,9 +316,12 @@ public class AndroidGameActivity extends ActionBarActivity implements NumLeftLis
     @Override
     public void numLeft( Token.Type ability, int numLeft )
     {
+        AbilityButton button = buttonForAbility( ability );
+
+        button.setNumLeft( numLeft );
+
         if ( numLeft == 0 )
         {
-            AbilityButton button = buttonForAbility( ability );
             button.disable();
             button.setChecked( false );
         }

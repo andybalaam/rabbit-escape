@@ -3,12 +3,15 @@ package rabbitescape.ui.android;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
+import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.RadioGroup;
 
-public class AbilityButton extends ImageButton
+public class AbilityButton extends Button
 {
     private class OnClickListener implements ImageButton.OnClickListener
     {
@@ -25,7 +28,13 @@ public class AbilityButton extends ImageButton
     private boolean checked;
 
     public AbilityButton(
-        Context context, Resources resources, RadioGroup group, String ability, int buttonIndex )
+        Context context,
+        Resources resources,
+        RadioGroup group,
+        String ability,
+        int numLeft,
+        int buttonIndex
+    )
     {
         super( context );
         this.group = group;
@@ -33,8 +42,9 @@ public class AbilityButton extends ImageButton
         this.buttonIndex = buttonIndex;
         this.checked = false;
 
-        setImage( resources );
         setUpLayout();
+        setImage( resources );
+        doSetNumLeft( numLeft );
         setOnClickListener( new OnClickListener() );
         setContentDescription( ability );
     }
@@ -51,14 +61,21 @@ public class AbilityButton extends ImageButton
 
     private void setImage( Resources resources )
     {
-        setImageDrawable(
-            resources.getDrawable(
-                resources.getIdentifier(
-                    "ability_" + ability,
-                    "drawable",
-                    "rabbitescape.ui.android"
-                )
+        Drawable img = resources.getDrawable(
+            resources.getIdentifier(
+                "ability_" + ability,
+                "drawable",
+                "rabbitescape.ui.android"
             )
+        );
+
+        setTextSize( TypedValue.COMPLEX_UNIT_SP, 10 );
+
+        setCompoundDrawablesWithIntrinsicBounds(
+            img,
+            null,
+            null,
+            null
         );
     }
 
@@ -67,7 +84,7 @@ public class AbilityButton extends ImageButton
         super.setEnabled( false );
         setMinimumWidth( getWidth() );
         setMinimumHeight( getHeight() );
-        setImageDrawable( null );
+        setCompoundDrawablesWithIntrinsicBounds( null, null, null, null );
         invalidate();
     }
 
@@ -89,5 +106,22 @@ public class AbilityButton extends ImageButton
     public boolean isChecked()
     {
         return checked;
+    }
+
+    public void setNumLeft( int numLeft )
+    {
+        setMinimumWidth( getWidth() );
+        setMinimumHeight( getHeight() );
+        doSetNumLeft( numLeft );
+    }
+
+    private void doSetNumLeft( int numLeft )
+    {
+        String text = String.valueOf( numLeft );
+        if ( text.length() < 2 )
+        {
+            text = " " + text;
+        }
+        setText( text );
     }
 }

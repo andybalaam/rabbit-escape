@@ -1,4 +1,5 @@
 <LinearLayout
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="horizontal"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
@@ -16,37 +17,43 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
 
-            <ImageButton
+            <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/muteButton"
-                android:src="@drawable/menu_unmuted"
+                android:drawableLeft="@drawable/menu_unmuted"
+                android:text="  "
                 android:contentDescription="@string/mute"
                 android:onClick="onMuteClicked"
-                android:layout_marginTop="3dp"/>
+                android:layout_marginTop="3dp"
+                tools:ignore="HardcodedText"/>
 
-            <ImageButton
+            <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/pauseButton"
-                android:src="@drawable/menu_pause"
+                android:drawableLeft="@drawable/menu_pause"
+                android:text="  "
                 android:layout_marginBottom="20dp"
                 android:contentDescription="@string/pause"
-                android:onClick="onPauseClicked"/>
+                android:onClick="onPauseClicked"
+                tools:ignore="HardcodedText"/>
 
             <RadioGroup
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/abilitiesGroup"/>
 
-            <ImageButton
+            <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/explodeAllButton"
-                android:src="@drawable/menu_explode_all"
+                android:drawableLeft="@drawable/menu_explode_all"
+                android:text="  "
                 android:layout_marginBottom="20dp"
                 android:contentDescription="@string/pause"
-                android:onClick="onExplodeAllClicked"/>
+                android:onClick="onExplodeAllClicked"
+                tools:ignore="HardcodedText"/>
 
         </LinearLayout>
     </ScrollView>
