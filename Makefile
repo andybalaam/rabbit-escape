@@ -61,7 +61,7 @@ $(ANDROIDIMAGESXHDPI_DEST)/%.png: images-src/%.png
 #$(MUSICOGG_DEST)/%.ogg: music-src/%.flac
 #	mkdir -p $(MUSICOGG_DEST); avconv -i $< -c:a libvorbis -q:a 1 $@
 
-VERSION=0.2
+VERSION=0.2.1
 
 all: compile
 
