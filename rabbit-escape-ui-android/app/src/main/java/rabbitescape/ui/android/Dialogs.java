@@ -3,6 +3,9 @@ package rabbitescape.ui.android;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import rabbitescape.engine.World;
 
 import static rabbitescape.engine.i18n.Translation.t;
@@ -26,7 +29,7 @@ public class Dialogs
 
         new AlertDialog.Builder( activity )
             .setTitle( t( world.name ) )
-            .setMessage( t( world.description ).replaceAll( "\\\\n", " " ) )
+            .setMessage( introMessage( world ) )
             .setPositiveButton( t( "Start" ), onOk )
             .create()
             .show();
@@ -74,9 +77,36 @@ public class Dialogs
         };
 
         new AlertDialog.Builder( activity )
-            .setMessage( message )
+            .setMessage( finishedMessage( activity.gameSurface.world, message ) )
             .setPositiveButton( ok, onOk )
             .create()
             .show();
+    }
+
+    private static String introMessage( World world )
+    {
+        return (
+            t( world.description ).replaceAll( "\\\\n", " " )
+            +  "\n"
+            + t( "Rabbits: ${num_rabbits}  Must save: ${num_to_save}", statsValues( world ) )
+        );
+    }
+
+    private static String finishedMessage( World world, String message )
+    {
+        return (
+               message
+            +  "\n"
+            + t( "Saved: ${num_saved}  Needed: ${num_to_save}", statsValues( world ) )
+        );
+    }
+
+    private static Map<String, Object> statsValues( World world )
+    {
+        Map<String, Object> values = new HashMap<String, Object>();
+        values.put( "num_rabbits", world.num_rabbits );
+        values.put( "num_to_save", world.num_to_save );
+        values.put( "num_saved",   world.num_saved );
+        return values;
     }
 }

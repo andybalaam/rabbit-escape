@@ -25,7 +25,7 @@ public class GameSurfaceView extends SurfaceView
         View.OnClickListener
 {
     // Saved state (saved by AndroidGameActivity)
-    private final World world;
+    public final World world;
     private Token.Type chosenAbility;
 
     // Saved state

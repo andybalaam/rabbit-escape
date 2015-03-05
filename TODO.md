@@ -31,7 +31,7 @@ Release 0.2 (Android)
 
 - Fix bug where blockers stop being blockers when you rotate screen
 - Show the level you just played on the menu
-- Info about how many to save etc.
+- ~~Info about how many to save etc.~~
 - ~~Info num tokens you have~~
 - ~~Graph paper background~~
 - ~~Centre level in window~~

@@ -59,7 +59,7 @@ public class AndroidGameActivity extends ActionBarActivity
     private LinearLayout topLayout;
     private RadioGroup abilitiesGroup;
 
-    private GameSurfaceView gameSurface;
+    public GameSurfaceView gameSurface;
     private Token.Type[] abilities;
     private TextView worldStatsTextView;
 
