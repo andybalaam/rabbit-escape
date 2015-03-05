@@ -13,6 +13,7 @@ import rabbitescape.engine.World.UnableToAddToken;
 public class WorldChanges
 {
     private final World world;
+    private final WorldStatsListener statsListener;
 
     private final List<Rabbit> rabbitsToEnter = new ArrayList<Rabbit>();
     private final List<Rabbit> rabbitsToKill  = new ArrayList<Rabbit>();
@@ -24,9 +25,11 @@ public class WorldChanges
 
     private boolean explodeAll = false;
 
-    public WorldChanges( World world )
+    public WorldChanges( World world, WorldStatsListener statsListener )
     {
         this.world = world;
+        this.statsListener = statsListener;
+        updateStats();
     }
 
     public synchronized void apply()
@@ -46,6 +49,11 @@ public class WorldChanges
         world.things.removeAll(  tokensToRemove );
         world.blocks.removeAll(  blocksToRemove );
 
+        if ( rabbitsToSave.size() > 0 )
+        {
+            updateStats();
+        }
+
         rabbitsToEnter.clear();
         rabbitsToKill.clear();
         rabbitsToSave.clear();
@@ -58,6 +66,11 @@ public class WorldChanges
         {
             doExplodeAll();
         }
+    }
+
+    private void updateStats()
+    {
+        statsListener.worldStats( world.num_saved, world.num_to_save );
     }
 
     private void doExplodeAll()

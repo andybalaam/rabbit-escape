@@ -24,12 +24,15 @@ Later
 - action:float
 - Fix desktop UI glitches e.g. slow mouse wheel scrolling in menus,
   stuff disappearing
+- Fix Android bug where winning alert disappears when you rotate the screen
 
 Release 0.2 (Android)
 ---------------------
 
+- Fix bug where blockers stop being blockers when you rotate screen
+- Show the level you just played on the menu
 - Info about how many to save etc.
-- Info num tokens you have
+- ~~Info num tokens you have~~
 - ~~Graph paper background~~
 - ~~Centre level in window~~
 - ~~Varied block images~~

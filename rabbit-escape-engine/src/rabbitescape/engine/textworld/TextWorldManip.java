@@ -57,11 +57,21 @@ public class TextWorldManip
     public static World createWorld( String... lines )
         throws WrongLineLength, UnknownCharacter
     {
-        return createWorldWithName( "", lines );
+        return createWorld( new IgnoreWorldStatsListener(), lines );
+    }
+
+    public static World createWorld(
+        WorldStatsListener statsListener, String... lines )
+        throws WrongLineLength, UnknownCharacter
+    {
+        return createWorldWithName( "", statsListener, lines );
     }
 
     public static World createWorldWithName(
-        String nameIfNoneSupplied, String... lines )
+        String nameIfNoneSupplied,
+        WorldStatsListener statsListener,
+        String... lines
+    )
     {
         List<Block> blocks = new ArrayList<>();
         List<Rabbit> rabbits = new ArrayList<>();
@@ -97,7 +107,8 @@ public class TextWorldManip
             processor.metaInt( num_waiting, num_rabs ),
             processor.metaBool( intro, true ),
             processor.metaBool( paused, false ),
-            processor.metaBool( ready_to_explode_all, false )
+            processor.metaBool( ready_to_explode_all, false ),
+            statsListener
         );
     }
 
@@ -119,7 +130,8 @@ public class TextWorldManip
             0,
             false,
             false,
-            false
+            false,
+            new IgnoreWorldStatsListener()
         );
     }
 

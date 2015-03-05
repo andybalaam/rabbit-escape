@@ -65,12 +65,12 @@ public class LoadWorldFile
         this.fs = fs;
     }
 
-    public World load( String fileName )
+    public World load( WorldStatsListener statsListener, String fileName )
     {
         try
         {
             return TextWorldManip.createWorldWithName(
-                levelName( fileName ), loadLines( fileName ) );
+                levelName( fileName ), statsListener, loadLines( fileName ) );
         }
         catch( RabbitEscapeException e )
         {

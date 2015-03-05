@@ -10,10 +10,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
@@ -23,6 +24,7 @@ import rabbitescape.engine.LoadWorldFile;
 import rabbitescape.engine.MultiLevelWinListener;
 import rabbitescape.engine.Token;
 import rabbitescape.engine.World;
+import rabbitescape.engine.WorldStatsListener;
 import rabbitescape.engine.err.RabbitEscapeException;
 import rabbitescape.engine.menu.LevelsCompleted;
 import rabbitescape.engine.textworld.TextWorldManip;
@@ -33,7 +35,8 @@ import static android.text.TextUtils.split;
 import static rabbitescape.engine.i18n.Translation.t;
 
 
-public class AndroidGameActivity extends ActionBarActivity implements NumLeftListener
+public class AndroidGameActivity extends ActionBarActivity
+    implements NumLeftListener, WorldStatsListener
 {
     // Constants
     public static final String INTENT_LEVELS_DIR   = "rabbitescape.levelsdir";
@@ -58,6 +61,7 @@ public class AndroidGameActivity extends ActionBarActivity implements NumLeftLis
 
     private GameSurfaceView gameSurface;
     private Token.Type[] abilities;
+    private TextView worldStatsTextView;
 
     @Override
     protected void onCreate( Bundle savedInstanceState )
@@ -87,11 +91,11 @@ public class AndroidGameActivity extends ActionBarActivity implements NumLeftLis
             String savedWorld = savedInstanceState.getString( AndroidGameLoop.STATE_WORLD );
             if ( savedWorld != null )
             {
-                return TextWorldManip.createWorld( split( savedWorld, "\n" ) );
+                return TextWorldManip.createWorld( this, split( savedWorld, "\n" ) );
             }
         }
 
-        return new LoadWorldFile( new RealFileSystem() ).load( levelFileName );
+        return new LoadWorldFile( new RealFileSystem() ).load( this, levelFileName );
     }
 
     private void buildDynamicUi(
@@ -137,6 +141,7 @@ public class AndroidGameActivity extends ActionBarActivity implements NumLeftLis
         pauseButton = (Button)findViewById( R.id.pauseButton );
         topLayout = (LinearLayout)findViewById( R.id.topLayout );
         abilitiesGroup = (RadioGroup)findViewById( R.id.abilitiesGroup );
+        worldStatsTextView = (TextView)findViewById( R.id.worldStats );
     }
 
     private void createAbilities( World world, Resources resources )
@@ -325,6 +330,25 @@ public class AndroidGameActivity extends ActionBarActivity implements NumLeftLis
             button.disable();
             button.setChecked( false );
         }
+    }
+
+    @Override
+    public void worldStats( int num_saved, int num_to_save )
+    {
+        final Map<String, Object> values = new HashMap<String, Object>();
+        values.put( "num_saved", num_saved );
+        values.put( "num_to_save", num_to_save );
+
+        this.runOnUiThread(
+            new Runnable()
+            {
+                @Override
+                public void run()
+                {
+                    worldStatsTextView.setText( t( "${num_saved} / ${num_to_save}", values ) );
+                }
+            }
+        );
     }
 
     public static class UnrecognisedAbility extends RabbitEscapeException

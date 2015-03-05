@@ -134,7 +134,8 @@ public class World
         int num_waiting,
         boolean intro,
         boolean paused,
-        boolean readyToExplodeAll
+        boolean readyToExplodeAll,
+        WorldStatsListener statsListener
     )
     {
         this.size = size;
@@ -154,7 +155,7 @@ public class World
         this.paused = paused;
         this.readyToExplodeAll = readyToExplodeAll;
 
-        this.changes = new WorldChanges( this );
+        this.changes = new WorldChanges( this, statsListener );
 
         init();
     }

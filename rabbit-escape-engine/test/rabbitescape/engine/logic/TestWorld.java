@@ -8,12 +8,16 @@ import static rabbitescape.engine.textworld.TextWorldManip.*;
 import static rabbitescape.engine.World.CompletionState.*;
 import static rabbitescape.engine.ChangeDescription.State.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.Test;
 
 import rabbitescape.engine.Rabbit;
 import rabbitescape.engine.Token;
 import rabbitescape.engine.World;
 import rabbitescape.engine.World.DontStepAfterFinish;
+import rabbitescape.engine.WorldStatsListener;
 import rabbitescape.engine.textworld.TextWorldManip;
 
 public class TestWorld
@@ -322,6 +326,57 @@ public class TestWorld
 
         // ... they are dead
         assertThat( world.rabbits.size(), equalTo( 0 ) );
+    }
+
+    @Test
+    public void We_are_notified_when_rabbits_are_saved()
+    {
+        class TrackingWorldStatsListener implements WorldStatsListener
+        {
+            class Call
+            {
+                public int num_saved;
+                public int num_to_save;
+            }
+
+            public List<Call> calls = new ArrayList<Call>();
+
+            @Override
+            public void worldStats( int num_saved, int num_to_save )
+            {
+                Call call = new Call();
+                call.num_saved = num_saved;
+                call.num_to_save = num_to_save;
+                calls.add( call );
+            }
+        }
+
+        TrackingWorldStatsListener statsListener =
+            new TrackingWorldStatsListener();
+
+        World world = createWorld(
+            statsListener,
+            ":num_to_save=7",
+            "r O",
+            "###"
+        );
+        world.setIntro( false );
+
+        // Sanity - we provide stats when we create the world
+        assertThat( statsListener.calls.size(), equalTo( 1 ) );
+        assertThat( statsListener.calls.get( 0 ).num_saved,   equalTo( 0 ) );
+        assertThat( statsListener.calls.get( 0 ).num_to_save, equalTo( 7 ) );
+
+        world.step(); // Rabbit moved
+        assertThat( statsListener.calls.size(), equalTo( 1 ) );
+
+        world.step(); // Rabbit entering exit
+        assertThat( statsListener.calls.size(), equalTo( 1 ) );
+
+        world.step(); // Rabbit has entered exit
+        assertThat( statsListener.calls.size(), equalTo( 2 ) );
+        assertThat( statsListener.calls.get( 1 ).num_saved,   equalTo( 1 ) );
+        assertThat( statsListener.calls.get( 1 ).num_to_save, equalTo( 7 ) );
     }
 
     // ---

@@ -6,6 +6,7 @@ import java.io.PrintStream;
 import java.util.Locale;
 
 import rabbitescape.engine.IgnoreLevelWinListener;
+import rabbitescape.engine.IgnoreWorldStatsListener;
 import rabbitescape.engine.LevelWinListener;
 import rabbitescape.engine.LoadWorldFile;
 import rabbitescape.engine.World;
@@ -45,7 +46,8 @@ public abstract class Main
         {
             String levelName = args[0];
 
-            World world = new LoadWorldFile( fs ).load( levelName );
+            World world = new LoadWorldFile( fs ).load(
+                new IgnoreWorldStatsListener(), levelName );
 
             GameLoop gameLoop = createGameLoop( world, winListener );
 

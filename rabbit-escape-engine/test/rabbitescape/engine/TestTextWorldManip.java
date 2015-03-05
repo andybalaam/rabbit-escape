@@ -396,7 +396,9 @@ public class TestTextWorldManip
     public void Can_supply_default_name()
     {
         assertThat(
-            createWorldWithName( "defname", new String[] {} ).name,
+            createWorldWithName(
+                "defname", new IgnoreWorldStatsListener(), new String[] {}
+            ).name,
             equalTo( "defname" )
         );
     }
@@ -409,7 +411,8 @@ public class TestTextWorldManip
         };
 
         assertThat(
-            createWorldWithName( "defname", lines ).name,
+            createWorldWithName(
+                "defname", new IgnoreWorldStatsListener(), lines ).name,
             equalTo( "bar" )
         );
     }
