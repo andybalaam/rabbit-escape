@@ -10,6 +10,7 @@ import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.image.BufferStrategy;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -323,6 +324,7 @@ public class SwingGameLoop implements GameLoop
             public String heading;
             public String text1;
             public String text2;
+            public String text3;
         }
 
         private void drawResult( Graphics2D g )
@@ -341,6 +343,11 @@ public class SwingGameLoop implements GameLoop
             if ( message.text2 != null )
             {
                 writeText( g, message.text2, 0.76, 0.03 );
+            }
+
+            if ( message.text3 != null )
+            {
+                writeText( g, message.text3, 0.9, 0.025 );
             }
         }
 
@@ -364,6 +371,10 @@ public class SwingGameLoop implements GameLoop
                 {
                     message.heading = t( "You won!" );
                     message.text1   = t( "Click the screen to continue." );
+                    message.text3 = t(
+                        "Saved: ${num_saved}  Needed: ${num_to_save}",
+                        statsValues( world )
+                    );
                     break;
                 }
                 case READY_TO_EXPLODE_ALL:
@@ -382,6 +393,10 @@ public class SwingGameLoop implements GameLoop
                 {
                     message.heading = t( "You lost." );
                     message.text1   = t( "Click the screen to continue." );
+                    message.text3 = t(
+                        "Saved: ${num_saved}  Needed: ${num_to_save}",
+                        statsValues( world )
+                    );
 
                     break;
                 }
@@ -399,6 +414,12 @@ public class SwingGameLoop implements GameLoop
         private void introMessage( OverlayMessage message, World world )
         {
             message.heading = t( world.name );
+
+            message.text3 = t(
+                "Rabbits: ${num_rabbits}  Must save: ${num_to_save}",
+                statsValues( world )
+            );
+
             if ( world.description.isEmpty() )
             {
                 message.text1 = t( "Click the screen to continue." );
@@ -412,6 +433,15 @@ public class SwingGameLoop implements GameLoop
                     message.text2 = lines[1];
                 }
             }
+        }
+
+        private Map<String, Object> statsValues( World world )
+        {
+            Map<String, Object> values = new HashMap<String, Object>();
+            values.put( "num_rabbits", world.num_rabbits );
+            values.put( "num_to_save", world.num_to_save );
+            values.put( "num_saved",   world.num_saved );
+            return values;
         }
 
         private void writeText(
