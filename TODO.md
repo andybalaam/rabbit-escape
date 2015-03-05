@@ -29,12 +29,14 @@ Later
 - Display level names on menu
 - Fix bug where using the Title bar on android to go backwards makes
   Quit not work properly.
+- Fix bug where diggers go too fast when you rotate the screen (see
+  TestTextWorldManip.Digging_state_is_preserved_second_step)
 
 Release 0.2 (Android)
 ---------------------
 
 - Android launch icon
-- Fix bug where blockers stop being blockers when you rotate screen
+- ~~Fix bug where blockers stop being blockers when you rotate screen~~
 - ~~Show the level you just played on the menu~~
 - ~~Info about how many to save etc.~~
 - ~~Info num tokens you have~~

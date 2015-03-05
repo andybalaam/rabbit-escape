@@ -3,24 +3,24 @@ package rabbitescape.engine.behaviours;
 import static rabbitescape.engine.ChangeDescription.State.*;
 import static rabbitescape.engine.Token.Type.*;
 
+import java.util.Map;
+
 import rabbitescape.engine.*;
 import rabbitescape.engine.ChangeDescription.State;
 
 public class Digging extends Behaviour
 {
-    private boolean cancelled;
+    private int stepsOfDigging;
 
     @Override
     public void cancel()
     {
-        cancelled = true;
+        stepsOfDigging = 0;
     }
 
     @Override
     public boolean checkTriggered( Rabbit rabbit, World world )
     {
-        cancelled = false;
-
         BehaviourTools t = new BehaviourTools( rabbit, world );
         return t.pickUpToken( dig );
     }
@@ -28,32 +28,35 @@ public class Digging extends Behaviour
     @Override
     public State newState( BehaviourTools t, boolean triggered )
     {
-        if ( cancelled )
+        if ( !triggered && stepsOfDigging == 0 )
         {
             return null;
         }
 
         if ( t.rabbit.state == RABBIT_DIGGING )
         {
+            stepsOfDigging = 1;
             return RABBIT_DIGGING_2;
         }
 
         if (
                triggered
-            || t.rabbit.state == RABBIT_DIGGING_2
-            || t.rabbit.state == RABBIT_DIGGING_ON_SLOPE
+            || stepsOfDigging > 0
         )
         {
             if ( t.rabbit.onSlope && t.blockHere() != null )
             {
+                stepsOfDigging = 1;
                 return RABBIT_DIGGING_ON_SLOPE;
             }
             else if ( t.blockBelow() != null )
             {
+                stepsOfDigging = 2;
                 return RABBIT_DIGGING;
             }
         }
 
+        --stepsOfDigging;
         return null;
     }
 
@@ -84,4 +87,19 @@ public class Digging extends Behaviour
             }
         }
     }
+
+    @Override
+    public void saveState( Map<String, String> saveState )
+    {
+        BehaviourState.addToStateIfGtZero(
+            saveState, "Digging.stepsOfDigging", stepsOfDigging );
+    }
+
+    @Override
+    public void restoreFromState( Map<String, String> saveState )
+    {
+        stepsOfDigging = BehaviourState.restoreFromState(
+            saveState, "Digging.stepsOfDigging", stepsOfDigging );
+    }
+
 }

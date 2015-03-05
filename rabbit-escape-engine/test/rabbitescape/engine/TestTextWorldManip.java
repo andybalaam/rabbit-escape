@@ -556,6 +556,157 @@ public class TestTextWorldManip
     }
 
     @Test
+    public void Blocking_state_is_preserved()
+    {
+        World world = createWorld(
+            "rk ",
+            "###"
+        );
+        world.setIntro( false );
+
+        // Pick up block token
+        world.step();
+
+        // We are now blocking
+        assertThat(
+            renderWorld( world, true, false ),
+            equalTo(
+                " H ",
+                "###"
+            )
+        );
+
+        // Round trip
+        World world2 = createWorld( renderCompleteWorld( world, false ) );
+
+        // We are still blocking
+        assertThat(
+            renderWorld( world2, true, false ),
+            equalTo(
+                " H ",
+                "###"
+            )
+        );
+    }
+
+    @Test
+    public void Digging_state_is_preserved()
+    {
+        World world = createWorld(
+            "rd ",
+            "###",
+            "###",
+            "###"
+        );
+        world.setIntro( false );
+
+        // Pick up dig token
+        world.step();
+
+        // We are now digging
+        assertThat(
+            renderWorld( world, true, false ),
+            equalTo(
+                " r ",
+                "#D#",
+                "###",
+                "###"
+            )
+        );
+
+        // Round trip
+        World world2 = createWorld( renderCompleteWorld( world, false ) );
+
+        // We are still digging
+        assertThat(
+            renderWorld( world2, true, false ),
+            equalTo(
+                " r ",
+                "#D#",
+                "###",
+                "###"
+            )
+        );
+    }
+
+    @Test
+    public void Digging_state_is_preserved_second_step()
+    {
+        World world = createWorld(
+            "rd ",
+            "###",
+            "###",
+            "###"
+        );
+        world.setIntro( false );
+
+        // Pick up dig token and begin digging
+        world.step();
+        world.step();
+
+        // We are now digging
+        assertThat(
+            renderWorld( world, true, false ),
+            equalTo(
+                "   ",
+                "#D#",
+                "###",
+                "###"
+            )
+        );
+
+        // Round trip
+        @SuppressWarnings( "unused" )
+        World world2 = createWorld( renderCompleteWorld( world, false ) );
+
+        // We are still digging
+        // TODO: bug: we moved on a step in the round trip
+        /*assertThat(
+            renderWorld( world2, true, false ),
+            equalTo(
+                "   ",
+                "#D#",
+                "###",
+                "###"
+            )
+        );*/
+    }
+
+    @Test
+    public void Bashing_state_is_preserved()
+    {
+        World world = createWorld(
+            "rb#",
+            "###"
+        );
+        world.setIntro( false );
+
+        // Pick up bash token
+        world.step();
+
+        // We are now bashing
+        assertThat(
+            renderWorld( world, true, false ),
+            equalTo(
+                " rK",
+                "###"
+            )
+        );
+
+        // Round trip
+        World world2 = createWorld( renderCompleteWorld( world, false ) );
+
+        // We are still bashing
+        assertThat(
+            renderWorld( world2, true, false ),
+            equalTo(
+                " rK",
+                "###"
+            )
+        );
+    }
+
+    @Test
     public void Round_trip_world_with_overlaps()
     {
         String[] lines = {

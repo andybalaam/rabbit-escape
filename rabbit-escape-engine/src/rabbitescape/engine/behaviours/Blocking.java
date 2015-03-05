@@ -3,14 +3,19 @@ package rabbitescape.engine.behaviours;
 import static rabbitescape.engine.ChangeDescription.State.*;
 import static rabbitescape.engine.Token.Type.*;
 
+import java.util.Map;
+
 import rabbitescape.engine.*;
 import rabbitescape.engine.ChangeDescription.State;
 
 public class Blocking extends Behaviour
 {
+    public boolean abilityActive = false;
+
     @Override
     public void cancel()
     {
+        abilityActive = false;
     }
 
     @Override
@@ -24,8 +29,9 @@ public class Blocking extends Behaviour
     @Override
     public State newState( BehaviourTools t, boolean triggered )
     {
-        if ( triggered || t.rabbit.state == RABBIT_BLOCKING )
+        if ( abilityActive || triggered )
         {
+            abilityActive = true;
             return RABBIT_BLOCKING;
         }
 
@@ -36,5 +42,21 @@ public class Blocking extends Behaviour
     public boolean behave( World world, Rabbit rabbit, State state )
     {
         return ( state == RABBIT_BLOCKING );
+    }
+
+    @Override
+    public void saveState( Map<String, String> saveState )
+    {
+        BehaviourState.addToStateIfTrue(
+            saveState, "Blocking.abilityActive", abilityActive
+        );
+    }
+
+    @Override
+    public void restoreFromState( Map<String, String> saveState )
+    {
+        abilityActive = BehaviourState.restoreFromState(
+            saveState, "Blocking.abilityActive", abilityActive
+        );
     }
 }
