@@ -237,11 +237,15 @@ public class AndroidGameLoop implements Runnable
             return physics.world.abilities.get( ability );
         }
 
-        return physics.addToken(
-            ability,
-            (int)( ( pixelX + scrollX ) / graphics.renderingTileSize ),
-            (int)( ( pixelY + scrollY ) / graphics.renderingTileSize )
-    );
+        int x = (int)( ( pixelX + scrollX ) / graphics.renderingTileSize );
+        int y = (int)( ( pixelY + scrollY ) / graphics.renderingTileSize );
+
+        if ( x < 0 || x >= physics.world.size.width || y < 0 || y >= physics.world.size.height )
+        {
+            return physics.world.abilities.get( ability );
+        }
+
+        return physics.addToken( ability,x, y );
     }
 
     public void setPaused( boolean paused )

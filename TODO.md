@@ -32,6 +32,11 @@ Later
 - Fix bug where diggers go too fast when you rotate the screen (see
   TestTextWorldManip.Digging_state_is_preserved_second_step)
 
+Release 0.2.1
+-------------
+
+- ~~Fix bug where we crash if you place a token outside playing area~~
+
 Release 0.2 (Android)
 ---------------------
 
