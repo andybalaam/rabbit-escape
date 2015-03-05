@@ -16,11 +16,13 @@ import rabbitescape.engine.menu.MenuItem;
 public class AndroidMenuActivity extends ActionBarActivity
 {
     private static final String POSITION = "rabbitescape.position";
+    private static final String STATE_SELECTED_ITEM = "rabbitescape.selected_menu_item";
 
     private int[] positions;
 
     private Menu menu = null;
     private ListView listView = null;
+    public int selectedItemPosition = -1;
 
     @Override
     protected void onCreate( Bundle savedInstanceState )
@@ -33,6 +35,11 @@ public class AndroidMenuActivity extends ActionBarActivity
                 getSharedPreferences( "rabbitescape", MODE_PRIVATE )
             )
         );
+
+        if ( savedInstanceState != null )
+        {
+            selectedItemPosition = savedInstanceState.getInt( STATE_SELECTED_ITEM, -1 );
+        }
 
         Intent intent = getIntent();
         positions = intent.getIntArrayExtra( POSITION );
@@ -50,7 +57,15 @@ public class AndroidMenuActivity extends ActionBarActivity
         menu = navigateToMenu( positions, mainMenu );
 
         listView = (ListView)findViewById( R.id.listView );
+        listView.setSelection( selectedItemPosition );
         addItemListener( menu, listView );
+    }
+
+    @Override
+    public void onSaveInstanceState( Bundle outState )
+    {
+        super.onSaveInstanceState( outState );
+        outState.putInt( STATE_SELECTED_ITEM, listView.getSelectedItemPosition() );
     }
 
     @Override
@@ -59,6 +74,7 @@ public class AndroidMenuActivity extends ActionBarActivity
         super.onResume();
         menu.refresh();
         listView.setAdapter( new MenuListAdapter( this, menu ) );
+        listView.setSelection( selectedItemPosition );
     }
 
     private void addItemListener( final Menu menu, ListView listView )
@@ -72,6 +88,7 @@ public class AndroidMenuActivity extends ActionBarActivity
                 public void onItemClick(
                     AdapterView<?> adapterView, View view, int position, long id )
                 {
+                    selectedItemPosition = position;
                     MenuItem item = menu.items[position];
                     switch( item.type )
                     {

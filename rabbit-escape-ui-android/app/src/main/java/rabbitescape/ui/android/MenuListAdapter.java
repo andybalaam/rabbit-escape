@@ -14,10 +14,12 @@ import static rabbitescape.engine.i18n.Translation.t;
 public class MenuListAdapter extends ArrayAdapter<MenuItem>
 {
     private final MenuItem[] items;
+    private final AndroidMenuActivity menuActivity;
 
-    public MenuListAdapter( Context context, Menu menu )
+    public MenuListAdapter( AndroidMenuActivity menuActivity, Menu menu )
     {
-        super( context, android.R.layout.simple_list_item_1, menu.items );
+        super( menuActivity, android.R.layout.simple_list_item_1, menu.items );
+        this.menuActivity = menuActivity;
         items = menu.items;
     }
 
@@ -48,6 +50,7 @@ public class MenuListAdapter extends ArrayAdapter<MenuItem>
 
         MenuItem item = items[ position ];
         ret.setText( t( item.name, item.nameParams ) );
+        ret.setTypeface( null, menuActivity.selectedItemPosition == position ? 1 : 0 );
         ret.setEnabled( item.enabled );
 
         return ret;

@@ -25,12 +25,17 @@ Later
 - Fix desktop UI glitches e.g. slow mouse wheel scrolling in menus,
   stuff disappearing
 - Fix Android bug where winning alert disappears when you rotate the screen
+- Display level previews on menu
+- Display level names on menu
+- Fix bug where using the Title bar on android to go backwards makes
+  Quit not work properly.
 
 Release 0.2 (Android)
 ---------------------
 
+- Android launch icon
 - Fix bug where blockers stop being blockers when you rotate screen
-- Show the level you just played on the menu
+- ~~Show the level you just played on the menu~~
 - ~~Info about how many to save etc.~~
 - ~~Info num tokens you have~~
 - ~~Graph paper background~~
