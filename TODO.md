@@ -35,7 +35,7 @@ Later
 Release 0.2 (Android)
 ---------------------
 
-- Android launch icon
+- ~~Android launch icon~~
 - ~~Fix bug where blockers stop being blockers when you rotate screen~~
 - ~~Show the level you just played on the menu~~
 - ~~Info about how many to save etc.~~

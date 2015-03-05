@@ -10,6 +10,8 @@ rabbit-escape-ui-android/app/libs/rabbit-escape-generic.jar
 rabbit-escape-ui-android/app/src/main/res/drawable-mdpi/*.png
 rabbit-escape-ui-android/app/src/main/res/drawable-hdpi/*.png
 rabbit-escape-ui-android/app/src/main/res/drawable-xhdpi/*.png
+rabbit-escape-ui-android/app/src/main/res/drawable-xxhdpi/*.png
+rabbit-escape-ui-android/app/src/main/res/drawable-xxxhdpi/*.png
 *.apk
 *.ap_
 *.dex

@@ -5,6 +5,8 @@ IMAGES32_DEST=rabbit-escape-ui-swing/src/rabbitescape/ui/swing/images32
 ANDROIDIMAGESMDPI_DEST=rabbit-escape-ui-android/app/src/main/res/drawable-mdpi
 ANDROIDIMAGESHDPI_DEST=rabbit-escape-ui-android/app/src/main/res/drawable-hdpi
 ANDROIDIMAGESXHDPI_DEST=rabbit-escape-ui-android/app/src/main/res/drawable-xhdpi
+ANDROIDIMAGESXXHDPI_DEST=rabbit-escape-ui-android/app/src/main/res/drawable-xxhdpi
+ANDROIDIMAGESXXXHDPI_DEST=rabbit-escape-ui-android/app/src/main/res/drawable-xxxhdpi
 
 SVGIMAGESSRC := $(wildcard images-src/*.svg)
 SVGIMAGES32 := $(SVGIMAGESSRC:images-src/%.svg=$(IMAGES32_DEST)/%.png)
@@ -40,14 +42,21 @@ $(ANDROIDIMAGESHDPI_DEST)/%.png: images-src/%.svg
 $(ANDROIDIMAGESXHDPI_DEST)/%.png: images-src/%.svg
 	mkdir -p $(ANDROIDIMAGESXHDPI_DEST); inkscape $< --export-png=$@ --export-dpi=180
 
+$(ANDROIDIMAGESXXHDPI_DEST)/%.png: images-src/%.svg
+	mkdir -p $(ANDROIDIMAGESXXHDPI_DEST); inkscape $< --export-png=$@ --export-dpi=270
+
+$(ANDROIDIMAGESXXXHDPI_DEST)/%.png: images-src/%.svg
+	mkdir -p $(ANDROIDIMAGESXXXHDPI_DEST); inkscape $< --export-png=$@ --export-dpi=360
+
+
 $(ANDROIDIMAGESMDPI_DEST)/%.png: images-src/%.png
 	mkdir -p $(ANDROIDIMAGESMDPI_DEST); convert $< -resize 12.5% $@
 
 $(ANDROIDIMAGESHDPI_DEST)/%.png: images-src/%.png
-	mkdir -p $(ANDROIDIMAGESMDPI_DEST); convert $< -resize 18.75% $@
+	mkdir -p $(ANDROIDIMAGESHDPI_DEST); convert $< -resize 18.75% $@
 
 $(ANDROIDIMAGESXHDPI_DEST)/%.png: images-src/%.png
-	mkdir -p $(ANDROIDIMAGESMDPI_DEST); convert $< -resize 25% $@
+	mkdir -p $(ANDROIDIMAGESXHDPI_DEST); convert $< -resize 25% $@
 
 #$(MUSICOGG_DEST)/%.ogg: music-src/%.flac
 #	mkdir -p $(MUSICOGG_DEST); avconv -i $< -c:a libvorbis -q:a 1 $@
@@ -142,8 +151,15 @@ rabbit-escape-ui-android/app/libs/rabbit-escape-generic.jar: dist/rabbit-escape-
 android-images-mdpi:  $(SVGANDROIDIMAGESMDPI)  $(PNGANDROIDIMAGESMDPI)
 android-images-hdpi:  $(SVGANDROIDIMAGESHDPI)  $(PNGANDROIDIMAGESHDPI)
 android-images-xhdpi: $(SVGANDROIDIMAGESXHDPI) $(PNGANDROIDIMAGESXHDPI)
+android-images-xxhdpi:  $(ANDROIDIMAGESXXHDPI_DEST)/ic_launcher.png
+android-images-xxxhdpi: $(ANDROIDIMAGESXXXHDPI_DEST)/ic_launcher.png
 
-android-images: android-images-mdpi android-images-hdpi android-images-xhdpi
+android-images: \
+	android-images-mdpi \
+	android-images-hdpi \
+	android-images-xhdpi \
+	android-images-xxhdpi \
+	android-images-xxxhdpi
 
 android-pre: android-images rabbit-escape-ui-android/app/libs/rabbit-escape-generic.jar
 
