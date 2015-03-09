@@ -40,6 +40,10 @@ Later
 - Tell you what level you are playing
 - Victory screen
 
+Release 0.3
+-----------
+
+- Zoom
 
 Release 0.2.1
 -------------
