@@ -31,6 +31,15 @@ Later
   Quit not work properly.
 - Fix bug where diggers go too fast when you rotate the screen (see
   TestTextWorldManip.Digging_state_is_preserved_second_step)
+- Slow down pause as time passes
+- Pause when screen power save kicks in
+- Next and Retry buttons when finished level, which update the
+  bolded menu item
+- Remove Settings button
+- Hints: 2-3 per level, getting increasingly hinty
+- Tell you what level you are playing
+- Victory screen
+
 
 Release 0.2.1
 -------------
