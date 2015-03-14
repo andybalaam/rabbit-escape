@@ -45,6 +45,11 @@ Release 0.3
 
 - Zoom
 
+Release 0.2.2
+-------------
+
+- ~~Fix a crash when rotating the screen on a level with empty description~~
+
 Release 0.2.1
 -------------
 
