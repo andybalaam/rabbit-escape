@@ -141,7 +141,7 @@ class LineProcessor
 
     private void processMetaLine( String line, VariantGenerator variantGen )
     {
-        String[] splitLine = line.substring( 1 ).split( "=" );
+        String[] splitLine = split( line.substring( 1 ), "=" );
         if ( splitLine.length != 2 )
         {
             throw new InvalidMetaLine( lines, lineNum );

@@ -444,6 +444,20 @@ public class TestTextWorldManip
     }
 
     @Test
+    public void Can_provide_empty_description()
+    {
+        String[] lines = {
+            ":description="
+        };
+
+        assertThat(
+            createWorld( lines ).description,
+            equalTo( "" )
+        );
+    }
+
+
+    @Test
     public void Can_provide_number_of_rabbits()
     {
         String[] lines = {
@@ -731,7 +745,7 @@ public class TestTextWorldManip
     {
         String[] lines = {
             ":name=My X Trip",
-            ":description=X around",
+            ":description=",
             ":num_rabbits=25",
             ":num_to_save=4",
             ":rabbit_delay=2",
