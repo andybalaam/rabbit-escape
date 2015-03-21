@@ -108,4 +108,10 @@ public class Token extends Thing
     public void restoreFromState( Map<String, String> state )
     {
     }
+
+    public static String name( Type ability )
+    {
+        String n = ability.name();
+        return n.substring( 0, 1 ).toUpperCase() + n.substring( 1 );
+    }
 }

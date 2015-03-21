@@ -1,5 +1,6 @@
 package rabbitescape.ui.swing;
 
+import static rabbitescape.engine.i18n.Translation.*;
 import static rabbitescape.engine.util.Util.*;
 import static rabbitescape.ui.swing.SwingConfigSetup.*;
 
@@ -67,10 +68,11 @@ class GameMenu
             "menu_unmuted",
             "menu_muted",
             ConfigTools.getBool( uiConfig, CFG_MUTED ),
-            "mute" //TODO NLS
+            t( "Mute" )
         );
 
-        this.pause = addToggleButton( "menu_pause", "menu_unpause", false, "pause");//TODO NLS
+        this.pause = addToggleButton(
+            "menu_pause", "menu_unpause", false, t( "Pause" ) );
 
         addSpacer();
 
@@ -118,7 +120,8 @@ class GameMenu
         {
             String iconName = "ability_" + ability.toString();
 
-            JToggleButton button = addToggleButton( iconName, null, false, ability.toString());
+            JToggleButton button = addToggleButton(
+                iconName, null, false, t( Token.name( ability ) ) );
 
             ret.put( ability, button );
 
