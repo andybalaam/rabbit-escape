@@ -37,13 +37,13 @@ public class TopBar implements StatsChangedListener
         this.backgroundColor = backgroundColor;
         this.panel = createPanel( contentPane );
 
+        this.ability = addLabel( "" );
+
         this.out     = addLabel( outText );
         this.saved   = addLabel( savedText );
         setCountText( this.saved, savedText, 0, numToSave );
         setCountText( this.out, outText, 0, 0 );
         this.numToSave = numToSave;
-
-        this.ability = addLabel( "" );
     }
 
     private JPanel createPanel( Container contentPane )
