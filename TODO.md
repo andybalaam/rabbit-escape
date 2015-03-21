@@ -22,8 +22,7 @@ Later
 - Speed up time?
 - graphics:float
 - action:float
-- Fix desktop UI glitches e.g. slow mouse wheel scrolling in menus,
-  stuff disappearing
+- Fix desktop UI glitches e.g. slow mouse wheel scrolling in menus
 - Fix Android bug where winning alert disappears when you rotate the screen
 - Display level previews on menu
 - Display level names on menu
@@ -44,6 +43,7 @@ Release 0.3
 -----------
 
 - Zoom
+- ~~Fix icon redraw bug in-game on Swing~~
 
 Release 0.2.2
 -------------

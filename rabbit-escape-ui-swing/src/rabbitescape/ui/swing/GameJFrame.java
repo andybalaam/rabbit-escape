@@ -124,8 +124,6 @@ public class GameJFrame extends JFrame
 
     private Canvas initUi()
     {
-        setIgnoreRepaint( true );
-
         contentPane.add( middlePanel, BorderLayout.CENTER );
 
         Canvas canvas = initCanvas( middlePanel, worldSizeInPixels );
