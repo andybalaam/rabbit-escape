@@ -42,8 +42,6 @@ class GameMenu
 
     private final BitmapCache<SwingBitmap> bitmapCache;
     private final Color backgroundColor;
-    private final Dimension buttonSizeInPixels;
-    private final Dimension worldSizeInPixels;
 
     private final JPanel panel;
     public final Map<Token.Type, JToggleButton> abilities;
@@ -60,8 +58,6 @@ class GameMenu
     {
         this.bitmapCache = bitmapCache;
         this.backgroundColor = backgroundColor;
-        this.buttonSizeInPixels = buttonSizeInPixels;
-        this.worldSizeInPixels = worldSizeInPixels;
         this.panel = createPanel( contentPane );
 
         this.mute = addToggleButton(
@@ -83,12 +79,22 @@ class GameMenu
         this.explodeAll = addButton( "menu_explode_all", t( "Explode all" ) );
         this.back       = addButton( "menu_back", t( "Back" ) );
 
+        panel.setPreferredSize(
+            new Dimension(
+                buttonSizeInPixels.width + 8,
+                  ( 2 * 16 )                                // Spacers
+                + ( 4 + abilityTypes.size() )               // Buttons
+                    * ( 16 + buttonSizeInPixels.height )
+            )
+        );
+
         addPanelInScrollPane( contentPane );
     }
 
     private void addPanelInScrollPane( Container contentPane )
     {
         JScrollPane scrollPane = new JScrollPane( panel );
+        scrollPane.getVerticalScrollBar().setUnitIncrement( 16 );
         contentPane.add( scrollPane, BorderLayout.WEST );
     }
 
@@ -98,13 +104,6 @@ class GameMenu
         JPanel ret = new JPanel( layout );
 
         ret.setBackground( backgroundColor );
-
-        ret.setPreferredSize(
-            new Dimension(
-                buttonSizeInPixels.width + 8,
-                worldSizeInPixels.height
-            )
-        );
 
         return ret;
     }

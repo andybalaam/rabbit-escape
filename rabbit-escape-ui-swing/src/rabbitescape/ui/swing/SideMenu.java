@@ -60,12 +60,21 @@ class SideMenu
 
         this.exit = addButton( "menu_exit", t( "Exit" ) );
 
+        panel.setPreferredSize(
+            new Dimension(
+                8 + buttonSizeInPixels.width,
+                  ( 2 * 16 )                                  // Spacers
+                + ( 3 * ( 16 + buttonSizeInPixels.height ) )  // Buttons
+            )
+        );
+
         addPanelInScrollPane( contentPane );
     }
 
     private void addPanelInScrollPane( Container contentPane )
     {
         JScrollPane scrollPane = new JScrollPane( panel );
+        scrollPane.getVerticalScrollBar().setUnitIncrement( 16 );
         contentPane.add( scrollPane, BorderLayout.WEST );
     }
 
