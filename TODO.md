@@ -38,6 +38,8 @@ Later
 - Hints: 2-3 per level, getting increasingly hinty
 - Tell you what level you are playing
 - Victory screen
+- Automated tests that levels run OK and can be solved
+- Make the text UI playable
 
 Release 0.3
 -----------
