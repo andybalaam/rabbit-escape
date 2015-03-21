@@ -19,7 +19,6 @@ import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
 import java.awt.event.WindowEvent;
 
-import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollBar;
 
@@ -28,32 +27,19 @@ import rabbitescape.engine.config.Config;
 import rabbitescape.engine.config.ConfigTools;
 import rabbitescape.render.BitmapCache;
 
-public class GameJFrame extends JFrame
+public class GameUi
 {
-    private static final long serialVersionUID = 1L;
-
     private class Listener extends EmptyListener implements MouseWheelListener
     {
         @Override
         public void windowClosing( WindowEvent e )
         {
-            exit();
-        }
-
-        @Override
-        public void componentMoved( ComponentEvent e )
-        {
-            ConfigTools.setInt( uiConfig, CFG_GAME_WINDOW_LEFT, getX() );
-            ConfigTools.setInt( uiConfig, CFG_GAME_WINDOW_TOP,  getY() );
-            uiConfig.save();
+            stopGameLoop();
         }
 
         @Override
         public void componentResized( ComponentEvent e )
         {
-            ConfigTools.setInt( uiConfig, CFG_GAME_WINDOW_WIDTH,  getWidth() );
-            ConfigTools.setInt( uiConfig, CFG_GAME_WINDOW_HEIGHT, getHeight() );
-            uiConfig.save();
             adjustScrollBars();
         }
 
@@ -87,7 +73,12 @@ public class GameJFrame extends JFrame
     private int worldTileSizeInPixels;
     private final Config uiConfig;
     private final BitmapCache<SwingBitmap> bitmapCache;
+    private final MainJFrame frame;
+    private final MenuUi menuUi;
+
     public final Canvas canvas;
+    private Listener listener;
+
     private JScrollBar canvasScrollBarX;
     private JScrollBar canvasScrollBarY;
     private GameMenu menu;
@@ -100,12 +91,20 @@ public class GameJFrame extends JFrame
     public int scrollX;
     public int scrollY;
 
-    public GameJFrame( Config uiConfig, BitmapCache<SwingBitmap> bitmapCache )
+    public GameUi(
+        Config uiConfig,
+        BitmapCache<SwingBitmap> bitmapCache,
+        MainJFrame frame,
+        MenuUi menuUi
+    )
     {
-        this.contentPane = getContentPane();
-        this.middlePanel = new JPanel( new BorderLayout() );
         this.uiConfig = uiConfig;
         this.bitmapCache = bitmapCache;
+        this.frame = frame;
+        this.menuUi = menuUi;
+
+        this.contentPane = frame.getContentPane();
+        this.middlePanel = new JPanel( new BorderLayout() );
         this.chosenAbility = null;
         this.gameLoop = null;
 
@@ -118,6 +117,7 @@ public class GameJFrame extends JFrame
 
         this.canvas = initUi();
         adjustScrollBars();
+
         this.menu = null;
         this.topBar = null;
     }
@@ -128,11 +128,11 @@ public class GameJFrame extends JFrame
 
         Canvas canvas = initCanvas( middlePanel, worldSizeInPixels );
 
-        setBoundsFromConfig();
+        frame.setBoundsFromConfig();
 
-        setTitle( t( "Rabbit Escape" ) );
-        pack();
-        setVisible( true );
+        frame.setTitle( t( "Rabbit Escape" ) );
+        frame.pack();
+        frame.setVisible( true );
 
         // Must do this after frame is made visible
         canvas.createBufferStrategy( 2 );
@@ -176,10 +176,10 @@ public class GameJFrame extends JFrame
     private void initListeners()
     {
         Listener listener = new Listener();
-        addWindowListener( listener );
-        addComponentListener( listener );
         canvas.addMouseListener( listener );
         canvas.addMouseWheelListener( listener );
+        frame.addComponentListener( listener );
+        frame.addWindowListener( listener );
         gameLoop.addStatsChangedListener( this.topBar );
 
         menu.addAbilitiesListener( new GameMenu.AbilityChangedListener()
@@ -250,24 +250,6 @@ public class GameJFrame extends JFrame
         );
     }
 
-    private void setBoundsFromConfig()
-    {
-        int x      = ConfigTools.getInt( uiConfig, CFG_GAME_WINDOW_LEFT );
-        int y      = ConfigTools.getInt( uiConfig, CFG_GAME_WINDOW_TOP );
-        int width  = ConfigTools.getInt( uiConfig, CFG_GAME_WINDOW_WIDTH );
-        int height = ConfigTools.getInt( uiConfig, CFG_GAME_WINDOW_HEIGHT );
-
-        if ( x != Integer.MIN_VALUE && y != Integer.MIN_VALUE )
-        {
-            setLocation( x, y );
-        }
-
-        if ( width != Integer.MIN_VALUE && y != Integer.MIN_VALUE )
-        {
-            setPreferredSize( new Dimension( width, height ) );
-        }
-    }
-
     public void setGameLoop( SwingGameLoop gameLoop )
     {
         this.gameLoop = gameLoop;
@@ -288,7 +270,7 @@ public class GameJFrame extends JFrame
             middlePanel
         );
 
-        pack();
+        frame.pack();
 
         initListeners();
     }
@@ -309,13 +291,30 @@ public class GameJFrame extends JFrame
 
     private void exit()
     {
+        stopGameLoop();
+
+        uninit();
+
+        if ( menuUi != null )
+        {
+            menuUi.init();
+        }
+    }
+
+    private void stopGameLoop()
+    {
         if ( gameLoop != null )
         {
             gameLoop.stop();
             gameLoop.world.setPaused( false );
         }
+    }
 
-        dispose();
+    private void uninit()
+    {
+        frame.getContentPane().removeAll();
+        frame.removeComponentListener( listener );
+        frame.removeWindowListener( listener );
     }
 
     private void explodeAllClicked()

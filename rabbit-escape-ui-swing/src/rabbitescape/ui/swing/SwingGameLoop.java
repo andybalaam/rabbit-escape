@@ -67,7 +67,7 @@ public class SwingGameLoop implements GameLoop
     private final int renderingTileSize;
     private final List<StatsChangedListener> statsListeners;
 
-    private final GameJFrame jframe;
+    private final GameUi jframe;
     private final BitmapCache<SwingBitmap> bitmapCache;
     public final Renderer renderer;
 

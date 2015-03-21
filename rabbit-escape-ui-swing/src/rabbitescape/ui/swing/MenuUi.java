@@ -9,8 +9,6 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ComponentEvent;
-import java.awt.event.WindowEvent;
 import java.io.PrintStream;
 import java.util.Locale;
 import java.util.Stack;
@@ -60,42 +58,6 @@ public class MenuUi
         }
     }
 
-    private class Listener extends EmptyListener
-    {
-        private final MainJFrame frame;
-
-        public Listener( MainJFrame frame )
-        {
-            this.frame = frame;
-        }
-
-        @Override
-        public void windowClosing( WindowEvent e )
-        {
-            exit();
-        }
-
-        @Override
-        public void componentMoved( ComponentEvent e )
-        {
-            ConfigTools.setInt( uiConfig, CFG_MENU_WINDOW_LEFT, frame.getX() );
-            ConfigTools.setInt( uiConfig, CFG_MENU_WINDOW_TOP,  frame.getY() );
-            uiConfig.save();
-        }
-
-        @Override
-        public void componentResized( ComponentEvent e )
-        {
-            ConfigTools.setInt(
-                uiConfig, CFG_MENU_WINDOW_WIDTH,  frame.getWidth() );
-
-            ConfigTools.setInt(
-                uiConfig, CFG_MENU_WINDOW_HEIGHT, frame.getHeight() );
-
-            uiConfig.save();
-        }
-    }
-
     private class ButtonListener implements ActionListener
     {
         private final MenuItem item;
@@ -135,7 +97,7 @@ public class MenuUi
                 }
                 case QUIT:
                 {
-                    exit();
+                    frame.exit();
                     return;
                 }
                 case DEMO:
@@ -164,7 +126,7 @@ public class MenuUi
 
     private final JPanel menuPanel;
     private final LevelsCompleted levelsCompleted;
-    private final SideMenu sidemenu;
+    private SideMenu sidemenu;
 
     public MenuUi(
         RealFileSystem fs,
@@ -191,6 +153,11 @@ public class MenuUi
             )
         );
 
+        init();
+    }
+
+    public void init()
+    {
         Container contentPane = frame.getContentPane();
 
         contentPane.setLayout( new BorderLayout( 4, 4 ) );
@@ -211,13 +178,19 @@ public class MenuUi
 
         placeMenu();
 
+        frame.setBoundsFromConfig();
+
         frame.setTitle( t( "Rabbit Escape" ) );
 
         frame.pack();
-        setBoundsFromConfig();
         frame.setVisible( true );
 
         initListeners();
+    }
+
+    private void uninit()
+    {
+        frame.getContentPane().removeAll();
     }
 
     public void placeMenu()
@@ -275,28 +248,6 @@ public class MenuUi
         );
     }
 
-    private void setBoundsFromConfig()
-    {
-        int x      = ConfigTools.getInt( uiConfig, CFG_MENU_WINDOW_LEFT );
-        int y      = ConfigTools.getInt( uiConfig, CFG_MENU_WINDOW_TOP );
-        int width  = ConfigTools.getInt( uiConfig, CFG_MENU_WINDOW_WIDTH );
-        int height = ConfigTools.getInt( uiConfig, CFG_MENU_WINDOW_HEIGHT );
-
-        if ( x != Integer.MIN_VALUE && y != Integer.MIN_VALUE )
-        {
-            frame.setLocation( x, y );
-        }
-        else
-        {
-            frame.setLocationByPlatform( true );
-        }
-
-        if ( width != Integer.MIN_VALUE && y != Integer.MIN_VALUE )
-        {
-            frame.setSize( new Dimension( width, height ) );
-        }
-    }
-
     private void level( final LevelMenuItem item )
     {
         new SwingWorker<Void, Void>()
@@ -304,11 +255,14 @@ public class MenuUi
             @Override
             protected Void doInBackground() throws Exception
             {
+                uninit();
+
                 new SwingSingleGameMain(
-                    fs, out, locale, bitmapCache, uiConfig ).launchGame(
-                        new String[] { item.fileName },
-                        winListeners( item )
-                    );
+                    fs, out, locale, bitmapCache, uiConfig, frame, MenuUi.this
+                ).launchGame(
+                    new String[] { item.fileName },
+                    winListeners( item )
+                );
 
                 return null;
             }
@@ -338,18 +292,13 @@ public class MenuUi
         );
     }
 
-    private void exit()
-    {
-        frame.dispose();
-    }
-
     private void back()
     {
         stack.pop();
 
         if ( stack.empty() )
         {
-            exit();
+            frame.exit();
         }
         else
         {
@@ -374,10 +323,6 @@ public class MenuUi
 
     private void initListeners()
     {
-        Listener listener = new Listener( frame );
-        frame.addWindowListener( listener );
-        frame.addComponentListener( listener );
-
         sidemenu.mute.addActionListener( new ActionListener()
         {
             @Override
@@ -401,7 +346,7 @@ public class MenuUi
             @Override
             public void actionPerformed( ActionEvent evt )
             {
-                exit();
+                frame.exit();
             }
         } );
     }

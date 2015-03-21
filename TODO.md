@@ -43,6 +43,7 @@ Release 0.3
 -----------
 
 - Zoom
+- ~~Issue #2, Single window~~
 - ~~Fix icon redraw bug in-game on Swing~~
 
 Release 0.2.2

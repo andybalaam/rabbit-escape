@@ -18,28 +18,38 @@ public class SwingSingleGameMain extends Main
 {
     private final BitmapCache<SwingBitmap> bitmapCache;
     private final Config uiConfig;
+    private final MainJFrame frame;
+    private final MenuUi menuUi;
 
     public SwingSingleGameMain(
         FileSystem fs,
         PrintStream out,
         Locale locale,
         BitmapCache<SwingBitmap> bitmapCache,
-        Config uiConfig
+        Config uiConfig,
+        MainJFrame frame,
+        MenuUi menuUi
     )
     {
         super( fs, out, locale );
         this.bitmapCache = bitmapCache;
         this.uiConfig = uiConfig;
+        this.frame = frame;
+        this.menuUi = menuUi;
     }
 
     public static void main( String[] args )
     {
+        Config cfg = SwingConfigSetup.createConfig();
+
         Main m = new SwingSingleGameMain(
             new RealFileSystem(),
             System.out,
             Locale.getDefault(),
             new BitmapCache<>( new SwingBitmapLoader(), 500 ),
-            SwingConfigSetup.createConfig()
+            cfg,
+            new MainJFrame( cfg ),
+            null
         );
 
         m.run( args );
@@ -48,7 +58,8 @@ public class SwingSingleGameMain extends Main
     @Override
     public GameLoop createGameLoop( World world, LevelWinListener winListener )
     {
-        SwingGameInit init = new SwingGameInit( bitmapCache, uiConfig );
+        SwingGameInit init = new SwingGameInit(
+            bitmapCache, uiConfig, frame, menuUi );
 
         SwingUtilities.invokeLater( init );
 

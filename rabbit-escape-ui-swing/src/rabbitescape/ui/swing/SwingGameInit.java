@@ -39,11 +39,11 @@ public class SwingGameInit implements Runnable
      */
     public static class WhenUiReady
     {
-        public final GameJFrame jframe;
+        public final GameUi jframe;
         public final BitmapCache<SwingBitmap> bitmapCache;
 
         public WhenUiReady(
-            GameJFrame jframe, BitmapCache<SwingBitmap> bitmapCache )
+            GameUi jframe, BitmapCache<SwingBitmap> bitmapCache )
         {
             this.jframe = jframe;
             this.bitmapCache = bitmapCache;
@@ -55,21 +55,27 @@ public class SwingGameInit implements Runnable
 
     private final BitmapCache<SwingBitmap> bitmapCache;
     private final Config uiConfig;
+    private final MainJFrame frame;
+    private final MenuUi menuUi;
 
     public SwingGameInit(
         BitmapCache<SwingBitmap> bitmapCache,
-        Config uiConfig
+        Config uiConfig,
+        MainJFrame frame,
+        MenuUi menuUi
     )
     {
         this.bitmapCache = bitmapCache;
         this.uiConfig = uiConfig;
+        this.frame = frame;
+        this.menuUi = menuUi;
     }
 
     @Override
     public void run()
     {
         //noinspection UnnecessaryLocalVariable
-        GameJFrame jframe = new GameJFrame( uiConfig, bitmapCache );
+        GameUi jframe = new GameUi( uiConfig, bitmapCache, frame, menuUi );
 
         // Populate the cache with images in a worker thread?
 
