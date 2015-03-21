@@ -80,8 +80,8 @@ class GameMenu
 
         addSpacer();
 
-        this.explodeAll = addButton( "menu_explode_all" );
-        this.back       = addButton( "menu_back" );
+        this.explodeAll = addButton( "menu_explode_all", t( "Explode all" ) );
+        this.back       = addButton( "menu_back", t( "Back" ) );
 
         addPanelInScrollPane( contentPane );
     }
@@ -151,7 +151,7 @@ class GameMenu
         button.setBackground( backgroundColor );
         button.setBorderPainted( false );
         button.setSelected( selected );
-        button.setToolTipText(description);
+        button.setToolTipText( description );
 
         if ( selectedImage != null )
         {
@@ -163,12 +163,13 @@ class GameMenu
         return button;
     }
 
-    private JButton addButton( String image )
+    private JButton addButton( String image, String description )
     {
         JButton button = new JButton( getIcon( image ) );
 
         button.setBackground( backgroundColor );
         button.setBorderPainted( false );
+        button.setToolTipText( description );
 
         panel.add( button );
 

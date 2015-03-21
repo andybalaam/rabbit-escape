@@ -1,5 +1,6 @@
 package rabbitescape.ui.swing;
 
+import static rabbitescape.engine.i18n.Translation.*;
 import static rabbitescape.ui.swing.SwingConfigSetup.*;
 
 import java.awt.BorderLayout;
@@ -47,16 +48,17 @@ class SideMenu
         this.mute = addToggleButton(
             "menu_unmuted",
             "menu_muted",
-            ConfigTools.getBool( uiConfig, CFG_MUTED )
+            ConfigTools.getBool( uiConfig, CFG_MUTED ),
+            t( "Mute" )
         );
 
         addSpacer();
 
-        this.back = addButton( "menu_back" );
+        this.back = addButton( "menu_back", t( "Back" ) );
 
         addSpacer();
 
-        this.exit = addButton( "menu_exit" );
+        this.exit = addButton( "menu_exit", t( "Exit" ) );
 
         addPanelInScrollPane( contentPane );
     }
@@ -95,7 +97,8 @@ class SideMenu
     private JToggleButton addToggleButton(
         String unSelectedImage,
         String selectedImage,
-        boolean selected
+        boolean selected,
+        String description
     )
     {
         JToggleButton button = new JToggleButton( getIcon( unSelectedImage ) );
@@ -103,6 +106,7 @@ class SideMenu
         button.setBackground( backgroundColor );
         button.setBorderPainted( false );
         button.setSelected( selected );
+        button.setToolTipText( description );
 
         if ( selectedImage != null )
         {
@@ -114,12 +118,13 @@ class SideMenu
         return button;
     }
 
-    private JButton addButton( String image )
+    private JButton addButton( String image, String description )
     {
         JButton button = new JButton( getIcon( image ) );
 
         button.setBackground( backgroundColor );
         button.setBorderPainted( false );
+        button.setToolTipText( description );
 
         panel.add( button );
 
