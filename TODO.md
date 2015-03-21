@@ -8,7 +8,6 @@ Later
 - graphics:mine?
 - action:mine?
 - Graphics in level design
-- Scrolling, UI improvement in Swing version
 - More levels (at least 60)
 - Ability to play custom levels
 - Level editor
@@ -45,6 +44,7 @@ Release 0.3
 -----------
 
 - Zoom
+- ~~Fix slow scroll wheel speed in menu~~
 - ~~Issue #2, Single window~~
 - ~~Fix icon redraw bug in-game on Swing~~
 

@@ -174,6 +174,7 @@ public class MenuUi
         contentPane.add( scrollPane, BorderLayout.CENTER );
         contentPane.setBackground( backgroundColor );
         scrollPane.setBackground( backgroundColor );
+        scrollPane.getVerticalScrollBar().setUnitIncrement( 16 );
         menuPanel.setBackground( backgroundColor );
 
         placeMenu();
