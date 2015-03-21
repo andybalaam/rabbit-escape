@@ -16,7 +16,6 @@ import java.util.Locale;
 import java.util.Stack;
 
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -45,10 +44,8 @@ import rabbitescape.engine.menu.MenuItem;
 import rabbitescape.engine.util.RealFileSystem;
 import rabbitescape.render.BitmapCache;
 
-public class MenuJFrame extends JFrame
+public class MenuUi
 {
-    private static final long serialVersionUID = 1L;
-
     public static class UnknownMenuItemType extends RabbitEscapeException
     {
         private static final long serialVersionUID = 1L;
@@ -65,6 +62,13 @@ public class MenuJFrame extends JFrame
 
     private class Listener extends EmptyListener
     {
+        private final MainJFrame frame;
+
+        public Listener( MainJFrame frame )
+        {
+            this.frame = frame;
+        }
+
         @Override
         public void windowClosing( WindowEvent e )
         {
@@ -74,16 +78,20 @@ public class MenuJFrame extends JFrame
         @Override
         public void componentMoved( ComponentEvent e )
         {
-            ConfigTools.setInt( uiConfig, CFG_MENU_WINDOW_LEFT, getX() );
-            ConfigTools.setInt( uiConfig, CFG_MENU_WINDOW_TOP,  getY() );
+            ConfigTools.setInt( uiConfig, CFG_MENU_WINDOW_LEFT, frame.getX() );
+            ConfigTools.setInt( uiConfig, CFG_MENU_WINDOW_TOP,  frame.getY() );
             uiConfig.save();
         }
 
         @Override
         public void componentResized( ComponentEvent e )
         {
-            ConfigTools.setInt( uiConfig, CFG_MENU_WINDOW_WIDTH,  getWidth() );
-            ConfigTools.setInt( uiConfig, CFG_MENU_WINDOW_HEIGHT, getHeight() );
+            ConfigTools.setInt(
+                uiConfig, CFG_MENU_WINDOW_WIDTH,  frame.getWidth() );
+
+            ConfigTools.setInt(
+                uiConfig, CFG_MENU_WINDOW_HEIGHT, frame.getHeight() );
+
             uiConfig.save();
         }
     }
@@ -152,16 +160,19 @@ public class MenuJFrame extends JFrame
 
     private final Stack<Menu> stack;
     private final Config uiConfig;
+    private final MainJFrame frame;
+
     private final JPanel menuPanel;
     private final LevelsCompleted levelsCompleted;
     private final SideMenu sidemenu;
 
-    public MenuJFrame(
+    public MenuUi(
         RealFileSystem fs,
         PrintStream out,
         Locale locale,
         BitmapCache<SwingBitmap> bitmapCache,
-        Config uiConfig
+        Config uiConfig,
+        MainJFrame frame
     )
     {
         this.fs = fs;
@@ -170,6 +181,7 @@ public class MenuJFrame extends JFrame
         this.bitmapCache = bitmapCache;
         this.stack = new Stack<>();
         this.uiConfig = uiConfig;
+        this.frame = frame;
         this.menuPanel = new JPanel( new GridBagLayout() );
         this.levelsCompleted = new ConfigBasedLevelsCompleted( uiConfig );
 
@@ -179,11 +191,7 @@ public class MenuJFrame extends JFrame
             )
         );
 
-        Container contentPane = getContentPane();
-
-        Listener listener = new Listener();
-        addWindowListener( listener );
-        addComponentListener( listener );
+        Container contentPane = frame.getContentPane();
 
         contentPane.setLayout( new BorderLayout( 4, 4 ) );
 
@@ -203,11 +211,11 @@ public class MenuJFrame extends JFrame
 
         placeMenu();
 
-        setTitle( t( "Rabbit Escape" ) );
+        frame.setTitle( t( "Rabbit Escape" ) );
 
-        pack();
+        frame.pack();
         setBoundsFromConfig();
-        setVisible( true );
+        frame.setVisible( true );
 
         initListeners();
     }
@@ -239,8 +247,8 @@ public class MenuJFrame extends JFrame
             ++i;
         }
 
-        repaint();
-        revalidate();
+        frame.repaint();
+        frame.revalidate();
     }
 
     public void refreshEnabledItems()
@@ -276,16 +284,16 @@ public class MenuJFrame extends JFrame
 
         if ( x != Integer.MIN_VALUE && y != Integer.MIN_VALUE )
         {
-            setLocation( x, y );
+            frame.setLocation( x, y );
         }
         else
         {
-            setLocationByPlatform( true );
+            frame.setLocationByPlatform( true );
         }
 
         if ( width != Integer.MIN_VALUE && y != Integer.MIN_VALUE )
         {
-            setSize( new Dimension( width, height ) );
+            frame.setSize( new Dimension( width, height ) );
         }
     }
 
@@ -323,7 +331,7 @@ public class MenuJFrame extends JFrame
         text.setBackground( null );
 
         JOptionPane.showMessageDialog(
-            MenuJFrame.this,
+            frame,
             text,
             t( "About Rabbit Escape" ),
             JOptionPane.INFORMATION_MESSAGE
@@ -332,7 +340,7 @@ public class MenuJFrame extends JFrame
 
     private void exit()
     {
-        dispose();
+        frame.dispose();
     }
 
     private void back()
@@ -366,9 +374,9 @@ public class MenuJFrame extends JFrame
 
     private void initListeners()
     {
-        Listener listener = new Listener();
-        addWindowListener( listener );
-        addComponentListener( listener );
+        Listener listener = new Listener( frame );
+        frame.addWindowListener( listener );
+        frame.addComponentListener( listener );
 
         sidemenu.mute.addActionListener( new ActionListener()
         {

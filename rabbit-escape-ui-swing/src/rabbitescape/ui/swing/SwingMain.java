@@ -56,7 +56,8 @@ public class SwingMain
             @Override
             public void run()
             {
-                new MenuJFrame( fs, out, locale, bitmapCache, uiConfig );
+                MainJFrame frame = new MainJFrame();
+                new MenuUi(  fs, out, locale, bitmapCache, uiConfig, frame );
             }
         } );
     }

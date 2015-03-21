@@ -4,17 +4,17 @@ import rabbitescape.engine.LevelWinListener;
 
 public class UpdateSwingMenuLevelWinListener implements LevelWinListener
 {
-    private final MenuJFrame menuJFrame;
+    private final MenuUi menuUi;
 
-    public UpdateSwingMenuLevelWinListener( MenuJFrame menuJFrame )
+    public UpdateSwingMenuLevelWinListener( MenuUi menuUi )
     {
-        this.menuJFrame = menuJFrame;
+        this.menuUi = menuUi;
     }
 
     @Override
     public void won()
     {
-        menuJFrame.refreshEnabledItems();
+        menuUi.refreshEnabledItems();
     }
 
     @Override
