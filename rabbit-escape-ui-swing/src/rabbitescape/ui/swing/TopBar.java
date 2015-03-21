@@ -61,7 +61,7 @@ public class TopBar implements StatsChangedListener
     private JLabel addLabel( String text )
     {
         JLabel ret = new JLabel( t( text, newMap( "num", "" ) ) );
-        ret.setPreferredSize( new Dimension( 150, 20 ) );
+        ret.setPreferredSize( new Dimension( 100, 20 ) );
         panel.add( ret );
         return ret;
     }
