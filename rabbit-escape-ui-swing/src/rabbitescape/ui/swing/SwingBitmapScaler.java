@@ -24,7 +24,7 @@ public class SwingBitmapScaler implements BitmapScaler<SwingBitmap>
 
         gfx.setRenderingHint(
             RenderingHints.KEY_INTERPOLATION,
-            RenderingHints.VALUE_INTERPOLATION_NEAREST_NEIGHBOR
+            RenderingHints.VALUE_INTERPOLATION_BILINEAR
         );
 
         gfx.drawImage(
