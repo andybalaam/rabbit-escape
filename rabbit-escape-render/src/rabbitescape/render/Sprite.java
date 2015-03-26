@@ -32,12 +32,12 @@ public class Sprite<T extends Bitmap>
 
     public void scaleTo( int tileSize )
     {
+        double scale = (double)tileSize / (double)bitmap.originalTileSize;
+        offsetX = (int)( originalOffsetX * scale );
+        offsetY = (int)( originalOffsetY * scale );
+
         if ( bitmap.tileSize != tileSize )
         {
-            double scale = (double)tileSize / (double)bitmap.originalTileSize;
-            offsetX = (int)( originalOffsetX * scale );
-            offsetY = (int)( originalOffsetY * scale );
-
             bitmap.scaleTo( tileSize );
         }
     }

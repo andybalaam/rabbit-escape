@@ -3,7 +3,6 @@ package rabbitescape.ui.swing;
 import static rabbitescape.engine.i18n.Translation.t;
 
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics2D;
@@ -91,13 +90,7 @@ public class SwingGameLoop implements GameLoop
 
         jframe.setGameLoop( this );
 
-        jframe.setWorldSize(
-            new Dimension(
-                world.size.width,
-                world.size.height
-            ),
-            renderingTileSize
-        );
+        jframe.setWorldSize( world.size, renderingTileSize );
     }
 
     public void stop()
@@ -129,9 +122,9 @@ public class SwingGameLoop implements GameLoop
             int f = 0;
             while ( running && f < framesPerStep )
             {
-                setRendererOffset( renderer );
-
                 sleep( 50 );
+
+                setRendererOffset( renderer );
 
                 new DrawFrame(
                     strategy,

@@ -10,7 +10,7 @@ public class Renderer<T extends Bitmap>
 {
     public int offsetX;
     public int offsetY;
-    public final int tileSize;
+    public int tileSize;
 
     public Renderer( int offsetX, int offsetY, int tileSize )
     {

@@ -37,6 +37,8 @@ class GameMenu
     public JToggleButton mute;
     public JToggleButton pause;
     public final JButton explodeAll;
+    public final JButton zoomIn;
+    public final JButton zoomOut;
     public final JButton back;
 
 
@@ -77,13 +79,15 @@ class GameMenu
         addSpacer();
 
         this.explodeAll = addButton( "menu_explode_all", t( "Explode all" ) );
-        this.back       = addButton( "menu_back", t( "Back" ) );
+        this.zoomIn     = addButton( "menu_zoom_in",     t( "Zoom in" ) );
+        this.zoomOut    = addButton( "menu_zoom_out",    t( "Zoom out" ) );
+        this.back       = addButton( "menu_back",        t( "Back" ) );
 
         panel.setPreferredSize(
             new Dimension(
                 buttonSizeInPixels.width + 8,
                   ( 2 * 16 )                                // Spacers
-                + ( 4 + abilityTypes.size() )               // Buttons
+                + ( 6 + abilityTypes.size() )               // Buttons
                     * ( 16 + buttonSizeInPixels.height )
             )
         );

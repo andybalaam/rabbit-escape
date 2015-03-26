@@ -65,6 +65,7 @@ public class GameUi
     }
 
     private static final Color backgroundColor = Color.WHITE;
+    private static int[] zoomValues = { 16, 24, 32, 48, 64, 96, 128 };
 
     private final Container contentPane;
     private final JPanel middlePanel;
@@ -90,6 +91,7 @@ public class GameUi
     // Modified in Swing event thread, read in game loop thread
     public int scrollX;
     public int scrollY;
+    public int zoomIndex;
 
     public GameUi(
         Config uiConfig,
@@ -109,7 +111,8 @@ public class GameUi
         this.gameLoop = null;
 
         this.buttonSizeInPixels = new Dimension( 32, 32 );
-        this.worldTileSizeInPixels = 32;
+        this.zoomIndex = 2;
+        this.worldTileSizeInPixels = zoomValues[zoomIndex];
         this.worldSizeInPixels = new Dimension( 400, 200 ); // Temporary guess
 
         this.scrollX = 0;
@@ -209,6 +212,24 @@ public class GameUi
             }
         } );
 
+        menu.zoomIn.addActionListener( new ActionListener()
+        {
+            @Override
+            public void actionPerformed( ActionEvent evt )
+            {
+                zoomClicked( true );
+            }
+        } );
+
+        menu.zoomOut.addActionListener( new ActionListener()
+        {
+            @Override
+            public void actionPerformed( ActionEvent evt )
+            {
+                zoomClicked( false );
+            }
+        } );
+
         menu.mute.addActionListener( new ActionListener()
         {
             @Override
@@ -276,7 +297,9 @@ public class GameUi
     }
 
     public void setWorldSize(
-        Dimension worldGridSize, int worldTileSizeInPixels )
+        rabbitescape.engine.util.Dimension worldGridSize,
+        int worldTileSizeInPixels
+    )
     {
         this.worldSizeInPixels = new Dimension(
             worldGridSize.width * worldTileSizeInPixels,
@@ -345,6 +368,28 @@ public class GameUi
     private void cancelExplodeAll()
     {
         gameLoop.world.setReadyToExplodeAll( false );
+    }
+
+    private void zoomClicked( boolean zoomIn )
+    {
+        if ( zoomIn )
+        {
+            if ( zoomIndex < zoomValues.length - 1 )
+            {
+                ++zoomIndex;
+            }
+        }
+        else
+        {
+            if ( zoomIndex > 0 )
+            {
+                --zoomIndex;
+            }
+        }
+
+        int zoom = zoomValues[zoomIndex];
+        gameLoop.renderer.tileSize = zoom;
+        setWorldSize( gameLoop.world.size, zoom );
     }
 
     private void leaveIntro()
