@@ -12,7 +12,7 @@ import org.junit.Test;
 import rabbitescape.render.Renderer;
 import rabbitescape.render.Sprite;
 
-public class TestRendering
+public class TestSwingRendering
 {
     @Test
     public void Draw_sprites_on_grid_lines_unscaled()
