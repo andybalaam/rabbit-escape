@@ -187,7 +187,8 @@ public class AndroidGameActivity extends ActionBarActivity
 
     private BitmapCache<AndroidBitmap> createBitmapCache( Resources resources )
     {
-        return new BitmapCache<AndroidBitmap>( new AndroidBitmapLoader( resources ), 500 );
+        return new BitmapCache<AndroidBitmap>(
+            new AndroidBitmapLoader( resources ), new AndroidBitmapScaler(), 500 );
     }
 
     public void onMuteClicked( View view )

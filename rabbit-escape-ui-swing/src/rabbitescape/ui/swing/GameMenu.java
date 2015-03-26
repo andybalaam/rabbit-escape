@@ -179,7 +179,8 @@ class GameMenu
     {
         return new ImageIcon(
             bitmapCache.get(
-                "/rabbitescape/ui/swing/images32/" + name + ".png" ).image
+                "/rabbitescape/ui/swing/images32/" + name + ".png"
+            ).bitmap.image
         );
     }
 

@@ -1,9 +1,12 @@
 package rabbitescape.render;
 
+import java.util.List;
+
+import rabbitescape.render.androidlike.Bitmap;
 import rabbitescape.render.androidlike.Canvas;
 import rabbitescape.render.androidlike.Paint;
 
-public class Renderer
+public class Renderer<T extends Bitmap>
 {
     public int offsetX;
     public int offsetY;
@@ -16,14 +19,14 @@ public class Renderer
         this.tileSize = tileSize;
     }
 
-    public void render( Canvas canvas, Sprite[] sprites, Paint paint )
+    public void render( Canvas canvas, List<Sprite<T>> sprites, Paint paint )
     {
-        for ( Sprite sprite : sprites )
+        for ( Sprite<T> sprite : sprites )
         {
             sprite.scaleTo( tileSize );
 
             canvas.drawBitmap(
-                sprite.bitmap,
+                sprite.bitmap.bitmap,
                 sprite.offsetX + offsetX + ( sprite.tileX * tileSize ),
                 sprite.offsetY + offsetY + ( sprite.tileY * tileSize ),
                 paint

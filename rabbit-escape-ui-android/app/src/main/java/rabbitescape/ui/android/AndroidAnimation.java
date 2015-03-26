@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import rabbitescape.render.Animation;
 import rabbitescape.render.BitmapCache;
 import rabbitescape.render.FrameNameAndOffset;
+import rabbitescape.render.ScaledBitmap;
 
 public class AndroidAnimation
 {
@@ -16,7 +17,7 @@ public class AndroidAnimation
 
         for ( FrameNameAndOffset frame : animation )
         {
-            AndroidBitmap bmp = bitmapCache.get( frame.name );
+            ScaledBitmap<AndroidBitmap> bmp = bitmapCache.get( frame.name );
 
             this.bitmaps.add(
                 new AndroidBitmapAndOffset( bmp, frame.offsetX, frame.offsetY ) );

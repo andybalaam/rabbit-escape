@@ -47,7 +47,7 @@ public class Graphics
         Renderer renderer = new Renderer( offsetX, offsetY, renderingTileSize );
 
         AndroidSpriteAnimator animator = new AndroidSpriteAnimator(
-            world, world.describeChanges(), imagesTileSize, bitmapCache, animationCache );
+            world, bitmapCache, animationCache );
 
         drawBackground( renderer, canvas );
 

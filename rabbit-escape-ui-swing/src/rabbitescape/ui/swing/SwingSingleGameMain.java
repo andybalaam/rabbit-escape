@@ -46,7 +46,8 @@ public class SwingSingleGameMain extends Main
             new RealFileSystem(),
             System.out,
             Locale.getDefault(),
-            new BitmapCache<>( new SwingBitmapLoader(), 500 ),
+            new BitmapCache<>(
+                new SwingBitmapLoader(), new SwingBitmapScaler(), 500 ),
             cfg,
             new MainJFrame( cfg ),
             null

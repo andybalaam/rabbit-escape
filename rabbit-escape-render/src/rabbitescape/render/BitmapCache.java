@@ -9,36 +9,43 @@ import rabbitescape.render.androidlike.Bitmap;
 
 public class BitmapCache<T extends Bitmap>
 {
+    private final int imagesTileSize = 32;
+
     private final BitmapLoader<T> loader;
+    private final BitmapScaler<T> scaler;
     private final int size;
-    private final Map<String, T> cache;
+    private final Map<String, ScaledBitmap<T>> cache;
     private final Queue<String> usedKeys;
 
-    public BitmapCache( BitmapLoader<T> loader, int size )
+    public BitmapCache(
+        BitmapLoader<T> loader, BitmapScaler<T> scaler, int size )
     {
         this.loader = loader;
+        this.scaler = scaler;
         this.size = size;
         this.cache = new HashMap<>();
         usedKeys = new LinkedList<>();
     }
 
-    public T get( String fileName )
+    public ScaledBitmap<T> get( String fileName )
     {
-        T ret = cache.get( fileName );
+        ScaledBitmap<T> ret = cache.get( fileName );
 
         if ( ret == null )
         {
             if ( usedKeys.size() == size )
             {
                 String purgedKey = usedKeys.remove();
-                T removed = cache.remove( purgedKey );
+                ScaledBitmap<T> removed = cache.remove( purgedKey );
                 if ( removed != null )
                 {
                     removed.recycle();
                 }
             }
 
-            ret = loader.load( fileName );
+            ret = new ScaledBitmap<T>(
+                scaler, loader.load( fileName ), imagesTileSize );
+
             cache.put( fileName, ret );
         }
 

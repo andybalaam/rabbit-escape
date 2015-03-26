@@ -6,10 +6,13 @@ import static rabbitescape.ui.swing.Tools.*;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.Test;
 
 import rabbitescape.render.Renderer;
+import rabbitescape.render.ScaledBitmap;
 import rabbitescape.render.Sprite;
 
 public class TestSwingRendering
@@ -22,17 +25,23 @@ public class TestSwingRendering
 
         SwingBitmap x = bitmapLoader.load( "/rabbitescape/ui/swing/x.png" );
 
-        Sprite[] sprites = new Sprite[] {
-            new Sprite( x, scaler, 0, 0, 32, 0, 0 ),
-            new Sprite( x, scaler, 1, 0, 32, 0, 0 ),
-            new Sprite( x, scaler, 0, 1, 32, 0, 0 ),
-            new Sprite( x, scaler, 1, 1, 32, 0, 0 ),
-            new Sprite( x, scaler, 1, 2, 32, 0, 0 ),
-        };
+        List<Sprite<SwingBitmap>> sprites =
+            new ArrayList<Sprite<SwingBitmap>>();
+
+        sprites.add( new Sprite<SwingBitmap>(
+            new ScaledBitmap<SwingBitmap>( scaler, x, 32 ), 0, 0, 0, 0 ) );
+        sprites.add( new Sprite<SwingBitmap>(
+            new ScaledBitmap<SwingBitmap>( scaler, x, 32 ), 1, 0, 0, 0 ) );
+        sprites.add( new Sprite<SwingBitmap>(
+            new ScaledBitmap<SwingBitmap>( scaler, x, 32 ), 0, 1, 0, 0 ) );
+        sprites.add( new Sprite<SwingBitmap>(
+            new ScaledBitmap<SwingBitmap>( scaler, x, 32 ), 1, 1, 0, 0 ) );
+        sprites.add( new Sprite<SwingBitmap>(
+            new ScaledBitmap<SwingBitmap>( scaler, x, 32 ), 1, 2, 0, 0 ) );
 
         SwingBitmapCanvas output = blankCanvas( 64, 96 );
 
-        Renderer renderer = new Renderer( 0, 0, 32 );
+        Renderer<SwingBitmap> renderer = new Renderer<SwingBitmap>( 0, 0, 32 );
         renderer.render( output, sprites, new SwingPaint() );
 
         SwingBitmap expected = bitmapLoader.load(
@@ -49,13 +58,15 @@ public class TestSwingRendering
 
         SwingBitmap x = bitmapLoader.load( "/rabbitescape/ui/swing/x.png" );
 
-        Sprite[] sprites = new Sprite[] {
-            new Sprite( x, scaler, 0, 0, 32, 0, 0 )
-        };
+        List<Sprite<SwingBitmap>> sprites =
+            new ArrayList<Sprite<SwingBitmap>>();
+
+        sprites.add( new Sprite<SwingBitmap>(
+            new ScaledBitmap<SwingBitmap>( scaler, x, 32 ), 0, 0, 0, 0 ) );
 
         SwingBitmapCanvas output = blankCanvas( 35, 34 );
 
-        Renderer renderer = new Renderer( 3, 2, 32 );
+        Renderer<SwingBitmap> renderer = new Renderer<SwingBitmap>( 3, 2, 32 );
         renderer.render( output, sprites, new SwingPaint() );
 
         SwingBitmap expected = bitmapLoader.load(
@@ -72,16 +83,17 @@ public class TestSwingRendering
 
         SwingBitmap x = bitmapLoader.load( "/rabbitescape/ui/swing/x.png" );
 
-        Sprite[] sprites = new Sprite[] {
-            new Sprite( x, scaler, 1, 1, 32, 0, 0 ) // Note: original tile size
-                                                    // is larger
-        };
+        List<Sprite<SwingBitmap>> sprites =
+            new ArrayList<Sprite<SwingBitmap>>();
+
+        sprites.add( new Sprite<SwingBitmap>(
+            new ScaledBitmap<SwingBitmap>( scaler, x, 32 ), 1, 1, 0, 0 ) );
+            // Note: original tile size is larger
 
         SwingBitmapCanvas output = blankCanvas( 35, 34 );
 
-        Renderer renderer = new Renderer( 3, 2, 16 ); // But the
-                                                              // renderer gets
-                                                              // to override.
+        Renderer<SwingBitmap> renderer = new Renderer<SwingBitmap>( 3, 2, 16 );
+            // But the renderer gets to override.
         renderer.render( output, sprites, new SwingPaint() );
 
         SwingBitmap expected = bitmapLoader.load(
@@ -98,13 +110,18 @@ public class TestSwingRendering
 
         SwingBitmap x = bitmapLoader.load( "/rabbitescape/ui/swing/x.png" );
 
-        Sprite[] sprites = new Sprite[] {
-            new Sprite( x, scaler, 0, 0, 32, 3, 2 )  // Sprite offset
-        };
+        List<Sprite<SwingBitmap>> sprites =
+            new ArrayList<Sprite<SwingBitmap>>();
+
+        sprites.add( new Sprite<SwingBitmap>(
+            new ScaledBitmap<SwingBitmap>( scaler, x, 32 ), 0, 0, 3, 2 ) );
+        // the Sprite is offset
 
         SwingBitmapCanvas output = blankCanvas( 35, 34 );
 
-        Renderer renderer = new Renderer( 0, 0, 32 ); // Renderer not
+        Renderer<SwingBitmap> renderer = new Renderer<SwingBitmap>( 0, 0, 32 );
+        // the Renderer is not
+
         renderer.render( output, sprites, new SwingPaint() );
 
         SwingBitmap expected = bitmapLoader.load(
@@ -121,13 +138,15 @@ public class TestSwingRendering
 
         SwingBitmap x = bitmapLoader.load( "/rabbitescape/ui/swing/x.png" );
 
-        Sprite[] sprites = new Sprite[] {
-            new Sprite( x, scaler, 1, 1, 32, 6, 4 )
-        };
+        List<Sprite<SwingBitmap>> sprites =
+            new ArrayList<Sprite<SwingBitmap>>();
+
+        sprites.add( new Sprite<SwingBitmap>(
+            new ScaledBitmap<SwingBitmap>( scaler, x, 32 ), 1, 1, 6, 4 ) );
 
         SwingBitmapCanvas output = blankCanvas( 35, 34 );
 
-        Renderer renderer = new Renderer( 0, 0, 16 );
+        Renderer<SwingBitmap> renderer = new Renderer<SwingBitmap>( 0, 0, 16 );
         renderer.render( output, sprites, new SwingPaint() );
 
         SwingBitmap expected = bitmapLoader.load(

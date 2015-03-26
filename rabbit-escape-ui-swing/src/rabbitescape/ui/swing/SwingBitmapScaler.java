@@ -5,14 +5,13 @@ import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 
 import rabbitescape.render.BitmapScaler;
-import rabbitescape.render.androidlike.Bitmap;
 
-public class SwingBitmapScaler implements BitmapScaler
+public class SwingBitmapScaler implements BitmapScaler<SwingBitmap>
 {
     @Override
-    public Bitmap scale( Bitmap originalBitmap, double scale )
+    public SwingBitmap scale( SwingBitmap originalBitmap, double scale )
     {
-        SwingBitmap orig = (SwingBitmap)originalBitmap;
+        SwingBitmap orig = originalBitmap;
         BufferedImage origImage = orig.image;
 
         int width  = (int)( origImage.getWidth()  * scale );

@@ -1,14 +1,15 @@
 package rabbitescape.ui.swing;
 
-import rabbitescape.render.androidlike.Bitmap;
+import rabbitescape.render.ScaledBitmap;
 
 public class SwingBitmapAndOffset
 {
-    public final Bitmap bitmap;
     public final int offsetX;
+    public final ScaledBitmap<SwingBitmap> bitmap;
     public final int offsetY;
 
-    public SwingBitmapAndOffset( SwingBitmap bitmap, int offsetX, int offsetY )
+    public SwingBitmapAndOffset(
+        ScaledBitmap<SwingBitmap> bitmap, int offsetX, int offsetY )
     {
         this.bitmap = bitmap;
         this.offsetX = offsetX;

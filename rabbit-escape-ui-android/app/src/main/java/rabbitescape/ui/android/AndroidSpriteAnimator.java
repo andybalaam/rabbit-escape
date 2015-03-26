@@ -7,23 +7,20 @@ import java.util.List;
 import java.util.Locale;
 
 import rabbitescape.engine.Block;
-import rabbitescape.engine.ChangeDescription;
 import rabbitescape.engine.Rabbit;
 import rabbitescape.engine.Thing;
 import rabbitescape.engine.World;
 import rabbitescape.render.Animation;
 import rabbitescape.render.AnimationCache;
 import rabbitescape.render.BitmapCache;
+import rabbitescape.render.ScaledBitmap;
 import rabbitescape.render.Sprite;
-import rabbitescape.render.androidlike.Bitmap;
 
 public class AndroidSpriteAnimator
 {
     private final World world;
-    private final int imagesTileSize;
     private final BitmapCache<AndroidBitmap> bitmapCache;
     private final AnimationCache animationCache;
-    private final AndroidBitmapScaler scaler;
 
     private static final String[] land_block = new String[]
     {
@@ -54,24 +51,20 @@ public class AndroidSpriteAnimator
 
     public AndroidSpriteAnimator(
         World world,
-        ChangeDescription changeDescription,
-        int imagesTileSize,
         BitmapCache<AndroidBitmap> bitmapCache,
         AnimationCache animationCache
     )
     {
         this.world = world;
-        this.imagesTileSize = imagesTileSize;
         this.bitmapCache = bitmapCache;
         this.animationCache = animationCache;
-        this.scaler = new AndroidBitmapScaler();
     }
 
-    public Sprite[] getSprites( int frameNum )
+    public List<Sprite<AndroidBitmap>> getSprites( int frameNum )
     {
         // TODO: share with swing.SpriteAnimator
 
-        List<Sprite> ret = new ArrayList<Sprite>();
+        List<Sprite<AndroidBitmap>> ret = new ArrayList<Sprite<AndroidBitmap>>();
 
         for ( Block block : world.blocks )
         {
@@ -93,25 +86,23 @@ public class AndroidSpriteAnimator
             addThing( frameNum, thing, ret );
         }
 
-        return ret.toArray( new Sprite[ret.size()] );
+        return ret;
     }
 
-    private void addBlock( List<Sprite> ret, Block block )
+    private void addBlock( List<Sprite<AndroidBitmap>> ret, Block block )
     {
         ret.add(
-            new Sprite(
+            new Sprite<AndroidBitmap>(
                 bitmapForBlock( block ),
-                scaler,
                 block.x,
                 block.y,
-                imagesTileSize,
                 0,
                 0
             )
         );
     }
 
-    private void addThing( int frameNum, Thing thing, List<Sprite> ret )
+    private void addThing( int frameNum, Thing thing, List<Sprite<AndroidBitmap>> ret )
     {
         String frame = thing.state.name().toLowerCase( Locale.ENGLISH );
         Animation animation = animationCache.get( frame );
@@ -128,19 +119,17 @@ public class AndroidSpriteAnimator
         AndroidBitmapAndOffset bmp = androidAnimation.get( frameNum );
 
         ret.add(
-            new Sprite(
+            new Sprite<AndroidBitmap>(
                 bmp.bitmap,
-                scaler,
                 thing.x,
                 thing.y,
-                imagesTileSize,
                 bmp.offsetX,
                 bmp.offsetY
             )
         );
     }
 
-    private AndroidBitmap bitmapForBlock( Block block )
+    private ScaledBitmap<AndroidBitmap> bitmapForBlock( Block block )
     {
         return bitmapCache.get( bitmapNameForBlock( block ) );
     }

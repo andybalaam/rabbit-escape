@@ -205,7 +205,7 @@ public class AnimationTester extends JFrame
     private SwingBitmapScaler scaler;
     private SwingPaint paint;
     private SwingAnimation[][] frames;
-    private SwingBitmap[] blockBitmaps;
+    private List<ScaledBitmap<SwingBitmap>> blockBitmaps;
     private final AnimationCache animationCache;
     private final String[] allBlocks = new String[] {
         NONE,
@@ -332,8 +332,8 @@ public class AnimationTester extends JFrame
         paint = new SwingPaint();
         SwingBitmapLoader bitmapLoader = new SwingBitmapLoader();
 
-        BitmapCache<SwingBitmap> bitmapCache = new BitmapCache<>(
-            bitmapLoader, 500 );
+        BitmapCache<SwingBitmap> bitmapCache = new BitmapCache<SwingBitmap>(
+            bitmapLoader, scaler, 500 );
 
         frames = loadAllFrames( bitmapCache, animationNames );
         blockBitmaps = loadAllBlockBitmaps( bitmapCache, blockNames );
@@ -374,20 +374,23 @@ public class AnimationTester extends JFrame
     }
 
 
-    private SwingBitmap[] loadAllBlockBitmaps(
+    private List<ScaledBitmap<SwingBitmap>> loadAllBlockBitmaps(
         BitmapCache<SwingBitmap> bitmapCache, String[] blockNames )
     {
-        SwingBitmap[] ret = new SwingBitmap[blockNames.length];
+        List<ScaledBitmap<SwingBitmap>> ret =
+            new ArrayList<ScaledBitmap<SwingBitmap>>( blockNames.length );
 
-        int i = 0;
         for ( String blockName : blockNames )
         {
             if ( !blockName.equals( NONE ) )
             {
                 try
                 {
-                    ret[ i ] = bitmapCache.get(
-                        "/rabbitescape/ui/swing/images32/" + blockName + ".png"
+                    ret.add(
+                        bitmapCache.get(
+                            "/rabbitescape/ui/swing/images32/"
+                                + blockName + ".png"
+                        )
                     );
                 }
                 catch ( FailedToLoadImage e )
@@ -395,7 +398,6 @@ public class AnimationTester extends JFrame
                     e.printStackTrace();
                 }
             }
-            ++i;
         }
         return ret;
     }
@@ -419,7 +421,7 @@ public class AnimationTester extends JFrame
     {
         BufferStrategy strategy = canvas.getBufferStrategy();
 
-        Renderer renderer = new Renderer( 0, 0, tileSize );
+        Renderer<SwingBitmap> renderer = new Renderer<SwingBitmap>( 0, 0, tileSize );
 
         int frameSetNum = 0;
         int frameNum = 0;
@@ -447,11 +449,11 @@ public class AnimationTester extends JFrame
     {
         private final int frameSetNum;
         private final int frameNum;
-        private final Renderer renderer;
+        private final Renderer<SwingBitmap> renderer;
 
         public DrawFrame(
             BufferStrategy strategy,
-            Renderer renderer,
+            Renderer<SwingBitmap> renderer,
             int frameSetNum,
             int frameNum
         )
@@ -473,9 +475,9 @@ public class AnimationTester extends JFrame
                 canvas.getHeight()
             );
 
-            List<Sprite> sprites = new ArrayList<>();
+            List<Sprite<SwingBitmap>> sprites = new ArrayList<>();
             int i = 0;
-            for ( SwingBitmap bmp : blockBitmaps )
+            for ( ScaledBitmap<SwingBitmap> bmp : blockBitmaps )
             {
                 if ( bmp == null )
                 {
@@ -485,12 +487,10 @@ public class AnimationTester extends JFrame
 
                 java.awt.Point loc = int2dim( i );
                 sprites.add(
-                    new Sprite(
+                    new Sprite<SwingBitmap>(
                         bmp,
-                        scaler,
                         loc.x,
                         loc.y,
-                        32,
                         0,
                         0
                     )
@@ -509,12 +509,10 @@ public class AnimationTester extends JFrame
                 }
                 java.awt.Point loc = int2dim( i );
                 SwingBitmapAndOffset bmp = bmps.get( frameNum );
-                Sprite sprite = new Sprite(
+                Sprite<SwingBitmap> sprite = new Sprite<SwingBitmap>(
                     bmp.bitmap,
-                    scaler,
                     loc.x,
                     loc.y,
-                    32,
                     bmp.offsetX,
                     bmp.offsetY
                 );
@@ -523,11 +521,7 @@ public class AnimationTester extends JFrame
                 ++i;
             }
 
-            renderer.render(
-                new SwingCanvas( g ),
-                    sprites.toArray( new Sprite[sprites.size() ] ),
-                paint
-            );
+            renderer.render( new SwingCanvas( g ), sprites, paint );
         }
     }
 

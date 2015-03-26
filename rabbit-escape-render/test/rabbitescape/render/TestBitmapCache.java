@@ -17,7 +17,7 @@ public class TestBitmapCache
     public void Cache_calls_load_if_not_loaded_before()
     {
         TrackingBitmapLoader loader = new TrackingBitmapLoader();
-        BitmapCache<FakeBitmap> cache = new BitmapCache<>( loader, 5 );
+        BitmapCache<FakeBitmap> cache = new BitmapCache<>( loader, null, 5 );
 
         // This is what we are testing
         cache.get( "a/b/foo.png" );
@@ -33,30 +33,36 @@ public class TestBitmapCache
     public void Getting_a_bitmap_from_the_cache_returns_the_same_object()
     {
         TrackingBitmapLoader loader = new TrackingBitmapLoader();
-        BitmapCache<FakeBitmap> cache = new BitmapCache<>( loader, 5 );
+        BitmapCache<FakeBitmap> cache = new BitmapCache<>( loader, null, 5 );
 
-        FakeBitmap gotBitmap1 = cache.get( "a/b/foo01.png" );
-        FakeBitmap gotBitmap2 = cache.get( "a/b/foo02.png" );
+        FakeBitmap gotBitmap1 = cache.get( "a/b/foo01.png" ).bitmap;
+        FakeBitmap gotBitmap2 = cache.get( "a/b/foo02.png" ).bitmap;
 
         // Sanity
         assertThat( gotBitmap1, not( sameInstance( gotBitmap2 ) ) );
 
         // This is what we are testing - get same instance when call again
-        assertThat( gotBitmap1, sameInstance( cache.get( "a/b/foo01.png" ) ) );
-        assertThat( gotBitmap1, sameInstance( cache.get( "a/b/foo01.png" ) ) );
+        assertThat(
+            gotBitmap1, sameInstance( cache.get( "a/b/foo01.png" ).bitmap ) );
 
-        assertThat( gotBitmap2, sameInstance( cache.get( "a/b/foo02.png" ) ) );
-        assertThat( gotBitmap2, sameInstance( cache.get( "a/b/foo02.png" ) ) );
+        assertThat(
+            gotBitmap1, sameInstance( cache.get( "a/b/foo01.png" ).bitmap ) );
+
+        assertThat(
+            gotBitmap2, sameInstance( cache.get( "a/b/foo02.png" ).bitmap ) );
+
+        assertThat(
+            gotBitmap2, sameInstance( cache.get( "a/b/foo02.png" ).bitmap ) );
     }
 
     @Test
     public void Load_only_called_once_even_if_get_called_multiple_times()
     {
         TrackingBitmapLoader loader = new TrackingBitmapLoader();
-        BitmapCache<FakeBitmap> cache = new BitmapCache<>( loader, 5 );
+        BitmapCache<FakeBitmap> cache = new BitmapCache<>( loader, null, 5 );
 
         // This is what we are testing - call get 3 times
-        FakeBitmap b1 = cache.get( "a/b/foo.png" );
+        FakeBitmap b1 = cache.get( "a/b/foo.png" ).bitmap;
         cache.get( "a/b/foo.png" );
         cache.get( "a/b/foo.png" );
 
@@ -74,14 +80,14 @@ public class TestBitmapCache
     public void Recently_accessed_items_are_not_purged_before_older()
     {
         TrackingBitmapLoader loader = new TrackingBitmapLoader();
-        BitmapCache<FakeBitmap> cache = new BitmapCache<>( loader, 5 );
+        BitmapCache<FakeBitmap> cache = new BitmapCache<>( loader, null, 5 );
 
         // Get enough to fill the cache
-        FakeBitmap b1 = cache.get( "a/b/foo01.png" );
-        FakeBitmap b2 = cache.get( "a/b/foo02.png" );
-        FakeBitmap b3 = cache.get( "a/b/foo03.png" );
-        FakeBitmap b4 = cache.get( "a/b/foo04.png" );
-        FakeBitmap b5 = cache.get( "a/b/foo05.png" );
+        FakeBitmap b1 = cache.get( "a/b/foo01.png" ).bitmap;
+        FakeBitmap b2 = cache.get( "a/b/foo02.png" ).bitmap;
+        FakeBitmap b3 = cache.get( "a/b/foo03.png" ).bitmap;
+        FakeBitmap b4 = cache.get( "a/b/foo04.png" ).bitmap;
+        FakeBitmap b5 = cache.get( "a/b/foo05.png" ).bitmap;
 
         // This is what we are testing: re-access foo02 and it should avoid
         // being purged
@@ -121,14 +127,14 @@ public class TestBitmapCache
     public void Bitmaps_are_purged_in_order_when_cache_is_full()
     {
         TrackingBitmapLoader loader = new TrackingBitmapLoader();
-        BitmapCache<FakeBitmap> cache = new BitmapCache<>( loader, 5 );
+        BitmapCache<FakeBitmap> cache = new BitmapCache<>( loader, null, 5 );
 
         // Get enough to fill the cache
-        FakeBitmap b1 = cache.get( "a/b/foo01.png" );
-        FakeBitmap b2 = cache.get( "a/b/foo02.png" );
-        FakeBitmap b3 = cache.get( "a/b/foo03.png" );
-        FakeBitmap b4 = cache.get( "a/b/foo04.png" );
-        FakeBitmap b5 = cache.get( "a/b/foo05.png" );
+        FakeBitmap b1 = cache.get( "a/b/foo01.png" ).bitmap;
+        FakeBitmap b2 = cache.get( "a/b/foo02.png" ).bitmap;
+        FakeBitmap b3 = cache.get( "a/b/foo03.png" ).bitmap;
+        FakeBitmap b4 = cache.get( "a/b/foo04.png" ).bitmap;
+        FakeBitmap b5 = cache.get( "a/b/foo05.png" ).bitmap;
 
         // Not recycled yet
         assertThat( b1.recycled, is( false ) );

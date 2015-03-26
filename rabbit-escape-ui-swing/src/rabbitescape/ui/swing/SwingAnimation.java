@@ -6,6 +6,7 @@ import java.util.List;
 import rabbitescape.render.Animation;
 import rabbitescape.render.BitmapCache;
 import rabbitescape.render.FrameNameAndOffset;
+import rabbitescape.render.ScaledBitmap;
 
 public class SwingAnimation
 {
@@ -18,7 +19,7 @@ public class SwingAnimation
 
         for ( FrameNameAndOffset frame : animation )
         {
-            SwingBitmap bmp = bitmapCache.get(
+            ScaledBitmap<SwingBitmap> bmp = bitmapCache.get(
                 "/rabbitescape/ui/swing/images32/" + frame.name + ".png" );
 
             this.bitmaps.add(

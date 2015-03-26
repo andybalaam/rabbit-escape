@@ -42,7 +42,8 @@ public class SwingMain
             new RealFileSystem(),
             System.out,
             locale,
-            new BitmapCache<>( new SwingBitmapLoader(), 500 ),
+            new BitmapCache<>(
+                new SwingBitmapLoader(), new SwingBitmapScaler(), 500 ),
             SwingConfigSetup.createConfig()
         );
 
