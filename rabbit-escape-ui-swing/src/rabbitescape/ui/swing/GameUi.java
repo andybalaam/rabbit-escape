@@ -372,6 +372,8 @@ public class GameUi
 
     private void zoomClicked( boolean zoomIn )
     {
+        int oldZoom = zoomValues[zoomIndex];
+
         if ( zoomIn )
         {
             if ( zoomIndex < zoomValues.length - 1 )
@@ -388,8 +390,37 @@ public class GameUi
         }
 
         int zoom = zoomValues[zoomIndex];
-        gameLoop.renderer.tileSize = zoom;
-        setWorldSize( gameLoop.world.size, zoom );
+
+        if ( oldZoom != zoom )
+        {
+            double scrX = getScrollBarProportion( canvasScrollBarX );
+            double scrY = getScrollBarProportion( canvasScrollBarY );
+
+            gameLoop.renderer.tileSize = zoom;
+            setWorldSize( gameLoop.world.size, zoom );
+
+            setScrollBarFromProportion( canvasScrollBarX, scrX );
+            setScrollBarFromProportion( canvasScrollBarY, scrY );
+        }
+    }
+
+    private static double getScrollBarProportion( JScrollBar scrollBar )
+    {
+        return (
+              ( scrollBar.getValue() + ( scrollBar.getVisibleAmount() / 2 ) )
+            / (double)scrollBar.getMaximum()
+        );
+    }
+
+    private static void setScrollBarFromProportion(
+        JScrollBar scrollBar, double proportion )
+    {
+        scrollBar.setValue(
+            (int)(
+                  ( scrollBar.getMaximum() * proportion )
+                - ( scrollBar.getVisibleAmount() / 2 )
+            )
+        );
     }
 
     private void leaveIntro()
