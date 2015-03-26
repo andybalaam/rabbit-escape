@@ -73,7 +73,8 @@ public class GameUi
         private void scrollScrollBarBy( JScrollBar scrollBar, int units )
         {
             scrollBar.setValue(
-                scrollBar.getValue() + ( units * scrollBar.getUnitIncrement() / 2 )
+                  scrollBar.getValue()
+                + ( units * scrollBar.getUnitIncrement() / 2 )
             );
         }
     }
