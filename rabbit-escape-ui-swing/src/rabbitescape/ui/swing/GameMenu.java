@@ -181,11 +181,7 @@ class GameMenu
 
     private ImageIcon getIcon( String name )
     {
-        return new ImageIcon(
-            bitmapCache.get(
-                "/rabbitescape/ui/swing/images32/" + name + ".png"
-            ).bitmap.image
-        );
+        return new ImageIcon( bitmapCache.get( name ).bitmap.image );
     }
 
     public void addAbilitiesListener( final AbilityChangedListener listener )

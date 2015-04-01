@@ -19,8 +19,7 @@ public class SwingAnimation
 
         for ( FrameNameAndOffset frame : animation )
         {
-            ScaledBitmap<SwingBitmap> bmp = bitmapCache.get(
-                "/rabbitescape/ui/swing/images32/" + frame.name + ".png" );
+            ScaledBitmap<SwingBitmap> bmp = bitmapCache.get( frame.name );
 
             this.bitmaps.add(
                 new SwingBitmapAndOffset( bmp, frame.offsetX, frame.offsetY ) );

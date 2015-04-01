@@ -13,8 +13,8 @@ public class TestTools
     {
         SwingBitmapLoader bitmapLoader = new SwingBitmapLoader();
 
-        SwingBitmap x1 = bitmapLoader.load( "/rabbitescape/ui/swing/x.png" );
-        SwingBitmap x2 = bitmapLoader.load( "/rabbitescape/ui/swing/x.png" );
+        SwingBitmap x1 = bitmapLoader.load( "x" );
+        SwingBitmap x2 = bitmapLoader.load( "x" );
 
         assertThat( x1, equalTo( x2 ) );
     }
@@ -24,8 +24,8 @@ public class TestTools
     {
         SwingBitmapLoader bitmapLoader = new SwingBitmapLoader();
 
-        SwingBitmap x1 = bitmapLoader.load( "/rabbitescape/ui/swing/x.png" );
-        SwingBitmap x2 = bitmapLoader.load( "/rabbitescape/ui/swing/sixx.png" );
+        SwingBitmap x1 = bitmapLoader.load( "x" );
+        SwingBitmap x2 = bitmapLoader.load( "sixx" );
 
         assertThat( x1, not( equalTo( x2 ) ) );
     }

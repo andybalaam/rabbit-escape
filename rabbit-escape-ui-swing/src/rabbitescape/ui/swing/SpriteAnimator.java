@@ -35,33 +35,30 @@ public class SpriteAnimator
 
         this.land_block = new String[]
         {
-            "/rabbitescape/ui/swing/images32/land_block_1.png",
-            "/rabbitescape/ui/swing/images32/land_block_2.png",
-            "/rabbitescape/ui/swing/images32/land_block_3.png",
-            "/rabbitescape/ui/swing/images32/land_block_4.png",
+            "land_block_1",
+            "land_block_2",
+            "land_block_3",
+            "land_block_4",
         };
 
         this.land_rising_right = new String[]
         {
-            "/rabbitescape/ui/swing/images32/land_rising_right_1.png",
-            "/rabbitescape/ui/swing/images32/land_rising_right_2.png",
-            "/rabbitescape/ui/swing/images32/land_rising_right_3.png",
-            "/rabbitescape/ui/swing/images32/land_rising_right_4.png"
+            "land_rising_right_1",
+            "land_rising_right_2",
+            "land_rising_right_3",
+            "land_rising_right_4"
         };
 
         this.land_rising_left = new String[]
         {
-            "/rabbitescape/ui/swing/images32/land_rising_left_1.png",
-            "/rabbitescape/ui/swing/images32/land_rising_left_2.png",
-            "/rabbitescape/ui/swing/images32/land_rising_left_3.png",
-            "/rabbitescape/ui/swing/images32/land_rising_left_4.png"
+            "land_rising_left_1",
+            "land_rising_left_2",
+            "land_rising_left_3",
+            "land_rising_left_4"
         };
 
-        this.bridge_rising_right =
-            "/rabbitescape/ui/swing/images32/bridge_rising_right.png";
-
-        this.bridge_rising_left =
-            "/rabbitescape/ui/swing/images32/bridge_rising_left.png";
+        this.bridge_rising_right = "bridge_rising_right";
+        this.bridge_rising_left = "bridge_rising_left";
     }
 
     public List<Sprite<SwingBitmap>> getSprites( int frameNum )

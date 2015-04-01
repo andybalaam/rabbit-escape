@@ -23,7 +23,7 @@ public class TestSwingRendering
         SwingBitmapLoader bitmapLoader = new SwingBitmapLoader();
         SwingBitmapScaler scaler = new SwingBitmapScaler();
 
-        SwingBitmap x = bitmapLoader.load( "/rabbitescape/ui/swing/x.png" );
+        SwingBitmap x = bitmapLoader.load( "x" );
 
         List<Sprite<SwingBitmap>> sprites =
             new ArrayList<Sprite<SwingBitmap>>();
@@ -44,8 +44,7 @@ public class TestSwingRendering
         Renderer<SwingBitmap> renderer = new Renderer<SwingBitmap>( 0, 0, 32 );
         renderer.render( output, sprites, new SwingPaint() );
 
-        SwingBitmap expected = bitmapLoader.load(
-            "/rabbitescape/ui/swing/sixx.png" );
+        SwingBitmap expected = bitmapLoader.load( "sixx" );
 
         assertThat( output.bitmap, equalTo( expected ) );
     }
@@ -56,7 +55,7 @@ public class TestSwingRendering
         SwingBitmapLoader bitmapLoader = new SwingBitmapLoader();
         SwingBitmapScaler scaler = new SwingBitmapScaler();
 
-        SwingBitmap x = bitmapLoader.load( "/rabbitescape/ui/swing/x.png" );
+        SwingBitmap x = bitmapLoader.load( "x" );
 
         List<Sprite<SwingBitmap>> sprites =
             new ArrayList<Sprite<SwingBitmap>>();
@@ -69,8 +68,7 @@ public class TestSwingRendering
         Renderer<SwingBitmap> renderer = new Renderer<SwingBitmap>( 3, 2, 32 );
         renderer.render( output, sprites, new SwingPaint() );
 
-        SwingBitmap expected = bitmapLoader.load(
-            "/rabbitescape/ui/swing/x32.png" );
+        SwingBitmap expected = bitmapLoader.load( "x32" );
 
         assertThat( output.bitmap, equalTo( expected ) );
     }
@@ -81,7 +79,7 @@ public class TestSwingRendering
         SwingBitmapLoader bitmapLoader = new SwingBitmapLoader();
         SwingBitmapScaler scaler = new SwingBitmapScaler();
 
-        SwingBitmap x = bitmapLoader.load( "/rabbitescape/ui/swing/x.png" );
+        SwingBitmap x = bitmapLoader.load( "x" );
 
         List<Sprite<SwingBitmap>> sprites =
             new ArrayList<Sprite<SwingBitmap>>();
@@ -96,8 +94,7 @@ public class TestSwingRendering
             // But the renderer gets to override.
         renderer.render( output, sprites, new SwingPaint() );
 
-        SwingBitmap expected = bitmapLoader.load(
-            "/rabbitescape/ui/swing/x16-32.png" );
+        SwingBitmap expected = bitmapLoader.load( "x16-32" );
 
         assertThat( output.bitmap, equalTo( expected ) );
     }
@@ -108,7 +105,7 @@ public class TestSwingRendering
         SwingBitmapLoader bitmapLoader = new SwingBitmapLoader();
         SwingBitmapScaler scaler = new SwingBitmapScaler();
 
-        SwingBitmap x = bitmapLoader.load( "/rabbitescape/ui/swing/x.png" );
+        SwingBitmap x = bitmapLoader.load( "x" );
 
         List<Sprite<SwingBitmap>> sprites =
             new ArrayList<Sprite<SwingBitmap>>();
@@ -124,8 +121,7 @@ public class TestSwingRendering
 
         renderer.render( output, sprites, new SwingPaint() );
 
-        SwingBitmap expected = bitmapLoader.load(
-            "/rabbitescape/ui/swing/x32.png" );
+        SwingBitmap expected = bitmapLoader.load( "x32" );
 
         assertThat( output.bitmap, equalTo( expected ) );
     }
@@ -136,7 +132,7 @@ public class TestSwingRendering
         SwingBitmapLoader bitmapLoader = new SwingBitmapLoader();
         SwingBitmapScaler scaler = new SwingBitmapScaler();
 
-        SwingBitmap x = bitmapLoader.load( "/rabbitescape/ui/swing/x.png" );
+        SwingBitmap x = bitmapLoader.load( "x" );
 
         List<Sprite<SwingBitmap>> sprites =
             new ArrayList<Sprite<SwingBitmap>>();
@@ -149,8 +145,7 @@ public class TestSwingRendering
         Renderer<SwingBitmap> renderer = new Renderer<SwingBitmap>( 0, 0, 16 );
         renderer.render( output, sprites, new SwingPaint() );
 
-        SwingBitmap expected = bitmapLoader.load(
-            "/rabbitescape/ui/swing/x16-32.png" );
+        SwingBitmap expected = bitmapLoader.load( "x16-32" );
 
         assertThat( output.bitmap, equalTo( expected ) );
     }

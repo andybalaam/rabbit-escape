@@ -386,12 +386,7 @@ public class AnimationTester extends JFrame
             {
                 try
                 {
-                    ret.add(
-                        bitmapCache.get(
-                            "/rabbitescape/ui/swing/images32/"
-                                + blockName + ".png"
-                        )
-                    );
+                    ret.add( bitmapCache.get( blockName ) );
                 }
                 catch ( FailedToLoadImage e )
                 {

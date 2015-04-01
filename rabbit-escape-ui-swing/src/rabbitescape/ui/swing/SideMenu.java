@@ -142,10 +142,6 @@ class SideMenu
 
     private ImageIcon getIcon( String name )
     {
-        return new ImageIcon(
-            bitmapCache.get(
-                "/rabbitescape/ui/swing/images32/" + name + ".png"
-            ).bitmap.image
-        );
+        return new ImageIcon( bitmapCache.get( name ).bitmap.image );
     }
 }

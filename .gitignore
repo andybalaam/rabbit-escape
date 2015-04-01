@@ -1,7 +1,6 @@
 bin/
 dist/
-animations32/
-images32/
+*/src/**/images32/
 .idea/workspace.xml
 ls.txt
 
