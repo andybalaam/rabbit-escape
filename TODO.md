@@ -39,6 +39,7 @@ Later
 - Victory screen
 - Automated tests that levels run OK and can be solved
 - Make the text UI playable
+- favicon for web site
 
 Release 0.3
 -----------
