@@ -19,8 +19,10 @@ public class TestRendering
     {
         TrackingBitmapScaler scaler = new TrackingBitmapScaler();
 
+        FakeBitmapLoader loader = new FakeBitmapLoader();
+
         ScaledBitmap<FakeBitmap> bitmap = new ScaledBitmap<FakeBitmap>(
-            scaler, new FakeBitmap(), 32 );
+            scaler, loader, "x" );
 
         List<Sprite<FakeBitmap>> sprites1 = new ArrayList<Sprite<FakeBitmap>>();
         sprites1.add( new Sprite<FakeBitmap>( bitmap, 1, 1, 6, 4 ) );
@@ -61,6 +63,21 @@ public class TestRendering
         @Override
         public void recycle()
         {
+        }
+    }
+
+    private static class FakeBitmapLoader implements BitmapLoader<FakeBitmap>
+    {
+        @Override
+        public FakeBitmap load( String fileName, int tileSize )
+        {
+            return new FakeBitmap();
+        }
+
+        @Override
+        public int sizeFor( int tileSize )
+        {
+            return 32;
         }
     }
 

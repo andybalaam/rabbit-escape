@@ -34,6 +34,8 @@ class GameMenu
         void abilityChosen( Token.Type ability );
     }
 
+    private static final int ICON_SIZE = 32;
+
     public JToggleButton mute;
     public JToggleButton pause;
     public final JButton explodeAll;
@@ -181,7 +183,8 @@ class GameMenu
 
     private ImageIcon getIcon( String name )
     {
-        return new ImageIcon( bitmapCache.get( name ).bitmap.image );
+        return new ImageIcon(
+            bitmapCache.get( name ).bitmap( ICON_SIZE ).image );
     }
 
     public void addAbilitiesListener( final AbilityChangedListener listener )

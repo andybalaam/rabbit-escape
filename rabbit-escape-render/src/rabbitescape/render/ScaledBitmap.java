@@ -4,39 +4,87 @@ import rabbitescape.render.androidlike.Bitmap;
 
 public class ScaledBitmap<T extends Bitmap>
 {
-    private final T originalBitmap;
-    public final int originalTileSize;
-
     private final BitmapScaler<T> scaler;
+    private final BitmapLoader<T> loader;
+    private final String fileName;
 
-    public T bitmap;
+    private T unscaledBitmap;
+    private T bitmap;
+
+    public int unscaledTileSize;
     public int tileSize;
 
-    public ScaledBitmap( BitmapScaler<T> scaler, T bitmap, int tileSize )
+    public ScaledBitmap(
+        BitmapScaler<T> scaler,
+        BitmapLoader<T> loader,
+        String fileName
+    )
     {
         this.scaler = scaler;
-        this.originalBitmap = bitmap;
-        this.bitmap = bitmap;
-        this.originalTileSize = tileSize;
-        this.tileSize = tileSize;
+        this.loader = loader;
+        this.fileName = fileName;
+
+        this.unscaledBitmap = null;
+        this.bitmap = null;
+
+        this.unscaledTileSize = -1;
+        this.tileSize = -1;
     }
 
-    public void scaleTo( int tileSize )
+    public T bitmap( int tileSize )
     {
-        if ( this.tileSize != tileSize )
-        {
-            double scale = (double)tileSize / (double)originalTileSize;
-            this.bitmap = scaler.scale( this.originalBitmap, scale );
-            this.tileSize = tileSize;
-        }
+        scaleTo( tileSize );
+        return bitmap;
     }
 
     public void recycle()
     {
-        if ( bitmap != originalBitmap )
+        replaceBitmap( null );
+        replaceUnscaledBitmap( null );
+    }
+
+    private void scaleTo( int tileSize )
+    {
+        if ( this.tileSize == tileSize )
+        {
+            return;
+        }
+
+        int desiredUnscaledTileSize = loader.sizeFor( tileSize );
+        if ( unscaledTileSize != desiredUnscaledTileSize )
+        {
+            unscaledTileSize = desiredUnscaledTileSize;
+            replaceUnscaledBitmap(
+                loader.load( fileName, desiredUnscaledTileSize ) );
+        }
+
+        if ( tileSize == unscaledTileSize )
+        {
+            replaceBitmap( unscaledBitmap );
+        }
+        else
+        {
+            double scale = tileSize / (double)unscaledTileSize;
+            replaceBitmap( scaler.scale( unscaledBitmap, scale ) );
+            this.tileSize = tileSize;
+        }
+    }
+
+    private void replaceUnscaledBitmap( T newUnscaledBitmap )
+    {
+        if ( unscaledBitmap != null )
+        {
+            unscaledBitmap.recycle();
+        }
+        unscaledBitmap = newUnscaledBitmap;
+    }
+
+    private void replaceBitmap( T newBitmap )
+    {
+        if ( bitmap != null && bitmap != unscaledBitmap )
         {
             bitmap.recycle();
         }
-        originalBitmap.recycle();
+        bitmap = newBitmap;
     }
 }

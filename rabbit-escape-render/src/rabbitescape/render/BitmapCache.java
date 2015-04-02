@@ -9,8 +9,6 @@ import rabbitescape.render.androidlike.Bitmap;
 
 public class BitmapCache<T extends Bitmap>
 {
-    private final int imagesTileSize = 32;
-
     private final BitmapLoader<T> loader;
     private final BitmapScaler<T> scaler;
     private final int size;
@@ -43,8 +41,7 @@ public class BitmapCache<T extends Bitmap>
                 }
             }
 
-            ret = new ScaledBitmap<T>(
-                scaler, loader.load( fileName ), imagesTileSize );
+            ret = new ScaledBitmap<T>( scaler, loader, fileName );
 
             cache.put( fileName, ret );
         }

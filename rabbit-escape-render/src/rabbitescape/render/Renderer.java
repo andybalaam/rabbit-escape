@@ -26,7 +26,7 @@ public class Renderer<T extends Bitmap>
             sprite.scaleTo( tileSize );
 
             canvas.drawBitmap(
-                sprite.bitmap.bitmap,
+                sprite.bitmap.bitmap( tileSize ),
                 sprite.offsetX + offsetX + ( sprite.tileX * tileSize ),
                 sprite.offsetY + offsetY + ( sprite.tileY * tileSize ),
                 paint

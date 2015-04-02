@@ -22,6 +22,8 @@ import rabbitescape.render.BitmapCache;
 
 class SideMenu
 {
+    private static final int ICON_SIZE = 32;
+
     public final JToggleButton mute;
     public final JButton back;
     public final JButton exit;
@@ -142,6 +144,7 @@ class SideMenu
 
     private ImageIcon getIcon( String name )
     {
-        return new ImageIcon( bitmapCache.get( name ).bitmap.image );
+        return new ImageIcon(
+            bitmapCache.get( name ).bitmap( ICON_SIZE ).image );
     }
 }

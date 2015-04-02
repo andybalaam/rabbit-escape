@@ -16,8 +16,10 @@ public class AndroidBitmapLoader implements BitmapLoader<AndroidBitmap>
     }
 
     @Override
-    public AndroidBitmap load( String name )
+    public AndroidBitmap load( String name, int tileSize )
     {
+        // tileSize is ignored for now
+
         // If this is slow, consider using reflection on R.drawable.class
         // (see http://daniel-codes.blogspot.co.uk/2009/12/dynamically-retrieving-resources-in.html)
         // or allow passing an int ID instead of a name.
@@ -30,5 +32,11 @@ public class AndroidBitmapLoader implements BitmapLoader<AndroidBitmap>
         }
 
         return new AndroidBitmap( BitmapFactory.decodeResource( resources, id ) );
+    }
+
+    @Override
+    public int sizeFor( int tileSize )
+    {
+        return 32; // This is ignored for now
     }
 }

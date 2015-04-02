@@ -13,8 +13,8 @@ public class TestTools
     {
         SwingBitmapLoader bitmapLoader = new SwingBitmapLoader();
 
-        SwingBitmap x1 = bitmapLoader.load( "x" );
-        SwingBitmap x2 = bitmapLoader.load( "x" );
+        SwingBitmap x1 = bitmapLoader.load( "x", 32 );
+        SwingBitmap x2 = bitmapLoader.load( "x", 32 );
 
         assertThat( x1, equalTo( x2 ) );
     }
@@ -24,8 +24,8 @@ public class TestTools
     {
         SwingBitmapLoader bitmapLoader = new SwingBitmapLoader();
 
-        SwingBitmap x1 = bitmapLoader.load( "x" );
-        SwingBitmap x2 = bitmapLoader.load( "sixx" );
+        SwingBitmap x1 = bitmapLoader.load( "x", 32 );
+        SwingBitmap x2 = bitmapLoader.load( "sixx", 32 );
 
         assertThat( x1, not( equalTo( x2 ) ) );
     }

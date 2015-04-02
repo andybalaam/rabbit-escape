@@ -11,7 +11,7 @@ public class Sprite<T extends Bitmap>
     public final int tileX;
     public final int tileY;
 
-    private final int originalOffsetX;
+    private final int originalOffsetX; // TODO: move offsets into ScaledBitmap?
     private final int originalOffsetY;
 
     public int offsetX;
@@ -32,13 +32,15 @@ public class Sprite<T extends Bitmap>
 
     public void scaleTo( int tileSize )
     {
-        double scale = (double)tileSize / (double)bitmap.originalTileSize;
-        offsetX = (int)( originalOffsetX * scale );
-        offsetY = (int)( originalOffsetY * scale );
-
         if ( bitmap.tileSize != tileSize )
         {
-            bitmap.scaleTo( tileSize );
+            // Ensure we have called bitmap here so we can use unscaledTileSize.
+            // This is why offsets should move.
+            bitmap.bitmap( tileSize );
         }
+
+        double scale = tileSize / (double)bitmap.unscaledTileSize;
+        offsetX = (int)( originalOffsetX * scale );
+        offsetY = (int)( originalOffsetY * scale );
     }
 }
