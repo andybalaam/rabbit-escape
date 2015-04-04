@@ -1,6 +1,8 @@
 bin/
 dist/
 */src/**/images32/
+*/src/**/images64/
+*/src/**/images128/
 .idea/workspace.xml
 ls.txt
 

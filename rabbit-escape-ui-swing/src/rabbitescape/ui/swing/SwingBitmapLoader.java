@@ -3,19 +3,22 @@ package rabbitescape.ui.swing;
 import static rabbitescape.engine.util.Util.*;
 
 import java.io.IOException;
+import java.util.Arrays;
 
 import rabbitescape.render.BitmapLoader;
 import rabbitescape.render.FailedToLoadImage;
 
 public class SwingBitmapLoader implements BitmapLoader<SwingBitmap>
 {
+    private static int[] SIZES = new int[] { 32, 64, 128 };
+
     @Override
     public SwingBitmap load( String name, int tileSize )
     {
-        reAssert( tileSize == 32 );
+        reAssert( Arrays.binarySearch( SIZES, tileSize ) >= 0 );
 
         String resourcePath =
-            "/rabbitescape/ui/swing/images32/" + name + ".png";
+            "/rabbitescape/ui/swing/images" + tileSize + "/" + name + ".png";
 
         try
         {
@@ -35,6 +38,13 @@ public class SwingBitmapLoader implements BitmapLoader<SwingBitmap>
     @Override
     public int sizeFor( int tileSize )
     {
-        return 32;
+        for ( int size : SIZES )
+        {
+            if ( tileSize <= size )
+            {
+                return size;
+            }
+        }
+        return SIZES[ SIZES.length - 1 ];
     }
 }

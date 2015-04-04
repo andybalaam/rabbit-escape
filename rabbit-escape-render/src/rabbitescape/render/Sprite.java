@@ -17,6 +17,13 @@ public class Sprite<T extends Bitmap>
     public int offsetX;
     public int offsetY;
 
+    /**
+     * @param bitmap
+     * @param tileX
+     * @param tileY
+     * @param offsetX x offset (relative to 32x32 image)
+     * @param offsetY y offset (relative to 32x32 image)
+     */
     public Sprite(
         ScaledBitmap<T> bitmap, int tileX, int tileY, int offsetX, int offsetY )
     {
@@ -39,7 +46,7 @@ public class Sprite<T extends Bitmap>
             bitmap.bitmap( tileSize );
         }
 
-        double scale = tileSize / (double)bitmap.unscaledTileSize;
+        double scale = tileSize / 32.0;
         offsetX = (int)( originalOffsetX * scale );
         offsetY = (int)( originalOffsetY * scale );
     }

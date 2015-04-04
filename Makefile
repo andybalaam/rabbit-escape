@@ -2,6 +2,8 @@
 CLASSPATH=rabbit-escape-engine/bin/:rabbit-escape-render/bin/:rabbit-escape-ui-text/bin/:rabbit-escape-ui-swing/bin/
 
 IMAGES32_DEST=rabbit-escape-ui-swing/src/rabbitescape/ui/swing/images32
+IMAGES64_DEST=rabbit-escape-ui-swing/src/rabbitescape/ui/swing/images64
+IMAGES128_DEST=rabbit-escape-ui-swing/src/rabbitescape/ui/swing/images128
 ANDROIDIMAGESMDPI_DEST=rabbit-escape-ui-android/app/src/main/res/drawable-mdpi
 ANDROIDIMAGESHDPI_DEST=rabbit-escape-ui-android/app/src/main/res/drawable-hdpi
 ANDROIDIMAGESXHDPI_DEST=rabbit-escape-ui-android/app/src/main/res/drawable-xhdpi
@@ -10,9 +12,13 @@ ANDROIDIMAGESXXXHDPI_DEST=rabbit-escape-ui-android/app/src/main/res/drawable-xxx
 
 SVGIMAGESSRC := $(wildcard images-src/*.svg)
 SVGIMAGES32 := $(SVGIMAGESSRC:images-src/%.svg=$(IMAGES32_DEST)/%.png)
+SVGIMAGES64 := $(SVGIMAGESSRC:images-src/%.svg=$(IMAGES64_DEST)/%.png)
+SVGIMAGES128 := $(SVGIMAGESSRC:images-src/%.svg=$(IMAGES128_DEST)/%.png)
 
 PNGIMAGESSRC := $(wildcard images-src/*.png)
 PNGIMAGES32 := $(PNGIMAGESSRC:images-src/%.png=$(IMAGES32_DEST)/%.png)
+PNGIMAGES64 := $(PNGIMAGESSRC:images-src/%.png=$(IMAGES64_DEST)/%.png)
+PNGIMAGES128 := $(PNGIMAGESSRC:images-src/%.png=$(IMAGES128_DEST)/%.png)
 
 MUSICSRC := $(wildcard music-src/*.flac)
 
@@ -30,8 +36,20 @@ LEVELS_DIRS := $(wildcard rabbit-escape-engine/src/rabbitescape/levels/*) \
 $(IMAGES32_DEST)/%.png: images-src/%.svg
 	mkdir -p $(IMAGES32_DEST); inkscape $< --export-png=$@ --export-dpi=90
 
+$(IMAGES64_DEST)/%.png: images-src/%.svg
+	mkdir -p $(IMAGES64_DEST); inkscape $< --export-png=$@ --export-dpi=180
+
+$(IMAGES128_DEST)/%.png: images-src/%.svg
+	mkdir -p $(IMAGES128_DEST); inkscape $< --export-png=$@ --export-dpi=360
+
 $(IMAGES32_DEST)/%.png: images-src/%.png
 	mkdir -p $(IMAGES32_DEST); convert $< -resize 12.5% $@
+
+$(IMAGES64_DEST)/%.png: images-src/%.png
+	mkdir -p $(IMAGES64_DEST); convert $< -resize 25% $@
+
+$(IMAGES128_DEST)/%.png: images-src/%.png
+	mkdir -p $(IMAGES128_DEST); convert $< -resize 50% $@
 
 $(ANDROIDIMAGESMDPI_DEST)/%.png: images-src/%.svg
 	mkdir -p $(ANDROIDIMAGESMDPI_DEST); inkscape $< --export-png=$@ --export-dpi=90
@@ -88,7 +106,7 @@ dist/rabbit-escape-${VERSION}.jar: compile
 		jar -uf ../../dist/rabbit-escape-${VERSION}.jar `find ./`
 	jar -ufm dist/rabbit-escape-${VERSION}.jar MANIFEST.MF
 
-images: $(SVGIMAGES32) $(PNGIMAGES32)
+images: $(SVGIMAGES32) $(PNGIMAGES32) $(SVGIMAGES64) $(PNGIMAGES64) $(SVGIMAGES128) $(PNGIMAGES128)
 
 #music: $(MUSICOGG)
 
@@ -115,7 +133,7 @@ clean:
 	rm -rf dist
 
 clean-images:
-	rm -rf $(IMAGES32_DEST)/* $(ANDROIDIMAGESMDPI_DEST)/* $(ANDROIDIMAGESHDPI_DEST)/* $(ANDROIDIMAGESXHDPI_DEST)/*
+	rm -rf $(IMAGES32_DEST)/* $(IMAGES64_DEST)/* $(IMAGES128_DEST)/* $(ANDROIDIMAGESMDPI_DEST)/* $(ANDROIDIMAGESHDPI_DEST)/* $(ANDROIDIMAGESXHDPI_DEST)/*
 
 clean-all: clean clean-images
 

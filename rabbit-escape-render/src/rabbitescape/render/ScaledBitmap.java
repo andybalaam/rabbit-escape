@@ -58,6 +58,7 @@ public class ScaledBitmap<T extends Bitmap>
                 loader.load( fileName, desiredUnscaledTileSize ) );
         }
 
+        this.tileSize = tileSize;
         if ( tileSize == unscaledTileSize )
         {
             replaceBitmap( unscaledBitmap );
@@ -66,7 +67,6 @@ public class ScaledBitmap<T extends Bitmap>
         {
             double scale = tileSize / (double)unscaledTileSize;
             replaceBitmap( scaler.scale( unscaledBitmap, scale ) );
-            this.tileSize = tileSize;
         }
     }
 
