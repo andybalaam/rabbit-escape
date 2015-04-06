@@ -23,14 +23,14 @@ public class Renderer<T extends Bitmap>
     {
         for ( Sprite<T> sprite : sprites )
         {
-            sprite.scaleTo( tileSize );
+            int posX = sprite.offsetX( tileSize )
+                + offsetX + ( sprite.tileX * tileSize );
+
+            int posY = sprite.offsetY( tileSize )
+                + offsetY + ( sprite.tileY * tileSize );
 
             canvas.drawBitmap(
-                sprite.bitmap.bitmap( tileSize ),
-                sprite.offsetX + offsetX + ( sprite.tileX * tileSize ),
-                sprite.offsetY + offsetY + ( sprite.tileY * tileSize ),
-                paint
-            );
+                sprite.bitmap.bitmap( tileSize ), posX, posY, paint );
         }
     }
 

@@ -127,8 +127,8 @@ public class TestSwingRendering
         Renderer<SwingBitmap> renderer = new Renderer<SwingBitmap>( 0, 0, 16 );
         renderer.render( output, sprites, new SwingPaint() );
 
-        assertThat( sprites.get( 0 ).offsetX, equalTo( 3 ) );
-        assertThat( sprites.get( 0 ).offsetY, equalTo( 2 ) );
+        assertThat( sprites.get( 0 ).offsetX( 16 ), equalTo( 3 ) );
+        assertThat( sprites.get( 0 ).offsetY( 16 ), equalTo( 2 ) );
 
         SwingBitmap expected = bitmapLoader.load( "x16-32", 32 );
 
