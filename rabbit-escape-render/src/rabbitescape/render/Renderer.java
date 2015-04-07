@@ -23,14 +23,26 @@ public class Renderer<T extends Bitmap>
     {
         for ( Sprite<T> sprite : sprites )
         {
-            int posX = sprite.offsetX( tileSize )
+            T bitmap = sprite.bitmap.bitmap( tileSize );
+
+            int left = sprite.offsetX( tileSize )
                 + offsetX + ( sprite.tileX * tileSize );
 
-            int posY = sprite.offsetY( tileSize )
+            int top = sprite.offsetY( tileSize )
                 + offsetY + ( sprite.tileY * tileSize );
 
-            canvas.drawBitmap(
-                sprite.bitmap.bitmap( tileSize ), posX, posY, paint );
+            int right  = left + bitmap.width();
+            int bottom = top  + bitmap.height();
+
+            if (
+                   right > 0
+                && bottom > 0
+                && left < canvas.width()
+                && top < canvas.height()
+            )
+            {
+                canvas.drawBitmap( bitmap, left, top, paint );
+            }
         }
     }
 

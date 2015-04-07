@@ -226,6 +226,18 @@ public class TestBitmapCache
         }
 
         @Override
+        public int width()
+        {
+            return 32;
+        }
+
+        @Override
+        public int height()
+        {
+            return 32;
+        }
+
+        @Override
         public void recycle()
         {
             assertThat( recycled, is( false ) );

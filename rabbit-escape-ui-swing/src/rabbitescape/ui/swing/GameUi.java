@@ -163,7 +163,7 @@ public class GameUi
     {
         Canvas canvas = new Canvas();
         canvas.setIgnoreRepaint( true );
-        canvas.setPreferredSize( worldSizeInPixels );
+        //canvas.setPreferredSize( worldSizeInPixels );
 
         canvasScrollBarX = new JScrollBar( JScrollBar.HORIZONTAL );
         canvasScrollBarY = new JScrollBar( JScrollBar.VERTICAL );

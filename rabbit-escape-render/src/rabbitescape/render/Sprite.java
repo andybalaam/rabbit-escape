@@ -18,16 +18,21 @@ public class Sprite<T extends Bitmap>
      * @param bitmap
      * @param tileX
      * @param tileY
-     * @param offsetX x offset (relative to 32x32 image)
-     * @param offsetY y offset (relative to 32x32 image)
+     * @param offset32X x offset (relative to 32x32 image)
+     * @param offset32Y y offset (relative to 32x32 image)
      */
     public Sprite(
-        ScaledBitmap<T> bitmap, int tileX, int tileY, int offsetX, int offsetY )
+        ScaledBitmap<T> bitmap,
+        int tileX,
+        int tileY,
+        int offset32X,
+        int offset32Y
+    )
     {
         this.tileX = tileX;
         this.tileY = tileY;
-        this.offset32X = offsetX;
-        this.offset32Y = offsetY;
+        this.offset32X = offset32X;
+        this.offset32Y = offset32Y;
 
         this.bitmap = bitmap;
     }

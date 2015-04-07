@@ -516,7 +516,11 @@ public class AnimationTester extends JFrame
                 ++i;
             }
 
-            renderer.render( new SwingCanvas( g ), sprites, paint );
+            renderer.render(
+                new SwingCanvas( g, canvas.getWidth(), canvas.getHeight() ),
+                sprites,
+                paint
+            );
         }
     }
 

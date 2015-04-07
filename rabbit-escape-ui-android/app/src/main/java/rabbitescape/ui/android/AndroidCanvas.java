@@ -21,4 +21,16 @@ public class AndroidCanvas implements Canvas
 
         canvas.drawBitmap( realBitmap, left, top, realPaint );
     }
+
+    @Override
+    public int width()
+    {
+        return canvas.getWidth();
+    }
+
+    @Override
+    public int height()
+    {
+        return canvas.getHeight();
+    }
 }

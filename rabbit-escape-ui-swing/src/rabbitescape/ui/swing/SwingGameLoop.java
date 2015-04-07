@@ -245,7 +245,8 @@ public class SwingGameLoop implements GameLoop
         {
             drawBackground( g );
 
-            SwingCanvas swingCanvas = new SwingCanvas( g );
+            SwingCanvas swingCanvas = new SwingCanvas(
+                g, canvas.getWidth(), canvas.getHeight() );
 
             renderer.render(
                 swingCanvas,

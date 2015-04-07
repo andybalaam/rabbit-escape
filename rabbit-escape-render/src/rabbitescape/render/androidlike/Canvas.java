@@ -7,4 +7,6 @@ package rabbitescape.render.androidlike;
 public interface Canvas
 {
     public void drawBitmap( Bitmap bitmap, float left, float top, Paint paint );
+    public int width();
+    public int height();
 }

@@ -18,6 +18,18 @@ public class AndroidBitmap implements Bitmap
     }
 
     @Override
+    public int width()
+    {
+        return bitmap.getWidth();
+    }
+
+    @Override
+    public int height()
+    {
+        return bitmap.getHeight();
+    }
+
+    @Override
     public void recycle()
     {
         bitmap.recycle();

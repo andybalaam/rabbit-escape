@@ -28,6 +28,18 @@ public class SwingBitmap implements Bitmap
     }
 
     @Override
+    public int width()
+    {
+        return this.image.getWidth();
+    }
+
+    @Override
+    public int height()
+    {
+        return this.image.getHeight();
+    }
+
+    @Override
     public void recycle()
     {
         // We don't do anything here in the Swing world
