@@ -54,18 +54,25 @@ public class GameUi
         {
             if ( e.getScrollType() == MouseWheelEvent.WHEEL_UNIT_SCROLL )
             {
-                int units = e.getUnitsToScroll();
-
-                if (
-                       canvasScrollBarY.getVisibleAmount()
-                    != canvasScrollBarY.getMaximum()
-                )
+                if ( e.isControlDown() )
                 {
-                    scrollScrollBarBy( canvasScrollBarY, units );
+                    zoomClicked( e.getUnitsToScroll() < 0 );
                 }
                 else
                 {
-                    scrollScrollBarBy( canvasScrollBarX, units );
+                    int units = e.getUnitsToScroll();
+
+                    if (
+                           canvasScrollBarY.getVisibleAmount()
+                        != canvasScrollBarY.getMaximum()
+                    )
+                    {
+                        scrollScrollBarBy( canvasScrollBarY, units );
+                    }
+                    else
+                    {
+                        scrollScrollBarBy( canvasScrollBarX, units );
+                    }
                 }
             }
         }
