@@ -9,6 +9,7 @@ import rabbitescape.render.AnimationCache;
 import rabbitescape.render.AnimationLoader;
 import rabbitescape.render.BitmapCache;
 import rabbitescape.render.Renderer;
+import rabbitescape.render.SpriteAnimator;
 
 public class Graphics
 {
@@ -41,12 +42,10 @@ public class Graphics
 
     public void draw( Canvas canvas, int offsetX, int offsetY, int frameNum )
     {
-        int imagesTileSize = 32;
-
         AndroidCanvas androidCanvas = new AndroidCanvas( canvas );
         Renderer renderer = new Renderer( offsetX, offsetY, renderingTileSize );
 
-        AndroidSpriteAnimator animator = new AndroidSpriteAnimator(
+        SpriteAnimator<AndroidBitmap> animator = new SpriteAnimator<AndroidBitmap>(
             world, bitmapCache, animationCache );
 
         drawBackground( renderer, canvas );

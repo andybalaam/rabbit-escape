@@ -22,6 +22,7 @@ import rabbitescape.render.AnimationLoader;
 import rabbitescape.render.BitmapCache;
 import rabbitescape.render.GameLoop;
 import rabbitescape.render.Renderer;
+import rabbitescape.render.SpriteAnimator;
 import rabbitescape.ui.swing.SwingGameInit.WhenUiReady;
 
 public class SwingGameLoop implements GameLoop

@@ -1,4 +1,4 @@
-package rabbitescape.ui.swing;
+package rabbitescape.render;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,12 +6,6 @@ import java.util.Locale;
 
 import rabbitescape.engine.*;
 import rabbitescape.render.androidlike.Bitmap;
-import rabbitescape.render.Animation;
-import rabbitescape.render.AnimationCache;
-import rabbitescape.render.BitmapCache;
-import rabbitescape.render.FrameNameAndOffset;
-import rabbitescape.render.ScaledBitmap;
-import rabbitescape.render.Sprite;
 
 public class SpriteAnimator<T extends Bitmap>
 {
