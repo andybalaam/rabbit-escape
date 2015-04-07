@@ -4,6 +4,7 @@ import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 
@@ -11,7 +12,11 @@ import java.awt.event.WindowListener;
  * A listener that does nothing.  Extend to provide behaviour.
  */
 public class EmptyListener
-    implements WindowListener, ComponentListener, MouseListener
+    implements
+        WindowListener,
+        ComponentListener,
+        MouseListener,
+        MouseMotionListener
 {
     @Override
     public void componentHidden( ComponentEvent arg0 )
@@ -90,6 +95,16 @@ public class EmptyListener
 
     @Override
     public void mouseReleased( MouseEvent e )
+    {
+    }
+
+    @Override
+    public void mouseDragged( MouseEvent arg0 )
+    {
+    }
+
+    @Override
+    public void mouseMoved( MouseEvent arg0 )
     {
     }
 }

@@ -31,6 +31,9 @@ public class GameUi
 {
     private class Listener extends EmptyListener implements MouseWheelListener
     {
+        private int startX = -1;
+        private int startY = -1;
+
         @Override
         public void windowClosing( WindowEvent e )
         {
@@ -44,9 +47,29 @@ public class GameUi
         }
 
         @Override
+        public void mousePressed( MouseEvent e )
+        {
+            startX  = e.getX();
+            startY  = e.getY();
+        }
+
+        @Override
         public void mouseClicked( MouseEvent e )
         {
             click( e.getPoint() );
+        }
+
+        @Override
+        public void mouseDragged( MouseEvent e )
+        {
+            canvasScrollBarX.setValue(
+                canvasScrollBarX.getValue() + startX - e.getX() );
+
+            canvasScrollBarY.setValue(
+                canvasScrollBarY.getValue() + startY - e.getY() );
+
+            startX = e.getX();
+            startY = e.getY();
         }
 
         @Override
@@ -229,6 +252,7 @@ public class GameUi
         Listener listener = new Listener();
         canvas.addMouseListener( listener );
         canvas.addMouseWheelListener( listener );
+        canvas.addMouseMotionListener( listener );
         frame.addComponentListener( listener );
         frame.addWindowListener( listener );
         gameLoop.addStatsChangedListener( this.topBar );
