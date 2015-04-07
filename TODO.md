@@ -3,15 +3,12 @@ Time moves upwards.
 Later
 -----
 
-- Music
 - Metal (undiggable) blocks
 - graphics:mine?
 - action:mine?
 - Graphics in level design
-- More levels (at least 60)
 - Ability to play custom levels
 - Level editor
-- Sound effects
 - Fail to bridge action when bridge placed next to wall?
 - Animate falling onto slopes
 - Separate rabbits who find themselves on top of each other.
@@ -21,7 +18,6 @@ Later
 - Speed up time?
 - graphics:float
 - action:float
-- Fix desktop UI glitches e.g. slow mouse wheel scrolling in menus
 - Fix Android bug where winning alert disappears when you rotate the screen
 - Display level previews on menu
 - Display level names on menu
@@ -41,10 +37,18 @@ Later
 - Make the text UI playable
 - favicon for web site
 
+Release 0.4
+-----------
+
+- Sound effects
+- Music
+
 Release 0.3
 -----------
 
-- Zoom
+- Zoom in Android (pinch, auto-zoom on start/rotate)
+- ~~Zoom in Swing (Ctrl+mouse wheel, buttons, auto-zoom on resize)~~
+- ~~Click and drag to scroll in Swing~~
 - ~~Fix slow scroll wheel speed in menu~~
 - ~~Issue #2, Single window~~
 - ~~Fix icon redraw bug in-game on Swing~~
