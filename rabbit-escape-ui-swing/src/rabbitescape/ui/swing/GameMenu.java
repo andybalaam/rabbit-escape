@@ -54,7 +54,6 @@ class GameMenu
         Container contentPane,
         BitmapCache<SwingBitmap> bitmapCache,
         Dimension buttonSizeInPixels,
-        Dimension worldSizeInPixels,
         Config uiConfig,
         Color backgroundColor,
         Map<Token.Type, Integer> abilityTypes

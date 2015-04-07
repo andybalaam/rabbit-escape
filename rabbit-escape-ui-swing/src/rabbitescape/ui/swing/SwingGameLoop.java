@@ -63,7 +63,6 @@ public class SwingGameLoop implements GameLoop
     private final LevelWinListener winListener;
     private final WorldModifier worldModifier;
     private boolean running;
-    private final int renderingTileSize;
     private final List<StatsChangedListener> statsListeners;
 
     private final GameUi jframe;
@@ -77,7 +76,6 @@ public class SwingGameLoop implements GameLoop
         this.winListener = winListener;
         this.worldModifier = new WorldModifier( world );
         this.running = true;
-        this.renderingTileSize = 32;
         this.statsListeners = new ArrayList<>();
 
         // This blocks until the UI is ready:
@@ -86,11 +84,9 @@ public class SwingGameLoop implements GameLoop
         this.jframe = uiPieces.jframe;
         this.bitmapCache = uiPieces.bitmapCache;
 
-        this.renderer = new Renderer<SwingBitmap>( 0, 0, renderingTileSize );
+        this.renderer = new Renderer<SwingBitmap>( 0, 0, -1 );
 
         jframe.setGameLoop( this );
-
-        jframe.setWorldSize( world.size, renderingTileSize );
     }
 
     public void stop()

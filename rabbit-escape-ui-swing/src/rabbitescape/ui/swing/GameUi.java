@@ -40,7 +40,7 @@ public class GameUi
         @Override
         public void componentResized( ComponentEvent e )
         {
-            adjustScrollBars();
+            zoomToFit();
         }
 
         @Override
@@ -81,6 +81,9 @@ public class GameUi
 
     private static final Color backgroundColor = Color.WHITE;
     private static int[] zoomValues = { 16, 24, 32, 48, 64, 96, 128 };
+
+        // 32x32 is the lowest "reasonable" zoom size
+    private static int MIN_AUTO_ZOOM_INDEX = 2;
 
     private final Container contentPane;
     private final JPanel middlePanel;
@@ -163,7 +166,6 @@ public class GameUi
     {
         Canvas canvas = new Canvas();
         canvas.setIgnoreRepaint( true );
-        //canvas.setPreferredSize( worldSizeInPixels );
 
         canvasScrollBarX = new JScrollBar( JScrollBar.HORIZONTAL );
         canvasScrollBarY = new JScrollBar( JScrollBar.VERTICAL );
@@ -176,6 +178,30 @@ public class GameUi
         contentPane.add( canvasPanel, BorderLayout.CENTER );
 
         return canvas;
+    }
+
+    private void zoomToFit()
+    {
+        // Start at MIN_AUTO_ZOOM_INDEX + 1 to enforce at least 32x32
+        for ( int index = MIN_AUTO_ZOOM_INDEX + 1; index < zoomValues.length; ++index )
+        {
+            if ( zoomIndexTooBig( index ) )
+            {
+                zoomTo( index - 1 );
+                return;
+            }
+        }
+        zoomTo( zoomValues.length - 1 );
+    }
+
+    private boolean zoomIndexTooBig( int index )
+    {
+        int zoom = zoomValues[index];
+
+        return (
+               zoom * gameLoop.world.size.width > canvas.getWidth()
+            || zoom * gameLoop.world.size.height > canvas.getHeight()
+        );
     }
 
     private void adjustScrollBars()
@@ -294,7 +320,6 @@ public class GameUi
             contentPane,
             bitmapCache,
             buttonSizeInPixels,
-            worldSizeInPixels,
             uiConfig,
             backgroundColor,
             gameLoop.getAbilities()
@@ -309,6 +334,8 @@ public class GameUi
         frame.pack();
 
         initListeners();
+
+        zoomToFit();
     }
 
     public void setWorldSize(
@@ -387,36 +414,36 @@ public class GameUi
 
     private void zoomClicked( boolean zoomIn )
     {
-        int oldZoom = zoomValues[zoomIndex];
-
         if ( zoomIn )
         {
             if ( zoomIndex < zoomValues.length - 1 )
             {
-                ++zoomIndex;
+                zoomTo( zoomIndex + 1 );
             }
         }
         else
         {
             if ( zoomIndex > 0 )
             {
-                --zoomIndex;
+                zoomTo( zoomIndex - 1 );
             }
         }
+    }
+
+    private void zoomTo( int zoomIndex )
+    {
+        this.zoomIndex = zoomIndex;
 
         int zoom = zoomValues[zoomIndex];
 
-        if ( oldZoom != zoom )
-        {
-            double scrX = getScrollBarProportion( canvasScrollBarX );
-            double scrY = getScrollBarProportion( canvasScrollBarY );
+        double scrX = getScrollBarProportion( canvasScrollBarX );
+        double scrY = getScrollBarProportion( canvasScrollBarY );
 
-            gameLoop.renderer.tileSize = zoom;
-            setWorldSize( gameLoop.world.size, zoom );
+        gameLoop.renderer.tileSize = zoom;
+        setWorldSize( gameLoop.world.size, zoom );
 
-            setScrollBarFromProportion( canvasScrollBarX, scrX );
-            setScrollBarFromProportion( canvasScrollBarY, scrY );
-        }
+        setScrollBarFromProportion( canvasScrollBarX, scrX );
+        setScrollBarFromProportion( canvasScrollBarY, scrY );
     }
 
     private static double getScrollBarProportion( JScrollBar scrollBar )
