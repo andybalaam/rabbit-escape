@@ -13,7 +13,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import rabbitescape.engine.ChangeDescription;
 import rabbitescape.engine.LevelWinListener;
 import rabbitescape.engine.Token;
 import rabbitescape.engine.World;
@@ -110,10 +109,10 @@ public class SwingGameLoop implements GameLoop
                 checkWon();
                 notifyStatsListeners();
             }
-            ChangeDescription changes = world.describeChanges();
 
-            final SpriteAnimator animator = new SpriteAnimator(
-                world, changes, bitmapCache, animationCache );
+            final SpriteAnimator<SwingBitmap> animator =
+                new SpriteAnimator<SwingBitmap>(
+                    world, bitmapCache, animationCache );
 
             int f = 0;
             while ( running && f < framesPerStep )
@@ -215,7 +214,7 @@ public class SwingGameLoop implements GameLoop
 
         private final java.awt.Canvas canvas;
         private final Renderer<SwingBitmap> renderer;
-        private final SpriteAnimator animator;
+        private final SpriteAnimator<SwingBitmap> animator;
         private final int frameNum;
         private final World world;
 
@@ -223,7 +222,7 @@ public class SwingGameLoop implements GameLoop
             BufferStrategy strategy,
             java.awt.Canvas canvas,
             Renderer<SwingBitmap> renderer,
-            SpriteAnimator animator,
+            SpriteAnimator<SwingBitmap> animator,
             int frameNum,
             World world
         )
