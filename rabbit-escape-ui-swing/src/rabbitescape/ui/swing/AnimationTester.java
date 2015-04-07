@@ -23,6 +23,45 @@ import static rabbitescape.render.AnimationLoader.*;
 
 public class AnimationTester extends JFrame
 {
+    private static class SwingBitmapAndOffset
+    {
+        public final int offsetX;
+        public final ScaledBitmap<SwingBitmap> bitmap;
+        public final int offsetY;
+
+        public SwingBitmapAndOffset(
+            ScaledBitmap<SwingBitmap> bitmap, int offsetX, int offsetY )
+        {
+            this.bitmap = bitmap;
+            this.offsetX = offsetX;
+            this.offsetY = offsetY;
+        }
+    }
+
+    private static class SwingAnimation
+    {
+        private final List<SwingBitmapAndOffset> bitmaps;
+
+        public SwingAnimation(
+            BitmapCache<SwingBitmap> bitmapCache, Animation animation )
+        {
+            this.bitmaps = new ArrayList<>();
+
+            for ( FrameNameAndOffset frame : animation )
+            {
+                ScaledBitmap<SwingBitmap> bmp = bitmapCache.get( frame.name );
+
+                this.bitmaps.add(
+                    new SwingBitmapAndOffset( bmp, frame.offsetX, frame.offsetY ) );
+            }
+        }
+
+        public SwingBitmapAndOffset get( int frameNum )
+        {
+            return bitmaps.get( frameNum );
+        }
+    }
+
     private static final long serialVersionUID = 1L;
 
     private static final String CONFIG_PATH =

@@ -13,6 +13,7 @@ import rabbitescape.engine.World;
 import rabbitescape.render.Animation;
 import rabbitescape.render.AnimationCache;
 import rabbitescape.render.BitmapCache;
+import rabbitescape.render.FrameNameAndOffset;
 import rabbitescape.render.ScaledBitmap;
 import rabbitescape.render.Sprite;
 
@@ -104,8 +105,8 @@ public class AndroidSpriteAnimator
 
     private void addThing( int frameNum, Thing thing, List<Sprite<AndroidBitmap>> ret )
     {
-        String frame = thing.state.name().toLowerCase( Locale.ENGLISH );
-        Animation animation = animationCache.get( frame );
+        String frameName = thing.state.name().toLowerCase( Locale.ENGLISH );
+        Animation animation = animationCache.get( frameName );
 
         if ( animation == null )
         {
@@ -113,18 +114,15 @@ public class AndroidSpriteAnimator
             return;
         }
 
-        // TODO: don't make a new one of these every time?
-        AndroidAnimation androidAnimation = new AndroidAnimation( bitmapCache, animation );
-
-        AndroidBitmapAndOffset bmp = androidAnimation.get( frameNum );
+        FrameNameAndOffset frame = animation.get( frameNum );
 
         ret.add(
             new Sprite<AndroidBitmap>(
-                bmp.bitmap,
+                bitmapCache.get( frame.name ),
                 thing.x,
                 thing.y,
-                bmp.offsetX,
-                bmp.offsetY
+                frame.offsetX,
+                frame.offsetY
             )
         );
     }

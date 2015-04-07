@@ -8,6 +8,7 @@ import rabbitescape.engine.*;
 import rabbitescape.render.Animation;
 import rabbitescape.render.AnimationCache;
 import rabbitescape.render.BitmapCache;
+import rabbitescape.render.FrameNameAndOffset;
 import rabbitescape.render.ScaledBitmap;
 import rabbitescape.render.Sprite;
 
@@ -99,8 +100,8 @@ public class SpriteAnimator
     private void drawThing(
         int frameNum, List<Sprite<SwingBitmap>> ret, Thing thing )
     {
-        String frame = thing.state.name().toLowerCase( Locale.ENGLISH );
-        Animation animation = animationCache.get( frame );
+        String frameName = thing.state.name().toLowerCase( Locale.ENGLISH );
+        Animation animation = animationCache.get( frameName );
 
         if ( animation == null )
         {
@@ -108,19 +109,15 @@ public class SpriteAnimator
             return;
         }
 
-        // TODO: don't make a new one of these every time?
-        SwingAnimation swingAnimation = new SwingAnimation(
-            bitmapCache, animation );
-
-        SwingBitmapAndOffset bmp = swingAnimation.get( frameNum );
+        FrameNameAndOffset frame = animation.get( frameNum );
 
         ret.add(
             new Sprite<SwingBitmap>(
-                bmp.bitmap,
+                bitmapCache.get( frame.name ),
                 thing.x,
                 thing.y,
-                bmp.offsetX,
-                bmp.offsetY
+                frame.offsetX,
+                frame.offsetY
             )
         );
     }
