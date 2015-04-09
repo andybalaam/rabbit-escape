@@ -12,6 +12,7 @@ import java.awt.FlowLayout;
 import java.awt.LayoutManager;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -120,6 +121,7 @@ class GameMenu
 
         ButtonGroup abilitiesGroup = new ButtonGroup();
 
+        int key = KeyEvent.VK_1;
         for ( Token.Type ability : sorted( abilityTypes.keySet() ) )
         {
             String iconName = "ability_" + ability.toString();
@@ -127,9 +129,13 @@ class GameMenu
             JToggleButton button = addToggleButton(
                 iconName, null, false, t( Token.name( ability ) ) );
 
+            MenuTools.clickOnKey( button, iconName, key );
+
             ret.put( ability, button );
 
             abilitiesGroup.add( button );
+
+            ++key;
         }
 
         return ret;
