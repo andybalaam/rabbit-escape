@@ -2,6 +2,8 @@ package rabbitescape.ui.swing;
 
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
@@ -16,7 +18,8 @@ public class EmptyListener
         WindowListener,
         ComponentListener,
         MouseListener,
-        MouseMotionListener
+        MouseMotionListener,
+        KeyListener
 {
     @Override
     public void componentHidden( ComponentEvent arg0 )
@@ -105,6 +108,21 @@ public class EmptyListener
 
     @Override
     public void mouseMoved( MouseEvent arg0 )
+    {
+    }
+
+    @Override
+    public void keyPressed( KeyEvent arg0 )
+    {
+    }
+
+    @Override
+    public void keyReleased( KeyEvent arg0 )
+    {
+    }
+
+    @Override
+    public void keyTyped( KeyEvent arg0 )
     {
     }
 }

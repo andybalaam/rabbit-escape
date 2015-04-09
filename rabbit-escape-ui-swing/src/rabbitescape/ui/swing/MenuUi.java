@@ -9,6 +9,7 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 import java.io.PrintStream;
 import java.util.Locale;
 import java.util.Stack;
@@ -324,23 +325,33 @@ public class MenuUi
 
     private void initListeners()
     {
-        sidemenu.mute.addActionListener( new ActionListener()
-        {
-            @Override
-            public void actionPerformed( ActionEvent evt )
+        MenuTools.listen(
+            sidemenu.mute,
+            "mute",
+            KeyEvent.VK_M,
+            new ActionListener()
             {
-                setMuted( sidemenu.mute.isSelected() );
+                @Override
+                public void actionPerformed( ActionEvent evt )
+                {
+                    setMuted( sidemenu.mute.isSelected() );
+                }
             }
-        } );
+        );
 
-        sidemenu.back.addActionListener( new ActionListener()
-        {
-            @Override
-            public void actionPerformed( ActionEvent evt )
+        MenuTools.listen(
+            sidemenu.back,
+            "back",
+            KeyEvent.VK_ESCAPE,
+            new ActionListener()
             {
-                back();
+                @Override
+                public void actionPerformed( ActionEvent e )
+                {
+                    back();
+                }
             }
-        } );
+        );
 
         sidemenu.exit.addActionListener( new ActionListener()
         {

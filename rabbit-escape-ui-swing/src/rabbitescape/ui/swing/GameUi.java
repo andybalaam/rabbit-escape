@@ -14,6 +14,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.AdjustmentEvent;
 import java.awt.event.AdjustmentListener;
 import java.awt.event.ComponentEvent;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
@@ -106,6 +107,39 @@ public class GameUi
                   scrollBar.getValue()
                 + ( units * scrollBar.getUnitIncrement() / 2 )
             );
+        }
+
+        @Override
+        public void keyPressed( KeyEvent e )
+        {
+            switch ( e.getKeyCode() )
+            {
+                case KeyEvent.VK_SPACE:
+                case KeyEvent.VK_ENTER:
+                {
+                    dismissClick();
+                }
+                case KeyEvent.VK_LEFT:
+                {
+                    scrollScrollBarBy( canvasScrollBarX, -1 );
+                    break;
+                }
+                case KeyEvent.VK_RIGHT:
+                {
+                    scrollScrollBarBy( canvasScrollBarX, 1 );
+                    break;
+                }
+                case KeyEvent.VK_UP:
+                {
+                    scrollScrollBarBy( canvasScrollBarY, -1 );
+                    break;
+                }
+                case KeyEvent.VK_DOWN:
+                {
+                    scrollScrollBarBy( canvasScrollBarY, 1 );
+                    break;
+                }
+            }
         }
     }
 
@@ -249,12 +283,14 @@ public class GameUi
 
     private void initListeners()
     {
-        Listener listener = new Listener();
+        listener = new Listener();
+        canvas.addKeyListener( listener );
         canvas.addMouseListener( listener );
         canvas.addMouseWheelListener( listener );
         canvas.addMouseMotionListener( listener );
         frame.addComponentListener( listener );
         frame.addWindowListener( listener );
+        frame.addKeyListener( listener );
         gameLoop.addStatsChangedListener( this.topBar );
 
         menu.addAbilitiesListener( new GameMenu.AbilityChangedListener()
@@ -266,59 +302,89 @@ public class GameUi
             }
         } );
 
-        menu.back.addActionListener( new ActionListener()
-        {
-            @Override
-            public void actionPerformed( ActionEvent evt )
+        MenuTools.listen(
+            menu.back,
+            "back",
+            KeyEvent.VK_ESCAPE,
+            new ActionListener()
             {
-                exit();
+                @Override
+                public void actionPerformed( ActionEvent evt )
+                {
+                    exit();
+                }
             }
-        } );
+        );
 
-        menu.explodeAll.addActionListener( new ActionListener()
-        {
-            @Override
-            public void actionPerformed( ActionEvent evt )
+        MenuTools.listen(
+            menu.explodeAll,
+            "explode_all",
+            KeyEvent.VK_X,
+            new ActionListener()
             {
-                explodeAllClicked();
+                @Override
+                public void actionPerformed( ActionEvent evt )
+                {
+                    explodeAllClicked();
+                }
             }
-        } );
+        );
 
-        menu.zoomIn.addActionListener( new ActionListener()
-        {
-            @Override
-            public void actionPerformed( ActionEvent evt )
+        MenuTools.listen(
+            menu.zoomIn,
+            "zoom_in",
+            KeyEvent.VK_EQUALS,
+            new ActionListener()
             {
-                zoomClicked( true );
+                @Override
+                public void actionPerformed( ActionEvent evt )
+                {
+                    zoomClicked( true );
+                }
             }
-        } );
+        );
 
-        menu.zoomOut.addActionListener( new ActionListener()
-        {
-            @Override
-            public void actionPerformed( ActionEvent evt )
+        MenuTools.listen(
+            menu.zoomOut,
+            "zoom_out",
+            KeyEvent.VK_MINUS,
+            new ActionListener()
             {
-                zoomClicked( false );
+                @Override
+                public void actionPerformed( ActionEvent evt )
+                {
+                    zoomClicked( false );
+                }
             }
-        } );
+        );
 
-        menu.mute.addActionListener( new ActionListener()
-        {
-            @Override
-            public void actionPerformed( ActionEvent evt )
+        MenuTools.listen(
+            menu.mute,
+            "mute",
+            KeyEvent.VK_M,
+            new ActionListener()
             {
-                setMuted( menu.mute.isSelected() );
+                @Override
+                public void actionPerformed( ActionEvent evt )
+                {
+                    setMuted( menu.mute.isSelected() );
+                }
             }
-        } );
+        );
 
-        menu.pause.addActionListener( new ActionListener()
-        {
-            @Override
-            public void actionPerformed( ActionEvent evt )
+        MenuTools.listen(
+            menu.pause,
+            "pause",
+            KeyEvent.VK_P,
+            new ActionListener()
             {
-                gameLoop.world.setPaused( menu.pause.isSelected() );
+                @Override
+                public void actionPerformed( ActionEvent evt )
+                {
+                    gameLoop.world.setPaused( menu.pause.isSelected() );
+                }
             }
-        } );
+        );
 
         canvasScrollBarX.addAdjustmentListener(
             new AdjustmentListener()
@@ -411,6 +477,7 @@ public class GameUi
         frame.getContentPane().removeAll();
         frame.removeComponentListener( listener );
         frame.removeWindowListener( listener );
+        frame.removeKeyListener( listener );
     }
 
     private void explodeAllClicked()
@@ -509,28 +576,10 @@ public class GameUi
 
     private void click( Point pixelPosition )
     {
-        switch( gameLoop.world.completionState() )
+        boolean dismissed = dismissClick();
+        if ( dismissed )
         {
-            case LOST:
-            case WON:
-            {
-                exit();
-                return;
-            }
-            case INTRO:
-            {
-                leaveIntro();
-                return;
-            }
-            case READY_TO_EXPLODE_ALL:
-            {
-                cancelExplodeAll();
-                return;
-            }
-            default:
-            {
-                // Continue to the normal click behaviour
-            }
+            return;
         }
 
         if ( chosenAbility == null )
@@ -552,6 +601,34 @@ public class GameUi
         }
 
         updateChosenAbility();
+    }
+
+    private boolean dismissClick()
+    {
+        switch( gameLoop.world.completionState() )
+        {
+            case LOST:
+            case WON:
+            {
+                exit();
+                return true;
+            }
+            case INTRO:
+            {
+                leaveIntro();
+                return true;
+            }
+            case READY_TO_EXPLODE_ALL:
+            {
+                cancelExplodeAll();
+                return true;
+            }
+            default:
+            {
+                // Continue to the normal click behaviour
+                return false;
+            }
+        }
     }
 
     protected void chooseAbility( Token.Type ability )
