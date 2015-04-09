@@ -325,33 +325,27 @@ public class MenuUi
 
     private void initListeners()
     {
-        MenuTools.listen(
-            sidemenu.mute,
-            "mute",
-            KeyEvent.VK_M,
-            new ActionListener()
+        sidemenu.mute.addActionListener( new ActionListener()
+        {
+            @Override
+            public void actionPerformed( ActionEvent evt )
             {
-                @Override
-                public void actionPerformed( ActionEvent evt )
-                {
-                    setMuted( sidemenu.mute.isSelected() );
-                }
+                setMuted( sidemenu.mute.isSelected() );
             }
-        );
+        } );
 
-        MenuTools.listen(
-            sidemenu.back,
-            "back",
-            KeyEvent.VK_ESCAPE,
-            new ActionListener()
+        MenuTools.clickOnKey( sidemenu.mute, "mute", KeyEvent.VK_M );
+
+        sidemenu.back.addActionListener( new ActionListener()
+        {
+            @Override
+            public void actionPerformed( ActionEvent e )
             {
-                @Override
-                public void actionPerformed( ActionEvent e )
-                {
-                    back();
-                }
+                back();
             }
-        );
+        } );
+
+        MenuTools.clickOnKey( sidemenu.back, "back", KeyEvent.VK_ESCAPE );
 
         sidemenu.exit.addActionListener( new ActionListener()
         {
@@ -361,5 +355,7 @@ public class MenuUi
                 frame.exit();
             }
         } );
+
+        MenuTools.clickOnKey( sidemenu.exit, "quit", KeyEvent.VK_Q );
     }
 }

@@ -302,89 +302,71 @@ public class GameUi
             }
         } );
 
-        MenuTools.listen(
-            menu.back,
-            "back",
-            KeyEvent.VK_ESCAPE,
-            new ActionListener()
+        menu.back.addActionListener( new ActionListener()
+        {
+            @Override
+            public void actionPerformed( ActionEvent evt )
             {
-                @Override
-                public void actionPerformed( ActionEvent evt )
-                {
-                    exit();
-                }
+                exit();
             }
-        );
+        } );
 
-        MenuTools.listen(
-            menu.explodeAll,
-            "explode_all",
-            KeyEvent.VK_X,
-            new ActionListener()
-            {
-                @Override
-                public void actionPerformed( ActionEvent evt )
-                {
-                    explodeAllClicked();
-                }
-            }
-        );
+        MenuTools.clickOnKey( menu.back, "back", KeyEvent.VK_ESCAPE );
 
-        MenuTools.listen(
-            menu.zoomIn,
-            "zoom_in",
-            KeyEvent.VK_EQUALS,
-            new ActionListener()
+        menu.explodeAll.addActionListener( new ActionListener()
+        {
+            @Override
+            public void actionPerformed( ActionEvent evt )
             {
-                @Override
-                public void actionPerformed( ActionEvent evt )
-                {
-                    zoomClicked( true );
-                }
+                explodeAllClicked();
             }
-        );
+        } );
 
-        MenuTools.listen(
-            menu.zoomOut,
-            "zoom_out",
-            KeyEvent.VK_MINUS,
-            new ActionListener()
-            {
-                @Override
-                public void actionPerformed( ActionEvent evt )
-                {
-                    zoomClicked( false );
-                }
-            }
-        );
+        MenuTools.clickOnKey( menu.explodeAll, "explode_all", KeyEvent.VK_X );
 
-        MenuTools.listen(
-            menu.mute,
-            "mute",
-            KeyEvent.VK_M,
-            new ActionListener()
+        menu.zoomIn.addActionListener( new ActionListener()
+        {
+            @Override
+            public void actionPerformed( ActionEvent evt )
             {
-                @Override
-                public void actionPerformed( ActionEvent evt )
-                {
-                    setMuted( menu.mute.isSelected() );
-                }
+                zoomClicked( true );
             }
-        );
+        } );
 
-        MenuTools.listen(
-            menu.pause,
-            "pause",
-            KeyEvent.VK_P,
-            new ActionListener()
+        MenuTools.clickOnKey( menu.zoomIn, "zoom_in", KeyEvent.VK_EQUALS );
+
+        menu.zoomOut.addActionListener( new ActionListener()
+        {
+            @Override
+            public void actionPerformed( ActionEvent evt )
             {
-                @Override
-                public void actionPerformed( ActionEvent evt )
-                {
-                    gameLoop.world.setPaused( menu.pause.isSelected() );
-                }
+                zoomClicked( false );
             }
-        );
+        } );
+
+        MenuTools.clickOnKey( menu.zoomOut, "zoom_out", KeyEvent.VK_MINUS );
+
+        menu.mute.addActionListener( new ActionListener()
+        {
+            @Override
+            public void actionPerformed( ActionEvent evt )
+            {
+                setMuted( menu.mute.isSelected() );
+            }
+        } );
+
+        MenuTools.clickOnKey( menu.mute, "mute", KeyEvent.VK_M );
+
+        menu.pause.addActionListener( new ActionListener()
+        {
+            @Override
+            public void actionPerformed( ActionEvent evt )
+            {
+                gameLoop.world.setPaused( menu.pause.isSelected() );
+            }
+        } );
+
+        MenuTools.clickOnKey( menu.pause, "pause", KeyEvent.VK_P );
 
         canvasScrollBarX.addAdjustmentListener(
             new AdjustmentListener()
