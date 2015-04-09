@@ -22,6 +22,7 @@ import java.awt.event.WindowEvent;
 
 import javax.swing.JPanel;
 import javax.swing.JScrollBar;
+import javax.swing.KeyStroke;
 
 import rabbitescape.engine.Token;
 import rabbitescape.engine.config.Config;
@@ -333,7 +334,20 @@ public class GameUi
             }
         } );
 
-        MenuTools.clickOnKey( menu.zoomIn, "zoom_in", KeyEvent.VK_EQUALS );
+        MenuTools.clickOnKey(
+            menu.zoomIn,
+            "zoom_in",
+            KeyStroke.getKeyStroke( KeyEvent.VK_EQUALS, 0 ),
+            KeyStroke.getKeyStroke( KeyEvent.VK_EQUALS,
+                java.awt.event.InputEvent.SHIFT_DOWN_MASK ),
+            KeyStroke.getKeyStroke( KeyEvent.VK_EQUALS,
+                java.awt.event.InputEvent.CTRL_DOWN_MASK ),
+            KeyStroke.getKeyStroke(
+                KeyEvent.VK_EQUALS,
+                  java.awt.event.InputEvent.CTRL_DOWN_MASK
+                | java.awt.event.InputEvent.SHIFT_DOWN_MASK
+            )
+        );
 
         menu.zoomOut.addActionListener( new ActionListener()
         {
@@ -344,7 +358,13 @@ public class GameUi
             }
         } );
 
-        MenuTools.clickOnKey( menu.zoomOut, "zoom_out", KeyEvent.VK_MINUS );
+        MenuTools.clickOnKey(
+            menu.zoomOut,
+            "zoom_out",
+            KeyStroke.getKeyStroke( KeyEvent.VK_MINUS, 0 ),
+            KeyStroke.getKeyStroke( KeyEvent.VK_MINUS,
+                java.awt.event.InputEvent.CTRL_DOWN_MASK )
+        );
 
         menu.mute.addActionListener( new ActionListener()
         {
