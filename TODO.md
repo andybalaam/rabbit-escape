@@ -47,6 +47,7 @@ Release 0.3
 -----------
 
 - Zoom in Android (pinch, auto-zoom on start/rotate)
+- ~~Keyboard shortcuts~~
 - ~~Zoom in Swing (Ctrl+mouse wheel, buttons, auto-zoom on resize)~~
 - ~~Click and drag to scroll in Swing~~
 - ~~Fix slow scroll wheel speed in menu~~
