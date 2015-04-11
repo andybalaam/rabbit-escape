@@ -36,6 +36,7 @@ Later
 - Automated tests that levels run OK and can be solved
 - Make the text UI playable
 - favicon for web site
+- Save up zoom events and do them between frames
 
 Release 0.4
 -----------
@@ -47,6 +48,8 @@ Release 0.3
 -----------
 
 - Zoom in Android (pinch, auto-zoom on start/rotate)
+- Share more code between Android and Swing
+- Avoid casts with more generics
 - ~~Keyboard shortcuts~~
 - ~~Zoom in Swing (Ctrl+mouse wheel, buttons, auto-zoom on resize)~~
 - ~~Click and drag to scroll in Swing~~
