@@ -26,7 +26,8 @@ public class TestRendering
 
         TrackingCanvas output = new TrackingCanvas( 200, 200 );
 
-        Renderer<FakeBitmap> renderer = new Renderer<FakeBitmap>( 0, 0, 16 );
+        Renderer<FakeBitmap, FakePaint> renderer =
+            new Renderer<FakeBitmap, FakePaint>( 0, 0, 16 );
 
         // Sanity: no calls to scale yet
         assertThat( scaler.scaleCalls.size(), equalTo( 0 ) );
@@ -168,7 +169,7 @@ public class TestRendering
     {
         TrackingCanvas output = new TrackingCanvas( canvasSizeX, canvasSizeY );
 
-        new Renderer<FakeBitmap>(
+        new Renderer<FakeBitmap, FakePaint>(
             rendererOffsetX, rendererOffsetY, tileSize
         ).render(
             output,
@@ -255,6 +256,10 @@ public class TestRendering
         }
     }
 
+    private static class FakePaint implements Paint
+    {
+    }
+
     private static class FakeBitmapLoader implements BitmapLoader<FakeBitmap>
     {
         private final int width;
@@ -292,7 +297,7 @@ public class TestRendering
         }
     }
 
-    public static class TrackingCanvas implements Canvas
+    public static class TrackingCanvas implements Canvas<FakeBitmap, FakePaint>
     {
         private static class DrawCall
         {
@@ -319,10 +324,10 @@ public class TestRendering
 
         @Override
         public void drawBitmap(
-            Bitmap bitmap,
+            FakeBitmap bitmap,
             float left,
             float top,
-            Paint paint
+            FakePaint paint
         )
         {
             drawCalls.add( new DrawCall( left, top ) );

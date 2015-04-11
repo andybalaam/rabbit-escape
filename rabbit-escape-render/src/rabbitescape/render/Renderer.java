@@ -6,7 +6,7 @@ import rabbitescape.render.androidlike.Bitmap;
 import rabbitescape.render.androidlike.Canvas;
 import rabbitescape.render.androidlike.Paint;
 
-public class Renderer<T extends Bitmap>
+public class Renderer<T extends Bitmap, P extends Paint>
 {
     public int offsetX;
     public int offsetY;
@@ -19,7 +19,7 @@ public class Renderer<T extends Bitmap>
         this.tileSize = tileSize;
     }
 
-    public void render( Canvas canvas, List<Sprite<T>> sprites, Paint paint )
+    public void render( Canvas<T, P> canvas, List<Sprite<T>> sprites, P paint )
     {
         for ( Sprite<T> sprite : sprites )
         {

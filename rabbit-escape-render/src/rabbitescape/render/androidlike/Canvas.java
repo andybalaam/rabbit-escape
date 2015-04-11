@@ -4,9 +4,9 @@ package rabbitescape.render.androidlike;
  * Something a bit like android.graphics.Canvas - provides calls like
  * drawBitmap that we use to draw our UI.
  */
-public interface Canvas
+public interface Canvas<T extends Bitmap, P extends Paint>
 {
-    public void drawBitmap( Bitmap bitmap, float left, float top, Paint paint );
+    public void drawBitmap( T bitmap, float left, float top, P paint );
     public int width();
     public int height();
 }

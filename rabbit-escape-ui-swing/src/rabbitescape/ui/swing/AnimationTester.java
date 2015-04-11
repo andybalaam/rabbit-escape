@@ -455,7 +455,8 @@ public class AnimationTester extends JFrame
     {
         BufferStrategy strategy = canvas.getBufferStrategy();
 
-        Renderer<SwingBitmap> renderer = new Renderer<SwingBitmap>( 0, 0, tileSize );
+        Renderer<SwingBitmap, SwingPaint> renderer =
+            new Renderer<SwingBitmap, SwingPaint>( 0, 0, tileSize );
 
         int frameSetNum = 0;
         int frameNum = 0;
@@ -483,11 +484,11 @@ public class AnimationTester extends JFrame
     {
         private final int frameSetNum;
         private final int frameNum;
-        private final Renderer<SwingBitmap> renderer;
+        private final Renderer<SwingBitmap, SwingPaint> renderer;
 
         public DrawFrame(
             BufferStrategy strategy,
-            Renderer<SwingBitmap> renderer,
+            Renderer<SwingBitmap, SwingPaint> renderer,
             int frameSetNum,
             int frameNum
         )

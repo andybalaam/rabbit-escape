@@ -43,7 +43,8 @@ public class Graphics
     public void draw( Canvas canvas, int offsetX, int offsetY, int frameNum )
     {
         AndroidCanvas androidCanvas = new AndroidCanvas( canvas );
-        Renderer renderer = new Renderer( offsetX, offsetY, renderingTileSize );
+        Renderer<AndroidBitmap, AndroidPaint> renderer =
+            new Renderer<AndroidBitmap, AndroidPaint>( offsetX, offsetY, renderingTileSize );
 
         SpriteAnimator<AndroidBitmap> animator = new SpriteAnimator<AndroidBitmap>(
             world, bitmapCache, animationCache );
@@ -57,7 +58,8 @@ public class Graphics
         );
     }
 
-    private void drawBackground( Renderer renderer, Canvas canvas )
+    private void drawBackground(
+        Renderer<AndroidBitmap, AndroidPaint> renderer, Canvas canvas )
     {
         // TODO: share with SwingGameLoop.DrawFrame
         canvas.drawColor( Color.WHITE );

@@ -67,7 +67,7 @@ public class SwingGameLoop implements GameLoop
 
     private final GameUi jframe;
     private final BitmapCache<SwingBitmap> bitmapCache;
-    public final Renderer<SwingBitmap> renderer;
+    public final Renderer<SwingBitmap, SwingPaint> renderer;
 
     public SwingGameLoop(
         SwingGameInit init, World world, LevelWinListener winListener )
@@ -84,7 +84,7 @@ public class SwingGameLoop implements GameLoop
         this.jframe = uiPieces.jframe;
         this.bitmapCache = uiPieces.bitmapCache;
 
-        this.renderer = new Renderer<SwingBitmap>( 0, 0, -1 );
+        this.renderer = new Renderer<SwingBitmap, SwingPaint>( 0, 0, -1 );
 
         jframe.setGameLoop( this );
     }
@@ -146,7 +146,7 @@ public class SwingGameLoop implements GameLoop
         }
     }
 
-    private void setRendererOffset( Renderer<SwingBitmap> renderer )
+    private void setRendererOffset( Renderer<SwingBitmap, SwingPaint> renderer )
     {
         renderer.setOffset(
             calcOffset(
@@ -214,7 +214,7 @@ public class SwingGameLoop implements GameLoop
         private static final Color graphPaperMinor = new Color( 235, 243, 255 );
 
         private final java.awt.Canvas canvas;
-        private final Renderer<SwingBitmap> renderer;
+        private final Renderer<SwingBitmap, SwingPaint> renderer;
         private final SpriteAnimator<SwingBitmap> animator;
         private final int frameNum;
         private final World world;
@@ -222,7 +222,7 @@ public class SwingGameLoop implements GameLoop
         public DrawFrame(
             BufferStrategy strategy,
             java.awt.Canvas canvas,
-            Renderer<SwingBitmap> renderer,
+            Renderer<SwingBitmap, SwingPaint> renderer,
             SpriteAnimator<SwingBitmap> animator,
             int frameNum,
             World world

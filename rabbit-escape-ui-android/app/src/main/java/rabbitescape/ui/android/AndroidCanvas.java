@@ -1,10 +1,8 @@
 package rabbitescape.ui.android;
 
-import rabbitescape.render.androidlike.Bitmap;
 import rabbitescape.render.androidlike.Canvas;
-import rabbitescape.render.androidlike.Paint;
 
-public class AndroidCanvas implements Canvas
+public class AndroidCanvas implements Canvas<AndroidBitmap, AndroidPaint>
 {
     private final android.graphics.Canvas canvas;
 
@@ -14,12 +12,9 @@ public class AndroidCanvas implements Canvas
     }
 
     @Override
-    public void drawBitmap( Bitmap bitmap, float left, float top, Paint paint )
+    public void drawBitmap( AndroidBitmap bitmap, float left, float top, AndroidPaint paint )
     {
-        android.graphics.Bitmap realBitmap = ( (AndroidBitmap)bitmap ).bitmap;
-        android.graphics.Paint realPaint   = (  (AndroidPaint)paint  ).paint;
-
-        canvas.drawBitmap( realBitmap, left, top, realPaint );
+        canvas.drawBitmap( bitmap.bitmap, left, top, paint.paint );
     }
 
     @Override

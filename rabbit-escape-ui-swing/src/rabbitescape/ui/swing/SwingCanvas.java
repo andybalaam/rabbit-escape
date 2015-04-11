@@ -3,11 +3,9 @@ package rabbitescape.ui.swing;
 import java.awt.AlphaComposite;
 import java.awt.Graphics2D;
 
-import rabbitescape.render.androidlike.Bitmap;
 import rabbitescape.render.androidlike.Canvas;
-import rabbitescape.render.androidlike.Paint;
 
-public class SwingCanvas implements Canvas
+public class SwingCanvas implements Canvas<SwingBitmap, SwingPaint>
 {
     private final Graphics2D gfx;
     private final int width;
@@ -21,12 +19,11 @@ public class SwingCanvas implements Canvas
     }
 
     @Override
-    public void drawBitmap( Bitmap bitmap, float left, float top, Paint paint )
+    public void drawBitmap(
+        SwingBitmap bitmap, float left, float top, SwingPaint paint )
     {
-        SwingBitmap b = (SwingBitmap)bitmap;
-
         this.gfx.setComposite( AlphaComposite.SrcAtop );
-        this.gfx.drawImage( b.image, (int)left, (int)top, null );
+        this.gfx.drawImage( bitmap.image, (int)left, (int)top, null );
     }
 
     @Override

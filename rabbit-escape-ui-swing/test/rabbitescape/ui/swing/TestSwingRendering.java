@@ -35,7 +35,9 @@ public class TestSwingRendering
 
         SwingBitmapCanvas output = blankCanvas( 64, 96 );
 
-        Renderer<SwingBitmap> renderer = new Renderer<SwingBitmap>( 0, 0, 32 );
+        Renderer<SwingBitmap, SwingPaint> renderer =
+            new Renderer<SwingBitmap, SwingPaint>( 0, 0, 32 );
+
         renderer.render( output, sprites, new SwingPaint() );
 
         SwingBitmap expected = bitmapLoader.load( "sixx", 32 );
@@ -56,7 +58,9 @@ public class TestSwingRendering
 
         SwingBitmapCanvas output = blankCanvas( 35, 34 );
 
-        Renderer<SwingBitmap> renderer = new Renderer<SwingBitmap>( 3, 2, 32 );
+        Renderer<SwingBitmap, SwingPaint> renderer =
+            new Renderer<SwingBitmap, SwingPaint>( 3, 2, 32 );
+
         renderer.render( output, sprites, new SwingPaint() );
 
         SwingBitmap expected = bitmapLoader.load( "x32", 32 );
@@ -78,8 +82,10 @@ public class TestSwingRendering
 
         SwingBitmapCanvas output = blankCanvas( 35, 34 );
 
-        Renderer<SwingBitmap> renderer = new Renderer<SwingBitmap>( 3, 2, 16 );
+        Renderer<SwingBitmap, SwingPaint> renderer =
+            new Renderer<SwingBitmap, SwingPaint>( 3, 2, 16 );
             // ... but the renderer gets to say what size it wants (16).
+
         renderer.render( output, sprites, new SwingPaint() );
 
         SwingBitmap expected = bitmapLoader.load( "x16-32", 32 );
@@ -101,7 +107,8 @@ public class TestSwingRendering
 
         SwingBitmapCanvas output = blankCanvas( 35, 34 );
 
-        Renderer<SwingBitmap> renderer = new Renderer<SwingBitmap>( 0, 0, 32 );
+        Renderer<SwingBitmap, SwingPaint> renderer =
+            new Renderer<SwingBitmap, SwingPaint>( 0, 0, 32 );
         // the Renderer is not
 
         renderer.render( output, sprites, new SwingPaint() );
@@ -124,7 +131,9 @@ public class TestSwingRendering
 
         SwingBitmapCanvas output = blankCanvas( 35, 34 );
 
-        Renderer<SwingBitmap> renderer = new Renderer<SwingBitmap>( 0, 0, 16 );
+        Renderer<SwingBitmap, SwingPaint> renderer =
+            new Renderer<SwingBitmap, SwingPaint>( 0, 0, 16 );
+
         renderer.render( output, sprites, new SwingPaint() );
 
         assertThat( sprites.get( 0 ).offsetX( 16 ), equalTo( 3 ) );
