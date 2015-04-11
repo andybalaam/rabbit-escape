@@ -9,4 +9,7 @@ public interface Canvas<T extends Bitmap, P extends Paint>
     public void drawBitmap( T bitmap, float left, float top, P paint );
     public int width();
     public int height();
+    public void drawColor( P paint );
+    public void drawLine(
+        float startX, float startY, float stopX, float stopY, P paint );
 }

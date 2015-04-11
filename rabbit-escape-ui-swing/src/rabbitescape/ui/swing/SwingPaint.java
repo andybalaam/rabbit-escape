@@ -1,10 +1,15 @@
 package rabbitescape.ui.swing;
 
+import java.awt.Color;
+
 import rabbitescape.render.androidlike.Paint;
 
-/**
- * Unused in the Swing world.
- */
 public class SwingPaint implements Paint
 {
+    public final Color color;
+
+    public SwingPaint( Color color )
+    {
+        this.color = color;
+    }
 }

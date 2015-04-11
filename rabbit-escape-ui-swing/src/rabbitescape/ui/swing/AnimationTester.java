@@ -368,7 +368,7 @@ public class AnimationTester extends JFrame
     private void loadBitmaps()
     {
         scaler = new SwingBitmapScaler();
-        paint = new SwingPaint();
+        paint = new SwingPaint( null );
         SwingBitmapLoader bitmapLoader = new SwingBitmapLoader();
 
         BitmapCache<SwingBitmap> bitmapCache = new BitmapCache<SwingBitmap>(

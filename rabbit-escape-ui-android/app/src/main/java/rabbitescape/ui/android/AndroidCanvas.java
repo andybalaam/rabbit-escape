@@ -28,4 +28,18 @@ public class AndroidCanvas implements Canvas<AndroidBitmap, AndroidPaint>
     {
         return canvas.getHeight();
     }
+
+    @Override
+    public void drawColor( AndroidPaint paint )
+    {
+        canvas.drawColor( paint.paint.getColor() );
+    }
+
+    @Override
+    public void drawLine(
+        float startX, float startY, float stopX, float stopY, AndroidPaint paint
+    )
+    {
+        this.canvas.drawLine( startX, startY, stopX, stopY, paint.paint );
+    }
 }

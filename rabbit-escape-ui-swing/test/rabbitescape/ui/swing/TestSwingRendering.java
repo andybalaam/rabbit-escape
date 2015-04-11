@@ -38,7 +38,7 @@ public class TestSwingRendering
         Renderer<SwingBitmap, SwingPaint> renderer =
             new Renderer<SwingBitmap, SwingPaint>( 0, 0, 32 );
 
-        renderer.render( output, sprites, new SwingPaint() );
+        renderer.render( output, sprites, new SwingPaint( null ) );
 
         SwingBitmap expected = bitmapLoader.load( "sixx", 32 );
 
@@ -61,7 +61,7 @@ public class TestSwingRendering
         Renderer<SwingBitmap, SwingPaint> renderer =
             new Renderer<SwingBitmap, SwingPaint>( 3, 2, 32 );
 
-        renderer.render( output, sprites, new SwingPaint() );
+        renderer.render( output, sprites, new SwingPaint( null ) );
 
         SwingBitmap expected = bitmapLoader.load( "x32", 32 );
 
@@ -86,7 +86,7 @@ public class TestSwingRendering
             new Renderer<SwingBitmap, SwingPaint>( 3, 2, 16 );
             // ... but the renderer gets to say what size it wants (16).
 
-        renderer.render( output, sprites, new SwingPaint() );
+        renderer.render( output, sprites, new SwingPaint( null ) );
 
         SwingBitmap expected = bitmapLoader.load( "x16-32", 32 );
 
@@ -111,7 +111,7 @@ public class TestSwingRendering
             new Renderer<SwingBitmap, SwingPaint>( 0, 0, 32 );
         // the Renderer is not
 
-        renderer.render( output, sprites, new SwingPaint() );
+        renderer.render( output, sprites, new SwingPaint( null ) );
 
         SwingBitmap expected = bitmapLoader.load( "x32", 32 );
 
@@ -134,7 +134,7 @@ public class TestSwingRendering
         Renderer<SwingBitmap, SwingPaint> renderer =
             new Renderer<SwingBitmap, SwingPaint>( 0, 0, 16 );
 
-        renderer.render( output, sprites, new SwingPaint() );
+        renderer.render( output, sprites, new SwingPaint( null ) );
 
         assertThat( sprites.get( 0 ).offsetX( 16 ), equalTo( 3 ) );
         assertThat( sprites.get( 0 ).offsetY( 16 ), equalTo( 2 ) );

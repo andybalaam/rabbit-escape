@@ -344,5 +344,21 @@ public class TestRendering
         {
             return height;
         }
+
+        @Override
+        public void drawColor( FakePaint paint )
+        {
+        }
+
+        @Override
+        public void drawLine(
+            float startX,
+            float startY,
+            float stopX,
+            float stopY,
+            FakePaint paint
+        )
+        {
+        }
     }
 }

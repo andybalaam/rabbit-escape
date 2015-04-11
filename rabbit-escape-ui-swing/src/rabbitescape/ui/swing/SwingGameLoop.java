@@ -21,6 +21,7 @@ import rabbitescape.render.AnimationCache;
 import rabbitescape.render.AnimationLoader;
 import rabbitescape.render.BitmapCache;
 import rabbitescape.render.GameLoop;
+import rabbitescape.render.GraphPaperBackground;
 import rabbitescape.render.Renderer;
 import rabbitescape.render.SpriteAnimator;
 import rabbitescape.ui.swing.SwingGameInit.WhenUiReady;
@@ -208,10 +209,14 @@ public class SwingGameLoop implements GameLoop
 
     private static class DrawFrame extends BufferedDraw
     {
-        private static final SwingPaint unusedPaint = new SwingPaint();
+        private static final SwingPaint white =
+            new SwingPaint( Color.WHITE );
 
-        private static final Color graphPaperMajor = new Color( 205, 212, 220 );
-        private static final Color graphPaperMinor = new Color( 235, 243, 255 );
+        private static final SwingPaint graphPaperMajor =
+            new SwingPaint( new Color( 205, 212, 220 ) );
+
+        private static final SwingPaint graphPaperMinor =
+            new SwingPaint( new Color( 235, 243, 255 ) );
 
         private final java.awt.Canvas canvas;
         private final Renderer<SwingBitmap, SwingPaint> renderer;
@@ -239,61 +244,25 @@ public class SwingGameLoop implements GameLoop
         @Override
         void draw( Graphics2D g )
         {
-            drawBackground( g );
-
             SwingCanvas swingCanvas = new SwingCanvas(
                 g, canvas.getWidth(), canvas.getHeight() );
+
+            GraphPaperBackground.drawBackground(
+                world,
+                renderer,
+                swingCanvas,
+                white,
+                graphPaperMajor,
+                graphPaperMinor
+            );
 
             renderer.render(
                 swingCanvas,
                 animator.getSprites( frameNum ),
-                unusedPaint
+                white
             );
 
             drawResult( g );
-        }
-
-        private void drawBackground( Graphics2D g )
-        {
-            fillCanvas( g, Color.WHITE );
-
-            int minTile = -2;
-            int maxTileX = world.size.width + 2;
-            int maxTileY = world.size.height + 2;
-            int minX = renderer.offsetX + ( minTile  * renderer.tileSize );
-            int maxX = renderer.offsetX + ( maxTileX * renderer.tileSize );
-            int minY = renderer.offsetY + ( minTile  * renderer.tileSize );
-            int maxY = renderer.offsetY + ( maxTileY * renderer.tileSize );
-            double inc = renderer.tileSize / 4.0;
-
-            g.setPaint( graphPaperMinor );
-            for( int x = minX; x < maxX; x += renderer.tileSize )
-            {
-                for ( int sub = 1; sub < 4; ++sub )
-                {
-                    int dx = (int)( x + ( sub * inc ) );
-                    g.drawLine( dx, minY, dx, maxY );
-                }
-            }
-            for( int y = minY; y < maxY; y += renderer.tileSize )
-            {
-                g.setPaint( graphPaperMinor );
-                for ( int sub = 1; sub < 4; ++sub )
-                {
-                    int dy = (int)( y + ( sub * inc ) );
-                    g.drawLine( minX, dy, maxX, dy );
-                }
-            }
-
-            g.setPaint( graphPaperMajor );
-            for( int x = minX; x <= maxX; x += renderer.tileSize )
-            {
-                g.drawLine( x, minY, x, maxY );
-            }
-            for( int y = minY; y <= maxY; y += renderer.tileSize )
-            {
-                g.drawLine( minX, y, maxX, y );
-            }
         }
 
         private void fillCanvas( Graphics2D g, Color paint )

@@ -37,4 +37,23 @@ public class SwingCanvas implements Canvas<SwingBitmap, SwingPaint>
     {
         return height;
     }
+
+    @Override
+    public void drawColor( SwingPaint paint )
+    {
+        this.gfx.setPaint( paint.color );
+        this.gfx.fillRect( 0, 0, width, height );
+    }
+
+    @Override
+    public void drawLine(
+        float startX,
+        float startY,
+        float stopX,
+        float stopY,
+        SwingPaint paint )
+    {
+        this.gfx.setPaint( paint.color );
+        this.gfx.drawLine( (int)startX, (int)startY, (int)stopX, (int)stopY );
+    }
 }
