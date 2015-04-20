@@ -31,7 +31,6 @@ public class FakeFileSystem implements FileSystem
         return files.containsKey( fileName );
     }
 
-    @SuppressWarnings( "DuplicateThrows" )
     @Override
     public String[] readLines( String fileName )
         throws FileNotFoundException, IOException
@@ -47,7 +46,6 @@ public class FakeFileSystem implements FileSystem
         }
     }
 
-    @SuppressWarnings( "DuplicateThrows" )
     @Override
     public String read( String fileName )
         throws FileNotFoundException, IOException

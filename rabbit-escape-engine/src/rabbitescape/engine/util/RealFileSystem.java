@@ -19,7 +19,6 @@ public class RealFileSystem implements FileSystem
         return new File( fileName ).exists();
     }
 
-    @SuppressWarnings( "DuplicateThrows" )
     @Override
     public String[] readLines( String fileName )
         throws FileNotFoundException, IOException
@@ -44,7 +43,6 @@ public class RealFileSystem implements FileSystem
         }
     }
 
-    @SuppressWarnings( "DuplicateThrows" )
     @Override
     public String read( String fileName )
         throws FileNotFoundException, IOException

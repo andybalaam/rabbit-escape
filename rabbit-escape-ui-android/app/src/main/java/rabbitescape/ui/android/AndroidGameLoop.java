@@ -2,7 +2,6 @@ package rabbitescape.ui.android;
 
 import android.graphics.Canvas;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.SurfaceHolder;
 
 import java.util.Date;
