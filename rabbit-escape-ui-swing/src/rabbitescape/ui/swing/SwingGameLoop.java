@@ -385,17 +385,17 @@ public class SwingGameLoop implements GameLoop
         // Nothing to do here - we showed the result while we were still running
     }
 
-    public int addToken( Token.Type ability, int gridX, int gridY )
+    public int addToken( int tileX, int tileY, Token.Type ability )
     {
         if (
                world.completionState() == CompletionState.RUNNING
-            && gridX >= 0
-            && gridY >= 0
-            && gridX < world.size.width
-            && gridY < world.size.height
+            && tileX >= 0
+            && tileY >= 0
+            && tileX < world.size.width
+            && tileY < world.size.height
         )
         {
-            return physics.addToken( ability, gridX, gridY );
+            return physics.addToken( tileX, tileY, ability );
         }
 
         return world.abilities.get( ability );

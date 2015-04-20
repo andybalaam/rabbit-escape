@@ -589,13 +589,13 @@ public class GameUi
             return;
         }
 
-        int gridX = ( pixelPosition.x - gameLoop.renderer.offsetX )
+        int tileX = ( pixelPosition.x - gameLoop.renderer.offsetX )
             / worldTileSizeInPixels;
 
-        int gridY = ( pixelPosition.y - gameLoop.renderer.offsetY )
+        int tileY = ( pixelPosition.y - gameLoop.renderer.offsetY )
             / worldTileSizeInPixels;
 
-        int numLeft = gameLoop.addToken( chosenAbility, gridX, gridY );
+        int numLeft = gameLoop.addToken( tileX, tileY, chosenAbility );
 
         if ( numLeft == 0 )
         {

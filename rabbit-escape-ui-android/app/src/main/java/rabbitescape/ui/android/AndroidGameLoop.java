@@ -244,7 +244,7 @@ public class AndroidGameLoop implements Runnable
             return physics.world.abilities.get( ability );
         }
 
-        return physics.addToken( ability,x, y );
+        return physics.addToken( x, y, ability );
     }
 
     public void setPaused( boolean paused )

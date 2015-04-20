@@ -205,7 +205,7 @@ public class TestPhysics
         assertEquals( 0, world.things.size() );
 
         // This is what we are testing - add the token
-        physics.addToken( Token.Type.bash, 1, 1 );
+        physics.addToken( 1, 1, Token.Type.bash );
 
         // Allow the change to happen
         world.step();
@@ -234,12 +234,12 @@ public class TestPhysics
         Physics physics = new Physics( world, winListener );
 
         // Add 1 - should work
-        physics.addToken( Token.Type.bash, 1, 1 );
+        physics.addToken( 1, 1, Token.Type.bash );
         world.step();
         assertEquals( 1, world.things.size() );
 
         // This is what we are testing - add another, but you don't have it
-        physics.addToken( Token.Type.bash, 1, 1 );
+        physics.addToken( 1, 1, Token.Type.bash );
 
         // It was not added - there still only 1 thing
         assertEquals( 1, world.things.size() );
@@ -261,15 +261,15 @@ public class TestPhysics
         Physics physics = new Physics( world, winListener );
 
         // Add 1 - 1 left
-        assertEquals( 1, physics.addToken( Token.Type.bash, 1, 1 ) );
+        assertEquals( 1, physics.addToken( 1, 1, Token.Type.bash ) );
 
         // Add another, 0 left
-        assertEquals( 0, physics.addToken( Token.Type.bash, 1, 1 ) );
+        assertEquals( 0, physics.addToken( 1, 1, Token.Type.bash ) );
 
         // Try to add more, still 0 left
-        assertEquals( 0, physics.addToken( Token.Type.bash, 1, 1 ) );
+        assertEquals( 0, physics.addToken( 1, 1, Token.Type.bash ) );
 
         // Different type is independent
-        assertEquals( 11, physics.addToken( Token.Type.climb, 1, 1 ) );
+        assertEquals( 11, physics.addToken( 1, 1, Token.Type.climb ) );
     }
 }

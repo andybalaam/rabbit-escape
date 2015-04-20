@@ -26,9 +26,10 @@ public class Physics
             world.step();
         }
 
-        public synchronized void addToken( int x, int y, Token.Type type )
+        public synchronized void addToken(
+            int tileX, int tileY, Token.Type type )
         {
-            world.changes.addToken( x, y, type );
+            world.changes.addToken( tileX, tileY, type );
         }
     }
 
@@ -70,7 +71,7 @@ public class Physics
         }
     }
 
-    public int addToken( Token.Type ability, int tileX, int tileY )
+    public int addToken( int tileX, int tileY, Token.Type ability )
     {
         if ( world.abilities.get( ability ) > 0 )
         {

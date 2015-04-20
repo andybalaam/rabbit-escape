@@ -34,8 +34,8 @@ public class Physics
     }
 
 
-    public int addToken( Token.Type ability, int tileX, int tileY )
+    public int addToken( int tileX, int tileY, Token.Type ability )
     {
-        return impl.addToken( ability, tileX, tileY );
+        return impl.addToken( tileX, tileY, ability);
     }
 }
