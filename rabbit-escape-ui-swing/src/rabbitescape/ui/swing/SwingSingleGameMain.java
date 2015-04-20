@@ -57,7 +57,7 @@ public class SwingSingleGameMain extends Main
     }
 
     @Override
-    public GameLaunch createGameLoop( World world, LevelWinListener winListener )
+    public GameLaunch createGameLaunch( World world, LevelWinListener winListener )
     {
         SwingGameInit init = new SwingGameInit(
             bitmapCache, uiConfig, frame, menuUi );

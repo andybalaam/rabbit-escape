@@ -34,17 +34,17 @@ public class WorldSaver
     }
 
     private final World world;
-    private final AndroidGameLaunch gameLoop;
+    private final AndroidGameLaunch gameLaunch;
 
     private Signal requestSave = new Signal();
     private Signal saved = new Signal();
     private boolean saveWorld = false;
     public String[] savedWorld = null;
 
-    public WorldSaver( World world, AndroidGameLaunch gameLoop )
+    public WorldSaver( World world, AndroidGameLaunch gameLaunch )
     {
         this.world = world;
-        this.gameLoop = gameLoop;
+        this.gameLaunch = gameLaunch;
     }
 
     /**
@@ -86,7 +86,7 @@ public class WorldSaver
      */
     public String[] waitUntilSaved()
     {
-        if ( !gameLoop.isRunning() )
+        if ( !gameLaunch.isRunning() )
         {
             return actuallySaveWorld();
         }

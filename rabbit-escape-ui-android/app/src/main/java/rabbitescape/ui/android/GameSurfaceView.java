@@ -95,9 +95,9 @@ public class GameSurfaceView extends SurfaceView
     {
         if ( game != null )
         {
-            AndroidGameLaunch gameLoop = game.gameLoop;
-            gameLoop.setPaused( !gameLoop.paused() );
-            return gameLoop.paused();
+            AndroidGameLaunch gameLaunch = game.gameLaunch;
+            gameLaunch.setPaused( !gameLaunch.paused() );
+            return gameLaunch.paused();
         }
         else
         {
@@ -113,7 +113,7 @@ public class GameSurfaceView extends SurfaceView
             return;
         }
 
-        int numLeft = game.gameLoop.addToken( chosenAbility, scrolling.curX, scrolling.curY );
+        int numLeft = game.gameLaunch.addToken( chosenAbility, scrolling.curX, scrolling.curY );
 
         numLeftListener.numLeft( chosenAbility, numLeft );
     }
@@ -133,7 +133,7 @@ public class GameSurfaceView extends SurfaceView
     {
         if ( game != null )
         {
-            game.gameLoop.onSaveInstanceState( outState );
+            game.gameLaunch.onSaveInstanceState( outState );
         }
     }
 }

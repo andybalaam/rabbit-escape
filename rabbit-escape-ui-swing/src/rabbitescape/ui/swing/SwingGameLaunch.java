@@ -62,7 +62,7 @@ public class SwingGameLaunch implements GameLaunch
 
         this.renderer = new Renderer<SwingBitmap, SwingPaint>( 0, 0, -1 );
 
-        jframe.setGameLoop( this );
+        jframe.setGameLaunch( this );
     }
 
     public void stop()

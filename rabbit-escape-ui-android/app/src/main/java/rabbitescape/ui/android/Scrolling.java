@@ -89,7 +89,7 @@ public class Scrolling
     {
         if ( view.game != null )
         {
-            view.game.gameLoop.scrollBy( velX, velY );
+            view.game.gameLaunch.scrollBy( velX, velY );
         }
     }
 

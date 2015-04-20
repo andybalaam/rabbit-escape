@@ -170,7 +170,7 @@ public class GameUi
     private TopBar topBar;
 
     private Token.Type chosenAbility;
-    private SwingGameLaunch gameLoop;
+    private SwingGameLaunch gameLaunch;
 
     // Modified in Swing event thread, read in game loop thread
     public int scrollX;
@@ -192,7 +192,7 @@ public class GameUi
         this.contentPane = frame.getContentPane();
         this.middlePanel = new JPanel( new BorderLayout() );
         this.chosenAbility = null;
-        this.gameLoop = null;
+        this.gameLaunch = null;
 
         this.buttonSizeInPixels = new Dimension( 32, 32 );
         this.zoomIndex = 2;
@@ -265,8 +265,8 @@ public class GameUi
         int zoom = zoomValues[index];
 
         return (
-               zoom * gameLoop.world.size.width > canvas.getWidth()
-            || zoom * gameLoop.world.size.height > canvas.getHeight()
+               zoom * gameLaunch.world.size.width > canvas.getWidth()
+            || zoom * gameLaunch.world.size.height > canvas.getHeight()
         );
     }
 
@@ -293,7 +293,7 @@ public class GameUi
         frame.addComponentListener( listener );
         frame.addWindowListener( listener );
         frame.addKeyListener( listener );
-        gameLoop.addStatsChangedListener( this.topBar );
+        gameLaunch.addStatsChangedListener( this.topBar );
 
         menu.addAbilitiesListener( new GameMenu.AbilityChangedListener()
         {
@@ -383,7 +383,7 @@ public class GameUi
             @Override
             public void actionPerformed( ActionEvent evt )
             {
-                gameLoop.world.setPaused( menu.pause.isSelected() );
+                gameLaunch.world.setPaused( menu.pause.isSelected() );
             }
         } );
 
@@ -412,9 +412,9 @@ public class GameUi
         );
     }
 
-    public void setGameLoop( SwingGameLaunch gameLoop )
+    public void setGameLaunch( SwingGameLaunch gameLaunch )
     {
-        this.gameLoop = gameLoop;
+        this.gameLaunch = gameLaunch;
 
         this.menu = new GameMenu(
             contentPane,
@@ -422,12 +422,12 @@ public class GameUi
             buttonSizeInPixels,
             uiConfig,
             backgroundColor,
-            gameLoop.getAbilities()
+            gameLaunch.getAbilities()
         );
 
         this.topBar = new TopBar(
             backgroundColor,
-            gameLoop.world.num_to_save,
+            gameLaunch.world.num_to_save,
             middlePanel
         );
 
@@ -468,10 +468,10 @@ public class GameUi
 
     private void stopGameLoop()
     {
-        if ( gameLoop != null )
+        if ( gameLaunch != null )
         {
-            gameLoop.stop();
-            gameLoop.world.setPaused( false );
+            gameLaunch.stop();
+            gameLaunch.world.setPaused( false );
         }
     }
 
@@ -485,19 +485,19 @@ public class GameUi
 
     private void explodeAllClicked()
     {
-        switch ( gameLoop.world.completionState() )
+        switch ( gameLaunch.world.completionState() )
         {
             case RUNNING:
             case PAUSED:
             {
-                gameLoop.world.setReadyToExplodeAll( true );
+                gameLaunch.world.setReadyToExplodeAll( true );
                 break;
             }
             case READY_TO_EXPLODE_ALL:
             {
-                gameLoop.world.setPaused( false );
-                gameLoop.world.changes.explodeAllRabbits();
-                gameLoop.world.setReadyToExplodeAll( false );
+                gameLaunch.world.setPaused( false );
+                gameLaunch.world.changes.explodeAllRabbits();
+                gameLaunch.world.setReadyToExplodeAll( false );
                 break;
             }
             default:
@@ -510,7 +510,7 @@ public class GameUi
 
     private void cancelExplodeAll()
     {
-        gameLoop.world.setReadyToExplodeAll( false );
+        gameLaunch.world.setReadyToExplodeAll( false );
     }
 
     private void zoomClicked( boolean zoomIn )
@@ -540,8 +540,8 @@ public class GameUi
         double scrX = getScrollBarProportion( canvasScrollBarX );
         double scrY = getScrollBarProportion( canvasScrollBarY );
 
-        gameLoop.renderer.tileSize = zoom;
-        setWorldSize( gameLoop.world.size, zoom );
+        gameLaunch.renderer.tileSize = zoom;
+        setWorldSize( gameLaunch.world.size, zoom );
 
         setScrollBarFromProportion( canvasScrollBarX, scrX );
         setScrollBarFromProportion( canvasScrollBarY, scrY );
@@ -568,7 +568,7 @@ public class GameUi
 
     private void leaveIntro()
     {
-        gameLoop.world.setIntro( false );
+        gameLaunch.world.setIntro( false );
     }
 
     private void setMuted( boolean muted )
@@ -590,13 +590,13 @@ public class GameUi
             return;
         }
 
-        int tileX = ( pixelPosition.x - gameLoop.renderer.offsetX )
+        int tileX = ( pixelPosition.x - gameLaunch.renderer.offsetX )
             / worldTileSizeInPixels;
 
-        int tileY = ( pixelPosition.y - gameLoop.renderer.offsetY )
+        int tileY = ( pixelPosition.y - gameLaunch.renderer.offsetY )
             / worldTileSizeInPixels;
 
-        int numLeft = gameLoop.addToken( tileX, tileY, chosenAbility );
+        int numLeft = gameLaunch.addToken( tileX, tileY, chosenAbility );
 
         if ( numLeft == 0 )
         {
@@ -608,7 +608,7 @@ public class GameUi
 
     private boolean dismissClick()
     {
-        switch( gameLoop.world.completionState() )
+        switch( gameLaunch.world.completionState() )
         {
             case LOST:
             case WON:
@@ -644,6 +644,6 @@ public class GameUi
     private void updateChosenAbility()
     {
         topBar.abilityChanged(
-            chosenAbility, gameLoop.world.abilities.get( chosenAbility ) );
+            chosenAbility, gameLaunch.world.abilities.get( chosenAbility ) );
     }
 }

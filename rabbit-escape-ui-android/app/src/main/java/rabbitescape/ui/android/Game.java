@@ -10,7 +10,7 @@ import rabbitescape.render.BitmapCache;
 public class Game
 {
     // Saved state (saved by GameSurfaceView)
-    public final AndroidGameLaunch gameLoop;
+    public final AndroidGameLaunch gameLaunch;
 
     // Transient state
     private final Thread thread;
@@ -24,10 +24,10 @@ public class Game
         Bundle savedInstanceState
     )
     {
-        gameLoop = new AndroidGameLaunch(
+        gameLaunch = new AndroidGameLaunch(
             surfaceHolder, bitmapCache, world, winListener, displayDensity, savedInstanceState );
 
-        thread = new Thread( gameLoop, "GameLoop" );
+        thread = new Thread( gameLaunch, "GameLaunch" );
     }
 
     public void start()
@@ -37,7 +37,7 @@ public class Game
 
     public void stop()
     {
-        gameLoop.pleaseStop();
+        gameLaunch.pleaseStop();
         try
         {
             thread.join();

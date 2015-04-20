@@ -30,7 +30,7 @@ public class TextSingleGameMain extends Main
     }
 
     @Override
-    public GameLaunch createGameLoop( World world, LevelWinListener winListener )
+    public GameLaunch createGameLaunch( World world, LevelWinListener winListener )
     {
         return new TextGameLaunch(
             world,

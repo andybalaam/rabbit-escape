@@ -229,7 +229,7 @@ public class AndroidGameActivity extends ActionBarActivity
 
     public void onExplodeAllClicked( View view )
     {
-        World world = gameSurface.game.gameLoop.physics.world;
+        World world = gameSurface.game.gameLaunch.physics.world;
 
         switch ( world.completionState() )
         {
