@@ -1,12 +1,11 @@
 package rabbitescape.ui.android;
 
 import rabbitescape.render.BitmapScaler;
-import rabbitescape.render.androidlike.Bitmap;
 
-public class AndroidBitmapScaler implements BitmapScaler
+public class AndroidBitmapScaler implements BitmapScaler<AndroidBitmap>
 {
     @Override
-    public Bitmap scale( Bitmap originalBitmap, double scale )
+    public AndroidBitmap scale( AndroidBitmap originalBitmap, double scale )
     {
         // On Android, the bitmaps got scaled for us automatically, so we
         // do nothing here.
