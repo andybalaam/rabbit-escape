@@ -38,10 +38,9 @@ public class SwingGameLoop implements GameLoop
     private static final Color overlay = new Color( 0.7f, 0.7f, 0.7f, 0.8f );
 
     public final World world;
-    private final LevelWinListener winListener;
-    private final Physics.WorldModifier worldModifier;
     private boolean running;
     private final List<StatsChangedListener> statsListeners;
+    private final Physics physics;
 
     private final GameUi jframe;
     private final BitmapCache<SwingBitmap> bitmapCache;
@@ -51,10 +50,9 @@ public class SwingGameLoop implements GameLoop
         SwingGameInit init, World world, LevelWinListener winListener )
     {
         this.world = world;
-        this.winListener = winListener;
-        this.worldModifier = new Physics.WorldModifier( world );
         this.running = true;
         this.statsListeners = new ArrayList<>();
+        this.physics = new Physics( world, winListener );
 
         // This blocks until the UI is ready:
         WhenUiReady uiPieces = init.waitForUi.waitForUi();
@@ -84,8 +82,7 @@ public class SwingGameLoop implements GameLoop
         {
             if ( world.completionState() == CompletionState.RUNNING )
             {
-                worldModifier.step();
-                checkWon();
+                physics.step();
                 notifyStatsListeners();
             }
 
@@ -149,27 +146,6 @@ public class SwingGameLoop implements GameLoop
         else
         {
             return -scroll;
-        }
-    }
-
-    private void checkWon()
-    {
-        switch ( world.completionState() )
-        {
-            case WON:
-            {
-                winListener.won();
-                break;
-            }
-            case LOST:
-            {
-                winListener.lost();
-                break;
-            }
-            default:
-            {
-                break;
-            }
         }
     }
 
@@ -413,14 +389,13 @@ public class SwingGameLoop implements GameLoop
     {
         if (
                world.completionState() == CompletionState.RUNNING
-            && world.abilities.get( ability ) > 0
             && gridX >= 0
             && gridY >= 0
             && gridX < world.size.width
             && gridY < world.size.height
         )
         {
-            worldModifier.addToken( gridX, gridY, ability );
+            return physics.addToken( ability, gridX, gridY );
         }
 
         return world.abilities.get( ability );

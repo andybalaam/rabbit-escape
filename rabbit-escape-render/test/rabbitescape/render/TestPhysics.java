@@ -4,6 +4,8 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
+import rabbitescape.engine.ChangeDescription;
+import rabbitescape.engine.LevelWinListener;
 import rabbitescape.engine.Token;
 import rabbitescape.engine.World;
 import rabbitescape.engine.textworld.TextWorldManip;
@@ -96,5 +98,178 @@ public class TestPhysics
 
         assertFalse( stepper.failed );
         assertFalse( tokenAdder.failed );
+    }
+
+    @Test
+    public void Step_steps_world()
+    {
+        final World world = TextWorldManip.createWorld(
+            "#      #",
+            "# /) r #",
+            "########",
+            ":climb=1000000"
+        );
+        world.setIntro( false );
+
+        LevelWinListener winListener = null;
+        Physics physics = new Physics( world, winListener );
+
+        // This is what we are testing - step
+        physics.step();
+
+        // The rabbit has moved
+        assertEquals( 6, world.rabbits.get( 0 ).x );
+    }
+
+    class TracingWinListener implements LevelWinListener
+    {
+        public boolean wonCalled  = false;
+        public boolean lostCalled = false;
+
+        @Override
+        public void won()
+        {
+            assertFalse( wonCalled );
+            wonCalled = true;
+        }
+
+        @Override
+        public void lost()
+        {
+            assertFalse( lostCalled );
+            lostCalled = true;
+        }
+    }
+
+    @Test
+    public void Step_notifies_when_we_won()
+    {
+        final World world = TextWorldManip.createWorld(
+            "#      #",
+            "# /) rO#",
+            "########",
+            ":num_rabbits=0"
+        );
+        world.setIntro( false );
+
+        TracingWinListener winListener = new TracingWinListener();
+        Physics physics = new Physics( world, winListener );
+
+        // This is what we are testing - step twice - winlistener should hear
+        physics.step();
+        physics.step();
+
+        // The winListener was notified of the win
+        assertTrue(  winListener.wonCalled );
+        assertFalse( winListener.lostCalled );
+    }
+
+    @Test
+    public void Step_notifies_when_we_lost()
+    {
+        final World world = TextWorldManip.createWorld(
+            "#   ",
+            "#  r", // Death in 1 step
+            "####",
+            ":num_rabbits=0"
+        );
+        world.setIntro( false );
+
+        TracingWinListener winListener = new TracingWinListener();
+        Physics physics = new Physics( world, winListener );
+
+        // This is what we are testing - step twice - winlistener should hear
+        physics.step();
+        physics.step();
+
+        // The winListener was notified of the loss
+        assertFalse(  winListener.wonCalled );
+        assertTrue(  winListener.lostCalled );
+    }
+
+    @Test
+    public void AddToken_adds_a_token_if_youve_got_some()
+    {
+        final World world = TextWorldManip.createWorld(
+            "#      #",
+            "# /) r #",
+            "########",
+            ":bash=10"
+        );
+        world.setIntro( false );
+
+        LevelWinListener winListener = null;
+        Physics physics = new Physics( world, winListener );
+
+        // Sanity: no things at the moment
+        assertEquals( 0, world.things.size() );
+
+        // This is what we are testing - add the token
+        physics.addToken( Token.Type.bash, 1, 1 );
+
+        // Allow the change to happen
+        world.step();
+
+        // It was added - there is now a token
+        assertEquals( 1, world.things.size() );
+
+        assertEquals(
+            ChangeDescription.State.TOKEN_BASH_STILL,
+            world.things.get( 0 ).state
+        );
+    }
+
+    @Test
+    public void AddToken_does_not_add_a_token_if_youve_not_got_any()
+    {
+        final World world = TextWorldManip.createWorld(
+            "#      #",
+            "# /) r #",
+            "########",
+            ":bash=1"
+        );
+        world.setIntro( false );
+
+        LevelWinListener winListener = null;
+        Physics physics = new Physics( world, winListener );
+
+        // Add 1 - should work
+        physics.addToken( Token.Type.bash, 1, 1 );
+        world.step();
+        assertEquals( 1, world.things.size() );
+
+        // This is what we are testing - add another, but you don't have it
+        physics.addToken( Token.Type.bash, 1, 1 );
+
+        // It was not added - there still only 1 thing
+        assertEquals( 1, world.things.size() );
+    }
+
+    @Test
+    public void AddToken_returns_how_many_are_left()
+    {
+        final World world = TextWorldManip.createWorld(
+            "#      #",
+            "# /) r #",
+            "########",
+            ":bash=2",
+            ":climb=12"
+        );
+        world.setIntro( false );
+
+        LevelWinListener winListener = null;
+        Physics physics = new Physics( world, winListener );
+
+        // Add 1 - 1 left
+        assertEquals( 1, physics.addToken( Token.Type.bash, 1, 1 ) );
+
+        // Add another, 0 left
+        assertEquals( 0, physics.addToken( Token.Type.bash, 1, 1 ) );
+
+        // Try to add more, still 0 left
+        assertEquals( 0, physics.addToken( Token.Type.bash, 1, 1 ) );
+
+        // Different type is independent
+        assertEquals( 11, physics.addToken( Token.Type.climb, 1, 1 ) );
     }
 }
