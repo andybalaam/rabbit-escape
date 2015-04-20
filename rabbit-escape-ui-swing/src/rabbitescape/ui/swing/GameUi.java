@@ -119,6 +119,7 @@ public class GameUi
                 case KeyEvent.VK_ENTER:
                 {
                     dismissClick();
+                    break;
                 }
                 case KeyEvent.VK_LEFT:
                 {
