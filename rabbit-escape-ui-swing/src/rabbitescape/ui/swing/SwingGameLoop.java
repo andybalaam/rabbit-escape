@@ -22,6 +22,7 @@ import rabbitescape.render.AnimationLoader;
 import rabbitescape.render.BitmapCache;
 import rabbitescape.render.GameLoop;
 import rabbitescape.render.GraphPaperBackground;
+import rabbitescape.render.Physics;
 import rabbitescape.render.Renderer;
 import rabbitescape.render.SpriteAnimator;
 import rabbitescape.ui.swing.SwingGameInit.WhenUiReady;
@@ -33,36 +34,12 @@ public class SwingGameLoop implements GameLoop
         void changed( int waiting, int out, int saved );
     }
 
-    /**
-     * Everything that modifies the world goes through here, with
-     * synchronization.
-     */
-    private static class WorldModifier
-    {
-        private final World world;
-
-        public WorldModifier( World world )
-        {
-            this.world = world;
-        }
-
-        public synchronized void step()
-        {
-            world.step();
-        }
-
-        public synchronized void addToken( int x, int y, Token.Type type )
-        {
-            world.changes.addToken( x, y, type );
-        }
-    }
-
     private static final int framesPerStep = 10;
     private static final Color overlay = new Color( 0.7f, 0.7f, 0.7f, 0.8f );
 
     public final World world;
     private final LevelWinListener winListener;
-    private final WorldModifier worldModifier;
+    private final Physics.WorldModifier worldModifier;
     private boolean running;
     private final List<StatsChangedListener> statsListeners;
 
@@ -75,7 +52,7 @@ public class SwingGameLoop implements GameLoop
     {
         this.world = world;
         this.winListener = winListener;
-        this.worldModifier = new WorldModifier( world );
+        this.worldModifier = new Physics.WorldModifier( world );
         this.running = true;
         this.statsListeners = new ArrayList<>();
 
