@@ -28,11 +28,10 @@ public class Physics
         }
     }
 
-    public boolean finished()
+    public boolean gameRunning()
     {
-        return world.completionState() != World.CompletionState.RUNNING;
+        return impl.gameRunning();
     }
-
 
     public int addToken( int tileX, int tileY, Token.Type ability )
     {

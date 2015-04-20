@@ -44,6 +44,11 @@ public class Physics
         this.worldModifier = new Physics.WorldModifier( world );
     }
 
+    public boolean gameRunning()
+    {
+        return ( world.completionState() == World.CompletionState.RUNNING );
+    }
+
     public void step()
     {
         worldModifier.step();
@@ -73,7 +78,14 @@ public class Physics
 
     public int addToken( int tileX, int tileY, Token.Type ability )
     {
-        if ( world.abilities.get( ability ) > 0 )
+        if (
+               gameRunning()
+            && tileX >= 0
+            && tileX < world.size.width
+            && tileY >= 0
+            && tileY < world.size.height
+            && world.abilities.get( ability ) > 0
+        )
         {
             worldModifier.addToken( tileX, tileY, ability );
         }

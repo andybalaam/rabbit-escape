@@ -94,7 +94,7 @@ public class AndroidGameLoop implements Runnable
                 frame_start_time = simulation_time;
             }
 
-            if ( physics.finished() )
+            if ( !physics.gameRunning() )
             {
                 running = false;
             }
@@ -231,18 +231,8 @@ public class AndroidGameLoop implements Runnable
 
     public int addToken( Token.Type ability, float pixelX, float pixelY )
     {
-        if ( !gameRunning() )
-        {
-            return physics.world.abilities.get( ability );
-        }
-
         int x = (int)( ( pixelX + scrollX ) / graphics.renderingTileSize );
         int y = (int)( ( pixelY + scrollY ) / graphics.renderingTileSize );
-
-        if ( x < 0 || x >= physics.world.size.width || y < 0 || y >= physics.world.size.height )
-        {
-            return physics.world.abilities.get( ability );
-        }
 
         return physics.addToken( x, y, ability );
     }
@@ -259,7 +249,7 @@ public class AndroidGameLoop implements Runnable
 
     public boolean gameRunning()
     {
-        return ( physics.world.completionState() == World.CompletionState.RUNNING );
+        return physics.gameRunning();
     }
 
     public void onSaveInstanceState( Bundle outState )

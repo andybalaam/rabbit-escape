@@ -272,4 +272,88 @@ public class TestPhysics
         // Different type is independent
         assertEquals( 11, physics.addToken( 1, 1, Token.Type.climb ) );
     }
+
+    @Test
+    public void AddToken_does_not_add_a_token_if_its_outside_world()
+    {
+        final World world = TextWorldManip.createWorld(
+            "#      #",
+            "# /) r #",
+            "########",
+            ":bash=1"
+        );
+        world.setIntro( false );
+
+        LevelWinListener winListener = null;
+        Physics physics = new Physics( world, winListener );
+
+        // Off the left does not add
+        physics.addToken( -1, 1, Token.Type.bash );
+        world.step();
+        assertEquals( 0, world.things.size() );
+
+        // Off the right does not add
+        physics.addToken( 8, 1, Token.Type.bash );
+        world.step();
+        assertEquals( 0, world.things.size() );
+
+        // Off the top does not add
+        physics.addToken( 1, -1, Token.Type.bash );
+        world.step();
+        assertEquals( 0, world.things.size() );
+
+        // Off the bottom does not add
+        physics.addToken( 1, 3, Token.Type.bash );
+        world.step();
+        assertEquals( 0, world.things.size() );
+    }
+
+    @Test
+    public void AddToken_does_not_add_a_token_if_not_running()
+    {
+        final World world = TextWorldManip.createWorld(
+            "#      #",
+            "# /) r #",
+            "########",
+            ":bash=1"
+        );
+        world.setIntro( false );
+
+        LevelWinListener winListener = null;
+        Physics physics = new Physics( world, winListener );
+
+        // Paused does not add
+        world.setPaused( true );
+        physics.addToken( 1, 1, Token.Type.bash );
+
+        // Unpause to step and check
+        world.setPaused( false );
+        world.step();
+        assertEquals( 0, world.things.size() );
+
+        // Unpaused does add
+        physics.addToken( 1, 1, Token.Type.bash );
+        world.step();
+        assertEquals( 1, world.things.size() );
+    }
+
+    @Test
+    public void GameRunning_reports_game_status()
+    {
+        final World world = TextWorldManip.createWorld(
+            "#      #",
+            "# /) r #",
+            "########",
+            ":bash=1"
+        );
+        world.setIntro( false );
+
+        LevelWinListener winListener = null;
+        Physics physics = new Physics( world, winListener );
+
+        assertTrue( physics.gameRunning() );
+
+        world.setPaused( true );
+        assertFalse( physics.gameRunning() );
+    }
 }
