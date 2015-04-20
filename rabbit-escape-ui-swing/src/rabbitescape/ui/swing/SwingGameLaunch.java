@@ -8,9 +8,7 @@ import java.awt.FontMetrics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.image.BufferStrategy;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import rabbitescape.engine.LevelWinListener;
@@ -29,17 +27,11 @@ import rabbitescape.ui.swing.SwingGameInit.WhenUiReady;
 
 public class SwingGameLaunch implements GameLaunch
 {
-    public static interface StatsChangedListener
-    {
-        void changed( int waiting, int out, int saved );
-    }
-
     private static final int framesPerStep = 10;
     private static final Color overlay = new Color( 0.7f, 0.7f, 0.7f, 0.8f );
 
     public final World world;
     private boolean running;
-    private final List<StatsChangedListener> statsListeners;
     private final Physics physics;
 
     private final GameUi jframe;
@@ -51,7 +43,6 @@ public class SwingGameLaunch implements GameLaunch
     {
         this.world = world;
         this.running = true;
-        this.statsListeners = new ArrayList<>();
         this.physics = new Physics( world, winListener );
 
         // This blocks until the UI is ready:
@@ -83,7 +74,6 @@ public class SwingGameLaunch implements GameLaunch
             if ( world.completionState() == CompletionState.RUNNING )
             {
                 physics.step();
-                notifyStatsListeners();
             }
 
             final SpriteAnimator<SwingBitmap> animator =
@@ -395,20 +385,8 @@ public class SwingGameLaunch implements GameLaunch
         return world.abilities;
     }
 
-    public void addStatsChangedListener( StatsChangedListener listener )
+    public void addStatsChangedListener( Physics.StatsChangedListener listener )
     {
-        statsListeners.add( listener );
-    }
-
-    private void notifyStatsListeners()
-    {
-        for ( StatsChangedListener listener : statsListeners )
-        {
-            listener.changed(
-                world.num_waiting,
-                world.numRabbitsOut(),
-                world.num_saved
-            );
-        }
+        physics.addStatsChangedListener( listener );
     }
 }

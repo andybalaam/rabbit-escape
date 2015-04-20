@@ -1,5 +1,8 @@
 package rabbitescape.render;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import rabbitescape.engine.LevelWinListener;
 import rabbitescape.engine.Token;
 import rabbitescape.engine.World;
@@ -33,15 +36,22 @@ public class Physics
         }
     }
 
+    public static interface StatsChangedListener
+    {
+        void changed( int waiting, int out, int saved );
+    }
+
     private final World world;
-    private final LevelWinListener winListener;
     private final WorldModifier worldModifier;
+    private final LevelWinListener winListener;
+    private final List<StatsChangedListener> statsListeners;
 
     public Physics( World world, LevelWinListener winListener )
     {
         this.world = world;
+        this.worldModifier = new WorldModifier( world );
         this.winListener = winListener;
-        this.worldModifier = new Physics.WorldModifier( world );
+        this.statsListeners = new ArrayList<>();
     }
 
     public boolean gameRunning()
@@ -53,6 +63,7 @@ public class Physics
     {
         worldModifier.step();
         checkWon();
+        notifyStatsListeners();
     }
 
     private void checkWon()
@@ -76,6 +87,18 @@ public class Physics
         }
     }
 
+    private void notifyStatsListeners()
+    {
+        for ( StatsChangedListener listener : statsListeners )
+        {
+            listener.changed(
+                world.num_waiting,
+                world.numRabbitsOut(),
+                world.num_saved
+            );
+        }
+    }
+
     public int addToken( int tileX, int tileY, Token.Type ability )
     {
         if (
@@ -91,5 +114,10 @@ public class Physics
         }
 
         return world.abilities.get( ability );
+    }
+
+    public void addStatsChangedListener( StatsChangedListener listener )
+    {
+        statsListeners.add( listener );
     }
 }
