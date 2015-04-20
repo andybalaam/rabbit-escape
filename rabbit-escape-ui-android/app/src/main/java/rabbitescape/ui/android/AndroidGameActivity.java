@@ -88,7 +88,7 @@ public class AndroidGameActivity extends ActionBarActivity
     {
         if ( savedInstanceState != null )
         {
-            String savedWorld = savedInstanceState.getString( AndroidGameLoop.STATE_WORLD );
+            String savedWorld = savedInstanceState.getString( AndroidGameLaunch.STATE_WORLD );
             if ( savedWorld != null )
             {
                 return TextWorldManip.createWorld( this, split( savedWorld, "\n" ) );

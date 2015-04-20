@@ -1,10 +1,7 @@
 package rabbitescape.ui.android;
 
 import android.content.Context;
-import android.content.res.Resources;
 import android.os.Bundle;
-import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -17,7 +14,6 @@ import rabbitescape.engine.LevelWinListener;
 import rabbitescape.engine.Token;
 import rabbitescape.engine.World;
 import rabbitescape.render.BitmapCache;
-import rabbitescape.render.GameLoop;
 
 public class GameSurfaceView extends SurfaceView
     implements
@@ -99,7 +95,7 @@ public class GameSurfaceView extends SurfaceView
     {
         if ( game != null )
         {
-            AndroidGameLoop gameLoop = game.gameLoop;
+            AndroidGameLaunch gameLoop = game.gameLoop;
             gameLoop.setPaused( !gameLoop.paused() );
             return gameLoop.paused();
         }

@@ -13,7 +13,7 @@ import rabbitescape.render.BitmapCache;
 
 import static android.text.TextUtils.join;
 
-public class AndroidGameLoop implements Runnable
+public class AndroidGameLaunch implements Runnable
 {
     // Constants
     public  static final String STATE_WORLD    = "rabbitescape.world";
@@ -38,7 +38,7 @@ public class AndroidGameLoop implements Runnable
 
     public final WorldSaver worldSaver;
 
-    public AndroidGameLoop(
+    public AndroidGameLaunch(
         SurfaceHolder surfaceHolder,
         BitmapCache<AndroidBitmap> bitmapCache,
         World world,

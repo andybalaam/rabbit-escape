@@ -11,7 +11,7 @@ import java.util.Map;
 import javax.swing.*;
 
 import rabbitescape.engine.Token;
-import rabbitescape.ui.swing.SwingGameLoop.StatsChangedListener;
+import rabbitescape.ui.swing.SwingGameLaunch.StatsChangedListener;
 
 import static rabbitescape.engine.i18n.Translation.t;
 import static rabbitescape.engine.util.Util.*;

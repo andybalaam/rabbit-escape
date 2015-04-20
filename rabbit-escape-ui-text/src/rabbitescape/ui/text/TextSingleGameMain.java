@@ -8,7 +8,7 @@ import rabbitescape.engine.World;
 import rabbitescape.engine.i18n.Translation;
 import rabbitescape.engine.util.FileSystem;
 import rabbitescape.engine.util.RealFileSystem;
-import rabbitescape.render.GameLoop;
+import rabbitescape.render.GameLaunch;
 import rabbitescape.render.Main;
 
 public class TextSingleGameMain extends Main
@@ -30,9 +30,9 @@ public class TextSingleGameMain extends Main
     }
 
     @Override
-    public GameLoop createGameLoop( World world, LevelWinListener winListener )
+    public GameLaunch createGameLoop( World world, LevelWinListener winListener )
     {
-        return new TextGameLoop(
+        return new TextGameLaunch(
             world,
             winListener,
             new Terminal( System.in, System.out, Locale.getDefault() )

@@ -11,7 +11,7 @@ import rabbitescape.engine.config.Config;
 import rabbitescape.engine.util.FileSystem;
 import rabbitescape.engine.util.RealFileSystem;
 import rabbitescape.render.BitmapCache;
-import rabbitescape.render.GameLoop;
+import rabbitescape.render.GameLaunch;
 import rabbitescape.render.Main;
 
 public class SwingSingleGameMain extends Main
@@ -57,13 +57,13 @@ public class SwingSingleGameMain extends Main
     }
 
     @Override
-    public GameLoop createGameLoop( World world, LevelWinListener winListener )
+    public GameLaunch createGameLoop( World world, LevelWinListener winListener )
     {
         SwingGameInit init = new SwingGameInit(
             bitmapCache, uiConfig, frame, menuUi );
 
         SwingUtilities.invokeLater( init );
 
-        return new SwingGameLoop( init, world, winListener );
+        return new SwingGameLaunch( init, world, winListener );
     }
 }

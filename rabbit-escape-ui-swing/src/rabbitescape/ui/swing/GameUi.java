@@ -169,7 +169,7 @@ public class GameUi
     private TopBar topBar;
 
     private Token.Type chosenAbility;
-    private SwingGameLoop gameLoop;
+    private SwingGameLaunch gameLoop;
 
     // Modified in Swing event thread, read in game loop thread
     public int scrollX;
@@ -411,7 +411,7 @@ public class GameUi
         );
     }
 
-    public void setGameLoop( SwingGameLoop gameLoop )
+    public void setGameLoop( SwingGameLaunch gameLoop )
     {
         this.gameLoop = gameLoop;
 

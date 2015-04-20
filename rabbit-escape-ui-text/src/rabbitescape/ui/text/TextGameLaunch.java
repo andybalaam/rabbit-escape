@@ -7,15 +7,15 @@ import rabbitescape.engine.LevelWinListener;
 import rabbitescape.engine.World;
 import rabbitescape.engine.World.CompletionState;
 import rabbitescape.engine.textworld.TextWorldManip;
-import rabbitescape.render.GameLoop;
+import rabbitescape.render.GameLaunch;
 
-public class TextGameLoop implements GameLoop
+public class TextGameLaunch implements GameLaunch
 {
     private final World world;
     private final LevelWinListener winListener;
     private final Terminal terminal;
 
-    public TextGameLoop(
+    public TextGameLaunch(
         World world, LevelWinListener winListener, Terminal terminal )
     {
         this.world = world;

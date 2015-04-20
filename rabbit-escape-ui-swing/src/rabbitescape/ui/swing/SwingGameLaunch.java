@@ -20,14 +20,14 @@ import rabbitescape.engine.World.CompletionState;
 import rabbitescape.render.AnimationCache;
 import rabbitescape.render.AnimationLoader;
 import rabbitescape.render.BitmapCache;
-import rabbitescape.render.GameLoop;
+import rabbitescape.render.GameLaunch;
 import rabbitescape.render.GraphPaperBackground;
 import rabbitescape.render.Physics;
 import rabbitescape.render.Renderer;
 import rabbitescape.render.SpriteAnimator;
 import rabbitescape.ui.swing.SwingGameInit.WhenUiReady;
 
-public class SwingGameLoop implements GameLoop
+public class SwingGameLaunch implements GameLaunch
 {
     public static interface StatsChangedListener
     {
@@ -46,7 +46,7 @@ public class SwingGameLoop implements GameLoop
     private final BitmapCache<SwingBitmap> bitmapCache;
     public final Renderer<SwingBitmap, SwingPaint> renderer;
 
-    public SwingGameLoop(
+    public SwingGameLaunch(
         SwingGameInit init, World world, LevelWinListener winListener )
     {
         this.world = world;

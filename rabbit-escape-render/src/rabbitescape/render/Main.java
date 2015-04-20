@@ -14,7 +14,7 @@ import rabbitescape.engine.util.FileSystem;
 
 public abstract class Main
 {
-    public abstract GameLoop createGameLoop(
+    public abstract GameLaunch createGameLoop(
         World world, LevelWinListener winListener );
 
     private static final int SUCCESS             = 0;
@@ -49,7 +49,7 @@ public abstract class Main
             World world = new LoadWorldFile( fs ).load(
                 new IgnoreWorldStatsListener(), levelName );
 
-            GameLoop gameLoop = createGameLoop( world, winListener );
+            GameLaunch gameLoop = createGameLoop( world, winListener );
 
             gameLoop.run( args );
 

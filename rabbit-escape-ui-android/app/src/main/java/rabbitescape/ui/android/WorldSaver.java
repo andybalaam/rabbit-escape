@@ -34,14 +34,14 @@ public class WorldSaver
     }
 
     private final World world;
-    private final AndroidGameLoop gameLoop;
+    private final AndroidGameLaunch gameLoop;
 
     private Signal requestSave = new Signal();
     private Signal saved = new Signal();
     private boolean saveWorld = false;
     public String[] savedWorld = null;
 
-    public WorldSaver( World world, AndroidGameLoop gameLoop )
+    public WorldSaver( World world, AndroidGameLaunch gameLoop )
     {
         this.world = world;
         this.gameLoop = gameLoop;
