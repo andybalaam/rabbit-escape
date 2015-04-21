@@ -2,7 +2,7 @@ package rabbitescape.ui.swing;
 
 import rabbitescape.render.Physics;
 
-public class GameLoop
+public class LegacyGameLoop
 {
     private static final int framesPerStep = 10;
 
@@ -11,7 +11,7 @@ public class GameLoop
     private final Physics physics;
     private final Graphics graphics;
 
-    public GameLoop( Physics physics, Graphics graphics )
+    public LegacyGameLoop( Physics physics, Graphics graphics )
     {
         this.physics = physics;
         this.graphics = graphics;

@@ -16,7 +16,7 @@ public class SwingGameLaunch implements GameLaunch
     public final Graphics graphics;
     private final GameUi jframe;
 
-    private final GameLoop loop;
+    private final LegacyGameLoop loop;
 
     public SwingGameLaunch(
         SwingGameInit init, World world, LevelWinListener winListener )
@@ -33,7 +33,7 @@ public class SwingGameLaunch implements GameLaunch
 
         jframe.setGameLaunch( this );
 
-        loop = new GameLoop( physics, graphics );
+        loop = new LegacyGameLoop( physics, graphics );
     }
 
     public void stop()
