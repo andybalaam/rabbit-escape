@@ -6,6 +6,7 @@ import rabbitescape.engine.LevelWinListener;
 import rabbitescape.engine.Token;
 import rabbitescape.engine.World;
 import rabbitescape.render.GameLaunch;
+import rabbitescape.render.gameloop.GameLoop;
 import rabbitescape.render.gameloop.GeneralPhysics;
 import rabbitescape.render.gameloop.Physics;
 import rabbitescape.ui.swing.SwingGameInit.WhenUiReady;
@@ -17,7 +18,7 @@ public class SwingGameLaunch implements GameLaunch
     public final SwingGraphics graphics;
     private final GameUi jframe;
 
-    private final LegacyGameLoop loop;
+    private final GameLoop loop;
 
     public SwingGameLaunch(
         SwingGameInit init, World world, LevelWinListener winListener )
@@ -34,12 +35,12 @@ public class SwingGameLaunch implements GameLaunch
 
         jframe.setGameLaunch( this );
 
-        loop = new LegacyGameLoop( new SwingInput(), physics, graphics );
+        loop = new GameLoop( new SwingInput(), physics, graphics );
     }
 
     public void stop()
     {
-        loop.stop();
+        loop.pleaseStop();
     }
 
     @Override
