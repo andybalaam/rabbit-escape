@@ -3,6 +3,9 @@ package rabbitescape.ui.android;
 import android.content.res.Resources;
 import android.graphics.BitmapFactory;
 
+import java.io.IOException;
+import java.io.InputStream;
+
 import rabbitescape.render.BitmapLoader;
 import rabbitescape.render.FailedToLoadImage;
 
@@ -18,25 +21,36 @@ public class AndroidBitmapLoader implements BitmapLoader<AndroidBitmap>
     @Override
     public AndroidBitmap load( String name, int tileSize )
     {
-        // tileSize is ignored for now
-
-        // If this is slow, consider using reflection on R.drawable.class
-        // (see http://daniel-codes.blogspot.co.uk/2009/12/dynamically-retrieving-resources-in.html)
-        // or allow passing an int ID instead of a name.
-
-        int id = resources.getIdentifier( name, "drawable", "rabbitescape.ui.android" );
-
-        if ( id == 0 )
+        if ( tileSize != 64 )
         {
-            throw new FailedToLoadImage( name );
+            throw new RuntimeException( "A Tile size is supposed to be hard-coded to 64!" );
         }
 
-        return new AndroidBitmap( BitmapFactory.decodeResource( resources, id ) );
+        try
+        {
+            InputStream assetStream = resources.getAssets().open( "images64/" + name + ".png" );
+            try
+            {
+                return new AndroidBitmap( BitmapFactory.decodeStream( assetStream ) );
+            }
+            finally
+            {
+                assetStream.close();
+            }
+        }
+        catch ( IOException e )
+        {
+            throw new FailedToLoadImage( name, e );
+        }
     }
 
     @Override
     public int sizeFor( int tileSize )
     {
-        return 32; // This is ignored for now
+        if ( tileSize != 64 )
+        {
+            throw new RuntimeException( "B Tile size is supposed to be hard-coded to 64!" );
+        }
+        return tileSize;
     }
 }

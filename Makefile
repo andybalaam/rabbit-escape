@@ -4,30 +4,39 @@ CLASSPATH=rabbit-escape-engine/bin/:rabbit-escape-render/bin/:rabbit-escape-ui-t
 IMAGES32_DEST=rabbit-escape-ui-swing/src/rabbitescape/ui/swing/images32
 IMAGES64_DEST=rabbit-escape-ui-swing/src/rabbitescape/ui/swing/images64
 IMAGES128_DEST=rabbit-escape-ui-swing/src/rabbitescape/ui/swing/images128
-ANDROIDIMAGESMDPI_DEST=rabbit-escape-ui-android/app/src/main/res/drawable-mdpi
-ANDROIDIMAGESHDPI_DEST=rabbit-escape-ui-android/app/src/main/res/drawable-hdpi
-ANDROIDIMAGESXHDPI_DEST=rabbit-escape-ui-android/app/src/main/res/drawable-xhdpi
-ANDROIDIMAGESXXHDPI_DEST=rabbit-escape-ui-android/app/src/main/res/drawable-xxhdpi
-ANDROIDIMAGESXXXHDPI_DEST=rabbit-escape-ui-android/app/src/main/res/drawable-xxxhdpi
+ANDROIDIMAGES32_DEST=rabbit-escape-ui-android/app/src/main/assets/images32
+ANDROIDIMAGES64_DEST=rabbit-escape-ui-android/app/src/main/assets/images64
+ANDROIDIMAGES128_DEST=rabbit-escape-ui-android/app/src/main/assets/images128
+
+ANDROIDICONSMDPI_DEST=rabbit-escape-ui-android/app/src/main/res/drawable-mdpi
+ANDROIDICONSHDPI_DEST=rabbit-escape-ui-android/app/src/main/res/drawable-hdpi
+ANDROIDICONSXHDPI_DEST=rabbit-escape-ui-android/app/src/main/res/drawable-xhdpi
+ANDROIDICONSXXHDPI_DEST=rabbit-escape-ui-android/app/src/main/res/drawable-xxhdpi
+ANDROIDICONSXXXHDPI_DEST=rabbit-escape-ui-android/app/src/main/res/drawable-xxxhdpi
 
 SVGIMAGESSRC := $(wildcard images-src/*.svg)
-SVGIMAGES32 := $(SVGIMAGESSRC:images-src/%.svg=$(IMAGES32_DEST)/%.png)
-SVGIMAGES64 := $(SVGIMAGESSRC:images-src/%.svg=$(IMAGES64_DEST)/%.png)
-SVGIMAGES128 := $(SVGIMAGESSRC:images-src/%.svg=$(IMAGES128_DEST)/%.png)
+SVGICONSSRC  := $(wildcard images-src/icons/*.svg)
+SVGIMAGES32  := $(SVGIMAGESSRC:images-src/%.svg=$(IMAGES32_DEST)/%.png) $(SVGICONSSRC:images-src/icons/%.svg=$(IMAGES32_DEST)/%.png)
+SVGIMAGES64  := $(SVGIMAGESSRC:images-src/%.svg=$(IMAGES64_DEST)/%.png) $(SVGICONSSRC:images-src/icons/%.svg=$(IMAGES64_DEST)/%.png)
+SVGIMAGES128 := $(SVGIMAGESSRC:images-src/%.svg=$(IMAGES128_DEST)/%.png) $(SVGICONSSRC:images-src/icons/%.svg=$(IMAGES128_DEST)/%.png)
 
 PNGIMAGESSRC := $(wildcard images-src/*.png)
-PNGIMAGES32 := $(PNGIMAGESSRC:images-src/%.png=$(IMAGES32_DEST)/%.png)
-PNGIMAGES64 := $(PNGIMAGESSRC:images-src/%.png=$(IMAGES64_DEST)/%.png)
+PNGIMAGES32  := $(PNGIMAGESSRC:images-src/%.png=$(IMAGES32_DEST)/%.png)
+PNGIMAGES64  := $(PNGIMAGESSRC:images-src/%.png=$(IMAGES64_DEST)/%.png)
 PNGIMAGES128 := $(PNGIMAGESSRC:images-src/%.png=$(IMAGES128_DEST)/%.png)
 
 MUSICSRC := $(wildcard music-src/*.flac)
 
-SVGANDROIDIMAGESMDPI  := $(SVGIMAGESSRC:images-src/%.svg=$(ANDROIDIMAGESMDPI_DEST)/%.png)
-SVGANDROIDIMAGESHDPI  := $(SVGIMAGESSRC:images-src/%.svg=$(ANDROIDIMAGESHDPI_DEST)/%.png)
-SVGANDROIDIMAGESXHDPI := $(SVGIMAGESSRC:images-src/%.svg=$(ANDROIDIMAGESXHDPI_DEST)/%.png)
-PNGANDROIDIMAGESMDPI  := $(PNGIMAGESSRC:images-src/%.png=$(ANDROIDIMAGESMDPI_DEST)/%.png)
-PNGANDROIDIMAGESHDPI  := $(PNGIMAGESSRC:images-src/%.png=$(ANDROIDIMAGESHDPI_DEST)/%.png)
-PNGANDROIDIMAGESXHDPI := $(PNGIMAGESSRC:images-src/%.png=$(ANDROIDIMAGESXHDPI_DEST)/%.png)
+SVGANDROIDIMAGES32  := $(SVGIMAGESSRC:images-src/%.svg=$(ANDROIDIMAGES32_DEST)/%.png)
+SVGANDROIDIMAGES64  := $(SVGIMAGESSRC:images-src/%.svg=$(ANDROIDIMAGES64_DEST)/%.png)
+SVGANDROIDIMAGES128 := $(SVGIMAGESSRC:images-src/%.svg=$(ANDROIDIMAGES128_DEST)/%.png)
+PNGANDROIDIMAGES32  := $(PNGIMAGESSRC:images-src/%.png=$(ANDROIDIMAGES32_DEST)/%.png)
+PNGANDROIDIMAGES64  := $(PNGIMAGESSRC:images-src/%.png=$(ANDROIDIMAGES64_DEST)/%.png)
+PNGANDROIDIMAGES128 := $(PNGIMAGESSRC:images-src/%.png=$(ANDROIDIMAGES128_DEST)/%.png)
+
+SVGANDROIDICONSMDPI  := $(SVGICONSSRC:images-src/icons/%.svg=$(ANDROIDICONSMDPI_DEST)/%.png)
+SVGANDROIDICONSHDPI  := $(SVGICONSSRC:images-src/icons/%.svg=$(ANDROIDICONSHDPI_DEST)/%.png)
+SVGANDROIDICONSXHDPI := $(SVGICONSSRC:images-src/icons/%.svg=$(ANDROIDICONSXHDPI_DEST)/%.png)
 
 ANIMATIONS_DIR := rabbit-escape-render/src/rabbitescape/render/animations
 LEVELS_DIRS := $(wildcard rabbit-escape-engine/src/rabbitescape/levels/*) \
@@ -42,6 +51,16 @@ $(IMAGES64_DEST)/%.png: images-src/%.svg
 $(IMAGES128_DEST)/%.png: images-src/%.svg
 	mkdir -p $(IMAGES128_DEST); inkscape $< --export-png=$@ --export-dpi=360
 
+$(IMAGES32_DEST)/%.png: images-src/icons/%.svg
+	mkdir -p $(IMAGES32_DEST); inkscape $< --export-png=$@ --export-dpi=90
+
+$(IMAGES64_DEST)/%.png: images-src/icons/%.svg
+	mkdir -p $(IMAGES64_DEST); inkscape $< --export-png=$@ --export-dpi=180
+
+$(IMAGES128_DEST)/%.png: images-src/icons/%.svg
+	mkdir -p $(IMAGES128_DEST); inkscape $< --export-png=$@ --export-dpi=360
+
+
 $(IMAGES32_DEST)/%.png: images-src/%.png
 	mkdir -p $(IMAGES32_DEST); convert $< -resize 12.5% $@
 
@@ -51,30 +70,41 @@ $(IMAGES64_DEST)/%.png: images-src/%.png
 $(IMAGES128_DEST)/%.png: images-src/%.png
 	mkdir -p $(IMAGES128_DEST); convert $< -resize 50% $@
 
-$(ANDROIDIMAGESMDPI_DEST)/%.png: images-src/%.svg
-	mkdir -p $(ANDROIDIMAGESMDPI_DEST); inkscape $< --export-png=$@ --export-dpi=90
 
-$(ANDROIDIMAGESHDPI_DEST)/%.png: images-src/%.svg
-	mkdir -p $(ANDROIDIMAGESHDPI_DEST); inkscape $< --export-png=$@ --export-dpi=135
+# Android images are just copies of the desktop ones
 
-$(ANDROIDIMAGESXHDPI_DEST)/%.png: images-src/%.svg
-	mkdir -p $(ANDROIDIMAGESXHDPI_DEST); inkscape $< --export-png=$@ --export-dpi=180
+$(ANDROIDIMAGES32_DEST)/%.png: $(IMAGES32_DEST)/%.png
+	mkdir -p $(ANDROIDIMAGES32_DEST); cp $< $@
 
-$(ANDROIDIMAGESXXHDPI_DEST)/%.png: images-src/%.svg
-	mkdir -p $(ANDROIDIMAGESXXHDPI_DEST); inkscape $< --export-png=$@ --export-dpi=270
+$(ANDROIDIMAGES64_DEST)/%.png: $(IMAGES64_DEST)/%.png
+	mkdir -p $(ANDROIDIMAGES64_DEST); cp $< $@
 
-$(ANDROIDIMAGESXXXHDPI_DEST)/%.png: images-src/%.svg
-	mkdir -p $(ANDROIDIMAGESXXXHDPI_DEST); inkscape $< --export-png=$@ --export-dpi=360
+$(ANDROIDIMAGES128_DEST)/%.png: $(IMAGES128_DEST)/%.png
+	mkdir -p $(ANDROIDIMAGES128_DEST); cp $< $@
 
 
-$(ANDROIDIMAGESMDPI_DEST)/%.png: images-src/%.png
-	mkdir -p $(ANDROIDIMAGESMDPI_DEST); convert $< -resize 12.5% $@
+# Android icons
 
-$(ANDROIDIMAGESHDPI_DEST)/%.png: images-src/%.png
-	mkdir -p $(ANDROIDIMAGESHDPI_DEST); convert $< -resize 18.75% $@
+$(ANDROIDICONSMDPI_DEST)/%.png: images-src/icons/%.svg
+	mkdir -p $(ANDROIDICONSMDPI_DEST); inkscape $< --export-png=$@ --export-dpi=90
 
-$(ANDROIDIMAGESXHDPI_DEST)/%.png: images-src/%.png
-	mkdir -p $(ANDROIDIMAGESXHDPI_DEST); convert $< -resize 25% $@
+$(ANDROIDICONSHDPI_DEST)/%.png: images-src/icons/%.svg
+	mkdir -p $(ANDROIDICONSHDPI_DEST); inkscape $< --export-png=$@ --export-dpi=135
+
+$(ANDROIDICONSXHDPI_DEST)/%.png: images-src/icons/%.svg
+	mkdir -p $(ANDROIDICONSXHDPI_DEST); inkscape $< --export-png=$@ --export-dpi=180
+
+$(ANDROIDICONSXXHDPI_DEST)/%.png: images-src/icons/%.svg
+	mkdir -p $(ANDROIDICONSXXHDPI_DEST); inkscape $< --export-png=$@ --export-dpi=270
+
+$(ANDROIDICONSXXXHDPI_DEST)/%.png: images-src/icons/%.svg
+	mkdir -p $(ANDROIDICONSXXXHDPI_DEST); inkscape $< --export-png=$@ --export-dpi=360
+
+
+# Will be needed again if we have some icons drawn as .png
+#$(ANDROIDICONSMDPI_DEST)/%.png: images-src/icons/%.png
+#	mkdir -p $(ANDROIDICONSMDPI_DEST); convert $< -resize 12.5% $@
+# ... etc for other sizes
 
 #$(MUSICOGG_DEST)/%.ogg: music-src/%.flac
 #	mkdir -p $(MUSICOGG_DEST); avconv -i $< -c:a libvorbis -q:a 1 $@
@@ -124,16 +154,27 @@ compile: images animations levels versioncheck
 	ant compile
 
 clean:
-	rm -rf \
+	- rm -r \
 		rabbit-escape-engine/bin/* \
 		rabbit-escape-render/bin/* \
 		rabbit-escape-ui-text/bin/* \
 		rabbit-escape-ui-swing/bin/*
 	find ./ -name "ls.txt" -delete
-	rm -rf dist
+	- rm -r dist
 
 clean-images:
-	rm -rf $(IMAGES32_DEST)/* $(IMAGES64_DEST)/* $(IMAGES128_DEST)/* $(ANDROIDIMAGESMDPI_DEST)/* $(ANDROIDIMAGESHDPI_DEST)/* $(ANDROIDIMAGESXHDPI_DEST)/*
+	- rm \
+		$(IMAGES32_DEST)/* \
+		$(IMAGES64_DEST)/* \
+		$(IMAGES128_DEST)/* \
+		$(ANDROIDIMAGES32_DEST)/* \
+		$(ANDROIDIMAGES64_DEST)/* \
+		$(ANDROIDIMAGES128_DEST)/* \
+		$(ANDROIDICONSMDPI_DEST)/* \
+		$(ANDROIDICONSHDPI_DEST)/* \
+		$(ANDROIDICONSXHDPI_DEST)/* \
+		$(ANDROIDICONSXXHDPI_DEST)/* \
+		$(ANDROIDICONSXXXHDPI_DEST)/*
 
 clean-all: clean clean-images
 
@@ -166,18 +207,25 @@ rabbit-escape-ui-android/app/libs/rabbit-escape-generic.jar: dist/rabbit-escape-
 	mkdir -p rabbit-escape-ui-android/app/libs/
 	cp dist/rabbit-escape-generic.jar rabbit-escape-ui-android/app/libs/
 
-android-images-mdpi:  $(SVGANDROIDIMAGESMDPI)  $(PNGANDROIDIMAGESMDPI)
-android-images-hdpi:  $(SVGANDROIDIMAGESHDPI)  $(PNGANDROIDIMAGESHDPI)
-android-images-xhdpi: $(SVGANDROIDIMAGESXHDPI) $(PNGANDROIDIMAGESXHDPI)
-android-images-xxhdpi:  $(ANDROIDIMAGESXXHDPI_DEST)/ic_launcher.png
-android-images-xxxhdpi: $(ANDROIDIMAGESXXXHDPI_DEST)/ic_launcher.png
+android-images-32:  $(SVGANDROIDIMAGES32)  $(PNGANDROIDIMAGES32)
+android-images-64:  $(SVGANDROIDIMAGES64)  $(PNGANDROIDIMAGES64)
+android-images-128: $(SVGANDROIDIMAGES128) $(PNGANDROIDIMAGES128)
+
+android-icons-mdpi:    $(SVGANDROIDICONSMDPI)
+android-icons-hdpi:    $(SVGANDROIDICONSHDPI)
+android-icons-xhdpi:   $(SVGANDROIDICONSXHDPI)
+android-icons-xxhdpi:  $(ANDROIDICONSXXHDPI_DEST)/ic_launcher.png
+android-icons-xxxhdpi: $(ANDROIDICONSXXXHDPI_DEST)/ic_launcher.png
 
 android-images: \
-	android-images-mdpi \
-	android-images-hdpi \
-	android-images-xhdpi \
-	android-images-xxhdpi \
-	android-images-xxxhdpi
+	android-images-32 \
+	android-images-64 \
+	android-images-128 \
+	android-icons-mdpi \
+	android-icons-hdpi \
+	android-icons-xhdpi \
+	android-icons-xxhdpi \
+	android-icons-xxxhdpi
 
 android-pre: android-images rabbit-escape-ui-android/app/libs/rabbit-escape-generic.jar
 

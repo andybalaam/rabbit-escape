@@ -8,6 +8,7 @@ ls.txt
 
 # Android
 rabbit-escape-ui-android/app/libs/rabbit-escape-generic.jar
+rabbit-escape-ui-android/app/src/main/assets/
 rabbit-escape-ui-android/app/src/main/res/drawable-mdpi/*.png
 rabbit-escape-ui-android/app/src/main/res/drawable-hdpi/*.png
 rabbit-escape-ui-android/app/src/main/res/drawable-xhdpi/*.png

@@ -73,7 +73,8 @@ public class AndroidGraphics implements Graphics
 
         this.animationCache = new AnimationCache( new AnimationLoader() );
         this.paint = new AndroidPaint( new Paint() );
-        this.renderingTileSize = (int)( 32 * displayDensity );
+        //TODO - find the right tile size to fit the window ... OLD: this.renderingTileSize = (int)( 32 * displayDensity );
+        this.renderingTileSize = 64;
         this.levelWidthPixels = renderingTileSize * world.size.width;
         this.levelHeightPixels = renderingTileSize * world.size.height;
 
