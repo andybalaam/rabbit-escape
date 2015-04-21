@@ -540,7 +540,7 @@ public class GameUi
         double scrX = getScrollBarProportion( canvasScrollBarX );
         double scrY = getScrollBarProportion( canvasScrollBarY );
 
-        gameLaunch.renderer.tileSize = zoom;
+        gameLaunch.graphics.setTileSize( zoom );
         setWorldSize( gameLaunch.world.size, zoom );
 
         setScrollBarFromProportion( canvasScrollBarX, scrX );
@@ -590,10 +590,10 @@ public class GameUi
             return;
         }
 
-        int tileX = ( pixelPosition.x - gameLaunch.renderer.offsetX )
+        int tileX = ( pixelPosition.x - gameLaunch.graphics.renderer.offsetX )
             / worldTileSizeInPixels;
 
-        int tileY = ( pixelPosition.y - gameLaunch.renderer.offsetY )
+        int tileY = ( pixelPosition.y - gameLaunch.graphics.renderer.offsetY )
             / worldTileSizeInPixels;
 
         int numLeft = gameLaunch.addToken( tileX, tileY, chosenAbility );
