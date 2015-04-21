@@ -6,13 +6,14 @@ import rabbitescape.engine.LevelWinListener;
 import rabbitescape.engine.Token;
 import rabbitescape.engine.World;
 import rabbitescape.render.GameLaunch;
-import rabbitescape.render.LegacyPhysics;
+import rabbitescape.render.gameloop.GeneralPhysics;
+import rabbitescape.render.gameloop.Physics;
 import rabbitescape.ui.swing.SwingGameInit.WhenUiReady;
 
 public class SwingGameLaunch implements GameLaunch
 {
     public final World world;
-    private final LegacyPhysics physics;
+    private final GeneralPhysics physics;
     public final SwingGraphics graphics;
     private final GameUi jframe;
 
@@ -22,7 +23,7 @@ public class SwingGameLaunch implements GameLaunch
         SwingGameInit init, World world, LevelWinListener winListener )
     {
         this.world = world;
-        this.physics = new LegacyPhysics( world, winListener );
+        this.physics = new GeneralPhysics( world, winListener );
 
         // This blocks until the UI is ready:
         WhenUiReady uiPieces = init.waitForUi.waitForUi();
@@ -63,7 +64,7 @@ public class SwingGameLaunch implements GameLaunch
         return world.abilities;
     }
 
-    public void addStatsChangedListener( LegacyPhysics.StatsChangedListener listener )
+    public void addStatsChangedListener( Physics.StatsChangedListener listener )
     {
         physics.addStatsChangedListener( listener );
     }

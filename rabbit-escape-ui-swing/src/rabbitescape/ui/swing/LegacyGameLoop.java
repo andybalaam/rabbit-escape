@@ -28,7 +28,10 @@ public class LegacyGameLoop
         {
             if ( physics.gameRunning() )
             {
-                physics.step( 70, 70 );
+                for ( int i = 0; i < 10; ++i )
+                {
+                    physics.step( 0, 70 );
+                }
             }
 
             int f = 0;

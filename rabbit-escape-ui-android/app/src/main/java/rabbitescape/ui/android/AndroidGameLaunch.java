@@ -7,6 +7,7 @@ import rabbitescape.engine.LevelWinListener;
 import rabbitescape.engine.Token;
 import rabbitescape.engine.World;
 import rabbitescape.render.BitmapCache;
+import rabbitescape.render.gameloop.GeneralPhysics;
 
 import static android.text.TextUtils.join;
 
@@ -18,7 +19,7 @@ public class AndroidGameLaunch implements Runnable
     private static final String STATE_SCROLL_Y = "rabbitescape.scrolly";
 
     // Transient state
-    public final AndroidPhysics physics;
+    public final GeneralPhysics physics;
     private final AndroidGraphics graphics;
 
     public final WorldSaver worldSaver;
@@ -33,7 +34,7 @@ public class AndroidGameLaunch implements Runnable
         Bundle savedInstanceState
     )
     {
-        this.physics = new AndroidPhysics( world, winListener );
+        this.physics = new GeneralPhysics( world, winListener );
 
         int scrollX;
         int scrollY;

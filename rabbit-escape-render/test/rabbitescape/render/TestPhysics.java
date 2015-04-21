@@ -9,8 +9,9 @@ import rabbitescape.engine.LevelWinListener;
 import rabbitescape.engine.Token;
 import rabbitescape.engine.World;
 import rabbitescape.engine.textworld.TextWorldManip;
-import rabbitescape.render.LegacyPhysics.StatsChangedListener;
-import rabbitescape.render.LegacyPhysics.WorldModifier;
+import rabbitescape.render.gameloop.GeneralPhysics;
+import rabbitescape.render.gameloop.Physics.StatsChangedListener;
+import rabbitescape.render.gameloop.GeneralPhysics.WorldModifier;
 
 public class TestPhysics
 {
@@ -113,10 +114,13 @@ public class TestPhysics
         world.setIntro( false );
 
         LevelWinListener winListener = null;
-        LegacyPhysics physics = new LegacyPhysics( world, winListener );
+        GeneralPhysics physics = new GeneralPhysics( world, winListener );
 
-        // This is what we are testing - step
-        physics.step( 70, 70 );
+        // This is what we are testing - step once
+        for ( int i = 0; i < 10; ++i )
+        {
+            physics.step( 0, GeneralPhysics.simulation_time_step_ms );
+        }
 
         // The rabbit has moved
         assertEquals( 6, world.rabbits.get( 0 ).x );
@@ -154,11 +158,13 @@ public class TestPhysics
         world.setIntro( false );
 
         TracingWinListener winListener = new TracingWinListener();
-        LegacyPhysics physics = new LegacyPhysics( world, winListener );
+        GeneralPhysics physics = new GeneralPhysics( world, winListener );
 
-        // This is what we are testing - step twice - winlistener should hear
-        physics.step( 70, 70 );
-        physics.step( 70, 70 );
+        // This is what we are testing - 2 time steps - winlistener should hear
+        for ( int i = 0; i < 20; ++i )
+        {
+            physics.step( 0, GeneralPhysics.simulation_time_step_ms );
+        }
 
         // The winListener was notified of the win
         assertTrue(  winListener.wonCalled );
@@ -177,11 +183,13 @@ public class TestPhysics
         world.setIntro( false );
 
         TracingWinListener winListener = new TracingWinListener();
-        LegacyPhysics physics = new LegacyPhysics( world, winListener );
+        GeneralPhysics physics = new GeneralPhysics( world, winListener );
 
         // This is what we are testing - step twice - winlistener should hear
-        physics.step( 70, 70 );
-        physics.step( 70, 70 );
+        for ( int i = 0; i < 20; ++i )
+        {
+            physics.step( 0, GeneralPhysics.simulation_time_step_ms );
+        }
 
         // The winListener was notified of the loss
         assertFalse(  winListener.wonCalled );
@@ -200,7 +208,7 @@ public class TestPhysics
         world.setIntro( false );
 
         LevelWinListener winListener = null;
-        LegacyPhysics physics = new LegacyPhysics( world, winListener );
+        GeneralPhysics physics = new GeneralPhysics( world, winListener );
 
         // Sanity: no things at the moment
         assertEquals( 0, world.things.size() );
@@ -232,7 +240,7 @@ public class TestPhysics
         world.setIntro( false );
 
         LevelWinListener winListener = null;
-        LegacyPhysics physics = new LegacyPhysics( world, winListener );
+        GeneralPhysics physics = new GeneralPhysics( world, winListener );
 
         // Add 1 - should work
         physics.addToken( 1, 1, Token.Type.bash );
@@ -259,7 +267,7 @@ public class TestPhysics
         world.setIntro( false );
 
         LevelWinListener winListener = null;
-        LegacyPhysics physics = new LegacyPhysics( world, winListener );
+        GeneralPhysics physics = new GeneralPhysics( world, winListener );
 
         // Add 1 - 1 left
         assertEquals( 1, physics.addToken( 1, 1, Token.Type.bash ) );
@@ -286,7 +294,7 @@ public class TestPhysics
         world.setIntro( false );
 
         LevelWinListener winListener = null;
-        LegacyPhysics physics = new LegacyPhysics( world, winListener );
+        GeneralPhysics physics = new GeneralPhysics( world, winListener );
 
         // Off the left does not add
         physics.addToken( -1, 1, Token.Type.bash );
@@ -321,7 +329,7 @@ public class TestPhysics
         world.setIntro( false );
 
         LevelWinListener winListener = null;
-        LegacyPhysics physics = new LegacyPhysics( world, winListener );
+        GeneralPhysics physics = new GeneralPhysics( world, winListener );
 
         // Paused does not add
         world.setPaused( true );
@@ -350,7 +358,7 @@ public class TestPhysics
         world.setIntro( false );
 
         LevelWinListener winListener = null;
-        LegacyPhysics physics = new LegacyPhysics( world, winListener );
+        GeneralPhysics physics = new GeneralPhysics( world, winListener );
 
         assertTrue( physics.gameRunning() );
 
@@ -382,7 +390,7 @@ public class TestPhysics
         world.setIntro( false );
 
         LevelWinListener winListener = null;
-        LegacyPhysics physics = new LegacyPhysics( world, winListener );
+        GeneralPhysics physics = new GeneralPhysics( world, winListener );
 
         // Ask to track stats
         TrackingStatsListener myListener = new TrackingStatsListener();
@@ -395,7 +403,10 @@ public class TestPhysics
         physics.addToken( 1, 1, Token.Type.block );
 
         // This is what we are testing - step the world
-        physics.step( 70, 70 );
+        for ( int i = 0; i < 10; ++i )
+        {
+            physics.step( 0, GeneralPhysics.simulation_time_step_ms );
+        }
 
         // Listeners should have been called
         assertTrue( myListener.changedCalled );

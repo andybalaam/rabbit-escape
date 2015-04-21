@@ -1,4 +1,4 @@
-package rabbitescape.render;
+package rabbitescape.render.gameloop;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,9 +6,8 @@ import java.util.List;
 import rabbitescape.engine.LevelWinListener;
 import rabbitescape.engine.Token;
 import rabbitescape.engine.World;
-import rabbitescape.render.gameloop.Physics;
 
-public class LegacyPhysics implements Physics
+public class GeneralPhysics implements Physics
 {
     /**
      * Everything that modifies the world goes through here, with
@@ -37,18 +36,18 @@ public class LegacyPhysics implements Physics
         }
     }
 
-    public static interface StatsChangedListener
-    {
-        void changed( int waiting, int out, int saved );
-    }
+    private static final long max_allowed_skips = 10;
+    public static final long simulation_time_step_ms = 70;
 
-    private final World world;
+    public int frame;
+    public final World world;
     private final WorldModifier worldModifier;
     private final LevelWinListener winListener;
     private final List<StatsChangedListener> statsListeners;
 
-    public LegacyPhysics( World world, LevelWinListener winListener )
+    public GeneralPhysics( World world, LevelWinListener winListener )
     {
+        this.frame = 0;
         this.world = world;
         this.worldModifier = new WorldModifier( world );
         this.winListener = winListener;
@@ -56,46 +55,42 @@ public class LegacyPhysics implements Physics
     }
 
     @Override
-    public boolean gameRunning()
+    public long step( long simulation_time, long frame_start_time )
     {
-        return ( world.completionState() == World.CompletionState.RUNNING );
+        for ( int skipped = 0; skipped < max_allowed_skips; ++skipped )
+        {
+            if ( simulation_time >= frame_start_time )
+            {
+                break;
+            }
+
+            ++frame;
+
+            if ( frame == 10 )
+            {
+                frame = 0;
+
+                worldModifier.step();
+                checkWon();
+                notifyStatsListeners();
+            }
+
+            simulation_time += simulation_time_step_ms;
+        }
+
+        return simulation_time;
     }
 
     @Override
     public int frameNumber()
     {
-        return 0;
+        return frame;
     }
 
     @Override
-    public long step(  long simulation_time, long frame_start_time  )
+    public boolean gameRunning()
     {
-        worldModifier.step();
-        checkWon();
-        notifyStatsListeners();
-
-        return 0;
-    }
-
-    private void checkWon()
-    {
-        switch ( world.completionState() )
-        {
-            case WON:
-            {
-                winListener.won();
-                break;
-            }
-            case LOST:
-            {
-                winListener.lost();
-                break;
-            }
-            default:
-            {
-                break;
-            }
-        }
+        return ( world.completionState() == World.CompletionState.RUNNING );
     }
 
     private void notifyStatsListeners()
@@ -131,4 +126,26 @@ public class LegacyPhysics implements Physics
     {
         statsListeners.add( listener );
     }
+
+    private void checkWon()
+    {
+        switch ( world.completionState() )
+        {
+            case WON:
+            {
+                winListener.won();
+                break;
+            }
+            case LOST:
+            {
+                winListener.lost();
+                break;
+            }
+            default:
+            {
+                break;
+            }
+        }
+    }
+
 }
