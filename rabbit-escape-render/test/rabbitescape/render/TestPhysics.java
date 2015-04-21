@@ -9,6 +9,7 @@ import rabbitescape.engine.LevelWinListener;
 import rabbitescape.engine.Token;
 import rabbitescape.engine.World;
 import rabbitescape.engine.textworld.TextWorldManip;
+import rabbitescape.render.Physics.StatsChangedListener;
 import rabbitescape.render.Physics.WorldModifier;
 
 public class TestPhysics
@@ -356,4 +357,49 @@ public class TestPhysics
         world.setPaused( true );
         assertFalse( physics.gameRunning() );
     }
+
+    @Test
+    public void Stats_listeners_are_notified_when_stats_change()
+    {
+        class TrackingStatsListener implements StatsChangedListener
+        {
+            boolean changedCalled = false;
+
+            @Override
+            public void changed( int waiting, int out, int saved )
+            {
+                assertFalse( changedCalled );
+                changedCalled = true;
+            }
+        }
+
+        final World world = TextWorldManip.createWorld(
+            "#      #",
+            "# /) r #",
+            "########",
+            ":block=1"
+        );
+        world.setIntro( false );
+
+        LevelWinListener winListener = null;
+        Physics physics = new Physics( world, winListener );
+
+        // Ask to track stats
+        TrackingStatsListener myListener = new TrackingStatsListener();
+        physics.addStatsChangedListener( myListener );
+
+        // Sanity
+        assertFalse( myListener.changedCalled );
+
+        // Change something that changes stats
+        physics.addToken( 1, 1, Token.Type.block );
+
+        // This is what we are testing - step the world
+        physics.step();
+
+        // Listeners should have been called
+        assertTrue( myListener.changedCalled );
+    }
+
+    // TODO: Stats_listeners_are_not_notified_when_stats_do_not_change
 }
