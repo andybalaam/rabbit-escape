@@ -18,8 +18,8 @@ public class AndroidGameLaunch implements Runnable
     private static final String STATE_SCROLL_Y = "rabbitescape.scrolly";
 
     // Transient state
-    public final Physics physics;
-    private final Graphics graphics;
+    public final AndroidPhysics physics;
+    private final AndroidGraphics graphics;
 
     public final WorldSaver worldSaver;
     private final GameLoop loop;
@@ -33,7 +33,7 @@ public class AndroidGameLaunch implements Runnable
         Bundle savedInstanceState
     )
     {
-        this.physics = new Physics( world, winListener );
+        this.physics = new AndroidPhysics( world, winListener );
 
         int scrollX;
         int scrollY;
@@ -49,12 +49,12 @@ public class AndroidGameLaunch implements Runnable
             scrollY = 0;
         }
 
-        this.graphics = new Graphics(
+        this.graphics = new AndroidGraphics(
             bitmapCache, world, surfaceHolder, displayDensity, scrollX, scrollY );
 
         this.worldSaver = new WorldSaver( world, this );
 
-        Input input = new Input( worldSaver );
+        AndroidInput input = new AndroidInput( worldSaver );
 
         loop = new GameLoop( input, physics, graphics );
     }
@@ -97,11 +97,11 @@ public class AndroidGameLaunch implements Runnable
 
     public boolean isRunning()
     {
-        return loop.running;
+        return loop.isRunning();
     }
 
     public void scrollBy( float x, float y )
     {
-        graphics.scrollBy( x, y );;
+        graphics.scrollBy( x, y );
     }
 }

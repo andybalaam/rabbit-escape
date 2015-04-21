@@ -9,7 +9,7 @@ public class GameLoop
     private final Input input;
     private final Physics physics;
     private final Graphics graphics;
-    public boolean running;
+    private boolean running;
 
     public GameLoop( Input input, Physics physics, Graphics graphics )
     {
@@ -28,7 +28,7 @@ public class GameLoop
         {
             input.waitMs( 0 );
             simulation_time = physics.step( simulation_time, frame_start_time );
-            graphics.draw( physics.frame );
+            graphics.draw( physics.frameNumber() );
             frame_start_time = waitForNextFrame( frame_start_time );
 
             if ( !physics.gameRunning() )
@@ -52,6 +52,11 @@ public class GameLoop
         running = false;
     }
 
+    public boolean isRunning()
+    {
+        return running;
+    }
+
     private void pause()
     {
         graphics.rememberScrollPos();
@@ -59,7 +64,7 @@ public class GameLoop
         while ( !physics.gameRunning() && running )
         {
             input.waitMs( 100 );
-            graphics.drawIfScrolled( physics.frame );
+            graphics.drawIfScrolled( physics.frameNumber() );
         }
     }
 
