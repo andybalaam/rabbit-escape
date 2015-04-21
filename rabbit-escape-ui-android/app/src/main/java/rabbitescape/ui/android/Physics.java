@@ -6,6 +6,9 @@ import rabbitescape.engine.World;
 
 public class Physics
 {
+    private static final long max_allowed_skips = 10;
+    private static final long simulation_time_step_ms = 70;
+
     public int frame;
     public final World world;
     private final rabbitescape.render.Physics impl;
@@ -17,15 +20,27 @@ public class Physics
         this.impl = new rabbitescape.render.Physics( world, winListener );
     }
 
-    public void step()
+    public long step( long simulation_time, long frame_start_time )
     {
-        ++frame;
-
-        if ( frame == 10 )
+        for ( int skipped = 0; skipped < max_allowed_skips; ++skipped )
         {
-            frame = 0;
-            impl.step();
+            if ( simulation_time >= frame_start_time )
+            {
+                break;
+            }
+
+            ++frame;
+
+            if ( frame == 10 )
+            {
+                frame = 0;
+                impl.step();
+            }
+
+            simulation_time += simulation_time_step_ms;
         }
+
+        return simulation_time;
     }
 
     public boolean gameRunning()
