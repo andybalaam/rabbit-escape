@@ -18,8 +18,9 @@ import rabbitescape.render.BitmapCache;
 import rabbitescape.render.GraphPaperBackground;
 import rabbitescape.render.Renderer;
 import rabbitescape.render.SpriteAnimator;
+import rabbitescape.render.gameloop.Graphics;
 
-public class Graphics
+public class SwingGraphics implements Graphics
 {
     private static class DrawFrame extends BufferedDraw
     {
@@ -249,8 +250,10 @@ public class Graphics
     private final SpriteAnimator<SwingBitmap> animator;
 
     public final Renderer<SwingBitmap, SwingPaint> renderer;
+    private int prevScrollX;
+    private int prevScrollY;
 
-    public Graphics(
+    public SwingGraphics(
         World world, GameUi jframe, BitmapCache<SwingBitmap> bitmapCache )
     {
         this.world = world;
@@ -263,7 +266,8 @@ public class Graphics
         this.renderer = new Renderer<SwingBitmap, SwingPaint>( 0, 0, -1 );
     }
 
-    public void step( int frame )
+    @Override
+    public void draw( int frame )
     {
         setRendererOffset( renderer );
 
@@ -307,6 +311,24 @@ public class Graphics
         else
         {
             return -scroll;
+        }
+    }
+
+    @Override
+    public void rememberScrollPos()
+    {
+        prevScrollX = jframe.scrollX;
+        prevScrollY = jframe.scrollY;
+    }
+
+    @Override
+    public void drawIfScrolled( int frame )
+    {
+        if ( prevScrollX != jframe.scrollX || prevScrollY != jframe.scrollY )
+        {
+            draw( frame );
+            prevScrollX = jframe.scrollX;
+            prevScrollY = jframe.scrollY;
         }
     }
 }

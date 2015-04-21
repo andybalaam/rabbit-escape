@@ -1,6 +1,8 @@
 package rabbitescape.ui.swing;
 
-import rabbitescape.render.Physics;
+import rabbitescape.render.gameloop.Graphics;
+import rabbitescape.render.gameloop.Input;
+import rabbitescape.render.gameloop.Physics;
 
 public class LegacyGameLoop
 {
@@ -8,11 +10,13 @@ public class LegacyGameLoop
 
     private boolean running;
 
+    private final Input input;
     private final Physics physics;
     private final Graphics graphics;
 
-    public LegacyGameLoop( Physics physics, Graphics graphics )
+    public LegacyGameLoop( Input input, Physics physics, Graphics graphics )
     {
+        this.input = input;
         this.physics = physics;
         this.graphics = graphics;
         this.running = true;
@@ -24,15 +28,15 @@ public class LegacyGameLoop
         {
             if ( physics.gameRunning() )
             {
-                physics.step();
+                physics.step( 70, 70 );
             }
 
             int f = 0;
             while ( running && f < framesPerStep )
             {
-                sleep( 50 );
+                input.waitMs( 50 );
 
-                graphics.step( f );
+                graphics.draw( f );
 
                 if ( physics.gameRunning() )
                 {
@@ -42,7 +46,7 @@ public class LegacyGameLoop
                 else
                 {
                     // Slow the frame rate when paused
-                    sleep( 500 );
+                    input.waitMs( 500 );
                 }
             }
         }
@@ -51,16 +55,5 @@ public class LegacyGameLoop
     public void stop()
     {
         running = false;
-    }
-
-    private void sleep( long millis )
-    {
-        try
-        {
-            Thread.sleep( millis );
-        }
-        catch ( InterruptedException ignored )
-        {
-        }
     }
 }

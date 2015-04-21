@@ -12,6 +12,7 @@ import rabbitescape.render.BitmapCache;
 import rabbitescape.render.GraphPaperBackground;
 import rabbitescape.render.Renderer;
 import rabbitescape.render.SpriteAnimator;
+import rabbitescape.render.gameloop.Graphics;
 
 public class AndroidGraphics implements Graphics
 {

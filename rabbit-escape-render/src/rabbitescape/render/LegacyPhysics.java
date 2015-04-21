@@ -6,8 +6,9 @@ import java.util.List;
 import rabbitescape.engine.LevelWinListener;
 import rabbitescape.engine.Token;
 import rabbitescape.engine.World;
+import rabbitescape.render.gameloop.Physics;
 
-public class Physics
+public class LegacyPhysics implements Physics
 {
     /**
      * Everything that modifies the world goes through here, with
@@ -46,7 +47,7 @@ public class Physics
     private final LevelWinListener winListener;
     private final List<StatsChangedListener> statsListeners;
 
-    public Physics( World world, LevelWinListener winListener )
+    public LegacyPhysics( World world, LevelWinListener winListener )
     {
         this.world = world;
         this.worldModifier = new WorldModifier( world );
@@ -54,16 +55,26 @@ public class Physics
         this.statsListeners = new ArrayList<>();
     }
 
+    @Override
     public boolean gameRunning()
     {
         return ( world.completionState() == World.CompletionState.RUNNING );
     }
 
-    public void step()
+    @Override
+    public int frameNumber()
+    {
+        return 0;
+    }
+
+    @Override
+    public long step(  long simulation_time, long frame_start_time  )
     {
         worldModifier.step();
         checkWon();
         notifyStatsListeners();
+
+        return 0;
     }
 
     private void checkWon()

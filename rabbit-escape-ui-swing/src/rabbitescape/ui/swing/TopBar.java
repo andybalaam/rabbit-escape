@@ -11,12 +11,12 @@ import java.util.Map;
 import javax.swing.*;
 
 import rabbitescape.engine.Token;
-import rabbitescape.render.Physics;
+import rabbitescape.render.LegacyPhysics;
 
 import static rabbitescape.engine.i18n.Translation.t;
 import static rabbitescape.engine.util.Util.*;
 
-public class TopBar implements Physics.StatsChangedListener
+public class TopBar implements LegacyPhysics.StatsChangedListener
 {
     private static final String outText     = "Out: ${num1} / ${num2}";
     private static final String savedText   = "Saved: ${num1} / ${num2}";

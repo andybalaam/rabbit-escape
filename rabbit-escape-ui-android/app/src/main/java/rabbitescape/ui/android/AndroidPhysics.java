@@ -3,6 +3,7 @@ package rabbitescape.ui.android;
 import rabbitescape.engine.LevelWinListener;
 import rabbitescape.engine.Token;
 import rabbitescape.engine.World;
+import rabbitescape.render.gameloop.Physics;
 
 public class AndroidPhysics implements Physics
 {
@@ -11,13 +12,13 @@ public class AndroidPhysics implements Physics
 
     public int frame;
     public final World world;
-    private final rabbitescape.render.Physics impl;
+    private final rabbitescape.render.LegacyPhysics impl;
 
     public AndroidPhysics( World world, LevelWinListener winListener )
     {
         this.frame = 0;
         this.world = world;
-        this.impl = new rabbitescape.render.Physics( world, winListener );
+        this.impl = new rabbitescape.render.LegacyPhysics( world, winListener );
     }
 
     @Override
@@ -35,7 +36,7 @@ public class AndroidPhysics implements Physics
             if ( frame == 10 )
             {
                 frame = 0;
-                impl.step();
+                impl.step( simulation_time, frame_start_time );
             }
 
             simulation_time += simulation_time_step_ms;

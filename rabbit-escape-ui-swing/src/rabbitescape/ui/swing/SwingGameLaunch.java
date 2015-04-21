@@ -6,14 +6,14 @@ import rabbitescape.engine.LevelWinListener;
 import rabbitescape.engine.Token;
 import rabbitescape.engine.World;
 import rabbitescape.render.GameLaunch;
-import rabbitescape.render.Physics;
+import rabbitescape.render.LegacyPhysics;
 import rabbitescape.ui.swing.SwingGameInit.WhenUiReady;
 
 public class SwingGameLaunch implements GameLaunch
 {
     public final World world;
-    private final Physics physics;
-    public final Graphics graphics;
+    private final LegacyPhysics physics;
+    public final SwingGraphics graphics;
     private final GameUi jframe;
 
     private final LegacyGameLoop loop;
@@ -22,18 +22,18 @@ public class SwingGameLaunch implements GameLaunch
         SwingGameInit init, World world, LevelWinListener winListener )
     {
         this.world = world;
-        this.physics = new Physics( world, winListener );
+        this.physics = new LegacyPhysics( world, winListener );
 
         // This blocks until the UI is ready:
         WhenUiReady uiPieces = init.waitForUi.waitForUi();
 
         this.jframe = uiPieces.jframe;
-        this.graphics = new Graphics(
+        this.graphics = new SwingGraphics(
             world, uiPieces.jframe, uiPieces.bitmapCache );
 
         jframe.setGameLaunch( this );
 
-        loop = new LegacyGameLoop( physics, graphics );
+        loop = new LegacyGameLoop( new SwingInput(), physics, graphics );
     }
 
     public void stop()
@@ -63,7 +63,7 @@ public class SwingGameLaunch implements GameLaunch
         return world.abilities;
     }
 
-    public void addStatsChangedListener( Physics.StatsChangedListener listener )
+    public void addStatsChangedListener( LegacyPhysics.StatsChangedListener listener )
     {
         physics.addStatsChangedListener( listener );
     }

@@ -2,6 +2,10 @@ package rabbitescape.ui.android;
 
 import java.util.Date;
 
+import rabbitescape.render.gameloop.Graphics;
+import rabbitescape.render.gameloop.Input;
+import rabbitescape.render.gameloop.Physics;
+
 public class GameLoop
 {
     private static final long frame_time_ms = 70;

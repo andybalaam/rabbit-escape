@@ -1,5 +1,7 @@
 package rabbitescape.ui.android;
 
+import rabbitescape.render.gameloop.Input;
+
 public class AndroidInput implements Input
 {
     private final WorldSaver worldSaver;
