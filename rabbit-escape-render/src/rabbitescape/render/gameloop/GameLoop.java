@@ -1,10 +1,6 @@
-package rabbitescape.ui.android;
+package rabbitescape.render.gameloop;
 
 import java.util.Date;
-
-import rabbitescape.render.gameloop.Graphics;
-import rabbitescape.render.gameloop.Input;
-import rabbitescape.render.gameloop.Physics;
 
 public class GameLoop
 {

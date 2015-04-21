@@ -7,6 +7,7 @@ import rabbitescape.engine.LevelWinListener;
 import rabbitescape.engine.Token;
 import rabbitescape.engine.World;
 import rabbitescape.render.BitmapCache;
+import rabbitescape.render.gameloop.GameLoop;
 import rabbitescape.render.gameloop.GeneralPhysics;
 
 import static android.text.TextUtils.join;
