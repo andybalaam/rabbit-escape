@@ -1,4 +1,6 @@
 
+MAKEFLAGS += --warn-undefined-variables
+
 CLASSPATH=rabbit-escape-engine/bin/:rabbit-escape-render/bin/:rabbit-escape-ui-text/bin/:rabbit-escape-ui-swing/bin/
 
 IMAGES32_DEST=rabbit-escape-ui-swing/src/rabbitescape/ui/swing/images32
@@ -111,9 +113,17 @@ $(ANDROIDICONSXXXHDPI_DEST)/%.png: images-src/icons/%.svg
 
 VERSION=0.2.2
 
+ifndef MAKECMDGOALS
+MAKECMDGOALS = all
+endif
+
 all: compile
 
-dist: dist/rabbit-escape-generic.jar dist/rabbit-escape-${VERSION}.jar
+# Fails if the Makefile contains any warnings
+no-make-warnings:
+	! make -n $(MAKECMDGOALS) 2>&1 >/dev/null | grep warning
+
+dist: no-make-warnings dist/rabbit-escape-generic.jar dist/rabbit-escape-${VERSION}.jar
 
 dist/rabbit-escape-generic.jar: compile
 	mkdir -p dist
@@ -136,24 +146,24 @@ dist/rabbit-escape-${VERSION}.jar: compile
 		jar -uf ../../dist/rabbit-escape-${VERSION}.jar `find ./`
 	jar -ufm dist/rabbit-escape-${VERSION}.jar MANIFEST.MF
 
-images: $(SVGIMAGES32) $(PNGIMAGES32) $(SVGIMAGES64) $(PNGIMAGES64) $(SVGIMAGES128) $(PNGIMAGES128)
+images: no-make-warnings $(SVGIMAGES32) $(PNGIMAGES32) $(SVGIMAGES64) $(PNGIMAGES64) $(SVGIMAGES128) $(PNGIMAGES128)
 
-#music: $(MUSICOGG)
+#music: no-make-warnings $(MUSICOGG)
 
 %/ls.txt: %/*.re*
 	ls $(@D) --hide=ls.txt > $(@D)/ls.txt
 
-animations: $(ANIMATIONS_DIR)/ls.txt
+animations: no-make-warnings $(ANIMATIONS_DIR)/ls.txt
 
-levels: $(patsubst %, %/ls.txt, $(LEVELS_DIRS))
+levels: no-make-warnings $(patsubst %, %/ls.txt, $(LEVELS_DIRS))
 
 versioncheck:
 	grep "version = \"${VERSION}\"" rabbit-escape-engine/src/rabbitescape/engine/menu/AboutText.java
 
-compile: images animations levels versioncheck
+compile: no-make-warnings images animations levels versioncheck
 	ant compile
 
-clean:
+clean: no-make-warnings
 	- rm -r \
 		rabbit-escape-engine/bin/* \
 		rabbit-escape-render/bin/* \
@@ -162,7 +172,7 @@ clean:
 	find ./ -name "ls.txt" -delete
 	- rm -r dist
 
-clean-images:
+clean-images: no-make-warnings
 	- rm \
 		$(IMAGES32_DEST)/* \
 		$(IMAGES64_DEST)/* \
