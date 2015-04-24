@@ -16,20 +16,22 @@ import rabbitescape.render.gameloop.Graphics;
 
 public class AndroidGraphics implements Graphics
 {
+    private static final int MIN_INITIAL_TILE_SIZE = 32;
+    private static final int MIN_TILE_SIZE = 16;
+
     private final BitmapCache<AndroidBitmap> bitmapCache;
     private final World world;
     private final SurfaceHolder surfaceHolder;
     private final AnimationCache animationCache;
     private final AndroidPaint paint;
-    public final int renderingTileSize;
-    public final int levelWidthPixels;
-    public final int levelHeightPixels;
+    public int renderingTileSize;
+    public int levelWidthPixels;
+    public int levelHeightPixels;
 
     private int screenWidthPixels;
     private int screenHeightPixels;
     private int prevScrollX;
     private int prevScrollY;
-    private boolean checkScroll;
 
     public int scrollX;
     public int scrollY;
@@ -73,14 +75,29 @@ public class AndroidGraphics implements Graphics
 
         this.animationCache = new AnimationCache( new AnimationLoader() );
         this.paint = new AndroidPaint( new Paint() );
-        //TODO - find the right tile size to fit the window ... OLD: this.renderingTileSize = (int)( 32 * displayDensity );
-        this.renderingTileSize = 64;
-        this.levelWidthPixels = renderingTileSize * world.size.width;
-        this.levelHeightPixels = renderingTileSize * world.size.height;
 
-        this.checkScroll = true;
-        this.screenWidthPixels = 100; // Will be set properly when we draw
-        this.screenHeightPixels = 100;
+        // These will be set properly when we draw, so we know screen size
+        this.screenWidthPixels  = -1;
+        this.screenHeightPixels = -1;
+        this.renderingTileSize  = -1;
+        this.levelWidthPixels   = -1;
+        this.levelHeightPixels  = -1;
+    }
+
+    private int initialTileSize()
+    {
+        // Try to fit the whole level on screen
+        int retX = screenWidthPixels  / world.size.width;
+        int retY = screenHeightPixels / world.size.height;
+
+        int ret = ( retX < retY ) ? retX : retY;
+
+        if ( ret < MIN_INITIAL_TILE_SIZE )
+        {
+            ret = MIN_INITIAL_TILE_SIZE;
+        }
+
+        return ret;
     }
 
     @Override
@@ -126,15 +143,51 @@ public class AndroidGraphics implements Graphics
 
     private void actuallyDrawGraphics( Canvas canvas, int frame )
     {
-        screenWidthPixels = canvas.getWidth();
-        screenHeightPixels = canvas.getHeight();
-        if ( checkScroll )
+        if (
+               screenWidthPixels  != canvas.getWidth()
+            || screenHeightPixels != canvas.getHeight()
+        )
         {
+            screenWidthPixels  = canvas.getWidth();
+            screenHeightPixels = canvas.getHeight();
+            setRenderingTileSize(  initialTileSize() );
+            levelWidthPixels  = renderingTileSize * world.size.width;
+            levelHeightPixels = renderingTileSize * world.size.height;
             scrollBy( 0, 0 );
-            checkScroll = false;
         }
 
         drawToCanvas( canvas, -scrollX, -scrollY, frame );
+    }
+
+    private void setRenderingTileSize( int newSize )
+    {
+        // Make sure size >= 16 and at least 5 tiles are visible in each direction
+
+        if ( newSize < MIN_TILE_SIZE )
+        {
+            this.renderingTileSize = MIN_TILE_SIZE;
+        }
+        else
+        {
+            int maxSize = maxSize();
+            if ( newSize > maxSize )
+            {
+                this.renderingTileSize = maxSize;
+            }
+            else
+            {
+                this.renderingTileSize = newSize;
+            }
+        }
+    }
+
+    private int maxSize()
+    {
+        // One fifth of the shortest screen dimension
+        // i.e. no less than five tiles are visible in each direction
+        int retX = screenWidthPixels / 5;
+        int retY = screenHeightPixels / 5;
+        return ( retX < retY ) ? retX : retY;
     }
 
     private void drawToCanvas( Canvas canvas, int offsetX, int offsetY, int frameNum )
