@@ -1,14 +1,24 @@
 package rabbitescape.ui.android;
 
+import android.graphics.Bitmap;
+
 import rabbitescape.render.BitmapScaler;
+
+import static rabbitescape.engine.util.Util.reAssert;
 
 public class AndroidBitmapScaler implements BitmapScaler<AndroidBitmap>
 {
     @Override
     public AndroidBitmap scale( AndroidBitmap originalBitmap, double scale )
     {
-        // On Android, the bitmaps got scaled for us automatically, so we
-        // do nothing here.
-        return originalBitmap;
+        reAssert( scale != 1.0 );
+
+        Bitmap origImage = originalBitmap.bitmap;
+
+        int width  = (int)( origImage.getWidth() * scale );
+        int height = (int)( origImage.getHeight() * scale );
+
+        return new AndroidBitmap(
+            Bitmap.createScaledBitmap( origImage, width, height, true ) );
     }
 }
