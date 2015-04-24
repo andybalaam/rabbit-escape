@@ -5,12 +5,17 @@ import android.graphics.BitmapFactory;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Arrays;
 
 import rabbitescape.render.BitmapLoader;
 import rabbitescape.render.FailedToLoadImage;
 
+import static rabbitescape.engine.util.Util.reAssert;
+
 public class AndroidBitmapLoader implements BitmapLoader<AndroidBitmap>
 {
+    private static int[] SIZES = new int[] { 32, 64, 128 };
+
     private final Resources resources;
 
     public AndroidBitmapLoader( Resources resources )
@@ -21,14 +26,13 @@ public class AndroidBitmapLoader implements BitmapLoader<AndroidBitmap>
     @Override
     public AndroidBitmap load( String name, int tileSize )
     {
-        if ( tileSize != 64 )
-        {
-            throw new RuntimeException( "A Tile size is supposed to be hard-coded to 64!" );
-        }
+        reAssert( Arrays.binarySearch(SIZES, tileSize) >= 0 );
+
+        String resourcePath = "images" + tileSize + "/" + name + ".png";
 
         try
         {
-            InputStream assetStream = resources.getAssets().open( "images64/" + name + ".png" );
+            InputStream assetStream = resources.getAssets().open( resourcePath );
             try
             {
                 return new AndroidBitmap( BitmapFactory.decodeStream( assetStream ) );
@@ -47,10 +51,20 @@ public class AndroidBitmapLoader implements BitmapLoader<AndroidBitmap>
     @Override
     public int sizeFor( int tileSize )
     {
-        if ( tileSize != 64 )
+        // Return the smallest size that is >= tileSize
+
+        // Could share this code with SwingBitmapLoader, but I'm
+        // not convinced we will always want the same implementation
+        // here and there.  E.g. maybe on one platform scaling up is
+        // better than down.
+
+        for ( int size : SIZES )
         {
-            throw new RuntimeException( "B Tile size is supposed to be hard-coded to 64!" );
+            if ( tileSize <= size )
+            {
+                return size;
+            }
         }
-        return tileSize;
+        return SIZES[ SIZES.length - 1 ];
     }
 }
