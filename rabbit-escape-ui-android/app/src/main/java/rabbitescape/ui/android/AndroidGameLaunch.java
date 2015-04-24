@@ -21,7 +21,7 @@ public class AndroidGameLaunch implements Runnable
 
     // Transient state
     public final GeneralPhysics physics;
-    private final AndroidGraphics graphics;
+    public final AndroidGraphics graphics;
 
     public final WorldSaver worldSaver;
     private final GameLoop loop;

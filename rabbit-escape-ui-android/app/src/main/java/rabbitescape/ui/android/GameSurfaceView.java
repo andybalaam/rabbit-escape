@@ -3,6 +3,7 @@ package rabbitescape.ui.android;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.MotionEvent;
+import android.view.ScaleGestureDetector;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
@@ -22,6 +23,8 @@ public class GameSurfaceView extends SurfaceView
 {
     // Saved state (saved by AndroidGameActivity)
     public final World world;
+    private OnScaleListener scaleGestureListener;
+    private ScaleGestureDetector scaleGestureDetector;
     private Token.Type chosenAbility;
 
     // Saved state
@@ -34,6 +37,7 @@ public class GameSurfaceView extends SurfaceView
     private final float displayDensity;
     private final Bundle savedInstanceState;
     private final Scrolling scrolling;
+
 
     public GameSurfaceView(
         Context context,
@@ -54,6 +58,9 @@ public class GameSurfaceView extends SurfaceView
         this.savedInstanceState = savedInstanceState;
 
         game = null;
+        scaleGestureListener = null;
+        scaleGestureDetector = null;
+
         scrolling = new Scrolling( this, ViewConfiguration.get( context ).getScaledTouchSlop() );
         chosenAbility = null;
 
@@ -69,6 +76,9 @@ public class GameSurfaceView extends SurfaceView
         game.start();
 
         setOnClickListener( this );
+        this.scaleGestureListener = new OnScaleListener( game.gameLaunch.graphics );
+        this.scaleGestureDetector = new ScaleGestureDetector(
+            getContext(), this.scaleGestureListener );
 
         for ( Map.Entry<Token.Type, Integer> e : world.abilities.entrySet() )
         {
@@ -121,7 +131,11 @@ public class GameSurfaceView extends SurfaceView
     @Override
     public boolean onTouchEvent( MotionEvent event )
     {
-        return scrolling.onTouchEvent( event );
+        boolean ret = scaleGestureDetector.onTouchEvent( event );
+
+        ret = scrolling.onTouchEvent(event) || ret;
+
+        return ret || super.onTouchEvent( event );
     }
 
     public void chooseAbility( Token.Type ability )

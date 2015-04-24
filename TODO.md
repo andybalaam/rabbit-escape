@@ -37,6 +37,8 @@ Later
 - Make the text UI playable
 - favicon for web site
 - Save up zoom events and do them between frames
+- Consider whether http://developer.android.com/training/gestures/detector.html
+  will fix the bug where we jerk-scroll after a zoom.
 
 Release 0.4
 -----------
@@ -47,7 +49,7 @@ Release 0.4
 Release 0.3
 -----------
 
-- Zoom in Android (pinch, auto-zoom on start/rotate)
+- ~~Zoom in Android (pinch, auto-zoom on start/rotate)~~
 - ~~Improve Swing performance by using the same game loop as Android~~
 - ~~Share more code between Android and Swing~~
 - ~~Avoid casts with more generics~~

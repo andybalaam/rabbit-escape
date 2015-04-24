@@ -16,15 +16,15 @@ import rabbitescape.render.gameloop.Graphics;
 
 public class AndroidGraphics implements Graphics
 {
-    private static final int MIN_INITIAL_TILE_SIZE = 32;
-    private static final int MIN_TILE_SIZE = 16;
+    private static final float MIN_INITIAL_TILE_SIZE = 32f;
+    private static final float MIN_TILE_SIZE = 16f;
 
     private final BitmapCache<AndroidBitmap> bitmapCache;
     private final World world;
     private final SurfaceHolder surfaceHolder;
     private final AnimationCache animationCache;
     private final AndroidPaint paint;
-    public int renderingTileSize;
+    public float renderingTileSize;
     public int levelWidthPixels;
     public int levelHeightPixels;
 
@@ -84,13 +84,13 @@ public class AndroidGraphics implements Graphics
         this.levelHeightPixels  = -1;
     }
 
-    private int initialTileSize()
+    private float initialTileSize()
     {
         // Try to fit the whole level on screen
-        int retX = screenWidthPixels  / world.size.width;
-        int retY = screenHeightPixels / world.size.height;
+        float retX = screenWidthPixels  / world.size.width;
+        float retY = screenHeightPixels / world.size.height;
 
-        int ret = ( retX < retY ) ? retX : retY;
+        float ret = ( retX < retY ) ? retX : retY;
 
         if ( ret < MIN_INITIAL_TILE_SIZE )
         {
@@ -150,43 +150,49 @@ public class AndroidGraphics implements Graphics
         {
             screenWidthPixels  = canvas.getWidth();
             screenHeightPixels = canvas.getHeight();
-            setRenderingTileSize(  initialTileSize() );
-            levelWidthPixels  = renderingTileSize * world.size.width;
-            levelHeightPixels = renderingTileSize * world.size.height;
-            scrollBy( 0, 0 );
+            adjustRenderingTileSize(initialTileSize());
         }
 
         drawToCanvas( canvas, -scrollX, -scrollY, frame );
     }
 
-    private void setRenderingTileSize( int newSize )
+    public void adjustRenderingTileSize( float newSize )
     {
         // Make sure size >= 16 and at least 5 tiles are visible in each direction
 
-        if ( newSize < MIN_TILE_SIZE )
+        this.renderingTileSize = chooseRenderingTileSize( newSize );
+
+        levelWidthPixels  = (int)( renderingTileSize * world.size.width );
+        levelHeightPixels = (int)( renderingTileSize * world.size.height );
+        scrollBy( 0, 0 );
+    }
+
+    private float chooseRenderingTileSize( float suggestedSize )
+    {
+        if ( suggestedSize < MIN_TILE_SIZE )
         {
-            this.renderingTileSize = MIN_TILE_SIZE;
+            return MIN_TILE_SIZE;
         }
         else
         {
-            int maxSize = maxSize();
-            if ( newSize > maxSize )
+            float maxSize = maxSize();
+            if ( suggestedSize > maxSize )
             {
-                this.renderingTileSize = maxSize;
+                return maxSize;
             }
             else
             {
-                this.renderingTileSize = newSize;
+                return suggestedSize;
             }
         }
     }
 
-    private int maxSize()
+    private float maxSize()
     {
         // One fifth of the shortest screen dimension
         // i.e. no less than five tiles are visible in each direction
-        int retX = screenWidthPixels / 5;
-        int retY = screenHeightPixels / 5;
+        float retX = screenWidthPixels / 5;
+        float retY = screenHeightPixels / 5;
         return ( retX < retY ) ? retX : retY;
     }
 
@@ -194,7 +200,7 @@ public class AndroidGraphics implements Graphics
     {
         AndroidCanvas androidCanvas = new AndroidCanvas( canvas );
         Renderer<AndroidBitmap, AndroidPaint> renderer =
-            new Renderer<AndroidBitmap, AndroidPaint>( offsetX, offsetY, renderingTileSize );
+            new Renderer<AndroidBitmap, AndroidPaint>( offsetX, offsetY, (int)renderingTileSize );
 
         SpriteAnimator<AndroidBitmap> animator = new SpriteAnimator<AndroidBitmap>(
             world, bitmapCache, animationCache );
@@ -239,5 +245,18 @@ public class AndroidGraphics implements Graphics
         {
             scrollY = levelHeightPixels - screenHeightPixels;
         }
+    }
+
+    public void scaleRenderingTileSize( float scaleFactor, float focusX, float focusY )
+    {
+        float newFocusX = scaleFactor * ( scrollX + focusX );
+        float newFocusY = scaleFactor * ( scrollY + focusY );
+
+        adjustRenderingTileSize( renderingTileSize * scaleFactor );
+
+        float movedFocusX = scrollX + focusX;
+        float movedFocusY = scrollY + focusY;
+
+        scrollBy( newFocusX - movedFocusX, newFocusY - movedFocusY );
     }
 }
