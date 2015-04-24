@@ -38,6 +38,8 @@ public class SwingBitmapLoader implements BitmapLoader<SwingBitmap>
     @Override
     public int sizeFor( int tileSize )
     {
+        // Return the smallest size that is >= tileSize
+
         for ( int size : SIZES )
         {
             if ( tileSize <= size )
