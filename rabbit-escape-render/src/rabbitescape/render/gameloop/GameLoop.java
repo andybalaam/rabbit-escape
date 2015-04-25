@@ -10,6 +10,8 @@ public class GameLoop
     private final Physics physics;
     private final Graphics graphics;
     private boolean running;
+    private long simulation_time;
+    private long frame_start_time;
 
     public GameLoop( Input input, Physics physics, Graphics graphics )
     {
@@ -17,34 +19,38 @@ public class GameLoop
         this.physics = physics;
         this.graphics = graphics;
         this.running = true;
+        simulation_time = -1;
+        frame_start_time = -1;
     }
 
     public void run()
     {
-        long simulation_time = new Date().getTime();
-        long frame_start_time = simulation_time;
+        simulation_time = new Date().getTime();
+        frame_start_time = simulation_time;
 
         while( running )
         {
-            input.waitMs( 0 );
-            simulation_time = physics.step( simulation_time, frame_start_time );
-            graphics.draw( physics.frameNumber() );
-            frame_start_time = waitForNextFrame( frame_start_time );
-
-            if ( !physics.gameRunning() )
-            {
-                pause();
-
-                // Reset the times to stop us thinking we've really lagged
-                simulation_time = new Date().getTime();
-                frame_start_time = simulation_time;
-            }
-
-            if ( !physics.gameRunning() )
-            {
-                running = false;
-            }
+            running = step();
         }
+    }
+
+    public boolean step()
+    {
+        input.waitMs( 0 );
+        simulation_time = physics.step( simulation_time, frame_start_time );
+        graphics.draw( physics.frameNumber() );
+        frame_start_time = waitForNextFrame( frame_start_time );
+
+        if ( !physics.gameRunning() )
+        {
+            pause();
+
+            // Reset the times to stop us thinking we've really lagged
+            simulation_time = new Date().getTime();
+            frame_start_time = simulation_time;
+        }
+
+        return physics.gameRunning() && running;
     }
 
     public void pleaseStop()
