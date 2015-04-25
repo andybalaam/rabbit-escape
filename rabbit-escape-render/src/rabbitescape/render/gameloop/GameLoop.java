@@ -1,7 +1,5 @@
 package rabbitescape.render.gameloop;
 
-import java.util.Date;
-
 public class GameLoop
 {
     private static final long frame_time_ms = 70;
@@ -25,7 +23,7 @@ public class GameLoop
 
     public void run()
     {
-        simulation_time = new Date().getTime();
+        simulation_time = input.timeNow();
         frame_start_time = simulation_time;
 
         while( running )
@@ -46,7 +44,7 @@ public class GameLoop
             pause();
 
             // Reset the times to stop us thinking we've really lagged
-            simulation_time = new Date().getTime();
+            simulation_time = input.timeNow();
             frame_start_time = simulation_time;
         }
 
@@ -76,7 +74,7 @@ public class GameLoop
 
     private long waitForNextFrame( long frame_start_time )
     {
-        long next_frame_start_time = new Date().getTime();
+        long next_frame_start_time = input.timeNow();
 
         long how_long_we_took = next_frame_start_time - frame_start_time;
         long wait_time = frame_time_ms - how_long_we_took;

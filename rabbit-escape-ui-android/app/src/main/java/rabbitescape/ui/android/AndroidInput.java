@@ -1,5 +1,7 @@
 package rabbitescape.ui.android;
 
+import java.util.Date;
+
 import rabbitescape.render.gameloop.Input;
 
 public class AndroidInput implements Input
@@ -19,5 +21,11 @@ public class AndroidInput implements Input
             worldSaver.waitUnlessSaveSignal( wait_time );
         }
         worldSaver.check();
+    }
+
+    @Override
+    public long timeNow()
+    {
+        return new Date().getTime();
     }
 }

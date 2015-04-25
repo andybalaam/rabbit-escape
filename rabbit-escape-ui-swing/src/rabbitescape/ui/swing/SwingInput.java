@@ -2,6 +2,8 @@ package rabbitescape.ui.swing;
 
 import rabbitescape.render.gameloop.Input;
 
+import java.util.Date;
+
 public class SwingInput implements Input
 {
     @Override
@@ -19,5 +21,11 @@ public class SwingInput implements Input
         catch ( InterruptedException ignored )
         {
         }
+    }
+
+    @Override
+    public long timeNow()
+    {
+        return new Date().getTime();
     }
 }
