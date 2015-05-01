@@ -23,8 +23,7 @@ public class GameLoop
 
     public void run()
     {
-        simulation_time = input.timeNow();
-        frame_start_time = simulation_time;
+        resetClock();
 
         while( running )
         {
@@ -32,9 +31,15 @@ public class GameLoop
         }
     }
 
+    public void resetClock()
+    {
+        simulation_time = input.timeNow();
+        frame_start_time = simulation_time;
+    }
+
     public boolean step()
     {
-        input.waitMs( 0 );
+        input.waitMs( 0 ); // Check for interruptions or input
         simulation_time = physics.step( simulation_time, frame_start_time );
         graphics.draw( physics.frameNumber() );
         frame_start_time = waitForNextFrame( frame_start_time );
@@ -43,9 +48,7 @@ public class GameLoop
         {
             pause();
 
-            // Reset the times to stop us thinking we've really lagged
-            simulation_time = input.timeNow();
-            frame_start_time = simulation_time;
+            resetClock();
         }
 
         return physics.gameRunning() && running;
@@ -74,13 +77,11 @@ public class GameLoop
 
     private long waitForNextFrame( long frame_start_time )
     {
-        long next_frame_start_time = input.timeNow();
-
-        long how_long_we_took = next_frame_start_time - frame_start_time;
+        long how_long_we_took = input.timeNow() - frame_start_time;
         long wait_time = frame_time_ms - how_long_we_took;
 
         input.waitMs( wait_time );
 
-        return next_frame_start_time;
+        return input.timeNow();
     }
 }

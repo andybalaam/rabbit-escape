@@ -13,7 +13,7 @@ import rabbitescape.engine.World.UnableToAddToken;
 public class WorldChanges
 {
     private final World world;
-    private final WorldStatsListener statsListener;
+    public final WorldStatsListener statsListener;
 
     private final List<Rabbit> rabbitsToEnter = new ArrayList<Rabbit>();
     private final List<Rabbit> rabbitsToKill  = new ArrayList<Rabbit>();
