@@ -13,30 +13,20 @@ public class TestGameLoop
     @Test
     public void If_rendering_is_quick_we_render_all_frames()
     {
-        CallTracker calls = new CallTracker();
-        SimpleClockInput input = new SimpleClockInput( calls );
-        DrawTracker graphics = new DrawTracker( input, calls, 0 );
-
-        GeneralPhysics physics = new GeneralPhysics(
-            new NeverWonWorld( TextWorldManip.createEmptyWorld( 5, 5 ) ),
-            null
-        );
-
-        GameLoop gameLoop = new GameLoop( input, physics, graphics );
-        gameLoop.resetClock();
+        TestObjects obj = prepareGameLoop( 0 ); // 0ms to draw a frame
 
         // Progress through the frames
-        gameLoop.step();
+        obj.gameLoop.step();
 
         // At each step, we should draw
-        graphics.calls.assertCalls( "waitMs(0)", "draw(0)", "waitMs(70)" );
+        obj.calls.assertCalls( "waitMs(0)", "draw(0)", "waitMs(70)" );
 
         // 10 more frames
         for ( int i = 0; i < 10; ++i )
         {
-            gameLoop.step();
+            obj.gameLoop.step();
         }
-        graphics.calls.assertCalls(
+        obj.calls.assertCalls(
             "waitMs(0)", "draw(0)", "waitMs(70)",
             "waitMs(0)", "draw(1)", "waitMs(70)",
             "waitMs(0)", "draw(2)", "waitMs(70)",
@@ -51,7 +41,92 @@ public class TestGameLoop
         );
     }
 
+    @Test
+    public void If_rendering_is_fairly_quick_we_render_all_frames()
+    {
+        CallTracker calls = new CallTracker();
+        TestObjects obj = prepareGameLoop( 55 ); // 55ms per frame
+
+        // Do 5 frames
+        for ( int i = 0; i < 5; ++i )
+        {
+            obj.gameLoop.step();
+        }
+
+        obj.calls.assertCalls(
+            "waitMs(0)", "draw(0)", "waitMs(15)",
+            "waitMs(0)", "draw(1)", "waitMs(15)",
+            "waitMs(0)", "draw(2)", "waitMs(15)",
+            "waitMs(0)", "draw(3)", "waitMs(15)",
+            "waitMs(0)", "draw(4)", "waitMs(15)"
+        );
+    }
+
+    @Test
+    public void Long_pause_in_middle_does_not_cause_us_to_skip()
+    {
+        TestObjects obj = prepareGameLoop( 45 );
+
+        // More frames
+        for ( int i = 0; i < 5; ++i )
+        {
+            obj.gameLoop.step();
+        }
+
+        // A long pause happens...
+        obj.input.time += 3000;
+
+        // More frames
+        for ( int i = 0; i < 6; ++i )
+        {
+            obj.gameLoop.step();
+        }
+
+        obj.calls.assertCalls(
+            "waitMs(0)", "draw(0)", "waitMs(25)",
+            "waitMs(0)", "draw(1)", "waitMs(25)",
+            "waitMs(0)", "draw(2)", "waitMs(25)",
+            "waitMs(0)", "draw(3)", "waitMs(25)",
+            "waitMs(0)", "draw(4)", "waitMs(25)",
+            "waitMs(0)", "draw(5)", "waitMs(-2975)", // We'd like to go back
+            "waitMs(0)", "draw(6)", "waitMs(25)",    // in time, but once we've
+            "waitMs(0)", "draw(7)", "waitMs(25)",    // expressed that, we
+            "waitMs(0)", "draw(8)", "waitMs(25)",    // carry on regardless.
+            "waitMs(0)", "draw(9)", "waitMs(25)",
+            "waitMs(0)", "draw(0)", "waitMs(25)"
+        );
+    }
+
     // ---
+
+    class TestObjects
+    {
+        public CallTracker calls;
+        public GameLoop gameLoop;
+        public SimpleClockInput input;
+        public DrawTracker graphics;
+    }
+
+    private TestObjects prepareGameLoop( int msPerFrame )
+    {
+        TestObjects ret = new TestObjects();
+
+        ret.calls = new CallTracker();
+        ret.input = new SimpleClockInput( ret.calls );
+
+        // 0 ms to draw each per frame
+        ret.graphics = new DrawTracker( ret.input, ret.calls, msPerFrame );
+
+        GeneralPhysics physics = new GeneralPhysics(
+            new NeverWonWorld( TextWorldManip.createEmptyWorld( 5, 5 ) ),
+            null
+        );
+
+        ret.gameLoop = new GameLoop( ret.input, physics, ret.graphics );
+        ret.gameLoop.resetClock();
+
+        return ret;
+    }
 
     private static class NeverWonWorld extends World
     {
