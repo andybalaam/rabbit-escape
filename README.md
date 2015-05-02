@@ -10,9 +10,11 @@ Find out more at [Rabbit Escape](http://artificialworlds.net/rabbit-escape).
 Screenshots
 -----------
 
-The goal of this project is to build an Android game.
+Rabbit Escape works on Android:
 
-For now, there is the Swing interface:
+![](https://raw.githubusercontent.com/andybalaam/rabbit-escape/master/doc/rabbitescape-android.gif)
+
+On PC (Linux, Windows, Mac) it runs via a Swing interface:
 
 ![](https://raw.githubusercontent.com/andybalaam/rabbit-escape/master/doc/minilevel/rabbitescape-minilevel.gif)
 
