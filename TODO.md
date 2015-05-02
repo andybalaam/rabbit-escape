@@ -46,6 +46,12 @@ Release 0.4
 - Sound effects
 - Music
 
+Release 0.3.1
+-------------
+
+- ~~Improve rendering performance~~
+- ~~Fix bug where rabbits go crazy after suspend/resume~~
+
 Release 0.3
 -----------
 
