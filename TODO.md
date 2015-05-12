@@ -39,12 +39,13 @@ Later
 - Save up zoom events and do them between frames
 - Consider whether http://developer.android.com/training/gestures/detector.html
   will fix the bug where we jerk-scroll after a zoom.
+- Music
 
 Release 0.4
 -----------
 
 - Sound effects
-- Music
+- Improve levels
 
 Release 0.3.1
 -------------
