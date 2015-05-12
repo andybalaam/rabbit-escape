@@ -44,7 +44,6 @@ public class TestGameLoop
     @Test
     public void If_rendering_is_fairly_quick_we_render_all_frames()
     {
-        CallTracker calls = new CallTracker();
         TestObjects obj = prepareGameLoop( 55 ); // 55ms per frame
 
         // Do 5 frames
