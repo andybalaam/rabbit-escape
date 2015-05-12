@@ -3,6 +3,7 @@ dist/
 */src/**/images32/
 */src/**/images64/
 */src/**/images128/
+rabbit-escape-ui-swing/src/rabbitescape/ui/swing/sounds/*.wav
 .idea/workspace.xml
 ls.txt
 

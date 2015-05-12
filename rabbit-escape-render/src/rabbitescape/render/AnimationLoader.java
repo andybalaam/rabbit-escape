@@ -120,14 +120,14 @@ public class AnimationLoader
             String trimmedLn = ln.trim();
             if ( !trimmedLn.isEmpty() )
             {
-                ret.add( frameNameAndOffset( trimmedLn ) );
+                ret.add( frameFromLine( trimmedLn ) );
             }
         }
 
         return new Animation( ret );
     }
 
-    private static Frame frameNameAndOffset( String animLine )
+    private static Frame frameFromLine( String animLine )
     {
         String[] parts = animLine.split( " " );
 
@@ -149,7 +149,17 @@ public class AnimationLoader
                     return new Frame(
                         parts[0],
                         Integer.valueOf( parts[1] ),
-                        Integer.valueOf( parts[2] )
+                        Integer.valueOf( parts[2] ),
+                        null
+                    );
+                }
+                case 4:
+                {
+                    return new Frame(
+                        parts[0],
+                        Integer.valueOf( parts[1] ),
+                        Integer.valueOf( parts[2] ),
+                        parts[3]
                     );
                 }
                 default:

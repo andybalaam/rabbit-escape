@@ -27,7 +27,12 @@ PNGIMAGES32  := $(PNGIMAGESSRC:images-src/%.png=$(IMAGES32_DEST)/%.png)
 PNGIMAGES64  := $(PNGIMAGESSRC:images-src/%.png=$(IMAGES64_DEST)/%.png)
 PNGIMAGES128 := $(PNGIMAGESSRC:images-src/%.png=$(IMAGES128_DEST)/%.png)
 
-MUSICSRC := $(wildcard music-src/*.flac)
+SOUNDSWAV_DEST := rabbit-escape-ui-swing/src/rabbitescape/ui/swing/sounds
+
+MUSICSRC  := $(wildcard music-src/*.flac)
+SOUNDSSRC := $(wildcard sounds-src/*.flac)
+
+SOUNDSWAV := $(SOUNDSSRC:sounds-src/%.flac=$(SOUNDSWAV_DEST)/%.wav)
 
 SVGANDROIDIMAGES32  := $(SVGIMAGESSRC:images-src/%.svg=$(ANDROIDIMAGES32_DEST)/%.png)
 SVGANDROIDIMAGES64  := $(SVGIMAGESSRC:images-src/%.svg=$(ANDROIDIMAGES64_DEST)/%.png)
@@ -43,6 +48,9 @@ SVGANDROIDICONSXHDPI := $(SVGICONSSRC:images-src/icons/%.svg=$(ANDROIDICONSXHDPI
 ANIMATIONS_DIR := rabbit-escape-render/src/rabbitescape/render/animations
 LEVELS_DIRS := $(wildcard rabbit-escape-engine/src/rabbitescape/levels/*) \
                $(wildcard rabbit-escape-engine/test/rabbitescape/levels/*)
+
+$(SOUNDSWAV_DEST)/%.wav: sounds-src/%.flac
+	mkdir -p $(SOUNDSWAV_DEST); sox $< $@
 
 $(IMAGES32_DEST)/%.png: images-src/%.svg
 	mkdir -p $(IMAGES32_DEST); inkscape $< --export-png=$@ --export-dpi=90
@@ -148,6 +156,8 @@ dist/rabbit-escape-${VERSION}.jar: compile
 
 images: no-make-warnings $(SVGIMAGES32) $(PNGIMAGES32) $(SVGIMAGES64) $(PNGIMAGES64) $(SVGIMAGES128) $(PNGIMAGES128)
 
+sounds: no-make-warnings $(SOUNDSWAV)
+
 #music: no-make-warnings $(MUSICOGG)
 
 %/ls.txt: %/*.re*
@@ -160,7 +170,7 @@ levels: no-make-warnings $(patsubst %, %/ls.txt, $(LEVELS_DIRS))
 versioncheck:
 	grep "version = \"${VERSION}\"" rabbit-escape-engine/src/rabbitescape/engine/menu/AboutText.java
 
-compile: no-make-warnings images animations levels versioncheck
+compile: no-make-warnings images sounds animations levels versioncheck
 	ant compile
 
 clean: no-make-warnings
@@ -186,7 +196,10 @@ clean-images: no-make-warnings
 		$(ANDROIDICONSXXHDPI_DEST)/* \
 		$(ANDROIDICONSXXXHDPI_DEST)/*
 
-clean-all: clean clean-images
+clean-sounds: no-make-warnings
+	- rm $(SOUNDSWAV_DEST)/*
+
+clean-all: clean clean-images clean-sounds
 
 run: compile
 	java -cp $(CLASSPATH) rabbitescape.ui.text.TextSingleGameMain test/level_01.rel

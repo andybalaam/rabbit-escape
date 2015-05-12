@@ -6,7 +6,9 @@ import rabbitescape.engine.config.Config;
 import rabbitescape.engine.config.ConfigTools;
 import rabbitescape.engine.util.RealFileSystem;
 import rabbitescape.render.*;
+import rabbitescape.render.Frame;
 import rabbitescape.render.Renderer;
+import rabbitescape.render.androidlike.Sound;
 
 import javax.swing.*;
 
@@ -25,16 +27,22 @@ public class AnimationTester extends JFrame
 {
     private static class SwingBitmapAndOffset
     {
-        public final int offsetX;
         public final ScaledBitmap<SwingBitmap> bitmap;
+        public final int offsetX;
         public final int offsetY;
+        public final String soundEffect;
 
         public SwingBitmapAndOffset(
-            ScaledBitmap<SwingBitmap> bitmap, int offsetX, int offsetY )
+            ScaledBitmap<SwingBitmap> bitmap,
+            int offsetX,
+            int offsetY,
+            String soundEffect
+        )
         {
             this.bitmap = bitmap;
             this.offsetX = offsetX;
             this.offsetY = offsetY;
+            this.soundEffect = soundEffect;
         }
     }
 
@@ -52,7 +60,9 @@ public class AnimationTester extends JFrame
                 ScaledBitmap<SwingBitmap> bmp = bitmapCache.get( frame.name );
 
                 this.bitmaps.add(
-                    new SwingBitmapAndOffset( bmp, frame.offsetX, frame.offsetY ) );
+                    new SwingBitmapAndOffset(
+                        bmp, frame.offsetX, frame.offsetY, frame.soundEffect )
+                );
             }
         }
 
@@ -458,12 +468,15 @@ public class AnimationTester extends JFrame
         Renderer<SwingBitmap, SwingPaint> renderer =
             new Renderer<SwingBitmap, SwingPaint>( 0, 0, tileSize );
 
+        Sound sound = new SwingSound();
+
         int frameSetNum = 0;
         int frameNum = 0;
         running = true;
         while( running && this.isVisible() )
         {
-            new DrawFrame( strategy, renderer, frameSetNum, frameNum ).run();
+            new DrawFrame( strategy, renderer, sound, frameSetNum, frameNum )
+                .run();
 
             pause();
 
@@ -485,16 +498,19 @@ public class AnimationTester extends JFrame
         private final int frameSetNum;
         private final int frameNum;
         private final Renderer<SwingBitmap, SwingPaint> renderer;
+        private final Sound sound;
 
         public DrawFrame(
             BufferStrategy strategy,
             Renderer<SwingBitmap, SwingPaint> renderer,
+            Sound sound,
             int frameSetNum,
             int frameNum
         )
         {
             super( strategy );
             this.renderer = renderer;
+            this.sound = sound;
             this.frameSetNum = frameSetNum;
             this.frameNum = frameNum;
         }
@@ -551,6 +567,8 @@ public class AnimationTester extends JFrame
                     bmp.offsetX,
                     bmp.offsetY
                 );
+
+                sound.play( bmp.soundEffect );
 
                 sprites.add( sprite );
                 ++i;
