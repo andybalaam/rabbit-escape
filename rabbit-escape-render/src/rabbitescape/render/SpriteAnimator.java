@@ -102,7 +102,7 @@ public class SpriteAnimator<T extends Bitmap>
             return;
         }
 
-        FrameNameAndOffset frame = animation.get( frameNum );
+        Frame frame = animation.get( frameNum );
 
         ret.add(
             new Sprite<T>(

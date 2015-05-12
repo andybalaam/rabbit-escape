@@ -113,7 +113,7 @@ public class AnimationLoader
         BufferedReader reader = new BufferedReader(
             new InputStreamReader( stream ) );
 
-        List<FrameNameAndOffset> ret = new ArrayList<>();
+        List<Frame> ret = new ArrayList<>();
         String ln;
         while ( ( ln = reader.readLine() ) != null )
         {
@@ -127,7 +127,7 @@ public class AnimationLoader
         return new Animation( ret );
     }
 
-    private static FrameNameAndOffset frameNameAndOffset( String animLine )
+    private static Frame frameNameAndOffset( String animLine )
     {
         String[] parts = animLine.split( " " );
 
@@ -137,16 +137,16 @@ public class AnimationLoader
             {
                 case 1:
                 {
-                    return new FrameNameAndOffset( parts[0] );
+                    return new Frame( parts[0] );
                 }
                 case 2:
                 {
-                    return new FrameNameAndOffset(
+                    return new Frame(
                         parts[0], Integer.valueOf( parts[1] ) );
                 }
                 case 3:
                 {
-                    return new FrameNameAndOffset(
+                    return new Frame(
                         parts[0],
                         Integer.valueOf( parts[1] ),
                         Integer.valueOf( parts[2] )

@@ -92,7 +92,7 @@ public class TestAnimationLoader
         return ret;
     }
 
-    private String frameToString( FrameNameAndOffset frame )
+    private String frameToString( Frame frame )
     {
         return frame.name + " " + frame.offsetX + " " + frame.offsetY;
     }

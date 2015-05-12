@@ -47,7 +47,7 @@ public class AnimationTester extends JFrame
         {
             this.bitmaps = new ArrayList<>();
 
-            for ( FrameNameAndOffset frame : animation )
+            for ( Frame frame : animation )
             {
                 ScaledBitmap<SwingBitmap> bmp = bitmapCache.get( frame.name );
 

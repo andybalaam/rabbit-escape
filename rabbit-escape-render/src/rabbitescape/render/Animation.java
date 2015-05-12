@@ -3,17 +3,17 @@ package rabbitescape.render;
 import java.util.Iterator;
 import java.util.List;
 
-public class Animation implements Iterable<FrameNameAndOffset>
+public class Animation implements Iterable<Frame>
 {
-    private final List<FrameNameAndOffset> frames;
+    private final List<Frame> frames;
 
-    public Animation( List<FrameNameAndOffset> frames )
+    public Animation( List<Frame> frames )
     {
         this.frames = frames;
     }
 
     @Override
-    public Iterator<FrameNameAndOffset> iterator()
+    public Iterator<Frame> iterator()
     {
         return frames.iterator();
     }
@@ -23,7 +23,7 @@ public class Animation implements Iterable<FrameNameAndOffset>
         return frames.size();
     }
 
-    public FrameNameAndOffset get( int i )
+    public Frame get( int i )
     {
         return frames.get( i );
     }
