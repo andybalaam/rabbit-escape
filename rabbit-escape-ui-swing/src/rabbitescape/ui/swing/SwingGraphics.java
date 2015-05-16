@@ -266,7 +266,11 @@ public class SwingGraphics implements Graphics
     private int prevScrollY;
 
     public SwingGraphics(
-        World world, GameUi jframe, BitmapCache<SwingBitmap> bitmapCache )
+        World world,
+        GameUi jframe,
+        BitmapCache<SwingBitmap> bitmapCache,
+        boolean muted
+    )
     {
         this.world = world;
         this.jframe = jframe;
@@ -276,7 +280,7 @@ public class SwingGraphics implements Graphics
             world, bitmapCache, animationCache );
 
         this.renderer = new Renderer<SwingBitmap, SwingPaint>( 0, 0, -1 );
-        this.soundPlayer = new SoundPlayer<>( new SwingSound() );
+        this.soundPlayer = new SoundPlayer<>( new SwingSound( muted ) );
     }
 
     @Override
@@ -349,5 +353,10 @@ public class SwingGraphics implements Graphics
     public void playSound( String soundEffect )
     {
         soundPlayer.sound.play( soundEffect );
+    }
+
+    public void setMuted( boolean muted )
+    {
+        soundPlayer.sound.mute( muted );
     }
 }

@@ -571,10 +571,17 @@ public class GameUi
         gameLaunch.world.setIntro( false );
     }
 
+    public boolean getMuted()
+    {
+        return ConfigTools.getBool( uiConfig, CFG_MUTED );
+    }
+
     private void setMuted( boolean muted )
     {
         ConfigTools.setBool( uiConfig, CFG_MUTED, muted );
         uiConfig.save();
+
+        gameLaunch.graphics.setMuted( muted );
     }
 
     private void click( Point pixelPosition )

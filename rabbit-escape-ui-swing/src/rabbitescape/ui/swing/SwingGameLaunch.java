@@ -31,7 +31,11 @@ public class SwingGameLaunch implements GameLaunch
 
         this.jframe = uiPieces.jframe;
         this.graphics = new SwingGraphics(
-            world, uiPieces.jframe, uiPieces.bitmapCache );
+            world,
+            uiPieces.jframe,
+            uiPieces.bitmapCache,
+            uiPieces.jframe.getMuted()
+        );
 
         jframe.setGameLaunch( this );
 
