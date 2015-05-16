@@ -177,6 +177,11 @@ public class TestGameLoop
         {
             return time;
         }
+
+        @Override
+        public void dispose()
+        {
+        }
     }
 
     private static class DrawTracker extends DoNothingGraphics
@@ -218,6 +223,11 @@ public class TestGameLoop
 
         @Override
         public void drawIfScrolled( int frame )
+        {
+        }
+
+        @Override
+        public void dispose()
         {
         }
     }

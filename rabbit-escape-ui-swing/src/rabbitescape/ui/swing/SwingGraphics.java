@@ -359,4 +359,10 @@ public class SwingGraphics implements Graphics
     {
         soundPlayer.sound.mute( muted );
     }
+
+    @Override
+    public void dispose()
+    {
+        soundPlayer.sound.dispose();
+    }
 }

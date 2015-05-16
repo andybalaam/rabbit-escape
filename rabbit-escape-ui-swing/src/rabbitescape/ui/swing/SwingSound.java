@@ -38,7 +38,7 @@ public class SwingSound implements Sound
         this.muted = muted;
         if ( muted )
         {
-            cache.dispose();
+            cache.stopAll();
         }
     }
 

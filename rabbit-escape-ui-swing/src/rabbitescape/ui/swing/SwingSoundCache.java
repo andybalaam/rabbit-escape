@@ -53,6 +53,11 @@ public class SwingSoundCache
 
     public void dispose()
     {
+        stopAll();
+    }
+
+    public void stopAll()
+    {
         for ( Clip clip : clips.values() )
         {
             clip.stop();

@@ -29,6 +29,10 @@ public class GameLoop
         {
             running = step();
         }
+
+        input.dispose();
+        physics.dispose();
+        graphics.dispose();
     }
 
     public void resetClock()
