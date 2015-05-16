@@ -8,6 +8,7 @@ import rabbitescape.render.androidlike.Bitmap;
 public class Sprite<T extends Bitmap>
 {
     public final ScaledBitmap<T> bitmap;
+    public final String soundEffect;
     public final int tileX;
     public final int tileY;
 
@@ -23,18 +24,20 @@ public class Sprite<T extends Bitmap>
      */
     public Sprite(
         ScaledBitmap<T> bitmap,
+        String soundEffect,
         int tileX,
         int tileY,
         int offset32X,
         int offset32Y
     )
     {
+        this.bitmap = bitmap;
+        this.soundEffect = soundEffect;
         this.tileX = tileX;
         this.tileY = tileY;
+
         this.offset32X = offset32X;
         this.offset32Y = offset32Y;
-
-        this.bitmap = bitmap;
     }
 
     public int offsetX( int tileSize )

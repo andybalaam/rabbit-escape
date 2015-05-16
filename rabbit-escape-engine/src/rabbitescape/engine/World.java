@@ -180,6 +180,8 @@ public class World
             thing.step(this);
         }
 
+        changes.rememberWhatWillHappen();
+
         changes.apply();
 
         for ( Thing thing : allThings() )

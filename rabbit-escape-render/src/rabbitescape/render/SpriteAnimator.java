@@ -62,17 +62,26 @@ public class SpriteAnimator<T extends Bitmap>
 
         for ( Thing thing : world.things )
         {
-            addThing( frameNum, thing, ret );
+            addThing( frameNum, thing, null, ret );
         }
 
         for ( Rabbit rabbit : world.rabbits )
         {
-            addThing( frameNum, rabbit, ret );
+            addThing( frameNum, rabbit, null, ret );
         }
 
         for ( Thing thing : world.changes.tokensAboutToAppear() )
         {
-            addThing( frameNum, thing, ret );
+            addThing( frameNum, thing, null, ret );
+        }
+
+        // TODO: probably easier if we just had a rabbit entering animation
+        if ( frameNum == 0 )
+        {
+            for ( Thing thing : world.changes.rabbitsJustEntered() )
+            {
+                addThing( -1, thing, "rabbit_entering", ret );
+            }
         }
 
         return ret;
@@ -83,6 +92,7 @@ public class SpriteAnimator<T extends Bitmap>
         ret.add(
             new Sprite<T>(
                 bitmapForBlock( block ),
+                null,
                 block.x,
                 block.y,
                 0,
@@ -91,28 +101,70 @@ public class SpriteAnimator<T extends Bitmap>
         );
     }
 
-    private void addThing( int frameNum, Thing thing, List<Sprite<T>> ret )
+    private void addThing(
+        int frameNum,
+        Thing thing,
+        String soundEffectOverride,
+        List<Sprite<T>> ret
+    )
     {
+        Frame frame = frameForThing( frameNum, thing );
+
+        ScaledBitmap<T> bitmap = null;
+        int offsetX = 0;
+        int offsetY = 0;
+        if ( frame != null )
+        {
+            bitmap = bitmapCache.get( frame.name );
+            offsetX = frame.offsetX;
+            offsetY = frame.offsetY;
+        }
+
+        ret.add(
+            new Sprite<T>(
+                bitmap,
+                soundEffectForFrame( soundEffectOverride, frame ),
+                thing.x,
+                thing.y,
+                offsetX,
+                offsetY
+            )
+        );
+    }
+
+    private String soundEffectForFrame(
+        String soundEffectOverride, Frame frame )
+    {
+        if ( soundEffectOverride != null )
+        {
+            return soundEffectOverride;
+        }
+
+        if ( frame != null )
+        {
+            return frame.soundEffect;
+        }
+
+        return null;
+    }
+
+    private Frame frameForThing( int frameNum, Thing thing )
+    {
+        if ( frameNum == -1 )
+        {
+            return null;
+        }
+
         String frameName = thing.state.name().toLowerCase( Locale.ENGLISH );
         Animation animation = animationCache.get( frameName );
 
         if ( animation == null )
         {
             System.out.println( "Missing animation for state " + thing.state );
-            return;
+            return null;
         }
 
-        Frame frame = animation.get( frameNum );
-
-        ret.add(
-            new Sprite<T>(
-                bitmapCache.get( frame.name ),
-                thing.x,
-                thing.y,
-                frame.offsetX,
-                frame.offsetY
-            )
-        );
+        return animation.get( frameNum );
     }
 
     private ScaledBitmap<T> bitmapForBlock( Block block )

@@ -216,7 +216,7 @@ public class TestRendering
         List<Sprite<FakeBitmap>> ret = new ArrayList<Sprite<FakeBitmap>>();
 
         ret.add( new Sprite<FakeBitmap>(
-            bitmap, tileX, tileY, offset32X, offset32Y ) );
+            bitmap, null, tileX, tileY, offset32X, offset32Y ) );
 
         return ret;
     }

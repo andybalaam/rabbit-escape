@@ -25,6 +25,8 @@ public class WorldChanges
 
     private boolean explodeAll = false;
 
+    private List<Rabbit> rabbitsJustEntered = new ArrayList<Rabbit>();
+
     public WorldChanges( World world, WorldStatsListener statsListener )
     {
         this.world = world;
@@ -196,5 +198,15 @@ public class WorldChanges
     public synchronized void explodeAllRabbits()
     {
         explodeAll = true;
+    }
+
+    public List<Rabbit> rabbitsJustEntered()
+    {
+        return rabbitsJustEntered;
+    }
+
+    public void rememberWhatWillHappen()
+    {
+        rabbitsJustEntered = new ArrayList<Rabbit>( rabbitsToEnter );
     }
 }

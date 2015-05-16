@@ -57,7 +57,13 @@ public class SwingGameLaunch implements GameLaunch
 
     public int addToken( int tileX, int tileY, Token.Type ability )
     {
-        return physics.addToken( tileX, tileY, ability );
+        int prev = world.abilities.get( ability );
+        int now = physics.addToken( tileX, tileY, ability );
+        if ( now != prev )
+        {
+            graphics.playSound( "place_token" );
+        }
+        return now;
     }
 
     public Map<Token.Type, Integer> getAbilities()

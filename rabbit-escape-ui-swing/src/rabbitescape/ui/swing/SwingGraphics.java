@@ -9,6 +9,7 @@ import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.image.BufferStrategy;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import rabbitescape.engine.World;
@@ -17,6 +18,8 @@ import rabbitescape.render.AnimationLoader;
 import rabbitescape.render.BitmapCache;
 import rabbitescape.render.GraphPaperBackground;
 import rabbitescape.render.Renderer;
+import rabbitescape.render.SoundPlayer;
+import rabbitescape.render.Sprite;
 import rabbitescape.render.SpriteAnimator;
 import rabbitescape.render.gameloop.Graphics;
 
@@ -37,6 +40,7 @@ public class SwingGraphics implements Graphics
 
         private final java.awt.Canvas canvas;
         private final Renderer<SwingBitmap, SwingPaint> renderer;
+        private final SoundPlayer<SwingBitmap> soundPlayer;
         private final SpriteAnimator<SwingBitmap> animator;
         private final int frameNum;
         private final World world;
@@ -45,6 +49,7 @@ public class SwingGraphics implements Graphics
             BufferStrategy strategy,
             java.awt.Canvas canvas,
             Renderer<SwingBitmap, SwingPaint> renderer,
+            SoundPlayer<SwingBitmap> soundPlayer,
             SpriteAnimator<SwingBitmap> animator,
             int frameNum,
             World world
@@ -53,6 +58,7 @@ public class SwingGraphics implements Graphics
             super( strategy );
             this.canvas = canvas;
             this.renderer = renderer;
+            this.soundPlayer = soundPlayer;
             this.animator = animator;
             this.frameNum = frameNum;
             this.world = world;
@@ -73,11 +79,15 @@ public class SwingGraphics implements Graphics
                 graphPaperMinor
             );
 
+            List<Sprite<SwingBitmap>> sprites = animator.getSprites( frameNum );
+
             renderer.render(
                 swingCanvas,
-                animator.getSprites( frameNum ),
+                sprites,
                 white
             );
+
+            soundPlayer.play( sprites );
 
             drawResult( g );
         }
@@ -250,6 +260,8 @@ public class SwingGraphics implements Graphics
     private final SpriteAnimator<SwingBitmap> animator;
 
     public final Renderer<SwingBitmap, SwingPaint> renderer;
+    private final SoundPlayer<SwingBitmap> soundPlayer;
+
     private int prevScrollX;
     private int prevScrollY;
 
@@ -264,6 +276,7 @@ public class SwingGraphics implements Graphics
             world, bitmapCache, animationCache );
 
         this.renderer = new Renderer<SwingBitmap, SwingPaint>( 0, 0, -1 );
+        this.soundPlayer = new SoundPlayer<>( new SwingSound() );
     }
 
     @Override
@@ -275,6 +288,7 @@ public class SwingGraphics implements Graphics
             strategy,
             jframe.canvas,
             renderer,
+            soundPlayer,
             animator,
             frame,
             world
@@ -330,5 +344,10 @@ public class SwingGraphics implements Graphics
             prevScrollX = jframe.scrollX;
             prevScrollY = jframe.scrollY;
         }
+    }
+
+    public void playSound( String soundEffect )
+    {
+        soundPlayer.sound.play( soundEffect );
     }
 }

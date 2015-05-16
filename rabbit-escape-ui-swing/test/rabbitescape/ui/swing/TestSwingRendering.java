@@ -174,6 +174,7 @@ public class TestSwingRendering
     {
         return new Sprite<SwingBitmap>(
             new ScaledBitmap<SwingBitmap>( scaler, bitmapLoader, "x" ),
+            null,
             tileX,
             tileY,
             offsetX,

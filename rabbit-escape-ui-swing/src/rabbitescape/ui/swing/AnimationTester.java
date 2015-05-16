@@ -8,7 +8,6 @@ import rabbitescape.engine.util.RealFileSystem;
 import rabbitescape.render.*;
 import rabbitescape.render.Frame;
 import rabbitescape.render.Renderer;
-import rabbitescape.render.androidlike.Sound;
 
 import javax.swing.*;
 
@@ -468,15 +467,16 @@ public class AnimationTester extends JFrame
         Renderer<SwingBitmap, SwingPaint> renderer =
             new Renderer<SwingBitmap, SwingPaint>( 0, 0, tileSize );
 
-        Sound sound = new SwingSound();
+        SoundPlayer<SwingBitmap> soundPlayer =
+            new SoundPlayer<SwingBitmap>( new SwingSound() );
 
         int frameSetNum = 0;
         int frameNum = 0;
         running = true;
         while( running && this.isVisible() )
         {
-            new DrawFrame( strategy, renderer, sound, frameSetNum, frameNum )
-                .run();
+            new DrawFrame(
+                strategy, renderer, soundPlayer, frameSetNum, frameNum ).run();
 
             pause();
 
@@ -498,19 +498,19 @@ public class AnimationTester extends JFrame
         private final int frameSetNum;
         private final int frameNum;
         private final Renderer<SwingBitmap, SwingPaint> renderer;
-        private final Sound sound;
+        private final SoundPlayer<SwingBitmap> soundPlayer;
 
         public DrawFrame(
             BufferStrategy strategy,
             Renderer<SwingBitmap, SwingPaint> renderer,
-            Sound sound,
+            SoundPlayer<SwingBitmap> soundPlayer,
             int frameSetNum,
             int frameNum
         )
         {
             super( strategy );
             this.renderer = renderer;
-            this.sound = sound;
+            this.soundPlayer = soundPlayer;
             this.frameSetNum = frameSetNum;
             this.frameNum = frameNum;
         }
@@ -540,6 +540,7 @@ public class AnimationTester extends JFrame
                 sprites.add(
                     new Sprite<SwingBitmap>(
                         bmp,
+                        null,
                         loc.x,
                         loc.y,
                         0,
@@ -562,17 +563,18 @@ public class AnimationTester extends JFrame
                 SwingBitmapAndOffset bmp = bmps.get( frameNum );
                 Sprite<SwingBitmap> sprite = new Sprite<SwingBitmap>(
                     bmp.bitmap,
+                    bmp.soundEffect,
                     loc.x,
                     loc.y,
                     bmp.offsetX,
                     bmp.offsetY
                 );
 
-                sound.play( bmp.soundEffect );
-
                 sprites.add( sprite );
                 ++i;
             }
+
+            soundPlayer.play( sprites );
 
             renderer.render(
                 new SwingCanvas( g, canvas.getWidth(), canvas.getHeight() ),
