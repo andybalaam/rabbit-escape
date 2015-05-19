@@ -28,6 +28,9 @@ public class AndroidMenuActivity extends ActionBarActivity
     protected void onCreate( Bundle savedInstanceState )
     {
         super.onCreate( savedInstanceState );
+
+        GlobalSoundPool.init( getResources() );
+
         setContentView( R.layout.activity_android_menu );
 
         Menu mainMenu = MenuDefinition.mainMenu(

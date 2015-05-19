@@ -5,12 +5,16 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.view.SurfaceHolder;
 
+import java.util.List;
+
 import rabbitescape.engine.World;
 import rabbitescape.render.AnimationCache;
 import rabbitescape.render.AnimationLoader;
 import rabbitescape.render.BitmapCache;
 import rabbitescape.render.GraphPaperBackground;
 import rabbitescape.render.Renderer;
+import rabbitescape.render.SoundPlayer;
+import rabbitescape.render.Sprite;
 import rabbitescape.render.SpriteAnimator;
 import rabbitescape.render.gameloop.Graphics;
 
@@ -20,6 +24,7 @@ public class AndroidGraphics implements Graphics
     private static final float MIN_TILE_SIZE = 16f;
 
     private final BitmapCache<AndroidBitmap> bitmapCache;
+    private final SoundPlayer<AndroidBitmap> soundPlayer;
     private final World world;
     private final SurfaceHolder surfaceHolder;
     private final AnimationCache animationCache;
@@ -60,6 +65,7 @@ public class AndroidGraphics implements Graphics
 
     public AndroidGraphics(
         BitmapCache<AndroidBitmap> bitmapCache,
+        SoundPlayer<AndroidBitmap> soundPlayer,
         World world,
         SurfaceHolder surfaceHolder,
         float displayDensity,
@@ -68,6 +74,7 @@ public class AndroidGraphics implements Graphics
     )
     {
         this.bitmapCache = bitmapCache;
+        this.soundPlayer = soundPlayer;
         this.world = world;
         this.surfaceHolder = surfaceHolder;
         this.scrollX = scrollX;
@@ -141,6 +148,12 @@ public class AndroidGraphics implements Graphics
         }
     }
 
+    @Override
+    public void dispose()
+    {
+        soundPlayer.sound.dispose();
+    }
+
     private void actuallyDrawGraphics( Canvas canvas, int frame )
     {
         if (
@@ -208,11 +221,11 @@ public class AndroidGraphics implements Graphics
         GraphPaperBackground.drawBackground(
             world, renderer, androidCanvas, white, graphPaperMajor, graphPaperMinor );
 
-        renderer.render(
-            androidCanvas,
-            animator.getSprites( frameNum ),
-            paint
-        );
+        List<Sprite<AndroidBitmap>> sprites = animator.getSprites( frameNum );
+
+        soundPlayer.play( sprites );
+
+        renderer.render( androidCanvas, sprites, paint );
     }
 
     public void scrollBy( float x, float y )

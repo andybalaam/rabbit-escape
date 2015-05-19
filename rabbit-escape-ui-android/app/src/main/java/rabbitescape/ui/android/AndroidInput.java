@@ -28,4 +28,9 @@ public class AndroidInput implements Input
     {
         return new Date().getTime();
     }
+
+    @Override
+    public void dispose()
+    {
+    }
 }

@@ -1,5 +1,6 @@
 package rabbitescape.ui.android;
 
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.SurfaceHolder;
 
@@ -7,6 +8,7 @@ import rabbitescape.engine.LevelWinListener;
 import rabbitescape.engine.Token;
 import rabbitescape.engine.World;
 import rabbitescape.render.BitmapCache;
+import rabbitescape.render.SoundPlayer;
 import rabbitescape.render.gameloop.GameLoop;
 import rabbitescape.render.gameloop.GeneralPhysics;
 
@@ -22,6 +24,8 @@ public class AndroidGameLaunch implements Runnable
     // Transient state
     public final GeneralPhysics physics;
     public final AndroidGraphics graphics;
+    public final SoundPlayer<AndroidBitmap> soundPlayer;
+    public final AndroidInput input;
 
     public final WorldSaver worldSaver;
     private final GameLoop loop;
@@ -29,12 +33,14 @@ public class AndroidGameLaunch implements Runnable
     public AndroidGameLaunch(
         SurfaceHolder surfaceHolder,
         BitmapCache<AndroidBitmap> bitmapCache,
+        Resources resources,
         World world,
         LevelWinListener winListener,
         float displayDensity,
         Bundle savedInstanceState
     )
     {
+        this.soundPlayer = new SoundPlayer<AndroidBitmap>( new AndroidSound( false ) );
         this.physics = new GeneralPhysics( world, winListener );
 
         int scrollX;
@@ -52,11 +58,11 @@ public class AndroidGameLaunch implements Runnable
         }
 
         this.graphics = new AndroidGraphics(
-            bitmapCache, world, surfaceHolder, displayDensity, scrollX, scrollY );
+            bitmapCache, soundPlayer, world, surfaceHolder, displayDensity, scrollX, scrollY );
 
         this.worldSaver = new WorldSaver( world, this );
 
-        AndroidInput input = new AndroidInput( worldSaver );
+        this.input = new AndroidInput( worldSaver );
 
         loop = new GameLoop( input, physics, graphics );
     }
@@ -67,9 +73,13 @@ public class AndroidGameLaunch implements Runnable
         loop.run();
     }
 
-    public void pleaseStop()
+    public void stopAndDispose()
     {
         loop.pleaseStop();
+        input.dispose();
+        graphics.dispose();
+        physics.dispose();
+        soundPlayer.sound.dispose();
     }
 
     public int addToken( Token.Type ability, float pixelX, float pixelY )

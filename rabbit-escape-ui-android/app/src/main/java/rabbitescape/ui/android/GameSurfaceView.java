@@ -15,6 +15,7 @@ import rabbitescape.engine.LevelWinListener;
 import rabbitescape.engine.Token;
 import rabbitescape.engine.World;
 import rabbitescape.render.BitmapCache;
+import rabbitescape.render.SoundPlayer;
 
 public class GameSurfaceView extends SurfaceView
     implements
@@ -71,7 +72,14 @@ public class GameSurfaceView extends SurfaceView
     public void surfaceCreated( SurfaceHolder surfaceHolder )
     {
         game = new Game(
-            surfaceHolder, bitmapCache, world, winListener, displayDensity, savedInstanceState );
+            surfaceHolder,
+            bitmapCache,
+            getResources(),
+            world,
+            winListener,
+            displayDensity,
+            savedInstanceState
+        );
 
         game.start();
 

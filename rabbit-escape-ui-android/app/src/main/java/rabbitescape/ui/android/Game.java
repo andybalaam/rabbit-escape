@@ -1,11 +1,13 @@
 package rabbitescape.ui.android;
 
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.SurfaceHolder;
 
 import rabbitescape.engine.LevelWinListener;
 import rabbitescape.engine.World;
 import rabbitescape.render.BitmapCache;
+import rabbitescape.render.SoundPlayer;
 
 public class Game
 {
@@ -18,6 +20,7 @@ public class Game
     public Game(
         SurfaceHolder surfaceHolder,
         BitmapCache<AndroidBitmap> bitmapCache,
+        Resources resources,
         World world,
         LevelWinListener winListener,
         float displayDensity,
@@ -25,7 +28,14 @@ public class Game
     )
     {
         gameLaunch = new AndroidGameLaunch(
-            surfaceHolder, bitmapCache, world, winListener, displayDensity, savedInstanceState );
+            surfaceHolder,
+            bitmapCache,
+            resources,
+            world,
+            winListener,
+            displayDensity,
+            savedInstanceState
+        );
 
         thread = new Thread( gameLaunch, "GameLaunch" );
     }
@@ -37,7 +47,7 @@ public class Game
 
     public void stop()
     {
-        gameLaunch.pleaseStop();
+        gameLaunch.stopAndDispose();
         try
         {
             thread.join();

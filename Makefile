@@ -28,11 +28,13 @@ PNGIMAGES64  := $(PNGIMAGESSRC:images-src/%.png=$(IMAGES64_DEST)/%.png)
 PNGIMAGES128 := $(PNGIMAGESSRC:images-src/%.png=$(IMAGES128_DEST)/%.png)
 
 SOUNDSWAV_DEST := rabbit-escape-ui-swing/src/rabbitescape/ui/swing/sounds
+ANDROIDSOUNDSOGG_DEST := rabbit-escape-ui-android/app/src/main/assets/sounds
 
 MUSICSRC  := $(wildcard music-src/*.flac)
 SOUNDSSRC := $(wildcard sounds-src/*.flac)
 
 SOUNDSWAV := $(SOUNDSSRC:sounds-src/%.flac=$(SOUNDSWAV_DEST)/%.wav)
+ANDROIDSOUNDSOGG := $(SOUNDSSRC:sounds-src/%.flac=$(ANDROIDSOUNDSOGG_DEST)/%.ogg)
 
 SVGANDROIDIMAGES32  := $(SVGIMAGESSRC:images-src/%.svg=$(ANDROIDIMAGES32_DEST)/%.png)
 SVGANDROIDIMAGES64  := $(SVGIMAGESSRC:images-src/%.svg=$(ANDROIDIMAGES64_DEST)/%.png)
@@ -51,6 +53,9 @@ LEVELS_DIRS := $(wildcard rabbit-escape-engine/src/rabbitescape/levels/*) \
 
 $(SOUNDSWAV_DEST)/%.wav: sounds-src/%.flac
 	mkdir -p $(SOUNDSWAV_DEST); sox $< $@
+
+$(ANDROIDSOUNDSOGG_DEST)/%.ogg: sounds-src/%.flac
+	mkdir -p $(ANDROIDSOUNDSOGG_DEST); sox $< $@
 
 $(IMAGES32_DEST)/%.png: images-src/%.svg
 	mkdir -p $(IMAGES32_DEST); inkscape $< --export-png=$@ --export-dpi=90
@@ -198,6 +203,7 @@ clean-images: no-make-warnings
 
 clean-sounds: no-make-warnings
 	- rm $(SOUNDSWAV_DEST)/*
+	- rm $(ANDROIDSOUNDSOGG_DEST)/*
 
 clean-all: clean clean-images clean-sounds
 
@@ -250,5 +256,11 @@ android-images: \
 	android-icons-xxhdpi \
 	android-icons-xxxhdpi
 
-android-pre: android-images rabbit-escape-ui-android/app/libs/rabbit-escape-generic.jar
+android-sounds: $(ANDROIDSOUNDSOGG)
+
+android-pre: \
+	android-images \
+	android-sounds \
+	rabbit-escape-ui-android/app/libs/rabbit-escape-generic.jar
+
 
