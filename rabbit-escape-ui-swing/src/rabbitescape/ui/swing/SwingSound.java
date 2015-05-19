@@ -60,7 +60,8 @@ public class SwingSound implements Sound
             return;
         }
 
-        uncacheMusic();
+        stopMusic();   // Could uncache here, but Java gets annoyed if you
+                       // keep loading and unloading clips.
         music = name;
 
         if ( !muted )
@@ -91,14 +92,6 @@ public class SwingSound implements Sound
         if ( clip != null )
         {
             clip.stop();
-        }
-    }
-
-    private void uncacheMusic()
-    {
-        if ( music != null )
-        {
-            cache.remove( "music/" + music );
         }
     }
 
