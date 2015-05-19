@@ -15,6 +15,7 @@ public class TextWorldManip
     private static final String num_rabbits          = "num_rabbits";
     private static final String num_to_save          = "num_to_save";
     private static final String rabbit_delay         = "rabbit_delay";
+    private static final String music                = "music";
     private static final String num_saved            = "num_saved";
     private static final String num_killed           = "num_killed";
     private static final String num_waiting          = "num_waiting";
@@ -33,7 +34,8 @@ public class TextWorldManip
 
     public static final List<String> META_STRINGS = Arrays.asList(
         name,
-        description
+        description,
+        music
     );
 
     public static final List<String> META_BOOLS = Arrays.asList(
@@ -102,6 +104,7 @@ public class TextWorldManip
             num_rabs,
             processor.metaInt( num_to_save,  1 ),
             processor.metaInt( rabbit_delay, 4 ),
+            processor.metaString( music, null ),
             processor.metaInt( num_saved, 0 ),
             processor.metaInt( num_killed, 0 ),
             processor.metaInt( num_waiting, num_rabs ),
@@ -125,6 +128,7 @@ public class TextWorldManip
             0,
             1,
             4,
+            null,
             0,
             0,
             0,

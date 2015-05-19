@@ -142,6 +142,7 @@ public class TestGameLoop
                 w.num_rabbits,
                 w.num_to_save,
                 w.rabbit_delay,
+                null,
                 w.num_saved,
                 w.num_killed,
                 1,

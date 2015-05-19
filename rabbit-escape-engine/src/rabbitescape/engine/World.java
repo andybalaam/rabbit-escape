@@ -117,6 +117,7 @@ public class World
     public boolean readyToExplodeAll;
 
     public final WorldChanges changes;
+    public final String music;
 
     public World(
         Dimension size,
@@ -129,6 +130,7 @@ public class World
         int num_rabbits,
         int num_to_save,
         int rabbit_delay,
+        String music,
         int num_saved,
         int num_killed,
         int num_waiting,
@@ -148,6 +150,7 @@ public class World
         this.num_rabbits = num_rabbits;
         this.num_to_save = num_to_save;
         this.rabbit_delay = rabbit_delay;
+        this.music = music;
         this.num_saved = num_saved;
         this.num_killed = num_killed;
         this.num_waiting = num_waiting;
