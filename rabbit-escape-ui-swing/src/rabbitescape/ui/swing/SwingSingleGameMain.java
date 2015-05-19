@@ -1,5 +1,7 @@
 package rabbitescape.ui.swing;
 
+import static rabbitescape.ui.swing.SwingConfigSetup.*;
+
 import java.io.PrintStream;
 import java.util.Locale;
 
@@ -8,6 +10,7 @@ import javax.swing.SwingUtilities;
 import rabbitescape.engine.LevelWinListener;
 import rabbitescape.engine.World;
 import rabbitescape.engine.config.Config;
+import rabbitescape.engine.config.ConfigTools;
 import rabbitescape.engine.util.FileSystem;
 import rabbitescape.engine.util.RealFileSystem;
 import rabbitescape.render.BitmapCache;
@@ -19,6 +22,7 @@ public class SwingSingleGameMain extends Main
     private final BitmapCache<SwingBitmap> bitmapCache;
     private final Config uiConfig;
     private final MainJFrame frame;
+    private final SwingSound sound;
     private final MenuUi menuUi;
 
     public SwingSingleGameMain(
@@ -28,6 +32,7 @@ public class SwingSingleGameMain extends Main
         BitmapCache<SwingBitmap> bitmapCache,
         Config uiConfig,
         MainJFrame frame,
+        SwingSound sound,
         MenuUi menuUi
     )
     {
@@ -35,12 +40,16 @@ public class SwingSingleGameMain extends Main
         this.bitmapCache = bitmapCache;
         this.uiConfig = uiConfig;
         this.frame = frame;
+        this.sound = sound;
         this.menuUi = menuUi;
     }
 
     public static void main( String[] args )
     {
         Config cfg = SwingConfigSetup.createConfig();
+
+        SwingSound sound = new SwingSound(
+            ConfigTools.getBool( cfg, CFG_MUTED ) );
 
         Main m = new SwingSingleGameMain(
             new RealFileSystem(),
@@ -49,7 +58,8 @@ public class SwingSingleGameMain extends Main
             new BitmapCache<>(
                 new SwingBitmapLoader(), new SwingBitmapScaler(), 500 ),
             cfg,
-            new MainJFrame( cfg ),
+            new MainJFrame( cfg, sound ),
+            sound,
             null
         );
 
@@ -64,6 +74,6 @@ public class SwingSingleGameMain extends Main
 
         SwingUtilities.invokeLater( init );
 
-        return new SwingGameLaunch( init, world, winListener );
+        return new SwingGameLaunch( init, world, winListener, sound );
     }
 }

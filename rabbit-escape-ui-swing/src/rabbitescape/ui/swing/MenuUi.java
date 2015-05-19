@@ -124,6 +124,7 @@ public class MenuUi
     private final Stack<Menu> stack;
     private final Config uiConfig;
     private final MainJFrame frame;
+    private final SwingSound sound;
 
     private final JPanel menuPanel;
     private final LevelsCompleted levelsCompleted;
@@ -135,7 +136,8 @@ public class MenuUi
         Locale locale,
         BitmapCache<SwingBitmap> bitmapCache,
         Config uiConfig,
-        MainJFrame frame
+        MainJFrame frame,
+        SwingSound sound
     )
     {
         this.fs = fs;
@@ -145,6 +147,7 @@ public class MenuUi
         this.stack = new Stack<>();
         this.uiConfig = uiConfig;
         this.frame = frame;
+        this.sound = sound;
         this.menuPanel = new JPanel( new GridBagLayout() );
         this.levelsCompleted = new ConfigBasedLevelsCompleted( uiConfig );
 
@@ -260,7 +263,14 @@ public class MenuUi
                 uninit();
 
                 new SwingSingleGameMain(
-                    fs, out, locale, bitmapCache, uiConfig, frame, MenuUi.this
+                    fs,
+                    out,
+                    locale,
+                    bitmapCache,
+                    uiConfig,
+                    frame,
+                    sound,
+                    MenuUi.this
                 ).launchGame(
                     new String[] { item.fileName },
                     winListeners( item )
@@ -321,6 +331,7 @@ public class MenuUi
     {
         ConfigTools.setBool( uiConfig, CFG_MUTED, muted );
         uiConfig.save();
+        sound.mute( muted );
     }
 
     private void initListeners()

@@ -21,7 +21,11 @@ public class SwingGameLaunch implements GameLaunch
     private final GameLoop loop;
 
     public SwingGameLaunch(
-        SwingGameInit init, World world, LevelWinListener winListener )
+        SwingGameInit init,
+        World world,
+        LevelWinListener winListener,
+        SwingSound sound
+    )
     {
         this.world = world;
         this.physics = new GeneralPhysics( world, winListener );
@@ -34,7 +38,7 @@ public class SwingGameLaunch implements GameLaunch
             world,
             uiPieces.jframe,
             uiPieces.bitmapCache,
-            uiPieces.jframe.getMuted()
+            sound
         );
 
         jframe.setGameLaunch( this );

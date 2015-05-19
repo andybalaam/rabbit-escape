@@ -39,4 +39,9 @@ public class AndroidSound implements Sound
     {
         this.muted = muted;
     }
+
+    @Override
+    public void setMusic( String s )
+    {
+    }
 }

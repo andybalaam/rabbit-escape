@@ -39,7 +39,7 @@ public class SwingSoundCache
     {
         AudioInputStream stream = AudioSystem.getAudioInputStream(
             getClass().getResource(
-                "/rabbitescape/ui/swing/sounds/" + name + ".wav"
+                "/rabbitescape/ui/swing/" + name + ".wav"
             )
         );
 
@@ -53,7 +53,12 @@ public class SwingSoundCache
 
     public void dispose()
     {
-        stopAll();
+        for ( Clip clip : clips.values() )
+        {
+            clip.stop();
+            clip.flush();
+        }
+        clips.clear();
     }
 
     public void stopAll()
@@ -61,8 +66,16 @@ public class SwingSoundCache
         for ( Clip clip : clips.values() )
         {
             clip.stop();
+        }
+    }
+
+    public void remove( String name )
+    {
+        Clip clip = clips.remove( name );
+        if ( clip != null )
+        {
+            clip.stop();
             clip.flush();
         }
-        clips.clear();
     }
 }

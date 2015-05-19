@@ -269,7 +269,7 @@ public class SwingGraphics implements Graphics
         World world,
         GameUi jframe,
         BitmapCache<SwingBitmap> bitmapCache,
-        boolean muted
+        SwingSound sound
     )
     {
         this.world = world;
@@ -280,7 +280,7 @@ public class SwingGraphics implements Graphics
             world, bitmapCache, animationCache );
 
         this.renderer = new Renderer<SwingBitmap, SwingPaint>( 0, 0, -1 );
-        this.soundPlayer = new SoundPlayer<>( new SwingSound( muted ) );
+        this.soundPlayer = new SoundPlayer<SwingBitmap>( sound );
     }
 
     @Override
@@ -363,6 +363,5 @@ public class SwingGraphics implements Graphics
     @Override
     public void dispose()
     {
-        soundPlayer.sound.dispose();
     }
 }

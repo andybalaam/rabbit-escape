@@ -52,16 +52,20 @@ public class MainJFrame extends JFrame
     }
 
     private final Config uiConfig;
+    private final SwingSound sound;
 
-    public MainJFrame( Config uiConfig )
+    public MainJFrame( Config uiConfig, SwingSound sound )
     {
         this.uiConfig = uiConfig;
+        this.sound = sound;
 
         Listener listener = new Listener( this );
         addWindowListener( listener );
         addComponentListener( listener );
 
         setBoundsFromConfig();
+
+        sound.setMusic( "tryad-let_them_run" );
     }
 
     public void setBoundsFromConfig()
@@ -84,6 +88,7 @@ public class MainJFrame extends JFrame
 
     public void exit()
     {
+        sound.dispose();
         dispose();
     }
 }

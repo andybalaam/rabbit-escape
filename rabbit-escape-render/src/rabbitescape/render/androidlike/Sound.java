@@ -5,4 +5,5 @@ public interface Sound
     void play( String soundEffect );
     void mute( boolean muted );
     void dispose();
+    void setMusic( String music );
 }
