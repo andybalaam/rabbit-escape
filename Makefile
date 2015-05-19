@@ -183,7 +183,7 @@ levels: no-make-warnings $(patsubst %, %/ls.txt, $(LEVELS_DIRS))
 versioncheck:
 	grep "version = \"${VERSION}\"" rabbit-escape-engine/src/rabbitescape/engine/menu/AboutText.java
 
-compile: no-make-warnings images sounds animations levels versioncheck
+compile: no-make-warnings images sounds music animations levels versioncheck
 	ant compile
 
 clean: no-make-warnings
