@@ -621,4 +621,45 @@ public class TestUtil
             equalTo( new String[] { "4", "3", "2", "1" } )
         );
     }
+
+    @Test
+    public void Equal_objects_are_equal()
+    {
+        assertThat(
+            equalsOrBothNull( "foo", "foo" ),
+            equalTo( true )
+        );
+    }
+
+    @Test
+    public void Unequal_objects_are_unequal()
+    {
+        assertThat(
+            equalsOrBothNull( "foo", "bar" ),
+            equalTo( false )
+        );
+    }
+
+    @Test
+    public void Null_does_not_equal_an_object()
+    {
+        assertThat(
+            equalsOrBothNull( "foo", null ),
+            equalTo( false )
+        );
+
+        assertThat(
+            equalsOrBothNull( null, "bar" ),
+            equalTo( false )
+        );
+    }
+
+    @Test
+    public void Two_nulls_are_equal()
+    {
+        assertThat(
+            equalsOrBothNull( null, null ),
+            equalTo( true )
+        );
+    }
 }

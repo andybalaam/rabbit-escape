@@ -549,4 +549,16 @@ public class Util
             )
         ).toArray( left );
     }
+
+    public static <T> boolean equalsOrBothNull( T left, T right )
+    {
+        if ( left == null )
+        {
+            return ( right == null );
+        }
+        else
+        {
+            return left.equals( right );
+        }
+    }
 }
