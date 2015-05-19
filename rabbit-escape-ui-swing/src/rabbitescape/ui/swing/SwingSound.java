@@ -1,5 +1,7 @@
 package rabbitescape.ui.swing;
 
+import static rabbitescape.engine.util.Util.*;
+
 import javax.sound.sampled.Clip;
 
 import rabbitescape.render.androidlike.Sound;
@@ -53,7 +55,7 @@ public class SwingSound implements Sound
     @Override
     public void setMusic( String name )
     {
-        if ( name.equals( music ) )
+        if ( equalsOrBothNull( name, music ) )
         {
             return;
         }
@@ -94,11 +96,19 @@ public class SwingSound implements Sound
 
     private void uncacheMusic()
     {
-        cache.remove( "music/" + music );
+        if ( music != null )
+        {
+            cache.remove( "music/" + music );
+        }
     }
 
     private Clip musicClip()
     {
+        if ( music == null )
+        {
+            return null;
+        }
+
         try
         {
             return cache.get( "music/" + music );
