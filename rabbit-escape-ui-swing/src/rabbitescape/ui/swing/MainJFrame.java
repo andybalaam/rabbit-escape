@@ -64,8 +64,6 @@ public class MainJFrame extends JFrame
         addComponentListener( listener );
 
         setBoundsFromConfig();
-
-        sound.setMusic( "tryad-let_them_run" );
     }
 
     public void setBoundsFromConfig()

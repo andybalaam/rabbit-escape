@@ -225,6 +225,8 @@ public class MenuUi
             ++i;
         }
 
+        sound.setMusic( "tryad-let_them_run" );
+
         frame.repaint();
         frame.revalidate();
     }
@@ -233,7 +235,6 @@ public class MenuUi
     {
         Menu menu = stack.lastElement();
         menu.refresh();
-        placeMenu();
     }
 
     private GridBagConstraints constraints( int i )

@@ -43,6 +43,8 @@ public class SwingGameLaunch implements GameLaunch
 
         jframe.setGameLaunch( this );
 
+        sound.setMusic( world.music );
+
         loop = new GameLoop( new SwingInput(), physics, graphics );
     }
 
