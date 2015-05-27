@@ -1081,7 +1081,7 @@ public class TestUtil
     {
         Token[] tokens = new Token[] {new Token( 0, 0, Token.Type.bash ),
                                       new Token( 1, 1, Token.Type.bridge )};
-        Rabbit[] rabbits = new Rabbit[] {new Rabbit( 3, 3, Direction.LEFT )};
+        Rabbit[] rabbits = new Rabbit[] {new Rabbit( 3, 3, Direction.LEFT, "good" )};
 
         Iterable<Thing> chained = Util.chain( Arrays.asList( tokens ), Arrays.asList( rabbits ) );
 

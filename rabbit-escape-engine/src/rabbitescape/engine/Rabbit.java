@@ -22,12 +22,14 @@ public class Rabbit extends Thing implements Comparable<Rabbit>
 
     public Direction dir;
     public boolean onSlope;
+    public final String type;
 
-    public Rabbit( int x, int y, Direction dir )
+    public Rabbit( int x, int y, Direction dir, String type )
     {
         super( x, y, RABBIT_WALKING_LEFT );
         this.dir = dir;
         this.onSlope = false;
+        this.type = type;
         behaviours = new ArrayList<>();
         behavioursTriggerOrder = new ArrayList<>();
         createBehaviours();
