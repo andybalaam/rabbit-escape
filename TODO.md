@@ -39,11 +39,42 @@ Later
 - Save up zoom events and do them between frames
 - Consider whether http://developer.android.com/training/gestures/detector.html
   will fix the bug where we jerk-scroll after a zoom.
-- Music
+- climbing up a 1 high wall glitches. First animation needs to be custom
+- climbing from an upward slope glitches. Also probably a downward slope.
+- walking from flat to downward slope starts off with rabbit about 2 pixels too high
+- after climbing and hitting head sometimes the rabbit walks on air
+- medium 7 can be solved because of a bug where you can walk through a slope that should hit your head i.e.
+    /
+    r/#
+    ###
+is traversable but should not be.
+- show level name and number in game
+- show level name in menu
+- front menu with quick play button that jumps to what you are stuck on
+- victory message (and sound?) when you complete a level set
+- jump to next level or retry when finished level
+- swing ui should use dialogs instead of overlay
+- hints for each level
+- walkthrough solutions for each level, tested with the build
+- fix text ui and allow recording walkthroughs in it
+- record walkthroughs in main ui
+- js port (and level editor)
+- when continuing to bridge rabbit floats
+- when a rabbit is starting to climb it can be made to bridge
+- when a rabbit is starting to bridge it can be made to bash
+- when I drop a token near the end of a bridge that is being built it should not float to the ground.
+- tokens resting on slopes should be higher
+- after climbing up to downward slope we fall onto it which looks weird
+      \
+    rc#
+    ###
+- when I explode a blocker it jerks to the left
+- when a bridge is almost built it should behave like a bridge
 
 Release 0.4
 -----------
 
+- Music
 - Sound effects
 - Improve levels
 
