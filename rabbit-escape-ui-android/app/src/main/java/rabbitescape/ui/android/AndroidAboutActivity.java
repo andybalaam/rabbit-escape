@@ -1,6 +1,7 @@
 package rabbitescape.ui.android;
 
 import android.content.Intent;
+import android.media.AudioManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
@@ -22,6 +23,7 @@ public class AndroidAboutActivity extends ActionBarActivity
     protected void onCreate( Bundle savedInstanceState )
     {
         super.onCreate( savedInstanceState );
+        setVolumeControlStream( AudioManager.STREAM_MUSIC );
         setContentView( R.layout.activity_android_about );
 
         TextView aboutText = (TextView)findViewById( R.id.aboutText );

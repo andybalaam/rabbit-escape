@@ -1,6 +1,7 @@
 package rabbitescape.ui.android;
 
 import android.content.Intent;
+import android.media.AudioManager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -28,6 +29,8 @@ public class AndroidMenuActivity extends ActionBarActivity
     protected void onCreate( Bundle savedInstanceState )
     {
         super.onCreate( savedInstanceState );
+
+        setVolumeControlStream( AudioManager.STREAM_MUSIC );
 
         GlobalSoundPool.init( getResources() );
 

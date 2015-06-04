@@ -3,6 +3,7 @@ package rabbitescape.ui.android;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
+import android.media.AudioManager;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
@@ -67,6 +68,8 @@ public class AndroidGameActivity extends ActionBarActivity
     protected void onCreate( Bundle savedInstanceState )
     {
         super.onCreate( savedInstanceState );
+
+        setVolumeControlStream( AudioManager.STREAM_MUSIC );
 
         Intent intent = getIntent();
         String levelsDir     = intent.getStringExtra( INTENT_LEVELS_DIR );
