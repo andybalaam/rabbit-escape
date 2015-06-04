@@ -63,6 +63,7 @@ public class AndroidGameActivity extends ActionBarActivity
     public GameSurfaceView gameSurface;
     private Token.Type[] abilities;
     private TextView worldStatsTextView;
+    private World world;
 
     @Override
     protected void onCreate( Bundle savedInstanceState )
@@ -77,7 +78,7 @@ public class AndroidGameActivity extends ActionBarActivity
         int    levelNum      = intent.getIntExtra( INTENT_LEVEL_NUMBER, 0 );
 
         staticInit();
-        World world = loadWorld( levelFileName, savedInstanceState );
+        world = loadWorld( levelFileName, savedInstanceState );
         buildDynamicUi( getResources(), world, levelsDir, levelNum, savedInstanceState );
         restoreFromState( savedInstanceState );
 
@@ -85,6 +86,20 @@ public class AndroidGameActivity extends ActionBarActivity
         {
             Dialogs.intro( this, world );
         }
+    }
+
+    @Override
+    public void onStop()
+    {
+        super.onStop();
+        GlobalSoundPool.stopIfNotInAnotherActivity( this );
+    }
+
+    @Override
+    public void onResume()
+    {
+        super.onResume();
+        GlobalSoundPool.playMusic( this, getResources(), world.music );
     }
 
     private World loadWorld( String levelFileName, Bundle savedInstanceState )

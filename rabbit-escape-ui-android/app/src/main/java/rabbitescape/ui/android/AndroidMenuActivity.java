@@ -75,9 +75,17 @@ public class AndroidMenuActivity extends ActionBarActivity
     }
 
     @Override
+    public void onStop()
+    {
+        super.onStop();
+        GlobalSoundPool.stopIfNotInAnotherActivity( this );
+    }
+
+    @Override
     public void onResume()
     {
         super.onResume();
+        GlobalSoundPool.playMusic( this, getResources(), "tryad-let_them_run" );
         menu.refresh();
         listView.setAdapter( new MenuListAdapter( this, menu ) );
         listView.setSelection( selectedItemPosition );

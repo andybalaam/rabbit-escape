@@ -4,16 +4,12 @@ import android.content.Intent;
 import android.media.AudioManager;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import rabbitescape.engine.menu.AboutText;
-import rabbitescape.engine.menu.Menu;
 
 import static rabbitescape.engine.i18n.Translation.t;
 
@@ -35,8 +31,23 @@ public class AndroidAboutActivity extends ActionBarActivity
         aboutOkButton.setText( t( "OK" ) );
     }
 
+    @Override
+    public void onResume()
+    {
+        super.onResume();
+        GlobalSoundPool.playMusic( this, getResources(), "tryad-let_them_run" );
+    }
+
+    @Override
+    public void onStop()
+    {
+        super.onStop();
+        GlobalSoundPool.stopIfNotInAnotherActivity( this );
+    }
+
     public void onMoreClicked( View view )
     {
+        //GlobalSoundPool.stopMusic();
         Intent intent = new Intent( Intent.ACTION_VIEW, Uri.parse( AboutText.url ) );
         startActivity( intent );
     }
