@@ -74,9 +74,12 @@ is traversable but should not be.
 Release 0.4
 -----------
 
+- Improve levels
+- Switch to BY-NC-SA for content
+- Update all license info (including in-game) to mention 3 licenses
+- Credit tyrad on web site and about page
 - Music
 - Sound effects
-- Improve levels
 
 Release 0.3.1
 -------------
