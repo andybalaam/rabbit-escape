@@ -151,7 +151,6 @@ public class AndroidGraphics implements Graphics
     @Override
     public void dispose()
     {
-        soundPlayer.sound.dispose();
     }
 
     private void actuallyDrawGraphics( Canvas canvas, int frame )

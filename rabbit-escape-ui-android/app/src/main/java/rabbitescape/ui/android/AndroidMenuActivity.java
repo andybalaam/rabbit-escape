@@ -1,12 +1,12 @@
 package rabbitescape.ui.android;
 
 import android.content.Intent;
-import android.media.AudioManager;
+import android.content.SharedPreferences;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
 
 import rabbitescape.engine.menu.LevelMenuItem;
@@ -14,33 +14,36 @@ import rabbitescape.engine.menu.Menu;
 import rabbitescape.engine.menu.MenuDefinition;
 import rabbitescape.engine.menu.MenuItem;
 
-public class AndroidMenuActivity extends ActionBarActivity
+public class AndroidMenuActivity extends RabbitEscapeActivity
 {
     private static final String POSITION = "rabbitescape.position";
     private static final String STATE_SELECTED_ITEM = "rabbitescape.selected_menu_item";
+
+    private SharedPreferences prefs;
 
     private int[] positions;
 
     private Menu menu = null;
     private ListView listView = null;
+    private Button muteButton = null;
+
+    // Saved state
+    private boolean muted;
     public int selectedItemPosition = -1;
 
     @Override
     protected void onCreate( Bundle savedInstanceState )
     {
         super.onCreate( savedInstanceState );
-
-        setVolumeControlStream( AudioManager.STREAM_MUSIC );
-
-        GlobalSoundPool.init( getResources() );
+        sound.setMusic( "tryad-let_them_run" );
 
         setContentView( R.layout.activity_android_menu );
 
+        prefs = getSharedPreferences( "rabbitescape", MODE_PRIVATE );
+        muteButton = (Button)findViewById( R.id.menuMuteButton );
+
         Menu mainMenu = MenuDefinition.mainMenu(
-            new AndroidPreferencesBasedLevelsCompleted(
-                getSharedPreferences( "rabbitescape", MODE_PRIVATE )
-            )
-        );
+            new AndroidPreferencesBasedLevelsCompleted( prefs ) );
 
         if ( savedInstanceState != null )
         {
@@ -75,20 +78,38 @@ public class AndroidMenuActivity extends ActionBarActivity
     }
 
     @Override
-    public void onStop()
-    {
-        super.onStop();
-        GlobalSoundPool.stopIfNotInAnotherActivity( this );
-    }
-
-    @Override
     public void onResume()
     {
         super.onResume();
-        GlobalSoundPool.playMusic( this, getResources(), "tryad-let_them_run" );
+        muted = prefs.getBoolean( AndroidGameActivity.PREFS_MUTED, false );
+        sound.mute( muted );
+        sound.setMusic( "tryad-let_them_run" );
+        updateMuteButton();
         menu.refresh();
         listView.setAdapter( new MenuListAdapter( this, menu ) );
         listView.setSelection( selectedItemPosition );
+    }
+
+    public void onMuteClicked( View view )
+    {
+        muted = !muted;
+
+        sound.mute( muted );
+
+        prefs.edit().putBoolean( AndroidGameActivity.PREFS_MUTED, muted ).commit();
+
+        updateMuteButton();
+    }
+
+    private void updateMuteButton()
+    {
+        muteButton.setCompoundDrawablesWithIntrinsicBounds(
+            getResources().getDrawable( muted ? R.drawable.menu_muted : R.drawable.menu_unmuted ),
+            null,
+            null,
+            null
+        );
+        muteButton.invalidate();
     }
 
     private void addItemListener( final Menu menu, ListView listView )

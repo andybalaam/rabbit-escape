@@ -40,7 +40,7 @@ public class AndroidGameLaunch implements Runnable
         Bundle savedInstanceState
     )
     {
-        this.soundPlayer = new SoundPlayer<AndroidBitmap>( new AndroidSound( false ) );
+        this.soundPlayer = new SoundPlayer<AndroidBitmap>( Globals.sound );
         this.physics = new GeneralPhysics( world, winListener );
 
         int scrollX;
@@ -79,7 +79,6 @@ public class AndroidGameLaunch implements Runnable
         input.dispose();
         graphics.dispose();
         physics.dispose();
-        soundPlayer.sound.dispose();
     }
 
     public int addToken( Token.Type ability, float pixelX, float pixelY )

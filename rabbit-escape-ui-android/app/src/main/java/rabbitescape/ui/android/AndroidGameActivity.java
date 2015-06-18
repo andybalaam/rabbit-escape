@@ -3,8 +3,6 @@ package rabbitescape.ui.android;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
-import android.media.AudioManager;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.Menu;
@@ -36,7 +34,7 @@ import static android.text.TextUtils.split;
 import static rabbitescape.engine.i18n.Translation.t;
 
 
-public class AndroidGameActivity extends ActionBarActivity
+public class AndroidGameActivity extends RabbitEscapeActivity
     implements NumLeftListener, WorldStatsListener
 {
     // Constants
@@ -45,7 +43,6 @@ public class AndroidGameActivity extends ActionBarActivity
     public static final String INTENT_LEVEL_NUMBER = "rabbitescape.levelnumber";
     public static final String PREFS_MUTED = "rabbitescape.muted";
     public static final String STATE_CHECKED_ABILITY_INDEX = "rabbitescape.checkedAbilityIndex";
-
 
     // System
     private SharedPreferences prefs;
@@ -70,8 +67,6 @@ public class AndroidGameActivity extends ActionBarActivity
     {
         super.onCreate( savedInstanceState );
 
-        setVolumeControlStream( AudioManager.STREAM_MUSIC );
-
         Intent intent = getIntent();
         String levelsDir     = intent.getStringExtra( INTENT_LEVELS_DIR );
         String levelFileName = intent.getStringExtra( INTENT_LEVEL );
@@ -86,20 +81,19 @@ public class AndroidGameActivity extends ActionBarActivity
         {
             Dialogs.intro( this, world );
         }
+
+        sound.mute( muted );
+        sound.setMusic( world.music );
     }
 
     @Override
-    public void onStop()
-    {
-        super.onStop();
-        GlobalSoundPool.stopIfNotInAnotherActivity( this );
-    }
-
-    @Override
-    public void onResume()
+    protected void onResume()
     {
         super.onResume();
-        GlobalSoundPool.playMusic( this, getResources(), world.music );
+        muted = prefs.getBoolean( PREFS_MUTED, false );
+        sound.mute( muted );
+        sound.setMusic( world.music );
+        updateMuteButton();
     }
 
     private World loadWorld( String levelFileName, Bundle savedInstanceState )
@@ -213,6 +207,8 @@ public class AndroidGameActivity extends ActionBarActivity
     {
         muted = !muted;
 
+        sound.mute( muted );
+
         prefs.edit().putBoolean( PREFS_MUTED, muted ).commit();
 
         updateMuteButton();
@@ -290,9 +286,6 @@ public class AndroidGameActivity extends ActionBarActivity
 
     private void restoreFromState( Bundle savedInstanceState )
     {
-        muted = prefs.getBoolean( PREFS_MUTED, false );
-        updateMuteButton();
-
         if ( savedInstanceState != null )
         {
             int checkedAbility = savedInstanceState.getInt( STATE_CHECKED_ABILITY_INDEX, -1 );
