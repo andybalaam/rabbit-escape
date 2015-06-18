@@ -77,31 +77,34 @@ Release 0.4
 - Improve levels
 - Switch to BY-NC-SA for content
 - Update all license info (including in-game) to mention 3 licenses
-- Credit tyrad on web site and about page
+- Credit tryad on web site and about page
 - Decide whether volumes should be fixed at <1 rate
 - Music
     + Swing
     - Android
+        - Handle AUDIO_BECOMING_NOISY
+            https://developer.android.com/guide/topics/media/mediaplayer.html#noisyintent
         + Control audio via hardware buttons
         + Load on demand
         + Play per activity
-        - Stop when I press home (check in emu and htc)
-        - Stop when I back out (check in emu and htc)
-        - Stop when I launch browser (check in emu and htc)
-        - Unit test GlobalSoundPool
-        - Handle AUDIO_BECOMING_NOISY
-            https://developer.android.com/guide/topics/media/mediaplayer.html#noisyintent
-        - Release on stop, reload on unstop
-        - Mute in game
-        - Mute (make button) in menu
-        - Fix stopping when flip
+        + Stop when I press home (check in emu and htc)
+        + Stop when I back out (check in emu and htc)
+        + Stop when I launch browser (check in emu and htc)
+        + Unit test GlobalSoundPool
+        + Release on stop, reload on unstop
+        + Mute in game
+        + Mute (make button) in menu
+        + Fix stopping when flip
 - Sound effects
     + Swing
-    - Android
+    + Android
         + Load async
         + Play in-game
-        - Mute in-game
+        + Mute in-game
     - Fix too-noisy bash
+    - Fix token placement sound - sounds like it is bad
+    - Fix enter sound - too annoying
+    - Fix exit sound?
     - Evaluate all sounds for volume and goodness
 
 Release 0.3.1
