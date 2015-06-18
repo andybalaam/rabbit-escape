@@ -352,7 +352,7 @@ public class SwingGraphics implements Graphics
 
     public void playSound( String soundEffect )
     {
-        soundPlayer.sound.play( soundEffect );
+        soundPlayer.sound.playSound( soundEffect );
     }
 
     public void setMuted( boolean muted )

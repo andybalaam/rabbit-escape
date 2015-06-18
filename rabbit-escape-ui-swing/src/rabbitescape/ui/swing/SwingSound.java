@@ -20,7 +20,7 @@ public class SwingSound implements Sound
     }
 
     @Override
-    public void play( String name )
+    public void playSound( String name )
     {
         if ( muted || name == null )
         {

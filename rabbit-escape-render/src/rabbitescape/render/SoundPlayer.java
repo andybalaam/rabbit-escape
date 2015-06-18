@@ -18,7 +18,7 @@ public class SoundPlayer<T extends Bitmap>
     {
         for ( Sprite<T> sprite : sprites )
         {
-            sound.play( sprite.soundEffect );
+            sound.playSound( sprite.soundEffect );
         }
     }
 }
