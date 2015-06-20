@@ -146,7 +146,7 @@ public class SandboxGame
      */
     private Rabbit cloneRabbit( Rabbit rabbit )
     {
-        return new Rabbit( rabbit.x, rabbit.y, rabbit.dir, "good" );
+        return new Rabbit( rabbit.x, rabbit.y, rabbit.dir, rabbit.type );
     }
 
     /**
