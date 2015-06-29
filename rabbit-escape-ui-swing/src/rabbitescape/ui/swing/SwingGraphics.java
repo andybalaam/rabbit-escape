@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Map;
 
 import rabbitescape.engine.World;
+import rabbitescape.engine.World.CompletionState;
 import rabbitescape.render.AnimationCache;
 import rabbitescape.render.AnimationLoader;
 import rabbitescape.render.BitmapCache;
@@ -254,6 +255,7 @@ public class SwingGraphics implements Graphics
     }
 
     private final World world;
+
     private final GameUi jframe;
     private final BufferStrategy strategy;
     private final AnimationCache animationCache;
@@ -264,6 +266,7 @@ public class SwingGraphics implements Graphics
 
     private int prevScrollX;
     private int prevScrollY;
+    private CompletionState lastWorldState;
 
     public SwingGraphics(
         World world,
@@ -281,6 +284,10 @@ public class SwingGraphics implements Graphics
 
         this.renderer = new Renderer<SwingBitmap, SwingPaint>( 0, 0, -1 );
         this.soundPlayer = new SoundPlayer<SwingBitmap>( sound );
+
+        this.prevScrollX = -1;
+        this.prevScrollY = -1;
+        this.lastWorldState = null;
     }
 
     @Override
@@ -342,8 +349,14 @@ public class SwingGraphics implements Graphics
     @Override
     public void drawIfScrolled( int frame )
     {
-        if ( prevScrollX != jframe.scrollX || prevScrollY != jframe.scrollY )
+        if (
+               prevScrollX != jframe.scrollX
+            || prevScrollY != jframe.scrollY
+            || lastWorldState != world.completionState()
+        )
         {
+            lastWorldState = world.completionState();
+
             draw( frame );
             prevScrollX = jframe.scrollX;
             prevScrollY = jframe.scrollY;

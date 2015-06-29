@@ -109,7 +109,7 @@ Release 0.4
     - ~~Fix exit sound - make it higher~~
     - ~~Evaluate all sounds for volume and goodness~~
 - ~~Reverse level 2 to make it fit the bashing icon~~
-- Fix bug on desktop where explode all dialog does not display
+- ~~Fix bug on desktop where explode all dialog does not display~~
 
 Release 0.3.1
 -------------
