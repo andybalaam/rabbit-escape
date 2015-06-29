@@ -71,6 +71,7 @@ is traversable but should not be.
 - when I explode a blocker it jerks to the left
 - when a bridge is almost built it should behave like a bridge
 - Use cant_place_token sound effect when you cannot place a token
+- Sounds for winning an losing a level and winning a level set
 
 Release 0.4
 -----------
@@ -104,9 +105,10 @@ Release 0.4
         - ~~Mute in-game~~
     - ~~Fix too-noisy bash and dig~~
     - ~~Fix token placement sound - sounds like it is bad~~
-    - Fix enter sound - too annoying
-    - Fix exit sound?
+    - ~~Fix enter sound - too annoying~~
+    - Fix exit sound - make it higher
     - Evaluate all sounds for volume and goodness
+- Reverse level 2 to make it fit the bashing icon
 
 Release 0.3.1
 -------------
