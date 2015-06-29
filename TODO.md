@@ -70,6 +70,7 @@ is traversable but should not be.
     ###
 - when I explode a blocker it jerks to the left
 - when a bridge is almost built it should behave like a bridge
+- Use cant_place_token sound effect when you cannot place a token
 
 Release 0.4
 -----------
@@ -102,7 +103,7 @@ Release 0.4
         + Play in-game
         + Mute in-game
     + Fix too-noisy bash and dig
-    - Fix token placement sound - sounds like it is bad
+    + Fix token placement sound - sounds like it is bad
     - Fix enter sound - too annoying
     - Fix exit sound?
     - Evaluate all sounds for volume and goodness
