@@ -101,7 +101,7 @@ Release 0.4
         + Load async
         + Play in-game
         + Mute in-game
-    - Fix too-noisy bash
+    + Fix too-noisy bash and dig
     - Fix token placement sound - sounds like it is bad
     - Fix enter sound - too annoying
     - Fix exit sound?
