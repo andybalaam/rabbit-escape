@@ -14,7 +14,8 @@ public class AboutText
         + "Version " + version + "\n"
         + "\n"
         + "All code released under GPL v2.\n"
-        + "All graphics, animations and levels released under CC-BY-NC.\n"
+        + "All graphics, animations and levels released under CC BY-NC-SA 3.0.\n"
+        + "Music is by tryad (http://tyrad.org), used under CC BY-SA 3.0.\n"
         + "See the file COPYING.txt for details.\n"
         + "\n"
         + url;

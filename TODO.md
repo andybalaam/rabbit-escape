@@ -77,15 +77,14 @@ Release 0.4
 -----------
 
 - Improve levels
-- Switch to BY-NC-SA for content
-- Update all license info (including in-game) to mention 3 licenses
-- Credit tryad on web site and about page
+- ~~Switch to BY-NC-SA for content~~
+- ~~Update all license info (including in-game) to mention 3 licenses~~
+- ~~Credit tryad on web site and about page~~
 - Decide whether volumes should be fixed at <1 rate
 - Music
     - ~~Swing~~
-    - Android
-        - Handle AUDIO_BECOMING_NOISY
-            https://developer.android.com/guide/topics/media/mediaplayer.html#noisyintent
+    - ~~Android~~
+        - ~~Handle AUDIO_BECOMING_NOISY~~
         - ~~Control audio via hardware buttons~~
         - ~~Load on demand~~
         - ~~Play per activity~~
@@ -100,6 +99,7 @@ Release 0.4
 - Sound effects
     - ~~Swing~~
     - ~~Android~~
+        - Fix not playing create token noise
         - ~~Load async~~
         - ~~Play in-game~~
         - ~~Mute in-game~~
