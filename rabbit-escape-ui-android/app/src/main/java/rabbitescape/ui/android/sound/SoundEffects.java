@@ -5,7 +5,7 @@ import android.media.SoundPool;
 
 public class SoundEffects
 {
-    private static final float VOLUME = 0.5f;
+    private static final float VOLUME = 1.0f;
 
     private final SoundPool soundPool;
     private final Resources resources;

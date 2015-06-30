@@ -77,11 +77,12 @@ Release 0.4
 -----------
 
 - Improve levels
+- Fix Android not playing create token noise
 - ~~Switch to BY-NC-SA for content~~
 - ~~Update all license info (including in-game) to mention 3 licenses~~
 - ~~Credit tryad on web site and about page~~
-- Decide whether volumes should be fixed at <1 rate
-- Music
+- ~~Up android volumes to the max~~
+- ~~Music~~
     - ~~Swing~~
     - ~~Android~~
         - ~~Handle AUDIO_BECOMING_NOISY~~
@@ -96,10 +97,9 @@ Release 0.4
         - ~~Mute in game~~
         - ~~Mute (make button) in menu~~
         - ~~Fix stopping when flip~~
-- Sound effects
+- ~~Sound effects~~
     - ~~Swing~~
     - ~~Android~~
-        - Fix not playing create token noise
         - ~~Load async~~
         - ~~Play in-game~~
         - ~~Mute in-game~~

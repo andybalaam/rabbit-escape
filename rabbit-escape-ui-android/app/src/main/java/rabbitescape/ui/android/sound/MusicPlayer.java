@@ -6,7 +6,7 @@ import android.media.SoundPool;
 public class MusicPlayer
 {
     private static final int LOADING = -1000;
-    private static final float VOLUME = 0.3f;
+    private static final float VOLUME = 0.5f;
 
     private final LoadedClips clips;
     private final SoundPool soundPool;
