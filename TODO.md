@@ -77,7 +77,7 @@ Release 0.4
 -----------
 
 - Improve levels
-- Fix Android not playing create token noise
+- ~~Fix Android not playing place token noise~~
 - ~~Switch to BY-NC-SA for content~~
 - ~~Update all license info (including in-game) to mention 3 licenses~~
 - ~~Credit tryad on web site and about page~~

@@ -121,6 +121,7 @@ public class AndroidGameActivity extends RabbitEscapeActivity
         gameSurface = new GameSurfaceView(
             this,
             this,
+            sound,
             createBitmapCache( resources ),
             world,
             winListener,

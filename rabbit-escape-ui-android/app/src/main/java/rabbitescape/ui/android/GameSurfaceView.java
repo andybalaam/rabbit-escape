@@ -15,7 +15,7 @@ import rabbitescape.engine.LevelWinListener;
 import rabbitescape.engine.Token;
 import rabbitescape.engine.World;
 import rabbitescape.render.BitmapCache;
-import rabbitescape.render.SoundPlayer;
+import rabbitescape.ui.android.sound.AndroidSound;
 
 public class GameSurfaceView extends SurfaceView
     implements
@@ -33,6 +33,7 @@ public class GameSurfaceView extends SurfaceView
 
     // Transient state
     private final NumLeftListener numLeftListener;
+    private final AndroidSound sound;
     private final BitmapCache<AndroidBitmap> bitmapCache;
     private final LevelWinListener winListener;
     private final float displayDensity;
@@ -43,6 +44,7 @@ public class GameSurfaceView extends SurfaceView
     public GameSurfaceView(
         Context context,
         NumLeftListener numLeftListener,
+        AndroidSound sound,
         BitmapCache<AndroidBitmap> bitmapCache,
         World world,
         LevelWinListener winListener,
@@ -52,6 +54,7 @@ public class GameSurfaceView extends SurfaceView
     {
         super( context );
         this.numLeftListener = numLeftListener;
+        this.sound = sound;
         this.bitmapCache = bitmapCache;
         this.world = world;
         this.winListener = winListener;
@@ -131,7 +134,13 @@ public class GameSurfaceView extends SurfaceView
             return;
         }
 
+        int prev = world.abilities.get( chosenAbility );
         int numLeft = game.gameLaunch.addToken( chosenAbility, scrolling.curX, scrolling.curY );
+
+        if ( numLeft != prev )
+        {
+            sound.playSound( "place_token" );
+        }
 
         numLeftListener.numLeft( chosenAbility, numLeft );
     }
