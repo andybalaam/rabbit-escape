@@ -76,38 +76,14 @@ is traversable but should not be.
 Release 0.4
 -----------
 
-- Improve levels
+- ~~Improve levels~~
 - ~~Fix Android not playing place token noise~~
 - ~~Switch to BY-NC-SA for content~~
 - ~~Update all license info (including in-game) to mention 3 licenses~~
 - ~~Credit tryad on web site and about page~~
 - ~~Up android volumes to the max~~
 - ~~Music~~
-    - ~~Swing~~
-    - ~~Android~~
-        - ~~Handle AUDIO_BECOMING_NOISY~~
-        - ~~Control audio via hardware buttons~~
-        - ~~Load on demand~~
-        - ~~Play per activity~~
-        - ~~Stop when I press home (check in emu and htc)~~
-        - ~~Stop when I back out (check in emu and htc)~~
-        - ~~Stop when I launch browser (check in emu and htc)~~
-        - ~~Unit test GlobalSoundPool~~
-        - ~~Release on stop, reload on unstop~~
-        - ~~Mute in game~~
-        - ~~Mute (make button) in menu~~
-        - ~~Fix stopping when flip~~
 - ~~Sound effects~~
-    - ~~Swing~~
-    - ~~Android~~
-        - ~~Load async~~
-        - ~~Play in-game~~
-        - ~~Mute in-game~~
-    - ~~Fix too-noisy bash and dig~~
-    - ~~Fix token placement sound - sounds like it is bad~~
-    - ~~Fix enter sound - too annoying~~
-    - ~~Fix exit sound - make it higher~~
-    - ~~Evaluate all sounds for volume and goodness~~
 - ~~Reverse level 2 to make it fit the bashing icon~~
 - ~~Fix bug on desktop where explode all dialog does not display~~
 
