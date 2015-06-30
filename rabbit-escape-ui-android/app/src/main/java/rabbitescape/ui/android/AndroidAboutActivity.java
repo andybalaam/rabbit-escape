@@ -42,6 +42,12 @@ public class AndroidAboutActivity extends RabbitEscapeActivity
         sound.setMusic( "tryad-let_them_run" );
     }
 
+    @Override
+    public void updateMuteButton( boolean muted )
+    {
+        // No mute button on this activity, so no need to update it
+    }
+
     public void onMoreClicked( View view )
     {
         Intent intent = new Intent( Intent.ACTION_VIEW, Uri.parse( AboutText.url ) );

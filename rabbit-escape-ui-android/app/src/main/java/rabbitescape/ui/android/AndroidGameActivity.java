@@ -1,7 +1,6 @@
 package rabbitescape.ui.android;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
@@ -41,16 +40,10 @@ public class AndroidGameActivity extends RabbitEscapeActivity
     public static final String INTENT_LEVELS_DIR   = "rabbitescape.levelsdir";
     public static final String INTENT_LEVEL        = "rabbitescape.level";
     public static final String INTENT_LEVEL_NUMBER = "rabbitescape.levelnumber";
-    public static final String PREFS_MUTED = "rabbitescape.muted";
     public static final String STATE_CHECKED_ABILITY_INDEX = "rabbitescape.checkedAbilityIndex";
 
     // System
-    private SharedPreferences prefs;
     private LevelsCompleted levelsCompleted;
-
-    // Saved state
-    private boolean muted;
-
 
     private Button muteButton;
     private Button pauseButton;
@@ -82,7 +75,6 @@ public class AndroidGameActivity extends RabbitEscapeActivity
             Dialogs.intro( this, world );
         }
 
-        sound.mute( muted );
         sound.setMusic( world.music );
     }
 
@@ -90,10 +82,7 @@ public class AndroidGameActivity extends RabbitEscapeActivity
     protected void onResume()
     {
         super.onResume();
-        muted = prefs.getBoolean( PREFS_MUTED, false );
-        sound.mute( muted );
         sound.setMusic( world.music );
-        updateMuteButton();
     }
 
     private World loadWorld( String levelFileName, Bundle savedInstanceState )
@@ -144,8 +133,7 @@ public class AndroidGameActivity extends RabbitEscapeActivity
 
     private void staticInit()
     {
-        prefs = getSharedPreferences( "rabbitescape", MODE_PRIVATE );
-        levelsCompleted = new AndroidPreferencesBasedLevelsCompleted( prefs );
+        levelsCompleted = new AndroidPreferencesBasedLevelsCompleted( getPrefs() );
 
         setContentView( R.layout.activity_android_game );
 
@@ -203,18 +191,8 @@ public class AndroidGameActivity extends RabbitEscapeActivity
             new AndroidBitmapLoader( resources ), new AndroidBitmapScaler(), 500 );
     }
 
-    public void onMuteClicked( View view )
-    {
-        muted = !muted;
-
-        sound.mute( muted );
-
-        prefs.edit().putBoolean( PREFS_MUTED, muted ).commit();
-
-        updateMuteButton();
-    }
-
-    private void updateMuteButton()
+    @Override
+    public void updateMuteButton( boolean muted )
     {
         muteButton.setCompoundDrawablesWithIntrinsicBounds(
             getResources().getDrawable( muted ? R.drawable.menu_muted : R.drawable.menu_unmuted ),

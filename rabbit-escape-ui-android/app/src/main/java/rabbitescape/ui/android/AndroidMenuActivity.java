@@ -19,8 +19,6 @@ public class AndroidMenuActivity extends RabbitEscapeActivity
     private static final String POSITION = "rabbitescape.position";
     private static final String STATE_SELECTED_ITEM = "rabbitescape.selected_menu_item";
 
-    private SharedPreferences prefs;
-
     private int[] positions;
 
     private Menu menu = null;
@@ -39,11 +37,10 @@ public class AndroidMenuActivity extends RabbitEscapeActivity
 
         setContentView( R.layout.activity_android_menu );
 
-        prefs = getSharedPreferences( "rabbitescape", MODE_PRIVATE );
         muteButton = (Button)findViewById( R.id.menuMuteButton );
 
         Menu mainMenu = MenuDefinition.mainMenu(
-            new AndroidPreferencesBasedLevelsCompleted( prefs ) );
+            new AndroidPreferencesBasedLevelsCompleted( getPrefs() ) );
 
         if ( savedInstanceState != null )
         {
@@ -81,27 +78,14 @@ public class AndroidMenuActivity extends RabbitEscapeActivity
     public void onResume()
     {
         super.onResume();
-        muted = prefs.getBoolean( AndroidGameActivity.PREFS_MUTED, false );
-        sound.mute( muted );
         sound.setMusic( "tryad-let_them_run" );
-        updateMuteButton();
         menu.refresh();
         listView.setAdapter( new MenuListAdapter( this, menu ) );
         listView.setSelection( selectedItemPosition );
     }
 
-    public void onMuteClicked( View view )
-    {
-        muted = !muted;
-
-        sound.mute( muted );
-
-        prefs.edit().putBoolean( AndroidGameActivity.PREFS_MUTED, muted ).commit();
-
-        updateMuteButton();
-    }
-
-    private void updateMuteButton()
+    @Override
+    public void updateMuteButton( boolean muted )
     {
         muteButton.setCompoundDrawablesWithIntrinsicBounds(
             getResources().getDrawable( muted ? R.drawable.menu_muted : R.drawable.menu_unmuted ),
