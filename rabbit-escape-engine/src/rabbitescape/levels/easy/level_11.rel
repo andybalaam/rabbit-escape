@@ -1,16 +1,17 @@
-:name=Everyone up
-:description=Give every rabbit climbing ability.\nYou can safely drop tokens on top of each other.
-:num_rabbits=20
-:num_to_save=15
-:rabbit_delay=15
-:climb=20
+:name=You wait here
+:description=One of your rabbits must prepare the way\nwhile the others wait
+:num_rabbits=10
+:num_to_save=8
+:bridge=6
+:block=2
+:explode=2
 :music=tryad-witness
 ##############################
 #                            #
-#  Q Q Q Q Q                O#
-#                     ########
-#                    (#/#/\  #
-#  ##################\/###/  #
+#    Q                      O#
+#                   # ########
+#           #\  #\   (#/#/\  #
+#  ########        /#\/###/  #
 #                    /#####/ #
 #                     \####/ #
 #                    /###/ \ #
