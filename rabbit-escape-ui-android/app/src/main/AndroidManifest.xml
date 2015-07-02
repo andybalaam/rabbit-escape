@@ -2,14 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="net.artificialworlds.rabbitescape"
     android:installLocation="preferExternal"
-    android:versionCode="40"
-    android:versionName="0.4"
     >
-
-    <uses-sdk
-        android:minSdkVersion="8"
-        android:targetSdkVersion="20"
-    />
 
     <supports-screens
         android:largeScreens="true"

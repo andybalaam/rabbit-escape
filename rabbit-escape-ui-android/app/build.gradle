@@ -5,11 +5,11 @@ android {
     buildToolsVersion "20.0.0"
 
     defaultConfig {
-        applicationId "rabbitescape.ui.android"
+        applicationId "net.artificialworlds.rabbitescape"
         minSdkVersion 8
         targetSdkVersion 20
-        versionCode 1
-        versionName "1.0"
+        versionCode 40
+        versionName "0.4"
     }
     buildTypes {
         release {
