@@ -65,7 +65,7 @@ public class AbilityButton extends Button
             resources.getIdentifier(
                 "ability_" + ability,
                 "drawable",
-                "rabbitescape.ui.android"
+                "net.artificialworlds.rabbitescape"
             )
         );
 
