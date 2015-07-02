@@ -6,13 +6,18 @@
     android:versionName="0.4"
     >
 
+    <uses-sdk
+        android:minSdkVersion="8"
+        android:targetSdkVersion="20"
+    />
+
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name=".AndroidMenuActivity"
+            android:name="rabbitescape.ui.android.AndroidMenuActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -21,11 +26,11 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".AndroidAboutActivity"
+            android:name="rabbitescape.ui.android.AndroidAboutActivity"
             android:label="@string/title_activity_android_about" >
         </activity>
         <activity
-            android:name=".AndroidGameActivity"
+            android:name="rabbitescape.ui.android.AndroidGameActivity"
             android:label="@string/title_activity_android_game" >
         </activity>
     </application>
