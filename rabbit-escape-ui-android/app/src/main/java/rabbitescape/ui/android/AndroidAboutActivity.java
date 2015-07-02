@@ -7,6 +7,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import net.artificialworlds.rabbitescape.R;
+
 import rabbitescape.engine.menu.AboutText;
 
 import static rabbitescape.engine.i18n.Translation.t;

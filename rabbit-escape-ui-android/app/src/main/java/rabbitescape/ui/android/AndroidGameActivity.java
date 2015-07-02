@@ -32,6 +32,7 @@ import rabbitescape.render.BitmapCache;
 import static android.text.TextUtils.split;
 import static rabbitescape.engine.i18n.Translation.t;
 
+import net.artificialworlds.rabbitescape.R;
 
 public class AndroidGameActivity extends RabbitEscapeActivity
     implements NumLeftListener, WorldStatsListener
