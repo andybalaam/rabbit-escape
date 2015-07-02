@@ -7,7 +7,6 @@ import android.view.SurfaceHolder;
 import rabbitescape.engine.LevelWinListener;
 import rabbitescape.engine.World;
 import rabbitescape.render.BitmapCache;
-import rabbitescape.render.SoundPlayer;
 
 public class Game
 {

@@ -5,7 +5,7 @@ import java.util.Map;
 
 public class LoadedClips
 {
-    private Map<String, Integer> map = new HashMap<String, Integer>();
+    private final Map<String, Integer> map = new HashMap<String, Integer>();
 
     public void put( String resourcePath, int clipId )
     {

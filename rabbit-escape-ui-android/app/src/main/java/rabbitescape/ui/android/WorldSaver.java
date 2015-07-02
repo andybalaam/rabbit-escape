@@ -36,8 +36,8 @@ public class WorldSaver
     private final World world;
     private final AndroidGameLaunch gameLaunch;
 
-    private Signal requestSave = new Signal();
-    private Signal saved = new Signal();
+    private final Signal requestSave = new Signal();
+    private final Signal saved = new Signal();
     private boolean saveWorld = false;
     public String[] savedWorld = null;
 

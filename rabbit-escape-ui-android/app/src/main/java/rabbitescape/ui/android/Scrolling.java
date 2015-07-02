@@ -9,9 +9,6 @@ public class Scrolling
     public float velX = 0;
     public float velY = 0;
 
-    private float origX = 0;
-    private float origY = 0;
-
     private final GameSurfaceView view;
     private final float squaredTouchSlop;
 
@@ -33,8 +30,6 @@ public class Scrolling
             curX = event.getX();
             curY = event.getY();
             movedDistSquared = 0;
-            origX = curX;
-            origY = curY;
         }
         else if ( event.getAction() == MotionEvent.ACTION_MOVE )
         {
@@ -67,13 +62,6 @@ public class Scrolling
         }
 
         return true;
-    }
-
-    private float squaredDistance( float origX, float origY, float curX, float curY )
-    {
-        float x = curX - origX;
-        float y = curY - origY;
-        return ( x * x ) + ( y * y );
     }
 
     private void cancelFlinger()

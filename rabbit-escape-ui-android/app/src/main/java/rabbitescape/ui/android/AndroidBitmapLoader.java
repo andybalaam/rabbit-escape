@@ -14,7 +14,7 @@ import static rabbitescape.engine.util.Util.reAssert;
 
 public class AndroidBitmapLoader implements BitmapLoader<AndroidBitmap>
 {
-    private static int[] SIZES = new int[] { 32, 64, 128 };
+    private static final int[] SIZES = new int[] { 32, 64, 128 };
 
     private final Resources resources;
 

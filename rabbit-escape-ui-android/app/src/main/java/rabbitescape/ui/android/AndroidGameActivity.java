@@ -345,7 +345,7 @@ public class AndroidGameActivity extends RabbitEscapeActivity
 
     public static class UnrecognisedAbility extends RabbitEscapeException
     {
-        public Token.Type ability;
+        public final Token.Type ability;
 
         public UnrecognisedAbility( Token.Type ability )
         {
