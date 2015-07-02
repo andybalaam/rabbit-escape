@@ -10,5 +10,5 @@ public class Globals
     public static final AndroidSound sound = new AndroidSound();
 
     public static final Lifecycle2SoundEvents<Activity> soundEvents =
-        new Lifecycle2SoundEvents( sound );
+        new Lifecycle2SoundEvents<Activity>( sound );
 }
