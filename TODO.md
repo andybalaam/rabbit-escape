@@ -73,6 +73,16 @@ is traversable but should not be.
 - Use cant_place_token sound effect when you cannot place a token
 - Sounds for winning an losing a level and winning a level set
 
+Release 0.6
+-----------
+
+- Speed up button
+
+Release 0.5
+-----------
+
+- Hints
+
 Release 0.4
 -----------
 
