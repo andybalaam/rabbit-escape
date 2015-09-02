@@ -8,9 +8,7 @@ import java.awt.FontMetrics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.image.BufferStrategy;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import rabbitescape.engine.World;
 import rabbitescape.engine.World.CompletionState;
@@ -144,18 +142,10 @@ public class SwingGraphics implements Graphics
                 case RUNNING:
                 case PAUSED:
                 case INTRO:
+                case WON:
+                case LOST:
                 {
                     // No overlay in these cases
-                    break;
-                }
-                case WON:
-                {
-                    message.heading = t( "You won!" );
-                    message.text1   = t( "Click the screen to continue." );
-                    message.text3 = t(
-                        "Saved: ${num_saved}  Needed: ${num_to_save}",
-                        statsValues( world )
-                    );
                     break;
                 }
                 case READY_TO_EXPLODE_ALL:
@@ -170,17 +160,6 @@ public class SwingGraphics implements Graphics
 
                     break;
                 }
-                case LOST:
-                {
-                    message.heading = t( "You lost." );
-                    message.text1   = t( "Click the screen to continue." );
-                    message.text3 = t(
-                        "Saved: ${num_saved}  Needed: ${num_to_save}",
-                        statsValues( world )
-                    );
-
-                    break;
-                }
                 default:
                 {
                     throw new AssertionError(
@@ -190,15 +169,6 @@ public class SwingGraphics implements Graphics
                 }
             }
             return message;
-        }
-
-        private Map<String, Object> statsValues( World world )
-        {
-            Map<String, Object> values = new HashMap<String, Object>();
-            values.put( "num_rabbits", world.num_rabbits );
-            values.put( "num_to_save", world.num_to_save );
-            values.put( "num_saved",   world.num_saved );
-            return values;
         }
 
         private void writeText(

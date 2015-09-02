@@ -28,8 +28,9 @@ import rabbitescape.engine.Token;
 import rabbitescape.engine.config.Config;
 import rabbitescape.engine.config.ConfigTools;
 import rabbitescape.render.BitmapCache;
+import rabbitescape.render.gameloop.Physics.StatsChangedListener;
 
-public class GameUi
+public class GameUi implements StatsChangedListener
 {
     private class Listener extends EmptyListener implements MouseWheelListener
     {
@@ -294,6 +295,7 @@ public class GameUi
         frame.addWindowListener( listener );
         frame.addKeyListener( listener );
         gameLaunch.addStatsChangedListener( this.topBar );
+        gameLaunch.addStatsChangedListener( this );
 
         menu.addAbilitiesListener( new GameMenu.AbilityChangedListener()
         {
@@ -454,7 +456,7 @@ public class GameUi
         adjustScrollBars();
     }
 
-    private void exit()
+    public void exit()
     {
         stopGameLoop();
 
@@ -566,11 +568,6 @@ public class GameUi
         );
     }
 
-    private void leaveIntro()
-    {
-        gameLaunch.world.setIntro( false );
-    }
-
     public boolean getMuted()
     {
         return ConfigTools.getBool( uiConfig, CFG_MUTED );
@@ -617,17 +614,6 @@ public class GameUi
     {
         switch( gameLaunch.world.completionState() )
         {
-            case LOST:
-            case WON:
-            {
-                exit();
-                return true;
-            }
-            case INTRO:
-            {
-                leaveIntro();
-                return true;
-            }
             case READY_TO_EXPLODE_ALL:
             {
                 cancelExplodeAll();
@@ -652,5 +638,23 @@ public class GameUi
     {
         topBar.abilityChanged(
             chosenAbility, gameLaunch.world.abilities.get( chosenAbility ) );
+    }
+
+    @Override
+    public void changed( int waiting, int out, int saved )
+    {
+        switch ( gameLaunch.world.completionState() )
+        {
+            case WON:
+            case LOST:
+            {
+                gameLaunch.stop();
+                break;
+            }
+            default:
+            {
+                break;
+            }
+        }
     }
 }

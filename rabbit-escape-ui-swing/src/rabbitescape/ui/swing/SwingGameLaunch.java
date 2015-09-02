@@ -1,5 +1,6 @@
 package rabbitescape.ui.swing;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.swing.JOptionPane;
@@ -94,14 +95,19 @@ public class SwingGameLaunch implements GameLaunch
         loop.run();
     }
 
-    private void showIntroDialog()
+    private void showDialog( String title, Object message )
     {
         MiniGameLoop bgDraw = new MiniGameLoop();
 
         new Thread( bgDraw ).start();
         try
         {
-            introDialog();
+            JOptionPane.showMessageDialog(
+                frame,
+                message,
+                title,
+                JOptionPane.INFORMATION_MESSAGE
+            );
         }
         finally
         {
@@ -109,32 +115,79 @@ public class SwingGameLaunch implements GameLaunch
         }
     }
 
-    private void introDialog()
+    private void showIntroDialog()
     {
-        JOptionPane.showMessageDialog(
-            frame,
+        showDialog(
+            world.name,
             Util.concat(
                 Util.split( world.description, "\\n" ),
                 new String[] {
                     " ",
                     t(
                         "Rabbits: ${num_rabbits}  Must save: ${num_to_save}",
-                        Util.newMap(
-                            "num_rabbits", String.valueOf( world.num_rabbits ),
-                            "num_to_save", String.valueOf( world.num_to_save )
-                        )
+                        statsValues( world )
                     )
                 }
-            ),
-            world.name,
-            JOptionPane.INFORMATION_MESSAGE
+            )
         );
+    }
+
+    private void showWonDialog()
+    {
+        showDialog(
+            t( "You won!" ),
+            t(
+                "Saved: ${num_saved}  Needed: ${num_to_save}",
+                statsValues( world )
+            )
+        );
+    }
+
+    private void showLostDialog()
+    {
+        showDialog(
+            t( "You lost!" ),
+            t(
+                "Saved: ${num_saved}  Needed: ${num_to_save}",
+                statsValues( world )
+            )
+        );
+    }
+
+    private static Map<String, Object> statsValues( World world )
+    {
+        Map<String, Object> values = new HashMap<String, Object>();
+        values.put( "num_rabbits", world.num_rabbits );
+        values.put( "num_to_save", world.num_to_save );
+        values.put( "num_saved",   world.num_saved );
+        return values;
     }
 
     @Override
     public void showResult()
     {
-        // Nothing to do here - we showed the result while we were still running
+        switch ( world.completionState() )
+        {
+            case WON:
+            {
+                showWonDialog();
+                break;
+            }
+            case LOST:
+            {
+                showLostDialog();
+                break;
+            }
+            default:
+            {
+                throw new AssertionError(
+                    "Unexpected completion state: "
+                    + world.completionState()
+                );
+            }
+        }
+
+        jframe.exit();
     }
 
     public int addToken( int tileX, int tileY, Token.Type ability )
