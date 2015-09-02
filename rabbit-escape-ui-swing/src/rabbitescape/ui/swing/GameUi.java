@@ -492,14 +492,7 @@ public class GameUi implements StatsChangedListener
             case RUNNING:
             case PAUSED:
             {
-                gameLaunch.world.setReadyToExplodeAll( true );
-                break;
-            }
-            case READY_TO_EXPLODE_ALL:
-            {
-                gameLaunch.world.setPaused( false );
-                gameLaunch.world.changes.explodeAllRabbits();
-                gameLaunch.world.setReadyToExplodeAll( false );
+                gameLaunch.checkExplodeAll();
                 break;
             }
             default:

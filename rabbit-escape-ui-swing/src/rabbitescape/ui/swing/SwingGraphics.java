@@ -1,12 +1,7 @@
 package rabbitescape.ui.swing;
 
-import static rabbitescape.engine.i18n.Translation.*;
-
 import java.awt.Color;
-import java.awt.Font;
-import java.awt.FontMetrics;
 import java.awt.Graphics2D;
-import java.awt.RenderingHints;
 import java.awt.image.BufferStrategy;
 import java.util.List;
 
@@ -26,8 +21,6 @@ public class SwingGraphics implements Graphics
 {
     private static class DrawFrame extends BufferedDraw
     {
-        private static final Color overlay = new Color( 0.7f, 0.7f, 0.7f, 0.8f );
-
         private static final SwingPaint white =
             new SwingPaint( Color.WHITE );
 
@@ -87,113 +80,7 @@ public class SwingGraphics implements Graphics
             );
 
             soundPlayer.play( sprites );
-
-            drawResult( g );
         }
-
-        private void fillCanvas( Graphics2D g, Color paint )
-        {
-            g.setPaint( paint );
-            g.fillRect(
-                0,
-                0,
-                canvas.getWidth(),
-                canvas.getHeight()
-            );
-        }
-
-        private static class OverlayMessage
-        {
-            public String heading;
-            public String text1;
-            public String text2;
-            public String text3;
-        }
-
-        private void drawResult( Graphics2D g )
-        {
-            OverlayMessage message = messageForState();
-            if ( message.heading == null )
-            {
-                return;
-            }
-
-            fillCanvas( g, overlay );
-
-            writeText( g, message.heading, 0.5, 0.06 );
-            writeText( g, message.text1,   0.7, 0.03 );
-
-            if ( message.text2 != null )
-            {
-                writeText( g, message.text2, 0.76, 0.03 );
-            }
-
-            if ( message.text3 != null )
-            {
-                writeText( g, message.text3, 0.9, 0.025 );
-            }
-        }
-
-        private OverlayMessage messageForState()
-        {
-            OverlayMessage message = new OverlayMessage();
-            switch( world.completionState() )
-            {
-                case RUNNING:
-                case PAUSED:
-                case INTRO:
-                case WON:
-                case LOST:
-                {
-                    // No overlay in these cases
-                    break;
-                }
-                case READY_TO_EXPLODE_ALL:
-                {
-                    message.heading = t( "Explode all rabbits?" );
-
-                    message.text1   = t(
-                        "Click the explode button again to explode all rabbits,"
-                    );
-
-                    message.text2   = t( "or click the screen to cancel." );
-
-                    break;
-                }
-                default:
-                {
-                    throw new AssertionError(
-                        "Unknown completion state: "
-                        + world.completionState()
-                    );
-                }
-            }
-            return message;
-        }
-
-        private void writeText(
-            Graphics2D g, String msg, double pos, double size )
-        {
-            g.setRenderingHint(
-                RenderingHints.KEY_TEXT_ANTIALIASING,
-                RenderingHints.VALUE_TEXT_ANTIALIAS_ON
-            );
-
-            g.setPaint( Color.BLACK );
-
-            int fontSize = (int)( canvas.getWidth() * size );
-
-            Font f = new Font( Font.SANS_SERIF, Font.PLAIN, fontSize );
-            g.setFont( f );
-            FontMetrics metrics = g.getFontMetrics( f );
-
-            g.drawString(
-                msg,
-                ( canvas.getWidth()  - metrics.stringWidth( msg ) ) / 2,
-                (int)( canvas.getHeight() * pos )
-            );
-        }
-
     }
 
     private final World world;

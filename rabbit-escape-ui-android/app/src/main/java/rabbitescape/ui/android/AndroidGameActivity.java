@@ -235,6 +235,7 @@ public class AndroidGameActivity extends RabbitEscapeActivity
             }
             default:
             {
+                // Don't do anything if we've finished already
                 break;
             }
         }

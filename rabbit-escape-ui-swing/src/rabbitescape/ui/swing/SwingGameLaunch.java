@@ -115,6 +115,34 @@ public class SwingGameLaunch implements GameLaunch
         }
     }
 
+    private boolean askExplodeAll()
+    {
+        MiniGameLoop bgDraw = new MiniGameLoop();
+
+        new Thread( bgDraw ).start();
+        try
+        {
+            String[] buttons = new String[] { t( "Cancel" ), t( "Explode!" ) };
+
+            int ret = JOptionPane.showOptionDialog(
+                frame,
+                t( "Do you want to explode your rabbits?" ),
+                t( "Explode all rabbits?" ),
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.QUESTION_MESSAGE,
+                null,
+                buttons,
+                buttons[1]
+            );
+
+            return ( ret == 1 );
+        }
+        finally
+        {
+            bgDraw.running = false;
+        }
+    }
+
     private void showIntroDialog()
     {
         showDialog(
@@ -180,14 +208,25 @@ public class SwingGameLaunch implements GameLaunch
             }
             default:
             {
-                throw new AssertionError(
-                    "Unexpected completion state: "
-                    + world.completionState()
-                );
+                // Maybe the user clicked back - do nothing here
             }
         }
 
         jframe.exit();
+    }
+
+    public void checkExplodeAll()
+    {
+        world.setPaused( true );
+
+        boolean explode = askExplodeAll();
+
+        world.setPaused( false );
+
+        if ( explode )
+        {
+            world.changes.explodeAllRabbits();
+        }
     }
 
     public int addToken( int tileX, int tileY, Token.Type ability )
