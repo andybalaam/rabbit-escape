@@ -143,13 +143,9 @@ public class SwingGraphics implements Graphics
             {
                 case RUNNING:
                 case PAUSED:
-                {
-                    // No overlay in these cases
-                    break;
-                }
                 case INTRO:
                 {
-                    introMessage( message, world );
+                    // No overlay in these cases
                     break;
                 }
                 case WON:
@@ -194,30 +190,6 @@ public class SwingGraphics implements Graphics
                 }
             }
             return message;
-        }
-
-        private void introMessage( OverlayMessage message, World world )
-        {
-            message.heading = t( world.name );
-
-            message.text3 = t(
-                "Rabbits: ${num_rabbits}  Must save: ${num_to_save}",
-                statsValues( world )
-            );
-
-            if ( world.description.isEmpty() )
-            {
-                message.text1 = t( "Click the screen to continue." );
-            }
-            else
-            {
-                String[] lines = world.description.split( "\\\\n", 2 );
-                message.text1 = lines[0];
-                if ( lines.length == 2 )
-                {
-                    message.text2 = lines[1];
-                }
-            }
         }
 
         private Map<String, Object> statsValues( World world )

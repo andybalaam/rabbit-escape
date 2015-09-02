@@ -2,9 +2,14 @@ package rabbitescape.ui.swing;
 
 import java.util.Map;
 
+import javax.swing.JOptionPane;
+
+import static rabbitescape.engine.i18n.Translation.t;
+
 import rabbitescape.engine.LevelWinListener;
 import rabbitescape.engine.Token;
 import rabbitescape.engine.World;
+import rabbitescape.engine.util.Util;
 import rabbitescape.render.GameLaunch;
 import rabbitescape.render.gameloop.GameLoop;
 import rabbitescape.render.gameloop.GeneralPhysics;
@@ -13,12 +18,39 @@ import rabbitescape.ui.swing.SwingGameInit.WhenUiReady;
 
 public class SwingGameLaunch implements GameLaunch
 {
+    /**
+     * A loop that just draws the game window when it's behind the
+     * intro dialog.
+     */
+    class MiniGameLoop implements Runnable
+    {
+        public boolean running = true;
+
+        @Override
+        public void run()
+        {
+            while ( running )
+            {
+                graphics.draw( physics.frameNumber() );
+                try
+                {
+                    Thread.sleep( 500 );
+                }
+                catch ( InterruptedException e )
+                {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
     public final World world;
     private final GeneralPhysics physics;
     public final SwingGraphics graphics;
     private final GameUi jframe;
 
     private final GameLoop loop;
+    private final MainJFrame frame;
 
     public SwingGameLaunch(
         SwingGameInit init,
@@ -28,6 +60,7 @@ public class SwingGameLaunch implements GameLaunch
     )
     {
         this.world = world;
+        this.frame = init.frame;
         this.physics = new GeneralPhysics( world, winListener );
 
         // This blocks until the UI is ready:
@@ -56,7 +89,46 @@ public class SwingGameLaunch implements GameLaunch
     @Override
     public void run( String[] args )
     {
+        showIntroDialog();
+        world.setIntro( false );
         loop.run();
+    }
+
+    private void showIntroDialog()
+    {
+        MiniGameLoop bgDraw = new MiniGameLoop();
+
+        new Thread( bgDraw ).start();
+        try
+        {
+            introDialog();
+        }
+        finally
+        {
+            bgDraw.running = false;
+        }
+    }
+
+    private void introDialog()
+    {
+        JOptionPane.showMessageDialog(
+            frame,
+            Util.concat(
+                Util.split( world.description, "\\n" ),
+                new String[] {
+                    " ",
+                    t(
+                        "Rabbits: ${num_rabbits}  Must save: ${num_to_save}",
+                        Util.newMap(
+                            "num_rabbits", String.valueOf( world.num_rabbits ),
+                            "num_to_save", String.valueOf( world.num_to_save )
+                        )
+                    )
+                }
+            ),
+            world.name,
+            JOptionPane.INFORMATION_MESSAGE
+        );
     }
 
     @Override

@@ -55,7 +55,7 @@ public class SwingGameInit implements Runnable
 
     private final BitmapCache<SwingBitmap> bitmapCache;
     private final Config uiConfig;
-    private final MainJFrame frame;
+    public final MainJFrame frame;
     private final MenuUi menuUi;
 
     public SwingGameInit(
