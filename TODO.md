@@ -83,6 +83,7 @@ Release 0.5
 
 - Hints
 - 20 new levels?
+- Authorship (and license?) in level definitions
 
 Release 0.4
 -----------
