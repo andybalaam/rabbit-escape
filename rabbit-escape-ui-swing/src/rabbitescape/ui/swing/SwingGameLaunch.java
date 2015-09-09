@@ -1,9 +1,11 @@
 package rabbitescape.ui.swing;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
 
 import static rabbitescape.engine.i18n.Translation.t;
 
@@ -95,31 +97,37 @@ public class SwingGameLaunch implements GameLaunch
         loop.run();
     }
 
-    private void showDialog( String title, Object message )
+    /**
+     * Must not be called from within event loop.
+     */
+    private void showDialog( final String title, final Object message )
     {
-        MiniGameLoop bgDraw = new MiniGameLoop();
-
-        new Thread( bgDraw ).start();
-        try
-        {
-            JOptionPane.showMessageDialog(
-                frame,
-                message,
-                title,
-                JOptionPane.INFORMATION_MESSAGE
-            );
-        }
-        finally
-        {
-            bgDraw.running = false;
-        }
+        runSwingCodeWithGameLoopBehind(
+            new Runnable()
+            {
+                @Override
+                public void run()
+                {
+                    JOptionPane.showMessageDialog(
+                        frame,
+                        message,
+                        title,
+                        JOptionPane.INFORMATION_MESSAGE
+                    );
+                }
+            }
+        );
     }
 
+    /**
+     * Must be called from within the event loop.
+     */
     private boolean askExplodeAll()
     {
         MiniGameLoop bgDraw = new MiniGameLoop();
 
         new Thread( bgDraw ).start();
+
         try
         {
             String[] buttons = new String[] { t( "Cancel" ), t( "Explode!" ) };
@@ -143,6 +151,33 @@ public class SwingGameLaunch implements GameLaunch
         }
     }
 
+    private void runSwingCodeWithGameLoopBehind( Runnable doRun )
+    {
+        MiniGameLoop bgDraw = new MiniGameLoop();
+
+        new Thread( bgDraw ).start();
+
+        try
+        {
+            SwingUtilities.invokeAndWait( doRun );
+        }
+        catch ( InvocationTargetException e )
+        {
+            throw new RuntimeException( e );
+        }
+        catch ( InterruptedException e )
+        {
+            // Continue if interrupted
+        }
+        finally
+        {
+            bgDraw.running = false;
+        }
+    }
+
+    /**
+     * Not called from within event loop.
+     */
     private void showIntroDialog()
     {
         showDialog(
@@ -160,6 +195,9 @@ public class SwingGameLaunch implements GameLaunch
         );
     }
 
+    /**
+     * Not called from within event loop.
+     */
     private void showWonDialog()
     {
         showDialog(
@@ -171,6 +209,9 @@ public class SwingGameLaunch implements GameLaunch
         );
     }
 
+    /**
+     * Not called from within event loop.
+     */
     private void showLostDialog()
     {
         showDialog(
