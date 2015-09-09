@@ -1,0 +1,21 @@
+:name=No bunny left behind
+:description=They are going too fast!
+:num_rabbits=5
+:num_to_save=5
+:rabbit_delay=2
+:bridge=5
+:dig=1
+:music=tryad-witness
+###################
+#######           #
+#######   Q       #
+#######           #
+#O                #
+#####   ######### #
+####              #
+####              #
+####    ###########
+####    #          
+####    #          
+####    #          
+#########          

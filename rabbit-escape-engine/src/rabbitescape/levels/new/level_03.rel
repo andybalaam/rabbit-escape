@@ -1,0 +1,24 @@
+:name=Tree climb
+:description=There's no ladder
+:num_rabbits=4
+:num_to_save=3
+:rabbit_delay=15
+:bash=3
+:bridge=5
+:dig=2
+:block=1
+:explode=1
+:music=tryad-witness
+                              
+            O  /#             
+            #####             
+              ##              
+              ##              
+              ##########\     
+      #       ###      ##     
+     /#####\  ###             
+     #    #######             
+             ####             
+ Q           ####             
+\           /####\           #
+##############################

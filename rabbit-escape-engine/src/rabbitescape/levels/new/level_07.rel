@@ -1,0 +1,24 @@
+:name=London Bridge
+:description=Don't fall down
+:num_rabbits=6
+:num_to_save=6
+:rabbit_delay=10
+:bridge=2
+:dig=4
+:bash=4
+:block=1
+:music=tryad-witness
+                        
+   /\              /\   
+  /  \            /  \  
+  ####            ####  
+  #  ##############  #  
+ /#  ##############  #\ 
+/##  #Q          Q#  ##\
+# #  #            #  # #
+  #  #            #  #  
+  #  #            #  #  
+#########      #########
+#########      #########
+#O     ##      ## ######
+#########      #########

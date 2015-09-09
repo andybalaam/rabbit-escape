@@ -1,0 +1,17 @@
+:name=Saw
+:description=One way
+:num_rabbits=6
+:num_to_save=4
+:rabbit_delay=5
+:bridge=7
+:dig=3
+:block=2
+:music=tryad-witness
+                         
+                         
+                   Q     
+                         
+   O                /### 
+ ///////////////// /#  # 
+ ####################  # 
+ ####################### 

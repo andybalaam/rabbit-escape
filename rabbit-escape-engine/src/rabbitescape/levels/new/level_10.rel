@@ -1,0 +1,25 @@
+:name=Cups and bridges
+:description=
+:num_rabbits=9
+:num_to_save=6
+:rabbit_delay=30
+:bridge=4
+:dig=3
+:block=4
+:explode=2
+:music=tryad-witness
+                                 
+#        #  #       #  #        #
+#        #  #       #  #        #
+#        #  #       #  #        #
+#        #  #       #  #        #
+# Q      #  # Q     #  # Q      #
+#        #  #       #  #        #
+#\      /#  #\     /#  #\      /#
+ ##    ##    ##   ##    ##    ## 
+  ######      #####      ######  
+                                 
+  O                              
+  ######      #####      ######  
+                                 
+                                 
