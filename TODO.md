@@ -82,6 +82,7 @@ Release 0.5
 -----------
 
 - Hints
+- 20 new levels?
 
 Release 0.4
 -----------
