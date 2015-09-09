@@ -39,6 +39,11 @@ Running
     make runmenu         # Launch text interface
     make runat           # The animation tester
 
+Make Levels
+-----------
+
+See the instructions and video at [Creating Levels](http://artificialworlds.net/rabbit-escape/create-levels.html).
+
 Developers
 ----------
 
