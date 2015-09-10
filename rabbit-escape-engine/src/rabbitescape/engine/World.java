@@ -89,10 +89,8 @@ public class World
 
     public enum CompletionState
     {
-        INTRO,
         RUNNING,
         PAUSED,
-        READY_TO_EXPLODE_ALL,
         WON,
         LOST
     }
