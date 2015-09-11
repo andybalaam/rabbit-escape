@@ -2,7 +2,7 @@
 :description=
 :num_rabbits=9
 :num_to_save=6
-:rabbit_delay=30
+:rabbit_delay=32
 :bridge=4
 :dig=3
 :block=4
