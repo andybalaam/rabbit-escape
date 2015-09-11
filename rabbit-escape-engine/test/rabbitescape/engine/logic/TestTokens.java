@@ -127,4 +127,142 @@ public class TestTokens
         assertThat( world.things.size(), equalTo( 0 ) );
         assertThat( world.abilities.get( Token.Type.dig ), equalTo( 5 ) );
     }
+
+    @Test
+    public void Tokens_do_not_fall_through_half_built_bridges_from_down_slope()
+    {
+        assertWorldEvolvesLike(
+            "r d" + "\n" +
+            "#* " + "\n" +
+            ":*=i\\",      // Bridging token on down slope
+
+            "   " + "\n" +
+            "#rB",         // Dig token hits bridge
+
+            "   " + "\n" +
+            "#r[",
+
+            "   " + "\n" +
+            "#r{",
+
+            "   " + "\n" +
+            "#\\D"         // Starts digging
+        );
+    }
+
+    @Test
+    public void Tokens_do_not_fall_through_half_built_bridges_from_flat()
+    {
+        assertWorldEvolvesLike(
+            "  d" + "\n" +
+            "ri " + "\n" +
+            "## ",         // Bridging token on flat
+
+            "   " + "\n" +
+            " rB" + "\n" +
+            "## ",         // Dig token hits bridge
+
+            "   " + "\n" +
+            " r[" + "\n" +
+            "## ",
+
+            "   " + "\n" +
+            " r{" + "\n" +
+            "## ",
+
+            "   " + "\n" +
+            "  D" + "\n" +
+            "## "          // Starts digging
+        );
+    }
+
+    @Test
+    public void Tokens_do_not_fall_through_half_built_bridges_from_up_slope()
+    {
+        assertWorldEvolvesLike(
+            "  d" + "\n" +
+            "   " + "\n" +
+            "r* " + "\n" +
+            "## " + "\n" +
+            ":*=i/",       // Bridging token on up slope
+
+            "   " + "\n" +
+            "  B" + "\n" +
+            " r " + "\n" +
+            "## ",         // Dig token hits bridge
+
+            "   " + "\n" +
+            "  [" + "\n" +
+            " r " + "\n" +
+            "## ",
+
+            "   " + "\n" +
+            "  {" + "\n" +
+            " r " + "\n" +
+            "## ",
+
+            "   " + "\n" +
+            "  D" + "\n" +  // Starts digging
+            " / " + "\n" +
+            "## "
+        );
+    }
+
+    @Test
+    public void Tokens_do_not_fall_through_half_built_bridges_in_tight_corners()
+    {
+        assertWorldEvolvesLike(
+            " d " + "\n" +
+            "#r#" + "\n" +
+            "#*#" + "\n" +
+            "###" + "\n" +
+            ":*=i/",       // Bridging token on up slope in hole
+
+            "   " + "\n" +
+            "#B#" + "\n" + // Dig token hits bridge
+            "#r#" + "\n" +
+            "###",
+
+            "   " + "\n" +
+            "#[#" + "\n" +
+            "#r#" + "\n" +
+            "###",
+
+            "   " + "\n" +
+            "#{#" + "\n" +
+            "#r#" + "\n" +
+            "###",
+
+            "   " + "\n" +
+            "#D#" + "\n" +  // Starts digging
+            "#/#" + "\n" +
+            "###"
+        );
+    }
+
+    @Test
+    public void Tokens_falling_onto_bridgers_in_corner_take_effect()
+    {
+        // This looks like the rabbit catches it when it's off to the side,
+        // because really the rabbit is stuck in a hole, so it's not too
+        // bad, but inconsistent with
+        // Tokens_do_not_fall_through_half_built_bridges_in_tight_corners
+
+        assertWorldEvolvesLike(
+            " d#" + "\n" +
+            "  #" + "\n" +
+            "ri#" + "\n" +
+            "###",         // Bridging token next to wall
+
+            "  #" + "\n" +
+            " d#" + "\n" +
+            " f#" + "\n" +
+            "###",
+
+            "  #" + "\n" +
+            "  #" + "\n" +
+            " r#" + "\n" + // Dig token hits bridge and converts rabbit
+            "#D#"
+        );
+    }
 }

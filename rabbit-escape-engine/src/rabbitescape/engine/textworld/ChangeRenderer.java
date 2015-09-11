@@ -2,6 +2,9 @@ package rabbitescape.engine.textworld;
 
 import rabbitescape.engine.ChangeDescription;
 import rabbitescape.engine.ChangeDescription.Change;
+import rabbitescape.engine.RabbitStates;
+import rabbitescape.engine.StateAndPosition;
+import rabbitescape.engine.util.Position;
 
 public class ChangeRenderer
 {
@@ -15,6 +18,21 @@ public class ChangeRenderer
 
     private static void charForChange( Change change, Chars chars )
     {
+        // Handle bridging specially
+        Position bridgingPos = RabbitStates.whereBridging(
+            new StateAndPosition( change.state, change.x, change.y ) );
+
+        if ( bridgingPos != null )
+        {
+            chars.set(
+                bridgingPos.x,
+                bridgingPos.y,
+                RabbitStates.bridgingStage( change.state )
+            );
+            return;
+        }
+
+        // Everything else is relatively simple
         switch( change.state )
         {
             case NOTHING:
@@ -190,84 +208,6 @@ public class ChangeRenderer
                 break;
             case RABBIT_DIGGING_2:
                 chars.set( change.x, change.y, 'D' );
-                break;
-            case RABBIT_BRIDGING_RIGHT_1:
-            case RABBIT_BRIDGING_DOWN_UP_RIGHT_1:
-                chars.set( change.x + 1, change.y, 'B' );
-                break;
-            case RABBIT_BRIDGING_RIGHT_2:
-            case RABBIT_BRIDGING_DOWN_UP_RIGHT_2:
-                chars.set( change.x + 1, change.y, '[' );
-                break;
-            case RABBIT_BRIDGING_RIGHT_3:
-            case RABBIT_BRIDGING_DOWN_UP_RIGHT_3:
-                chars.set( change.x + 1, change.y, '{' );
-                break;
-            case RABBIT_BRIDGING_LEFT_1:
-            case RABBIT_BRIDGING_DOWN_UP_LEFT_1:
-                chars.set( change.x - 1, change.y, 'E' );
-                break;
-            case RABBIT_BRIDGING_LEFT_2:
-            case RABBIT_BRIDGING_DOWN_UP_LEFT_2:
-                chars.set( change.x - 1, change.y, ']' );
-                break;
-            case RABBIT_BRIDGING_LEFT_3:
-            case RABBIT_BRIDGING_DOWN_UP_LEFT_3:
-                chars.set( change.x - 1, change.y, '}' );
-                break;
-            case RABBIT_BRIDGING_UP_RIGHT_1:
-                chars.set( change.x + 1, change.y - 1, 'B' );
-                break;
-            case RABBIT_BRIDGING_UP_RIGHT_2:
-                chars.set( change.x + 1, change.y - 1, '[' );
-                break;
-            case RABBIT_BRIDGING_UP_RIGHT_3:
-                chars.set( change.x + 1, change.y - 1, '{' );
-                break;
-            case RABBIT_BRIDGING_UP_LEFT_1:
-                chars.set( change.x - 1, change.y - 1, 'E' );
-                break;
-            case RABBIT_BRIDGING_UP_LEFT_2:
-                chars.set( change.x - 1, change.y - 1, ']' );
-                break;
-            case RABBIT_BRIDGING_UP_LEFT_3:
-                chars.set( change.x - 1, change.y - 1, '}' );
-                break;
-            case RABBIT_BRIDGING_IN_CORNER_RIGHT_1:
-                chars.set( change.x, change.y, 'B' );
-                break;
-            case RABBIT_BRIDGING_IN_CORNER_RIGHT_2:
-                chars.set( change.x, change.y, '[' );
-                break;
-            case RABBIT_BRIDGING_IN_CORNER_RIGHT_3:
-                chars.set( change.x, change.y, '{' );
-                break;
-            case RABBIT_BRIDGING_IN_CORNER_LEFT_1:
-                chars.set( change.x, change.y, 'E' );
-                break;
-            case RABBIT_BRIDGING_IN_CORNER_LEFT_2:
-                chars.set( change.x, change.y, ']' );
-                break;
-            case RABBIT_BRIDGING_IN_CORNER_LEFT_3:
-                chars.set( change.x, change.y, '}' );
-                break;
-            case RABBIT_BRIDGING_IN_CORNER_UP_RIGHT_1:
-                chars.set( change.x, change.y - 1, 'B' );
-                break;
-            case RABBIT_BRIDGING_IN_CORNER_UP_RIGHT_2:
-                chars.set( change.x, change.y - 1, '[' );
-                break;
-            case RABBIT_BRIDGING_IN_CORNER_UP_RIGHT_3:
-                chars.set( change.x, change.y - 1, '{' );
-                break;
-            case RABBIT_BRIDGING_IN_CORNER_UP_LEFT_1:
-                chars.set( change.x, change.y - 1, 'E' );
-                break;
-            case RABBIT_BRIDGING_IN_CORNER_UP_LEFT_2:
-                chars.set( change.x, change.y - 1, ']' );
-                break;
-            case RABBIT_BRIDGING_IN_CORNER_UP_LEFT_3:
-                chars.set( change.x, change.y - 1, '}' );
                 break;
             case RABBIT_BLOCKING:
                 chars.set( change.x, change.y, 'H' );

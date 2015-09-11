@@ -77,13 +77,14 @@ Release 0.6
 -----------
 
 - Speed up button
+- 20 new levels?
+- Authorship (and license?) in level definitions
 
 Release 0.5
 -----------
 
 - Hints
-- 20 new levels?
-- Authorship (and license?) in level definitions
+- ~~Tokens don''t fall through half-built bridges~~
 
 Release 0.4
 -----------
