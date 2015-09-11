@@ -1,20 +1,20 @@
 :name=Prison break
-:description=Which order should you free them in?
+:description=In which order should you free them?
 :num_rabbits=3
 :num_to_save=3
 :bash=2
 :bridge=3
 :dig=2
 :music=tryad-witness
-            #########            
-            #   Q   # #########  
-#########   #       # #   Q   #  
-#   Q   #   ######### #       #  
-#       #             #########  
-#########                        
-                                 
-                        O        
-            \        /#########  
-            ###########          
-                                 
-###########                      
+            ########          
+            #  Q   # ######## 
+ ########   #      # #   Q  # 
+ #  Q   #   ######## #      # 
+ #      #            ######## 
+ ########                     
+                              
+                       O      
+            \       /######## 
+            ##########        
+                              
+ ##########                   
