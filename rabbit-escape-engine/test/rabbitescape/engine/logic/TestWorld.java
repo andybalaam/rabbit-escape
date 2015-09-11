@@ -31,7 +31,6 @@ public class TestWorld
             "   O ",
             "#####"
         );
-        world.setIntro( false );
 
         world.step();
         world.step();
@@ -62,7 +61,6 @@ public class TestWorld
             " O ",  // Exit right below entrance
             "###"
         );
-        world.setIntro( false );
 
         world.step(); // First one over the exit
 
@@ -95,7 +93,6 @@ public class TestWorld
             "   ",
             "###"
         );
-        world.setIntro( false );
 
         // We should now be finished
         assertThat( world.completionState(), equalTo( WON ) );
@@ -111,25 +108,23 @@ public class TestWorld
             "   ",
             "###"
         );
-        world.setIntro( false );
 
         // We should now be finished
         assertThat( world.completionState(), equalTo( LOST ) );
     }
 
     @Test
-    public void World_is_in_intro_status_at_the_start()
+    public void World_is_in_running_status_at_the_start()
     {
         World world = createWorld(
-            ":num_rabbits=0",
+            ":num_rabbits=3",
             ":num_saved=2",
             ":num_to_save=3",
             "   ",
             "###"
         );
 
-        // We should now be finished
-        assertThat( world.completionState(), equalTo( INTRO ) );
+        assertThat( world.completionState(), equalTo( RUNNING ) );
     }
 
     @Test
@@ -154,7 +149,6 @@ public class TestWorld
                 "   ",
                 "###"
         );
-        world.setIntro( false );
 
         // This is what we are testing
         world.changes.addToken( 0, 0, Token.Type.bash );
@@ -178,7 +172,6 @@ public class TestWorld
                 "   ",
                 "###"
         );
-        world.setIntro( false );
 
         // Use up the last bash
         world.changes.addToken( 0, 0, Token.Type.bash );
@@ -208,7 +201,6 @@ public class TestWorld
             " i ",
             "###"
         );
-        world.setIntro( false );
 
         Token token = world.getTokenAt( 1, 0 );
 
@@ -263,7 +255,6 @@ public class TestWorld
             "###",
             ":*=rr"  // 2 rabbits in the same place
         );
-        world.setIntro( false );
 
         world.step();  // Now 1 is a bridger
 
@@ -281,7 +272,6 @@ public class TestWorld
             "###",
             ":*=rr"  // 2 rabbits in the same place
         );
-        world.setIntro( false );
 
         world.step();  // Now 1 is a bridger
 
@@ -301,7 +291,6 @@ public class TestWorld
             "#r#r#r#r#r#",
             "###########"
         );
-        world.setIntro( false );
 
         world.step();
 
@@ -360,7 +349,6 @@ public class TestWorld
             "r O",
             "###"
         );
-        world.setIntro( false );
 
         // Sanity - we provide stats when we create the world
         assertThat( statsListener.calls.size(), equalTo( 1 ) );

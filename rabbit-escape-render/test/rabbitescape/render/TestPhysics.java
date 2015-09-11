@@ -25,7 +25,6 @@ public class TestPhysics
             "########",
             ":climb=1000000"
         );
-        world.setIntro( false );
 
         final int num_threads = 100;
         final int num_iters   = 20;
@@ -111,7 +110,6 @@ public class TestPhysics
             "########",
             ":climb=1000000"
         );
-        world.setIntro( false );
 
         LevelWinListener winListener = null;
         GeneralPhysics physics = new GeneralPhysics( world, winListener );
@@ -155,7 +153,6 @@ public class TestPhysics
             "########",
             ":num_rabbits=0"
         );
-        world.setIntro( false );
 
         TracingWinListener winListener = new TracingWinListener();
         GeneralPhysics physics = new GeneralPhysics( world, winListener );
@@ -180,7 +177,6 @@ public class TestPhysics
             "####",
             ":num_rabbits=0"
         );
-        world.setIntro( false );
 
         TracingWinListener winListener = new TracingWinListener();
         GeneralPhysics physics = new GeneralPhysics( world, winListener );
@@ -205,7 +201,6 @@ public class TestPhysics
             "########",
             ":bash=10"
         );
-        world.setIntro( false );
 
         LevelWinListener winListener = null;
         GeneralPhysics physics = new GeneralPhysics( world, winListener );
@@ -237,7 +232,6 @@ public class TestPhysics
             "########",
             ":bash=1"
         );
-        world.setIntro( false );
 
         LevelWinListener winListener = null;
         GeneralPhysics physics = new GeneralPhysics( world, winListener );
@@ -264,7 +258,6 @@ public class TestPhysics
             ":bash=2",
             ":climb=12"
         );
-        world.setIntro( false );
 
         LevelWinListener winListener = null;
         GeneralPhysics physics = new GeneralPhysics( world, winListener );
@@ -291,7 +284,6 @@ public class TestPhysics
             "########",
             ":bash=1"
         );
-        world.setIntro( false );
 
         LevelWinListener winListener = null;
         GeneralPhysics physics = new GeneralPhysics( world, winListener );
@@ -326,7 +318,6 @@ public class TestPhysics
             "########",
             ":bash=1"
         );
-        world.setIntro( false );
 
         LevelWinListener winListener = null;
         GeneralPhysics physics = new GeneralPhysics( world, winListener );
@@ -355,7 +346,6 @@ public class TestPhysics
             "########",
             ":bash=1"
         );
-        world.setIntro( false );
 
         LevelWinListener winListener = null;
         GeneralPhysics physics = new GeneralPhysics( world, winListener );
@@ -387,7 +377,6 @@ public class TestPhysics
             "########",
             ":block=1"
         );
-        world.setIntro( false );
 
         LevelWinListener winListener = null;
         GeneralPhysics physics = new GeneralPhysics( world, winListener );

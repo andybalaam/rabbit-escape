@@ -146,12 +146,9 @@ public class TestGameLoop
                 w.num_saved,
                 w.num_killed,
                 1,
-                w.intro,
                 w.paused,
-                w.readyToExplodeAll,
                 w.changes.statsListener
             );
-            setIntro( false );
             assertThat( completionState(), equalTo( CompletionState.RUNNING ) );
         }
     }

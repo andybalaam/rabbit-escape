@@ -21,7 +21,6 @@ public class TestDigging
             "   ",
             "###"
         );
-        world.setIntro( false );
 
         world.step();
 
@@ -88,7 +87,6 @@ public class TestDigging
             "   ",
             "###"
         );
-        world.setIntro( false );
 
         world.step();
 
@@ -220,7 +218,6 @@ public class TestDigging
             "   ",
             "###"
         );
-        world.setIntro( false );
 
         world.step();
 
@@ -308,7 +305,6 @@ public class TestDigging
             "   ",
             "###"
         );
-        world.setIntro( false );
 
         world.step();
 

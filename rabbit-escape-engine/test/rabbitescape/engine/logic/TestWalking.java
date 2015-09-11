@@ -20,7 +20,6 @@ public class TestWalking
             " r   ",
             "#####"
         );
-        world.setIntro( false );
 
         world.step();
 
@@ -44,7 +43,6 @@ public class TestWalking
             "  j  ",
             "#####"
         );
-        world.setIntro( false );
 
         world.step();
 
@@ -66,7 +64,6 @@ public class TestWalking
             "#j   ",
             "#####"
         );
-        world.setIntro( false );
 
         assertThat(
             renderWorld( world, true, false ),
@@ -94,7 +91,6 @@ public class TestWalking
             "# r# ",
             "#####"
         );
-        world.setIntro( false );
 
         world.step();
 
@@ -114,7 +110,6 @@ public class TestWalking
             "/j  ",
             "####"
         );
-        world.setIntro( false );
 
         world.step();
 
@@ -134,7 +129,6 @@ public class TestWalking
             " (j  ",
             "#####"
         );
-        world.setIntro( false );
 
         world.step();
 
@@ -164,7 +158,6 @@ public class TestWalking
             "  r\\",
             "####"
         );
-        world.setIntro( false );
 
         world.step();
 
@@ -184,7 +177,6 @@ public class TestWalking
             "  r) ",
             "#####"
         );
-        world.setIntro( false );
 
         world.step();
 
@@ -216,7 +208,6 @@ public class TestWalking
             "r /###",
             "######"
         );
-        world.setIntro( false );
 
         world.step();
 
@@ -277,7 +268,6 @@ public class TestWalking
             "r (###",
             "######"
         );
-        world.setIntro( false );
 
         world.step();
 
@@ -337,7 +327,6 @@ public class TestWalking
             "###\\ j",
             "######"
         );
-        world.setIntro( false );
 
         world.step();
 
@@ -397,7 +386,6 @@ public class TestWalking
             "###) j",
             "######"
         );
-        world.setIntro( false );
 
         world.step();
 
@@ -457,7 +445,6 @@ public class TestWalking
             "###\\  ",
             "######"
         );
-        world.setIntro( false );
 
         world.step();
 
@@ -516,7 +503,6 @@ public class TestWalking
             "###)  ",
             "######"
         );
-        world.setIntro( false );
 
         world.step();
 
@@ -575,7 +561,6 @@ public class TestWalking
             "  /###",
             "######"
         );
-        world.setIntro( false );
 
         world.step();
 
@@ -635,7 +620,6 @@ public class TestWalking
             "  (###",
             "######"
         );
-        world.setIntro( false );
 
         world.step();
 
@@ -694,7 +678,6 @@ public class TestWalking
             "r /#",
             "####"
         );
-        world.setIntro( false );
 
         world.step();
 
@@ -749,7 +732,6 @@ public class TestWalking
             "r (#",
             "####"
         );
-        world.setIntro( false );
 
         world.step();
 
@@ -804,7 +786,6 @@ public class TestWalking
             " r/#",
             "####"
         );
-        world.setIntro( false );
 
         world.step();
 
@@ -837,7 +818,6 @@ public class TestWalking
             " r/##",
             "#####"
         );
-        world.setIntro( false );
 
         world.step();
 
@@ -881,7 +861,6 @@ public class TestWalking
             "#\\ j",
             "####"
         );
-        world.setIntro( false );
 
         world.step();
 
@@ -936,7 +915,6 @@ public class TestWalking
             "#) j",
             "####"
         );
-        world.setIntro( false );
 
         world.step();
 
@@ -991,7 +969,6 @@ public class TestWalking
             "#\\j ",
             "####"
         );
-        world.setIntro( false );
 
         world.step();
 
@@ -1024,7 +1001,6 @@ public class TestWalking
             "##\\j ",
             "#####"
         );
-        world.setIntro( false );
 
         world.step();
 
@@ -1068,7 +1044,6 @@ public class TestWalking
             "##\\#",
             "###\\"
         );
-        world.setIntro( false );
 
         assertThat(
             renderWorld( world, true, false ),
@@ -1121,7 +1096,6 @@ public class TestWalking
             "##)#",
             "###)"
         );
-        world.setIntro( false );
 
         assertThat(
             renderWorld( world, true, false ),
@@ -1174,7 +1148,6 @@ public class TestWalking
             "##\\\\",
             "###\\"
         );
-        world.setIntro( false );
 
         world.step();
 
@@ -1207,7 +1180,6 @@ public class TestWalking
             "#/##",
             "/###"
         );
-        world.setIntro( false );
 
         assertThat(
             renderWorld( world, true, false ),
@@ -1260,7 +1232,6 @@ public class TestWalking
             "#(##",
             "(###"
         );
-        world.setIntro( false );
 
         assertThat(
             renderWorld( world, true, false ),
@@ -1313,7 +1284,6 @@ public class TestWalking
             "//##",
             "/###"
         );
-        world.setIntro( false );
 
         world.step();
 
@@ -1346,7 +1316,6 @@ public class TestWalking
             "#\\/#",
             "####"
         );
-        world.setIntro( false );
 
         assertThat(
             renderWorld( world, true, false ),
@@ -1388,7 +1357,6 @@ public class TestWalking
             "#)(#",
             "####"
         );
-        world.setIntro( false );
 
         assertThat(
             renderWorld( world, true, false ),
@@ -1430,7 +1398,6 @@ public class TestWalking
             "#\\/#",
             "####"
         );
-        world.setIntro( false );
 
         assertThat(
             renderWorld( world, true, false ),
@@ -1472,7 +1439,6 @@ public class TestWalking
             "#)(#",
             "####"
         );
-        world.setIntro( false );
 
         assertThat(
             renderWorld( world, true, false ),
@@ -1514,7 +1480,6 @@ public class TestWalking
             "r/\\ ",
             "####"
         );
-        world.setIntro( false );
 
         world.step();
 
@@ -1547,7 +1512,6 @@ public class TestWalking
             "r() ",
             "####"
         );
-        world.setIntro( false );
 
         world.step();
 
@@ -1580,7 +1544,6 @@ public class TestWalking
             " /\\j",
             "####"
         );
-        world.setIntro( false );
 
         world.step();
 
@@ -1613,7 +1576,6 @@ public class TestWalking
             " ()j",
             "####"
         );
-        world.setIntro( false );
 
         world.step();
 
@@ -1647,7 +1609,6 @@ public class TestWalking
             "r/  ",
             "####"
         );
-        world.setIntro( false );
 
         world.step();
 
@@ -1683,7 +1644,6 @@ public class TestWalking
             "r(  ",
             "####"
         );
-        world.setIntro( false );
 
         world.step();
 
@@ -1719,7 +1679,6 @@ public class TestWalking
             "  \\j",
             "####"
         );
-        world.setIntro( false );
 
         world.step();
 
@@ -1755,7 +1714,6 @@ public class TestWalking
             "  )j",
             "####"
         );
-        world.setIntro( false );
 
         world.step();
 
@@ -1791,7 +1749,6 @@ public class TestWalking
             "r(  ",
             "#\\  "
         );
-        world.setIntro( false );
 
         world.step();
 
@@ -1827,7 +1784,6 @@ public class TestWalking
             "  )j",
             "  /#"
         );
-        world.setIntro( false );
 
         world.step();
 
@@ -1864,7 +1820,6 @@ public class TestWalking
             "#)(  ",
             "##\\  "
         );
-        world.setIntro( false );
 
         world.step();
 
@@ -1900,7 +1855,6 @@ public class TestWalking
             "  )(#",
             "  /##"
         );
-        world.setIntro( false );
 
         world.step();
 
@@ -1936,7 +1890,6 @@ public class TestWalking
             "r(\\ ",
             "#   "
         );
-        world.setIntro( false );
 
         world.step();
 
@@ -1972,7 +1925,6 @@ public class TestWalking
             " /)j",
             "   #"
         );
-        world.setIntro( false );
 
         world.step();
 

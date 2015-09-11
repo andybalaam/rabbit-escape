@@ -576,7 +576,6 @@ public class TestTextWorldManip
             "rk ",
             "###"
         );
-        world.setIntro( false );
 
         // Pick up block token
         world.step();
@@ -612,7 +611,6 @@ public class TestTextWorldManip
             "###",
             "###"
         );
-        world.setIntro( false );
 
         // Pick up dig token
         world.step();
@@ -652,7 +650,6 @@ public class TestTextWorldManip
             "###",
             "###"
         );
-        world.setIntro( false );
 
         // Pick up dig token and begin digging
         world.step();
@@ -693,7 +690,6 @@ public class TestTextWorldManip
             "rb#",
             "###"
         );
-        world.setIntro( false );
 
         // Pick up bash token
         world.step();
@@ -741,6 +737,42 @@ public class TestTextWorldManip
     }
 
     @Test
+    public void Deprecated_items_are_still_allowed_in_world_serialisation()
+    {
+        String[] lines = {
+            ":name=My X Trip",
+            ":description=",
+            ":num_rabbits=25",
+            ":num_to_save=4",
+            ":rabbit_delay=2",
+            ":num_saved=5",
+            ":num_killed=4",
+            ":num_waiting=16",
+            ":intro=true",                  // Deprecated
+            ":paused=false",
+            ":ready_to_explode_all=false",  // Deprecated
+            ":bash=1",
+            ":block=4",
+            ":bridge=3",
+            ":dig=2",
+            ":explode=5",
+            "####",
+            "#**#",
+            "#**#",
+            "####",
+            ":*=rj",
+            ":*=bi",
+            ":*=\\d",
+            ":*=/d"
+        };
+
+        World world = createWorld( lines );
+
+        // Just a basic sanity check
+        assertThat( world.name, equalTo( "My X Trip" ) );
+    }
+
+    @Test
     public void Round_trip_world_with_metadata()
     {
         String[] lines = {
@@ -752,9 +784,7 @@ public class TestTextWorldManip
             ":num_saved=5",
             ":num_killed=4",
             ":num_waiting=16",
-            ":intro=true",
             ":paused=false",
-            ":ready_to_explode_all=false",
             ":bash=1",
             ":block=4",
             ":bridge=3",
@@ -835,9 +865,7 @@ public class TestTextWorldManip
             ":num_saved=5",
             ":num_killed=4",
             ":num_waiting=16",
-            ":intro=false",
             ":paused=true",
-            ":ready_to_explode_all=true",
             ":bash=1",
             ":bridge=3",
             ":dig=2",

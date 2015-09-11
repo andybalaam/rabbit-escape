@@ -39,9 +39,9 @@ public class TextWorldManip
     );
 
     public static final List<String> META_BOOLS = Arrays.asList(
-        intro,
+        intro,               // Deprecated - leave for backward compatibility
         paused,
-        ready_to_explode_all
+        ready_to_explode_all // Deprecated - leave for backward compatibility
     );
 
     public static final List<String> ABILITIES = abilitiesList();
@@ -108,9 +108,7 @@ public class TextWorldManip
             processor.metaInt( num_saved, 0 ),
             processor.metaInt( num_killed, 0 ),
             processor.metaInt( num_waiting, num_rabs ),
-            processor.metaBool( intro, true ),
             processor.metaBool( paused, false ),
-            processor.metaBool( ready_to_explode_all, false ),
             statsListener
         );
     }
@@ -132,8 +130,6 @@ public class TextWorldManip
             0,
             0,
             0,
-            false,
-            false,
             false,
             new IgnoreWorldStatsListener()
         );
@@ -188,9 +184,7 @@ public class TextWorldManip
         ret.add( metaLine( num_saved,    world.num_saved ) );
         ret.add( metaLine( num_killed,   world.num_killed ) );
         ret.add( metaLine( num_waiting,  world.num_waiting ) );
-        ret.add( metaLine( intro,        world.intro ) );
         ret.add( metaLine( paused,       world.paused ) );
-        ret.add( metaLine( ready_to_explode_all, world.readyToExplodeAll ) );
 
         abilityMetaLines( world, ret );
 

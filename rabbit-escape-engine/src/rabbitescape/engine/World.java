@@ -110,9 +110,7 @@ public class World
     public int num_killed;
     public int num_waiting;
 
-    public boolean intro;
     public boolean paused;
-    public boolean readyToExplodeAll;
 
     public final WorldChanges changes;
     public final String music;
@@ -132,9 +130,7 @@ public class World
         int num_saved,
         int num_killed,
         int num_waiting,
-        boolean intro,
         boolean paused,
-        boolean readyToExplodeAll,
         WorldStatsListener statsListener
     )
     {
@@ -152,9 +148,7 @@ public class World
         this.num_saved = num_saved;
         this.num_killed = num_killed;
         this.num_waiting = num_waiting;
-        this.intro = intro;
         this.paused = paused;
-        this.readyToExplodeAll = readyToExplodeAll;
 
         this.changes = new WorldChanges( this, statsListener );
 
@@ -225,15 +219,7 @@ public class World
 
     public CompletionState completionState()
     {
-        if ( intro )
-        {
-            return CompletionState.INTRO;
-        }
-        else if ( readyToExplodeAll )
-        {
-            return CompletionState.READY_TO_EXPLODE_ALL;
-        }
-        else if ( paused )
+        if ( paused )
         {
             return CompletionState.PAUSED;
         }
@@ -291,18 +277,8 @@ public class World
             ( this.num_waiting + num_killed + num_saved );
     }
 
-    public void setReadyToExplodeAll( boolean readyToExplodeAll )
-    {
-        this.readyToExplodeAll = readyToExplodeAll;
-    }
-
     public void setPaused( boolean paused )
     {
         this.paused = paused;
-    }
-
-    public void setIntro( boolean intro )
-    {
-        this.intro = intro;
     }
 }

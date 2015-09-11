@@ -116,12 +116,6 @@ public class GameUi implements StatsChangedListener
         {
             switch ( e.getKeyCode() )
             {
-                case KeyEvent.VK_SPACE:
-                case KeyEvent.VK_ENTER:
-                {
-                    dismissClick();
-                    break;
-                }
                 case KeyEvent.VK_LEFT:
                 {
                     scrollScrollBarBy( canvasScrollBarX, -1 );
@@ -503,11 +497,6 @@ public class GameUi implements StatsChangedListener
         }
     }
 
-    private void cancelExplodeAll()
-    {
-        gameLaunch.world.setReadyToExplodeAll( false );
-    }
-
     private void zoomClicked( boolean zoomIn )
     {
         if ( zoomIn )
@@ -576,12 +565,6 @@ public class GameUi implements StatsChangedListener
 
     private void click( Point pixelPosition )
     {
-        boolean dismissed = dismissClick();
-        if ( dismissed )
-        {
-            return;
-        }
-
         if ( chosenAbility == null )
         {
             return;
@@ -601,23 +584,6 @@ public class GameUi implements StatsChangedListener
         }
 
         updateChosenAbility();
-    }
-
-    private boolean dismissClick()
-    {
-        switch( gameLaunch.world.completionState() )
-        {
-            case READY_TO_EXPLODE_ALL:
-            {
-                cancelExplodeAll();
-                return true;
-            }
-            default:
-            {
-                // Continue to the normal click behaviour
-                return false;
-            }
-        }
     }
 
     protected void chooseAbility( Token.Type ability )

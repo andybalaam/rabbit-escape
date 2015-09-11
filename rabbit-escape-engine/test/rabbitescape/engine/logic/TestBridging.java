@@ -1480,7 +1480,6 @@ public class TestBridging
             "  i      ",
             "#########"
         );
-        world.setIntro( false );
 
         // Add 2 rabbits in the same place
         world.rabbits.add( new Rabbit( 2, 2, Direction.RIGHT ) );

@@ -93,7 +93,6 @@ public class SwingGameLaunch implements GameLaunch
     public void run( String[] args )
     {
         showIntroDialog();
-        world.setIntro( false );
         loop.run();
     }
 

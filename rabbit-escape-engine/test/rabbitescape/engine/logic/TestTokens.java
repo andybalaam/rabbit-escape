@@ -58,7 +58,6 @@ public class TestTokens
             "bdikc",
             "     "
         );
-        world.setIntro( false );
 
         // Sanity - we have 5 things
         assertThat( world.things.size(), equalTo( 5 ) );
@@ -82,7 +81,6 @@ public class TestTokens
             "#####",
             ":dig=5"
         );
-        world.setIntro( false );
 
         // Sanity - no tokens yet
         assertThat( world.things.size(), equalTo( 0 ) );
@@ -109,7 +107,6 @@ public class TestTokens
             "#####",
             ":dig=5"
         );
-        world.setIntro( false );
 
         // Sanity - no tokens yet
         assertThat( world.things.size(), equalTo( 0 ) );
