@@ -1,30 +1,25 @@
-:name=Rabbit hole descent
-:description=Rabbit hole descent
-:num_rabbits=4
-:num_to_save=2
-:rabbit_delay=25
-:bridge=5
+:name=Cloud bunnies
+:description=
+:num_rabbits=9
+:num_to_save=8
+:rabbit_delay=20
+:bridge=3
 :dig=4
-:bash=4
-:block=1
+:block=2
+:explode=2
 :music=tryad-witness
-###################
-                   
-                   
-  Q                
-                   
-#######   #########
-#######   #########
-     ##   ##       
-     ##   ##       
-     ##   ##       
-     ##   ##       
-     ##   ##       
-     ##   ##       
-     ##   ##       
-     ##   ##       
-     ##   ##       
-     ##   ##       
-     ##   O#       
-#######   #########
-#######   #########
+ Q                                   
+                        Q            
+     /##\                            
+    /#  #\                  /##\     
+ /###    ###\              /#  #\    
+ #          #           /###    ###\ 
+ ##        ##           #          # 
+  ##########            ##      O ## 
+           Q   /##\      ##########  
+              /#  #\                 
+           /###    ###\              
+           #          #              
+           ##        ##              
+            ##########               
+                                     
