@@ -23,9 +23,7 @@ public class Dialogs
             }
         };
 
-        world.setIntro( false );  // We can't use onDismiss, so we can't guarantee to unintro
-        activity.setPaused( world, true ); // ourselves.  Instead, use pause so the user can always
-                                  // unpause manually if needed.
+        activity.setPaused( world, true );
 
         new AlertDialog.Builder( activity )
             .setTitle( t( world.name ) )

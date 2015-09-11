@@ -69,11 +69,14 @@ public class AndroidGameActivity extends RabbitEscapeActivity
         staticInit();
         world = loadWorld( levelFileName, savedInstanceState );
         buildDynamicUi( getResources(), world, levelsDir, levelNum, savedInstanceState );
-        restoreFromState( savedInstanceState );
 
-        if ( world.completionState() == World.CompletionState.INTRO )
+        if ( savedInstanceState == null )
         {
             Dialogs.intro( this, world );
+        }
+        else
+        {
+            restoreFromState( savedInstanceState );
         }
 
         sound.setMusic( world.music );
@@ -267,13 +270,10 @@ public class AndroidGameActivity extends RabbitEscapeActivity
 
     private void restoreFromState( Bundle savedInstanceState )
     {
-        if ( savedInstanceState != null )
+        int checkedAbility = savedInstanceState.getInt( STATE_CHECKED_ABILITY_INDEX, -1 );
+        if ( checkedAbility != -1 )
         {
-            int checkedAbility = savedInstanceState.getInt( STATE_CHECKED_ABILITY_INDEX, -1 );
-            if ( checkedAbility != -1 )
-            {
-                abilitiesGroup.check( checkedAbility );
-            }
+            abilitiesGroup.check( checkedAbility );
         }
     }
 
