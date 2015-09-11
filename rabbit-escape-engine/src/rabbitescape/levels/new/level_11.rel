@@ -1,0 +1,22 @@
+:name=Spare a blocker
+:description=How to rescue 9?
+:num_rabbits=10
+:num_to_save=9
+:rabbit_delay=4
+:bridge=4
+:block=10
+:explode=10
+:dig=1
+:bash=1
+:music=tryad-witness
+                              
+                           O  
+     /  /  /              ### 
+                              
+                           #\ 
+  Q                           
+                           #\ 
+                              
+ ##############\           #\ 
+ ##################           
+                              
