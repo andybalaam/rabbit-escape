@@ -54,7 +54,7 @@ is traversable but should not be.
 - victory message (and sound?) when you complete a level set
 - jump to next level or retry when finished level
 - swing ui should use dialogs instead of overlay
-- hints for each level
+- description for each level
 - walkthrough solutions for each level, tested with the build
 - fix text ui and allow recording walkthroughs in it
 - record walkthroughs in main ui
