@@ -1,4 +1,5 @@
 :name=Makes Me Cross
+:description=Find some way of delaying some of the rabbits.
 :num_rabbits=5
 :num_to_save=5
 :rabbit_delay=1

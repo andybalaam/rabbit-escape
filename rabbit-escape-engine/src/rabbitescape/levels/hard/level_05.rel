@@ -1,4 +1,5 @@
 :name=Minecraft
+:description=It's an absolute minefield!
 :num_rabbits=1
 :num_to_save=1
 :bridge=2

@@ -1,4 +1,5 @@
 :name=Whizz Bang
+:description=Mind the mine!
 :num_rabbits=5
 :num_to_save=4
 :rabbit_delay=5
