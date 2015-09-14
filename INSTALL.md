@@ -21,6 +21,8 @@ You should have 2 separate IntelliJ projects - one for non-Android and
 (optional) one for Android (see below).  Avoid loading the directory
 rabbit-escape-ui-android into the non-Android project.
 
+You will need to run make before you start.
+
 Eclipse
 -------
 
