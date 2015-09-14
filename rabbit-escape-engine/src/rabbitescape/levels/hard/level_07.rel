@@ -1,5 +1,5 @@
 :name=Crowd
-:descrption=It's a long way back up.
+:description=It's a long way back up.
 :num_rabbits=30
 :num_to_save=30
 :rabbit_delay=1
