@@ -4,6 +4,11 @@ INSTALL
 Prerequisites
 -------------
 
+Rabbit Escape is developed on Linux and uses GNU Make as well as
+Ant, Java, Inkscape and other Unix tools to build.  If you'd like to
+work on getting it to build on other platforms, we will happily
+accept patches, but you might have your work cut out.
+
     sudo apt-get install git make openjdk-7-jdk ant sox inkscape
 
 Run tests
