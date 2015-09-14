@@ -1,4 +1,5 @@
 :name=Flag
+:description=Climb, dig or bridge?
 :num_rabbits=5
 :rabbit_delay=10
 :num_to_save=5

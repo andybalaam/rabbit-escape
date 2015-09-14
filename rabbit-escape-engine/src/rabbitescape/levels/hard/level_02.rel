@@ -1,4 +1,5 @@
 :name=Walls
+:description=Too many barriers!
 :num_rabbits=5
 :num_to_save=4
 :rabbit_delay=3

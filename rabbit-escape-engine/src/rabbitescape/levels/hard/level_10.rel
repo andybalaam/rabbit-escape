@@ -1,4 +1,5 @@
 :name=Three Down
+:description=Ascend to freedom.
 :num_rabbits=4
 :num_to_save=4
 :climb=3

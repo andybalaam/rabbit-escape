@@ -1,4 +1,5 @@
 :name=Cliff Path
+:description=You have 15 bridges for a reason.
 :num_rabbits=10
 :num_to_save=7
 :climb=1
