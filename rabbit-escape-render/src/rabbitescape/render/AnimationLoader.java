@@ -12,6 +12,7 @@ import java.util.List;
 import static rabbitescape.engine.util.Util.*;
 
 import rabbitescape.engine.err.RabbitEscapeException;
+import rabbitescape.engine.util.Util;
 
 public class AnimationLoader
 {
@@ -118,7 +119,7 @@ public class AnimationLoader
         while ( ( ln = reader.readLine() ) != null )
         {
             String trimmedLn = ln.trim();
-            if ( !trimmedLn.isEmpty() )
+            if ( !Util.isEmpty( trimmedLn ) )
             {
                 ret.add( frameFromLine( trimmedLn ) );
             }
