@@ -52,7 +52,7 @@ See [INSTALL.md](https://github.com/andybalaam/rabbit-escape/blob/master/INSTALL
 Credits
 -------
 
-Code, graphics, sound effects by [Andy Balaam](http://www.artificialworlds.net).
+Code, graphics, sound effects by [Andy Balaam](http://www.artificialworlds.net) and the [Rabbit Escape Developers](https://github.com/andybalaam/rabbit-escape/graphs/contributors).
 
 Music samples by [tryad](http://tryad.org/).
 
