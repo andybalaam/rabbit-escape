@@ -1,4 +1,5 @@
 :name=Stairs
+:description=Don't fall back down!
 :num_rabbits=10
 :num_to_save=5
 :bridge=5

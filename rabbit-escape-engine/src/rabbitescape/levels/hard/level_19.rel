@@ -1,4 +1,5 @@
 :name=Panic!
+:description=Reduce the fall of the rabbits in the lower chamber as\nfast as possible.
 :num_rabbits=20
 :num_to_save=11
 :rabbit_delay=8
