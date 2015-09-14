@@ -5,6 +5,7 @@ import static rabbitescape.engine.util.Util.*;
 import rabbitescape.engine.config.Config;
 import rabbitescape.engine.config.ConfigTools;
 import rabbitescape.engine.util.RealFileSystem;
+import rabbitescape.engine.util.Util;
 import rabbitescape.render.*;
 import rabbitescape.render.Frame;
 import rabbitescape.render.Renderer;
@@ -667,7 +668,7 @@ public class AnimationTester extends JFrame
 
     private static String[][] animationsFromConfig( String cfgEntry )
     {
-        if ( cfgEntry.isEmpty() )
+        if ( Util.isEmpty( cfgEntry ) )
         {
             return defaultAnimationNames;
         }
@@ -694,7 +695,7 @@ public class AnimationTester extends JFrame
 
     private static String[] blocksFromConfig( String cfgEntry )
     {
-        if ( cfgEntry.isEmpty() )
+        if ( Util.isEmpty( cfgEntry ) )
         {
             return defaultBlockNames;
         }

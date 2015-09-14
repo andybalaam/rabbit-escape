@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import rabbitescape.engine.Thing;
+import rabbitescape.engine.util.Util;
 import rabbitescape.engine.util.VariantGenerator;
 
 public class ItemsLineProcessor
@@ -73,7 +74,7 @@ public class ItemsLineProcessor
     {
         Map<String, String> ret = new HashMap<String, String>();
 
-        if ( str.isEmpty() )
+        if ( Util.isEmpty( str ) )
         {
             return ret;
         }

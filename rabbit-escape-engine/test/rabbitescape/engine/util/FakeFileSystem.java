@@ -77,7 +77,7 @@ public class FakeFileSystem implements FileSystem
     public void mkdirs( String dirPath )
     {
         String parent = parent( dirPath );
-        if ( !parent.isEmpty() && !exists( parent ) )
+        if ( !Util.isEmpty( parent ) && !exists( parent ) )
         {
             mkdirs( parent );
         }

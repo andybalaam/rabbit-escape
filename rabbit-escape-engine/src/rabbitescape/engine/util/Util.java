@@ -561,4 +561,13 @@ public class Util
             return left.equals( right );
         }
     }
+
+    /**
+     * Use in preference to String.isEmpty since that is not available
+     * in Android 2.2.
+     */
+    public static boolean isEmpty( String str )
+    {
+        return ( str.length() == 0 );
+    }
 }
