@@ -1,11 +1,12 @@
 :name=Re-entry
 :description=
 :num_rabbits=6
-:num_to_save=4
+:num_to_save=5
 :rabbit_delay=10
 :bridge=1
 :dig=3
 :block=2
+:explode=2
 :bash=3
 :music=tryad-witness
               #####  
