@@ -104,7 +104,7 @@ public class World
     public final String description;
     public final int num_rabbits;
     public final int num_to_save;
-    public final int rabbit_delay;
+    public final int[] rabbit_delay;
 
     public int num_saved;
     public int num_killed;
@@ -125,7 +125,7 @@ public class World
         String description,
         int num_rabbits,
         int num_to_save,
-        int rabbit_delay,
+        int[] rabbit_delay,
         String music,
         int num_saved,
         int num_killed,
