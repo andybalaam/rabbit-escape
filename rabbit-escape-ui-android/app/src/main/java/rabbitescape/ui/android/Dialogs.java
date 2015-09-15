@@ -19,27 +19,30 @@ public class Dialogs
             @Override
             public void onClick( DialogInterface dialogInterface, int i )
             {
+                activity.currentDialog = null;
                 activity.setPaused( world, false );
             }
         };
 
         activity.setPaused( world, true );
 
-        new AlertDialog.Builder( activity )
+        activity.currentDialog = new AlertDialog.Builder( activity )
             .setTitle( t( world.name ) )
             .setMessage( introMessage( world ) )
             .setPositiveButton( t( "Start" ), onOk )
-            .create()
-            .show();
+            .create();
+
+        activity.currentDialog.show();
     }
 
     public static void explode( final AndroidGameActivity activity, final World world )
     {
-        DialogInterface.OnClickListener onCancel = new DialogInterface.OnClickListener()
+        DialogInterface.OnClickListener onCancelButton = new DialogInterface.OnClickListener()
         {
             @Override
             public void onClick( DialogInterface dialogInterface, int i )
             {
+                activity.currentDialog = null;
                 activity.setPaused( world, false );
             }
         };
@@ -49,18 +52,20 @@ public class Dialogs
             @Override
             public void onClick( DialogInterface dialogInterface, int i )
             {
+                activity.currentDialog = null;
                 activity.setPaused( world, false );
                 world.changes.explodeAllRabbits();
             }
         };
 
         activity.setPaused( world, true );
-        new AlertDialog.Builder( activity )
+        activity.currentDialog = new AlertDialog.Builder( activity )
             .setMessage( t( "Explode all rabbits?" ) )
-            .setNegativeButton( t( "Cancel" ), onCancel )
+            .setNegativeButton( t( "Cancel" ), onCancelButton )
             .setPositiveButton( t( "Explode!" ), onExplode )
-            .create()
-            .show();
+            .create();
+
+        activity.currentDialog.show();
     }
 
     public static void finished( final AndroidGameActivity activity, String message, String ok )
@@ -70,15 +75,17 @@ public class Dialogs
             @Override
             public void onClick( DialogInterface dialogInterface, int i )
             {
+                activity.currentDialog = null;
                 activity.finish();
             }
         };
 
-        new AlertDialog.Builder( activity )
+        activity.currentDialog = new AlertDialog.Builder( activity )
             .setMessage( finishedMessage( activity.gameSurface.world, message ) )
             .setPositiveButton( ok, onOk )
-            .create()
-            .show();
+            .create();
+
+        activity.currentDialog.show();
     }
 
     private static String introMessage( World world )

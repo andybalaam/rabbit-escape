@@ -1,5 +1,6 @@
 package rabbitescape.ui.android;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
@@ -43,13 +44,15 @@ public class AndroidGameActivity extends RabbitEscapeActivity
     public static final String INTENT_LEVEL_NUMBER = "rabbitescape.levelnumber";
     public static final String STATE_CHECKED_ABILITY_INDEX = "rabbitescape.checkedAbilityIndex";
 
+    public AlertDialog currentDialog;
+    public RadioGroup abilitiesGroup;
+
     // System
     private LevelsCompleted levelsCompleted;
 
     private Button muteButton;
     private Button pauseButton;
     private LinearLayout topLayout;
-    private RadioGroup abilitiesGroup;
 
     public GameSurfaceView gameSurface;
     private Token.Type[] abilities;

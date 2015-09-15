@@ -23,6 +23,7 @@ public class AbilityButton extends Button
     }
 
     private final RadioGroup group;
+
     private final String ability;
     private final int buttonIndex;
     private boolean checked;
@@ -106,6 +107,11 @@ public class AbilityButton extends Button
     public boolean isChecked()
     {
         return checked;
+    }
+
+    public String ability()
+    {
+        return ability;
     }
 
     public void setNumLeft( int numLeft )
