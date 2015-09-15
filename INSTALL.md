@@ -51,6 +51,11 @@ If you make changes in the non-Android code, run "make android-pre"
 again and choose "Synchronize" on the jar file in Android Studio at
 app/src/libs/rabbit-escape-generic.jar
 
+To run the (very slow) UI tests, right-click androidTest/java in
+Android Studio, and click Run 'All Tests'.  Do this before making
+a release, trying it on an old Android version (2.2) and a modern
+one.
+
 Contributing
 ------------
 
