@@ -1,5 +1,5 @@
 :name=Prison break
-:description=In which order should you free them?
+:description=Who should escape first?
 :num_rabbits=3
 :num_to_save=3
 :bash=2
