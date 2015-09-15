@@ -24,6 +24,12 @@ public class SmokeTest extends ActivityInstrumentationTestCase2<AndroidMenuActiv
         super( AndroidMenuActivity.class );
     }
 
+    /**
+     * Appears to work on old Android versions, and has trouble on newer ones.
+     * I suspect the hack I used to do "back" is to blame.
+     *
+     * To run, ensure the device is unlocked, and run as an Android Test.
+     */
     public void test_Smoke()
     {
         AndroidUiDriver driver = new AndroidUiDriver( this );
