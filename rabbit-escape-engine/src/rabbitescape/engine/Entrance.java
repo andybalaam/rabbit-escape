@@ -8,21 +8,24 @@ import java.util.Map;
 
 public class Entrance extends Thing
 {
-    private int delay;
+    private int[] delay = new int[1];
 
     private int timeToNextRabbit;
+    
+    private int rabbitEntranceCount = 0;
 
     public Entrance( int x, int y )
     {
         super( x, y, ENTRANCE );
-        delay = -1;
+        delay[0] = -1;
         timeToNextRabbit = 0;
+        rabbitEntranceCount = 0;
     }
 
     @Override
     public void calcNewState( World world )
     {
-        if ( delay == -1 )
+        if ( delay[0] == -1 )
         {
             delay = world.rabbit_delay;
         }
@@ -31,6 +34,7 @@ public class Entrance extends Thing
     @Override
     public void step( World world )
     {
+        
         if ( world.num_waiting <= 0 )
         {
             return;
@@ -38,8 +42,14 @@ public class Entrance extends Thing
 
         if ( timeToNextRabbit == 0 )
         {
-            timeToNextRabbit = delay;
-
+            int delayIndex; 
+            
+            delayIndex = rabbitEntranceCount >= delay.length ? delay.length-1 : rabbitEntranceCount ;
+		    
+            rabbitEntranceCount++ ;
+        	
+            timeToNextRabbit = delay[delayIndex];
+            
             world.changes.enterRabbit( new Rabbit( x, y + 1, RIGHT ) );
         }
         --timeToNextRabbit;

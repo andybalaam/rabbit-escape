@@ -40,6 +40,7 @@ class LineProcessor
     private final Map<String, String>  m_metaStrings;
     private final Map<String, Integer> m_metaInts;
     private final Map<String, Boolean> m_metaBools;
+    private final Map<String, ArrayList<Integer>> m_metaIntArrays;
     private final List<Point> starPoints;
 
     private int width;
@@ -61,9 +62,10 @@ class LineProcessor
         this.things = things;
         this.abilities = abilities;
         this.lines = lines;
-        this.m_metaStrings = new HashMap<>();
-        this.m_metaInts    = new HashMap<>();
-        this.m_metaBools   = new HashMap<>();
+        this.m_metaStrings   = new HashMap<>();
+        this.m_metaInts      = new HashMap<>();
+        this.m_metaBools     = new HashMap<>();
+        this.m_metaIntArrays = new HashMap<>();
         starPoints = new ArrayList<Point>();
 
         width = -1;
@@ -98,6 +100,21 @@ class LineProcessor
         {
             return ret;
         }
+    }
+    
+    public int[] metaIntArray( String key, int[] def )
+    {
+        ArrayList<Integer> temp = m_metaIntArrays.get( key );
+        if ( temp == null )
+        {
+            return def;
+        }
+    	int[] ret = new int[temp.size()];
+        for ( int i = 0; i < temp.size(); i++ )
+        {	
+            ret[i] = temp.get(i);
+        }
+        return ret;
     }
 
     public boolean metaBool( String key, boolean def )
@@ -162,6 +179,10 @@ class LineProcessor
         {
             m_metaBools.put( key, toBool( value ) );
         }
+        else if ( TextWorldManip.META_INT_ARRAYS.contains( key ) )
+        {
+            m_metaIntArrays.put( key, toIntArray( value ) );
+        }
         else if ( TextWorldManip.ABILITIES.contains( key ) )
         {
             abilities.put( Token.Type.valueOf( key ), toInt( value ) );
@@ -196,6 +217,24 @@ class LineProcessor
         {
             throw new NonIntegerMetaValue( lines, lineNum );
         }
+    }
+    
+    private ArrayList<Integer> toIntArray( String value )
+    {
+    	try
+    	{
+    		String[] items = value.split(",");
+    		ArrayList<Integer> ret = new ArrayList<Integer> (items.length);
+    		for ( int i=0; i<items.length; i++ )
+    		{
+    			ret.add( i, new Integer( items[i] ) );
+    		}
+    		return ret;
+    	}
+    	catch( NumberFormatException e)
+    	{
+    		throw new NonIntegerMetaValue (lines, lineNum);
+    	}
     }
 
     private boolean toBool( String value )

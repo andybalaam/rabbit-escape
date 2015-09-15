@@ -26,10 +26,13 @@ public class TextWorldManip
     public static final List<String> META_INTS = Arrays.asList(
         num_rabbits,
         num_to_save,
-        rabbit_delay,
         num_saved,
         num_killed,
         num_waiting
+    );
+    
+    public static final List<String> META_INT_ARRAYS = Arrays.asList(
+        rabbit_delay
     );
 
     public static final List<String> META_STRINGS = Arrays.asList(
@@ -103,7 +106,7 @@ public class TextWorldManip
             processor.metaString( description, "" ),
             num_rabs,
             processor.metaInt( num_to_save,  1 ),
-            processor.metaInt( rabbit_delay, 4 ),
+            processor.metaIntArray( rabbit_delay, new int[4] ),
             processor.metaString( music, null ),
             processor.metaInt( num_saved, 0 ),
             processor.metaInt( num_killed, 0 ),
@@ -125,7 +128,7 @@ public class TextWorldManip
             "",
             0,
             1,
-            4,
+            new int[4],
             null,
             0,
             0,
@@ -215,6 +218,16 @@ public class TextWorldManip
     private static String metaLine( String name, int value )
     {
         return metaLine( name, Integer.toString( value ) );
+    }
+    
+    private static String metaLine( String name, int[] value )
+    {
+    	String ret = Integer.toString( value[0] );
+    	for ( int i = 1; i< value.length; i++)
+    	{
+    		ret = ret + "," + Integer.toString( value[i] ) ;
+    	}
+        return metaLine( name, ret); 
     }
 
     private static String metaLine( String name, String value )
