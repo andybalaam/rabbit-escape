@@ -3,7 +3,7 @@
 :num_rabbits=10
 :num_to_save=10
 :rabbit_delay=4
-:bridge=4
+:bridge=3
 :block=10
 :explode=10
 :dig=1
