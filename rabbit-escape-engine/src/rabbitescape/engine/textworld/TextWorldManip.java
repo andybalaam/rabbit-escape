@@ -106,7 +106,7 @@ public class TextWorldManip
             processor.metaString( description, "" ),
             num_rabs,
             processor.metaInt( num_to_save,  1 ),
-            processor.metaIntArray( rabbit_delay, new int[4] ),
+            processor.metaIntArray( rabbit_delay, new int[]{4} ),
             processor.metaString( music, null ),
             processor.metaInt( num_saved, 0 ),
             processor.metaInt( num_killed, 0 ),
@@ -128,7 +128,7 @@ public class TextWorldManip
             "",
             0,
             1,
-            new int[4],
+            new int[]{4},
             null,
             0,
             0,
@@ -222,11 +222,11 @@ public class TextWorldManip
     
     private static String metaLine( String name, int[] value )
     {
-    	String ret = Integer.toString( value[0] );
-    	for ( int i = 1; i< value.length; i++)
-    	{
-    		ret = ret + "," + Integer.toString( value[i] ) ;
-    	}
+        String ret = Integer.toString( value[0] );
+        for ( int i = 1; i< value.length; i++)
+        {
+            ret = ret + "," + Integer.toString( value[i] ) ;
+        }
         return metaLine( name, ret); 
     }
 
