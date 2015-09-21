@@ -35,6 +35,10 @@ There are Eclipse project files, so "File" -> "Import" ->
 "Existing projects into workspace" should work.  Avoid the
 rabbit-escape-ui-android directory.
 
+There is a code formatting profile in doc/eclipse-format.xml.  You can
+import it in Window -> Preferences -> Java -> Code Style -> Formatter
+then click Import...
+
 You will need to run make before you start.
 
 Android
@@ -65,4 +69,7 @@ The only directory that can contain java.awt or javax.swing code is
 rabbit-escape-ui-swing.  Everything else must not use these packages
 since they are not available on Android.
 
+Please try to stick to the code format as you find it - braces on
+their own lines, 4 spaces for indentation (not tabs), spaces inside
+brackets.
 
