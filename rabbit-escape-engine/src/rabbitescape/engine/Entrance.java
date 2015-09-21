@@ -41,24 +41,22 @@ public class Entrance extends Thing
 
         if ( timeToNextRabbit == 0 )
         {
-            world = birthRabbit(world);
+            birthRabbit(world);
         }
         --timeToNextRabbit;
     }
     
-    private World birthRabbit( World world )
+    private void birthRabbit( World world )
     {
-    	int delayIndex; 
+        int delayIndex; 
         
         delayIndex = rabbitEntranceCount >= delay.length ? delay.length-1 : rabbitEntranceCount ;
-	    
+        
         rabbitEntranceCount++ ;
-    	
+        
         timeToNextRabbit = delay[delayIndex];
         
-        world.changes.enterRabbit( new Rabbit( x, y + 1, RIGHT ) );    	
-        
-        return world;
+        world.changes.enterRabbit( new Rabbit( x, y + 1, RIGHT ) );
     }
 
     @Override

@@ -890,15 +890,15 @@ public class TestTextWorldManip
     public void Test_variable_rabbit_delay()
     {
         String[] lines = {
-            ":rabbit_delay=1,2",
-            ":num_rabbits=4",
+            ":rabbit_delay=1,2,3",
+            ":num_rabbits=5",
             "Q                                                                            ",
             "                                                                             ",
             "#############################################################################"
         };
         
         World world = createWorld( lines );
-        for ( int i = 0 ; i<8 ; i++ )
+        for ( int i = 0 ; i<16 ; i++ )
         {
             world.step();
         }
@@ -907,9 +907,9 @@ public class TestTextWorldManip
 
         String[] expectedLines = {
             "*                                                                            ",
-            "  r r rr                                                                     ",
+            "      r  r  r rr                                                             ",
             "#############################################################################",
-            ":*=Q{Entrance.timeToNextRabbit:1}"
+            ":*=Q{Entrance.timeToNextRabbit:2}"
         };
         assertThat( resultLines, equalTo( expectedLines ));
 
