@@ -885,4 +885,33 @@ public class TestTextWorldManip
             equalTo( lines )
         );
     }
+    
+    @Test
+    public void Test_variable_rabbit_delay()
+    {
+        String[] lines = {
+            ":rabbit_delay=1,2,3",
+            ":num_rabbits=5",
+            "Q                                                                            ",
+            "                                                                             ",
+            "#############################################################################"
+        };
+        
+        World world = createWorld( lines );
+        for ( int i = 0 ; i<16 ; i++ )
+        {
+            world.step();
+        }
+        
+        String[] resultLines=renderCompleteWorld( world, false );
+
+        String[] expectedLines = {
+            "*                                                                            ",
+            "      r  r  r rr                                                             ",
+            "#############################################################################",
+            ":*=Q{Entrance.timeToNextRabbit:2}"
+        };
+        assertThat( resultLines, equalTo( expectedLines ));
+
+    }
 }
