@@ -101,6 +101,9 @@ public class TestWorldChanges
         {
             ":name=My Round X",
             ":description=Go and\nreturn",
+            ":hint1=",
+            ":hint2=",
+            ":hint3=",
             ":num_rabbits=25",
             ":num_to_save=4",
             ":rabbit_delay=2",
