@@ -914,4 +914,29 @@ public class TestTextWorldManip
         assertThat( resultLines, equalTo( expectedLines ));
 
     }
+
+    @Test
+    public void Round_trip_for_variable_delay_world()
+    {
+        String[] lines = {
+            ":name=var delay round trip",
+            ":description=trippy",
+            ":num_rabbits=20",
+            ":num_to_save=18",
+            ":rabbit_delay=10,3,2,10",
+            ":num_saved=0",
+            ":num_killed=0",
+            ":num_waiting=20",
+            ":paused=false",
+            "#######",
+            "#Q   Q#",
+            "#     #",
+            "#######"
+        };
+        
+        assertThat(
+            renderCompleteWorld( createWorld( lines ), true ),
+            equalTo( lines )
+        );
+    }
 }
