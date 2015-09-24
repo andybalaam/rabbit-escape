@@ -81,7 +81,7 @@ http://artificialworlds.net/rabbit-escape/doxygen/
 
 To build the Doxygen documentation, install the prerequisites:
 
-   sudo apt-get install doxygen graphviz
+    sudo apt-get install doxygen graphviz
 
 Then build it with:
 
