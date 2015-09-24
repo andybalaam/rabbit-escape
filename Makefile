@@ -222,7 +222,7 @@ clean-music: no-make-warnings
 	- rm $(MUSICWAV_DEST)/*
 	- rm $(ANDROIDMUSICOGG_DEST)/*
 
-clean-all: clean clean-images clean-sounds clean-music
+clean-all: clean clean-images clean-sounds clean-music clean-doxygen
 
 run: compile
 	java -cp $(CLASSPATH) rabbitescape.ui.text.TextSingleGameMain test/level_01.rel
@@ -283,14 +283,11 @@ android-pre: \
 	android-music \
 	rabbit-escape-ui-android/app/libs/rabbit-escape-generic.jar
 
-# doxygen
-# -------
-# excluded from other targets, as it imposes extra dependencies (doxygen and graphviz) and and takes a few min
-
-doxy:
-	mkdir -p ../rabbit-doxygen/doc
+# Requires sudo apt-get install doxygen graphviz
+doxygen:
+	mkdir -p doc/doxygen
 	echo PROJECT_NUMBER=$$(git log --date-order --tags --simplify-by-decoration --pretty=format:"%ci_%d" -n 1) | tr " " "_" | cat Doxyfile - | doxygen -
 
-doxy-clean:
-	rm -r ../rabbit-doxygen/doc
+clean-doxygen:
+	- rm -r doc/doxygen
 

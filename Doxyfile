@@ -1,6 +1,6 @@
 # Doxyfile 1.8.8
 
-# ColonelFazackerley says install doxygen and graphviz. then "doxygen Doxyfile"
+# Rabbit Escape Doxyfile
 
 # This file describes the settings to be used by the documentation system
 # doxygen (www.doxygen.org) for a project.
@@ -32,7 +32,7 @@ PROJECT_NAME           = "Rabbit Escape"
 # TODO
 PROJECT_LOGO           = doc/www/rabbitescape-84.png
 
-OUTPUT_DIRECTORY       =../rabbit-doxygen/doc
+OUTPUT_DIRECTORY       = doc/doxygen
 
 # required for large projects. not necessary yet...
 CREATE_SUBDIRS         = NO

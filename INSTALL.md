@@ -73,3 +73,14 @@ Please try to stick to the code format as you find it - braces on
 their own lines, 4 spaces for indentation (not tabs), spaces inside
 brackets.
 
+Doxygen
+-------
+
+To build the Doxygen documentation, install the prerequisites:
+
+   sudo apt-get install doxygen graphviz
+
+Then build it with:
+
+    make doxygen
+
