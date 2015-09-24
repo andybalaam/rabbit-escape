@@ -283,4 +283,14 @@ android-pre: \
 	android-music \
 	rabbit-escape-ui-android/app/libs/rabbit-escape-generic.jar
 
+# doxygen
+# -------
+# excluded from other targets, as it imposes extra dependencies (doxygen and graphviz) and and takes a few min
+
+doxy:
+	mkdir -p ../rabbit-doxygen/doc
+	echo PROJECT_NUMBER=$$(git log --date-order --tags --simplify-by-decoration --pretty=format:"%ci_%d" -n 1) | tr " " "_" | cat Doxyfile - | doxygen -
+
+doxy-clean:
+	rm -r ../rabbit-doxygen/doc
 
