@@ -109,9 +109,9 @@ class LineProcessor
         {
             return def;
         }
-    	int[] ret = new int[temp.size()];
+        int[] ret = new int[temp.size()];
         for ( int i = 0; i < temp.size(); i++ )
-        {	
+        {
             ret[i] = temp.get(i);
         }
         return ret;
@@ -221,20 +221,20 @@ class LineProcessor
     
     private ArrayList<Integer> toIntArray( String value )
     {
-    	try
-    	{
-    		String[] items = value.split(",");
-    		ArrayList<Integer> ret = new ArrayList<Integer> (items.length);
-    		for ( int i=0; i<items.length; i++ )
-    		{
-    			ret.add( i, new Integer( items[i] ) );
-    		}
-    		return ret;
-    	}
-    	catch( NumberFormatException e)
-    	{
-    		throw new NonIntegerMetaValue (lines, lineNum);
-    	}
+        try
+        {
+            String[] items = value.split(",");
+            ArrayList<Integer> ret = new ArrayList<Integer> (items.length);
+            for ( int i=0; i<items.length; i++ )
+            {
+                ret.add( i, new Integer( items[i] ) );
+            }
+            return ret;
+        }
+        catch( NumberFormatException e)
+        {
+            throw new NonIntegerMetaValue (lines, lineNum);
+        }
     }
 
     private boolean toBool( String value )
