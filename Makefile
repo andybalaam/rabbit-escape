@@ -288,6 +288,9 @@ doxygen:
 	mkdir -p doc/doxygen
 	echo PROJECT_NUMBER=$$(git log --date-order --tags --simplify-by-decoration --pretty=format:"%ci_%d" -n 1) | tr " " "_" | cat Doxyfile - | doxygen -
 
+doxygen-upload: doxygen
+	rsync --delete -r doc/doxygen/html/ dreamhost:artificialworlds.net/rabbit-escape/doxygen/
+
 clean-doxygen:
 	- rm -r doc/doxygen
 

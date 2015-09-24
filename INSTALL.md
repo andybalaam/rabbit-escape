@@ -76,6 +76,9 @@ brackets.
 Doxygen
 -------
 
+You can view Doxygen documentation for the code at:
+http://artificialworlds.net/rabbit-escape/doxygen/
+
 To build the Doxygen documentation, install the prerequisites:
 
    sudo apt-get install doxygen graphviz
