@@ -1,5 +1,8 @@
 :name=Mary Poppins
 :description=Chim chim-in-ey, chim chim-in-ey\nChim chim cher-ee!
+:hint1=Bridge.
+:hint2=Bash.
+:hint3=Bash.
 :num_rabbits=10
 :num_to_save=10
 :climb=1

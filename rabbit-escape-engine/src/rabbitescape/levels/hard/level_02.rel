@@ -1,5 +1,8 @@
 :name=Walls
 :description=Too many barriers!
+:hint1=You do not have enough bash tokens to\nget through both walls.
+:hint2=You will need to use the bridge.
+:hint3=Dig down, then tap precisely to convert the digger\n into a basher before they fall. When they have\n undermined the walls convert them to a bridger.
 :num_rabbits=5
 :num_to_save=4
 :rabbit_delay=3

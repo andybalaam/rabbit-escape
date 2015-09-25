@@ -1,5 +1,8 @@
 :name=Stairs
 :description=Don't fall back down!
+:hint1=Build a couple of safety bridges at the bottom.
+:hint2=Use the stairs and bridge the gap.
+:hint3=Use a blocker to turn them around after the gap\nand then build a bridge back the other way to freedom.
 :num_rabbits=10
 :num_to_save=5
 :bridge=5

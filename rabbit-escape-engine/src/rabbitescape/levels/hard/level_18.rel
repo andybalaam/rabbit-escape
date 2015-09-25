@@ -1,5 +1,8 @@
 :name=Mates
 :description=One rabbit must rescue the other.
+:hint1=Only one of them can possibly survive the fall.
+:hint2=The left rabbit has to drop onto the wall.
+:hint3=Then build a bridge up to the exit platform\nfrom the right side. The right rabbit can bash\nout on to it.
 :num_rabbits=1
 :num_to_save=2
 :bridge=4
