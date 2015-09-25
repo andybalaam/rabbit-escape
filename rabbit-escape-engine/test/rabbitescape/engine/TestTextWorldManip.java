@@ -932,6 +932,9 @@ public class TestTextWorldManip
         String[] lines = {
             ":name=var delay round trip",
             ":description=trippy",
+            ":hint1=",
+            ":hint2=",
+            ":hint3=",
             ":num_rabbits=20",
             ":num_to_save=18",
             ":rabbit_delay=10,3,2,10",
