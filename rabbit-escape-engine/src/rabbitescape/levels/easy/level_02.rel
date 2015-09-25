@@ -1,5 +1,6 @@
 :name=Bashing practice
 :description=Click the green button on the left,\nthen drop a bashing token next to the wall.
+:hint1=Drop a bashing token when the rabbit is not\nthere, to make sure you bash to the right.
 :num_rabbits=3
 :num_to_save=1
 :bash=10
