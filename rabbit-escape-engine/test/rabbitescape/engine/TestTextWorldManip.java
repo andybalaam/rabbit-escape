@@ -959,7 +959,7 @@ public class TestTextWorldManip
      * entries cause a DuplicateMetaKey to be thrown.
      */
     @Test( expected=DuplicateMetaKey.class )
-    public void Duplicate_name_throws_exception()
+    public void Duplicate_meta_string_is_an_error()
     {
         String[] lines = {
             ":name=1",
@@ -973,11 +973,47 @@ public class TestTextWorldManip
     }
 
     /**
+     * @brief Key meta should be unique. Test that Duplicate num_rabbits
+     * entries cause a DuplicateMetaKey to be thrown.
+     */
+    @Test( expected=DuplicateMetaKey.class )
+    public void Duplicate_meta_int_is_an_error()
+    {
+        String[] lines = {
+            ":num_rabbits=1",
+            ":num_rabbits=2",
+            "#####",
+            "#r  #",
+            "#####"
+        };
+
+        renderCompleteWorld( createWorld( lines ), true );
+    }
+
+    /**
+     * @brief Key meta should be unique. Test that Duplicate paused
+     * entries cause a DuplicateMetaKey to be thrown.
+     */
+    @Test( expected=DuplicateMetaKey.class )
+    public void Duplicate_meta_boolean_is_an_error()
+    {
+        String[] lines = {
+            ":paused=true",
+            ":paused=true",
+            "#####",
+            "#r  #",
+            "#####"
+        };
+
+        renderCompleteWorld( createWorld( lines ), true );
+    }
+
+    /**
      * @brief Key meta should be unique. Test that Duplicate rabbit_delay
      * entries cause a DuplicateMetaKey to be thrown.
      */
     @Test( expected=DuplicateMetaKey.class )
-    public void Duplicate_delay_throws_exception()
+    public void Duplicate_meta_intarray_is_an_error()
     {
         String[] lines = {
             ":rabbit_delay=1,2,6",
@@ -994,7 +1030,7 @@ public class TestTextWorldManip
      * entries cause a DuplicateMetaKey to be thrown.
      */
     @Test( expected=DuplicateMetaKey.class )
-    public void Duplicate_dig_throws_exception()
+    public void Duplicate_ability_is_an_error()
     {
         String[] lines = {
             ":dig=10",
