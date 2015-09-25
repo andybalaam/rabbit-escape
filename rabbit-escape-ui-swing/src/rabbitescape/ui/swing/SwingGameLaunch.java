@@ -96,26 +96,40 @@ public class SwingGameLaunch implements GameLaunch
         loop.run();
     }
 
+    private static class AnswerHolder
+    {
+        public int answer;
+    }
+
     /**
      * Must not be called from within event loop.
      */
-    private void showDialog( final String title, final Object message )
+    private int showDialog(
+        final String title, final Object message, final Object[] options )
     {
+        final AnswerHolder holder = new AnswerHolder();
+
         runSwingCodeWithGameLoopBehind(
             new Runnable()
             {
                 @Override
                 public void run()
                 {
-                    JOptionPane.showMessageDialog(
+                    holder.answer = JOptionPane.showOptionDialog(
                         frame,
                         message,
                         title,
-                        JOptionPane.INFORMATION_MESSAGE
+                        JOptionPane.YES_NO_OPTION,
+                        JOptionPane.INFORMATION_MESSAGE,
+                        null,
+                        options,
+                        options[ options.length - 1 ]
                     );
                 }
             }
         );
+
+        return holder.answer;
     }
 
     /**
@@ -179,19 +193,98 @@ public class SwingGameLaunch implements GameLaunch
      */
     private void showIntroDialog()
     {
-        showDialog(
+        String desc = world.description + "\n \n"
+            + t(
+                "Rabbits: ${num_rabbits}  Must save: ${num_to_save}",
+                statsValues( world )
+            );
+
+        showDialogs(
             world.name,
-            Util.concat(
-                Util.split( world.description, "\\n" ),
-                new String[] {
-                    " ",
-                    t(
-                        "Rabbits: ${num_rabbits}  Must save: ${num_to_save}",
-                        statsValues( world )
-                    )
-                }
-            )
+            new String[] { desc, world.hint1, world.hint2, world.hint3 }
         );
+    }
+
+    private void showDialogs( String title, String[] messages )
+    {
+        // Keep showing dialogs until we click start
+        int retVal = 0;
+        while ( retVal == 0 )
+        {
+            for ( int i = 0; i < messages.length; ++i )
+            {
+                if ( Util.isEmpty( messages[i] ) )
+                {
+                    // No more messages
+                    break;
+                }
+
+                String nextMessage = nextMessage( messages, i );
+                Object[] options = nextOptions( nextMessage, i );
+                retVal = showDialog(
+                    title,
+                    Util.split( messages[i], "\\n" ),
+                    options
+                );
+                if ( options.length == 1 )
+                {
+                    // There was only 1 option - we clicked Start
+                    retVal = 1;
+                }
+
+                if ( retVal != 0 )
+                {
+                    // We clicked Start or closed dialog
+                    break;
+                }
+            }
+        }
+    }
+
+    private Object[] nextOptions( String nextMessage, int i )
+    {
+        if ( Util.isEmpty( nextMessage ) )
+        {
+            if ( i == 0 )
+            {
+                // There were no hints at all
+                return new Object[] { t( "Start" ) };
+            }
+            else
+            {
+                // Go back to level description
+                return new Object[] { t( "Info" ), t( "Start" ) };
+            }
+        }
+        else
+        {
+            // Another hint to come
+            return new Object[] { t( hintName( i ) ), t( "Start" ) };
+        }
+    }
+
+    private String hintName( int i )
+    {
+        if ( i == 0 )
+        {
+            return "Hint";
+        }
+        else
+        {
+            return "Hint " + ( i + 1 );
+        }
+    }
+
+    private String nextMessage( String[] messages, int i )
+    {
+        if ( i >= messages.length - 1 )
+        {
+            return "";
+        }
+        else
+        {
+            return messages[ i + 1 ];
+        }
     }
 
     /**
@@ -204,7 +297,8 @@ public class SwingGameLaunch implements GameLaunch
             t(
                 "Saved: ${num_saved}  Needed: ${num_to_save}",
                 statsValues( world )
-            )
+            ),
+            new Object[] { t( "Ok" ) }
         );
     }
 
@@ -218,7 +312,8 @@ public class SwingGameLaunch implements GameLaunch
             t(
                 "Saved: ${num_saved}  Needed: ${num_to_save}",
                 statsValues( world )
-            )
+            ),
+            new Object[] { t( "Ok" ) }
         );
     }
 

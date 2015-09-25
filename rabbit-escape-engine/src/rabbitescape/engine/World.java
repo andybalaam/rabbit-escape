@@ -102,6 +102,9 @@ public class World
     public final Map<Token.Type, Integer> abilities;
     public final String name;
     public final String description;
+    public final String hint1;
+    public final String hint2;
+    public final String hint3;
     public final int num_rabbits;
     public final int num_to_save;
     public final int[] rabbit_delay;
@@ -123,6 +126,9 @@ public class World
         Map<Token.Type, Integer> abilities,
         String name,
         String description,
+        String hint1,
+        String hint2,
+        String hint3,
         int num_rabbits,
         int num_to_save,
         int[] rabbit_delay,
@@ -141,6 +147,9 @@ public class World
         this.abilities = abilities;
         this.name = name;
         this.description = description;
+        this.hint1 = hint1;
+        this.hint2 = hint2;
+        this.hint3 = hint3;
         this.num_rabbits = num_rabbits;
         this.num_to_save = num_to_save;
         this.rabbit_delay = rabbit_delay;

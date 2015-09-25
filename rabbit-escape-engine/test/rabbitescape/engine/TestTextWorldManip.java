@@ -779,6 +779,9 @@ public class TestTextWorldManip
         String[] lines = {
             ":name=My X Trip",
             ":description=",
+            ":hint1=foo\nbar",
+            ":hint2=baz",
+            ":hint3=bash",
             ":num_rabbits=25",
             ":num_to_save=4",
             ":rabbit_delay=2",
@@ -860,6 +863,9 @@ public class TestTextWorldManip
         String[] lines = {
             ":name=My Round Trip",
             ":description=Go around",
+            ":hint1=",
+            ":hint2=",
+            ":hint3=",
             ":num_rabbits=25",
             ":num_to_save=4",
             ":rabbit_delay=2",
