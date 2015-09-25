@@ -1,7 +1,8 @@
 package rabbitescape.engine.textworld;
 
 /**
- * @brief An exception representing redundant metadata. Two ":name=" entries in a .rel file, for example.
+ * @brief An exception representing redundant metadata.
+ * Two ":name=" entries in a .rel file, for example.
  */
 public class DuplicateMetaKey extends IncorrectLine
 {
@@ -11,5 +12,4 @@ public class DuplicateMetaKey extends IncorrectLine
     {
         super( lines, lineNum );
     }
-
 }
