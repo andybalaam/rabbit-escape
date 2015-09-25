@@ -88,5 +88,6 @@ public class MainJFrame extends JFrame
     {
         sound.dispose();
         dispose();
+        System.exit( 0 );
     }
 }
