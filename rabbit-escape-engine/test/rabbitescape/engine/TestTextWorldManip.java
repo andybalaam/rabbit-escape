@@ -11,6 +11,7 @@ import java.util.Map;
 
 import org.junit.Test;
 
+import rabbitescape.engine.textworld.DuplicateMetaKey;
 import rabbitescape.engine.textworld.ItemsLineProcessor;
 
 public class TestTextWorldManip
@@ -915,6 +916,10 @@ public class TestTextWorldManip
 
     }
 
+    /**
+     * @brief Test an example world with variable rabbit_delay.
+     * Parse it, reserialise it, and test for changes.
+     */
     @Test
     public void Round_trip_for_variable_delay_world()
     {
@@ -939,4 +944,57 @@ public class TestTextWorldManip
             equalTo( lines )
         );
     }
+
+    /**
+     * @brief Key meta should be unique. Test that Duplicate name
+     * entries cause a DuplicateMetaKey to be thrown.
+     */
+    @Test( expected=DuplicateMetaKey.class )
+    public void Duplicate_name_throws_exception()
+    {
+        String[] lines = {
+            ":name=1",
+            ":name=2",
+            "#####",
+            "#r  #",
+            "#####"
+        };
+
+        renderCompleteWorld( createWorld( lines ), true );
+    }
+
+    /**
+     * @brief Key meta should be unique. Test that Duplicate rabbit_delay
+     * entries cause a DuplicateMetaKey to be thrown.
+     */
+    @Test( expected=DuplicateMetaKey.class )
+    public void Duplicate_delay_throws_exception()
+    {
+        String[] lines = {
+            ":rabbit_delay=1,2,6",
+            ":rabbit_delay=4",
+            "#####",
+            "#r  #",
+            "#####"
+        };
+        renderCompleteWorld( createWorld( lines ), true );
+    }
+
+    /**
+     * @brief Key meta should be unique. Test that Duplicate dig
+     * entries cause a DuplicateMetaKey to be thrown.
+     */
+    @Test( expected=DuplicateMetaKey.class )
+    public void Duplicate_dig_throws_exception()
+    {
+        String[] lines = {
+            ":dig=10",
+            ":dig=10",
+            "#####",
+            "#r  #",
+            "#####"
+        };
+        renderCompleteWorld( createWorld( lines ), true );
+    }
+
 }

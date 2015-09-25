@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import rabbitescape.engine.Block;
 import rabbitescape.engine.Entrance;
@@ -156,6 +157,14 @@ class LineProcessor
         }
     }
 
+    private void duplicateMetaCheck( Set<String> set, String key )
+    {
+        if ( set.contains( key ) )
+        {
+            throw new DuplicateMetaKey( lines, lineNum );
+        }
+    }
+
     private void processMetaLine( String line, VariantGenerator variantGen )
     {
         String[] splitLine = split( line.substring( 1 ), "=" );
@@ -169,22 +178,30 @@ class LineProcessor
 
         if ( TextWorldManip.META_INTS.contains( key ) )
         {
+            duplicateMetaCheck( m_metaInts.keySet(), key );
             m_metaInts.put( key, toInt( value ) );
         }
         else if ( TextWorldManip.META_STRINGS.contains( key ) )
         {
+            duplicateMetaCheck( m_metaStrings.keySet(), key );
             m_metaStrings.put( key, value );
         }
         else if ( TextWorldManip.META_BOOLS.contains( key ) )
         {
+            duplicateMetaCheck( m_metaBools.keySet(), key );
             m_metaBools.put( key, toBool( value ) );
         }
         else if ( TextWorldManip.META_INT_ARRAYS.contains( key ) )
         {
+            duplicateMetaCheck( m_metaIntArrays.keySet(), key );
             m_metaIntArrays.put( key, toIntArray( value ) );
         }
         else if ( TextWorldManip.ABILITIES.contains( key ) )
         {
+            if ( abilities.keySet().contains( Token.Type.valueOf( key ) ) )
+            {
+                throw new DuplicateMetaKey( lines, lineNum );
+            }
             abilities.put( Token.Type.valueOf( key ), toInt( value ) );
         }
         else if ( key.equals( "*" ) )
@@ -205,6 +222,7 @@ class LineProcessor
         {
             throw new UnknownMetaKey( lines, lineNum );
         }
+
     }
 
     private int toInt( String value )
