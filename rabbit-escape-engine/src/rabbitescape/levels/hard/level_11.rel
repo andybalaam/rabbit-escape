@@ -1,5 +1,8 @@
 :name=Flag
 :description=Climb, dig or bridge?
+:hint1=The difficult part is getting down alive.
+:hint2=Let them climb one at a time.
+:hint3=Place the first dig token at the far end of the\nflag, and work backwards.
 :num_rabbits=5
 :rabbit_delay=10
 :num_to_save=5

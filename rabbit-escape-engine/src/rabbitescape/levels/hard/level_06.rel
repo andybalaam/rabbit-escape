@@ -1,5 +1,8 @@
 :name=Flat Back
 :description=Dig to freedom.
+:hint1=The fall is too great.
+:hint2=The rabbits need to dig together.
+:hint3=Place a dig token for the first rabbit. When she\nhas dug 2-4 squares, explode her. Wait for all the\nrabbits to be trapped in the hole. Drop in a dig \ntoken.
 :num_rabbits=10
 :num_to_save=8
 :rabbit_delay=5
