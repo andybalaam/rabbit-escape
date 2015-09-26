@@ -1,8 +1,8 @@
 :name=Whizz Bang
 :description=Mind the mine!
-:hint1=Nevermind the mine.
+:hint1=Never mind the mine.
 :hint2=Let the first rabbit take the mine hit,\nbut don't fall down the hole.
-:hint3=Bridge the first bump. Place a climbing token\nin front of the tower, and a dig token on the first\ntop square reached. Drop a bridge token, so the first\n rabbit heading back does not fall down the\nhole. Place another climb and dig token to take out\n the second column of the tower.
+:hint3=Bridge the first bump. Place a climbing token\nin front of the tower, and a dig token on the first\ntop square reached. Drop a bridge token, so the first\nrabbit heading back does not fall down the\nhole. Place another climb and dig token to take out\nthe second column of the tower.
 :num_rabbits=5
 :num_to_save=4
 :rabbit_delay=5

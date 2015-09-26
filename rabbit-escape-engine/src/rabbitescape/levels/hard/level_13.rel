@@ -1,8 +1,8 @@
 :name=Co-operative
 :description=Combine forces.
 :hint1=Use a bridge to stop the foolhardy right\nrabbit attempting the minefield.
-:hint2=The Right rabbit can bash through the middle\nlayer of the block.
-:hint3=The left rabbit can bridge to freedom using\nthree bridges. The first bridge token should be\nplaced under the exit.
+:hint2=The left rabbit can bridge to freedom using\nthree bridges. The first bridge token should be\nplaced under the entrance.
+:hint3=The right rabbit can bash through the middle\nlayer of the block.
 :num_rabbits=2
 :num_to_save=2
 :bridge=4

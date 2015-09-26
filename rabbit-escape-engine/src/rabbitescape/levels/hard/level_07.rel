@@ -1,8 +1,8 @@
 :name=Crowd
 :description=It's a long way back up.
 :hint1=They enter thick and fast.
-:hint2=It is very difficult to climb back up if they fall.
-:hint3=Place a bridge token for the first rabbit to climb\nto the exit. Slow down the rabbits behind by getting\nthem to build more bridges. You have to drop the\ntokens quickly. 
+:hint2=Try to prevent any rabbits falling.
+:hint3=Place a bridge token one square back from the edge.\nSlow down the other rabbits by placing four\nbridge tokens as soon as the first rabbit passes.\n(Bonus: there is a way to get rabbits back up if they fall!)
 :num_rabbits=30
 :num_to_save=30
 :rabbit_delay=1

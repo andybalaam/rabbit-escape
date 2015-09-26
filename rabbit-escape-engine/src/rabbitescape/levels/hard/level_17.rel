@@ -1,8 +1,8 @@
 :name=Maze
 :description=The commandos must navigate the assault course.
 :hint1=They will need to climb the far wall.
-:hint2=They can bridge the first gap.
-:hint3=Climb the short wall after the first gap.\nBridge the second gap, bash the barrier, and finally\ndrop down on the handy cheese wedges.
+:hint2=Go over the top.
+:hint3=Bridge just before the downward slope. Climb the next wall.\nBridge on the slope over the second gap, bash the barrier,\nand drop down on the handy cheese wedges.
 :num_rabbits=2
 :num_to_save=2
 :rabbit_delay=8
