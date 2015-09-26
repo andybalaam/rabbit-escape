@@ -1,19 +1,20 @@
 :name=Mary Poppins
 :description=Chim chim-in-ey, chim chim-in-ey\nChim chim cher-ee!
-:hint1=Bridge.
-:hint2=Bash.
-:hint3=Bash.
+:hint1=One must go ahead and bridge a way.
+:hint2=The the others must be held back by bridges (and a useless bash).
+:hint3=You wouldn't want us to spoil it for you, would you?
 :num_rabbits=10
 :num_to_save=10
 :climb=1
 :bridge=4
 :bash=3
 :music=tryad-the_final_rewind
-##################
-#          \ \   #
-#  Q       # #   #
-#         ####  ##
-# #######       O#
-#   \ \ # ########
-#   # #   ########
-##################
+######################
+#          \ \ \ \   #
+#  Q       # # # #   #
+#         ########  ##
+# #######           O#
+#   \ \ # ############
+#   # #   ############
+#   # #   ############
+######################
