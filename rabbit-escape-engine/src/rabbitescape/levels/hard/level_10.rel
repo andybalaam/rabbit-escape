@@ -2,7 +2,7 @@
 :description=Ascend to freedom.
 :hint1=There aren't enough bridges to use those alone.
 :hint2=There are three rabbits at the bottom and there\nare three climbing tokens.
-:hint3=Use the upper rabbit to dig down through the\nspike. Convert her to a bridger when she is in line\nwith the slope to freedom. With the hole cut, give the\nlower three climbing tokens.
+:hint3=Use the upper rabbit to dig down through the\nspike. Convert to a bridger when in line\nwith the slope to freedom. With the hole cut, give the\nlower three climbing tokens.
 :num_rabbits=4
 :num_to_save=4
 :climb=3
