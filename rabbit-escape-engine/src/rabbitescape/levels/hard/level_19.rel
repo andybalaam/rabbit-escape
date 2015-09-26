@@ -1,7 +1,7 @@
 :name=Panic!
 :description=Reduce the fall of the rabbits in the lower chamber as\nfast as possible.
-:hint1=Bash into the solid rock on the left from the \ntop chamber.
-:hint2=Then convert the basher and dig down.Then \nconvert the digger and bash some more, to make the \nroute to the bottom safely in two drops. You may need a\nblocker in the tunnels to change direction. Build a \nbridge at the bottom to save the others.
+:hint1=Bash into the solid rock on the left from the\ntop chamber.
+:hint2=Then convert the basher and dig down.Then\nconvert the digger and bash some more, to make the\nroute to the bottom safely in two drops. You may need a\nblocker in the tunnels to change direction. Build a\nbridge at the bottom to save the others.
 :num_rabbits=20
 :num_to_save=11
 :rabbit_delay=8
