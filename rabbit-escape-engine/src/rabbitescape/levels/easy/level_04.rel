@@ -1,5 +1,8 @@
 :name=Block before you drop
 :description=Drop blocking tokens to stop rabbits falling off.\nBlow up your blockers at the end.
+:hint1=Stop the rabbits falling off high edges\nby placing blocker tokens to turn them around.
+:hint2=Choose a blocker from the left and place\none at the end of the second platform.
+:hint3=You need blockers at the right of the second\nplatform and the left of the third.
 :num_rabbits=10
 :num_to_save=2
 :rabbit_delay=5

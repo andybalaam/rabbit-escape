@@ -1,5 +1,8 @@
 :name=To the top
 :description=There's got to be a way up there.
+:hint1=Can you climb up somewhere?
+:hint2=Climb up the right of the column to the exit.
+:hint3=Bash through the column.  Bridge up to the\nright-hand side of the column.  Climb up.
 :num_rabbits=4
 :num_to_save=4
 :climb=5
