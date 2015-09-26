@@ -1,4 +1,8 @@
 :name=Dig?
+:description=...to victory.
+:hint1=Get to the floor of the main chamber.
+:hint2=Why why 'y'?
+:hint3=After walking up the second limb of the 'y'\ninstruct the lead rabbit to dig down into\nthe wall of the exit chamber.\nExplode the rabbit to stop digging\nwhen level with the chamber floor.
 :num_rabbits=2
 :rabbit_delay=15
 :num_to_save=1

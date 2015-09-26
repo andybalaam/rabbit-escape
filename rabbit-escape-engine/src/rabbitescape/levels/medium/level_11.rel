@@ -1,4 +1,8 @@
 :name=Rescuer
+:description=Break the barriers to freedom.
+:hint1=The top rabbit must dig.
+:hint2=There is only one safe place to start digging.
+:hint3=The top rabbit must dig down the central wall.\nStop digging at the slopes using a bash token.\nIf necessary, the other rabbit can build a bridge to\nhop over the remnant of the wall.
 :num_rabbits=2
 :num_to_save=2
 :dig=1
