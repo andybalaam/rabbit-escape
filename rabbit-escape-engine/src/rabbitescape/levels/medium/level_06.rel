@@ -1,4 +1,8 @@
 :name=One Pop Shot
+:description=Tense.
+:hint1=You only need to save one rabbit.\nThe other one will help.
+:hint2=How can you make the digging\nrabbit stop at the right time?
+:hint3=Wait until the digging rabbit has dug the entire wall\ndown to floor level, then drop an explode token on it.
 :num_rabbits=2
 :num_to_save=1
 :explode=1

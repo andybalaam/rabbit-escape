@@ -1,5 +1,8 @@
 :name=Placement
 :description=Be precise
+:hint1=Bridge in exactly the right places.
+:hint2=You don't need the dig token.
+:hint3=Place bridge tokens:\none square to the right of the entrance,\nimmediately after the first wall,\ntwo away from the second wall, and\ntwo away from the third wall.
 :num_rabbits=3
 :num_to_save=3
 :rabbit_delay=2
