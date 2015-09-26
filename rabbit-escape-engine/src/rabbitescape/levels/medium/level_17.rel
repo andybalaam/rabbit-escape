@@ -1,4 +1,8 @@
 :name=Jet Set
+:description=Bridge the maze.
+:hint1=There only needs to be one that leaves.
+:hint2=Bridge the first 2 gaps.
+:hint3=Descend on the right, and use a\nblocker to turn the last rabbit away from\nthe trap above the exit.
 :num_rabbits=3
 :num_to_save=1
 :block=3
