@@ -1,3 +1,9 @@
+:name=Test 1
+:description=Choose life
+:hint1=Choose a job
+:hint2=Choose a career
+:hint3=Choose a family
+:author=andybalaam
 :num_rabbits=2
 :bash=1
 :dig=1
