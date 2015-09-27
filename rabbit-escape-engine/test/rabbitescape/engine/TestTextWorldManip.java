@@ -779,6 +779,7 @@ public class TestTextWorldManip
         String[] lines = {
             ":name=My X Trip",
             ":description=",
+            ":author=alice",
             ":hint1=foo\nbar",
             ":hint2=baz",
             ":hint3=bash",
@@ -863,6 +864,7 @@ public class TestTextWorldManip
         String[] lines = {
             ":name=My Round Trip",
             ":description=Go around",
+            ":author=bob",
             ":hint1=",
             ":hint2=",
             ":hint3=",
@@ -932,6 +934,7 @@ public class TestTextWorldManip
         String[] lines = {
             ":name=var delay round trip",
             ":description=trippy",
+            ":author=cyril",
             ":hint1=",
             ":hint2=",
             ":hint3=",
