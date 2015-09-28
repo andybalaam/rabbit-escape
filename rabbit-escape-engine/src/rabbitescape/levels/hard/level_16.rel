@@ -1,5 +1,6 @@
 :name=Makes Me Cross
 :description=Find some way of delaying some of the rabbits.
+:author=andybalaam
 :hint1=The lead rabbit needs to build a 2-token bridge\nfrom the end of the slope.
 :hint2=You need to drop 4 or 5 bridge tokens quickly on the same square to slow them all down.
 :hint3=Drop 5 bridge tokens at the end of the slope.\nDrop 5 more on the third bridge square as it is built.

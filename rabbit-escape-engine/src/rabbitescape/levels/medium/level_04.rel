@@ -1,5 +1,6 @@
 :name=Leaky Bucket
 :description=Can you drip into the exit?
+:author=andybalaam
 :hint1=Find a way to step downwards.
 :hint2=Bashing will help you.
 :hint3=Place a bash token in the first hole you get stuck in.\nWait for the rabbit to bash right and drop.\nAs you start turning, place another bash token on the rabbit.\nWait again, then bash to reach the exit.

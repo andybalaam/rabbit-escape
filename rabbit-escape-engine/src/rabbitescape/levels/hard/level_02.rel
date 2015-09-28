@@ -1,5 +1,6 @@
 :name=Walls
 :description=Too many barriers!
+:author=andybalaam
 :hint1=You do not have enough bash tokens to\nget through both walls.
 :hint2=Can you bash the whole way in one go?
 :hint3=Dig down exactly one square by converting the digger\ninto a basher almost straight away. Once you are\npast the walls make the basher into a bridger.

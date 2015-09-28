@@ -1,5 +1,6 @@
 :name=Flag
 :description=Climb, dig or bridge?
+:author=andybalaam
 :hint1=The difficult part is getting down alive.
 :hint2=Let them climb one at a time.
 :hint3=Place the first dig token at the far end of the\nflag, and work backwards.
