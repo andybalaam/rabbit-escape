@@ -1,4 +1,8 @@
 :name=Turn around, rabbit ears
+:description=Don't fall into the wrong hole.
+:hint1=Your only tool is a bridge.
+:hint2=Are those joists for show?
+:hint3=There are 3 places the first rabbit\ncan start a bridge to meet\na ceiling joist. This will turn them back\nto the correct hole.
 :num_rabbits=2
 :rabbit_delay=10
 :num_to_save=2
