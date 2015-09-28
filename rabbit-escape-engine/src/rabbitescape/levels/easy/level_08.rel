@@ -1,5 +1,6 @@
 :name=Dig quick
 :description=Quick, dig before it's too late!
+:author=andybalaam
 :hint1=Find the right place to dig, and do it quickly.
 :hint2=If you need more time, pause and choose\nthe digger, then unpause to place it.
 :hint3=Dig on the last or second-last\nsquare of the top platform.

@@ -1,5 +1,6 @@
 :name=You wait here
 :description=One of your rabbits must prepare the way\nwhile the others wait
+:author=andybalaam
 :hint1=Make your first rabbit a bridger\nand keep the others back using 2 blockers.
 :hint2=Try placing all the bridging tokens\nat the beginning, to give you more time.
 :hint3=Place a bridge token at the very right end of the first platform and each floating island.\nAfter one rabbit starts bridging, place block tokens at each end of the first platform.\nWhen ready, use an explode token to blow up the right-hand blocker.

@@ -1,5 +1,6 @@
 :name=Assist
 :description=Most rabbits will not make it.
+:author=andybalaam
 :hint1=Bash the first block.
 :hint2=Put a block token in the hole in the wall.
 :hint3=There is now space for the second rabbit\nto turn and bridge up to the exit.
