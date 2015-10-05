@@ -1,8 +1,8 @@
 :name=Family
 :description=Journey across the giant folk.
-:hint1=Select one rabbit to undertake an advanced\nscouting mission. This scout should leave the drop\nsite with a climbing token. Take care to catch a rabbit\nwalking right with the token. If the rabbit\nclimbs the world's wall they will fall to their doom.
-:hint2=The scout must disembowel the first parent with\na bash token. The scout can then climb the inside leg\nand bridge across from the thigh.
-:hint3=The scout can climb over the child's head and\nbridge from the end of the arm.
+:hint1=Send one rabbit ahead.
+:hint2=Place a bash token on the left thigh of the first figure.\nClimb someone up to it.
+:hint3=Place a bridge token on the right thigh of the first figure.\nPlace another on the right arm of the second.
 :num_rabbits=5
 :num_to_save=4
 :climb=5
