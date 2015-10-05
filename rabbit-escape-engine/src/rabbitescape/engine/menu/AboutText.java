@@ -2,7 +2,7 @@ package rabbitescape.engine.menu;
 
 public class AboutText
 {
-    public static final String version = "0.4.2";
+    public static final String version = "0.5";
 
     public static final String url =
         "http://www.artificialworlds.net/rabbit-escape";
