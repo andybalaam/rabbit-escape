@@ -1,7 +1,6 @@
 package rabbitescape.ui.swing;
 
 import java.lang.reflect.InvocationTargetException;
-import java.util.HashMap;
 import java.util.Map;
 
 import javax.swing.JOptionPane;
@@ -193,17 +192,6 @@ public class SwingGameLaunch implements GameLaunch
      */
     private void showIntroDialog()
     {
-        String auth = world.author_name.length()==0
-            ? ""
-            : "\n\nby " + world.author_name;
-
-        String desc = world.description + "\n \n"
-            + t(
-                "Rabbits: ${num_rabbits}  Must save: ${num_to_save}",
-                statsValues( world )
-            )
-            + auth;
-
         Util.Function<String, String> slashNToNewline =
             new Util.Function<String, String>()
         {
@@ -216,10 +204,13 @@ public class SwingGameLaunch implements GameLaunch
 
         showDialogs(
             world.name,
-            Util.map(
-                slashNToNewline,
-                new String[] { desc, world.hint1, world.hint2, world.hint3 },
-                new String[4]
+            Util.concat(
+                new Object[] { DialogText.introText( this.frame, world ) },
+                Util.map(
+                    slashNToNewline,
+                    new String[] { world.hint1, world.hint2, world.hint3 },
+                    new String[3]
+                )
             )
         );
     }
@@ -315,7 +306,7 @@ public class SwingGameLaunch implements GameLaunch
             t( "You won!" ),
             t(
                 "Saved: ${num_saved}  Needed: ${num_to_save}",
-                statsValues( world )
+                DialogText.statsValues( world )
             ),
             new Object[] { t( "Ok" ) }
         );
@@ -330,19 +321,10 @@ public class SwingGameLaunch implements GameLaunch
             t( "You lost!" ),
             t(
                 "Saved: ${num_saved}  Needed: ${num_to_save}",
-                statsValues( world )
+                DialogText.statsValues( world )
             ),
             new Object[] { t( "Ok" ) }
         );
-    }
-
-    private static Map<String, Object> statsValues( World world )
-    {
-        Map<String, Object> values = new HashMap<String, Object>();
-        values.put( "num_rabbits", world.num_rabbits );
-        values.put( "num_to_save", world.num_to_save );
-        values.put( "num_saved",   world.num_saved );
-        return values;
     }
 
     @Override
