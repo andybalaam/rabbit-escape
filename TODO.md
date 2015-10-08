@@ -2,7 +2,7 @@ Time moves upwards.
 
 Later
 -----
-- Test for the same key added twice in a level
+
 - Metal (undiggable) blocks
 - graphics:mine?
 - action:mine?
@@ -30,7 +30,6 @@ Later
 - Next and Retry buttons when finished level, which update the
   bolded menu item
 - Remove Settings button
-- Hints: 2-3 per level, getting increasingly hinty
 - Tell you what level you are playing
 - Victory screen
 - Automated tests that levels run OK and can be solved
@@ -54,7 +53,6 @@ is traversable but should not be.
 - victory message (and sound?) when you complete a level set
 - jump to next level or retry when finished level
 - swing ui should use dialogs instead of overlay
-- description for each level
 - walkthrough solutions for each level, tested with the build
 - fix text ui and allow recording walkthroughs in it
 - record walkthroughs in main ui
@@ -78,13 +76,16 @@ Release 0.6
 
 - Speed up button
 - 20 new levels?
-- Authorship (and license?) in level definitions
+- ~~Authorship in level definitions~~
+- ~~description for each level~~
+- ~~Hints: 2-3 per level, getting increasingly hinty~~
 
 Release 0.5
 -----------
 
-- Hints
+- ~~Hints~~
 - ~~Tokens don''t fall through half-built bridges~~
+- ~~Test for the same key added twice in a level~~
 
 Release 0.4
 -----------
