@@ -102,6 +102,7 @@ public class TestWorldChanges
             ":name=My Round X",
             ":description=Go and\nreturn",
             ":author_name=dave",
+            ":author_url=",
             ":hint1=",
             ":hint2=",
             ":hint3=",

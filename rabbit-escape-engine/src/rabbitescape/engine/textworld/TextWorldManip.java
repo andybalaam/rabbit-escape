@@ -13,6 +13,7 @@ public class TextWorldManip
     private static final String name                 = "name";
     private static final String description          = "description";
     private static final String author_name          = "author_name";
+    private static final String author_url           = "author_url";
     private static final String hint1                = "hint1";
     private static final String hint2                = "hint2";
     private static final String hint3                = "hint3";
@@ -43,6 +44,7 @@ public class TextWorldManip
         name,
         description,
         author_name,
+        author_url,
         hint1,
         hint2,
         hint3,
@@ -113,6 +115,7 @@ public class TextWorldManip
             processor.metaString( name, nameIfNoneSupplied ),
             processor.metaString( description, "" ),
             processor.metaString( author_name, "" ),
+            processor.metaString( author_url, "" ),
             processor.metaString( hint1, "" ),
             processor.metaString( hint2, "" ),
             processor.metaString( hint3, "" ),
@@ -139,6 +142,7 @@ public class TextWorldManip
             "Empty World", //name
             "",            //description
             "",            //author_name
+            "",            //author_url
             "",            //hint1
             "",            //hint2
             "",            //hint3
@@ -198,6 +202,7 @@ public class TextWorldManip
         ret.add( metaLine( name,         world.name ) );
         ret.add( metaLine( description,  world.description ) );
         ret.add( metaLine( author_name,  world.author_name) );
+        ret.add( metaLine( author_url,   world.author_url) );
         ret.add( metaLine( hint1,        world.hint1 ) );
         ret.add( metaLine( hint2,        world.hint2 ) );
         ret.add( metaLine( hint3,        world.hint3 ) );

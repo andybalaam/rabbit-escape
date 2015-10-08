@@ -103,6 +103,7 @@ public class World
     public final String name;
     public final String description;
     public final String author_name;
+    public final String author_url;
     public final String hint1;
     public final String hint2;
     public final String hint3;
@@ -128,6 +129,7 @@ public class World
         String name,
         String description,
         String author_name,
+        String author_url,
         String hint1,
         String hint2,
         String hint3,
@@ -150,6 +152,7 @@ public class World
         this.name = name;
         this.description = description;
         this.author_name = author_name;
+        this.author_url = author_url;
         this.hint1 = hint1;
         this.hint2 = hint2;
         this.hint3 = hint3;

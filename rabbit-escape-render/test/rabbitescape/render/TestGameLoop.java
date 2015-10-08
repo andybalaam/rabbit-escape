@@ -140,6 +140,7 @@ public class TestGameLoop
                 w.name,
                 w.description,
                 w.author_name,
+                w.author_url,
                 w.hint1,
                 w.hint2,
                 w.hint3,
