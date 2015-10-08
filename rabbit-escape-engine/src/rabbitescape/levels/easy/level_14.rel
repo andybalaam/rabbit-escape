@@ -1,6 +1,7 @@
 :name=Three strikes
 :description=You will need several different abilities\nto get past each of the towers in your way.
 :author_name=Andy Balaam
+:author_url=http://artificialworlds.net/rabbit-escape/
 :hint1=Use bashers, climbers and bridgers.\nIn what order?
 :hint2=You can't go over the last wall - go through it.
 :hint3=Bridge directly under the entrance, place two\nclimbers by the second wall, and bash through the third wall.

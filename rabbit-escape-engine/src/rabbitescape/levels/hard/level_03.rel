@@ -1,6 +1,7 @@
 :name=Quadrabbit
 :description=All for one!
 :author_name=Andy Balaam
+:author_url=http://artificialworlds.net/rabbit-escape/
 :hint1=Get the bottom two rabbits together, and climb them up.
 :hint2=When you climb rabbits up from the bottom,\nyou will need a bridge for them to fall onto.
 :hint3=Bottom left rabbit bashes through to bottom right.\nBottom right rabbit bridges over the bash hole.\nTop right rabbit bridges up to the central wall,\nand bashes through. Bottom pair climb up. Top left\nrabbit bashes above the exit, and they all escape.

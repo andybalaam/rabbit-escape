@@ -1,6 +1,7 @@
 :name=Panic!
 :description=Don't Panic
 :author_name=Andy Balaam
+:author_url=http://artificialworlds.net/rabbit-escape/
 :hint1=Build a bridge under the rabbits in the lower chamber\nas fast as possible.
 :hint2=Bash into the solid rock on the left from the\ntop chamber.
 :hint3=Block to turn around a top rabbit, then bridge the blocker.\nBash leftwards, then convert the basher to a digger.\nBridge to stop digging, and bash right.\nBridge at the bottom to save the others.

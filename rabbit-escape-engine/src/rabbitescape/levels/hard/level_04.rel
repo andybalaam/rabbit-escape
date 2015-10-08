@@ -1,6 +1,7 @@
 :name=Stairs
 :description=Don't fall back down!
 :author_name=Andy Balaam
+:author_url=http://artificialworlds.net/rabbit-escape/
 :hint1=Find a good place to block so you can bridge to the exit.
 :hint2=The first rabbit should bridge then become a blocker.
 :hint3=Bridge leftwards after climbing the stairs.\nBlock in the middle of the next platform.\nWait, then bridge from the right of that platform as the rabbit turns around.

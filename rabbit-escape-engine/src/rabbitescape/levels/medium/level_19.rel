@@ -1,6 +1,7 @@
 :name=Charing Cross the Void
 :description=Bridge from the bottom of the slope.
 :author_name=Andy Balaam
+:author_url=http://artificialworlds.net/rabbit-escape/
 :hint1=Pause the game to select which token to deploy.
 :hint2=Use a block token under the exit to\nfreeze a rabbit moving right.
 :hint3=Convert the rabbit behind the leader into\n a blocker. Extend the bridge, and finally\n free the blockers with bash tokens.

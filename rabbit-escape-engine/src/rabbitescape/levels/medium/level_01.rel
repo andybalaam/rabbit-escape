@@ -1,6 +1,7 @@
 :name=Easy for some
 :description=But can you save both?
 :author_name=Andy Balaam
+:author_url=http://artificialworlds.net/rabbit-escape/
 :hint1=Each rabbit only needs to look after itself.
 :hint2=Can you climb the left-hand rabbit out?
 :hint3=Ignore the right-hand rabbit.\nThe left-hand rabbit can bridge rightwards\nto the wall and then climb over it.

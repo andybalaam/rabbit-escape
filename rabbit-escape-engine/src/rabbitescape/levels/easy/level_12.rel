@@ -1,6 +1,7 @@
 :name=Across the void
 :description=Build lots of bridges to get across\nwithout falling out of the world.
 :author_name=Andy Balaam
+:author_url=http://artificialworlds.net/rabbit-escape/
 :hint1=Don't panic: you only need to save two!\nFocus on saving the first rabbit.
 :hint2=Build a bridge from the bottom of the slope,\nand place another when the bridger is about to stop.
 :hint3=Place a bridge token at the very bottom of the slope.\nAfter three squares, place another at end of the bridge.
