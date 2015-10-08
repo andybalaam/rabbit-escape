@@ -204,13 +204,27 @@ public class SwingGameLaunch implements GameLaunch
             )
             + auth;
 
+        Util.Function<String, String> slashNToNewline =
+            new Util.Function<String, String>()
+        {
+            @Override
+            public String apply( String inp )
+            {
+                return inp.replace( "\\n", "\n" );
+            }
+        };
+
         showDialogs(
             world.name,
-            new String[] { desc, world.hint1, world.hint2, world.hint3 }
+            Util.map(
+                slashNToNewline,
+                new String[] { desc, world.hint1, world.hint2, world.hint3 },
+                new String[4]
+            )
         );
     }
 
-    private void showDialogs( String title, String[] messages )
+    private void showDialogs( String title, Object[] messages )
     {
         // Keep showing dialogs until we click start
         int retVal = 0;
@@ -218,17 +232,17 @@ public class SwingGameLaunch implements GameLaunch
         {
             for ( int i = 0; i < messages.length; ++i )
             {
-                if ( Util.isEmpty( messages[i] ) )
+                if ( messages[i] == null )
                 {
                     // No more messages
                     break;
                 }
 
-                String nextMessage = nextMessage( messages, i );
+                Object nextMessage = nextMessage( messages, i );
                 Object[] options = nextOptions( nextMessage, i );
                 retVal = showDialog(
                     title,
-                    Util.split( messages[i], "\\n" ),
+                    messages[i],
                     options
                 );
                 if ( options.length == 1 )
@@ -246,9 +260,9 @@ public class SwingGameLaunch implements GameLaunch
         }
     }
 
-    private Object[] nextOptions( String nextMessage, int i )
+    private Object[] nextOptions( Object nextMessage, int i )
     {
-        if ( Util.isEmpty( nextMessage ) )
+        if ( nextMessage == null )
         {
             if ( i == 0 )
             {
@@ -280,11 +294,11 @@ public class SwingGameLaunch implements GameLaunch
         }
     }
 
-    private String nextMessage( String[] messages, int i )
+    private Object nextMessage( Object[] messages, int i )
     {
         if ( i >= messages.length - 1 )
         {
-            return "";
+            return null;
         }
         else
         {
