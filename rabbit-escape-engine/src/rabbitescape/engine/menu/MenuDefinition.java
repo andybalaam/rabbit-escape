@@ -16,8 +16,8 @@ public class MenuDefinition
                     "Choose a set of levels:",
                     item( "Easy",     levels( "easy",     levelsCompleted ), true ),
                     item( "Medium",   levels( "medium",   levelsCompleted ), true ),
-                    item( "Hard",     levels( "hard",     levelsCompleted ), true )//,
-                    //item( "Outdoors", levels( "outdoors", levelsCompleted ), true )
+                    item( "Hard",     levels( "hard",     levelsCompleted ), true ),
+                    item( "Outdoors", levels( "outdoors", levelsCompleted ), true )
                 ),
                 true
             ),
