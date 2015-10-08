@@ -1,6 +1,6 @@
 :name=Minefield
 :description=Don't blow up!
-:author=andybalaam
+:authorName=Andy Balaam
 :hint1=Avoid walking on the mines.
 :hint2=Bridge over them.
 :hint3=Place a bridge token on each single block.\nYou can do all of them at the beginning if you like.

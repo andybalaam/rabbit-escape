@@ -1,6 +1,6 @@
 :name=Jet Set
 :description=Bridge the maze.
-:author=andybalaam
+:authorName=Andy Balaam
 :hint1=There only needs to be one that leaves.
 :hint2=Bridge the first 2 gaps you come to.
 :hint3=After the rabbits have descended on the right-hand side,\nplace a blocker before the trap above the exit.

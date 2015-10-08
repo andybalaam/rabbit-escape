@@ -1,6 +1,6 @@
 :name=Keep it simple
 :description=Don't over-think this one.
-:author=andybalaam
+:authorName=Andy Balaam
 :hint1=You only need to place one token to solve this level.
 :hint2=What is the best way to go downwards?
 :hint3=Place a dig token on the top platform\ndirectly above the exit.

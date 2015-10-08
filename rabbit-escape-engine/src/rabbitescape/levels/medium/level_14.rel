@@ -1,6 +1,6 @@
 :name=Chess
 :description=Pawn to king's knight three.
-:author=andybalaam
+:authorName=Andy Balaam
 :hint1=Bash with consideration, or run\nout of bash tokens.
 :hint2=All rabbits need to climb from the start.
 :hint3=Bash out the first block next to the ceiling\nthen bash out two more blocks under\nthe last block attached to the ceiling.

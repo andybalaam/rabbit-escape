@@ -193,7 +193,10 @@ public class SwingGameLaunch implements GameLaunch
      */
     private void showIntroDialog()
     {
-        String auth= world.author.length()==0 ? "" : "\n\nby " + world.author ;
+        String auth= world.authorName.length()==0
+            ? ""
+            : "\n\nby " + world.authorName ;
+
         String desc = world.description + "\n \n"
             + t(
                 "Rabbits: ${num_rabbits}  Must save: ${num_to_save}",

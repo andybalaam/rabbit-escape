@@ -1,6 +1,6 @@
 :name=Hills
 :description=...are alive with the sound of music.
-:author=andybalaam
+:authorName=Andy Balaam
 :hint1=Let one (only one) rabbit drop into the valley.
 :hint2=Make the rabbit climb out towards the exit, but use\na bridge to turn around instead of going into the exit.
 :hint3=Block in all but the first rabbit under the entrance.\nAfter turning around, make the first rabbit bridge back towards the first hill.\nBash through the bridge blocking the exit, and explode the blockers.

@@ -139,7 +139,7 @@ public class TestGameLoop
                 w.abilities,
                 w.name,
                 w.description,
-                w.author,
+                w.authorName,
                 w.hint1,
                 w.hint2,
                 w.hint3,

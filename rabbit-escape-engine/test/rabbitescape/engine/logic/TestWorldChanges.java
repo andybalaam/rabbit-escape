@@ -101,7 +101,7 @@ public class TestWorldChanges
         {
             ":name=My Round X",
             ":description=Go and\nreturn",
-            ":author=dave",
+            ":authorName=dave",
             ":hint1=",
             ":hint2=",
             ":hint3=",
