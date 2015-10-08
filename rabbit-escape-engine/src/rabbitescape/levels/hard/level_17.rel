@@ -1,6 +1,6 @@
 :name=Maze
 :description=The commandos must navigate the assault course.
-:authorName=Andy Balaam
+:author_name=Andy Balaam
 :hint1=They will need to climb the far wall.
 :hint2=Go over the top.
 :hint3=Bridge just before the downward slope. Climb the next wall.\nBridge on the slope over the second gap, bash the barrier,\nand drop down on the handy cheese wedges.

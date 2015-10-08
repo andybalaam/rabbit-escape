@@ -1,6 +1,6 @@
 :name=Three Down
 :description=Ascend to freedom.
-:authorName=Andy Balaam
+:author_name=Andy Balaam
 :hint1=There aren't enough bridges to use those alone.
 :hint2=There are three rabbits at the bottom and there\nare three climbing tokens.
 :hint3=Use the upper rabbit to dig down through the spike,\nand convert to a bridger after three digs.\nGive the lower three climbing tokens.

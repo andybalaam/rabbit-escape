@@ -1,6 +1,6 @@
 :name=Mates
 :description=One rabbit must rescue the other.
-:authorName=Andy Balaam
+:author_name=Andy Balaam
 :hint1=Only one of them can possibly survive the fall.
 :hint2=Make the left rabbit dig straight above the little wall.
 :hint3=After dropping, build a bridge up to the exit platform\nfrom the right side. The right rabbit can bash\nout on to it.

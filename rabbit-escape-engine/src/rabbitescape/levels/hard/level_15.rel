@@ -1,6 +1,6 @@
 :name=Cliff Path
 :description=You have 15 bridges for a reason.
-:authorName=Andy Balaam
+:author_name=Andy Balaam
 :hint1=Build a safety bridge first, to catch any\nfalling workers.
 :hint2=The lowest floating block is not helpful.
 :hint3=Bridge rightwards to drop onto the higher floating block\n(you may need to dig to stop bridging).\nBridge from there to the top.\nDrop a token as the rabbit turns,\nso you bridge leftwards towards the exit.

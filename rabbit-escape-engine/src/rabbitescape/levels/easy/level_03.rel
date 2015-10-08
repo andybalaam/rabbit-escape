@@ -1,6 +1,6 @@
 :name=Build your way out
 :description=Drop bridging tokens to help\nyour rabbits past obstacles.
-:authorName=Andy Balaam
+:author_name=Andy Balaam
 :hint1=You need to bridge up onto the higher ground\nand then over the hole.
 :hint2=If you fall into the hole, drop more\nbridging tokens to climb back out.
 :hint3=Place a bridge token next to the step\nand before the hole.

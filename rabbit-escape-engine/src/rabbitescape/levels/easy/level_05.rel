@@ -1,6 +1,6 @@
 :name=Get down
 :description=Place digging tokens in the right places\nto avoid falling too far.
-:authorName=Andy Balaam
+:author_name=Andy Balaam
 :hint1=Choose the digger token on the left\nand place them in good places to drop down.
 :hint2=Place a digger near the left at the beginning.
 :hint3=Dig in the middle of the roof over the green exit.

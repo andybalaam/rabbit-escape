@@ -1,6 +1,6 @@
 :name=Castle
 :description=A ruin with battlements
-:authorName=Andy Balaam
+:author_name=Andy Balaam
 :hint1=Climb but don't get stuck.
 :hint2=Towards the end, go over the top\nand get down somehow.
 :hint3=Place a bridger under the entrance going right.\nClimb over and bridge from the block to the right of the first tower.\nBridge from the right of the second tower onto the wall,\nand dig down from the top of the wall.

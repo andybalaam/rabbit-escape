@@ -1,7 +1,7 @@
 :name=Chimneys
 :description=The gap is claustrophobic.
 :num_rabbits=10
-:authorName=Andy Balaam
+:author_name=Andy Balaam
 :hint1=With only one bash token, they can't get over the\nroof.
 :hint2=You have 3 block tokens and 3 expendable rabbits.
 :hint3=Let the first two drop down, then corral the rest\non the landing platform with a blocker at each end.\nGive the two in the hole the ability to climb.\nMake one a blocker just before the exit. Make the other\nbridge back across the gap. Explode the\nrabbits in the correct order to herd them towards freedom.

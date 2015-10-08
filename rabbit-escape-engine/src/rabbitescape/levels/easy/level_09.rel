@@ -1,6 +1,6 @@
 :name=Climbing practice
 :description=Place climbing tokens to give your rabbits\nthe ability to get over things.
-:authorName=Andy Balaam
+:author_name=Andy Balaam
 :hint1=Once a rabbit is a climber, it stays a climber.
 :hint2=Make all your rabbits into climbers.
 :hint3=Place climbing tokens near the rabbits\nand watch them walk home!

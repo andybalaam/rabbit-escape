@@ -1,6 +1,6 @@
 :name=Crowd
 :description=It's a long way back up.
-:authorName=Andy Balaam
+:author_name=Andy Balaam
 :hint1=They enter thick and fast.
 :hint2=Try to prevent any rabbits falling.
 :hint3=Place a bridge token one square back from the edge.\nSlow down the other rabbits by placing four\nbridge tokens as soon as the first rabbit passes.\n(Bonus: there is a way to get rabbits back up if they fall!)

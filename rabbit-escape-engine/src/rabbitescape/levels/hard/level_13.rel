@@ -1,6 +1,6 @@
 :name=Co-operative
 :description=Combine forces.
-:authorName=Andy Balaam
+:author_name=Andy Balaam
 :hint1=Use a bridge to stop the foolhardy right\nrabbit attempting the minefield.
 :hint2=The left rabbit can bridge to freedom using\nthree bridges. The first bridge token should be\nplaced under the entrance.
 :hint3=The right rabbit can bash through the middle\nlayer of the block.

@@ -102,7 +102,7 @@ public class World
     public final Map<Token.Type, Integer> abilities;
     public final String name;
     public final String description;
-    public final String authorName;
+    public final String author_name;
     public final String hint1;
     public final String hint2;
     public final String hint3;
@@ -127,7 +127,7 @@ public class World
         Map<Token.Type, Integer> abilities,
         String name,
         String description,
-        String authorName,
+        String author_name,
         String hint1,
         String hint2,
         String hint3,
@@ -149,7 +149,7 @@ public class World
         this.abilities = abilities;
         this.name = name;
         this.description = description;
-        this.authorName = authorName;
+        this.author_name = author_name;
         this.hint1 = hint1;
         this.hint2 = hint2;
         this.hint3 = hint3;
