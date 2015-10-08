@@ -1,5 +1,6 @@
 :name=Tree climb
 :description=There's no ladder
+:hint1=Can you climb onto each branch?
 :num_rabbits=4
 :num_to_save=3
 :rabbit_delay=15
