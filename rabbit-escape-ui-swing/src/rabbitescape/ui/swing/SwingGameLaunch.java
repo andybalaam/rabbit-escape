@@ -232,7 +232,7 @@ public class SwingGameLaunch implements GameLaunch
         {
             for ( int i = 0; i < messages.length; ++i )
             {
-                if ( messages[i] == null )
+                if ( "".equals( messages[i] ) )
                 {
                     // No more messages
                     break;
@@ -262,7 +262,7 @@ public class SwingGameLaunch implements GameLaunch
 
     private Object[] nextOptions( Object nextMessage, int i )
     {
-        if ( nextMessage == null )
+        if ( "".equals( nextMessage ) )
         {
             if ( i == 0 )
             {
@@ -298,7 +298,7 @@ public class SwingGameLaunch implements GameLaunch
     {
         if ( i >= messages.length - 1 )
         {
-            return null;
+            return "";
         }
         else
         {
