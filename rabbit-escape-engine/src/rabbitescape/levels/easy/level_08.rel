@@ -2,7 +2,7 @@
 :description=Quick, dig before it's too late!
 :author_name=Andy Balaam
 :author_url=http://artificialworlds.net/rabbit-escape/
-:hint1=Find the right place to dig, and do it quickly.
+:hint1=If the rabbits fall more than 4 squares\nthey don't land well.
 :hint2=If you need more time, pause and choose\nthe digger, then unpause to place it.
 :hint3=Dig on the last or second-last\nsquare of the top platform.
 :num_rabbits=1

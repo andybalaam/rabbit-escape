@@ -2,7 +2,7 @@
 :description=Drop blocking tokens to stop rabbits falling off.\nBlow up your blockers at the end.
 :author_name=Andy Balaam
 :author_url=http://artificialworlds.net/rabbit-escape/
-:hint1=Stop the rabbits falling off high edges\nby placing blocker tokens to turn them around.
+:hint1=The blocking tokens are blue.
 :hint2=Choose a blocker from the left and place\none at the end of the second platform.
 :hint3=You need blockers at the right of the second\nplatform and the left of the third.
 :num_rabbits=10
