@@ -3,8 +3,8 @@
 :author_name=Andy Balaam
 :author_url=http://artificialworlds.net/rabbit-escape/
 :hint1=Get the bottom two rabbits together, and climb them up.
-:hint2=When you climb rabbits up from the bottom,\nyou will need a bridge for them to fall onto.
-:hint3=Bottom left rabbit bashes through to bottom right.\nBottom right rabbit bridges over the bash hole.\nTop right rabbit bridges up to the central wall,\nand bashes through. Bottom pair climb up. Top left\nrabbit bashes above the exit, and they all escape.
+:hint2=By the time the bottom rabbits get up,\nthey mustn't have too much wall to climb.
+:hint3=Place bash on top-left bridge so first rabbit bashes above the exit.\nPlace bash at top of top-right bridge.\nBash through the wall at the bottom, then bridge over the\nbash hole from the right.  Climb both rabbits up.
 :num_rabbits=4
 :num_to_save=4
 :bash=3
