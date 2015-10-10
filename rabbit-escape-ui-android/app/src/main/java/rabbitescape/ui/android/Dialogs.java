@@ -2,6 +2,9 @@ package rabbitescape.ui.android;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.text.Html;
+import android.text.method.LinkMovementMethod;
+import android.widget.TextView;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -10,6 +13,7 @@ import rabbitescape.engine.World;
 import rabbitescape.engine.util.Util;
 
 import static rabbitescape.engine.i18n.Translation.t;
+import static rabbitescape.engine.util.NamedFieldFormatter.format;
 
 public class Dialogs
 {
@@ -54,7 +58,6 @@ public class Dialogs
         {
             AlertDialog.Builder dialogBuilder = new AlertDialog.Builder( activity )
                 .setTitle( t( world.name ) )
-                .setMessage( hint( hintNum ) )
                 .setPositiveButton( t( "Start" ), onOk );
 
             if ( Util.isEmpty( hint( hintNum + 1 ) ) )
@@ -71,6 +74,13 @@ public class Dialogs
             }
 
             activity.currentDialog = dialogBuilder.create();
+
+            TextView view = new TextView( activity.currentDialog.getContext() );
+            view.setText( Html.fromHtml( hint( hintNum ) ) );
+            view.setMovementMethod( LinkMovementMethod.getInstance() );
+            view.setPadding( 10, 10, 10, 10 );
+
+            activity.currentDialog.setView( view );
 
             activity.currentDialog.show();
         }
@@ -101,11 +111,49 @@ public class Dialogs
 
         private String introMessage()
         {
-            return (
-                readyForDialog( world.description )
-                +  "\n"
-                + t( "Rabbits: ${num_rabbits}  Must save: ${num_to_save}", statsValues( world ) )
+            return format(
+                "<p><b>${description}</b></p>"
+                + "<p>Rabbits: ${num_rabbits}  Must save: ${num_to_save}</p>"
+                + "${author}",
+                Util.newMap(
+                    "description", readyForDialog( world.description ),
+                    "num_rabbits", Integer.toString( world.num_rabbits ),
+                    "num_to_save", Integer.toString( world.num_to_save ),
+                    "author", authorHtml( world )
+                )
             );
+        }
+
+        static String authorHtml( World world )
+        {
+            if ( Util.isEmpty( world.author_name ) )
+            {
+                return "";
+            }
+
+            String ret = "<p>";
+
+            if ( Util.isEmpty( world.author_url ) )
+            {
+                ret += t(
+                    "by ${author_name}",
+                    Util.newMap( "author_name", world.author_name )
+                );
+            }
+            else
+            {
+                ret += t(
+                    "by <a href='${author_url}'>${author_name}</a>",
+                    Util.newMap(
+                        "author_name", world.author_name,
+                        "author_url", world.author_url
+                    )
+                );
+            }
+
+            ret += "</p>";
+
+            return ret;
         }
 
         private String readyForDialog( String message )
