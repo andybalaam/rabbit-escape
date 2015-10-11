@@ -2,6 +2,8 @@ package rabbitescape.ui.swing;
 
 import static rabbitescape.engine.config.ConfigKeys.*;
 
+import javax.swing.JFileChooser;
+
 import rabbitescape.engine.config.Config;
 import rabbitescape.engine.util.RealFileSystem;
 
@@ -77,6 +79,12 @@ public class SwingConfigSetup
             CFG_MUTED,
             String.valueOf( false ),
             "Disable all sound"
+        );
+
+        definition.set(
+            CFG_LOAD_LEVEL_PATH,
+            (new JFileChooser()).getCurrentDirectory().getAbsolutePath(),
+            "Default path in the dialog to load a level file for testing."
         );
 
         return new Config( definition, new RealFileSystem(), CONFIG_PATH );

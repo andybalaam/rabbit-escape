@@ -10,11 +10,14 @@ import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.io.File;
+import java.io.IOException;
 import java.io.PrintStream;
 import java.util.Locale;
 import java.util.Stack;
 
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -23,14 +26,18 @@ import javax.swing.JTextPane;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 import javax.swing.SwingWorker;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 import static rabbitescape.engine.i18n.Translation.*;
 import static rabbitescape.ui.swing.SwingConfigSetup.*;
 
 import rabbitescape.engine.CompletedLevelWinListener;
+import rabbitescape.engine.IgnoreLevelWinListener;
 import rabbitescape.engine.LevelWinListener;
 import rabbitescape.engine.MultiLevelWinListener;
 import rabbitescape.engine.config.Config;
+import rabbitescape.engine.config.Config.UnknownKey;
+import rabbitescape.engine.config.ConfigKeys;
 import rabbitescape.engine.config.ConfigTools;
 import rabbitescape.engine.err.RabbitEscapeException;
 import rabbitescape.engine.menu.AboutText;
@@ -94,6 +101,11 @@ public class MenuUi
                 case LEVEL:
                 {
                     level( (LevelMenuItem)item );
+                    return;
+                }
+                case LOAD:
+                {
+                    level(null);
                     return;
                 }
                 case QUIT:
@@ -256,6 +268,24 @@ public class MenuUi
 
     private void level( final LevelMenuItem item )
     {
+        final String relFilename;
+        final LevelWinListener levelWinListener;
+
+        if ( null == item ) // choose a file
+        {
+            relFilename = chooseLoadLevel();
+            if ( null == relFilename )
+            {
+                return; // cancelled dialog
+            }
+            levelWinListener = new IgnoreLevelWinListener();
+        }
+        else // normal level from a set
+        {
+             relFilename = item.fileName;
+             levelWinListener = winListeners( item );
+        }
+
         new SwingWorker<Void, Void>()
         {
             @Override
@@ -273,13 +303,44 @@ public class MenuUi
                     sound,
                     MenuUi.this
                 ).launchGame(
-                    new String[] { item.fileName },
-                    winListeners( item )
+                    new String[] { relFilename },
+                    levelWinListener
                 );
 
                 return null;
             }
         }.execute();
+    }
+
+    private String chooseLoadLevel()
+    {
+        final JFileChooser fc = new JFileChooser();
+        final FileNameExtensionFilter relFilter = new FileNameExtensionFilter(
+            "Rabbit Escape Level (*.rel)",
+            "rel"
+        );
+        fc.setDialogTitle("Open a level file");
+        String path = ConfigTools.getString( uiConfig, ConfigKeys.CFG_LOAD_LEVEL_PATH );
+        fc.setCurrentDirectory(new File(path));
+        String filename;
+        fc.addChoosableFileFilter( relFilter );
+        fc.setFileFilter( relFilter );
+        int chooserVal = fc.showOpenDialog( frame );
+
+        if ( JFileChooser.APPROVE_OPTION != chooserVal )
+        {
+            return null; // cancel, ...
+        }
+
+        filename = fc.getSelectedFile().getAbsolutePath();
+        ConfigTools.setString(
+            uiConfig,
+            ConfigKeys.CFG_LOAD_LEVEL_PATH,
+            fc.getCurrentDirectory().getAbsolutePath()
+        );
+        uiConfig.save();
+
+        return filename;
     }
 
     protected LevelWinListener winListeners( LevelMenuItem item )

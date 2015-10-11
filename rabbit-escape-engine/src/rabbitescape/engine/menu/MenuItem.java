@@ -12,6 +12,7 @@ public class MenuItem
         DEMO,
         QUIT,
         LEVEL,
+        LOAD,
     }
 
     public final Menu menu;
