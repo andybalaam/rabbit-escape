@@ -7,15 +7,13 @@ Later
 - graphics:mine?
 - action:mine?
 - Graphics in level design
-- Ability to play custom levels
 - Level editor
-- Fail to bridge action when bridge placed next to wall?
+- Fail to bridge action when bridge placed somewhere you can't bridge
 - Animate falling onto slopes
 - Separate rabbits who find themselves on top of each other.
 - More colourful?
-- Allow continuing bridgers
 - Fix many things not animating nicely
-- Speed up time?
+- Speed up time button
 - graphics:float
 - action:float
 - Fix Android bug where winning alert disappears when you rotate the screen
@@ -29,11 +27,10 @@ Later
 - Pause when screen power save kicks in
 - Next and Retry buttons when finished level, which update the
   bolded menu item
-- Remove Settings button
+- Remove Settings button (Android)
 - Tell you what level you are playing
 - Victory screen
 - Automated tests that levels run OK and can be solved
-- Make the text UI playable
 - favicon for web site
 - Save up zoom events and do them between frames
 - Consider whether http://developer.android.com/training/gestures/detector.html
@@ -52,7 +49,6 @@ is traversable but should not be.
 - front menu with quick play button that jumps to what you are stuck on
 - victory message (and sound?) when you complete a level set
 - jump to next level or retry when finished level
-- swing ui should use dialogs instead of overlay
 - walkthrough solutions for each level, tested with the build
 - fix text ui and allow recording walkthroughs in it
 - record walkthroughs in main ui
@@ -70,13 +66,14 @@ is traversable but should not be.
 - when a bridge is almost built it should behave like a bridge
 - Use cant_place_token sound effect when you cannot place a token
 - Sounds for winning an losing a level and winning a level set
-- - Speed up button
+- Speed up button
 
 Release 0.6
 -----------
 
 - 20 new levels: "outdoor"
 - New music for the outdoor levels
+- Ability to play custom levels
 - ~~Author name and url in level definitions~~
 
 Release 0.5
@@ -86,6 +83,7 @@ Release 0.5
 - ~~Hints: 2-3 per level, getting increasingly hinty~~
 - ~~Tokens don''t fall through half-built bridges~~
 - ~~Test for the same key added twice in a level~~
+- ~~swing ui should use dialogs instead of overlay~~
 
 Release 0.4
 -----------
