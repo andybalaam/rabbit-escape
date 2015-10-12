@@ -2,7 +2,7 @@
 :description=Drop bridging tokens to help\nyour rabbits past obstacles.
 :author_name=Andy Balaam
 :author_url=http://artificialworlds.net/rabbit-escape/
-:hint1=You need to bridge up onto the higher ground\nand then over the hole.
+:hint1=The bridge tokens are yellow. They\nwill build across 3 squares, unless\nthe rabbit runs out of space.
 :hint2=If you fall into the hole, drop more\nbridging tokens to climb back out.
 :hint3=Place a bridge token next to the step\nand before the hole.
 :num_rabbits=2
