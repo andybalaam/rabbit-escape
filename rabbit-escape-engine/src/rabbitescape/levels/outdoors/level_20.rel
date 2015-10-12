@@ -1,0 +1,20 @@
+:name=K2
+:description=Climb up from base camp and down the other side.
+:num_rabbits=10
+:num_to_save=2
+:bridge=5
+:block=2
+:explode=10
+:music=tryad-witness
+                              
+                   /\         
+ \                /##\        
+ #\              /#### /\     
+ #       /\      ##### ##     
+ ##\     ##\/\  /##### ##\   /
+/#Q#\   /############# ###   #
+#   #   #######/\###/\/###\ /#
+#   #  /######/##\#/##\##  /##
+# *   /###/\#/####/####\ /  O#
+#########/##\####/###### #####
+:*=cccccccccc
