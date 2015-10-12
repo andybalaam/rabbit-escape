@@ -70,20 +70,20 @@ is traversable but should not be.
 - when a bridge is almost built it should behave like a bridge
 - Use cant_place_token sound effect when you cannot place a token
 - Sounds for winning an losing a level and winning a level set
+- - Speed up button
 
 Release 0.6
 -----------
 
-- Speed up button
-- 20 new levels?
-- ~~Authorship in level definitions~~
-- ~~description for each level~~
-- ~~Hints: 2-3 per level, getting increasingly hinty~~
+- 20 new levels: "outdoor"
+- New music for the outdoor levels
+- ~~Author name and url in level definitions~~
 
 Release 0.5
 -----------
 
-- ~~Hints~~
+- ~~Description for each level~~
+- ~~Hints: 2-3 per level, getting increasingly hinty~~
 - ~~Tokens don''t fall through half-built bridges~~
 - ~~Test for the same key added twice in a level~~
 
