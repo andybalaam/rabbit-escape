@@ -1,0 +1,20 @@
+:name=Blockers
+:description=Free the blockers
+:num_rabbits=10
+:num_to_save=12
+:rabbit_delay=1
+:bridge=3
+:dig=3
+:music=tryad-witness
+       Q       
+               
+    j     r    
+    k     k    
+    #######    
+               
+               
+               
+    #######    
+ O          O  
+ ###      ###  
+               
