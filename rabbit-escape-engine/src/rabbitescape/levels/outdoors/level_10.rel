@@ -1,5 +1,10 @@
 :name=Cloud bunnies
+:author_name=colonelfazackerley
+:author_url=https://github.com/colonelfazackerley
 :description=
+:hint1=The first rabbit on the\nright cloud should\ndig.
+:hint2=The first rabbit on the\nmiddle cloud should bridge\nto the right cloud.
+:hint3=Dig into the very\nend of the left\ncloud. Explode the\ndigger leaving one block.
 :num_rabbits=9
 :num_to_save=8
 :rabbit_delay=20

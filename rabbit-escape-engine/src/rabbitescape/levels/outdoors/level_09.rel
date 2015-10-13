@@ -1,5 +1,10 @@
 :name=Re-entry
-:description=
+:author_name=colonelfazackerley
+:author_url=https://github.com/colonelfazackerley
+:hint1=Bridge out from the rocket.
+:hint2=Put a blocker at the end of\nthe bridge.
+:hint3=Bash out of the moon\nand dig down the rocket.
+:description=Return from button moon.
 :num_rabbits=6
 :num_to_save=5
 :rabbit_delay=10

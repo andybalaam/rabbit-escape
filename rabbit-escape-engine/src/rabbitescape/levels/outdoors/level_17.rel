@@ -1,4 +1,9 @@
 :name=Chasm
+:author_name=colonelfazackerley
+:author_url=https://github.com/colonelfazackerley
+:hint1=Block the upper rabbits\nat the edge and bridge up\nfrom below.
+:hint2=when the bridge is complete\nrescue the blocker with\ndigtoken.
+:hint3=Don't dig too far:\nUse a bridge token\nto stop digging.\nThen a dig token\nso the bridge does\nnot get too high.
 :description=Up and over
 :num_to_save=10
 :num_rabbits=10

@@ -1,5 +1,10 @@
 :name=Cups and bridges
-:description=
+:author_name=colonelfazackerley
+:author_url=https://github.com/colonelfazackerley
+:hint1=Bridge together from both\nsides of each gap.
+:hint2=Experiment with timings\nfor releasing the rabbits.
+:hint3=Use a blocker on\nthe far right.\nbridge the right\ngap first.
+:description=Keep your eye on the ball.
 :num_rabbits=9
 :num_to_save=6
 :rabbit_delay=32
@@ -21,5 +26,4 @@
                                  
   O                              
   ######      #####      ######  
-                                 
                                  

@@ -1,5 +1,10 @@
 :name=C
-:description=
+:author_name=colonelfazackerley
+:author_url=https://github.com/colonelfazackerley
+:hint1=Dig.
+:hint2=Bash.
+:hint3=Profit.
+:description=Down and around.
 :num_rabbits=9
 :num_to_save=9
 :rabbit_delay=10,10,10,10,5,4,3,2

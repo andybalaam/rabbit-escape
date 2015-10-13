@@ -1,4 +1,9 @@
 :name=Platforms, large
+:author_name=colonelfazackerley
+:author_url=https://github.com/colonelfazackerley
+:hint1=Use a blocker to\nturn the rabbits on the\nlower platform.
+:hint2=Use bridges up to\nthe edges of platforms\nto hold the rabbits\nfrom the left entrance.
+:hint3=When the rabbits from the lower\nentrance have bridged up\to catch the upper\nrabbits dig through the bridges.
 :description=Here and there
 :num_rabbits=6
 :num_to_save=5

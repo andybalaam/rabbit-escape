@@ -1,7 +1,10 @@
 :name=Tree climb
 :description=There's no ladder
-:author_name=colonelfazackerley
 :hint1=Can you climb onto each branch?
+:hint2=Bash through the tree.\nWait for the first rabbit\nto turn around then bridge\nup to the trunk.
+:hint3=Use a blocker at the end\nof the rightmost branch.
+:author_name=colonelfazackerley
+:author_url=https://github.com/colonelfazackerley
 :num_rabbits=4
 :num_to_save=3
 :rabbit_delay=15
