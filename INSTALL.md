@@ -11,7 +11,7 @@ happily accept patches.  On Mac it shouldn't be too bad, but on
 Windows it's likely to be hard work.
 
 In the meantime, if you are on Windows we'd suggest running
-Ubuntu Linux inside a virtual machine.  There are some good
+Linux inside a virtual machine.  There are some good
 instructions here:
 http://www.wikihow.com/Install-Ubuntu-on-VirtualBox .  If this is
 slow you might have better results using
@@ -21,7 +21,7 @@ Prerequisites
 -------------
 
 You need Java, Git, Make, Sox and Inkscape to be able to build the
-images, sounds and code.  On Ubuntu:
+images, sounds and code.  On Ubuntu, Debian and similar:
 
     sudo apt-get install git make openjdk-7-jdk ant sox inkscape
 
