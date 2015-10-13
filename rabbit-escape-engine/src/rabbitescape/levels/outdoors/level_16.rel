@@ -1,0 +1,22 @@
+:name=Half The World Away
+:description=Dreaming of jetpacks...
+:num_rabbits=2
+:num_to_save=2
+:rabbit_delay=2
+:climb=1
+:bash=2
+:dig=1
+:bridge=3
+:music=tryad-witness
+#########          
+#                 O
+#                 #
+#Q                 
+#       #          
+#                  
+###### #           
+#      #           
+#      #           
+#    ###           
+#                  
+#########          

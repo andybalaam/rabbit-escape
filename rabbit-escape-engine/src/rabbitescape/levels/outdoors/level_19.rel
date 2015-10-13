@@ -1,0 +1,19 @@
+:name=Sailing
+:description=Sink or swim
+:num_to_save=3
+:num_rabbits=3
+:dig=5
+:block=2
+:bridge=8
+:rabbit_delay=10
+           ##        
+          ####    ## 
+ ##              ####
+####      /          
+         /# \        
+        /## #\       
+       /### ##\      
+Q         #         O
+      ##########   /#
+() ( )( (( )( (  )  #
+( )) ( )( ) () )) ) (

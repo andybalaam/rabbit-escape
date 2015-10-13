@@ -1,0 +1,29 @@
+:name=Platforms, large
+:description=Here and there
+:num_rabbits=6
+:num_to_save=5
+:bash=1
+:dig=1
+:bridge=6
+:climb=1
+:block=1
+:explode=10
+:rabbit_delay=9
+Q          Q               
+                           
+###        #####           
+                      #### 
+#               ######     
+                           
+  ######                   
+             ######   ###  
+                           
+                           
+                Q          
+                           
+      ######               
+                           
+                           
+O              #######     
+#######                    
+                           

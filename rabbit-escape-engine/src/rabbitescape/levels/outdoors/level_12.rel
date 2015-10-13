@@ -1,25 +1,21 @@
-:name=Cups and bridges
+:name=Platforms, small
 :description=
-:num_rabbits=9
-:num_to_save=6
-:rabbit_delay=32
-:bridge=4
-:dig=3
-:block=4
-:explode=2
+:num_rabbits=5
+:num_to_save=5
+:rabbit_delay=10
+:bridge=3
+:bash=3
+:dig=2
 :music=tryad-witness
-                                 
-#        #  #       #  #        #
-#        #  #       #  #        #
-#        #  #       #  #        #
-#        #  #       #  #        #
-# Q      #  # Q     #  # Q      #
-#        #  #       #  #        #
-#\      /#  #\     /#  #\      /#
- ##    ##    ##   ##    ##    ## 
-  ######      #####      ######  
-                                 
-  O                              
-  ######      #####      ######  
-                                 
-                                 
+         Q            
+                      
+                      
+                      
+         ###     ###  
+    ###               
+                      
+    ##                
+          ####        
+O                     
+#####                 
+                      

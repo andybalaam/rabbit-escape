@@ -1,22 +1,20 @@
-:name=Spare a blocker
-:description=How to rescue 9?
+:name=Blockers
+:description=Free the blockers
 :num_rabbits=10
-:num_to_save=9
-:rabbit_delay=4
-:bridge=4
-:block=10
-:explode=10
-:dig=1
-:bash=1
+:num_to_save=12
+:rabbit_delay=1
+:bridge=3
+:dig=3
 :music=tryad-witness
-                              
-                           O  
-     /  /  /              ### 
-                              
-                           #\ 
-  Q                           
-                           #\ 
-                              
- ##############\           #\ 
- ##################           
-                              
+       Q       
+               
+    j     r    
+    k     k    
+    #######    
+               
+               
+               
+    #######    
+ O          O  
+ ###      ###  
+               
