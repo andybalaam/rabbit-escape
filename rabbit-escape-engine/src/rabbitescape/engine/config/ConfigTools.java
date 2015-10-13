@@ -96,6 +96,16 @@ public class ConfigTools
         return Boolean.parseBoolean( config.get( key ) );
     }
 
+    public static void setString( IConfig config, String key, String value )
+    {
+        config.set( key, value );
+    }
+
+    public static String getString( IConfig config, String key )
+    {
+        return config.get(  key );
+    }
+
     // TODO: break into separate class file
     public static <T> Map<String, T> getMap(
         IConfig cfg, String configKey, Class<T> clazz )
