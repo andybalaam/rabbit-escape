@@ -103,7 +103,7 @@ public class MenuUi
                 }
                 case LOAD:
                 {
-                    level( null );
+                    chooseLevel();
                     return;
                 }
                 case QUIT:
@@ -264,53 +264,18 @@ public class MenuUi
         );
     }
 
-    private void level( final LevelMenuItem item )
+    private void chooseLevel()
     {
-        final String relFilename;
-        final LevelWinListener levelWinListener;
-
-        if ( null == item ) // choose a file
+        String filename = chooseLevelFilename();
+        if ( filename == null )
         {
-            relFilename = chooseLoadLevel();
-            if ( null == relFilename )
-            {
-                return; // cancelled dialog
-            }
-            levelWinListener = new IgnoreLevelWinListener();
-        }
-        else // normal level from a set
-        {
-             relFilename = item.fileName;
-             levelWinListener = winListeners( item );
+            return;  // The user cancelled or closed the dialog
         }
 
-        new SwingWorker<Void, Void>()
-        {
-            @Override
-            protected Void doInBackground() throws Exception
-            {
-                uninit();
-
-                new SwingSingleGameMain(
-                    fs,
-                    out,
-                    locale,
-                    bitmapCache,
-                    uiConfig,
-                    frame,
-                    sound,
-                    MenuUi.this
-                ).launchGame(
-                    new String[] { relFilename },
-                    levelWinListener
-                );
-
-                return null;
-            }
-        }.execute();
+        playLevel( filename, new IgnoreLevelWinListener() );
     }
 
-    private String chooseLoadLevel()
+    private String chooseLevelFilename()
     {
         String path = ConfigTools.getString(
             uiConfig, ConfigKeys.CFG_LOAD_LEVEL_PATH );
@@ -342,6 +307,40 @@ public class MenuUi
         uiConfig.save();
 
         return filename;
+    }
+
+    private void level( final LevelMenuItem item )
+    {
+        playLevel( item.fileName, winListeners( item ) );
+    }
+
+    private void playLevel(
+        final String filename, final LevelWinListener levelWinListener )
+    {
+        new SwingWorker<Void, Void>()
+        {
+            @Override
+            protected Void doInBackground() throws Exception
+            {
+                uninit();
+
+                new SwingSingleGameMain(
+                    fs,
+                    out,
+                    locale,
+                    bitmapCache,
+                    uiConfig,
+                    frame,
+                    sound,
+                    MenuUi.this
+                ).launchGame(
+                    new String[] { filename },
+                    levelWinListener
+                );
+
+                return null;
+            }
+        }.execute();
     }
 
     protected LevelWinListener winListeners( LevelMenuItem item )
