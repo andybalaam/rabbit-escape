@@ -28,7 +28,6 @@ public class MenuDefinition
                 true
             ),
             item( "About",      Type.ABOUT, true ),
-            item( "Demo",       Type.DEMO,  false ),
             maybeItem( includeLoadLevel, "Load level", Type.LOAD,  true ),
             item( "Quit",       Type.QUIT,  true )
         );
