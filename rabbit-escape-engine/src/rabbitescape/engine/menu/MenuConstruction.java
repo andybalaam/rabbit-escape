@@ -18,4 +18,10 @@ public class MenuConstruction
     {
         return new MenuItem( name, type, enabled );
     }
+
+    public static MenuItem maybeItem(
+        boolean included, String name, Type type, boolean enabled )
+    {
+        return included ? item( name, type, enabled ) : null;
+    }
 }

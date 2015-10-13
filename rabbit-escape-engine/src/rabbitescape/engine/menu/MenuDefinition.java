@@ -8,6 +8,12 @@ public class MenuDefinition
 {
     public static Menu mainMenu( LevelsCompleted levelsCompleted )
     {
+        return mainMenu( levelsCompleted, true );
+    }
+
+    public static Menu mainMenu(
+        LevelsCompleted levelsCompleted, boolean includeLoadLevel )
+    {
         return menu(
             "Welcome to Rabbit Escape!",
             item(
@@ -23,7 +29,7 @@ public class MenuDefinition
             ),
             item( "About",      Type.ABOUT, true ),
             item( "Demo",       Type.DEMO,  false ),
-            item( "Load level", Type.LOAD,  true ),
+            maybeItem( includeLoadLevel, "Load level", Type.LOAD,  true ),
             item( "Quit",       Type.QUIT,  true )
         );
     }

@@ -41,7 +41,7 @@ public class AndroidMenuActivity extends RabbitEscapeActivity
         muteButton = (Button)findViewById( R.id.menuMuteButton );
 
         Menu mainMenu = MenuDefinition.mainMenu(
-            new AndroidPreferencesBasedLevelsCompleted( getPrefs() ) );
+            new AndroidPreferencesBasedLevelsCompleted( getPrefs() ), false );
 
         if ( savedInstanceState != null )
         {
