@@ -1,13 +1,25 @@
 INSTALL
 =======
 
+You need Linux
+--------------
+
+Rabbit Escape is developed on Linux and uses several tools to
+build that are much harder to get working on Windows.  If you'd
+like to work on getting it to build on other platforms, we will
+happily accept patches.  On Mac it shouldn't be too bad, but on
+Windows it's likely to be hard work.
+
+In the meantime, if you are on Windows we'd suggest running
+Ubuntu Linux inside a virtual machine.  There are some good
+instructions here:
+http://www.wikihow.com/Install-Ubuntu-on-VirtualBox
+
 Prerequisites
 -------------
 
-Rabbit Escape is developed on Linux and uses GNU Make as well as
-Ant, Java, Inkscape and other Unix tools to build.  If you'd like to
-work on getting it to build on other platforms, we will happily
-accept patches, but you might have your work cut out.
+You need Java, Git, Make, Sox and Inkscape to be able to build the
+images, sounds and code.  On Ubuntu:
 
     sudo apt-get install git make openjdk-7-jdk ant sox inkscape
 
@@ -26,7 +38,7 @@ You should have 2 separate IntelliJ projects - one for non-Android and
 (optional) one for Android (see below).  Avoid loading the directory
 rabbit-escape-ui-android into the non-Android project.
 
-You will need to run make before you start.
+You will need to run `make` before you start.
 
 Eclipse
 -------
@@ -46,7 +58,7 @@ Android
 
 Before you start, run:
 
-make android-pre
+    make android-pre
 
 Load the rabbit-escape-ui-android directory as a project into Android
 Studio.  From here you should be able to run it as normal.
