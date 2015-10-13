@@ -13,7 +13,9 @@ Windows it's likely to be hard work.
 In the meantime, if you are on Windows we'd suggest running
 Ubuntu Linux inside a virtual machine.  There are some good
 instructions here:
-http://www.wikihow.com/Install-Ubuntu-on-VirtualBox
+http://www.wikihow.com/Install-Ubuntu-on-VirtualBox .  If this is
+slow you might have better results using
+[Lubuntu](http://lubuntu.net/) instead of the default Ubuntu.
 
 Prerequisites
 -------------
