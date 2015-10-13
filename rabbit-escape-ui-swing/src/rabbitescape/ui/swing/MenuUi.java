@@ -11,7 +11,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.io.File;
-import java.io.IOException;
 import java.io.PrintStream;
 import java.util.Locale;
 import java.util.Stack;
@@ -36,7 +35,6 @@ import rabbitescape.engine.IgnoreLevelWinListener;
 import rabbitescape.engine.LevelWinListener;
 import rabbitescape.engine.MultiLevelWinListener;
 import rabbitescape.engine.config.Config;
-import rabbitescape.engine.config.Config.UnknownKey;
 import rabbitescape.engine.config.ConfigKeys;
 import rabbitescape.engine.config.ConfigTools;
 import rabbitescape.engine.err.RabbitEscapeException;
@@ -105,7 +103,7 @@ public class MenuUi
                 }
                 case LOAD:
                 {
-                    level(null);
+                    level( null );
                     return;
                 }
                 case QUIT:
@@ -314,25 +312,28 @@ public class MenuUi
 
     private String chooseLoadLevel()
     {
+        String path = ConfigTools.getString(
+            uiConfig, ConfigKeys.CFG_LOAD_LEVEL_PATH );
+
         final JFileChooser fc = new JFileChooser();
         final FileNameExtensionFilter relFilter = new FileNameExtensionFilter(
-            "Rabbit Escape Level (*.rel)",
+            t( "Rabbit Escape Level (*.rel)" ),
             "rel"
         );
-        fc.setDialogTitle("Open a level file");
-        String path = ConfigTools.getString( uiConfig, ConfigKeys.CFG_LOAD_LEVEL_PATH );
-        fc.setCurrentDirectory(new File(path));
-        String filename;
+        fc.setDialogTitle( t( "Open a level file" ) );
+
+        fc.setCurrentDirectory( new File( path ) );
         fc.addChoosableFileFilter( relFilter );
         fc.setFileFilter( relFilter );
         int chooserVal = fc.showOpenDialog( frame );
 
         if ( JFileChooser.APPROVE_OPTION != chooserVal )
         {
-            return null; // cancel, ...
+            return null; // The user cancelled or closed the dialog
         }
 
-        filename = fc.getSelectedFile().getAbsolutePath();
+        String filename = fc.getSelectedFile().getAbsolutePath();
+
         ConfigTools.setString(
             uiConfig,
             ConfigKeys.CFG_LOAD_LEVEL_PATH,

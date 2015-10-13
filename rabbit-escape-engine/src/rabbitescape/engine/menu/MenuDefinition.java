@@ -23,7 +23,7 @@ public class MenuDefinition
             ),
             item( "About",      Type.ABOUT, true ),
             item( "Demo",       Type.DEMO,  false ),
-            item( "Load Level", Type.LOAD,  true),
+            item( "Load level", Type.LOAD,  true ),
             item( "Quit",       Type.QUIT,  true )
         );
     }
