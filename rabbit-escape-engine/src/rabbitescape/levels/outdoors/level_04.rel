@@ -1,4 +1,8 @@
 :name=Blockers
+:author_name=colonelfazackerley
+:author_url=https://github.com/colonelfazackerley
+:hint1=Drop dig tokens.
+:hint2=The dig tokens can be dropped\non the blockers.
 :description=Free the blockers
 :num_rabbits=10
 :num_to_save=12
