@@ -11,8 +11,17 @@ android {
         versionCode 50
         versionName "0.5"
     }
+    signingConfigs {
+        release {
+            storeFile file( "/home/andy/apk-key-store/keystore.jks" )
+            storePassword System.getenv( "KEY_STORE_PASSWORD" )
+            keyAlias "andybalaam"
+            keyPassword System.getenv( "KEY_PASSWORD" )
+        }
+    }
     buildTypes {
         release {
+            signingConfig signingConfigs.release
         }
     }
 }

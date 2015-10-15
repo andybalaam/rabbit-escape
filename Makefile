@@ -148,7 +148,9 @@ all: compile
 no-make-warnings:
 	! make -n $(MAKECMDGOALS) 2>&1 >/dev/null | grep warning
 
-dist: no-make-warnings dist/rabbit-escape-generic.jar dist/rabbit-escape-${VERSION}.jar
+dist: no-make-warnings dist-swing dist-android-release-signed
+
+dist-swing: dist/rabbit-escape-${VERSION}.jar
 
 dist/rabbit-escape-generic.jar: compile
 	mkdir -p dist
@@ -282,6 +284,27 @@ android-pre: \
 	android-sounds \
 	android-music \
 	rabbit-escape-ui-android/app/libs/rabbit-escape-generic.jar
+
+
+android-debug: app/build/outputs/apk/app-debug.apk
+
+app/build/outputs/apk/app-debug.apk: android-pre
+	cd rabbit-escape-ui-android && ./gradlew assembleDebug
+
+dist-android-release-signed: dist/rabbit-escape-${VERSION}.apk
+
+KEY_STORE_PASSWORD_FILE := $(HOME)/pw/android-key-store-password.txt
+KEY_PASSWORD_FILE := $(HOME)/pw/android-key-password.txt
+
+dist/rabbit-escape-${VERSION}.apk: android-pre
+	# Check the password files exist before we start
+	ls $(KEY_STORE_PASSWORD_FILE) && \
+	ls $(KEY_PASSWORD_FILE) && \
+	cd rabbit-escape-ui-android && \
+	KEY_STORE_PASSWORD=`cat $(KEY_STORE_PASSWORD_FILE)` \
+	KEY_PASSWORD=`cat $(KEY_PASSWORD_FILE)` \
+	./gradlew assembleRelease && \
+	mv app/build/outputs/apk/app-release.apk ../dist/rabbit-escape-${VERSION}.apk
 
 # Requires sudo apt-get install doxygen graphviz
 doxygen:
