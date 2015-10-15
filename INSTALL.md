@@ -74,6 +74,13 @@ Android Studio, and click Run 'All Tests'.  Do this before making
 a release, trying it on an old Android version (2.2) and a modern
 one.
 
+To build the debug APK from the command line:
+
+    make android-debug
+
+This will create a file at
+rabbit-escape-ui-android/app/build/outputs/apk/app-debug.apk .
+
 Contributing
 ------------
 
