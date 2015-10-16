@@ -1,0 +1,7 @@
+These files should be:
+
+32-bit
+mono
+22050Hz
+
+FLAC files.
