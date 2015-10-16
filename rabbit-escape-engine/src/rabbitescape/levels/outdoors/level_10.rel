@@ -1,30 +1,30 @@
-:name=Cloud bunnies
+:name=Home sweet home
 :author_name=colonelfazackerley
 :author_url=https://github.com/colonelfazackerley
-:description=
-:hint1=The first rabbit on the\nright cloud should\ndig.
-:hint2=The first rabbit on the\nmiddle cloud should bridge\nto the right cloud.
-:hint3=Dig into the very\nend of the left\ncloud. Explode the\ndigger leaving one block.
-:num_rabbits=9
-:num_to_save=8
-:rabbit_delay=20
-:bridge=3
-:dig=4
+:hint1=Put a blocker next to the chimney.
+:hint2=Bridge up to the wall\nto save the bunnies falling from\nthe roof.
+:hint3=Bash through the house's walls.
+:description=Save the chimney bunnies!
+:num_rabbits=8
+:num_to_save=6
+:rabbit_delay=4
+:bash=3
+:bridge=5
 :block=2
 :explode=2
 :music=tryad-witness
- Q                                   
-                        Q            
-     /##\                            
-    /#  #\                  /##\     
- /###    ###\              /#  #\    
- #          #           /###    ###\ 
- ##        ##           #          # 
-  ##########            ##      O ## 
-           Q   /##\      ##########  
-              /#  #\                 
-           /###    ###\              
-           #          #              
-           ##        ##              
-            ##########               
-                                     
+                              
+             /## #            
+            /### #            
+           /#    #            
+       Q  /#     #            
+         /#      #\           
+        /####### ##\          
+       /      #     \         
+       #      #     #         
+       #      #     #         
+       ##############         
+       #    #       #         
+ Q     #    #       #         
+       #    #       #      O  
+ #############################

@@ -1,25 +1,34 @@
-:name=Prison break
+:name=C
 :author_name=colonelfazackerley
 :author_url=https://github.com/colonelfazackerley
-:hint1=The rightmost rabbit\ndoes not have far to fall.
-:hint2=Bridge up to the left rabbit.\nThen the left rabbit can\nbash out.
-:hint3=From the right rabbit's cell wall\nbridge up to the middle rabbit's\ncell.
-:description=Who should escape first?
-:num_rabbits=3
-:num_to_save=3
-:bash=2
-:bridge=3
-:dig=2
+:hint1=Dig.
+:hint2=Bash.
+:hint3=Profit.
+:description=Down and around.
+:num_rabbits=9
+:num_to_save=9
+:rabbit_delay=10,10,10,10,5,4,3,2
+:bridge=4
+:dig=4
+:block=4
+:bash=3
+:explode=2
 :music=tryad-witness
-            ########          
-            #  Q   # ######## 
- ########   #      # #   Q  # 
- #  Q   #   ######## #      # 
- #      #            ######## 
- ########                     
-                              
-                       O      
-            \       /######## 
-            ##########        
-                              
- ##########                   
+    Q           
+                
+    #########   
+   # #####   #  
+  ########\   # 
+ # # #    #\  # 
+ ####      #### 
+ ####           
+ ####           
+ #  #           
+ ####           
+ ####      #### 
+ #####    ##### 
+ ##  ######  O# 
+  ## ######  #  
+   ##########   
+    ########    
+                

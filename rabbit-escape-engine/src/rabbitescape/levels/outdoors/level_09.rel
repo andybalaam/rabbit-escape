@@ -1,39 +1,29 @@
-:name=Re-entry
+:name=London Bridge
 :author_name=colonelfazackerley
 :author_url=https://github.com/colonelfazackerley
-:hint1=Bridge out from the rocket.
-:hint2=Put a blocker at the end of\nthe bridge.
-:hint3=Bash out of the moon\nand dig down the rocket.
-:description=Return from button moon.
+:hint1=Bridge the gap.
+:hint2=Build 2 bridges simultaneously.
+:hint3=Drop the bridge tokens\nas soon as the level\nstarts. Use pause.
+:description=Don't fall down
 :num_rabbits=6
-:num_to_save=5
+:num_to_save=6
 :rabbit_delay=10
-:bridge=1
-:dig=3
-:block=2
-:explode=2
-:bash=3
+:bridge=2
+:dig=4
+:bash=4
+:block=1
 :music=tryad-witness
-              #####  
-             ##   ## 
-            ##     ##
-            #       #
-            #   Q   #
-            #       #
-            ##     ##
-       /\    ##   ## 
-      /  \    #####  
-     /    \          
-    /Q     \         
-    #      #         
-    ########         
-    #      #         
-    #      #         
-    ########         
-    #      #         
-    #      #         
-    ########         
-    #      #         
-   /#      #\        
-  /##########\     O 
-#####################
+                        
+   /\              /\   
+  /  \            /  \  
+  ####            ####  
+  #  ##############  #  
+ /#  ##############  #\ 
+/##  #Q          Q#  ##\
+# #  #            #  # #
+  #  #            #  #  
+  #  #            #  #  
+#########      #########
+#########      #########
+#O     ##      ## ######
+#########      #########

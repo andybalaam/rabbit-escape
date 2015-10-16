@@ -1,30 +1,34 @@
-:name=Home sweet home
+:name=Rabbit hole descent
 :author_name=colonelfazackerley
 :author_url=https://github.com/colonelfazackerley
-:hint1=Put a blocker next to the chimney.
-:hint2=Bridge up to the wall\nto save the bunnies falling from\nthe roof.
-:hint3=Bash through the house's walls.
-:description=Save the chimney bunnies!
-:num_rabbits=8
-:num_to_save=6
-:rabbit_delay=4
-:bash=3
+:hint1=There are several ways\nof completing this level.
+:hint2=Dig down 4 squares\nat the edge of the hole.\nThen bridge.
+:hint3=Dig down 4, then bash.\nUse a blocker to turn\nback toward the exit.
+:description=You should have taken the blue pill.
+:num_rabbits=4
+:num_to_save=2
+:rabbit_delay=25
 :bridge=5
-:block=2
-:explode=2
+:dig=4
+:bash=4
+:block=1
 :music=tryad-witness
-                              
-             /## #            
-            /### #            
-           /#    #            
-       Q  /#     #            
-         /#      #\           
-        /####### ##\          
-       /      #     \         
-       #      #     #         
-       #      #     #         
-       ##############         
-       #    #       #         
- Q     #    #       #         
-       #    #       #      O  
- #############################
+                   
+                   
+  Q                
+                   
+#######   #########
+#######   #########
+     ##   ##       
+     ##   ##       
+     ##   ##       
+     ##   ##       
+     ##   ##       
+     ##   ##       
+     ##   ##       
+     ##   ##       
+     ##   ##       
+     ##   ##       
+     ##   O#       
+#######   #########
+#######   #########
