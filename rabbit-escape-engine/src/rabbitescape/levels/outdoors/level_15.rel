@@ -4,7 +4,7 @@
 :hint1=The lower rabbits\nmust build a bridge to\ncatch the upper rabbits.
 :hint2=The middle rabbits must\nbuild a bridge to catch\nthe upper rabbits.
 :hint3=The middle rabbits' bridge\nneeds a blocker at the end.
-:description=
+:description=There is no emoticon for this letter
 :num_rabbits=9
 :num_to_save=8
 :rabbit_delay=10

@@ -2,7 +2,7 @@
 :author_name=Andy Balaam
 :author_url=http://artificialworlds.net/rabbit-escape/
 :hint1=Get the first rabbit to\nbuild the bridge.
-:hint2=Turn all the rest into blockers.
+:hint2=Turn all the rest into blockers.\nBridge up to the top right, then left from the bridge to the platform.\nPlace bridging tokens on each slope above the saw-teeth.
 :hint3=Turn them into blockers\nas they are still moving right.\nFree the last one with\na dig token, then turn the rabbit\ninto a basher. The rabbit\nwill undermine and free\nall the blockers.
 :description=How to rescue 10?
 :num_rabbits=10
