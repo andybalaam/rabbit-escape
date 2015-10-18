@@ -6,12 +6,12 @@ import java.util.regex.Pattern;
 
 public class GitHubIssue
 {
-    private int number;
+    private int number; /**< @brief github issue number.*/
     private boolean isLevel;
     private boolean isBug;
-    private String body; /*< @brief body text excluding world text. */
+    private String body; /**< @brief body text excluding world text. */
     private String title;
-    private ArrayList<String> wrappedWorlds; /*< @brief Worlds are []. These have \n */
+    private ArrayList<String> wrappedWorlds; /**< @brief Worlds are []. These have \n */
 
     public GitHubIssue()
     {
@@ -75,11 +75,15 @@ public class GitHubIssue
         {
             String worldWrapped = worldMatcher.group(1);
             worldWrapped = stripEscape(worldWrapped);
-            worldWrapped = worldWrapped.replaceAll( "\\\\n", "\n" ); // replace \n with actual newlines
+            worldWrapped = realNewlines(worldWrapped); 
             wrappedWorlds.add( worldWrapped );
-            System.out.println("***"+getNumber()+"\n"+worldWrapped+"\n***");
+            //System.out.println("***"+getNumber()+"\n"+worldWrapped+"\n***");
         }
-        this.body = bodyIn;
+        
+        this.body = bodyIn.replaceAll( "```(.*?)```", "\n-----\n" );
+        this.body = stripEscape(this.body);
+        this.body = realNewlines(this.body);
+        System.out.println("***"+this.body+"\n***");
     }
 
     public String getTitle()
@@ -104,5 +108,13 @@ public class GitHubIssue
         // @TODO this is removing \" instead of just \ which are followed by "
         s2 = s2.replaceAll( "(\\\\)\"", "" );
         return s2;
+    }
+    
+    /**
+     * @brief Replace \n with actual newline chars.
+     */
+    public static String realNewlines(String s)
+    {
+        return s.replaceAll( "\\\\n", "\n" );
     }
 }

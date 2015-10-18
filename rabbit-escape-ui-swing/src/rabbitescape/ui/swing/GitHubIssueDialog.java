@@ -12,8 +12,8 @@ import java.awt.event.ActionListener;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JDialog;
-import javax.swing.JEditorPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
@@ -25,7 +25,6 @@ public class GitHubIssueDialog extends JDialog implements ChangeListener
 {
 
     private static final long serialVersionUID = 1L;
-    private String worldString = null;
     private JTextField issueNameBox = new JTextField( "Issue title here" );
     private JTextArea issueTextBox = new JTextArea( "Text  apart from\n world goes here" );
     private JTextArea issueWorldBox = new JTextArea( "ASCII art world here" );
@@ -87,8 +86,7 @@ public class GitHubIssueDialog extends JDialog implements ChangeListener
         @Override
         public void removeChangeListener( ChangeListener arg0 )
         {
-            // TODO Auto-generated method stub
-            
+            throw new RuntimeException(); // not used
         }
 
         @Override
@@ -110,7 +108,6 @@ public class GitHubIssueDialog extends JDialog implements ChangeListener
         GridBagConstraints gbc = new GridBagConstraints();
         
         JPanel pane = new JPanel( new GridBagLayout() );
-        Dimension d = frame.getSize();
         
         issueModel = new IssueSpinnerModel();
         JSpinner issueSpinner = new JSpinner(issueModel);
@@ -126,6 +123,8 @@ public class GitHubIssueDialog extends JDialog implements ChangeListener
         
         issueNameBox.setEditable( false );
         issueTextBox.setEditable( false );
+        JScrollPane issueTextScrollPane = new JScrollPane(issueTextBox);
+        issueTextScrollPane.setPreferredSize( new Dimension(300,300) );
         issueTextBox.setBorder( BorderFactory.createLineBorder( Color.GRAY ) );
         issueWorldBox.setEditable( false );
         issueWorldBox.setBorder( BorderFactory.createLineBorder( Color.GRAY ) );
@@ -178,7 +177,7 @@ public class GitHubIssueDialog extends JDialog implements ChangeListener
         gbc.gridwidth = 2;
         gbc.gridx = 0;
         gbc.gridy = 3;
-        pane.add( issueTextBox, gbc );
+        pane.add( issueTextScrollPane, gbc );
         gbc.gridwidth = 1;
         
         gbc.gridwidth = 3;
@@ -202,7 +201,7 @@ public class GitHubIssueDialog extends JDialog implements ChangeListener
          } );
         cancelButton.addActionListener( new ActionListener() {
             public void actionPerformed( ActionEvent e ) {
-                worldString = null;
+                // @TODO set some state to be retrieved when dialog hidden
                 setVisible(false);
             }
          } );
@@ -222,8 +221,10 @@ public class GitHubIssueDialog extends JDialog implements ChangeListener
     public void stateChanged( ChangeEvent e )
     {
         GitHubIssue ghi = issueModel.getCurrentIssue();
+        
         issueNameBox.setText( ghi.getTitle() );
         issueNameBox.repaint();
+        
         String worldText = ghi.getWorld(0); // @TODO choose which world
         if ( null == worldText ) // some issues have no worlds
         {
@@ -233,6 +234,9 @@ public class GitHubIssueDialog extends JDialog implements ChangeListener
             issueWorldBox.setText(worldText);
         }
         issueWorldBox.repaint();
+        
+        issueTextBox.setText( ghi.getBody() );
+        issueTextBox.repaint();
     }
     
 }
