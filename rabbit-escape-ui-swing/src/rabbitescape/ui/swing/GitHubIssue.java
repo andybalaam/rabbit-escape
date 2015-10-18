@@ -50,6 +50,7 @@ public class GitHubIssue
     
     /**
      * @param i  Some issues contain multiple worlds. Ask for them by index.
+     * @return World string with newline characters.
      */
     public String getWorld( int i ){
         if( i >= wrappedWorlds.size() )
@@ -105,7 +106,7 @@ public class GitHubIssue
     {
         String s2;
         s2 = s1.replaceAll( "(\\\\r)", "" );
-        // @TODO this is removing \" instead of just \ which are followed by "
+        /// @TODO this is removing \" instead of just \ which are followed by "
         s2 = s2.replaceAll( "(\\\\)\"", "" );
         return s2;
     }

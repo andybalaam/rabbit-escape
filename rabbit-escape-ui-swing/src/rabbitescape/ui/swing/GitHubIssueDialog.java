@@ -29,6 +29,7 @@ public class GitHubIssueDialog extends JDialog implements ChangeListener
     private JTextArea issueTextBox = new JTextArea( "Text  apart from\n world goes here" );
     private JTextArea issueWorldBox = new JTextArea( "ASCII art world here" );
     private IssueSpinnerModel issueModel;
+    private boolean choseWorld = false;
     
     class IssueSpinnerModel implements SpinnerModel
     {
@@ -194,24 +195,56 @@ public class GitHubIssueDialog extends JDialog implements ChangeListener
         gbc.fill = GridBagConstraints.BOTH;
         this.add(pane, gbc);
         
-        okButton.addActionListener( new ActionListener() {
-            public void actionPerformed( ActionEvent e ) {
+        okButton.addActionListener( new ActionListener()
+        {
+            public void actionPerformed( ActionEvent e )
+            {
+                choseWorld = true;
                 setVisible(false);
             }
          } );
-        cancelButton.addActionListener( new ActionListener() {
-            public void actionPerformed( ActionEvent e ) {
-                // @TODO set some state to be retrieved when dialog hidden
+        cancelButton.addActionListener( new ActionListener() 
+        {
+            public void actionPerformed( ActionEvent e )
+            {
                 setVisible(false);
             }
          } );
 
         
-        setResizable( false ); // TODO maybe make it resize so the worldTextBox expands
+        setResizable( false ); /// @TODO maybe make it resize so the worldTextBox expands
         pack();
         setLocationRelativeTo( frame );
         stateChanged(null); // set initial values
         setVisible( true );
+    }
+    
+    public String getWorld()
+    {
+        if( !choseWorld )
+        {
+            return null;
+        }
+        return fixWorld( issueModel.getCurrentIssue().getWorld( 0 ) ); /// @TODO choose which world
+    }
+    
+    /**
+     * @brief Perform some automatic fixing
+     * Can't be as strict as when loading from files.
+     */
+    private String fixWorld(String world)
+    {
+        String fixed = world;
+        fixed = fixed.replaceAll("\n\n","\n");
+        fixed = fixed.replaceAll( "^\n", "" );
+        return fixed;
+    }
+    
+    public String generateFilename()
+    {
+        String title = issueModel.getCurrentIssue().getTitle();
+        title = title.replaceAll( "\\W", "" );
+        return title;
     }
 
     /**
@@ -225,7 +258,7 @@ public class GitHubIssueDialog extends JDialog implements ChangeListener
         issueNameBox.setText( ghi.getTitle() );
         issueNameBox.repaint();
         
-        String worldText = ghi.getWorld(0); // @TODO choose which world
+        String worldText = ghi.getWorld(0); /// @TODO choose which world
         if ( null == worldText ) // some issues have no worlds
         {
             issueWorldBox.setText( "" );

@@ -46,7 +46,7 @@ public class GitHubClient
     }
     
     private ArrayList<GitHubIssue> parseIssues(String json)
-    {   // TODO this is extremely crufty: hacking out most of the URL to split on.
+    {   /// @TODO this is extremely crufty: hacking out most of the URL to split on.
         // This leaves the issue number as the first thing in the string.
         Pattern issuePattern = Pattern.compile( "\\{\"url\":\"https://api\\.github\\.com/repos/andybalaam/rabbit-escape/issues/" );
         String[] jsonIssuesStrings = issuePattern.split( json );
@@ -77,9 +77,7 @@ public class GitHubClient
         return ret;
     }
     
-    /**
-     * @TODO progress bar if its taking a while?
-     */
+    /// @TODO progress bar if its taking a while?
     private String apiCall( String endURL )
     {
         URL url;
@@ -89,12 +87,12 @@ public class GitHubClient
         String out="";
 
         try
-        { // TODO send header requesting api V3
+        { /// @TODO send header requesting api V3
             url = new URL( baseURL+endURL );
             is = url.openStream();  // throws an IOException
             br = new BufferedReader( new InputStreamReader( is ) );
 
-            while ( ( line = br.readLine() ) != null ) // TODO maybe read more than a line at time
+            while ( ( line = br.readLine() ) != null ) /// @TODO maybe read more than a line at time
             {
                 out = out + line + "\n";
             }

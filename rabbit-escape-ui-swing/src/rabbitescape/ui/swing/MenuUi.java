@@ -11,7 +11,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.PrintStream;
+import java.io.PrintWriter;
 import java.util.Locale;
 import java.util.Stack;
 
@@ -271,7 +273,35 @@ public class MenuUi
 
     private void chooseIssue(){
         GitHubIssueDialog id = new GitHubIssueDialog(frame);
+        String world = id.getWorld();
+        if( null == world ){
+            return; // User clicked cancel, or selected issue with no world
+        }
+        String path = ConfigTools.getString(
+            uiConfig, ConfigKeys.CFG_LOAD_LEVEL_PATH );
         
+        File nameCandidate = new File (path + File.separator + id.generateFilename() + ".rel");
+        int version = 0;
+        String filename = id.generateFilename();
+        while(nameCandidate.exists())
+        {
+            nameCandidate = new File (
+                path + File.separator + filename + "." + (version++) + ".rel"
+                );
+        }
+        System.out.print( nameCandidate.getAbsolutePath() );
+        PrintWriter out;
+        try
+        {
+            out = new PrintWriter( nameCandidate );
+            out.print( world );
+            out.close();
+            playLevel( nameCandidate.getAbsolutePath(), new IgnoreLevelWinListener() );
+        }
+        catch ( FileNotFoundException e ) /// @TODO fix exception handling
+        {
+            e.printStackTrace();
+        }
     }
 
     private void chooseLevel()
