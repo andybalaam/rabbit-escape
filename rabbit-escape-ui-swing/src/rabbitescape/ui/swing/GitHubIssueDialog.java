@@ -66,7 +66,7 @@ public class GitHubIssueDialog extends JDialog implements ChangeListener
             {
                 return null;
             }
-            return new Integer( ghi.getNumber() );
+            return Integer.valueOf( ghi.getNumber() );
         }
         
         public GitHubIssue getCurrentIssue()
@@ -78,7 +78,7 @@ public class GitHubIssueDialog extends JDialog implements ChangeListener
         @Override
         public Object getValue()
         {
-            return new Integer( getCurrentIssue().getNumber() );
+            return Integer.valueOf( getCurrentIssue().getNumber() );
         }
         
         
