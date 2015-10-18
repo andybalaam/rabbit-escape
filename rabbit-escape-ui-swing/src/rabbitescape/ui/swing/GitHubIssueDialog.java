@@ -2,6 +2,7 @@ package rabbitescape.ui.swing;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Frame;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -128,6 +129,7 @@ public class GitHubIssueDialog extends JDialog implements ChangeListener
         issueTextBox.setBorder( BorderFactory.createLineBorder( Color.GRAY ) );
         issueWorldBox.setEditable( false );
         issueWorldBox.setBorder( BorderFactory.createLineBorder( Color.GRAY ) );
+        issueWorldBox.setFont( new Font("monospaced", Font.PLAIN, 12) );
         // after packing, this gives the dialog it's height
         issueWorldBox.setPreferredSize( new Dimension( 2, 500 ) );
         
@@ -213,12 +215,24 @@ public class GitHubIssueDialog extends JDialog implements ChangeListener
         setVisible( true );
     }
 
+    /**
+     * @brief Listens to the issue choosing spinner
+     */
     @Override
     public void stateChanged( ChangeEvent e )
     {
-        GitHubIssue ghc = issueModel.getCurrentIssue();
-        issueNameBox.setText( ghc.getTitle() );
+        GitHubIssue ghi = issueModel.getCurrentIssue();
+        issueNameBox.setText( ghi.getTitle() );
         issueNameBox.repaint();
+        String worldText = ghi.getWorld(0); // @TODO choose which world
+        if ( null == worldText ) // some issues have no worlds
+        {
+            issueWorldBox.setText( "" );
+        }
+        {
+            issueWorldBox.setText(worldText);
+        }
+        issueWorldBox.repaint();
     }
     
 }

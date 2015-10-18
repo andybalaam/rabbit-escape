@@ -1,5 +1,9 @@
 package rabbitescape.ui.swing;
 
+import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class GitHubIssue
 {
     private int number;
@@ -7,16 +11,11 @@ public class GitHubIssue
     private boolean isBug;
     private String body; /*< @brief body text excluding world text. */
     private String title;
-
-    public GitHubIssue( boolean isLevel, boolean isBug )
-    {
-        this.isLevel = isLevel;
-        this.isBug = isBug;
-    }
+    private ArrayList<String> wrappedWorlds; /*< @brief Worlds are []. These have \n */
 
     public GitHubIssue()
     {
-        // TODO Auto-generated constructor stub
+        wrappedWorlds = new ArrayList<String>();
     }
 
     public int getNumber()
@@ -48,15 +47,39 @@ public class GitHubIssue
     {
         this.isBug = isBug;
     }
+    
+    /**
+     * @param i  Some issues contain multiple worlds. Ask for them by index.
+     */
+    public String getWorld( int i ){
+        if( i >= wrappedWorlds.size() )
+        {
+            return null;
+        }
+        return wrappedWorlds.get( i );
+    }
 
     public String getBody()
     {
         return body;
     }
 
-    public void setBody( String body )
+    /**
+     * @brief Keeps a copy of the body text and parses out the worlds.
+     */
+    public void setBody( String bodyIn )
     {
-        this.body = body;
+        Pattern worldPattern = Pattern.compile( "```(.*?)```" );
+        Matcher worldMatcher = worldPattern.matcher( bodyIn );
+        while ( worldMatcher.find() )
+        {
+            String worldWrapped = worldMatcher.group(1);
+            worldWrapped = stripEscape(worldWrapped);
+            worldWrapped = worldWrapped.replaceAll( "\\\\n", "\n" ); // replace \n with actual newlines
+            wrappedWorlds.add( worldWrapped );
+            System.out.println("***"+getNumber()+"\n"+worldWrapped+"\n***");
+        }
+        this.body = bodyIn;
     }
 
     public String getTitle()
@@ -64,8 +87,22 @@ public class GitHubIssue
         return title;
     }
 
-    public void setTitle( String title )
+    public void setTitle( String titleIn )
     {
-        this.title = title;
+        this.title = stripEscape(titleIn);
+    }
+    
+    /**
+     * @brief Tidy up escape characters.
+     * - Remove \ before "
+     * - Remove \r to covert Win EOL to Unix EOL
+     */
+    public static String stripEscape(String s1)
+    {
+        String s2;
+        s2 = s1.replaceAll( "(\\\\r)", "" );
+        // @TODO this is removing \" instead of just \ which are followed by "
+        s2 = s2.replaceAll( "(\\\\)\"", "" );
+        return s2;
     }
 }

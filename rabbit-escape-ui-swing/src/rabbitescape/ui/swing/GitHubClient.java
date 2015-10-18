@@ -70,8 +70,8 @@ public class GitHubClient
             //System.out.println(jsonIssuesStrings[i]);
             ghi.setTitle( titleMatcher.group(1) );
             ghi.setBody( bodyMatcher.group(1) );
-            System.out.println("" + ghi.getNumber() + " " + ghi.getTitle());
-            System.out.println("" + ghi.getBody());
+            //System.out.println("" + ghi.getNumber() + " " + ghi.getTitle());
+            //System.out.println("" + ghi.getBody());
             ret.add( ghi );
         }
         return ret;
