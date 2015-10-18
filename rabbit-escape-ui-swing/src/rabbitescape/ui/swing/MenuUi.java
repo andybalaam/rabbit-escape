@@ -106,6 +106,11 @@ public class MenuUi
                     chooseLevel();
                     return;
                 }
+                case GITHUB_ISSUE:
+                {
+                    chooseIssue();
+                    return;
+                }
                 case QUIT:
                 {
                     frame.exit();
@@ -262,6 +267,11 @@ public class MenuUi
             0,
             0
         );
+    }
+
+    private void chooseIssue(){
+        GitHubIssueDialog id = new GitHubIssueDialog(frame);
+        
     }
 
     private void chooseLevel()

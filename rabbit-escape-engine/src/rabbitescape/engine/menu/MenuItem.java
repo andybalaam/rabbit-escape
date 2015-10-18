@@ -13,6 +13,7 @@ public class MenuItem
         QUIT,
         LEVEL,
         LOAD,
+        GITHUB_ISSUE
     }
 
     public final Menu menu;

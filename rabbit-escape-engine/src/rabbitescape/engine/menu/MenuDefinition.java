@@ -28,7 +28,16 @@ public class MenuDefinition
                 true
             ),
             item( "About",      Type.ABOUT, true ),
-            maybeItem( includeLoadLevel, "Load level", Type.LOAD,  true ),
+            maybeItem( 
+                includeLoadLevel,
+                "Custom Levels", 
+                menu(
+                    "Get from file or network",
+                    item( "Load Level", Type.LOAD, true ),
+                    item( "GitHub Issue", Type.GITHUB_ISSUE, true )
+                ),
+                true 
+            ),
             item( "Quit",       Type.QUIT,  true )
         );
     }
