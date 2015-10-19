@@ -10,14 +10,18 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
+import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SpinnerModel;
+import javax.swing.SwingWorker;
+import javax.swing.Timer;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
@@ -25,23 +29,22 @@ public class GitHubIssueDialog extends JDialog implements ChangeListener
 {
 
     private static final long serialVersionUID = 1L;
-    private JTextField issueNameBox = new JTextField( "Issue title here" );
-    private JTextArea issueTextBox = new JTextArea( "Text  apart from\n world goes here" );
-    private JTextArea issueWorldBox = new JTextArea( "ASCII art world here" );
+    private JTextField issueNameBox = new JTextField( "Attempting to contact github." );
+    private JTextArea issueTextBox = new JTextArea( "" );
+    private JTextArea issueWorldBox = new JTextArea( "" );
     private IssueSpinnerModel issueModel;
     private boolean choseWorld = false;
+    GitHubClient ghc = null;
     
     class IssueSpinnerModel implements SpinnerModel
     {
-        GitHubClient ghc;
         private int issueIndex = 0;
         private ChangeListener changeListener;
         
         IssueSpinnerModel()
         {
-            ghc=new GitHubClient();
         }
-
+        
         @Override
         public void addChangeListener( ChangeListener cl )
         {
@@ -62,6 +65,10 @@ public class GitHubIssueDialog extends JDialog implements ChangeListener
         
         public Object getValue ( int index )
         {
+            if( null == ghc )
+            {
+                return null;
+            }
             GitHubIssue ghi = ghc.getIssue( index );
             if( null == ghi )
             {
@@ -72,6 +79,10 @@ public class GitHubIssueDialog extends JDialog implements ChangeListener
         
         public GitHubIssue getCurrentIssue()
         {
+            if( null == ghc )
+            {
+                return null;
+            }
             return ghc.getIssue(issueIndex);
         }
         
@@ -79,7 +90,12 @@ public class GitHubIssueDialog extends JDialog implements ChangeListener
         @Override
         public Object getValue()
         {
-            return Integer.valueOf( getCurrentIssue().getNumber() );
+            GitHubIssue ghi =  getCurrentIssue();
+            if( null == ghi )
+            {
+                return null;
+            }
+            return Integer.valueOf(ghi.getNumber() );
         }
         
         
@@ -94,6 +110,10 @@ public class GitHubIssueDialog extends JDialog implements ChangeListener
         public void setValue( Object issueNumberIntegerObject )
         {
             Integer issueNumber = (Integer)issueNumberIntegerObject;
+            if( null == issueNumber )
+            {
+                return;
+            }
             issueIndex = ghc.getIndexOfNumber( issueNumber.intValue() );
             System.out.println( "in IssueSpinnerModel.setValue" );
             changeListener.stateChanged( new ChangeEvent( this ) );
@@ -113,9 +133,14 @@ public class GitHubIssueDialog extends JDialog implements ChangeListener
         issueModel = new IssueSpinnerModel();
         JSpinner issueSpinner = new JSpinner(issueModel);
         issueSpinner.addChangeListener( this );
-        JButton levelFilterButton = new JButton( "Level" );
-        JButton bugFilterButton = new JButton( "Bug" );
-        JButton allFilterButton = new JButton( "All" );
+        JRadioButton levelFilterButton = new JRadioButton( "Level" );
+        JRadioButton bugFilterButton = new JRadioButton( "Bug" );
+        JRadioButton allFilterButton = new JRadioButton( "All" );
+        ButtonGroup filterButtons = new ButtonGroup();
+        filterButtons.add( levelFilterButton );
+        filterButtons.add( bugFilterButton );
+        filterButtons.add( allFilterButton );
+        allFilterButton.doClick(); // set preselected filter
         JPanel spacerPanel = new JPanel();
         // after packing, this gives the dialog it's width
         spacerPanel.setPreferredSize( new Dimension( 500, 2 ) ); 
@@ -216,16 +241,22 @@ public class GitHubIssueDialog extends JDialog implements ChangeListener
         pack();
         setLocationRelativeTo( frame );
         stateChanged(null); // set initial values
+        ghc = new GitHubClient();
+        final NetWorker nw = new NetWorker();
+        nw.execute();
         setVisible( true );
+        DotTic dt = new DotTic (nw);
+        dt.start();
     }
     
     public String getWorld()
     {
-        if( !choseWorld )
+        GitHubIssue ghi = issueModel.getCurrentIssue();
+        if( !choseWorld || (null == ghi) ) // user cancelled or maybe no inet
         {
             return null;
         }
-        return fixWorld( issueModel.getCurrentIssue().getWorld( 0 ) ); /// @TODO choose which world
+        return fixWorld( ghi.getWorld( 0 ) ); /** @TODO choose which world */
     }
     
     /**
@@ -249,16 +280,22 @@ public class GitHubIssueDialog extends JDialog implements ChangeListener
 
     /**
      * @brief Listens to the issue choosing spinner
+     * @TODO choose which world
      */
     @Override
     public void stateChanged( ChangeEvent e )
     {
         GitHubIssue ghi = issueModel.getCurrentIssue();
+        if( null == ghi )
+        {
+            return;
+        }
+        
         
         issueNameBox.setText( ghi.getTitle() );
         issueNameBox.repaint();
         
-        String worldText = ghi.getWorld(0); /// @TODO choose which world
+        String worldText = ghi.getWorld(0); /// 
         if ( null == worldText ) // some issues have no worlds
         {
             issueWorldBox.setText( "" );
@@ -271,5 +308,45 @@ public class GitHubIssueDialog extends JDialog implements ChangeListener
         issueTextBox.setText( ghi.getBody() );
         issueTextBox.repaint();
     }
+
+    private final class DotTic implements ActionListener 
+    {
+        private Timer timer;
+        private NetWorker netWorker;
+        
+        public DotTic (NetWorker netWorkerIn)
+        {
+            timer = new Timer(400,this);
+            netWorker = netWorkerIn;
+        }
+        
+        public void start() 
+        {
+            timer.start();
+        }
+        
+        public void actionPerformed(ActionEvent event){
+            issueNameBox.setText( issueNameBox.getText() + "." );
+            issueNameBox.repaint();
+            if (netWorker.isDone())
+            {
+                timer.stop();
+                issueNameBox.setText( "Done" );
+                issueNameBox.repaint();
+                stateChanged(null); //update info in dialog with new info from github
+            }
+          }
+    }
     
+    private final class NetWorker extends SwingWorker<Void,Void> 
+    {
+
+        @Override
+        protected Void doInBackground() throws Exception
+        {
+            ghc.initialise();
+            return null;
+        }
+        
+    }
 }

@@ -6,6 +6,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -14,18 +15,23 @@ public class GitHubClient
 {
     public final String baseURL = "https://api.github.com/repos/andybalaam/rabbit-escape/issues";
     public final String acceptHeader = "application/vnd.github.v3+json";
-    private ArrayList<GitHubIssue> issues;
+    private ArrayList<GitHubIssue> issues = null;
+    private String errMsg = "";
+    
     
     public GitHubClient()
     {
+    }
+    
+    public void initialise()
+    {
         String jsonIssues = apiCall( "" );
-        issues = parseIssues( jsonIssues );
-        
+        issues = parseIssues( jsonIssues);
     }
     
     public GitHubIssue getIssue(int index)
     {
-        if( index<0 || index>= issues.size())
+        if( null==issues || (index<0 || index>= issues.size()) )
         {
             return null;
         }
@@ -77,7 +83,7 @@ public class GitHubClient
         return ret;
     }
     
-    /// @TODO progress bar if its taking a while?
+    /// \TODO progress bar if its taking a while?
     private String apiCall( String endURL )
     {
         URL url;
@@ -101,11 +107,15 @@ public class GitHubClient
         catch ( MalformedURLException eMU ) 
         {
              eMU.printStackTrace();
-        } 
+        }
+        catch (UnknownHostException eUH) 
+        {
+            errMsg = "Can't reach github.com.";
+        }
         catch ( IOException eIO )
         {
              eIO.printStackTrace();
-        } 
+        }
         finally 
         {
             try 
