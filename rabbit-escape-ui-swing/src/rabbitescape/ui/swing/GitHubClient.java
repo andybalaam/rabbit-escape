@@ -83,9 +83,19 @@ public class GitHubClient
         return ret;
     }
     
-    /// \TODO progress bar if its taking a while?
     private String apiCall( String endURL )
     {
+        /*  //uncomment to test progress dot tic
+        try
+        {
+            Thread.sleep(5000);
+        }
+        catch ( InterruptedException e )
+        {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        */
         URL url;
         InputStream is = null;
         BufferedReader br;

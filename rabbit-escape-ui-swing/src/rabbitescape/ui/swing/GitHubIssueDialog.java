@@ -243,10 +243,10 @@ public class GitHubIssueDialog extends JDialog implements ChangeListener
         stateChanged(null); // set initial values
         ghc = new GitHubClient();
         final NetWorker nw = new NetWorker();
-        nw.execute();
-        setVisible( true );
-        DotTic dt = new DotTic (nw);
+        nw.execute();DotTic dt = new DotTic (nw);
         dt.start();
+        setVisible( true );
+        
     }
     
     public String getWorld()
@@ -327,7 +327,7 @@ public class GitHubIssueDialog extends JDialog implements ChangeListener
         
         public void actionPerformed(ActionEvent event){
             issueNameBox.setText( issueNameBox.getText() + "." );
-            issueNameBox.repaint();
+            issueNameBox.repaint(200);
             if (netWorker.isDone())
             {
                 timer.stop();
