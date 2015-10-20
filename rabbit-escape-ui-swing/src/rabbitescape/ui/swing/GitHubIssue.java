@@ -78,13 +78,11 @@ public class GitHubIssue
             worldWrapped = stripEscape(worldWrapped);
             worldWrapped = realNewlines(worldWrapped); 
             wrappedWorlds.add( worldWrapped );
-            //System.out.println("***"+getNumber()+"\n"+worldWrapped+"\n***");
         }
         
         this.body = bodyIn.replaceAll( "```(.*?)```", "\n-----\n" );
         this.body = stripEscape(this.body);
         this.body = realNewlines(this.body);
-        System.out.println("***"+this.body+"\n***");
     }
 
     public String getTitle()

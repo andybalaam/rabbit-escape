@@ -115,7 +115,6 @@ public class GitHubIssueDialog extends JDialog implements ChangeListener
                 return;
             }
             issueIndex = ghc.getIndexOfNumber( issueNumber.intValue() );
-            System.out.println( "in IssueSpinnerModel.setValue" );
             changeListener.stateChanged( new ChangeEvent( this ) );
         }
         

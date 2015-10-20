@@ -289,7 +289,6 @@ public class MenuUi
                 path + File.separator + filename + "." + (version++) + ".rel"
                 );
         }
-        System.out.print( nameCandidate.getAbsolutePath() );
         PrintWriter out;
         try
         {

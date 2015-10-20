@@ -73,11 +73,8 @@ public class GitHubClient
             titleMatcher.find();
             bodyMatcher.find();
             ghi.setNumber( Integer.parseInt( numberMatcher.group(1) ) );
-            //System.out.println(jsonIssuesStrings[i]);
             ghi.setTitle( titleMatcher.group(1) );
             ghi.setBody( bodyMatcher.group(1) );
-            //System.out.println("" + ghi.getNumber() + " " + ghi.getTitle());
-            //System.out.println("" + ghi.getBody());
             ret.add( ghi );
         }
         return ret;
