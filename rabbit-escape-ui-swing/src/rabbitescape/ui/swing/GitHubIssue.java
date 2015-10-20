@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * @brief encapsulates what has been retrieved about a github issue
+ */
 public class GitHubIssue
 {
     private int number; /**< @brief github issue number.*/

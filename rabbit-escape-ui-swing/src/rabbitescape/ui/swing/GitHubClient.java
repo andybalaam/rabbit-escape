@@ -11,6 +11,9 @@ import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/** 
+ * @brief retrieval and parsing. no swing.
+ */
 public class GitHubClient
 {
     public final String baseURL = "https://api.github.com/repos/andybalaam/rabbit-escape/issues";
