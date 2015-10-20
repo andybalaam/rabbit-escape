@@ -32,6 +32,11 @@ public class GitHubClient
         issues = parseIssues( jsonIssues);
     }
     
+    public String getError()
+    {
+       return errMsg; 
+    }
+    
     public GitHubIssue getIssue(int index)
     {
         if( null==issues || (index<0 || index>= issues.size()) )

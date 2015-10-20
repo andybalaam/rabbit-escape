@@ -15,6 +15,7 @@ public class GitHubIssue
     private String body; /**< @brief body text excluding world text. */
     private String title;
     private ArrayList<String> wrappedWorlds; /**< @brief Worlds are []. These have \n */
+    private final String replaceWorldsWith = "\n-----\n";
 
     public GitHubIssue()
     {
@@ -73,8 +74,19 @@ public class GitHubIssue
      */
     public void setBody( String bodyIn )
     {
+        body = bodyIn;
+        extractBacktickWorlds(body);
+        body = stripEscape(body);
+        body = realNewlines(body);
+    }
+    
+    /**
+     * @brief parse out worlds from markdown contained in triple backticks
+     */
+    private String extractBacktickWorlds(String text)
+    {
         Pattern worldPattern = Pattern.compile( "```(.*?)```" );
-        Matcher worldMatcher = worldPattern.matcher( bodyIn );
+        Matcher worldMatcher = worldPattern.matcher( text );
         while ( worldMatcher.find() )
         {
             String worldWrapped = worldMatcher.group(1);
@@ -83,9 +95,40 @@ public class GitHubIssue
             wrappedWorlds.add( worldWrapped );
         }
         
-        this.body = bodyIn.replaceAll( "```(.*?)```", "\n-----\n" );
-        this.body = stripEscape(this.body);
-        this.body = realNewlines(this.body);
+        return text.replaceAll( "```(.*?)```", replaceWorldsWith );
+    }
+
+    /**
+     * @brief parse out worlds from markdown contained in indent blocks
+     */
+    private String extractIndentWorlds(String text)
+    {
+        // at least 4 spaces or a tab
+        Pattern firstLinePattern = Pattern.compile( "^(\\t| {4,}+)" );
+        Matcher firstLineMatcher = firstLinePattern.matcher( text );
+        while ( firstLineMatcher.find())
+        {
+            String blockPrefix = firstLineMatcher.group(1);
+            Pattern subsequentLinePattern = Pattern.compile( "^"+blockPrefix+"(.*?)$" );
+            Matcher subsequentLineMatcher = subsequentLinePattern.matcher( text );
+            // Do I need to store the result of region back in the Matcher?
+            subsequentLineMatcher.region( firstLineMatcher.regionStart(), text.length() -1 );
+            String worldWrapped = "";
+            int prevEndIndex = -1;
+            while (subsequentLineMatcher.find())
+            {
+                // @TODO maybe OBi-Ones
+                if (subsequentLineMatcher.regionStart() != prevEndIndex)//check for lines between matches
+                {
+                    break;
+                }
+                prevEndIndex = subsequentLineMatcher.regionEnd();
+                worldWrapped = worldWrapped + subsequentLineMatcher.group(1) + "\n";
+            }
+            wrappedWorlds.add( worldWrapped );
+        }
+        // @TODO return the body text with the worlds stripped
+        return text;
     }
 
     public String getTitle()

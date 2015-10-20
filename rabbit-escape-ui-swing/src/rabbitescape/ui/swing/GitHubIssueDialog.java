@@ -333,7 +333,14 @@ public class GitHubIssueDialog extends JDialog implements ChangeListener
             if (netWorker.isDone())
             {
                 timer.stop();
-                issueNameBox.setText( "Done" );
+                if(!"".equals( ghc.getError() ))
+                {
+                    issueNameBox.setText( ghc.getError() );
+                }
+                else
+                {
+                    issueNameBox.setText( "Done" );
+                }
                 issueNameBox.repaint();
                 stateChanged(null); //update info in dialog with new info from github
             }
