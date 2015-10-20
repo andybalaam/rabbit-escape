@@ -92,7 +92,7 @@ public class GitHubIssue
             String worldWrapped = worldMatcher.group(1);
             worldWrapped = stripEscape(worldWrapped);
             worldWrapped = realNewlines(worldWrapped); 
-            wrappedWorlds.add( worldWrapped );
+            wrappedWorlds.add( fixWorld(worldWrapped) );
         }
         
         return text.replaceAll( "```(.*?)```", replaceWorldsWith );
@@ -125,10 +125,23 @@ public class GitHubIssue
                 prevEndIndex = subsequentLineMatcher.regionEnd();
                 worldWrapped = worldWrapped + subsequentLineMatcher.group(1) + "\n";
             }
-            wrappedWorlds.add( worldWrapped );
+            wrappedWorlds.add( fixWorld(worldWrapped) );
         }
         // @TODO return the body text with the worlds stripped
         return text;
+    }
+    
+    /**
+     * @brief Perform some automatic fixing
+     * Can't be as strict as when loading from files.
+     */
+    private String fixWorld(String world)
+    {
+        String fixed = world;
+        //remove blank lines
+        fixed = fixed.replaceAll("\n\n","\n");
+        fixed = fixed.replaceAll( "^\n", "" );
+        return fixed;
     }
 
     public String getTitle()

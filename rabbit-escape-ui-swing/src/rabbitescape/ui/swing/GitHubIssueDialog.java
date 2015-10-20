@@ -258,21 +258,9 @@ public class GitHubIssueDialog extends JDialog implements ChangeListener
         {
             return null;
         }
-        return fixWorld( ghi.getWorld( 0 ) ); /** @TODO choose which world */
+        return ghi.getWorld( 0 ) ; /** @TODO choose which world */
     }
-    
-    /**
-     * @brief Perform some automatic fixing
-     * Can't be as strict as when loading from files.
-     */
-    private String fixWorld(String world)
-    {
-        String fixed = world;
-        fixed = fixed.replaceAll("\n\n","\n");
-        fixed = fixed.replaceAll( "^\n", "" );
-        return fixed;
-    }
-    
+
     public String generateFilename()
     {
         String title = issueModel.getCurrentIssue().getTitle();
