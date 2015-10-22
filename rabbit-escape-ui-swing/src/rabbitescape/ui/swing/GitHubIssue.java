@@ -75,7 +75,8 @@ public class GitHubIssue
     public void setBody( String bodyIn )
     {
         body = bodyIn;
-        extractBacktickWorlds(body);
+        body = extractBacktickWorlds(body);
+        body = extractIndentWorlds(body);
         body = stripEscape(body);
         body = realNewlines(body);
     }
@@ -97,6 +98,11 @@ public class GitHubIssue
         
         return text.replaceAll( "```(.*?)```", replaceWorldsWith );
     }
+    
+    private void p(String s)
+    {
+        System.out.println(s);
+    }
 
     /**
      * @brief parse out worlds from markdown contained in indent blocks
@@ -104,27 +110,55 @@ public class GitHubIssue
     private String extractIndentWorlds(String text)
     {
         // at least 4 spaces or a tab
-        Pattern firstLinePattern = Pattern.compile( "^(\\t| {4,}+)" );
+        // the json has \n in, not newline char
+        // after java compiler \\\\ becomes \\, after regex compile \
+        Pattern firstLinePattern = Pattern.compile( "\\\\n(\\\\t| {4,}+)" );
+        //Pattern firstLinePattern = Pattern.compile( "\\\\n(\\t)" );
+        p("text:\n"+text);
+        p("01234567890123456789012345678901234567890123456789012345678901234567890");
+        p("00000000001111111111222222222233333333334444444444555555555566666666667");
         Matcher firstLineMatcher = firstLinePattern.matcher( text );
         while ( firstLineMatcher.find())
         {
+            p("\n*** new block");
+            p("firstLineMatcher.group(1): "+firstLineMatcher.start(1)+"-"+firstLineMatcher.end(1));
             String blockPrefix = firstLineMatcher.group(1);
-            Pattern subsequentLinePattern = Pattern.compile( "^"+blockPrefix+"(.*?)$" );
+            if (0 == blockPrefix.compareTo( "\\t" ))
+            {
+                blockPrefix = "\\\\t"; //reform so regex is char pair, not tab char.
+            }
+            Pattern subsequentLinePattern = Pattern.compile( "\\\\n"+blockPrefix+"(.+?)\\\\n" );
             Matcher subsequentLineMatcher = subsequentLinePattern.matcher( text );
             // Do I need to store the result of region back in the Matcher?
-            subsequentLineMatcher.region( firstLineMatcher.regionStart(), text.length() -1 );
+            subsequentLineMatcher.region( firstLineMatcher.start(), text.length() - 1 );
             String worldWrapped = "";
             int prevEndIndex = -1;
             while (subsequentLineMatcher.find())
             {
-                // @TODO maybe OBi-Ones
-                if (subsequentLineMatcher.regionStart() != prevEndIndex)//check for lines between matches
+                p("subsequentLineMatcher.group(1):>"+subsequentLineMatcher.group(1)+"<"+subsequentLineMatcher.start(1)+"-"+subsequentLineMatcher.end(1));
+                
+                
+                p(""+prevEndIndex+":"+subsequentLineMatcher.start());
+                /* Check for lines between matches, note this is to the 
+                   start of the whole match including the indent string.
+                   First time through, let the -1 past. */
+                if ( -1 != prevEndIndex &&
+                    subsequentLineMatcher.start() != prevEndIndex )
                 {
                     break;
                 }
-                prevEndIndex = subsequentLineMatcher.regionEnd();
                 worldWrapped = worldWrapped + subsequentLineMatcher.group(1) + "\n";
+                p("got past break");
+                prevEndIndex = subsequentLineMatcher.end() - 2;
+                // the end of the group is 2 chars before the end of the whole match, so it 
+                // can find the \n again to start the next line.
+                subsequentLineMatcher.region( subsequentLineMatcher.end(1), text.length() );
             }
+            p("set flm for next block, region: "+prevEndIndex+"-"+text.length());
+            /*if ( -1 == prevEndIndex) {
+                break; //TODO is this the right thing to do?
+            }*/
+            firstLineMatcher = firstLineMatcher.region( prevEndIndex, text.length());
             wrappedWorlds.add( fixWorld(worldWrapped) );
         }
         // @TODO return the body text with the worlds stripped
