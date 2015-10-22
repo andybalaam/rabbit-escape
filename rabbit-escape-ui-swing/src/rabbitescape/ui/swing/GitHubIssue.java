@@ -1,6 +1,7 @@
 package rabbitescape.ui.swing;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -74,9 +75,45 @@ public class GitHubIssue
      */
     public void setBody( String bodyIn )
     {
+        // posiitons of worlds in the body text;
+        ArrayList<Integer> startIndices = new ArrayList<Integer>(); 
+        ArrayList<Integer> endIndices = new ArrayList<Integer>(); 
         body = bodyIn;
-        body = extractBacktickWorlds(body);
-        body = extractIndentWorlds(body);
+        findBacktickWorlds( startIndices, endIndices );
+        findIndentWorlds( startIndices, endIndices );
+        p("startIndices size: "+ startIndices.size());
+        for (int i=0;i<startIndices.size();i++)
+        {
+            p(""+startIndices.get( i )+"-"+endIndices.get( i )+"  ");
+        }
+        ArrayList<String> newWorldOrder = new ArrayList<String>( wrappedWorlds.size() );
+        for ( int i=0; i<startIndices.size(); i++)
+        {
+            newWorldOrder.add( "" );
+        }
+        // re-order worlds and remove worlds from body text
+        for ( int i=0; i<startIndices.size(); i++)
+        {
+            int max = Collections.max( startIndices );
+            int maxIndex = -1;
+            for (int j=0; j< startIndices.size() ;j++)
+            {
+                if (max == startIndices.get( j ))
+                {
+                    maxIndex = j;
+                    break;
+                }
+            }
+            p("max: "+max+"   maxIndex: "+maxIndex);
+            newWorldOrder.set( startIndices.size() - 1 - i, wrappedWorlds.get( maxIndex ) );
+            body=body.substring( 0, startIndices.get(maxIndex) ) + 
+                 replaceWorldsWith +
+                 body.substring( endIndices.get(maxIndex) );
+            startIndices.set( maxIndex, 0 ); // so it is not found again
+        
+        }
+        wrappedWorlds = newWorldOrder;
+        
         body = stripEscape(body);
         body = realNewlines(body);
     }
@@ -84,19 +121,22 @@ public class GitHubIssue
     /**
      * @brief parse out worlds from markdown contained in triple backticks
      */
-    private String extractBacktickWorlds(String text)
+    private void findBacktickWorlds( ArrayList<Integer> startIndices, 
+                                        ArrayList<Integer> endIndices )
     {
-        Pattern worldPattern = Pattern.compile( "```(.*?)```" );
-        Matcher worldMatcher = worldPattern.matcher( text );
+        Pattern worldPattern = Pattern.compile( "(\\\\n)?```(.*?)```" );
+        Matcher worldMatcher = worldPattern.matcher( body );
         while ( worldMatcher.find() )
         {
-            String worldWrapped = worldMatcher.group(1);
+            String worldWrapped = worldMatcher.group(2);
             worldWrapped = stripEscape(worldWrapped);
-            worldWrapped = realNewlines(worldWrapped); 
+            worldWrapped = realNewlines(worldWrapped);
             wrappedWorlds.add( fixWorld(worldWrapped) );
+            startIndices.add( worldMatcher.start() );
+            endIndices.add(  worldMatcher.end() );
         }
         
-        return text.replaceAll( "```(.*?)```", replaceWorldsWith );
+
     }
     
     private void p(String s)
@@ -107,20 +147,24 @@ public class GitHubIssue
     /**
      * @brief parse out worlds from markdown contained in indent blocks
      */
-    private String extractIndentWorlds(String text)
+    private void findIndentWorlds( ArrayList<Integer> startIndices, 
+                                      ArrayList<Integer> endIndices )
     {
         // at least 4 spaces or a tab
         // the json has \n in, not newline char
         // after java compiler \\\\ becomes \\, after regex compile \
         Pattern firstLinePattern = Pattern.compile( "\\\\n(\\\\t| {4,}+)" );
         //Pattern firstLinePattern = Pattern.compile( "\\\\n(\\t)" );
-        p("text:\n"+text);
-        p("01234567890123456789012345678901234567890123456789012345678901234567890");
-        p("00000000001111111111222222222233333333334444444444555555555566666666667");
-        Matcher firstLineMatcher = firstLinePattern.matcher( text );
+        p("text:\n"+body);
+        for (int i=0;i<22;i++) System.out.print("0123456789");
+        p("");
+        for (int i=0;i<22;i++) for (int j=0;j<10;j++) System.out.print(""+i%10);
+        p("");
+        Matcher firstLineMatcher = firstLinePattern.matcher( body );
         while ( firstLineMatcher.find())
         {
             p("\n*** new block");
+            startIndices.add( firstLineMatcher.start() );
             p("firstLineMatcher.group(1): "+firstLineMatcher.start(1)+"-"+firstLineMatcher.end(1));
             String blockPrefix = firstLineMatcher.group(1);
             if (0 == blockPrefix.compareTo( "\\t" ))
@@ -128,9 +172,9 @@ public class GitHubIssue
                 blockPrefix = "\\\\t"; //reform so regex is char pair, not tab char.
             }
             Pattern subsequentLinePattern = Pattern.compile( "\\\\n"+blockPrefix+"(.+?)\\\\n" );
-            Matcher subsequentLineMatcher = subsequentLinePattern.matcher( text );
+            Matcher subsequentLineMatcher = subsequentLinePattern.matcher( body );
             // Do I need to store the result of region back in the Matcher?
-            subsequentLineMatcher.region( firstLineMatcher.start(), text.length() - 1 );
+            subsequentLineMatcher.region( firstLineMatcher.start(), body.length() - 1 );
             String worldWrapped = "";
             int prevEndIndex = -1;
             while (subsequentLineMatcher.find())
@@ -152,17 +196,13 @@ public class GitHubIssue
                 prevEndIndex = subsequentLineMatcher.end() - 2;
                 // the end of the group is 2 chars before the end of the whole match, so it 
                 // can find the \n again to start the next line.
-                subsequentLineMatcher.region( subsequentLineMatcher.end(1), text.length() );
+                subsequentLineMatcher.region( subsequentLineMatcher.end(1), body.length() );
             }
-            p("set flm for next block, region: "+prevEndIndex+"-"+text.length());
-            /*if ( -1 == prevEndIndex) {
-                break; //TODO is this the right thing to do?
-            }*/
-            firstLineMatcher = firstLineMatcher.region( prevEndIndex, text.length());
+            p("set flm for next block, region: "+prevEndIndex+"-"+body.length());
+            endIndices.add(prevEndIndex);
+            firstLineMatcher = firstLineMatcher.region( prevEndIndex, body.length());
             wrappedWorlds.add( fixWorld(worldWrapped) );
         }
-        // @TODO return the body text with the worlds stripped
-        return text;
     }
     
     /**
