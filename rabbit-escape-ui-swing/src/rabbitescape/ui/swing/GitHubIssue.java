@@ -81,11 +81,6 @@ public class GitHubIssue
         body = bodyIn;
         findBacktickWorlds( startIndices, endIndices );
         findIndentWorlds( startIndices, endIndices );
-        p("startIndices size: "+ startIndices.size());
-        for (int i=0;i<startIndices.size();i++)
-        {
-            p(""+startIndices.get( i )+"-"+endIndices.get( i )+"  ");
-        }
         ArrayList<String> newWorldOrder = new ArrayList<String>( wrappedWorlds.size() );
         for ( int i=0; i<startIndices.size(); i++)
         {
@@ -104,7 +99,6 @@ public class GitHubIssue
                     break;
                 }
             }
-            p("max: "+max+"   maxIndex: "+maxIndex);
             newWorldOrder.set( startIndices.size() - 1 - i, wrappedWorlds.get( maxIndex ) );
             body=body.substring( 0, startIndices.get(maxIndex) ) + 
                  replaceWorldsWith +
@@ -135,13 +129,7 @@ public class GitHubIssue
             startIndices.add( worldMatcher.start() );
             endIndices.add(  worldMatcher.end() );
         }
-        
 
-    }
-    
-    private void p(String s)
-    {
-        System.out.println(s);
     }
 
     /**
@@ -155,17 +143,11 @@ public class GitHubIssue
         // after java compiler \\\\ becomes \\, after regex compile \
         Pattern firstLinePattern = Pattern.compile( "\\\\n(\\\\t| {4,}+)" );
         //Pattern firstLinePattern = Pattern.compile( "\\\\n(\\t)" );
-        p("text:\n"+body);
-        for (int i=0;i<22;i++) System.out.print("0123456789");
-        p("");
-        for (int i=0;i<22;i++) for (int j=0;j<10;j++) System.out.print(""+i%10);
-        p("");
+
         Matcher firstLineMatcher = firstLinePattern.matcher( body );
         while ( firstLineMatcher.find())
         {
-            p("\n*** new block");
             startIndices.add( firstLineMatcher.start() );
-            p("firstLineMatcher.group(1): "+firstLineMatcher.start(1)+"-"+firstLineMatcher.end(1));
             String blockPrefix = firstLineMatcher.group(1);
             if (0 == blockPrefix.compareTo( "\\t" ))
             {
@@ -179,10 +161,6 @@ public class GitHubIssue
             int prevEndIndex = -1;
             while (subsequentLineMatcher.find())
             {
-                p("subsequentLineMatcher.group(1):>"+subsequentLineMatcher.group(1)+"<"+subsequentLineMatcher.start(1)+"-"+subsequentLineMatcher.end(1));
-                
-                
-                p(""+prevEndIndex+":"+subsequentLineMatcher.start());
                 /* Check for lines between matches, note this is to the 
                    start of the whole match including the indent string.
                    First time through, let the -1 past. */
@@ -192,13 +170,11 @@ public class GitHubIssue
                     break;
                 }
                 worldWrapped = worldWrapped + subsequentLineMatcher.group(1) + "\n";
-                p("got past break");
                 prevEndIndex = subsequentLineMatcher.end() - 2;
                 // the end of the group is 2 chars before the end of the whole match, so it 
                 // can find the \n again to start the next line.
                 subsequentLineMatcher.region( subsequentLineMatcher.end(1), body.length() );
             }
-            p("set flm for next block, region: "+prevEndIndex+"-"+body.length());
             endIndices.add(prevEndIndex);
             firstLineMatcher = firstLineMatcher.region( prevEndIndex, body.length());
             wrappedWorlds.add( fixWorld(worldWrapped) );

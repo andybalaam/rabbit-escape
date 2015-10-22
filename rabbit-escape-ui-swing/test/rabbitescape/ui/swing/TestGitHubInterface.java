@@ -115,14 +115,7 @@ public class TestGitHubInterface
         GitHubIssue ghi = new GitHubIssue();
         ghi.setBody( issueBodyText );
         String wrappedWorld, expectedWrappedWorld;
-        
-        for (int i=0; i<4; i++)
-        {
-            
-            System.out.println( "--->\n" + ghi.getWorld( i ) +"<" );
-        }
-        System.out.println( "--->\n" + ghi.getBody() +"<" );
-        
+
         wrappedWorld = ghi.getWorld( 0 );
         expectedWrappedWorld = ":name=Level1\n"+
                                "# #####\n";
