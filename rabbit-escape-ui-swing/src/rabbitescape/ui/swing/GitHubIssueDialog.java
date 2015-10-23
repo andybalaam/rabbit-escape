@@ -134,6 +134,7 @@ public class GitHubIssueDialog extends JDialog implements ChangeListener
         
         issueModel = new IssueSpinnerModel();
         JSpinner issueSpinner = new JSpinner(issueModel);
+        issueSpinner.setPreferredSize( new Dimension( 60, 30 ) );
         issueSpinner.addChangeListener( this );
         JRadioButton levelFilterButton = new JRadioButton( "Level" );
         JRadioButton bugFilterButton = new JRadioButton( "Bug" );
@@ -306,7 +307,7 @@ public class GitHubIssueDialog extends JDialog implements ChangeListener
         
         public DotTic (NetWorker netWorkerIn)
         {
-            timer = new Timer(400,this);
+            timer = new Timer(800,this);
             netWorker = netWorkerIn;
         }
         
@@ -317,7 +318,7 @@ public class GitHubIssueDialog extends JDialog implements ChangeListener
         
         public void actionPerformed(ActionEvent event){
             issueNameBox.setText( issueNameBox.getText() + "." );
-            issueNameBox.repaint(200);
+            issueNameBox.repaint();
             if (netWorker.isDone())
             {
                 timer.stop();

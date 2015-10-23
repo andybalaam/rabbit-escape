@@ -113,6 +113,26 @@ public class GitHubIssue
     }
     
     /**
+     * @brief Add location of world in the body string to the list.
+     *        Only add if the new world is not inside another.
+     *        Backtick worlds are parsed first, so they win.
+     */
+    private void checkAddWorldIndices( ArrayList<Integer> startIndices, 
+                                       ArrayList<Integer> endIndices,
+                                       int startIndex,
+                                       int endIndex )
+    {
+        for(int i = 0; i < startIndices.size(); i++){
+            if ( startIndex >= startIndices.get( i ) && startIndex < endIndices.get( i ) )
+            { // It's in the range of another world, don't add.
+                return;
+            }
+        }
+        startIndices.add(startIndex);
+        endIndices.add( endIndex );
+    }
+    
+    /**
      * @brief parse out worlds from markdown contained in triple backticks
      */
     private void findBacktickWorlds( ArrayList<Integer> startIndices, 
@@ -126,8 +146,10 @@ public class GitHubIssue
             worldWrapped = stripEscape(worldWrapped);
             worldWrapped = realNewlines(worldWrapped);
             wrappedWorlds.add( fixWorld(worldWrapped) );
-            startIndices.add( worldMatcher.start() );
-            endIndices.add(  worldMatcher.end() );
+            checkAddWorldIndices( startIndices, 
+                                  endIndices, 
+                                  worldMatcher.start(), 
+                                  worldMatcher.end() );
         }
 
     }
@@ -145,9 +167,10 @@ public class GitHubIssue
         //Pattern firstLinePattern = Pattern.compile( "\\\\n(\\t)" );
 
         Matcher firstLineMatcher = firstLinePattern.matcher( body );
+        int worldStart, worldEnd;
         while ( firstLineMatcher.find())
         {
-            startIndices.add( firstLineMatcher.start() );
+            worldStart = firstLineMatcher.start() ;
             String blockPrefix = firstLineMatcher.group(1);
             if (0 == blockPrefix.compareTo( "\\t" ))
             {
@@ -175,7 +198,8 @@ public class GitHubIssue
                 // can find the \n again to start the next line.
                 subsequentLineMatcher.region( subsequentLineMatcher.end(1), body.length() );
             }
-            endIndices.add(prevEndIndex);
+            worldEnd = prevEndIndex;
+            checkAddWorldIndices( startIndices, endIndices, worldStart, worldEnd );
             firstLineMatcher = firstLineMatcher.region( prevEndIndex, body.length());
             wrappedWorlds.add( fixWorld(worldWrapped) );
         }
