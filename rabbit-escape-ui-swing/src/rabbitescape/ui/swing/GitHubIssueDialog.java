@@ -38,11 +38,16 @@ public class GitHubIssueDialog extends JDialog implements ChangeListener
     private IssueSpinnerModel issueModel;
     private boolean choseWorld = false;
     GitHubClient ghc = null;
+    public static enum Label {ALL,
+                              BUG, 
+                              LEVEL};
     
     class IssueSpinnerModel implements SpinnerModel
     {
         private int issueIndex = 0;
         private ChangeListener changeListener;
+        private Label filterMode = Label.ALL;
+        
         
         IssueSpinnerModel()
         {
@@ -57,25 +62,41 @@ public class GitHubIssueDialog extends JDialog implements ChangeListener
         @Override
         public Object getNextValue()
         {
-            return getValue( issueIndex - 1);
+            
+            return getRelativeValue( -1 );
         }
 
         @Override
         public Object getPreviousValue()
         {
-            return getValue( issueIndex + 1);
+            return getRelativeValue( +1 );
         }
         
-        public Object getValue ( int index )
+        public Object getRelativeValue ( int indexStep )
         {
             if( null == ghc )
             {
                 return null;
             }
-            GitHubIssue ghi = ghc.getIssue( index );
+            int newIssueIndex = issueIndex + indexStep;
+            GitHubIssue ghi = ghc.getIssue( newIssueIndex );
             if( null == ghi )
             {
                 return null;
+            }
+            switch (filterMode)
+            {
+            case BUG:
+                if ( !ghi.isBug() )
+                {
+                    return getRelativeValue( indexStep + (int)Math.signum(indexStep) );
+                }
+            case LEVEL:
+                if ( !ghi.isLevel() )
+                {
+                    return getRelativeValue( indexStep + (int)Math.signum(indexStep) );
+                }
+            case ALL:
             }
             return Integer.valueOf( ghi.getNumber() );
         }
@@ -107,6 +128,11 @@ public class GitHubIssueDialog extends JDialog implements ChangeListener
         public void removeChangeListener( ChangeListener arg0 )
         {
             throw new RuntimeException(); // not used
+        }
+        
+        public void setFilter(Label filter)
+        {
+            filterMode = filter;
         }
 
         @Override
@@ -223,6 +249,27 @@ public class GitHubIssueDialog extends JDialog implements ChangeListener
         gbc.fill = GridBagConstraints.BOTH;
         this.add(pane, gbc);
         
+        levelFilterButton.addActionListener( new ActionListener()
+        {
+            public void actionPerformed( ActionEvent e )
+            {
+                issueModel.setFilter( Label.LEVEL );
+            }
+         } );
+        bugFilterButton.addActionListener( new ActionListener()
+        {
+            public void actionPerformed( ActionEvent e )
+            {
+                issueModel.setFilter( Label.BUG );
+            }
+         } );
+        allFilterButton.addActionListener( new ActionListener()
+        {
+            public void actionPerformed( ActionEvent e )
+            {
+                issueModel.setFilter( Label.ALL );
+            }
+         } );
         okButton.addActionListener( new ActionListener()
         {
             public void actionPerformed( ActionEvent e )

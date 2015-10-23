@@ -38,20 +38,28 @@ public class GitHubIssue
         return isLevel;
     }
 
-    public void setLevel( boolean isLevel )
-    {
-        this.isLevel = isLevel;
-    }
-
     public boolean isBug()
     {
         return isBug;
     }
 
-    public void setBug( boolean isBug )
+    public void setLabels( String labelsJson )
     {
-        this.isBug = isBug;
+        Pattern labelPattern = Pattern.compile( "\"name\":\"(.*?)\"" );
+        Matcher labelMatcher = labelPattern.matcher( labelsJson );
+        while ( labelMatcher.find() )
+        {
+            if ( 0 == labelMatcher.group(1).compareTo( "bug" ) )
+            {
+                isBug = true;
+            }
+            else if ( 0 == labelMatcher.group(1).compareTo( "level" ) )
+            {
+                isLevel = true;
+            }
+        }
     }
+
     
     /**
      * @param i  Some issues contain multiple worlds. Ask for them by index.
@@ -249,4 +257,6 @@ public class GitHubIssue
     {
         return s.replaceAll( "\\\\n", "\n" );
     }
+
+
 }

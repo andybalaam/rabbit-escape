@@ -68,21 +68,25 @@ public class GitHubClient
         Pattern numberPattern=Pattern.compile( "^([0-9]++)" );
         Pattern titlePattern = Pattern.compile( "\"title\":\"([^\"\\\\]*(?:\\\\.[^\"\\\\]*)*)\"" );
         Pattern bodyPattern = Pattern.compile( "\"body\":\"([^\"\\\\]*(?:\\\\.[^\"\\\\]*)*)\"" ); 
+        Pattern labelsPattern = Pattern.compile( "\"labels\":\\[(.*?)\\]" );
         for( int i = 0; i < jsonIssuesStrings.length; i++ )
         {
             GitHubIssue ghi = new GitHubIssue();
             Matcher numberMatcher = numberPattern.matcher( jsonIssuesStrings[i] );
             Matcher titleMatcher = titlePattern.matcher( jsonIssuesStrings[i] );
             Matcher bodyMatcher = bodyPattern.matcher( jsonIssuesStrings[i] );
+            Matcher labelsMatcher = labelsPattern.matcher( jsonIssuesStrings[i] );
             if (!numberMatcher.find())
             {
                 continue;
             }
             titleMatcher.find();
             bodyMatcher.find();
+            labelsMatcher.find();
             ghi.setNumber( Integer.parseInt( numberMatcher.group(1) ) );
             ghi.setTitle( titleMatcher.group(1) );
             ghi.setBody( bodyMatcher.group(1) );
+            ghi.setLabels( labelsMatcher.group(1));
             ret.add( ghi );
         }
         return ret;
