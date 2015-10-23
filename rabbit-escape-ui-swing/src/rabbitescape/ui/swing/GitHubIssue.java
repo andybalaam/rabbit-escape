@@ -151,8 +151,6 @@ public class GitHubIssue
         while ( worldMatcher.find() )
         {
             String worldWrapped = worldMatcher.group(2);
-            worldWrapped = stripEscape(worldWrapped);
-            worldWrapped = realNewlines(worldWrapped);
             wrappedWorlds.add( fixWorld(worldWrapped) );
             checkAddWorldIndices( startIndices, 
                                   endIndices, 
@@ -220,9 +218,25 @@ public class GitHubIssue
     private String fixWorld(String world)
     {
         String fixed = world;
-        //remove blank lines
+        
+        fixed = stripEscape(fixed);
+        fixed = realNewlines(fixed);
+        
+        // remove blank lines
         fixed = fixed.replaceAll("\n\n","\n");
         fixed = fixed.replaceAll( "^\n", "" );
+        
+        // strip trailing spaces from meta lines
+        Pattern p = Pattern.compile("^:(.*?) *?$", Pattern.MULTILINE);
+        Matcher m = p.matcher(fixed);
+        StringBuffer sb = new StringBuffer();
+        while (m.find()) {
+            m.appendReplacement(sb, ":$1");
+        }
+        m.appendTail(sb);
+        fixed = sb.toString();
+        
+        
         return fixed;
     }
 
