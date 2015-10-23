@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.UnknownHostException;
@@ -128,12 +129,16 @@ public class GitHubClient
         String out="";
 
         try
-        { /// @TODO send header requesting api V3
+        {
             url = new URL( baseURL+endURL );
-            is = url.openStream();  // throws an IOException
+            HttpURLConnection connection = (HttpURLConnection)url.openConnection();
+            connection.setRequestProperty("Accept",acceptHeader);
+            is = connection.getInputStream();  // Throws an IOException
             br = new BufferedReader( new InputStreamReader( is ) );
 
-            while ( ( line = br.readLine() ) != null ) /// @TODO maybe read more than a line at time
+            /* github (?always) returns the response on one line,
+             * so this while loop is not slow. */
+            while ( ( line = br.readLine() ) != null )
             {
                 out = out + line + "\n";
             }
