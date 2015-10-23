@@ -277,20 +277,24 @@ class LineProcessor
 
     private void processItemsLine( String line, VariantGenerator variantGen )
     {
-        if ( width == -1 )
+        // Treat empty lines as blank lines (Github converts blank lines to empty lines, so it seems sensible to reverse the process).
+        if ( line.length() != 0 )
         {
-            width = line.length();
-        }
-        else if ( line.length() != width )
-        {
-            throw new WrongLineLength( lines, lineNum );
-        }
+            if ( width == -1 )
+            {
+                width = line.length();
+            }
+            else if ( line.length() != width )
+            {
+                throw new WrongLineLength( lines, lineNum );
+            }
 
-        int i = 0;
-        for ( char ch : asChars( line ) )
-        {
-            processChar( ch, i, height, variantGen );
-            ++i;
+            int i = 0;
+            for ( char ch : asChars( line ) )
+            {
+                processChar( ch, i, height, variantGen );
+                ++i;
+            }
         }
         ++height;
     }

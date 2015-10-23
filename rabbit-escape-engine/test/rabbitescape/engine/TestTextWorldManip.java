@@ -472,6 +472,27 @@ public class TestTextWorldManip
     }
 
     @Test
+    public void Empty_lines_are_treated_as_spaces()
+    {
+        World world = createWorld(
+            "####",
+            "",
+            "#  #",
+            ""
+        );
+
+        assertThat(
+            renderCompleteWorld( world, false ),
+            equalTo(
+                "####",
+                "    ",
+                "#  #",
+                "    "
+            )
+        );
+    }
+
+    @Test
     public void Full_dump_shows_overlapping_things()
     {
         // Make an empty world
