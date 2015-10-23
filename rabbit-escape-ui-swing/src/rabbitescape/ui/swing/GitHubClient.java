@@ -20,6 +20,8 @@ public class GitHubClient
     public final String acceptHeader = "application/vnd.github.v3+json";
     private ArrayList<GitHubIssue> issues = null;
     private String errMsg = "";
+    private int page=1; /**< .../issues?page=number */
+    private boolean gotAllPages = false; /**< @brief do not query for more pages of issues */
     
     
     public GitHubClient()
@@ -39,9 +41,23 @@ public class GitHubClient
     
     public GitHubIssue getIssue(int index)
     {
-        if( null==issues || (index<0 || index>= issues.size()) )
+        if( null==issues || index<0 )
         {
             return null;
+        }
+        if ( index >= issues.size() )
+        {
+            if (gotAllPages)
+            {
+                return null;
+            }/// @TODO do in different thread, give some progress meter
+            String jsonIssues = apiCall( "?page=" + (++page) );
+            ArrayList<GitHubIssue> extra = parseIssues(jsonIssues);
+            issues.addAll( extra );
+            if ( 0 == extra.size() ){
+                gotAllPages = true;
+                return null; // no more to give
+            }
         }
         return issues.get( index );
     }

@@ -170,8 +170,6 @@ public class GitHubIssue
         // the json has \n in, not newline char
         // after java compiler \\\\ becomes \\, after regex compile \
         Pattern firstLinePattern = Pattern.compile( "\\\\n(\\\\t| {4,}+)" );
-        //Pattern firstLinePattern = Pattern.compile( "\\\\n(\\t)" );
-
         Matcher firstLineMatcher = firstLinePattern.matcher( body );
         int worldStart, worldEnd;
         while ( firstLineMatcher.find())
@@ -204,10 +202,20 @@ public class GitHubIssue
                 // can find the \n again to start the next line.
                 subsequentLineMatcher.region( subsequentLineMatcher.end(1), body.length() );
             }
-            worldEnd = prevEndIndex;
-            checkAddWorldIndices( startIndices, endIndices, worldStart, worldEnd );
-            firstLineMatcher = firstLineMatcher.region( prevEndIndex, body.length());
             wrappedWorlds.add( fixWorld(worldWrapped) );
+            if ( -1 == prevEndIndex ) 
+            { //indent block runs to the end of the body
+                worldEnd = body.length();
+                checkAddWorldIndices( startIndices, endIndices, worldStart, worldEnd );
+                break;
+            }
+            else
+            {
+                worldEnd = prevEndIndex;
+                firstLineMatcher = firstLineMatcher.region( prevEndIndex, body.length());
+                checkAddWorldIndices( startIndices, endIndices, worldStart, worldEnd );
+            }
+            
         }
     }
     
