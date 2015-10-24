@@ -308,6 +308,7 @@ public class GitHubIssue
      * @brief Tidy up escape characters.
      * - Remove \ before "
      * - Remove \r to covert Win EOL to Unix EOL
+     * - Undouble \\
      */
     public static String stripEscape(String s1)
     {
@@ -315,7 +316,19 @@ public class GitHubIssue
         s2 = s1.replaceAll( "(\\\\r)", "" );
         /// @TODO this is removing \" instead of just \ which are followed by "
         s2 = s2.replaceAll( "(\\\\)\"", "" );
-        return s2;
+        
+        // Undouble slashes
+        // I don't understand why this does not work without the capturing group and back reference.
+        Pattern doubleSlashPattern = Pattern.compile( "(\\\\)\\\\" ); // 8 becomes 2
+        Matcher dsMatcher = doubleSlashPattern.matcher(s2);
+        StringBuffer sb = new StringBuffer();
+        while (dsMatcher.find()) 
+        {
+            dsMatcher.appendReplacement(sb, "$1");
+        }
+        dsMatcher.appendTail(sb);
+        
+        return sb.toString();
     }
     
     /**
