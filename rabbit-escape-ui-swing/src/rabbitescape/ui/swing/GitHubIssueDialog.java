@@ -349,7 +349,8 @@ public class GitHubIssueDialog extends JDialog implements ChangeListener
         }
         final FetchCommentsWorker<Void,Void> fcw = new FetchCommentsWorker<Void,Void>(ghi);
         fcw.execute();
-        statusBox.setText( "Fetching followup comments." ); // Let dt repaint it
+        statusBox.setText( "Fetching followup comments for #" + ghi.getNumber() + "." );
+        // Let dt repaint statusBox
         DotTic dt = new DotTic(fcw);
         dt.start();
         
@@ -444,7 +445,7 @@ public class GitHubIssueDialog extends JDialog implements ChangeListener
         @Override
         protected Void doInBackground() throws Exception
         {
-            ghi.fetchComments();
+            ghi.fetchComments(ghc);
             return null;
         }
     }

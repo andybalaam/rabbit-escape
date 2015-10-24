@@ -35,6 +35,12 @@ public class GitHubClient
         issues = parseIssues( jsonIssues);
     }
     
+    public void fetchComments(GitHubIssue ghi)
+    {
+        String jsonComments = apiCall( "/" + ghi.getNumber() + "/comments" );
+        System.out.println(jsonComments);
+    }
+    
     public String getError()
     {
        return errMsg; 

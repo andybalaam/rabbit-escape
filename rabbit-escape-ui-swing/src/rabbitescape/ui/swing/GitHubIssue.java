@@ -60,9 +60,9 @@ public class GitHubIssue
         }
     }
     
-    public void fetchComments()
+    public void fetchComments(GitHubClient ghc)
     {
-        
+        ghc.fetchComments(this);
     }
 
     
