@@ -76,6 +76,7 @@ public class GitHubClient
         return -1;
     }
     
+    /** @TODO also request follow up comments */
     private ArrayList<GitHubIssue> parseIssues(String json)
     {   /// @TODO this is extremely crufty: hacking out most of the URL to split on.
         // This leaves the issue number as the first thing in the string.
