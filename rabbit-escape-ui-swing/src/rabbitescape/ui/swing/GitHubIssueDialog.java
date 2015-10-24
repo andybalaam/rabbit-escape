@@ -32,9 +32,10 @@ public class GitHubIssueDialog extends JDialog implements ChangeListener
 {
 
     private static final long serialVersionUID = 1L;
-    private JTextField issueNameBox = new JTextField( "Attempting to contact github." );
+    private JTextField issueNameBox = new JTextField( "" );
     private JTextArea issueTextBox = new JTextArea( "" );
     private JTextArea issueWorldBox = new JTextArea( "" );
+    private JTextField statusBox = new JTextField( "Attempting to contact github." );
     private IssueSpinnerModel issueModel;
     private boolean choseWorld = false;
     GitHubClient ghc = null;
@@ -177,6 +178,7 @@ public class GitHubIssueDialog extends JDialog implements ChangeListener
         JButton okButton = new JButton( "OK" );
         JButton cancelButton = new JButton( "Cancel" );
         
+        statusBox.setEditable( false );
         issueNameBox.setEditable( false );
         issueTextBox.setEditable( false );
         JScrollPane issueTextScrollPane = new JScrollPane(issueTextBox);
@@ -215,21 +217,27 @@ public class GitHubIssueDialog extends JDialog implements ChangeListener
         gbc.gridwidth = 3;
         gbc.gridx = 3;
         gbc.gridy = 0;
+        pane.add(  statusBox, gbc );
+        gbc.gridwidth = 1;
+        
+        gbc.gridwidth = 3;
+        gbc.gridx = 3;
+        gbc.gridy = 1;
         pane.add(  issueNameBox, gbc );
         gbc.gridwidth = 1;
             
         gbc.gridx= 3 ;
-        gbc.gridy= 1 ;
+        gbc.gridy= 2 ;
         pane.add( spacerPanel, gbc );
         
         gbc.fill = GridBagConstraints.NONE;
         
         gbc.gridx= 4 ;
-        gbc.gridy= 1 ;
+        gbc.gridy= 2 ;
         pane.add( okButton, gbc );
         
         gbc.gridx=5;
-        gbc.gridy=1;
+        gbc.gridy=2;
         pane.add( cancelButton, gbc );
         
         gbc.fill = GridBagConstraints.BOTH;
@@ -241,9 +249,9 @@ public class GitHubIssueDialog extends JDialog implements ChangeListener
         gbc.gridwidth = 1;
         
         gbc.gridwidth = 3;
-        gbc.gridheight = 2;
+        gbc.gridheight = 1;
         gbc.gridx = 3;
-        gbc.gridy = 2;
+        gbc.gridy = 3;
         pane.add( issueWorldBox, gbc );
         gbc.gridwidth = 1;
         gbc.gridheight = 1;
@@ -390,20 +398,20 @@ public class GitHubIssueDialog extends JDialog implements ChangeListener
         }
         
         public void actionPerformed(ActionEvent event){
-            issueNameBox.setText( issueNameBox.getText() + "." );
-            issueNameBox.repaint();
+            statusBox.setText( statusBox.getText() + "." );
+            statusBox.repaint();
             if (worker.isDone())
             {
                 timer.stop();
                 if(!"".equals( ghc.getError() ))
                 {
-                    issueNameBox.setText( ghc.getError() );
+                    statusBox.setText( ghc.getError() );
                 }
                 else
                 {
-                    issueNameBox.setText( "Done" );
+                    statusBox.setText( statusBox.getText() + "Done." );
                 }
-                issueNameBox.repaint();
+                statusBox.repaint();
                 stateChanged(null); //update info in dialog with new info from github
             }
           }
