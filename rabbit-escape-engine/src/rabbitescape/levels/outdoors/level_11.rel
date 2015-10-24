@@ -1,27 +1,39 @@
-:name=Spare 2 blockers?
-:author_name=Andy Balaam
-:author_url=http://artificialworlds.net/rabbit-escape/
-:hint1=Get the first rabbit to\nbuild the bridge.
-:hint2=Turn all the rest into blockers.
-:hint3=Turn them into blockers\nas they are still moving right.\nFree the last one with\na dig token, then turn the rabbit\ninto a basher. The rabbit\nwill undermine and free\nall the blockers.
-:description=How to rescue 10?
-:num_rabbits=10
-:num_to_save=10
-:rabbit_delay=4
-:bridge=3
-:block=10
-:explode=10
-:dig=1
-:bash=1
-:music=tryad-witness
-                              
-                           O  
-     /  /  /              ### 
-                              
-                           #\ 
-  Q                           
-                           #\ 
-                              
- ###############\          #\ 
- ##################           
-                              
+:name=Re-entry
+:author_name=colonelfazackerley
+:author_url=https://github.com/colonelfazackerley
+:hint1=Bridge out from the rocket.
+:hint2=Put a blocker at the end of\nthe bridge.
+:hint3=Bash out of the moon\nand dig down the rocket.
+:description=Return from button moon.
+:num_rabbits=6
+:num_to_save=5
+:rabbit_delay=10
+:bridge=1
+:dig=3
+:block=2
+:explode=2
+:bash=3
+:music=tryad-empty
+              #####  
+             ##   ## 
+            ##     ##
+            #       #
+            #   Q   #
+            #       #
+            ##     ##
+       /\    ##   ## 
+      /  \    #####  
+     /    \          
+    /Q     \         
+    #      #         
+    ########         
+    #      #         
+    #      #         
+    ########         
+    #      #         
+    #      #         
+    ########         
+    #      #         
+   /#      #\        
+  /##########\     O 
+#####################

@@ -2,7 +2,7 @@ package rabbitescape.engine.menu;
 
 public class AboutText
 {
-    public static final String version = "0.5";
+    public static final String version = "0.6.1";
 
     public static final String url =
         "http://www.artificialworlds.net/rabbit-escape";
@@ -15,7 +15,7 @@ public class AboutText
         + "\n"
         + "All code released under GPL v2.\n"
         + "All graphics, animations and levels released under CC BY-NC-SA 3.0.\n"
-        + "Music is by tryad (http://tyrad.org), used under CC BY-SA 3.0.\n"
+        + "Music is by tryad (http://tryad.org), used under CC BY-SA 3.0.\n"
         + "See the file COPYING.txt for details.\n"
         + "\n"
         + url;

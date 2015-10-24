@@ -1,34 +1,27 @@
-:name=Rabbit hole descent
-:author_name=colonelfazackerley
-:author_url=https://github.com/colonelfazackerley
-:hint1=There are several ways\nof completing this level.
-:hint2=Dig down 4 squares\nat the edge of the hole.\nThen bridge.
-:hint3=Dig down 4, then bash.\nUse a blocker to turn\nback toward the exit.
-:description=You should have taken the blue pill.
-:num_rabbits=4
-:num_to_save=2
-:rabbit_delay=25
-:bridge=5
-:dig=4
-:bash=4
-:block=1
-:music=tryad-witness
-                   
-                   
-  Q                
-                   
-#######   #########
-#######   #########
-     ##   ##       
-     ##   ##       
-     ##   ##       
-     ##   ##       
-     ##   ##       
-     ##   ##       
-     ##   ##       
-     ##   ##       
-     ##   ##       
-     ##   ##       
-     ##   O#       
-#######   #########
-#######   #########
+:name=Spare a blocker
+:author_name=Andy Balaam
+:author_url=http://artificialworlds.net/rabbit-escape/
+:hint1=The first rabbit should\nbuild a bridge from the end\nof the platform.
+:hint2=Corral the other rabbits\nwith a pair of blockers.
+:hint3=Free one of the blockers\nby digging down one square,\nthen bashing under the\nblocker.
+:description=How to rescue 9?
+:num_rabbits=10
+:num_to_save=9
+:rabbit_delay=4
+:bridge=4
+:block=10
+:explode=10
+:dig=1
+:bash=1
+:music=tryad-empty
+                              
+                           O  
+     /  /  /              ### 
+                              
+                           #\ 
+  Q                           
+                           #\ 
+                              
+ ##############\           #\ 
+ ##################           
+                              

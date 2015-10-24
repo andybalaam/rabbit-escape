@@ -1,29 +1,25 @@
-:name=London Bridge
+:name=Prison break
 :author_name=colonelfazackerley
 :author_url=https://github.com/colonelfazackerley
-:hint1=Bridge the gap.
-:hint2=Build 2 bridges simultaneously.
-:hint3=Drop the bridge tokens\nas soon as the level\nstarts. Use pause.
-:description=Don't fall down
-:num_rabbits=6
-:num_to_save=6
-:rabbit_delay=10
-:bridge=2
-:dig=4
-:bash=4
-:block=1
-:music=tryad-witness
-                        
-   /\              /\   
-  /  \            /  \  
-  ####            ####  
-  #  ##############  #  
- /#  ##############  #\ 
-/##  #Q          Q#  ##\
-# #  #            #  # #
-  #  #            #  #  
-  #  #            #  #  
-#########      #########
-#########      #########
-#O     ##      ## ######
-#########      #########
+:hint1=The rightmost rabbit\ndoes not have far to fall.
+:hint2=Bridge up to the left rabbit.\nThen the left rabbit can\nbash out.
+:hint3=From the right rabbit's cell wall\nbridge up to the middle rabbit's\ncell.
+:description=Who should escape first?
+:num_rabbits=3
+:num_to_save=3
+:bash=2
+:bridge=3
+:dig=2
+:music=tryad-empty
+            ########          
+            #  Q   # ######## 
+ ########   #      # #   Q  # 
+ #  Q   #   ######## #      # 
+ #      #            ######## 
+ ########                     
+                              
+                       O      
+            \       /######## 
+            ##########        
+                              
+ ##########                   

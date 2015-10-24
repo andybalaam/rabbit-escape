@@ -8,11 +8,20 @@ android {
         applicationId "net.artificialworlds.rabbitescape"
         minSdkVersion 8
         targetSdkVersion 20
-        versionCode 50
-        versionName "0.5"
+        versionCode 61
+        versionName "0.6.1"
+    }
+    signingConfigs {
+        release {
+            storeFile file( "/home/andy/apk-key-store/keystore.jks" )
+            storePassword System.getenv( "KEY_STORE_PASSWORD" )
+            keyAlias "andybalaam"
+            keyPassword System.getenv( "KEY_PASSWORD" )
+        }
     }
     buildTypes {
         release {
+            signingConfig signingConfigs.release
         }
     }
 }

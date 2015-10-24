@@ -9,8 +9,10 @@
 :num_rabbits=10
 :dig=3
 :block=1
+:explode=1
 :bridge=4
 :rabbit_delay=14,4
+:music=tryad-empty
 \Q              
 #               
 #####           

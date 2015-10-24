@@ -1,34 +1,29 @@
-:name=C
-:author_name=colonelfazackerley
-:author_url=https://github.com/colonelfazackerley
-:hint1=Dig.
-:hint2=Bash.
-:hint3=Profit.
-:description=Down and around.
-:num_rabbits=9
-:num_to_save=9
-:rabbit_delay=10,10,10,10,5,4,3,2
-:bridge=4
-:dig=4
-:block=4
-:bash=3
-:explode=2
-:music=tryad-witness
-    Q           
-                
-    #########   
-   # #####   #  
-  ########\   # 
- # # #    #\  # 
- ####      #### 
- ####           
- ####           
- #  #           
- ####           
- ####      #### 
- #####    ##### 
- ##  ######  O# 
-  ## ######  #  
-   ##########   
-    ########    
-                
+:name=Spare 2 blockers?
+:author_name=Andy Balaam
+:author_url=http://artificialworlds.net/rabbit-escape/
+:hint1=Get the first rabbit to\nbuild the bridge.
+:hint2=Turn all the rest into blockers.\nBridge up to the top right, then left from the bridge to the platform.\nPlace bridging tokens on each slope above the saw-teeth.
+:hint3=Turn them into blockers\nas they are still moving right.\nFree the last one with\na dig token, then turn the rabbit\ninto a basher. The rabbit\nwill undermine and free\nall the blockers.
+:description=How to rescue 10?
+:num_rabbits=10
+:num_to_save=10
+:rabbit_delay=4
+:bridge=8
+:block=10
+:explode=10
+:dig=1
+:bash=1
+:music=tryad-empty
+                             
+                             
+                        #### 
+   O  /   /   /   /        # 
+  ###   #   #   #   #    ### 
+       /   /   /   /         
+ \\\\\\\\\\\\\\\\\\#      #\ 
+  Q                     ##   
+                          #\ 
+                             
+ ##############\          #\ 
+ #################           
+                             

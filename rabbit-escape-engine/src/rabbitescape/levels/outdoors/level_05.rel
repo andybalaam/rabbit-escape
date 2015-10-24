@@ -1,26 +1,26 @@
-:name=Spare a blocker
-:author_name=Andy Balaam
-:hint1=The first rabbit should\nbuild a bridge from the end\nof the platform.
-:hint2=Corral the other rabbits\nwith a pair of blockers.
-:hint3=Free one of the blockers\nby digging down one square,\nthen bashing under the\nblocker.
-:description=How to rescue 9?
-:num_rabbits=10
-:num_to_save=9
-:rabbit_delay=4
-:bridge=4
-:block=10
-:explode=10
-:dig=1
-:bash=1
-:music=tryad-witness
-                              
-                           O  
-     /  /  /              ### 
-                              
-                           #\ 
-  Q                           
-                           #\ 
-                              
- ##############\           #\ 
- ##################           
-                              
+:name=Platforms, small
+:author_name=colonelfazackerley
+:author_url=https://github.com/colonelfazackerley
+:hint1=Use a bridge to turn the\nrabbits.
+:hint2=Position the bridge\nto lead up to the edge of\na platform.
+:hint3=Bridge up to the next\nplatform and dig.
+:description=It's a long way down.
+:num_rabbits=5
+:num_to_save=5
+:rabbit_delay=10
+:bridge=3
+:bash=3
+:dig=2
+:music=tryad-empty
+         Q            
+                      
+                      
+                      
+         ###     ###  
+    ###               
+                      
+    ##                
+          ####        
+O                     
+#####                 
+                      

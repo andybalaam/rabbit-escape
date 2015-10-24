@@ -11,7 +11,8 @@
 :bridge=7
 :dig=3
 :block=2
-:music=tryad-witness
+:explode=2
+:music=tryad-empty
                          
                          
                    Q     

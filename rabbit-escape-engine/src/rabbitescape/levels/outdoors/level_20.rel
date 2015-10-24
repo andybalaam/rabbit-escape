@@ -10,7 +10,9 @@
 :bridge=5
 :block=2
 :explode=10
-:music=tryad-witness
+:music=tryad-empty
+                              
+                              
                               
                    /\         
  \                /##\        
