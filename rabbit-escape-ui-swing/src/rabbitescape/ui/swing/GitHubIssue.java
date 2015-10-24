@@ -16,8 +16,11 @@ public class GitHubIssue
     private String body; /**< @brief body text excluding world text. */
     private String title;
     private ArrayList<String> wrappedWorlds; /**< @brief Worlds are []. These have \n */
+    private int worldIndex = 0; /**< @brief Some issues have multiple worlds: current selected index */
+
     private static final String replaceWorldsWith = "\n-----\n";
     private static final String commentSeparator = "\n*****\n";
+
 
     public GitHubIssue()
     {
@@ -43,6 +46,35 @@ public class GitHubIssue
     public boolean isBug()
     {
         return isBug;
+    }
+    
+
+    /**
+     * @return true if it can be set (is not out of range)
+     */
+    public boolean setCurrentWorldIndex( int index )
+    {
+        if ( wrappedWorlds.size() > index )
+        {
+            worldIndex = index;
+            return true;
+        }
+        return false;
+    }
+    
+    
+    public int getCurrentWorldIndex()
+    {
+        return worldIndex;
+    }
+    
+    public String getCurrentWorld()
+    {
+        if ( wrappedWorlds.size() > worldIndex )
+        {
+            return wrappedWorlds.get( worldIndex );
+        }
+        return null;
     }
 
     public void setLabels( String labelsJson )
@@ -293,6 +325,7 @@ public class GitHubIssue
     {
         return s.replaceAll( "\\\\n", "\n" );
     }
+
 
 
 }

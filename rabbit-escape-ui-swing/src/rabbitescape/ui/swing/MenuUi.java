@@ -271,10 +271,12 @@ public class MenuUi
         );
     }
 
-    private void chooseIssue(){
+    private void chooseIssue()
+    {
         GitHubIssueDialog id = new GitHubIssueDialog(frame);
         String world = id.getWorld();
-        if( null == world ){
+        if( null == world )
+        {
             return; // User clicked cancel, or selected issue with no world
         }
         String path = ConfigTools.getString(

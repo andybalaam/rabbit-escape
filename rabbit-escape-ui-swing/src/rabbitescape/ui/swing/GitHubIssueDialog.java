@@ -37,6 +37,7 @@ public class GitHubIssueDialog extends JDialog implements ChangeListener
     private JTextArea issueWorldBox = new JTextArea( "" );
     private JTextField statusBox = new JTextField( "Attempting to contact github." );
     private IssueSpinnerModel issueModel;
+    private WorldSpinnerModel worldModel;
     private boolean choseWorld = false;
     GitHubClient ghc = null;
     public static enum Label {ALL,
@@ -85,18 +86,20 @@ public class GitHubIssueDialog extends JDialog implements ChangeListener
             {
                 return null;
             }
-            switch (filterMode)
+            switch ( filterMode )
             {
             case BUG:
                 if ( !ghi.isBug() )
                 {
                     return getRelativeValue( indexStep + (int)Math.signum(indexStep) );
                 }
+                break;
             case LEVEL:
                 if ( !ghi.isLevel() )
                 {
                     return getRelativeValue( indexStep + (int)Math.signum(indexStep) );
                 }
+                break;
             case ALL:
             }
             return Integer.valueOf( ghi.getNumber() );
@@ -145,11 +148,88 @@ public class GitHubIssueDialog extends JDialog implements ChangeListener
                 return;
             }
             issueIndex = ghc.getIndexOfNumber( issueNumber.intValue() );
+            // new issue may have different world index current
+            worldModel.setValue( worldModel.getValue() ); 
             changeListener.stateChanged( new ChangeEvent( this ) );
         }
         
     }
-    
+
+
+    class WorldSpinnerModel implements SpinnerModel
+    {
+        private ChangeListener changeListener;
+
+        @Override
+        public void addChangeListener( ChangeListener l )
+        {
+            changeListener = l;
+        }
+
+        @Override
+        public Object getNextValue()
+        {
+            GitHubIssue ghi = issueModel.getCurrentIssue();
+            if ( null == ghi )
+            {
+                return null;
+            }
+            int value = ghi.getCurrentWorldIndex() - 1;
+            return Integer.valueOf( value < 0 ? 0 : value );
+        }
+
+        @Override
+        public Object getPreviousValue()
+        {
+            GitHubIssue ghi = issueModel.getCurrentIssue();
+            if ( null == ghi )
+            {
+                return null;
+            }
+            int value = ghi.getCurrentWorldIndex() + 1;
+            // No bounds checking needed here, setValue's is OK.
+            return Integer.valueOf( value );
+        }
+
+        @Override
+        public Object getValue()
+        {
+            GitHubIssue ghi = issueModel.getCurrentIssue();
+            if ( null == ghi )
+            {
+                return null;
+            }
+            return Integer.valueOf( ghi.getCurrentWorldIndex() );
+        }
+
+        @Override
+        public void removeChangeListener( ChangeListener l )
+        {
+            throw new RuntimeException(); // Not used
+        }
+
+        @Override
+        public void setValue( Object WorldIndexIntegerObject )
+        {
+            Integer worldIndexInteger = (Integer)WorldIndexIntegerObject;
+            if( null == worldIndexInteger )
+            {
+                return;
+            }
+            GitHubIssue ghi = issueModel.getCurrentIssue();
+            if ( null == ghi )
+            {
+                return;
+            }
+            if ( ghi.setCurrentWorldIndex((int)worldIndexInteger))
+            {
+                changeListener.stateChanged( new ChangeEvent( this ) );
+            }
+        }
+        
+    }
+
+
     protected GitHubIssueDialog( Frame frame )
     {
         super( frame, true ); // arg2 sets modal
@@ -163,6 +243,12 @@ public class GitHubIssueDialog extends JDialog implements ChangeListener
         JSpinner issueSpinner = new JSpinner(issueModel);
         issueSpinner.setPreferredSize( new Dimension( 60, 30 ) );
         issueSpinner.addChangeListener( this );
+        
+        worldModel = new WorldSpinnerModel();
+        JSpinner worldSpinner = new JSpinner( worldModel );
+        worldSpinner.setPreferredSize( new Dimension( 60, 30 ));
+        worldSpinner.addChangeListener( this );
+        
         JRadioButton levelFilterButton = new JRadioButton( "Level" );
         JRadioButton bugFilterButton = new JRadioButton( "Bug" );
         JRadioButton allFilterButton = new JRadioButton( "All" );
@@ -173,7 +259,7 @@ public class GitHubIssueDialog extends JDialog implements ChangeListener
         allFilterButton.doClick(); // set preselected filter
         JButton fetchFollowButton = new JButton("Fetch followup comments");
         JPanel spacerPanel = new JPanel();
-        // after packing, this gives the dialog it's width
+        // Ater packing, this gives the dialog it's width
         spacerPanel.setPreferredSize( new Dimension( 500, 2 ) ); 
         JButton okButton = new JButton( "OK" );
         JButton cancelButton = new JButton( "Cancel" );
@@ -187,7 +273,7 @@ public class GitHubIssueDialog extends JDialog implements ChangeListener
         issueWorldBox.setEditable( false );
         issueWorldBox.setBorder( BorderFactory.createLineBorder( Color.GRAY ) );
         issueWorldBox.setFont( new Font("monospaced", Font.PLAIN, 12) );
-        // after packing, this gives the dialog it's height
+        // After packing, this gives the dialog it's height
         issueWorldBox.setPreferredSize( new Dimension( 2, 500 ) );
         
         gbc.fill = GridBagConstraints.BOTH;
@@ -197,6 +283,10 @@ public class GitHubIssueDialog extends JDialog implements ChangeListener
         gbc.gridheight = 2;
         pane.add( issueSpinner, gbc );
         gbc.gridheight = 1;
+        
+        gbc.gridx = 0;
+        gbc.gridy = 2;
+        pane.add( worldSpinner, gbc );
         
         gbc.gridx = 1;
         gbc.gridy =0;
@@ -320,6 +410,7 @@ public class GitHubIssueDialog extends JDialog implements ChangeListener
         
     }
     
+    
     public String getWorld()
     {
         GitHubIssue ghi = issueModel.getCurrentIssue();
@@ -327,8 +418,13 @@ public class GitHubIssueDialog extends JDialog implements ChangeListener
         {
             return null;
         }
-        return ghi.getWorld( 0 ) ; /** @TODO choose which world */
+        String wrappedWorld = ghi.getCurrentWorld() ;
+        if ( null == wrappedWorld ){
+            return null;
+        }
+        return wrappedWorld;
     }
+    
 
     public String generateFilename()
     {
@@ -357,7 +453,7 @@ public class GitHubIssueDialog extends JDialog implements ChangeListener
     }
     
     /**
-     * @brief Listens to the issue choosing spinner
+     * @brief Listens to the issue choosing spinner and world choosing spinner
      * @TODO choose which world
      */
     @Override
@@ -373,7 +469,7 @@ public class GitHubIssueDialog extends JDialog implements ChangeListener
         issueNameBox.setText( ghi.getTitle() );
         issueNameBox.repaint();
         
-        String worldText = ghi.getWorld(0); /// 
+        String worldText = ghi.getCurrentWorld(); /// 
         if ( null == worldText ) // some issues have no worlds
         {
             issueWorldBox.setText( "" );
