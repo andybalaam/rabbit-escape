@@ -310,11 +310,11 @@ public class GitHubIssueDialog extends JDialog implements ChangeListener
         setResizable( false ); /// @TODO maybe make it resize so the worldTextBox expands
         pack();
         setLocationRelativeTo( frame );
-        stateChanged(null); // set initial values
+        stateChanged(null); // show initial values for GUI items
         ghc = new GitHubClient();
-        final InitFetchWorker ifw = new InitFetchWorker();
+        final InitFetchWorker<Void,Void> ifw = new InitFetchWorker<Void,Void>();
         ifw.execute();
-        DotTic dt = new DotTic (ifw);
+        DotTic dt = new DotTic ((SwingWorker<Void,Void>)ifw);
         dt.start();
         setVisible( true );
         
@@ -347,6 +347,11 @@ public class GitHubIssueDialog extends JDialog implements ChangeListener
         {
             return;
         }
+        final FetchCommentsWorker<Void,Void> fcw = new FetchCommentsWorker<Void,Void>(ghi);
+        fcw.execute();
+        statusBox.setText( "Fetching followup comments." ); // Let dt repaint it
+        DotTic dt = new DotTic(fcw);
+        dt.start();
         
     }
     
@@ -384,12 +389,12 @@ public class GitHubIssueDialog extends JDialog implements ChangeListener
     private final class DotTic implements ActionListener 
     {
         private Timer timer;
-        private SwingWorker worker;
+        private SwingWorker<Void, Void> worker;
         
-        public DotTic (SwingWorker workerIn)
+        public DotTic (SwingWorker<Void, Void> ifw)
         {
             timer = new Timer(800,this);
-            worker = workerIn;
+            worker = ifw;
         }
         
         public void start() 
@@ -417,7 +422,7 @@ public class GitHubIssueDialog extends JDialog implements ChangeListener
           }
     }
     
-    private final class InitFetchWorker extends SwingWorker<Void,Void> 
+    private final class InitFetchWorker<T,U> extends SwingWorker<Void,Void> 
     {
         @Override
         protected Void doInBackground() throws Exception
@@ -425,6 +430,22 @@ public class GitHubIssueDialog extends JDialog implements ChangeListener
             ghc.initialise();
             return null;
         }
+    }
+
+    private final class FetchCommentsWorker<T,U> extends SwingWorker<Void,Void>
+    {
+        private GitHubIssue ghi;
         
+        public FetchCommentsWorker(GitHubIssue i)
+        {
+            ghi = i;
+        }
+        
+        @Override
+        protected Void doInBackground() throws Exception
+        {
+            ghi.fetchComments();
+            return null;
+        }
     }
 }

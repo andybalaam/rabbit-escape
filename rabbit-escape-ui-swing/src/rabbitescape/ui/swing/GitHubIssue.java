@@ -59,6 +59,11 @@ public class GitHubIssue
             }
         }
     }
+    
+    public void fetchComments()
+    {
+        
+    }
 
     
     /**
