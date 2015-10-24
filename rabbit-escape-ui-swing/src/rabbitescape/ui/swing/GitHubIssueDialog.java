@@ -170,6 +170,7 @@ public class GitHubIssueDialog extends JDialog implements ChangeListener
         filterButtons.add( bugFilterButton );
         filterButtons.add( allFilterButton );
         allFilterButton.doClick(); // set preselected filter
+        JButton fetchFollowButton = new JButton("Fetch followup comments");
         JPanel spacerPanel = new JPanel();
         // after packing, this gives the dialog it's width
         spacerPanel.setPreferredSize( new Dimension( 500, 2 ) ); 
@@ -207,29 +208,33 @@ public class GitHubIssueDialog extends JDialog implements ChangeListener
         gbc.gridy= 2 ;
         pane.add( allFilterButton, gbc );
     
-        gbc.gridwidth = 3;
         gbc.gridx = 2;
+        gbc.gridy = 0;
+        pane.add( fetchFollowButton, gbc );
+        
+        gbc.gridwidth = 3;
+        gbc.gridx = 3;
         gbc.gridy = 0;
         pane.add(  issueNameBox, gbc );
         gbc.gridwidth = 1;
             
-        gbc.gridx= 2 ;
+        gbc.gridx= 3 ;
         gbc.gridy= 1 ;
         pane.add( spacerPanel, gbc );
         
         gbc.fill = GridBagConstraints.NONE;
         
-        gbc.gridx= 3 ;
+        gbc.gridx= 4 ;
         gbc.gridy= 1 ;
         pane.add( okButton, gbc );
         
-        gbc.gridx=4;
+        gbc.gridx=5;
         gbc.gridy=1;
         pane.add( cancelButton, gbc );
         
         gbc.fill = GridBagConstraints.BOTH;
         
-        gbc.gridwidth = 2;
+        gbc.gridwidth = 3;
         gbc.gridx = 0;
         gbc.gridy = 3;
         pane.add( issueTextScrollPane, gbc );
@@ -237,7 +242,7 @@ public class GitHubIssueDialog extends JDialog implements ChangeListener
         
         gbc.gridwidth = 3;
         gbc.gridheight = 2;
-        gbc.gridx = 2;
+        gbc.gridx = 3;
         gbc.gridy = 2;
         pane.add( issueWorldBox, gbc );
         gbc.gridwidth = 1;
@@ -270,6 +275,13 @@ public class GitHubIssueDialog extends JDialog implements ChangeListener
                 issueModel.setFilter( Label.ALL );
             }
          } );
+        fetchFollowButton.addActionListener( new ActionListener()
+        {
+            public void actionPerformed( ActionEvent e )
+            {
+                fetchFollowupComments();
+            }
+         } );
         okButton.addActionListener( new ActionListener()
         {
             public void actionPerformed( ActionEvent e )
@@ -292,8 +304,9 @@ public class GitHubIssueDialog extends JDialog implements ChangeListener
         setLocationRelativeTo( frame );
         stateChanged(null); // set initial values
         ghc = new GitHubClient();
-        final NetWorker nw = new NetWorker();
-        nw.execute();DotTic dt = new DotTic (nw);
+        final InitFetchWorker ifw = new InitFetchWorker();
+        ifw.execute();
+        DotTic dt = new DotTic (ifw);
         dt.start();
         setVisible( true );
         
@@ -316,6 +329,19 @@ public class GitHubIssueDialog extends JDialog implements ChangeListener
         return title;
     }
 
+    /**
+     * @brief github only sends the opening comment in te first instance.
+     */
+    public void fetchFollowupComments()
+    {
+        GitHubIssue ghi = issueModel.getCurrentIssue();
+        if( null == ghi )
+        {
+            return;
+        }
+        
+    }
+    
     /**
      * @brief Listens to the issue choosing spinner
      * @TODO choose which world
@@ -350,12 +376,12 @@ public class GitHubIssueDialog extends JDialog implements ChangeListener
     private final class DotTic implements ActionListener 
     {
         private Timer timer;
-        private NetWorker netWorker;
+        private SwingWorker worker;
         
-        public DotTic (NetWorker netWorkerIn)
+        public DotTic (SwingWorker workerIn)
         {
             timer = new Timer(800,this);
-            netWorker = netWorkerIn;
+            worker = workerIn;
         }
         
         public void start() 
@@ -366,7 +392,7 @@ public class GitHubIssueDialog extends JDialog implements ChangeListener
         public void actionPerformed(ActionEvent event){
             issueNameBox.setText( issueNameBox.getText() + "." );
             issueNameBox.repaint();
-            if (netWorker.isDone())
+            if (worker.isDone())
             {
                 timer.stop();
                 if(!"".equals( ghc.getError() ))
@@ -383,9 +409,8 @@ public class GitHubIssueDialog extends JDialog implements ChangeListener
           }
     }
     
-    private final class NetWorker extends SwingWorker<Void,Void> 
+    private final class InitFetchWorker extends SwingWorker<Void,Void> 
     {
-
         @Override
         protected Void doInBackground() throws Exception
         {
