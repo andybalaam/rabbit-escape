@@ -17,6 +17,7 @@ public class GitHubIssue
     private String title;
     private ArrayList<String> wrappedWorlds; /**< @brief Worlds are []. These have \n */
     private static final String replaceWorldsWith = "\n-----\n";
+    private static final String commentSeparator = "\n*****\n";
 
     public GitHubIssue()
     {
@@ -125,7 +126,7 @@ public class GitHubIssue
         
         bodyAdd = stripEscape(bodyAdd);
         bodyAdd = realNewlines(bodyAdd);
-        body = body + bodyAdd;
+        body = body + commentSeparator + bodyAdd;
     }
     
     /**

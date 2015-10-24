@@ -41,9 +41,9 @@ public class GitHubClient
         //System.out.println(jsonComments);
         Pattern bodyPattern = Pattern.compile( "\"body\":\"([^\"\\\\]*(?:\\\\.[^\"\\\\]*)*)\"" ); 
         Matcher bodyMatcher = bodyPattern.matcher( jsonComments );
-        while ( bodyMatcher.find())
+        while ( bodyMatcher.find() )
         {
-            
+            ghi.addToBody( bodyMatcher.group( 1 ) );
         }
     }
     
@@ -52,7 +52,7 @@ public class GitHubClient
        return errMsg; 
     }
     
-    public GitHubIssue getIssue(int index)
+    public GitHubIssue getIssue( int index )
     {
         if( null==issues || index<0 )
         {
@@ -60,7 +60,7 @@ public class GitHubClient
         }
         if ( index >= issues.size() )
         {
-            if (gotAllPages)
+            if ( gotAllPages )
             {
                 return null;
             }/// @TODO do in different thread, give some progress meter
@@ -69,7 +69,7 @@ public class GitHubClient
             issues.addAll( extra );
             if ( 0 == extra.size() ){
                 gotAllPages = true;
-                return null; // no more to give
+                return null; // Github has no more to give
             }
         }
         return issues.get( index );
@@ -124,7 +124,7 @@ public class GitHubClient
     
     private String apiCall( String endURL )
     {
-        /*  //uncomment to test progress dot tic
+        /*  // uncomment to test progress dot tic
         try
         {
             Thread.sleep(5000);
