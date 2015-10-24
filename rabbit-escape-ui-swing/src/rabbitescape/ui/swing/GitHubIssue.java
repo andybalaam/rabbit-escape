@@ -16,11 +16,12 @@ public class GitHubIssue
     private String body; /**< @brief body text excluding world text. */
     private String title;
     private ArrayList<String> wrappedWorlds; /**< @brief Worlds are []. These have \n */
-    private final String replaceWorldsWith = "\n-----\n";
+    private static final String replaceWorldsWith = "\n-----\n";
 
     public GitHubIssue()
     {
         wrappedWorlds = new ArrayList<String>();
+        body = "";
     }
 
     public int getNumber()
@@ -86,15 +87,16 @@ public class GitHubIssue
     /**
      * @brief Keeps a copy of the body text and parses out the worlds.
      */
-    public void setBody( String bodyIn )
+    public void addToBody( String bodyIn )
     {
-        // posiitons of worlds in the body text;
+        // Positions of worlds in the body text;
         ArrayList<Integer> startIndices = new ArrayList<Integer>(); 
         ArrayList<Integer> endIndices = new ArrayList<Integer>(); 
-        body = bodyIn;
-        findBacktickWorlds( startIndices, endIndices );
-        findIndentWorlds( startIndices, endIndices );
-        ArrayList<String> newWorldOrder = new ArrayList<String>( wrappedWorlds.size() );
+        String bodyAdd = ""+bodyIn;
+        ArrayList<String> wrappedWorldsAdd = new ArrayList<String>();
+        findBacktickWorlds( bodyAdd, wrappedWorldsAdd, startIndices, endIndices );
+        findIndentWorlds( bodyAdd, wrappedWorldsAdd, startIndices, endIndices );
+        ArrayList<String> newWorldOrder = new ArrayList<String>( wrappedWorldsAdd.size() );
         for ( int i=0; i<startIndices.size(); i++)
         {
             newWorldOrder.add( "" );
@@ -112,17 +114,18 @@ public class GitHubIssue
                     break;
                 }
             }
-            newWorldOrder.set( startIndices.size() - 1 - i, wrappedWorlds.get( maxIndex ) );
-            body=body.substring( 0, startIndices.get(maxIndex) ) + 
-                 replaceWorldsWith +
-                 body.substring( endIndices.get(maxIndex) );
-            startIndices.set( maxIndex, 0 ); // so it is not found again
+            newWorldOrder.set( startIndices.size() - 1 - i, wrappedWorldsAdd.get( maxIndex ) );
+            bodyAdd=bodyAdd.substring( 0, startIndices.get(maxIndex) ) + 
+                    replaceWorldsWith +
+                    bodyAdd.substring( endIndices.get(maxIndex) );
+            startIndices.set( maxIndex, 0 ); // So it is not found again
         
         }
-        wrappedWorlds = newWorldOrder;
+        wrappedWorlds.addAll( newWorldOrder );
         
-        body = stripEscape(body);
-        body = realNewlines(body);
+        bodyAdd = stripEscape(bodyAdd);
+        bodyAdd = realNewlines(bodyAdd);
+        body = body + bodyAdd;
     }
     
     /**
@@ -130,7 +133,7 @@ public class GitHubIssue
      *        Only add if the new world is not inside another.
      *        Backtick worlds are parsed first, so they win.
      */
-    private void checkAddWorldIndices( ArrayList<Integer> startIndices, 
+    private static void checkAddWorldIndices( ArrayList<Integer> startIndices, 
                                        ArrayList<Integer> endIndices,
                                        int startIndex,
                                        int endIndex )
@@ -144,38 +147,44 @@ public class GitHubIssue
         startIndices.add(startIndex);
         endIndices.add( endIndex );
     }
-    
+
+
     /**
      * @brief parse out worlds from markdown contained in triple backticks
      */
-    private void findBacktickWorlds( ArrayList<Integer> startIndices, 
-                                        ArrayList<Integer> endIndices )
+    private static void findBacktickWorlds( String bodyAdd,
+                                            ArrayList<String> braveNewWrappedWorlds,
+                                            ArrayList<Integer> startIndices, 
+                                            ArrayList<Integer> endIndices )
     {
         Pattern worldPattern = Pattern.compile( "(\\\\n)?```(.*?)```" );
-        Matcher worldMatcher = worldPattern.matcher( body );
+        Matcher worldMatcher = worldPattern.matcher( bodyAdd );
         while ( worldMatcher.find() )
         {
             String worldWrapped = worldMatcher.group(2);
-            wrappedWorlds.add( fixWorld(worldWrapped) );
+            braveNewWrappedWorlds.add( fixWorld(worldWrapped) );
             checkAddWorldIndices( startIndices, 
                                   endIndices, 
                                   worldMatcher.start(), 
                                   worldMatcher.end() );
         }
-
     }
+
 
     /**
      * @brief parse out worlds from markdown contained in indent blocks
+     * Appends to the ArrayList<Integer> describing the worlds location.
      */
-    private void findIndentWorlds( ArrayList<Integer> startIndices, 
-                                      ArrayList<Integer> endIndices )
+    private static void findIndentWorlds( String bodyAdd,
+                                          ArrayList<String> braveNewWrappedWorlds,
+                                          ArrayList<Integer> startIndices, 
+                                          ArrayList<Integer> endIndices )
     {
         // at least 4 spaces or a tab
         // the json has \n in, not newline char
         // after java compiler \\\\ becomes \\, after regex compile \
         Pattern firstLinePattern = Pattern.compile( "\\\\n(\\\\t| {4,}+)" );
-        Matcher firstLineMatcher = firstLinePattern.matcher( body );
+        Matcher firstLineMatcher = firstLinePattern.matcher( bodyAdd );
         int worldStart, worldEnd;
         while ( firstLineMatcher.find())
         {
@@ -183,17 +192,17 @@ public class GitHubIssue
             String blockPrefix = firstLineMatcher.group(1);
             if (0 == blockPrefix.compareTo( "\\t" ))
             {
-                blockPrefix = "\\\\t"; //reform so regex is char pair, not tab char.
+                blockPrefix = "\\\\t"; // Reform so regex is char pair, not tab char.
             }
             Pattern subsequentLinePattern = Pattern.compile( "\\\\n"+blockPrefix+"(.+?)\\\\n" );
-            Matcher subsequentLineMatcher = subsequentLinePattern.matcher( body );
+            Matcher subsequentLineMatcher = subsequentLinePattern.matcher( bodyAdd );
             // Do I need to store the result of region back in the Matcher?
-            subsequentLineMatcher.region( firstLineMatcher.start(), body.length() - 1 );
+            subsequentLineMatcher.region( firstLineMatcher.start(), bodyAdd.length() - 1 );
             String worldWrapped = "";
             int prevEndIndex = -1;
             while (subsequentLineMatcher.find())
             {
-                /* Check for lines between matches, note this is to the 
+                /* Check for lines between matches, note this is to the
                    start of the whole match including the indent string.
                    First time through, let the -1 past. */
                 if ( -1 != prevEndIndex &&
@@ -205,22 +214,21 @@ public class GitHubIssue
                 prevEndIndex = subsequentLineMatcher.end() - 2;
                 // the end of the group is 2 chars before the end of the whole match, so it 
                 // can find the \n again to start the next line.
-                subsequentLineMatcher.region( subsequentLineMatcher.end(1), body.length() );
+                subsequentLineMatcher.region( subsequentLineMatcher.end(1), bodyAdd.length() );
             }
-            wrappedWorlds.add( fixWorld(worldWrapped) );
+            braveNewWrappedWorlds.add( fixWorld(worldWrapped) );
             if ( -1 == prevEndIndex ) 
             { //indent block runs to the end of the body
-                worldEnd = body.length();
+                worldEnd = bodyAdd.length();
                 checkAddWorldIndices( startIndices, endIndices, worldStart, worldEnd );
                 break;
             }
             else
             {
                 worldEnd = prevEndIndex;
-                firstLineMatcher = firstLineMatcher.region( prevEndIndex, body.length());
+                firstLineMatcher = firstLineMatcher.region( prevEndIndex, bodyAdd.length());
                 checkAddWorldIndices( startIndices, endIndices, worldStart, worldEnd );
             }
-            
         }
     }
     
@@ -228,18 +236,18 @@ public class GitHubIssue
      * @brief Perform some automatic fixing
      * Can't be as strict as when loading from files.
      */
-    private String fixWorld(String world)
+    private static String fixWorld(String world)
     {
-        String fixed = world;
+        String fixed = "" + world;
         
         fixed = stripEscape(fixed);
         fixed = realNewlines(fixed);
         
-        // remove blank lines
+        // Remove blank lines
         fixed = fixed.replaceAll("\n\n","\n");
         fixed = fixed.replaceAll( "^\n", "" );
         
-        // strip trailing spaces from meta lines
+        // Strip trailing spaces from meta lines
         Pattern p = Pattern.compile("^:(.*?) *?$", Pattern.MULTILINE);
         Matcher m = p.matcher(fixed);
         StringBuffer sb = new StringBuffer();

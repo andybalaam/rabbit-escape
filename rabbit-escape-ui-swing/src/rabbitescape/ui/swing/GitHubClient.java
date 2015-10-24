@@ -38,7 +38,13 @@ public class GitHubClient
     public void fetchComments(GitHubIssue ghi)
     {
         String jsonComments = apiCall( "/" + ghi.getNumber() + "/comments" );
-        System.out.println(jsonComments);
+        //System.out.println(jsonComments);
+        Pattern bodyPattern = Pattern.compile( "\"body\":\"([^\"\\\\]*(?:\\\\.[^\"\\\\]*)*)\"" ); 
+        Matcher bodyMatcher = bodyPattern.matcher( jsonComments );
+        while ( bodyMatcher.find())
+        {
+            
+        }
     }
     
     public String getError()
@@ -109,7 +115,7 @@ public class GitHubClient
             labelsMatcher.find();
             ghi.setNumber( Integer.parseInt( numberMatcher.group(1) ) );
             ghi.setTitle( titleMatcher.group(1) );
-            ghi.setBody( bodyMatcher.group(1) );
+            ghi.addToBody( bodyMatcher.group(1) );
             ghi.setLabels( labelsMatcher.group(1));
             ret.add( ghi );
         }
