@@ -181,7 +181,35 @@ public class TestGitHubInterface
     @Test
     public void No_infinite_loop()
     {
-        String issueBodyText = "```\\r\\n:name=Planet Paradise\\r\\n:description=Don't lose your gravity and fall off the planet just get to the core.\\r\\n:author_name=GamingInky\\r\\n:author_url=https://github.com/GamingInky\\r\\n:hint1=You have to smash the planet.\\r\\n:hint2=The lower you are the better.\\r\\n:hint3=Bridging would be useful at the end.\\r\\n:num_rabbits=1\\r\\n:num_to_save=1\\r\\n:bash=2\\r\\n:bridge=2\\r\\n:music=\\r\\n                 Q         \\r\\n                          #\\r\\n                          #\\r\\n               # #         \\r\\n                ###        \\r\\n               #####    #  \\r\\n           #  #######   ## \\r\\n          #################\\r\\n         # #  ## O###   ## \\r\\n        #        ###    #  \\r\\n       #        ###        \\r\\n     #           #         \\r\\n     ########## # #        \\r\\n```  \\r\\n\\r\\nPlease somebody help me make theese levels harder";
+        String issueBodyText =
+            "```\\r\\n" +
+            ":name=Planet Paradise\\r\\n" +
+            ":description=Don't lose your gravity and fall off the planet just get to the core.\\r\\n" +
+            ":author_name=GamingInky\\r\\n" +
+            ":author_url=https://github.com/GamingInky\\r\\n" +
+            ":hint1=You have to smash the planet.\\r\\n" +
+            ":hint2=The lower you are the better.\\r\\n" +
+            ":hint3=Bridging would be useful at the end.\\r\\n" +
+            ":num_rabbits=1\\r\\n" +
+            ":num_to_save=1\\r\\n" +":bash=2\\r\\n" +
+            ":bridge=2\\r\\n" +
+            ":music=\\r\\n" +
+            "                 Q         \\r\\n" +
+            "                          #\\r\\n" +
+            "                          #\\r\\n" +
+            "               # #         \\r\\n" +
+            "                ###        \\r\\n" +
+            "               #####    #  \\r\\n" +
+            "           #  #######   ## \\r\\n" +
+            "          #################\\r\\n" +
+            "         # #  ## O###   ## \\r\\n" +
+            "        #        ###    #  \\r\\n" +
+            "       #        ###        \\r\\n" +
+            "     #           #         \\r\\n" +
+            "     ########## # #        \\r\\n" +
+            "```  \\r\\n" +
+            "\\r\\n" +
+            "Please somebody help me make theese levels harder";
         GitHubIssue ghi = new GitHubIssue( 1,
                                            "Level: test",
                                            issueBodyText);
