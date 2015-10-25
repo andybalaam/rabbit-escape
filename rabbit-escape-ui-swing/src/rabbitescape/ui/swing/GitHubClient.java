@@ -89,7 +89,7 @@ public class GitHubClient
     }
 
 
-    private ArrayList<GitHubIssue> parseIssues(String json)
+    private static ArrayList<GitHubIssue> parseIssues(String json)
     {   /// @TODO this is extremely crufty: hacking out most of the URL to split on.
         // This leaves the issue number as the first thing in the string.
         Pattern issuePattern = Pattern.compile( "\\{\"url\":\"https://api\\.github\\.com/repos/andybalaam/rabbit-escape/issues/" );
@@ -101,7 +101,6 @@ public class GitHubClient
         Pattern labelsPattern = Pattern.compile( "\"labels\":\\[(.*?)\\]" );
         for( int i = 0; i < jsonIssuesStrings.length; i++ )
         {
-            GitHubIssue ghi = new GitHubIssue();
             Matcher numberMatcher = numberPattern.matcher( jsonIssuesStrings[i] );
             Matcher titleMatcher = titlePattern.matcher( jsonIssuesStrings[i] );
             Matcher bodyMatcher = bodyPattern.matcher( jsonIssuesStrings[i] );
@@ -113,10 +112,10 @@ public class GitHubClient
             titleMatcher.find();
             bodyMatcher.find();
             labelsMatcher.find();
-            ghi.setNumber( Integer.parseInt( numberMatcher.group(1) ) );
-            ghi.setTitle( titleMatcher.group(1) );
-            ghi.addToBody( bodyMatcher.group(1) );
-            ghi.setLabels( labelsMatcher.group(1));
+            GitHubIssue ghi = new GitHubIssue( Integer.parseInt( numberMatcher.group( 1 ) ),
+                                               titleMatcher.group( 1 ),
+                                               bodyMatcher.group( 1 ) );
+            ghi.setLabels( labelsMatcher.group( 1 ) );
             ret.add( ghi );
         }
         return ret;

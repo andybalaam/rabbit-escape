@@ -9,9 +9,9 @@ public class TestGitHubInterface
 {
 
     @Test
-    public void TestBacktickMarkdownWorld()
+    public void Backtick_markdown_world()
     {
-        // strings from github json have actual \n, not newline chars
+        // Strings from github json have actual \n, not newline chars
         String issueBodyText = 
             "Some chat\\n" +
             "```\\n"+
@@ -22,10 +22,10 @@ public class TestGitHubInterface
             "```\\n"+
             "More waffle";
         
-        GitHubIssue ghi = new GitHubIssue();
-        ghi.addToBody( issueBodyText );
+        GitHubIssue ghi = new GitHubIssue( 1,
+                                           "Level: test",
+                                           issueBodyText);
         String wrappedWorld = ghi.getWorld( 0 );
-        // now newlines
         String expectedWrappedWorld =
             ":name=Bunny\n"+
             ":description=Boiler\n"+
@@ -35,9 +35,8 @@ public class TestGitHubInterface
     }
     
     @Test
-    public void TestStripTrailingWhiteFromMetaLines()
+    public void Strip_trailing_white_from_meta_lines()
     {
-        // strings from github json have actual \n, not newline chars
         String issueBodyText = 
             "Some chat\\n" +
             "```\\n"+
@@ -48,10 +47,10 @@ public class TestGitHubInterface
             "```\\n"+
             "More waffle";
         
-        GitHubIssue ghi = new GitHubIssue();
-        ghi.addToBody( issueBodyText );
+        GitHubIssue ghi = new GitHubIssue( 1,
+                                           "Level: test",
+                                           issueBodyText);
         String wrappedWorld = ghi.getWorld( 0 );
-        // now newlines
         String expectedWrappedWorld =
             ":name=Bunny\n"+
             ":description=Boiler\n"+
@@ -61,9 +60,8 @@ public class TestGitHubInterface
     }
     
     @Test
-    public void TestBacktickMarkdownWorldNoPreamble()
+    public void Backtick_markdown_world_no_preamble()
     {
-        // strings from github json have actual \n, not newline chars
         String issueBodyText = 
             "```\\n"+
             ":name=Bunny\\n"+
@@ -72,8 +70,9 @@ public class TestGitHubInterface
             "#######\\n"+
             "```";
         
-        GitHubIssue ghi = new GitHubIssue();
-        ghi.addToBody( issueBodyText );
+        GitHubIssue ghi = new GitHubIssue( 1,
+                                           "Level: test",
+                                           issueBodyText);
         String wrappedWorld = ghi.getWorld( 0 );
         // now newlines
         String expectedWrappedWorld =
@@ -88,9 +87,8 @@ public class TestGitHubInterface
      * @brief test parsing of world from 4 space indented markdown.
      */
     @Test
-    public void TestIndentMarkdownWorld()
+    public void Indent_markdown_world()
     {
-        // strings from github json have actual \n, not newline chars
         String issueBodyText = 
             "Some chat\\n" +
             "    :name=Bunny\\n"+
@@ -100,10 +98,10 @@ public class TestGitHubInterface
             "    #######\\n"+
             "\\n"+
             "More waffle";
-        GitHubIssue ghi = new GitHubIssue();
-        ghi.addToBody( issueBodyText );
+        GitHubIssue ghi = new GitHubIssue( 1,
+                                           "Level: test",
+                                           issueBodyText);
         String wrappedWorld = ghi.getWorld( 0 );
-        // now newlines
         String expectedWrappedWorld =
             ":name=Bunny\n"+
             ":description=Boiler\n"+
@@ -114,12 +112,11 @@ public class TestGitHubInterface
     }
     
     
-    
     /**
      * @brief 6-space indented. tab indented. backticked.
      */
     @Test
-    public void TestManyWorldMarkdown()
+    public void Many_world_markdown()
     {
         String issueBodyText = 
             "Dear sir,\\n" +
@@ -138,8 +135,9 @@ public class TestGitHubInterface
             "#### ##\\n"+
             "```\\n"+
             "Regards\\n";
-        GitHubIssue ghi = new GitHubIssue();
-        ghi.addToBody( issueBodyText );
+        GitHubIssue ghi = new GitHubIssue( 1,
+                                           "Level: test",
+                                           issueBodyText);
         String wrappedWorld, expectedWrappedWorld;
 
         wrappedWorld = ghi.getWorld( 0 );
@@ -162,7 +160,8 @@ public class TestGitHubInterface
                                "#### ##\n";
         assertThat( wrappedWorld, equalTo(expectedWrappedWorld) );
         
-        String expectedBody = "Dear sir,\n" +
+        String expectedBody = "\n*****\n" +
+                              "Dear sir,\n" +
                               "Herein are some levels\n" +
                               "-----\n" +
                               "\n" +
@@ -180,10 +179,11 @@ public class TestGitHubInterface
     }
     
     @Test
-    public void TestNoInfiniteLoop()
+    public void No_infinite_loop()
     {
         String issueBodyText = "```\\r\\n:name=Planet Paradise\\r\\n:description=Don't lose your gravity and fall off the planet just get to the core.\\r\\n:author_name=GamingInky\\r\\n:author_url=https://github.com/GamingInky\\r\\n:hint1=You have to smash the planet.\\r\\n:hint2=The lower you are the better.\\r\\n:hint3=Bridging would be useful at the end.\\r\\n:num_rabbits=1\\r\\n:num_to_save=1\\r\\n:bash=2\\r\\n:bridge=2\\r\\n:music=\\r\\n                 Q         \\r\\n                          #\\r\\n                          #\\r\\n               # #         \\r\\n                ###        \\r\\n               #####    #  \\r\\n           #  #######   ## \\r\\n          #################\\r\\n         # #  ## O###   ## \\r\\n        #        ###    #  \\r\\n       #        ###        \\r\\n     #           #         \\r\\n     ########## # #        \\r\\n```  \\r\\n\\r\\nPlease somebody help me make theese levels harder";
-        GitHubIssue ghi = new GitHubIssue();
-        ghi.addToBody( issueBodyText );
+        GitHubIssue ghi = new GitHubIssue( 1,
+                                           "Level: test",
+                                           issueBodyText);
     }
 }

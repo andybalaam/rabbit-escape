@@ -13,7 +13,7 @@ public class GitHubIssue
     private int number; /**< @brief github issue number.*/
     private boolean isLevel;
     private boolean isBug;
-    private String body; /**< @brief body text excluding world text. */
+    private String body = ""; /**< @brief body text excluding world text. */
     private String title;
     private ArrayList<String> wrappedWorlds; /**< @brief Worlds are []. These have \n */
     private int worldIndex = 0; /**< @brief Some issues have multiple worlds: current selected index */
@@ -22,10 +22,14 @@ public class GitHubIssue
     private static final String commentSeparator = "\n*****\n";
 
 
-    public GitHubIssue()
+    public GitHubIssue( int gitHubIssueNumber,
+                        String gitHubIssueTitle,
+                        String openingCommentBody)
     {
         wrappedWorlds = new ArrayList<String>();
-        body = "";
+        number = gitHubIssueNumber;
+        addToBody(openingCommentBody);
+        title = gitHubIssueTitle;
     }
 
     public int getNumber()
@@ -33,10 +37,6 @@ public class GitHubIssue
         return number;
     }
 
-    public void setNumber( int number )
-    {
-        this.number = number;
-    }
 
     public boolean isLevel()
     {

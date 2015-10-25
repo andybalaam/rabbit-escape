@@ -429,6 +429,10 @@ public class GitHubIssueDialog extends JDialog implements ChangeListener
     public String generateFilename()
     {
         String title = issueModel.getCurrentIssue().getTitle();
+        if ( null == title )
+        {
+            title = "IssueHasNoTitle";
+        }
         title = title.replaceAll( "\\W", "" );
         return title;
     }
