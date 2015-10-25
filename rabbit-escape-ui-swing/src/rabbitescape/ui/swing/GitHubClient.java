@@ -38,7 +38,6 @@ public class GitHubClient
     public void fetchComments(GitHubIssue ghi)
     {
         String jsonComments = apiCall( "/" + ghi.getNumber() + "/comments" );
-        //System.out.println(jsonComments);
         Pattern bodyPattern = Pattern.compile( "\"body\":\"([^\"\\\\]*(?:\\\\.[^\"\\\\]*)*)\"" ); 
         Matcher bodyMatcher = bodyPattern.matcher( jsonComments );
         while ( bodyMatcher.find() )
@@ -94,24 +93,21 @@ public class GitHubClient
         // This leaves the issue number as the first thing in the string.
         Pattern issuePattern = Pattern.compile( "\\{\"url\":\"https://api\\.github\\.com/repos/andybalaam/rabbit-escape/issues/" );
         String[] jsonIssuesStrings = issuePattern.split( json );
-        ArrayList<GitHubIssue> ret= new ArrayList<GitHubIssue>();;
-        Pattern numberPattern=Pattern.compile( "^([0-9]++)" );
-        Pattern labelsPattern = Pattern.compile( "\"labels\":\\[(.*?)\\]" );
+        ArrayList<GitHubIssue> ret= new ArrayList<GitHubIssue>();
         for( int i = 0; i < jsonIssuesStrings.length; i++ )
         {
-            Matcher numberMatcher = numberPattern.matcher( jsonIssuesStrings[i] );
-            Matcher labelsMatcher = labelsPattern.matcher( jsonIssuesStrings[i] );
-            if (!numberMatcher.find())
+            String jsonIssue = jsonIssuesStrings[i];
+            if ( !"0123456789".contains( jsonIssue.substring( 0, 1 ) ) )
             {
                 continue;
             }
-            labelsMatcher.find();
+            
             GitHubIssue ghi = new GitHubIssue( 
-                GitHubJsonTools.getIntValue( jsonIssuesStrings[i], "number" ),
-                GitHubJsonTools.getStringValue( jsonIssuesStrings[i], "title" ),
-                GitHubJsonTools.getStringValue( jsonIssuesStrings[i], "body" )
+                GitHubJsonTools.getIntValue( jsonIssue, "number" ),
+                GitHubJsonTools.getStringValue( jsonIssue, "title" ),
+                GitHubJsonTools.getStringValue( jsonIssue, "body" ),
+                GitHubJsonTools.getStringValuesFromArrayOfObjects( jsonIssue, "labels.name" )
             );
-            ghi.setLabels( labelsMatcher.group( 1 ) );
             ret.add( ghi );
         }
         return ret;

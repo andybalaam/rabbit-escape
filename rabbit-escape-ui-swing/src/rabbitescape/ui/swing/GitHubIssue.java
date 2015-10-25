@@ -2,6 +2,7 @@ package rabbitescape.ui.swing;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.EnumSet;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -22,14 +23,39 @@ public class GitHubIssue
     private static final String commentSeparator = "\n*****\n";
 
 
+    /**
+     * @brief Creates a GitHubIssue with no labels.
+     */
     public GitHubIssue( int gitHubIssueNumber,
                         String gitHubIssueTitle,
                         String openingCommentBody)
+    {
+        this(gitHubIssueNumber,
+             gitHubIssueTitle,
+             openingCommentBody,
+             new String[] {});
+    }
+
+    public GitHubIssue( int gitHubIssueNumber,
+                        String gitHubIssueTitle,
+                        String openingCommentBody,
+                        String[] labels)
     {
         wrappedWorlds = new ArrayList<String>();
         number = gitHubIssueNumber;
         addToBody(openingCommentBody);
         title = gitHubIssueTitle;
+        for ( int i = 0; i < labels.length; i++ )
+        {
+            if ( 0 == labels[i].compareTo( "bug" ) )
+            {
+                isBug = true;
+            }
+            else if ( 0 == labels[i].compareTo( "level" ) )
+            {
+                isLevel = true;
+            }
+        }
     }
 
     public int getNumber()
