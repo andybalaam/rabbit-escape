@@ -11,7 +11,7 @@ public class TestMegaCoder
     @Test
     public void Encode_hello_world()
     {
-        String output = MegaCoder.encode( "Be the bash" );
+        String output = MegaCoder.encode( "Hello World" );
         assertEquals( "Igjj*z{j={4", output );
 
         String decoded = MegaCoder.decode( output );
