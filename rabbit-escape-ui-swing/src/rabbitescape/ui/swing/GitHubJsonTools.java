@@ -36,7 +36,8 @@ public class GitHubJsonTools
     }
     
     /**
-     * @param key Something of the form array_name.member_name
+     * @param key Something of the form array_name.member_name. If something of the form member_name
+     *            is used, the whole string will be searched.
      * 
      * "thing1":"stuff"
      * "thing2_array:[
@@ -53,9 +54,19 @@ public class GitHubJsonTools
     public static String[] getStringValuesFromArrayOfObjects( String json, String key)
     {
         String[] keyParts = key.split( "\\." );
-        String arrayString = getArrayString ( json, keyParts[0] );
-        
-        Pattern p = Pattern.compile( "\"" + keyParts[1] + "\":\"(.*?)\"" );
+        String memberName;
+        String arrayString ;
+        if ( 2 == keyParts.length )
+        { // array_name.member_name
+            arrayString = getArrayString ( json, keyParts[0] );
+            memberName = keyParts[1];
+        }
+        else
+        { // member_name only
+            arrayString = json;
+            memberName = key;
+        }
+        Pattern p = Pattern.compile( "\"" + memberName + "\":\"(.*?)\"" );
         Matcher m = p.matcher( arrayString );
         ArrayList<String> ret = new ArrayList<String>(); 
         while ( m.find() )

@@ -103,23 +103,7 @@ public class GitHubIssue
         return null;
     }
 
-    public void setLabels( String labelsJson )
-    {
-        Pattern labelPattern = Pattern.compile( "\"name\":\"(.*?)\"" );
-        Matcher labelMatcher = labelPattern.matcher( labelsJson );
-        while ( labelMatcher.find() )
-        {
-            if ( 0 == labelMatcher.group(1).compareTo( "bug" ) )
-            {
-                isBug = true;
-            }
-            else if ( 0 == labelMatcher.group(1).compareTo( "level" ) )
-            {
-                isLevel = true;
-            }
-        }
-    }
-    
+
     public void fetchComments(GitHubClient ghc)
     {
         ghc.fetchComments(this);

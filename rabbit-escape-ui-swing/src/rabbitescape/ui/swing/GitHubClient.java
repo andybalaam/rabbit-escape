@@ -34,17 +34,19 @@ public class GitHubClient
         String jsonIssues = apiCall( "" );
         issues = parseIssues( jsonIssues);
     }
-    
+
+
     public void fetchComments(GitHubIssue ghi)
     {
         String jsonComments = apiCall( "/" + ghi.getNumber() + "/comments" );
-        Pattern bodyPattern = Pattern.compile( "\"body\":\"([^\"\\\\]*(?:\\\\.[^\"\\\\]*)*)\"" ); 
-        Matcher bodyMatcher = bodyPattern.matcher( jsonComments );
-        while ( bodyMatcher.find() )
+        String [] commentBodies = GitHubJsonTools.getStringValuesFromArrayOfObjects( jsonComments, "body" );
+
+        for ( int i = 0; i < commentBodies.length; i++)
         {
-            ghi.addToBody( bodyMatcher.group( 1 ) );
+            ghi.addToBody( commentBodies[i] );
         }
     }
+    
     
     public String getError()
     {
@@ -66,14 +68,16 @@ public class GitHubClient
             String jsonIssues = apiCall( "?page=" + (++page) );
             ArrayList<GitHubIssue> extra = parseIssues(jsonIssues);
             issues.addAll( extra );
-            if ( 0 == extra.size() ){
+            if ( 0 == extra.size() )
+            {
                 gotAllPages = true;
                 return null; // Github has no more to give
             }
         }
         return issues.get( index );
     }
-    
+
+
     public int getIndexOfNumber( int issueNumber)
     {
         for( int i=0; i<issues.size(); i++ )
