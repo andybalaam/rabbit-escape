@@ -96,25 +96,21 @@ public class GitHubClient
         String[] jsonIssuesStrings = issuePattern.split( json );
         ArrayList<GitHubIssue> ret= new ArrayList<GitHubIssue>();;
         Pattern numberPattern=Pattern.compile( "^([0-9]++)" );
-        Pattern titlePattern = Pattern.compile( "\"title\":\"([^\"\\\\]*(?:\\\\.[^\"\\\\]*)*)\"" );
-        Pattern bodyPattern = Pattern.compile( "\"body\":\"([^\"\\\\]*(?:\\\\.[^\"\\\\]*)*)\"" ); 
         Pattern labelsPattern = Pattern.compile( "\"labels\":\\[(.*?)\\]" );
         for( int i = 0; i < jsonIssuesStrings.length; i++ )
         {
             Matcher numberMatcher = numberPattern.matcher( jsonIssuesStrings[i] );
-            Matcher titleMatcher = titlePattern.matcher( jsonIssuesStrings[i] );
-            Matcher bodyMatcher = bodyPattern.matcher( jsonIssuesStrings[i] );
             Matcher labelsMatcher = labelsPattern.matcher( jsonIssuesStrings[i] );
             if (!numberMatcher.find())
             {
                 continue;
             }
-            titleMatcher.find();
-            bodyMatcher.find();
             labelsMatcher.find();
-            GitHubIssue ghi = new GitHubIssue( Integer.parseInt( numberMatcher.group( 1 ) ),
-                                               titleMatcher.group( 1 ),
-                                               bodyMatcher.group( 1 ) );
+            GitHubIssue ghi = new GitHubIssue( 
+                GitHubJsonTools.getIntValue( jsonIssuesStrings[i], "number" ),
+                GitHubJsonTools.getStringValue( jsonIssuesStrings[i], "title" ),
+                GitHubJsonTools.getStringValue( jsonIssuesStrings[i], "body" )
+            );
             ghi.setLabels( labelsMatcher.group( 1 ) );
             ret.add( ghi );
         }
