@@ -460,7 +460,6 @@ public class GitHubIssueDialog extends JDialog implements ChangeListener
 
     /**
      * @brief Listens to the issue choosing spinner and world choosing spinner
-     * @TODO choose which world
      */
     @Override
     public void stateChanged( ChangeEvent e )

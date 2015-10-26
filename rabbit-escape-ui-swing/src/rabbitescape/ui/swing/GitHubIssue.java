@@ -322,7 +322,7 @@ public class GitHubIssue
     {
         String s2;
         s2 = s1.replaceAll( "(\\\\r)", "" );
-        // / @TODO this is removing \" instead of just \ which are followed by "
+
         s2 = GitHubJsonTools.regexReplacePreserveGroup( s2, "\\\\(\\\")" );
 
         // Undouble slashes
