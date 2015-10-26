@@ -4,6 +4,8 @@ import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.regex.Pattern;
 
+import static rabbitescape.engine.i18n.Translation.t ;
+
 /**
  * @brief retrieval and parsing. no swing.
  */
@@ -116,7 +118,7 @@ public class GitHubClient
         }
         catch ( UnknownHostException eUH )
         {
-            errMsg = "Can't reach github.com.";
+            errMsg = t( "Can't reach github.com." );
         }
         catch ( Exception e )
         {

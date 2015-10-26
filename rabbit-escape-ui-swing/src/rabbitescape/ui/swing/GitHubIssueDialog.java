@@ -1,6 +1,7 @@
 package rabbitescape.ui.swing;
 
 import java.awt.Color;
+
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Frame;
@@ -25,6 +26,8 @@ import javax.swing.Timer;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import static rabbitescape.engine.i18n.Translation.t ;
+
 /**
  * @brief GUI elements for retrieving levels from issues.
  */
@@ -36,7 +39,7 @@ public class GitHubIssueDialog extends JDialog implements ChangeListener
     private JTextArea issueTextBox = new JTextArea( "" );
     private JTextArea issueWorldBox = new JTextArea( "" );
     private JTextField statusBox = new JTextField(
-        "Attempting to contact github." );
+        t( "Attempting to contact github." ) );
     private IssueSpinnerModel issueModel;
     private WorldSpinnerModel worldModel;
     private boolean choseWorld = false;
@@ -234,7 +237,7 @@ public class GitHubIssueDialog extends JDialog implements ChangeListener
     protected GitHubIssueDialog( Frame frame )
     {
         super( frame, true ); // arg2 sets modal
-        setTitle( "Retrieve level from the GitHub Rabbit Escape issue pages." );
+        setTitle( t( "Retrieve level from the GitHub Rabbit Escape issue pages." ) );
 
         GridBagConstraints gbc = new GridBagConstraints();
 
@@ -250,20 +253,20 @@ public class GitHubIssueDialog extends JDialog implements ChangeListener
         worldSpinner.setPreferredSize( new Dimension( 60, 30 ) );
         worldSpinner.addChangeListener( this );
 
-        JRadioButton levelFilterButton = new JRadioButton( "Level" );
-        JRadioButton bugFilterButton = new JRadioButton( "Bug" );
-        JRadioButton allFilterButton = new JRadioButton( "All" );
+        JRadioButton levelFilterButton = new JRadioButton( t( "Level" ) );
+        JRadioButton bugFilterButton = new JRadioButton( t( "Bug" ) );
+        JRadioButton allFilterButton = new JRadioButton( t( "All" ) );
         ButtonGroup filterButtons = new ButtonGroup();
         filterButtons.add( levelFilterButton );
         filterButtons.add( bugFilterButton );
         filterButtons.add( allFilterButton );
         allFilterButton.doClick(); // set preselected filter
-        JButton fetchFollowButton = new JButton( "Fetch followup comments" );
+        JButton fetchFollowButton = new JButton( t( "Fetch followup comments" ) );
         JPanel spacerPanel = new JPanel();
         // Ater packing, this gives the dialog it's width
         spacerPanel.setPreferredSize( new Dimension( 500, 2 ) );
-        JButton okButton = new JButton( "OK" );
-        JButton cancelButton = new JButton( "Cancel" );
+        JButton okButton = new JButton( t( "OK" ) );
+        JButton cancelButton = new JButton( t( "Cancel" ) );
 
         statusBox.setEditable( false );
         issueNameBox.setEditable( false );
@@ -431,7 +434,7 @@ public class GitHubIssueDialog extends JDialog implements ChangeListener
         String title = issueModel.getCurrentIssue().getTitle();
         if ( null == title )
         {
-            title = "IssueHasNoTitle";
+            title = t( "Issue has no title" ) ;
         }
         title = title.replaceAll( "\\W", "" );
         return title;
@@ -450,7 +453,7 @@ public class GitHubIssueDialog extends JDialog implements ChangeListener
         final FetchCommentsWorker<Void, Void> fcw = new FetchCommentsWorker<Void, Void>(
             ghi );
         fcw.execute();
-        statusBox.setText( "Fetching followup comments for #" + ghi.getNumber()
+        statusBox.setText( t( "Fetching followup comments for" ) + " #" + ghi.getNumber()
             + "." );
         // Let dt repaint statusBox
         DotTic dt = new DotTic( fcw );
@@ -516,7 +519,7 @@ public class GitHubIssueDialog extends JDialog implements ChangeListener
                 }
                 else
                 {
-                    statusBox.setText( statusBox.getText() + "Done." );
+                    statusBox.setText( statusBox.getText() + t( "Done." ) );
                 }
                 statusBox.repaint();
                 stateChanged( null ); // update info in dialog with new info
