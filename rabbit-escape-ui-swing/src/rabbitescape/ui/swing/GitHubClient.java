@@ -1,11 +1,10 @@
 package rabbitescape.ui.swing;
 
-
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.regex.Pattern;
 
-/** 
+/**
  * @brief retrieval and parsing. no swing.
  */
 public class GitHubClient
@@ -14,41 +13,39 @@ public class GitHubClient
     public final String acceptHeader = "Accept: application/vnd.github.v3+json";
     private ArrayList<GitHubIssue> issues = null;
     private String errMsg = "";
-    private int page=1; /**< .../issues?page=number */
-    private boolean gotAllPages = false; /**< @brief do not query for more pages of issues */
-    
-    
+    private int page = 1; /** < .../issues?page=number */
+    private boolean gotAllPages = false; /** < @brief do not query for more pages of issues */
+
     public GitHubClient()
     {
     }
-    
+
     public void initialise()
     {
         String jsonIssues = apiCall( "" );
-        issues = parseIssues( jsonIssues);
+        issues = parseIssues( jsonIssues );
     }
 
-
-    public void fetchComments(GitHubIssue ghi)
+    public void fetchComments( GitHubIssue ghi )
     {
         String jsonComments = apiCall( "/" + ghi.getNumber() + "/comments" );
-        String [] commentBodies = GitHubJsonTools.getStringValuesFromArrayOfObjects( jsonComments, "body" );
+        String[] commentBodies = GitHubJsonTools
+            .getStringValuesFromArrayOfObjects( jsonComments, "body" );
 
-        for ( int i = 0; i < commentBodies.length; i++)
+        for ( int i = 0; i < commentBodies.length; i++ )
         {
             ghi.addToBody( commentBodies[i] );
         }
     }
-    
-    
+
     public String getError()
     {
-       return errMsg; 
+        return errMsg;
     }
-    
+
     public GitHubIssue getIssue( int index )
     {
-        if( null==issues || index<0 )
+        if ( null == issues || index < 0 )
         {
             return null;
         }
@@ -57,9 +54,9 @@ public class GitHubClient
             if ( gotAllPages )
             {
                 return null;
-            }/// @TODO do in different thread, give some progress meter
-            String jsonIssues = apiCall( "?page=" + (++page) );
-            ArrayList<GitHubIssue> extra = parseIssues(jsonIssues);
+            }// / @TODO do in different thread, give some progress meter
+            String jsonIssues = apiCall( "?page=" + ( ++page ) );
+            ArrayList<GitHubIssue> extra = parseIssues( jsonIssues );
             issues.addAll( extra );
             if ( 0 == extra.size() )
             {
@@ -70,13 +67,12 @@ public class GitHubClient
         return issues.get( index );
     }
 
-
-    public int getIndexOfNumber( int issueNumber)
+    public int getIndexOfNumber( int issueNumber )
     {
-        for( int i=0; i<issues.size(); i++ )
+        for ( int i = 0; i < issues.size(); i++ )
         {
             GitHubIssue ghi = issues.get( i );
-            if( ghi.getNumber() == issueNumber )
+            if ( ghi.getNumber() == issueNumber )
             {
                 return i;
             }
@@ -84,43 +80,45 @@ public class GitHubClient
         return -1;
     }
 
-
-    private static ArrayList<GitHubIssue> parseIssues(String json)
-    {   /// @TODO this is extremely crufty: hacking out most of the URL to split on.
-        // This leaves the issue number as the first thing in the string.
-        Pattern issuePattern = Pattern.compile( "\\{\"url\":\"https://api\\.github\\.com/repos/andybalaam/rabbit-escape/issues/" );
+    private static ArrayList<GitHubIssue> parseIssues( String json )
+    { // / @TODO this is extremely crufty: hacking out most of the URL to split
+      // on.
+      // This leaves the issue number as the first thing in the string.
+        Pattern issuePattern = Pattern
+            .compile( "\\{\"url\":\"https://api\\.github\\.com/repos/andybalaam/rabbit-escape/issues/" );
         String[] jsonIssuesStrings = issuePattern.split( json );
-        ArrayList<GitHubIssue> ret= new ArrayList<GitHubIssue>();
-        for( int i = 0; i < jsonIssuesStrings.length; i++ )
+        ArrayList<GitHubIssue> ret = new ArrayList<GitHubIssue>();
+        for ( int i = 0; i < jsonIssuesStrings.length; i++ )
         {
             String jsonIssue = jsonIssuesStrings[i];
             if ( !"0123456789".contains( jsonIssue.substring( 0, 1 ) ) )
             {
                 continue;
             }
-            
-            GitHubIssue ghi = new GitHubIssue( 
+
+            GitHubIssue ghi = new GitHubIssue(
                 GitHubJsonTools.getIntValue( jsonIssue, "number" ),
                 GitHubJsonTools.getStringValue( jsonIssue, "title" ),
                 GitHubJsonTools.getStringValue( jsonIssue, "body" ),
-                GitHubJsonTools.getStringValuesFromArrayOfObjects( jsonIssue, "labels.name" )
-            );
+                GitHubJsonTools.getStringValuesFromArrayOfObjects( jsonIssue,
+                    "labels.name" )
+                );
             ret.add( ghi );
         }
         return ret;
     }
-    
+
     private String apiCall( String endURL )
     {
-        try 
+        try
         {
-            return HttpTools.get( baseURL+endURL, acceptHeader );
+            return HttpTools.get( baseURL + endURL, acceptHeader );
         }
-        catch (UnknownHostException eUH) 
+        catch ( UnknownHostException eUH )
         {
             errMsg = "Can't reach github.com.";
         }
-        catch (Exception e)
+        catch ( Exception e )
         {
             e.printStackTrace();
         }

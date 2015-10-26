@@ -35,26 +35,30 @@ public class GitHubIssueDialog extends JDialog implements ChangeListener
     private JTextField issueNameBox = new JTextField( "" );
     private JTextArea issueTextBox = new JTextArea( "" );
     private JTextArea issueWorldBox = new JTextArea( "" );
-    private JTextField statusBox = new JTextField( "Attempting to contact github." );
+    private JTextField statusBox = new JTextField(
+        "Attempting to contact github." );
     private IssueSpinnerModel issueModel;
     private WorldSpinnerModel worldModel;
     private boolean choseWorld = false;
     GitHubClient ghc = null;
-    public static enum Label {ALL,
-                              BUG, 
-                              LEVEL};
-    
+
+    public static enum Label
+    {
+        ALL,
+        BUG,
+        LEVEL
+    };
+
     class IssueSpinnerModel implements SpinnerModel
     {
         private int issueIndex = 0;
         private ChangeListener changeListener;
         private Label filterMode = Label.ALL;
-        
-        
+
         IssueSpinnerModel()
         {
         }
-        
+
         @Override
         public void addChangeListener( ChangeListener cl )
         {
@@ -64,7 +68,7 @@ public class GitHubIssueDialog extends JDialog implements ChangeListener
         @Override
         public Object getNextValue()
         {
-            
+
             return getRelativeValue( -1 );
         }
 
@@ -73,16 +77,16 @@ public class GitHubIssueDialog extends JDialog implements ChangeListener
         {
             return getRelativeValue( +1 );
         }
-        
-        public Object getRelativeValue ( int indexStep )
+
+        public Object getRelativeValue( int indexStep )
         {
-            if( null == ghc )
+            if ( null == ghc )
             {
                 return null;
             }
             int newIssueIndex = issueIndex + indexStep;
             GitHubIssue ghi = ghc.getIssue( newIssueIndex );
-            if( null == ghi )
+            if ( null == ghi )
             {
                 return null;
             }
@@ -91,50 +95,49 @@ public class GitHubIssueDialog extends JDialog implements ChangeListener
             case BUG:
                 if ( !ghi.isBug() )
                 {
-                    return getRelativeValue( indexStep + (int)Math.signum(indexStep) );
+                    return getRelativeValue( indexStep
+                        + (int)Math.signum( indexStep ) );
                 }
                 break;
             case LEVEL:
                 if ( !ghi.isLevel() )
                 {
-                    return getRelativeValue( indexStep + (int)Math.signum(indexStep) );
+                    return getRelativeValue( indexStep
+                        + (int)Math.signum( indexStep ) );
                 }
                 break;
             case ALL:
             }
             return Integer.valueOf( ghi.getNumber() );
         }
-        
+
         public GitHubIssue getCurrentIssue()
         {
-            if( null == ghc )
+            if ( null == ghc )
             {
                 return null;
             }
-            return ghc.getIssue(issueIndex);
+            return ghc.getIssue( issueIndex );
         }
-        
 
         @Override
         public Object getValue()
         {
-            GitHubIssue ghi =  getCurrentIssue();
-            if( null == ghi )
+            GitHubIssue ghi = getCurrentIssue();
+            if ( null == ghi )
             {
                 return null;
             }
-            return Integer.valueOf(ghi.getNumber() );
+            return Integer.valueOf( ghi.getNumber() );
         }
-        
-        
 
         @Override
         public void removeChangeListener( ChangeListener arg0 )
         {
             throw new RuntimeException(); // not used
         }
-        
-        public void setFilter(Label filter)
+
+        public void setFilter( Label filter )
         {
             filterMode = filter;
         }
@@ -143,18 +146,17 @@ public class GitHubIssueDialog extends JDialog implements ChangeListener
         public void setValue( Object issueNumberIntegerObject )
         {
             Integer issueNumber = (Integer)issueNumberIntegerObject;
-            if( null == issueNumber )
+            if ( null == issueNumber )
             {
                 return;
             }
             issueIndex = ghc.getIndexOfNumber( issueNumber.intValue() );
             // new issue may have different world index current
-            worldModel.setValue( worldModel.getValue() ); 
+            worldModel.setValue( worldModel.getValue() );
             changeListener.stateChanged( new ChangeEvent( this ) );
         }
-        
-    }
 
+    }
 
     class WorldSpinnerModel implements SpinnerModel
     {
@@ -212,7 +214,7 @@ public class GitHubIssueDialog extends JDialog implements ChangeListener
         public void setValue( Object WorldIndexIntegerObject )
         {
             Integer worldIndexInteger = (Integer)WorldIndexIntegerObject;
-            if( null == worldIndexInteger )
+            if ( null == worldIndexInteger )
             {
                 return;
             }
@@ -221,34 +223,33 @@ public class GitHubIssueDialog extends JDialog implements ChangeListener
             {
                 return;
             }
-            if ( ghi.setCurrentWorldIndex((int)worldIndexInteger))
+            if ( ghi.setCurrentWorldIndex( (int)worldIndexInteger ) )
             {
                 changeListener.stateChanged( new ChangeEvent( this ) );
             }
         }
-        
-    }
 
+    }
 
     protected GitHubIssueDialog( Frame frame )
     {
         super( frame, true ); // arg2 sets modal
         setTitle( "Retrieve level from the GitHub Rabbit Escape issue pages." );
-        
+
         GridBagConstraints gbc = new GridBagConstraints();
-        
+
         JPanel pane = new JPanel( new GridBagLayout() );
-        
+
         issueModel = new IssueSpinnerModel();
-        JSpinner issueSpinner = new JSpinner(issueModel);
+        JSpinner issueSpinner = new JSpinner( issueModel );
         issueSpinner.setPreferredSize( new Dimension( 60, 30 ) );
         issueSpinner.addChangeListener( this );
-        
+
         worldModel = new WorldSpinnerModel();
         JSpinner worldSpinner = new JSpinner( worldModel );
-        worldSpinner.setPreferredSize( new Dimension( 60, 30 ));
+        worldSpinner.setPreferredSize( new Dimension( 60, 30 ) );
         worldSpinner.addChangeListener( this );
-        
+
         JRadioButton levelFilterButton = new JRadioButton( "Level" );
         JRadioButton bugFilterButton = new JRadioButton( "Bug" );
         JRadioButton allFilterButton = new JRadioButton( "All" );
@@ -257,87 +258,87 @@ public class GitHubIssueDialog extends JDialog implements ChangeListener
         filterButtons.add( bugFilterButton );
         filterButtons.add( allFilterButton );
         allFilterButton.doClick(); // set preselected filter
-        JButton fetchFollowButton = new JButton("Fetch followup comments");
+        JButton fetchFollowButton = new JButton( "Fetch followup comments" );
         JPanel spacerPanel = new JPanel();
         // Ater packing, this gives the dialog it's width
-        spacerPanel.setPreferredSize( new Dimension( 500, 2 ) ); 
+        spacerPanel.setPreferredSize( new Dimension( 500, 2 ) );
         JButton okButton = new JButton( "OK" );
         JButton cancelButton = new JButton( "Cancel" );
-        
+
         statusBox.setEditable( false );
         issueNameBox.setEditable( false );
         issueTextBox.setEditable( false );
-        JScrollPane issueTextScrollPane = new JScrollPane(issueTextBox);
-        issueTextScrollPane.setPreferredSize( new Dimension(300,300) );
+        JScrollPane issueTextScrollPane = new JScrollPane( issueTextBox );
+        issueTextScrollPane.setPreferredSize( new Dimension( 300, 300 ) );
         issueTextBox.setBorder( BorderFactory.createLineBorder( Color.GRAY ) );
         issueWorldBox.setEditable( false );
         issueWorldBox.setBorder( BorderFactory.createLineBorder( Color.GRAY ) );
-        issueWorldBox.setFont( new Font("monospaced", Font.PLAIN, 12) );
+        issueWorldBox.setFont( new Font( "monospaced", Font.PLAIN, 12 ) );
         // After packing, this gives the dialog it's height
         issueWorldBox.setPreferredSize( new Dimension( 2, 500 ) );
-        
+
         gbc.fill = GridBagConstraints.BOTH;
-        
+
         gbc.gridx = 0;
         gbc.gridy = 0;
         gbc.gridheight = 2;
         pane.add( issueSpinner, gbc );
         gbc.gridheight = 1;
-        
+
         gbc.gridx = 0;
         gbc.gridy = 2;
         pane.add( worldSpinner, gbc );
-        
+
         gbc.gridx = 1;
-        gbc.gridy =0;
+        gbc.gridy = 0;
         pane.add( levelFilterButton, gbc );
-        
-        gbc.gridx= 1 ;
-        gbc.gridy= 1 ;
+
+        gbc.gridx = 1;
+        gbc.gridy = 1;
         pane.add( bugFilterButton, gbc );
-        
-        gbc.gridx= 1 ;
-        gbc.gridy= 2 ;
+
+        gbc.gridx = 1;
+        gbc.gridy = 2;
         pane.add( allFilterButton, gbc );
-    
+
         gbc.gridx = 2;
         gbc.gridy = 0;
         pane.add( fetchFollowButton, gbc );
-        
+
         gbc.gridwidth = 3;
         gbc.gridx = 3;
         gbc.gridy = 0;
-        pane.add(  statusBox, gbc );
+        pane.add( statusBox, gbc );
         gbc.gridwidth = 1;
-        
+
         gbc.gridwidth = 3;
         gbc.gridx = 3;
         gbc.gridy = 1;
-        pane.add(  issueNameBox, gbc );
+        pane.add( issueNameBox, gbc );
         gbc.gridwidth = 1;
-            
-        gbc.gridx= 3 ;
-        gbc.gridy= 2 ;
+
+        gbc.gridx = 3;
+        gbc.gridy = 2;
         pane.add( spacerPanel, gbc );
-        
+
         gbc.fill = GridBagConstraints.NONE;
-        
-        gbc.gridx= 4 ;
-        gbc.gridy= 2 ;
+
+        gbc.gridx = 4;
+        gbc.gridy = 2;
         pane.add( okButton, gbc );
-        
-        gbc.gridx=5;
-        gbc.gridy=2;
+
+        gbc.gridx = 5;
+        gbc.gridy = 2;
         pane.add( cancelButton, gbc );
-        
+
         gbc.fill = GridBagConstraints.BOTH;
-        
+
         gbc.gridwidth = 3;
         gbc.gridx = 0;
         gbc.gridy = 3;
         pane.add( issueTextScrollPane, gbc );
         gbc.gridwidth = 1;
-        
+
         gbc.gridwidth = 3;
         gbc.gridheight = 1;
         gbc.gridx = 3;
@@ -345,86 +346,85 @@ public class GitHubIssueDialog extends JDialog implements ChangeListener
         pane.add( issueWorldBox, gbc );
         gbc.gridwidth = 1;
         gbc.gridheight = 1;
-        
+
         setLayout( new GridBagLayout() );
         gbc.gridx = 0;
         gbc.gridy = 0;
         gbc.fill = GridBagConstraints.BOTH;
-        this.add(pane, gbc);
-        
+        this.add( pane, gbc );
+
         levelFilterButton.addActionListener( new ActionListener()
         {
             public void actionPerformed( ActionEvent e )
             {
                 issueModel.setFilter( Label.LEVEL );
             }
-         } );
+        } );
         bugFilterButton.addActionListener( new ActionListener()
         {
             public void actionPerformed( ActionEvent e )
             {
                 issueModel.setFilter( Label.BUG );
             }
-         } );
+        } );
         allFilterButton.addActionListener( new ActionListener()
         {
             public void actionPerformed( ActionEvent e )
             {
                 issueModel.setFilter( Label.ALL );
             }
-         } );
+        } );
         fetchFollowButton.addActionListener( new ActionListener()
         {
             public void actionPerformed( ActionEvent e )
             {
                 fetchFollowupComments();
             }
-         } );
+        } );
         okButton.addActionListener( new ActionListener()
         {
             public void actionPerformed( ActionEvent e )
             {
                 choseWorld = true;
-                setVisible(false);
+                setVisible( false );
             }
-         } );
-        cancelButton.addActionListener( new ActionListener() 
+        } );
+        cancelButton.addActionListener( new ActionListener()
         {
             public void actionPerformed( ActionEvent e )
             {
-                setVisible(false);
+                setVisible( false );
             }
-         } );
+        } );
 
-        
-        setResizable( false ); /// @TODO maybe make it resize so the worldTextBox expands
+        setResizable( false ); // / @TODO maybe make it resize so the
+                               // worldTextBox expands
         pack();
         setLocationRelativeTo( frame );
-        stateChanged(null); // show initial values for GUI items
+        stateChanged( null ); // show initial values for GUI items
         ghc = new GitHubClient();
-        final InitFetchWorker<Void,Void> ifw = new InitFetchWorker<Void,Void>();
+        final InitFetchWorker<Void, Void> ifw = new InitFetchWorker<Void, Void>();
         ifw.execute();
-        DotTic dt = new DotTic ((SwingWorker<Void,Void>)ifw);
+        DotTic dt = new DotTic( (SwingWorker<Void, Void>)ifw );
         dt.start();
         setVisible( true );
-        
+
     }
-    
-    
+
     public String getWorld()
     {
         GitHubIssue ghi = issueModel.getCurrentIssue();
-        if( !choseWorld || (null == ghi) ) // user cancelled or maybe no inet
+        if ( !choseWorld || ( null == ghi ) ) // user cancelled or maybe no inet
         {
             return null;
         }
-        String wrappedWorld = ghi.getCurrentWorld() ;
-        if ( null == wrappedWorld ){
+        String wrappedWorld = ghi.getCurrentWorld();
+        if ( null == wrappedWorld )
+        {
             return null;
         }
         return wrappedWorld;
     }
-    
 
     public String generateFilename()
     {
@@ -443,19 +443,21 @@ public class GitHubIssueDialog extends JDialog implements ChangeListener
     public void fetchFollowupComments()
     {
         GitHubIssue ghi = issueModel.getCurrentIssue();
-        if( null == ghi )
+        if ( null == ghi )
         {
             return;
         }
-        final FetchCommentsWorker<Void,Void> fcw = new FetchCommentsWorker<Void,Void>(ghi);
+        final FetchCommentsWorker<Void, Void> fcw = new FetchCommentsWorker<Void, Void>(
+            ghi );
         fcw.execute();
-        statusBox.setText( "Fetching followup comments for #" + ghi.getNumber() + "." );
+        statusBox.setText( "Fetching followup comments for #" + ghi.getNumber()
+            + "." );
         // Let dt repaint statusBox
-        DotTic dt = new DotTic(fcw);
+        DotTic dt = new DotTic( fcw );
         dt.start();
-        
+
     }
-    
+
     /**
      * @brief Listens to the issue choosing spinner and world choosing spinner
      * @TODO choose which world
@@ -464,52 +466,52 @@ public class GitHubIssueDialog extends JDialog implements ChangeListener
     public void stateChanged( ChangeEvent e )
     {
         GitHubIssue ghi = issueModel.getCurrentIssue();
-        if( null == ghi )
+        if ( null == ghi )
         {
             return;
         }
-        
-        
+
         issueNameBox.setText( ghi.getTitle() );
         issueNameBox.repaint();
-        
-        String worldText = ghi.getCurrentWorld(); /// 
+
+        String worldText = ghi.getCurrentWorld(); // /
         if ( null == worldText ) // some issues have no worlds
         {
             issueWorldBox.setText( "" );
         }
         {
-            issueWorldBox.setText(worldText);
+            issueWorldBox.setText( worldText );
         }
         issueWorldBox.repaint();
-        
+
         issueTextBox.setText( ghi.getBody() );
         issueTextBox.repaint();
     }
 
-    private final class DotTic implements ActionListener 
+    private final class DotTic implements ActionListener
     {
         private Timer timer;
         private SwingWorker<Void, Void> worker;
-        
-        public DotTic (SwingWorker<Void, Void> ifw)
+
+        public DotTic( SwingWorker<Void, Void> ifw )
         {
-            timer = new Timer(800,this);
+            timer = new Timer( 800, this );
             worker = ifw;
         }
-        
-        public void start() 
+
+        public void start()
         {
             timer.start();
         }
-        
-        public void actionPerformed(ActionEvent event){
+
+        public void actionPerformed( ActionEvent event )
+        {
             statusBox.setText( statusBox.getText() + "." );
             statusBox.repaint();
-            if (worker.isDone())
+            if ( worker.isDone() )
             {
                 timer.stop();
-                if(!"".equals( ghc.getError() ))
+                if ( !"".equals( ghc.getError() ) )
                 {
                     statusBox.setText( ghc.getError() );
                 }
@@ -518,12 +520,13 @@ public class GitHubIssueDialog extends JDialog implements ChangeListener
                     statusBox.setText( statusBox.getText() + "Done." );
                 }
                 statusBox.repaint();
-                stateChanged(null); //update info in dialog with new info from github
+                stateChanged( null ); // update info in dialog with new info
+                                      // from github
             }
-          }
+        }
     }
-    
-    private final class InitFetchWorker<T,U> extends SwingWorker<Void,Void> 
+
+    private final class InitFetchWorker<T, U> extends SwingWorker<Void, Void>
     {
         @Override
         protected Void doInBackground() throws Exception
@@ -533,19 +536,21 @@ public class GitHubIssueDialog extends JDialog implements ChangeListener
         }
     }
 
-    private final class FetchCommentsWorker<T,U> extends SwingWorker<Void,Void>
+    private final class FetchCommentsWorker<T, U>
+        extends
+        SwingWorker<Void, Void>
     {
         private GitHubIssue ghi;
-        
-        public FetchCommentsWorker(GitHubIssue i)
+
+        public FetchCommentsWorker( GitHubIssue i )
         {
             ghi = i;
         }
-        
+
         @Override
         protected Void doInBackground() throws Exception
         {
-            ghi.fetchComments(ghc);
+            ghi.fetchComments( ghc );
             return null;
         }
     }
