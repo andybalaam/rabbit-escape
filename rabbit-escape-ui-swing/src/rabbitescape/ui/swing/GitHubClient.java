@@ -4,19 +4,22 @@ import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.regex.Pattern;
 
-import static rabbitescape.engine.i18n.Translation.t ;
+import static rabbitescape.engine.i18n.Translation.t;
 
 /**
  * @brief retrieval and parsing. no swing.
  */
-public class GitHubClient
+public class GitHubClient implements GitHubPageFetchNotifier
 {
     public final String baseURL = "https://api.github.com/repos/andybalaam/rabbit-escape/issues";
     public final String acceptHeader = "Accept: application/vnd.github.v3+json";
     private ArrayList<GitHubIssue> issues = null;
     private String errMsg = "";
-    private int page = 1; /** < .../issues?page=number */
-    private boolean gotAllPages = false; /** < @brief do not query for more pages of issues */
+    private int page = 1;
+    /** < .../issues?page=number */
+    private boolean gotAllPages = false;
+
+    /** < @brief do not query for more pages of issues */
 
     public GitHubClient()
     {
@@ -45,7 +48,13 @@ public class GitHubClient
         return errMsg;
     }
 
-    public GitHubIssue getIssue( int index )
+    /**
+     * @param GitHubPageFetcher
+     *            required in case more issues need fetching. This method can
+     *            make a call back to the UI. This is necessary as it may be
+     *            time consuming: the user needs a progress bar or something.
+     */
+    public GitHubIssue getIssue( int index, GitHubPageFetcher ghpf )
     {
         if ( null == issues || index < 0 )
         {
@@ -56,15 +65,12 @@ public class GitHubClient
             if ( gotAllPages )
             {
                 return null;
-            }// / @TODO do in different thread, give some progress meter
-            String jsonIssues = apiCall( "?page=" + ( ++page ) );
-            ArrayList<GitHubIssue> extra = parseIssues( jsonIssues );
-            issues.addAll( extra );
-            if ( 0 == extra.size() )
-            {
-                gotAllPages = true;
-                return null; // Github has no more to give
             }
+            ghpf.notifyAndFetch( baseURL + "?page=" + ( ++page ),
+                acceptHeader,
+                t( "Fetching more issues." ),
+                this );
+            return null; // user waits and requests again
         }
         return issues.get( index );
     }
@@ -125,5 +131,16 @@ public class GitHubClient
             e.printStackTrace();
         }
         return null;
+    }
+
+    @Override
+    public void setPage( String page )
+    {
+        ArrayList<GitHubIssue> extra = parseIssues( page );
+        issues.addAll( extra );
+        if ( 0 == extra.size() )
+        {
+            gotAllPages = true; // Github has no more to give
+        }
     }
 }

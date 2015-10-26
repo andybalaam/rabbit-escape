@@ -26,7 +26,7 @@ import javax.swing.Timer;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-import static rabbitescape.engine.i18n.Translation.t ;
+import static rabbitescape.engine.i18n.Translation.t;
 
 /**
  * @brief GUI elements for retrieving levels from issues.
@@ -52,7 +52,7 @@ public class GitHubIssueDialog extends JDialog implements ChangeListener
         LEVEL
     };
 
-    class IssueSpinnerModel implements SpinnerModel
+    class IssueSpinnerModel implements SpinnerModel, GitHubPageFetcher
     {
         private int issueIndex = 0;
         private ChangeListener changeListener;
@@ -60,6 +60,29 @@ public class GitHubIssueDialog extends JDialog implements ChangeListener
 
         IssueSpinnerModel()
         {
+        }
+
+        /**
+         * @brief
+         */
+        public void notifyAndFetch( String url,
+            String requestProperty,
+            String notification,
+            GitHubPageFetchNotifier ghpfn )
+        {
+            GitHubIssue ghi = issueModel.getCurrentIssue();
+            if ( null == ghi )
+            {
+                return;
+            }
+            final IssuePageFetchWorker<Void, Void> w =
+                new IssuePageFetchWorker<Void, Void>( url, requestProperty,
+                    ghpfn );
+            w.execute();
+            statusBox.setText( notification );
+            // Let dt repaint statusBox
+            DotTic dt = new DotTic( w );
+            dt.start();
         }
 
         @Override
@@ -88,7 +111,7 @@ public class GitHubIssueDialog extends JDialog implements ChangeListener
                 return null;
             }
             int newIssueIndex = issueIndex + indexStep;
-            GitHubIssue ghi = ghc.getIssue( newIssueIndex );
+            GitHubIssue ghi = ghc.getIssue( newIssueIndex, this );
             if ( null == ghi )
             {
                 return null;
@@ -120,7 +143,7 @@ public class GitHubIssueDialog extends JDialog implements ChangeListener
             {
                 return null;
             }
-            return ghc.getIssue( issueIndex );
+            return ghc.getIssue( issueIndex, this );
         }
 
         @Override
@@ -434,7 +457,7 @@ public class GitHubIssueDialog extends JDialog implements ChangeListener
         String title = issueModel.getCurrentIssue().getTitle();
         if ( null == title )
         {
-            title = t( "Issue has no title" ) ;
+            title = t( "Issue has no title" );
         }
         title = title.replaceAll( "\\W", "" );
         return title;
@@ -453,12 +476,12 @@ public class GitHubIssueDialog extends JDialog implements ChangeListener
         final FetchCommentsWorker<Void, Void> fcw = new FetchCommentsWorker<Void, Void>(
             ghi );
         fcw.execute();
-        statusBox.setText( t( "Fetching followup comments for" ) + " #" + ghi.getNumber()
+        statusBox.setText( t( "Fetching followup comments for" ) + " #"
+            + ghi.getNumber()
             + "." );
         // Let dt repaint statusBox
         DotTic dt = new DotTic( fcw );
         dt.start();
-
     }
 
     /**
@@ -534,6 +557,31 @@ public class GitHubIssueDialog extends JDialog implements ChangeListener
         protected Void doInBackground() throws Exception
         {
             ghc.initialise();
+            return null;
+        }
+    }
+
+    private final class IssuePageFetchWorker<T, U>
+        extends
+        SwingWorker<Void, Void>
+    {
+        String u;
+        String rp;
+        GitHubPageFetchNotifier ghpfn;
+
+        public IssuePageFetchWorker( String url, String requestProperty,
+            GitHubPageFetchNotifier notifier )
+        {
+            u = url;
+            rp = requestProperty;
+            ghpfn = notifier;
+        }
+
+        @Override
+        protected Void doInBackground() throws Exception
+        {
+            String answer = HttpTools.get( u, rp );
+            ghpfn.setPage( answer );
             return null;
         }
     }
