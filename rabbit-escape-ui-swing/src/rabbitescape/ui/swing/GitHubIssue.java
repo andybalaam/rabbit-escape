@@ -42,7 +42,7 @@ public class GitHubIssue
         wrappedWorlds = new ArrayList<String>();
         number = gitHubIssueNumber;
         addToBody( openingCommentBody );
-        title = gitHubIssueTitle;
+        title = stripEscape( gitHubIssueTitle );
         for ( int i = 0; i < labels.length; i++ )
         {
             if ( 0 == labels[i].compareTo( "bug" ) )
@@ -300,16 +300,7 @@ public class GitHubIssue
         fixed = fixed.replaceAll( "^\n", "" );
 
         // Strip trailing spaces from meta lines
-        Pattern p = Pattern.compile( "^:(.*?) *?$", Pattern.MULTILINE );
-        Matcher m = p.matcher( fixed );
-        StringBuffer sb = new StringBuffer();
-        while ( m.find() )
-        {
-            m.appendReplacement( sb, ":$1" );
-        }
-        m.appendTail( sb );
-        fixed = sb.toString();
-
+        fixed = GitHubJsonTools.regexReplacePreserveGroup( fixed, "^(:.*?) *?$", Pattern.MULTILINE );
         return fixed;
     }
 
@@ -332,23 +323,14 @@ public class GitHubIssue
         String s2;
         s2 = s1.replaceAll( "(\\\\r)", "" );
         // / @TODO this is removing \" instead of just \ which are followed by "
-        s2 = s2.replaceAll( "(\\\\)\"", "" );
+        s2 = GitHubJsonTools.regexReplacePreserveGroup( s2, "\\\\(\\\")" );
 
         // Undouble slashes
         // I don't understand why this does not work without the capturing group
         // and back reference.
-        Pattern doubleSlashPattern = Pattern.compile( "(\\\\)\\\\" ); // 8
-                                                                      // becomes
-                                                                      // 2
-        Matcher dsMatcher = doubleSlashPattern.matcher( s2 );
-        StringBuffer sb = new StringBuffer();
-        while ( dsMatcher.find() )
-        {
-            dsMatcher.appendReplacement( sb, "$1" );
-        }
-        dsMatcher.appendTail( sb );
+        s2 = GitHubJsonTools.regexReplacePreserveGroup( s2, "(\\\\)\\\\" );
 
-        return sb.toString();
+        return s2;
     }
 
     /**

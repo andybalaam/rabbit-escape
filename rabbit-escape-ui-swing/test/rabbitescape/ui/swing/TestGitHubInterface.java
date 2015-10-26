@@ -9,9 +9,32 @@ public class TestGitHubInterface
 {
 
     @Test
-    public void Backtick_markdown_world()
+    public void Strip_trailing_spaces_from_meta_lines()
     {
         // Strings from github json have actual \n, not newline chars
+        String issueBodyText =
+                "```\\n" +
+                ":name=Bunny   \\n" +
+                ":description=Boiler\\n" +
+                "#   r  \\n" +
+                "#######\\n" +
+                "```\\n";
+
+        GitHubIssue ghi = new GitHubIssue( 1,
+            "Level: test",
+            issueBodyText );
+        String wrappedWorld = ghi.getWorld( 0 );
+        String expectedWrappedWorld =
+            ":name=Bunny\n" +
+                ":description=Boiler\n" +
+                "#   r  \n" +
+                "#######\n";
+        assertThat( wrappedWorld, equalTo( expectedWrappedWorld ) );
+    }
+
+    @Test
+    public void Backtick_markdown_world()
+    {
         String issueBodyText =
             "Some chat\\n" +
                 "```\\n" +
@@ -33,7 +56,7 @@ public class TestGitHubInterface
                 "#######\n";
         assertThat( wrappedWorld, equalTo( expectedWrappedWorld ) );
     }
-
+    
     @Test
     public void Strip_trailing_white_from_meta_lines()
     {
