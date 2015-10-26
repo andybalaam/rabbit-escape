@@ -15,29 +15,30 @@ import java.util.TreeSet;
  * characters.
  * <p>
  * The MegaCoder is licensed here for use as part of rabbit-escape, but is also
- * declared public domain, so that it may be used, without attribution, by anyone
- * who needs obfuscation slightly more powerful than rot13, but less portable
- * than base64. (For clarity, the MegaCoder is this single file).
+ * declared public domain, so that it may be used, without attribution, by
+ * anyone who needs obfuscation slightly more powerful than rot13, but less
+ * portable than base64. (For clarity, the MegaCoder is this single file).
  * 
  * @author tttppp
  */
 public class MegaCoder
 {
-    /** A list of common ASCII characters that can be swapped with each other. */ 
-    private static final List<Character> COMMON_CHARACTERS = Arrays.asList( ' ', '!', '"', '#', '$', '%', '&',
-                                                                            '\'', '(', ')', '*', '+', ',',
-                                                                            '-', '.', '/', '0', '1', '2', '3',
-                                                                            '4', '5', '6', '7', '8', '9', ':',
-                                                                            ';', '<', '=', '>', '?', '@', 'A',
-                                                                            'B', 'C', 'D', 'E', 'F', 'G', 'H',
-                                                                            'I', 'J', 'K', 'L', 'M', 'N', 'O',
-                                                                            'P', 'Q', 'R', 'S', 'T', 'U', 'V',
-                                                                            'W', 'X', 'Y', 'Z', '[', '\\',
-                                                                            ']', '^', '_', '`', 'a', 'b', 'c',
-                                                                            'd', 'e', 'f', 'g', 'h', 'i', 'j',
-                                                                            'k', 'l', 'm', 'n', 'o', 'p', 'q',
-                                                                            'r', 's', 't', 'u', 'v', 'w', 'x',
-                                                                            'y', 'z', '{', '|', '}', '~' );
+    /** A list of common ASCII characters that can be swapped with each other. */
+    private static final List<Character> COMMON_CHARACTERS = Arrays.asList(
+        ' ', '!', '"', '#', '$', '%', '&',
+        '\'', '(', ')', '*', '+', ',',
+        '-', '.', '/', '0', '1', '2', '3',
+        '4', '5', '6', '7', '8', '9', ':',
+        ';', '<', '=', '>', '?', '@', 'A',
+        'B', 'C', 'D', 'E', 'F', 'G', 'H',
+        'I', 'J', 'K', 'L', 'M', 'N', 'O',
+        'P', 'Q', 'R', 'S', 'T', 'U', 'V',
+        'W', 'X', 'Y', 'Z', '[', '\\',
+        ']', '^', '_', '`', 'a', 'b', 'c',
+        'd', 'e', 'f', 'g', 'h', 'i', 'j',
+        'k', 'l', 'm', 'n', 'o', 'p', 'q',
+        'r', 's', 't', 'u', 'v', 'w', 'x',
+        'y', 'z', '{', '|', '}', '~' );
 
     /** Private constructor for util class. */
     private MegaCoder()
@@ -47,17 +48,21 @@ public class MegaCoder
     /**
      * Encode a string using the MegaCoder obfuscation routine.
      * 
-     * @param input The plaintext to encode.
+     * @param input
+     *            The plaintext to encode.
      * @return The obfuscated ciphertext.
      */
     public static String encode( String input )
     {
         List<Character> characterList = stringToCharacters( input );
 
-        List<Character> sortedCharactersUsed = new ArrayList<>( new TreeSet<Character>( characterList ) );
-        characterList = replaceUsingCharacterList( sortedCharactersUsed, characterList );
+        List<Character> sortedCharactersUsed = new ArrayList<>(
+            new TreeSet<Character>( characterList ) );
+        characterList = replaceUsingCharacterList( sortedCharactersUsed,
+            characterList );
 
-        characterList = replaceUsingCharacterList( shuffle( COMMON_CHARACTERS, characterList.size() ), characterList );
+        characterList = replaceUsingCharacterList(
+            shuffle( COMMON_CHARACTERS, characterList.size() ), characterList );
 
         characterList = shuffle( characterList, 0 );
 
@@ -67,7 +72,8 @@ public class MegaCoder
     /**
      * Decode a string using the MegaCoder obfuscation routine.
      * 
-     * @param input The ciphertext to decode.
+     * @param input
+     *            The ciphertext to decode.
      * @return The plaintext.
      */
     public static String decode( String input )
@@ -75,11 +81,14 @@ public class MegaCoder
         List<Character> characterList = stringToCharacters( input );
 
         characterList = shuffle( characterList, 0 );
-        
-        characterList = replaceUsingCharacterList( shuffle( COMMON_CHARACTERS, characterList.size() ), characterList );
 
-        List<Character> sortedCharactersUsed = new ArrayList<>( new TreeSet<Character>( characterList ) );
-        characterList = replaceUsingCharacterList( sortedCharactersUsed, characterList );
+        characterList = replaceUsingCharacterList(
+            shuffle( COMMON_CHARACTERS, characterList.size() ), characterList );
+
+        List<Character> sortedCharactersUsed = new ArrayList<>(
+            new TreeSet<Character>( characterList ) );
+        characterList = replaceUsingCharacterList( sortedCharactersUsed,
+            characterList );
 
         return charactersToString( characterList );
     }
@@ -87,19 +96,23 @@ public class MegaCoder
     /**
      * Replace characters in a string using a key.
      * 
-     * @param characterListKey A list of characters. The first will be swapped
-     *        with the last, and so on. If there is an odd number of characters
-     *        then the middle character will not be swapped at all.
-     * @param input The string to replace the characters in.
+     * @param characterListKey
+     *            A list of characters. The first will be swapped with the last,
+     *            and so on. If there is an odd number of characters then the
+     *            middle character will not be swapped at all.
+     * @param input
+     *            The string to replace the characters in.
      */
-    private static List<Character> replaceUsingCharacterList( List<Character> characterListKey,
-                                                              List<Character> input )
+    private static List<Character> replaceUsingCharacterList(
+        List<Character> characterListKey,
+        List<Character> input )
     {
         List<Character> output = input;
         int distinctCharacters = characterListKey.size();
-        for ( int i = 0; i < distinctCharacters / 2; i++ ) {
-            output = exchangeCharacters( output, characterListKey.get(i),
-                                         characterListKey.get( distinctCharacters - i - 1 ) );
+        for ( int i = 0; i < distinctCharacters / 2; i++ )
+        {
+            output = exchangeCharacters( output, characterListKey.get( i ),
+                characterListKey.get( distinctCharacters - i - 1 ) );
         }
         return output;
     }
@@ -107,12 +120,18 @@ public class MegaCoder
     /**
      * Swap two characters with each other in a given characters list.
      * 
-     * @param input The list of characters to search through.
-     * @param a A character.
-     * @param b Another character.
+     * @param input
+     *            The list of characters to search through.
+     * @param a
+     *            A character.
+     * @param b
+     *            Another character.
      * @return The input, but with all occurances of a and b exchanged.
      */
-    private static List<Character> exchangeCharacters( List<Character> input, Character a, Character b )
+    private static List<Character> exchangeCharacters(
+        List<Character> input,
+        Character a,
+        Character b )
     {
         List<Character> output = new ArrayList<>();
         for ( Character c : input )
@@ -136,8 +155,10 @@ public class MegaCoder
     /**
      * Shuffle the characters in the given string.
      * 
-     * @param input The string to be shuffled.
-     * @param key A value that changes the shuffling algorithm.
+     * @param input
+     *            The string to be shuffled.
+     * @param key
+     *            A value that changes the shuffling algorithm.
      * @return The string with letters swapped around a bit.
      */
     private static List<Character> shuffle( List<Character> input, int key )
@@ -169,7 +190,8 @@ public class MegaCoder
     /**
      * Convert a string to a list of characters.
      * 
-     * @param input The string to convert.
+     * @param input
+     *            The string to convert.
      * @return A list of characters that comprise the string.
      */
     private static List<Character> stringToCharacters( String input )
@@ -186,7 +208,8 @@ public class MegaCoder
     /**
      * Create a string from the concatenation of a list of characters.
      * 
-     * @param characterList The list of characters.
+     * @param characterList
+     *            The list of characters.
      * @return A string.
      */
     private static String charactersToString( List<Character> characterList )
