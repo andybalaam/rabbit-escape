@@ -54,7 +54,7 @@ public class MegaCoder
      */
     public static String encode( String input )
     {
-        List<Character> characterList = stringToCharacters( input );
+        List<Character> characterList = Util.stringToCharacterList( input );
 
         List<Character> sortedCharactersUsed = new ArrayList<>(
             new TreeSet<Character>( characterList ) );
@@ -66,7 +66,7 @@ public class MegaCoder
 
         characterList = shuffle( characterList, 0 );
 
-        return charactersToString( characterList );
+        return Util.characterListToString( characterList );
     }
 
     /**
@@ -78,7 +78,7 @@ public class MegaCoder
      */
     public static String decode( String input )
     {
-        List<Character> characterList = stringToCharacters( input );
+        List<Character> characterList = Util.stringToCharacterList( input );
 
         characterList = shuffle( characterList, 0 );
 
@@ -90,7 +90,7 @@ public class MegaCoder
         characterList = replaceUsingCharacterList( sortedCharactersUsed,
             characterList );
 
-        return charactersToString( characterList );
+        return Util.characterListToString( characterList );
     }
 
     /**
@@ -120,36 +120,31 @@ public class MegaCoder
     /**
      * Swap two characters with each other in a given characters list.
      * 
-     * @param input
+     * @param chars
      *            The list of characters to search through.
      * @param a
      *            A character.
      * @param b
      *            Another character.
-     * @return The input, but with all occurances of a and b exchanged.
+     * @return The input, but with all occurrences of a and b exchanged.
      */
     private static List<Character> exchangeCharacters(
-        List<Character> input,
+        List<Character> chars,
         Character a,
         Character b )
     {
-        List<Character> output = new ArrayList<>();
-        for ( Character c : input )
+        for ( int i = 0; i < chars.size(); i++ )
         {
-            if ( c.equals( a ) )
+            if ( chars.get( i ).equals( a ) )
             {
-                output.add( b );
+                chars.set( i, b );
             }
-            else if ( c.equals( b ) )
+            else if ( chars.get( i ).equals( b ) )
             {
-                output.add( a );
-            }
-            else
-            {
-                output.add( c );
+                chars.set( i, a );
             }
         }
-        return output;
+        return chars;
     }
 
     /**
@@ -185,40 +180,5 @@ public class MegaCoder
             }
         }
         return output;
-    }
-
-    /**
-     * Convert a string to a list of characters.
-     * 
-     * @param input
-     *            The string to convert.
-     * @return A list of characters that comprise the string.
-     */
-    private static List<Character> stringToCharacters( String input )
-    {
-        char[] charArray = input.toCharArray();
-        List<Character> characterList = new ArrayList<>();
-        for ( int i = 0; i < charArray.length; i++ )
-        {
-            characterList.add( charArray[i] );
-        }
-        return characterList;
-    }
-
-    /**
-     * Create a string from the concatenation of a list of characters.
-     * 
-     * @param characterList
-     *            The list of characters.
-     * @return A string.
-     */
-    private static String charactersToString( List<Character> characterList )
-    {
-        StringBuilder sb = new StringBuilder();
-        for ( Character c : characterList )
-        {
-            sb.append( c );
-        }
-        return sb.toString();
     }
 }

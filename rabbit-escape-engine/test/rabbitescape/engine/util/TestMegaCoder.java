@@ -36,10 +36,10 @@ public class TestMegaCoder
     @Test
     public void Encode_including_unicode()
     {
-        String output = MegaCoder.encode( "☺ Mr Happy ᕙ(⇀‸↼‶)ᕗ Mr Strong" );
-        assertEquals( "Y↼‶ᕙEᕗ‸ee⇀btngC☺☺☺KQ‶☺}}ca☺}\\", output );
+        String output = MegaCoder.encode( "\u263A Mr Happy" );
+        assertEquals( "3TOzTig\u263A\u263A2", output );
 
         String decoded = MegaCoder.decode( output );
-        assertEquals( "☺ Mr Happy ᕙ(⇀‸↼‶)ᕗ Mr Strong", decoded );
+        assertEquals( "\u263A Mr Happy", decoded );
     }
 }

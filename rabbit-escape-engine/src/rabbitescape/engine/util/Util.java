@@ -225,6 +225,41 @@ public class Util
         return ret.toString();
     }
 
+    /**
+     * Convert a string to a list of characters.
+     * 
+     * @param input
+     *            The string to convert.
+     * @return A list of characters that comprise the string.
+     */
+    public static List<Character> stringToCharacterList( String input )
+    {
+        char[] charArray = input.toCharArray();
+        List<Character> characterList = new ArrayList<>();
+        for ( int i = 0; i < charArray.length; i++ )
+        {
+            characterList.add( charArray[i] );
+        }
+        return characterList;
+    }
+
+    /**
+     * Create a string from the concatenation of a list of characters.
+     * 
+     * @param characterList
+     *            The list of characters.
+     * @return A string.
+     */
+    public static String characterListToString( List<Character> characterList )
+    {
+        StringBuilder sb = new StringBuilder();
+        for ( Character c : characterList )
+        {
+            sb.append( c );
+        }
+        return sb.toString();
+    }
+
     public static String join( String glue, String[] items )
     {
         return join( glue, Arrays.asList( items ) );
