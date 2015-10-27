@@ -8,6 +8,9 @@
         <JavaCodeStyleSettings>
           <option name="SPACES_WITHIN_ANGLE_BRACKETS" value="true" />
         </JavaCodeStyleSettings>
+        <XML>
+          <option name="XML_LEGACY_SETTINGS_IMPORTED" value="true" />
+        </XML>
         <codeStyleSettings language="JAVA">
           <option name="BRACE_STYLE" value="2" />
           <option name="CLASS_BRACE_STYLE" value="2" />
@@ -72,12 +75,10 @@
           <option name="ENUM_CONSTANTS_WRAP" value="1" />
           <indentOptions>
             <option name="CONTINUATION_INDENT_SIZE" value="4" />
-            <option name="USE_RELATIVE_INDENTS" value="true" />
           </indentOptions>
         </codeStyleSettings>
       </value>
     </option>
     <option name="USE_PER_PROJECT_SETTINGS" value="true" />
-    <option name="PREFERRED_PROJECT_CODE_STYLE" value="RabbitEscape" />
   </component>
 </project>
