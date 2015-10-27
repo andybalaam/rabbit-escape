@@ -1,6 +1,7 @@
 package rabbitescape.engine.logic;
 
 import static org.hamcrest.MatcherAssert.*;
+import static org.hamcrest.core.IsNot.not;
 import static rabbitescape.engine.Tools.*;
 import static rabbitescape.engine.textworld.TextWorldManip.*;
 import static rabbitescape.engine.util.WorldAssertions.*;
@@ -2176,5 +2177,53 @@ public class TestWalking
             "# (##" + "\n" +
             "#####"
         );
+    }
+    
+
+    @Test
+    public void Bump_head_on_slope_not_past_roof()
+    {
+        String[] lines = {
+            "  #  # ",
+            "#r/#r(#",
+            "#######"
+        };
+
+        World world = createWorld( lines );
+        for ( int i = 0; i < 2; i++ )
+        {
+            world.step();
+        }
+
+        String[] resultLines = renderCompleteWorld( world, false );
+
+        // The rabbits should not be able
+        // to climb the slopes
+        String[] linesBad = {
+            "  #r #r",
+            "# /# (#",
+            "#######"
+        };
+        assertThat( resultLines, not( equalTo( linesBad ) ) );
+    }
+
+    @Test
+    public void Bump_head_on_slope_turn()
+    {
+        String[] lines = {
+            " # # # # ",
+           "#\\r/#)r(#",
+            "#########",
+        };
+
+        World world = createWorld( lines );
+        for ( int i = 0; i < 6; i++ )
+        {
+            world.step();
+        }
+
+        String[] resultLines = renderCompleteWorld( world, false );
+
+        assertThat( resultLines, equalTo( lines ) );
     }
 }
