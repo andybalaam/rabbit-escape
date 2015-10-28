@@ -79,4 +79,39 @@ public class TestExit
         world.step();
         assertThat( world.num_saved, equalTo( 4 ) );
     }
+
+    @Test
+    public void Splatting_prevents_exit()
+    {
+        World world = createWorld(
+            "r    ",
+            "#    ",
+            "     ",
+            "  r  ",
+            "  #  ",
+            "     ",
+            "#O O#",
+            "#####"
+        );
+
+        for ( int i = 0; i < 5; i++ )
+        {
+            world.step();
+        }
+        assertThat( world.num_saved, equalTo ( 1 ) );
+        // Check there have been enough steps for both
+        // to exit or splat.
+        assertThat(
+            renderCompleteWorld( world, false ), 
+            equalTo(new String[] {
+                "     ",
+                "#    ",
+                "     ",
+                "     ",
+                "  #  ",
+                "     ",
+                "#O O#",
+                "#####"
+            }));
+    }
 }
