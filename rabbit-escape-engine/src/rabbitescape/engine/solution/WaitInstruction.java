@@ -1,7 +1,5 @@
 package rabbitescape.engine.solution;
 
-import rabbitescape.engine.World;
-
 public class WaitInstruction implements Instruction
 {
     private int steps;
@@ -12,11 +10,11 @@ public class WaitInstruction implements Instruction
     }
 
     @Override
-    public void performOn( World world )
+    public void performOn( SandboxGame sandboxGame )
     {
         for ( int i = 0; i < steps; i++ )
         {
-            world.step();
+            sandboxGame.getWorld().step();
         }
     }
 

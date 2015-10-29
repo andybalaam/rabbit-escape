@@ -1106,15 +1106,31 @@ public class TestTextWorldManip
         
         createWorld( lines );
     }
-    
+
     @Test
     public void Complex_solution_string()
     {
         String[] lines = {
             ":num_rabbits=1",
-            ":solution=2;RUNNING;2;RUNNING;WON",
+            ":bash=2",
+            ":solution=bash&(1,0);4;RUNNING;1;WON",
             "Q    ",
-            "    O",
+            "  # O",
+            "#####"
+        };
+        
+        createWorld( lines );
+    }
+    
+    @Test
+    public void Obfuscated_solution()
+    {
+        String[] lines = {
+            ":num_rabbits=1",
+            ":bash=2",
+            ":solution.code=WTSMTzF4=n M>DmTBMTr}3$Mz~",
+            "Q    ",
+            "  # O",
             "#####"
         };
         

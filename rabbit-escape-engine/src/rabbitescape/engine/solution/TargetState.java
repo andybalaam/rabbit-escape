@@ -1,6 +1,5 @@
 package rabbitescape.engine.solution;
 
-import rabbitescape.engine.World;
 import rabbitescape.engine.World.CompletionState;
 
 public class TargetState implements ValidationInstruction
@@ -20,9 +19,9 @@ public class TargetState implements ValidationInstruction
     }
 
     @Override
-    public void performOn( World world )
+    public void performOn( SandboxGame sandboxGame )
     {
-        if ( world.completionState() != targetState )
+        if ( sandboxGame.getWorld().completionState() != targetState )
         {
             throw new InvalidSolution( "Solution " + solutionId
                 + " did not cause " + targetState

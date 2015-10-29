@@ -17,11 +17,13 @@ public class Solution
 
     public void checkSolution( World world ) throws InvalidSolution
     {
+        SandboxGame sandboxGame = new SandboxGame( world );
+        
         for ( Instruction instruction : instructions )
         {
             try
             {
-                instruction.performOn( world );
+                instruction.performOn( sandboxGame );
             }
             catch ( DontStepAfterFinish e )
             {

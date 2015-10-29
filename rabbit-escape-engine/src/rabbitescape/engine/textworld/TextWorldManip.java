@@ -125,7 +125,7 @@ public class TextWorldManip
         int num_rabs = processor.metaInt( num_rabbits,  10 );
 
         Solution solution = SolutionFactory.create(
-            processor.metaString( SOLUTION, "0" ), 1 );
+            processor.metaString( SOLUTION, "" ), 1 );
 
         solution.checkSolution( createWorldFromLineProcessor(
             nameIfNoneSupplied, statsListener, blocks, rabbits, things,
