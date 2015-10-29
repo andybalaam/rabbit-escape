@@ -12,6 +12,7 @@ import java.util.Map;
 
 import org.junit.Test;
 
+import rabbitescape.engine.solution.InvalidSolution;
 import rabbitescape.engine.textworld.DuplicateMetaKey;
 import rabbitescape.engine.textworld.ItemsLineProcessor;
 
@@ -1064,4 +1065,59 @@ public class TestTextWorldManip
         renderCompleteWorld( createWorld( lines ), true );
     }
 
+    @Test( expected=InvalidSolution.class )
+    public void Incorrect_solution_string_throws_exception()
+    {
+        String[] lines = {
+            ":num_rabbits=1",
+            ":solution=5",
+            "Q    ",
+            "    O",
+            "#####"
+        };
+        
+        createWorld( lines );
+    }
+    
+    @Test
+    public void Valid_solution_string_throws_no_exception()
+    {
+        String[] lines = {
+            ":num_rabbits=1",
+            ":solution=6",
+            "Q    ",
+            "    O",
+            "#####"
+        };
+        
+        createWorld( lines );
+    }
+    
+    @Test( expected=InvalidSolution.class )
+    public void Solution_too_many_steps_throws_exception()
+    {
+        String[] lines = {
+            ":num_rabbits=1",
+            ":solution=7",
+            "Q    ",
+            "    O",
+            "#####"
+        };
+        
+        createWorld( lines );
+    }
+    
+    @Test
+    public void Complex_solution_string()
+    {
+        String[] lines = {
+            ":num_rabbits=1",
+            ":solution=5;RUNNING;1;WON",
+            "Q    ",
+            "    O",
+            "#####"
+        };
+        
+        createWorld( lines );
+    }
 }
