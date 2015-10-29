@@ -1112,7 +1112,7 @@ public class TestTextWorldManip
     {
         String[] lines = {
             ":num_rabbits=1",
-            ":solution=5;RUNNING;1;WON",
+            ":solution=2;RUNNING;2;RUNNING;WON",
             "Q    ",
             "    O",
             "#####"

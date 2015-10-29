@@ -8,11 +8,13 @@ import rabbitescape.engine.util.Util;
 
 public class SolutionFactory
 {
-    private static final String DELIMITER = ";";
+    private static final String STAGE_DELIMITER = ";";
+    private static final String INSTRUCTION_DELIMITER = "&";
     private static final String WAIT_REGEX = "[1-9][0-9]*";
 
     private static final List<String> COMPLETION_STATES = new ArrayList<>();
-    static {
+    static
+    {
         // Initialise the completion state strings.
         CompletionState[] completionStates = CompletionState.values();
         for ( int i = 0; i < completionStates.length; i++ )
@@ -23,14 +25,27 @@ public class SolutionFactory
 
     public static Solution create( String solution, int solutionId )
     {
-        String[] instructionStrings = Util.split( solution, DELIMITER );
+        String[] instructionStages = Util.split( solution, STAGE_DELIMITER );
 
         List<Instruction> instructions = new ArrayList<>();
-        for ( int i = 0; i < instructionStrings.length; i++ )
+        for ( int i = 0; i < instructionStages.length; i++ )
         {
-            Instruction instruction = makeInstruction( instructionStrings[i],
-                solutionId, i );
-            instructions.add( instruction );
+            String[] instructionStrings = Util.split( instructionStages[i],
+                INSTRUCTION_DELIMITER );
+            for ( int j = 0; j < instructionStrings.length; j++ )
+            {
+                Instruction instruction = makeInstruction(
+                    instructionStrings[j],
+                    solutionId, i );
+                instructions.add( instruction );
+            }
+            // Wait one step after every semicolon (unless the last instruction
+            // was a wait instruction).
+            if ( !( instructions.get( instructions.size() - 1 ) instanceof WaitInstruction )
+                && ( i < instructionStages.length - 1 ) )
+            {
+                instructions.add( new WaitInstruction( 1 ) );
+            }
         }
 
         // If the last instruction is not a validation step then assume this was
