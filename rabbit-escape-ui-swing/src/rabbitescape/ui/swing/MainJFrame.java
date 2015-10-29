@@ -41,6 +41,11 @@ public class MainJFrame extends JFrame
         @Override
         public void componentResized( ComponentEvent e )
         {
+            if ( !frame.isActive() )
+            { // awt.EDT fires off a couple of events before the frame is active
+              // the second changes the frame's size slightly. protect against this.
+                return;
+            }
             ConfigTools.setInt(
                 uiConfig, CFG_GAME_WINDOW_WIDTH,  frame.getWidth() );
 
