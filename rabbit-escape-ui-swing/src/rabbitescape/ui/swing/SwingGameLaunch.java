@@ -92,6 +92,9 @@ public class SwingGameLaunch implements GameLaunch
     public void run( String[] args )
     {
         showIntroDialog();
+        // After the dialog has gone, return keyboard 
+        // focus so keystrokes are not lost.
+        frame.getRootPane().grabFocus();
         loop.run();
     }
 
