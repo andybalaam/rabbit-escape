@@ -52,6 +52,10 @@ public class GameUi implements StatsChangedListener
         @Override
         public void mousePressed( MouseEvent e )
         {
+            if ( noScrollRequired() )
+            {
+                mouseClicked( e );
+            }
             startX  = e.getX();
             startY  = e.getY();
         }
@@ -73,6 +77,18 @@ public class GameUi implements StatsChangedListener
 
             startX = e.getX();
             startY = e.getY();
+        }
+
+        /**
+         * @return true if the window is large such that the whole world is
+         *         visible.
+         */
+        public boolean noScrollRequired()
+        {
+            int xRange = canvasScrollBarX.getMaximum() - canvasScrollBarX.getMinimum();
+            int yRange = canvasScrollBarY.getMaximum() - canvasScrollBarY.getMinimum();
+            return ( canvasScrollBarX.getVisibleAmount() == xRange )
+                && ( canvasScrollBarY.getVisibleAmount() == yRange );
         }
 
         @Override
