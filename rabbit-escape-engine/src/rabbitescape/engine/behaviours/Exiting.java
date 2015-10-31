@@ -20,6 +20,7 @@ public class Exiting extends Behaviour
             if (
                    ( thing instanceof Exit )
                 && ( thing.x == rabbit.x && thing.y == rabbit.y )
+                && ( RABBIT_FALLING != rabbit.state )
             )
             {
                 return true;
