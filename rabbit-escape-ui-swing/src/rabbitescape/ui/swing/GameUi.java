@@ -36,6 +36,9 @@ public class GameUi implements StatsChangedListener
     {
         private int startX = -1;
         private int startY = -1;
+        private long msTimePress = 0;
+        /** Time in ms. Longer press-release intervals are interpreted as drags */
+        private static final long msClickThreshold = 300;
 
         @Override
         public void windowClosing( WindowEvent e )
@@ -54,21 +57,40 @@ public class GameUi implements StatsChangedListener
         {
             if ( noScrollRequired() )
             {
-                mouseClicked( e );
+                click( e.getPoint() );
+                return;
             }
+            msTimePress = System.currentTimeMillis();
             startX  = e.getX();
             startY  = e.getY();
         }
 
         @Override
+        public void mouseReleased( MouseEvent e )
+        {
+            long msDownTime = System.currentTimeMillis() - msTimePress;
+            if ( msDownTime < msClickThreshold )
+            {
+                click( e.getPoint() );
+            }
+        }
+
+        @Override
         public void mouseClicked( MouseEvent e )
         {
-            click( e.getPoint() );
+            // use pressed and released calls.
+            // if this was used too, would get double event calls.
         }
 
         @Override
         public void mouseDragged( MouseEvent e )
         {
+            long msDownTime = System.currentTimeMillis() - msTimePress;
+            if ( msDownTime < msClickThreshold )
+            { // Wait and see if this is a click or a drag
+                return;
+            }
+
             canvasScrollBarX.setValue(
                 canvasScrollBarX.getValue() + startX - e.getX() );
 
