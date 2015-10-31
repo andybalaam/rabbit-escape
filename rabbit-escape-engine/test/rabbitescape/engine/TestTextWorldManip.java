@@ -1070,7 +1070,7 @@ public class TestTextWorldManip
     {
         String[] lines = {
             ":num_rabbits=1",
-            ":solution=5",
+            ":solution.1=5",
             "Q    ",
             "    O",
             "#####"
@@ -1084,7 +1084,7 @@ public class TestTextWorldManip
     {
         String[] lines = {
             ":num_rabbits=1",
-            ":solution=6",
+            ":solution.1=6",
             "Q    ",
             "    O",
             "#####"
@@ -1098,7 +1098,7 @@ public class TestTextWorldManip
     {
         String[] lines = {
             ":num_rabbits=1",
-            ":solution=7",
+            ":solution.1=7",
             "Q    ",
             "    O",
             "#####"
@@ -1108,12 +1108,14 @@ public class TestTextWorldManip
     }
 
     @Test
-    public void Complex_solution_string()
+    public void Complex_solution_strings()
     {
         String[] lines = {
             ":num_rabbits=1",
             ":bash=2",
-            ":solution=bash&(1,0);4;RUNNING;1;WON",
+            ":solution.1=bash&(1,0);4;RUNNING;1;WON",
+            ":solution.2=bash;(1,1);1;(0,1);RUNNING;2;WON",
+            ":solution.3=bash;(1,1)&(1,1);5;RUNNING",
             "Q    ",
             "  # O",
             "#####"
@@ -1128,7 +1130,7 @@ public class TestTextWorldManip
         String[] lines = {
             ":num_rabbits=1",
             ":bash=2",
-            ":solution.code=WTSMTzF4=n M>DmTBMTr}3$Mz~",
+            ":solution.1.code=WTSMTzF4=n M>DmTBMTr}3$Mz~",
             "Q    ",
             "  # O",
             "#####"

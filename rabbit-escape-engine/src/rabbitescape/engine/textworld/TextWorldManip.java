@@ -36,8 +36,6 @@ public class TextWorldManip
     private static final String num_to_save          = "num_to_save";
     private static final String rabbit_delay         = "rabbit_delay";
     private static final String music                = "music";
-    // TODO Allow multiple solutions with notation "solution.x".
-    private static final String SOLUTION             = "solution";
     private static final String num_saved            = "num_saved";
     private static final String num_killed           = "num_killed";
     private static final String num_waiting          = "num_waiting";
@@ -65,8 +63,7 @@ public class TextWorldManip
         hint1,
         hint2,
         hint3,
-        music,
-        SOLUTION
+        music
     );
 
     public static final List<String> META_BOOLS = Arrays.asList(
@@ -122,17 +119,18 @@ public class TextWorldManip
             new VariantGenerator( variantSeed )
         );
 
-        int num_rabs = processor.metaInt( num_rabbits,  10 );
+        int num_rabs = processor.metaInt( num_rabbits, 10 );
 
-        Solution solution = SolutionFactory.create(
-            processor.metaString( SOLUTION, "" ), 1 );
-
-        solution.checkSolution( createWorldFromLineProcessor(
+        World world = createWorldFromLineProcessor(
             nameIfNoneSupplied, statsListener, blocks, rabbits, things,
-            abilities, processor, num_rabs ) );
-        
-        return createWorldFromLineProcessor( nameIfNoneSupplied, statsListener,
-            blocks, rabbits, things, abilities, processor, num_rabs );
+            abilities, processor, num_rabs );
+
+        for ( Solution solution : processor.getSolutions() )
+        {
+            solution.checkSolution( world );
+        }
+
+        return world;
     }
 
     private static World createWorldFromLineProcessor(
