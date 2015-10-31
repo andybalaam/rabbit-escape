@@ -2,6 +2,7 @@ package rabbitescape.engine;
 
 import static org.hamcrest.MatcherAssert.*;
 import static org.hamcrest.core.IsEqual.*;
+import static org.junit.Assert.assertEquals;
 import static rabbitescape.engine.ChangeDescription.State.*;
 import static rabbitescape.engine.Tools.*;
 import static rabbitescape.engine.textworld.TextWorldManip.*;
@@ -457,6 +458,21 @@ public class TestTextWorldManip
         );
     }
 
+    @Test
+    public void Can_obfuscate_hints()
+    {
+        String[] lines = {
+            ":hint1.code=_Uf?>3ZH_8>U>{3",
+            ":hint2.code=@XW@W:)e+:+ ",
+            ":hint3.code=X5g..T[6X4["
+        };
+
+        World world = createWorld( lines );
+
+        assertEquals( world.hint1, "Select the bash" );
+        assertEquals( world.hint2, "Use the bash" );
+        assertEquals( world.hint3, "Be the bash" );
+    }
 
     @Test
     public void Can_provide_number_of_rabbits()

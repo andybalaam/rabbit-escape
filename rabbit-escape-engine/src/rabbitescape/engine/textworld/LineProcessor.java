@@ -17,10 +17,13 @@ import rabbitescape.engine.Rabbit;
 import rabbitescape.engine.Thing;
 import rabbitescape.engine.Token;
 import rabbitescape.engine.util.Dimension;
+import rabbitescape.engine.util.MegaCoder;
 import rabbitescape.engine.util.VariantGenerator;
 
 class LineProcessor
 {
+    private static final String CODE_SUFFIX = ".code";
+
     private static class Point
     {
         public final int x;
@@ -167,7 +170,7 @@ class LineProcessor
 
     private void processMetaLine( String line, VariantGenerator variantGen )
     {
-        String[] splitLine = split( line.substring( 1 ), "=" );
+        String[] splitLine = split( line.substring( 1 ), "=", 1 );
         if ( splitLine.length != 2 )
         {
             throw new InvalidMetaLine( lines, lineNum );
@@ -175,6 +178,12 @@ class LineProcessor
 
         String key   = splitLine[0];
         String value = splitLine[1];
+
+        if ( key.endsWith( CODE_SUFFIX ) )
+        {
+            key = key.substring( 0, key.length() - CODE_SUFFIX.length() );
+            value = MegaCoder.decode( value );
+        }
 
         if ( TextWorldManip.META_INTS.contains( key ) )
         {

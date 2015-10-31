@@ -64,7 +64,7 @@ public class Util
     public static <T> T getNth( Iterable<T> input, int n )
     {
         int i = 0;
-        for( T item : input )
+        for ( T item : input )
         {
             if ( i == n )
             {
@@ -122,7 +122,7 @@ public class Util
 
     public static String[] stringArray( List<String> list )
     {
-        return list.toArray( new String[ list.size() ] );
+        return list.toArray( new String[list.size()] );
     }
 
     public static String[] stringArray( Iterable<String> items )
@@ -132,7 +132,7 @@ public class Util
 
     public static Character[] characterArray( List<Character> list )
     {
-        return list.toArray( new Character[ list.size() ] );
+        return list.toArray( new Character[list.size()] );
     }
 
     public static Character[] characterArray( Iterable<Character> items )
@@ -142,7 +142,7 @@ public class Util
 
     public static Integer[] integerArray( List<Integer> list )
     {
-        return list.toArray( new Integer[ list.size() ] );
+        return list.toArray( new Integer[list.size()] );
     }
 
     public static Integer[] integerArray( Iterable<Integer> items )
@@ -158,7 +158,7 @@ public class Util
 
         for ( int i = 0; i < keysAndValues.length; i += 2 )
         {
-            ret.put( keysAndValues[i], keysAndValues[ i + 1 ] );
+            ret.put( keysAndValues[i], keysAndValues[i + 1] );
         }
 
         return ret;
@@ -276,7 +276,40 @@ public class Util
 
         ret.add( input.substring( lastI ) );
 
-        return ret.toArray( new String[ ret.size() ] );
+        return ret.toArray( new String[ret.size()] );
+    }
+
+    /**
+     * Split input by finding all occurrences of delimiter. Works like a sane
+     * version of String.split, but with no regular expressions.
+     *
+     * @param delimiter
+     *            is not a regular expression, just a string.
+     * @param maxSplits
+     *            the maximum number of times the string should be split.
+     *
+     * @return An array of strings that is always min(n + 1, maxSplits) long,
+     *         where n is the number of times the string delimiter appears in
+     *         input.
+     */
+    public static
+        String[]
+        split( String input, String delimiter, int maxSplits )
+    {
+        List<String> ret = new ArrayList<String>();
+
+        int lastI = 0;
+        int i = input.indexOf( delimiter );
+        while ( i != -1 && ret.size() < maxSplits )
+        {
+            ret.add( input.substring( lastI, i ) );
+            lastI = i + delimiter.length();
+            i = input.indexOf( delimiter, lastI );
+        }
+
+        ret.add( input.substring( lastI ) );
+
+        return ret.toArray( new String[ret.size()] );
     }
 
     public static Iterable<Integer> range( final int max )
@@ -411,7 +444,7 @@ public class Util
     public static <T> Iterable<T> filter(
         final Function<T, Boolean> predicate,
         final Iterable<T> input
-    )
+        )
     {
         class It extends UntilNullIterator<T>
         {
