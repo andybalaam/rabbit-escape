@@ -19,7 +19,6 @@ import rabbitescape.engine.Token;
 import rabbitescape.engine.World;
 import rabbitescape.engine.WorldStatsListener;
 import rabbitescape.engine.solution.Solution;
-import rabbitescape.engine.solution.SolutionFactory;
 import rabbitescape.engine.util.Dimension;
 import rabbitescape.engine.util.VariantGenerator;
 

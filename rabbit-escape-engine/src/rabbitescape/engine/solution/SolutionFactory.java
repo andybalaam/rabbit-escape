@@ -73,7 +73,7 @@ public class SolutionFactory
                 instructions.size() ) );
         }
 
-        return new Solution( instructions );
+        return new Solution( solutionId, instructions );
     }
 
     private static Instruction makeInstruction(

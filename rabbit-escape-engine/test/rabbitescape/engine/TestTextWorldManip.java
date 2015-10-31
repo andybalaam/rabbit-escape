@@ -1116,6 +1116,7 @@ public class TestTextWorldManip
             ":solution.1=bash&(1,0);4;RUNNING;1;WON",
             ":solution.2=bash;(1,1);1;(0,1);RUNNING;2;WON",
             ":solution.3=bash;(1,1)&(1,1);5;RUNNING",
+            ":solution.4=bash;(4,1);(3,1);3;LOST",
             "Q    ",
             "  # O",
             "#####"
