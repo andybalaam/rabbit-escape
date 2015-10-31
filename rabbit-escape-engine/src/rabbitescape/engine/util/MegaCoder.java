@@ -15,6 +15,53 @@ import java.util.Set;
  * declared public domain, so that it may be used, without attribution, by
  * anyone who needs obfuscation slightly more powerful than rot13, but less
  * portable than base64. (For clarity, the MegaCoder is this single file).
+ * <p>
+ * The MegaCoder shuffle algorithm:
+ * <pre>
+ * Input: An array of length l, A integer key k
+ * i = 0
+ * while at least two array entries remain unswapped:
+ *   if array entry i has not been swapped:
+ *     j = (floor(length / 2) + 3i + k) mod l
+ *     while array entry j has already been swapped:
+ *       j = (j + 1) mod l
+ *     swap entries i and j in the array
+ *   i = i + 1
+ * Output: The modified array
+ * </pre>
+ * The MegaCoder replace algorithm:
+ * <pre>
+ * Input: An key array k of length l, An array of characters x
+ * for i in [0, floor(l / 2)]:
+ *   a = entry i in k; b = entry (l - 1 - i) in k
+ *   replace all instances of a with b, and b with a, in the array x
+ * Output: The modified array x
+ * </pre>
+ * The MegaCoder uniquify algorithm:
+ * <pre>
+ * Input: An array of characters x
+ * Output: The set of characters in x sorted by value
+ * </pre>
+ * The MegaCoder encode algorithm:
+ * <pre>
+ * Input: An array of characters x of length l
+ * k1 = uniquify(x)
+ * x = replace(k1, x)
+ * k2 = shuffle(C, l) where C is the array of ASCII characters from space (0x20) to tilde (0x7e)
+ * x = replace(k2, x)
+ * x = shuffle(x, 0)
+ * Output: The modified array x
+ * </pre>
+ * The MegaCoder decode algorithm:
+ * <pre>
+ * Input: An array of characters x of length l
+ * x = shuffle(x, 0)
+ * k2 = shuffle(C, l) where C is the array of ASCII characters from space (0x20) to tilde (0x7e)
+ * x = replace(k2, x)
+ * k1 = uniquify(x)
+ * x = replace(k1, x)
+ * Output: The modified array x
+ * </pre>
  * 
  * @author tttppp
  */
