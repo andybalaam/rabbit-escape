@@ -59,4 +59,17 @@ public class Blocking extends Behaviour
             saveState, "Blocking.abilityActive", abilityActive
         );
     }
+
+    public static boolean blockerAt( World world, int nextX, int nextY )
+    {
+        Rabbit[] rabbits = world.getRabbitsAt( nextX, nextY );
+        for ( Rabbit r : rabbits )
+        {
+            if ( r.state == RABBIT_BLOCKING )
+            {
+                return true;
+            }
+        }
+        return false;
+    }
 }

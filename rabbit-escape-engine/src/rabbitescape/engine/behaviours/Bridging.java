@@ -108,6 +108,8 @@ public class Bridging extends Behaviour
                    nextBlock != null
                 && nextBlock.riseDir() != rabbit.dir
             ) || (
+                   Blocking.blockerAt( t.world, nx, ny )
+            ) || (
                    // Clip land
                    belowNextBlock != null
                 && belowNextBlock.riseDir() != rabbit.dir

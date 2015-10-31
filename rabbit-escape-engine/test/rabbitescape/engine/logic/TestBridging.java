@@ -1529,4 +1529,31 @@ public class TestBridging
             )
         );
     }
+
+    @Test
+    public void No_build_through_blocker()
+    {
+        World world = createWorld(
+          "r   ",
+          "  rO",
+          " ik#",
+          "####"
+        );
+
+        for ( int i = 0; i < 5 ; i++ )
+        {
+            world.step();
+        }
+
+        // rabbit has been turned by blocker and is bridging the other way.
+        assertThat(
+            renderWorld( world, true, false ),
+            equalTo(
+                "    ",
+                "   O",
+                "}jH#",
+                "####"
+            )
+        );
+    }
 }

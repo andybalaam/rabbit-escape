@@ -35,8 +35,8 @@ public class Walking extends Behaviour
                 if
                     (
                        t.isWall( aboveNext )
+                    || Blocking.blockerAt( t.world, nextX, nextY )
                     || t.isRoof( above )
-                    || blockerAt( nextX, nextY )
                     )
                 {
                     return rl(
@@ -75,7 +75,7 @@ public class Walking extends Behaviour
 
                 if (
                        t.isWall( next )
-                    || blockerAt( nextX, nextY )
+                    || Blocking.blockerAt( t.world, nextX, nextY )
                     )
                 {
                     return rl(
@@ -99,7 +99,7 @@ public class Walking extends Behaviour
                 }
                 else
                 {
-                    if ( blockerAt( nextX, t.rabbit.y ) )
+                    if ( Blocking.blockerAt( t.world, nextX, t.rabbit.y ) )
                     {
                         return rl(
                             RABBIT_TURNING_RIGHT_TO_LEFT_LOWERING,
@@ -124,7 +124,7 @@ public class Walking extends Behaviour
                 if
                     (
                        t.isWall( next )
-                    || blockerAt( nextX, nextY )
+                    || Blocking.blockerAt( t.world, nextX, nextY )
                     )
                 {
                     return rl(
@@ -141,7 +141,7 @@ public class Walking extends Behaviour
                 }
                 else if ( t.isDownSlope( t.blockBelowNext() ) )
                 {
-                    if ( blockerAt( nextX, t.rabbit.y + 1 ) )
+                    if ( Blocking.blockerAt( t.world, nextX, t.rabbit.y + 1 ) )
                     {
                         return rl(
                             RABBIT_TURNING_RIGHT_TO_LEFT,
@@ -164,19 +164,6 @@ public class Walking extends Behaviour
                     );
                 }
             }
-        }
-
-        private boolean blockerAt( int nextX, int nextY )
-        {
-            Rabbit[] rabbits = t.world.getRabbitsAt( nextX, nextY );
-            for ( Rabbit r : rabbits )
-            {
-                if ( r.state == RABBIT_BLOCKING )
-                {
-                    return true;
-                }
-            }
-            return false;
         }
 
         private State rl( State rightState, State leftState )
