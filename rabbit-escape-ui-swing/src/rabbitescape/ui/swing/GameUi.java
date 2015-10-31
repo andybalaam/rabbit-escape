@@ -36,6 +36,10 @@ public class GameUi implements StatsChangedListener
     {
         private int startX = -1;
         private int startY = -1;
+        private long msTimePress = 0;
+        /** Time in ms. Longer press-release intervals are interpreted as drags */
+        private long msClickThreshold =
+            (long)ConfigTools.getInt( uiConfig, CFG_CLICK_THRESHOLD_MS );
 
         @Override
         public void windowClosing( WindowEvent e )
@@ -52,19 +56,42 @@ public class GameUi implements StatsChangedListener
         @Override
         public void mousePressed( MouseEvent e )
         {
+            if ( noScrollRequired() )
+            {
+                click( e.getPoint() );
+                return;
+            }
+            msTimePress = System.currentTimeMillis();
             startX  = e.getX();
             startY  = e.getY();
         }
 
         @Override
+        public void mouseReleased( MouseEvent e )
+        {
+            long msDownTime = System.currentTimeMillis() - msTimePress;
+            if ( msDownTime < msClickThreshold )
+            {
+                click( e.getPoint() );
+            }
+        }
+
+        @Override
         public void mouseClicked( MouseEvent e )
         {
-            click( e.getPoint() );
+            // use pressed and released calls.
+            // if this was used too, would get double event calls.
         }
 
         @Override
         public void mouseDragged( MouseEvent e )
         {
+            long msDownTime = System.currentTimeMillis() - msTimePress;
+            if ( msDownTime < msClickThreshold )
+            { // Wait and see if this is a click or a drag
+                return;
+            }
+
             canvasScrollBarX.setValue(
                 canvasScrollBarX.getValue() + startX - e.getX() );
 
@@ -73,6 +100,18 @@ public class GameUi implements StatsChangedListener
 
             startX = e.getX();
             startY = e.getY();
+        }
+
+        /**
+         * @return true if the window is large such that the whole world is
+         *         visible.
+         */
+        public boolean noScrollRequired()
+        {
+            int xRange = canvasScrollBarX.getMaximum() - canvasScrollBarX.getMinimum();
+            int yRange = canvasScrollBarY.getMaximum() - canvasScrollBarY.getMinimum();
+            return ( canvasScrollBarX.getVisibleAmount() == xRange )
+                && ( canvasScrollBarY.getVisibleAmount() == yRange );
         }
 
         @Override
