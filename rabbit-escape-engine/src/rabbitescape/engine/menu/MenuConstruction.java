@@ -24,4 +24,10 @@ public class MenuConstruction
     {
         return included ? item( name, type, enabled ) : null;
     }
+
+    public static MenuItem maybeItem(
+        boolean included, String name, Menu target, boolean enabled )
+    {
+        return included ? item( name, target, enabled ) : null;
+    }
 }
