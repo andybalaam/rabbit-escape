@@ -28,6 +28,7 @@ public class Walking extends Behaviour
             if ( t.isOnUpSlope() )
             {
                 Block aboveNext = t.blockAboveNext();
+                Block above = t.blockAbove();
                 int nextX = t.nextX();
                 int nextY = t.rabbit.y - 1;
 
@@ -35,6 +36,7 @@ public class Walking extends Behaviour
                     (
                        t.isWall( aboveNext )
                     || Blocking.blockerAt( t.world, nextX, nextY )
+                    || t.isRoof( above )
                     )
                 {
                     return rl(
