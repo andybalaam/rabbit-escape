@@ -38,7 +38,8 @@ public class GameUi implements StatsChangedListener
         private int startY = -1;
         private long msTimePress = 0;
         /** Time in ms. Longer press-release intervals are interpreted as drags */
-        private static final long msClickThreshold = 300;
+        private long msClickThreshold =
+            (long)ConfigTools.getInt( uiConfig, CFG_CLICK_THRESHOLD_MS );
 
         @Override
         public void windowClosing( WindowEvent e )
