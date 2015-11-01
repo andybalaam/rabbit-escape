@@ -2,6 +2,8 @@ package rabbitescape.engine.solution;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import rabbitescape.engine.Token.Type;
 import rabbitescape.engine.World.CompletionState;
@@ -12,7 +14,9 @@ public class SolutionFactory
     private static final String STAGE_DELIMITER = ";";
     private static final String INSTRUCTION_DELIMITER = "&";
     private static final String WAIT_REGEX = "\\d+";
-    private static final String PLACE_TOKEN_REGEX = "\\((\\d+),(\\d+)\\)";
+
+    private static final Pattern PLACE_TOKEN_REGEX = Pattern.compile(
+        "\\((\\d+),(\\d+)\\)" );
 
     private static final List<String> COMPLETION_STATES =
         Util.toStringList( CompletionState.values() );
@@ -80,12 +84,15 @@ public class SolutionFactory
         {
             return new SelectInstruction( Type.valueOf( instructionString ) );
         }
-        else if ( instructionString.matches( PLACE_TOKEN_REGEX ) )
+        else
         {
-            String[] xAndY = instructionString.replace( "(", "" )
-                .replace( ")", "" ).split( "," );
-            return new PlaceTokenInstruction( Integer.valueOf( xAndY[0] ),
-                Integer.valueOf( xAndY[1] ) );
+            Matcher m = PLACE_TOKEN_REGEX.matcher( instructionString );
+            if ( m.matches() )
+            {
+                return new PlaceTokenInstruction(
+                    Integer.valueOf( m.group( 1 ) ),
+                    Integer.valueOf( m.group( 2 ) ) );
+            }
         }
         throw new InvalidInstruction( instructionString );
     }
