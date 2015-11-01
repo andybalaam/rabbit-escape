@@ -94,10 +94,8 @@ public class TestExit
             "#####"
         );
 
-        for ( int i = 0; i < 5; i++ )
-        {
-            world.step();
-        }
+        world.step( 5 );
+
         assertThat( world.num_saved, equalTo ( 1 ) );
         // Check there have been enough steps for both
         // to exit or splat.
@@ -112,6 +110,36 @@ public class TestExit
                 "     ",
                 "#O O#",
                 "#####"
+            }));
+    }
+    
+    @Test
+    public void Climb_into_exit()
+    {
+        // Has a trap to see if the rabbit climbed past
+        World world = createWorld(
+            "     ",
+            " O# #",
+            "  ###",
+            "rc#  ",
+            "###  "
+        );
+
+        world.step( 6 );
+
+        // The rabbit escaped
+        assertThat( world.num_saved, equalTo ( 1 ) );
+
+        // World is now devoid of life, and the climbing token has been
+        // consumed.
+        assertThat(
+            renderCompleteWorld( world, false ), 
+            equalTo(new String[] {
+                "     ",
+                " O# #",
+                "  ###",
+                "  #  ",
+                "###  "
             }));
     }
 }
