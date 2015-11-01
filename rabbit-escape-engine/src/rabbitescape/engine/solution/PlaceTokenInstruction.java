@@ -2,8 +2,8 @@ package rabbitescape.engine.solution;
 
 public class PlaceTokenInstruction implements Instruction
 {
-    int x;
-    int y;
+    public final int x;
+    public final int y;
 
     public PlaceTokenInstruction( int x, int y )
     {
