@@ -1,8 +1,7 @@
 package rabbitescape.engine;
 
 import static org.hamcrest.MatcherAssert.*;
-import static org.hamcrest.core.IsEqual.*;
-import static org.junit.Assert.assertEquals;
+import static org.hamcrest.CoreMatchers.*;
 import static rabbitescape.engine.ChangeDescription.State.*;
 import static rabbitescape.engine.Tools.*;
 import static rabbitescape.engine.textworld.TextWorldManip.*;
@@ -474,9 +473,9 @@ public class TestTextWorldManip
 
         World world = createWorld( lines );
 
-        assertEquals( world.hint1, "Select the bash" );
-        assertEquals( world.hint2, "Use the bash" );
-        assertEquals( world.hint3, "Be the bash" );
+        assertThat( world.hint1, equalTo( "Select the bash" ) );
+        assertThat( world.hint2, equalTo( "Use the bash" ) );
+        assertThat( world.hint3, equalTo( "Be the bash" ) );
     }
 
     @Test
