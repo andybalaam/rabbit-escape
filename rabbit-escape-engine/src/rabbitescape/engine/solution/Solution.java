@@ -1,16 +1,18 @@
 package rabbitescape.engine.solution;
 
+import java.util.Arrays;
 import java.util.List;
 
 import rabbitescape.engine.World;
 import rabbitescape.engine.World.DontStepAfterFinish;
 import rabbitescape.engine.World.NoSuchAbilityInThisWorld;
 import rabbitescape.engine.World.NoneOfThisAbilityLeft;
+import rabbitescape.engine.util.Util;
 
 public class Solution
 {
-    private int solutionId;
-    private List<Instruction> instructions;
+    private final int solutionId;
+    private final List<Instruction> instructions;
 
     public Solution( int solutionId, List<Instruction> instructions )
     {
@@ -51,5 +53,42 @@ public class Solution
                     e );
             }
         }
+    }
+
+    @Override
+    public String toString()
+    {
+        return "Solution( "
+            + solutionId
+            + ", [ " + Util.join( ", ", instructions )
+            + " ] )";
+    }
+
+    @Override
+    public boolean equals( Object other )
+    {
+        if ( ! ( other instanceof Solution ) )
+        {
+            return false;
+        }
+        Solution otherSolution = (Solution)other;
+
+        return (
+            solutionId == otherSolution.solutionId
+            &&
+            Arrays.deepEquals(
+                instructionsArray(), otherSolution.instructionsArray() )
+        );
+    }
+
+    private Instruction[] instructionsArray()
+    {
+        return instructions.toArray( new Instruction[ instructions.size() ] );
+    }
+
+    @Override
+    public int hashCode()
+    {
+        return solutionId + Arrays.deepHashCode( instructionsArray() );
     }
 }
