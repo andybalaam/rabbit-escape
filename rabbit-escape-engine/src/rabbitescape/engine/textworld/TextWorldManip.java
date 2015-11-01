@@ -30,6 +30,7 @@ public class TextWorldManip
     private static final String hint1                = "hint1";
     private static final String hint2                = "hint2";
     private static final String hint3                = "hint3";
+    private static final String solution             = "solution";
     private static final String num_rabbits          = "num_rabbits";
     private static final String num_to_save          = "num_to_save";
     private static final String rabbit_delay         = "rabbit_delay";
@@ -62,6 +63,10 @@ public class TextWorldManip
         hint2,
         hint3,
         music
+    );
+
+    public static final List<String> META_STRING_ARRAYS_BY_KEY = Arrays.asList(
+        solution
     );
 
     public static final List<String> META_BOOLS = Arrays.asList(
@@ -149,6 +154,7 @@ public class TextWorldManip
             processor.metaString( hint1, "" ),
             processor.metaString( hint2, "" ),
             processor.metaString( hint3, "" ),
+            processor.metaStringArrayByKey( solution, new String[] {} ),
             num_rabs,
             processor.metaInt( num_to_save,  1 ),
             processor.metaIntArray( rabbit_delay, new int[]{4} ),
@@ -176,6 +182,7 @@ public class TextWorldManip
             "",            //hint1
             "",            //hint2
             "",            //hint3
+            new String[] {}, //solutions
             0,
             1,
             new int[]{4},

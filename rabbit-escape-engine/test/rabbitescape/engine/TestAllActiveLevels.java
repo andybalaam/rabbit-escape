@@ -14,9 +14,11 @@ import rabbitescape.engine.menu.LevelsCompleted;
 import rabbitescape.engine.menu.Menu;
 import rabbitescape.engine.menu.MenuDefinition;
 import rabbitescape.engine.menu.MenuItem;
+import rabbitescape.engine.solution.Solution;
+import rabbitescape.engine.solution.SolutionFactory;
 import rabbitescape.engine.util.FileSystem;
 
-public class TestRoundTripAllLevels
+public class TestAllActiveLevels
 {
     private static class IgnoreLevelsCompleted implements LevelsCompleted
     {
@@ -74,7 +76,7 @@ public class TestRoundTripAllLevels
     }
 
     @Test
-    public void Round_trip_all_levels()
+    public void All_levels_load_and_round_trip()
     {
         Menu menu = MenuDefinition.mainMenu( new IgnoreLevelsCompleted() );
         Menu levelSets = menu.items[0].menu;
@@ -84,8 +86,9 @@ public class TestRoundTripAllLevels
             {
                 LevelMenuItem lev = (LevelMenuItem)levelItem;
 
-                World world = new LoadWorldFile( new NothingExistsFileSystem() ).load(
-                    new IgnoreWorldStatsListener(), lev.fileName );
+                World world = new LoadWorldFile(
+                    new NothingExistsFileSystem() ).load(
+                        new IgnoreWorldStatsListener(), lev.fileName );
 
                 String[] lines = renderCompleteWorld( world, true );
 
@@ -93,6 +96,32 @@ public class TestRoundTripAllLevels
                     renderCompleteWorld( createWorld( lines ), true ),
                     equalTo( lines )
                 );
+            }
+        }
+    }
+
+    @Test
+    public void All_solutions_are_correct()
+    {
+        Menu menu = MenuDefinition.mainMenu( new IgnoreLevelsCompleted() );
+        Menu levelSets = menu.items[0].menu;
+        for ( MenuItem levelSet : levelSets.items )
+        {
+            for ( MenuItem levelItem : levelSet.menu.items )
+            {
+                LevelMenuItem lev = (LevelMenuItem)levelItem;
+
+                World world = new LoadWorldFile(
+                    new NothingExistsFileSystem() ).load(
+                        new IgnoreWorldStatsListener(), lev.fileName );
+
+                int i = 0;
+                for ( String s : world.solutions )
+                {
+                    Solution solution = SolutionFactory.create( s, i );
+                    solution.checkSolution( world );
+                    ++i;
+                }
             }
         }
     }

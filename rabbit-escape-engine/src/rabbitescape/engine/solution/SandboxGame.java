@@ -1,6 +1,7 @@
 package rabbitescape.engine.solution;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
@@ -24,7 +25,7 @@ public class SandboxGame
      */
     private Token.Type selectedType = null;
     /** The world object that is contained in the game. */
-    private World world;
+    private final World world;
 
     /**
      * Create a sandbox game based on a given world. This allows playing with
@@ -49,6 +50,7 @@ public class SandboxGame
             world.hint1,
             world.hint2,
             world.hint3,
+            Arrays.copyOf( world.solutions, world.solutions.length ),
             world.num_rabbits,
             world.num_to_save,
             world.rabbit_delay,
