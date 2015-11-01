@@ -31,18 +31,9 @@ public class SolutionFactory
         List<Instruction> instructions = new ArrayList<>();
         for ( int i = 0; i < instructionStages.length; i++ )
         {
-            String[] instructionStrings = Util.split( instructionStages[i],
-                INSTRUCTION_DELIMITER );
-            for ( int j = 0; j < instructionStrings.length; j++ )
-            {
-                if ( !instructionStrings[j].equals( "" ) )
-                {
-                    Instruction instruction = makeInstruction(
-                        instructionStrings[j],
-                        solutionId, i );
-                    instructions.add( instruction );
-                }
-            }
+            instructions.addAll(
+                createTimeStep( instructionStages[i], solutionId, i ) );
+
             // Wait one step after every semicolon (unless the last instruction
             // was a wait instruction).
             if ( instructions.size() > 0
@@ -63,6 +54,31 @@ public class SolutionFactory
         }
 
         return new Solution( solutionId, instructions );
+    }
+
+    public static List<Instruction> createTimeStep(
+        String timeStepString, int solutionId, int instructionIndex )
+    {
+        ArrayList<Instruction> ret = new ArrayList<Instruction>();
+
+        String[] instructionStrings = Util.split(
+            timeStepString, INSTRUCTION_DELIMITER );
+
+        for ( int j = 0; j < instructionStrings.length; j++ )
+        {
+            if ( !instructionStrings[j].equals( "" ) )
+            {
+                ret.add(
+                    makeInstruction(
+                        instructionStrings[j],
+                        solutionId,
+                        instructionIndex
+                    )
+                );
+            }
+        }
+
+        return ret;
     }
 
     private static Instruction makeInstruction(

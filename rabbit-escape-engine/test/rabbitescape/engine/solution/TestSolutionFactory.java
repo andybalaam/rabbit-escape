@@ -129,6 +129,39 @@ public class TestSolutionFactory
     }
 
     @Test
+    public void Can_parse_single_instruction()
+    {
+        assertThat(
+            SolutionFactory.createTimeStep( "bash", 1, 1 ),
+            equalTo(
+                Arrays.asList(
+                    new Instruction[]
+                    {
+                        new SelectInstruction( Token.Type.bash )
+                    }
+                )
+            )
+        );
+    }
+
+    @Test
+    public void Can_parse_multiple_single_instructions()
+    {
+        assertThat(
+            SolutionFactory.createTimeStep( "bash&(1,2)", 1, 1 ),
+            equalTo(
+                Arrays.asList(
+                    new Instruction[]
+                    {
+                          new SelectInstruction( Token.Type.bash )
+                        , new PlaceTokenInstruction( 1, 2 )
+                    }
+                )
+            )
+        );
+    }
+
+    @Test
     public void Unrecognised_ability_is_an_error()
     {
         try
