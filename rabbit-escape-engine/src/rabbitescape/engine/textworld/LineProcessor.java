@@ -5,7 +5,6 @@ import static rabbitescape.engine.Block.Type.*;
 import static rabbitescape.engine.util.Util.*;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;

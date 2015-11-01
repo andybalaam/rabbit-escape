@@ -14,6 +14,7 @@ import org.junit.Test;
 import rabbitescape.engine.solution.InvalidSolution;
 import rabbitescape.engine.solution.Solution;
 import rabbitescape.engine.solution.SolutionFactory;
+import rabbitescape.engine.solution.SolutionRunner;
 import rabbitescape.engine.textworld.DuplicateMetaKey;
 import rabbitescape.engine.textworld.ItemsLineProcessor;
 import rabbitescape.engine.textworld.LineProcessor;
@@ -1290,7 +1291,7 @@ public class TestTextWorldManip
         for ( String s : world.solutions )
         {
             Solution solution = SolutionFactory.create( s, i );
-            solution.checkSolution( world );
+            SolutionRunner.runSolution( solution, world );
             ++i;
         }
     }
