@@ -7,6 +7,8 @@ import static rabbitescape.engine.util.Util.*;
 import static rabbitescape.engine.i18n.Translation.*;
 
 import rabbitescape.engine.CompletedLevelWinListener;
+import rabbitescape.engine.LevelWinListener;
+import rabbitescape.engine.MultiLevelWinListener;
 import rabbitescape.engine.config.Config;
 import rabbitescape.engine.err.RabbitEscapeException;
 import rabbitescape.engine.menu.AboutText;
@@ -48,6 +50,7 @@ public class TextMenu
     private final FileSystem fs;
     private final Terminal terminal;
     private final LevelsCompleted levelsCompleted;
+    private final Stack<Menu> stack = new Stack<Menu>();
 
     public TextMenu( FileSystem fs, Terminal terminal, Config config )
     {
@@ -60,7 +63,7 @@ public class TextMenu
     {
         Menu menu = MenuDefinition.mainMenu( levelsCompleted );
 
-        Stack<Menu> stack = new Stack<>();
+        stack.clear();
         stack.push( menu );
 
         while ( true )
@@ -113,9 +116,17 @@ public class TextMenu
         new TextSingleGameMain( fs, terminal.out, terminal.locale )
             .launchGame(
                 new String[] { levelItem.fileName, "--interactive" },
-                new CompletedLevelWinListener(
-                    levelItem.levelsDir, levelItem.levelNumber, levelsCompleted )
+                winListeners( levelItem )
             );
+    }
+
+    protected LevelWinListener winListeners( LevelMenuItem item )
+    {
+        return new MultiLevelWinListener(
+            new CompletedLevelWinListener(
+                item.levelsDir, item.levelNumber, levelsCompleted ),
+            new UpdateTextMenuLevelWinListener( this )
+        );
     }
 
     private void about()
@@ -229,5 +240,11 @@ public class TextMenu
                 )
             );
         }
+    }
+
+    public void refreshEnabledItems()
+    {
+        Menu menu = stack.lastElement();
+        menu.refresh();
     }
 }
