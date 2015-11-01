@@ -112,7 +112,7 @@ public class TestExit
                 "#####"
             }));
     }
-    
+
     @Test
     public void Climb_into_exit()
     {
@@ -140,6 +140,41 @@ public class TestExit
                 "  ###",
                 "  #  ",
                 "###  "
+            }));
+    }
+
+    @Test
+    public void Fall_past_exit()
+    {
+        // All must die
+        World world = createWorld(
+            "rrrrrrr",
+            "O      ",
+            " O     ",
+            "  O    ",
+            "   O   ",
+            "    O  ",
+            "     O ",
+            "      O"
+        );
+
+        world.step( 5 );
+
+        // None lived
+        assertThat( world.num_saved, equalTo ( 0 ) );
+
+        // World is now devoid of life
+        assertThat(
+            renderCompleteWorld( world, false ), 
+            equalTo(new String[] {
+                "       ",
+                "O      ",
+                " O     ",
+                "  O    ",
+                "   O   ",
+                "    O  ",
+                "     O ",
+                "      O"
             }));
     }
 }
