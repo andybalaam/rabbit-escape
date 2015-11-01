@@ -5,6 +5,7 @@ import static rabbitescape.engine.Block.Type.*;
 import static rabbitescape.engine.util.Util.*;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,6 +17,8 @@ import rabbitescape.engine.Exit;
 import rabbitescape.engine.Rabbit;
 import rabbitescape.engine.Thing;
 import rabbitescape.engine.Token;
+import rabbitescape.engine.solution.Solution;
+import rabbitescape.engine.solution.SolutionFactory;
 import rabbitescape.engine.util.Dimension;
 import rabbitescape.engine.util.MegaCoder;
 import rabbitescape.engine.util.VariantGenerator;
@@ -23,6 +26,7 @@ import rabbitescape.engine.util.VariantGenerator;
 class LineProcessor
 {
     private static final String CODE_SUFFIX = ".code";
+    private static final String SOLUTION_PREFIX = "solution.";
 
     private static class Point
     {
@@ -45,6 +49,7 @@ class LineProcessor
     private final Map<String, Integer> m_metaInts;
     private final Map<String, Boolean> m_metaBools;
     private final Map<String, ArrayList<Integer>> m_metaIntArrays;
+    private final Map<Integer, Solution> solutions;
     private final List<Point> starPoints;
 
     private int width;
@@ -70,6 +75,7 @@ class LineProcessor
         this.m_metaInts      = new HashMap<>();
         this.m_metaBools     = new HashMap<>();
         this.m_metaIntArrays = new HashMap<>();
+        this.solutions       = new HashMap<>();
         starPoints = new ArrayList<Point>();
 
         width = -1;
@@ -132,6 +138,11 @@ class LineProcessor
         {
             return ret;
         }
+    }
+
+    public Collection<Solution> getSolutions()
+    {
+        return solutions.values();
     }
 
     public Dimension size()
@@ -204,6 +215,16 @@ class LineProcessor
         {
             duplicateMetaCheck( m_metaIntArrays.keySet(), key );
             m_metaIntArrays.put( key, toIntArray( value ) );
+        }
+        else if ( key.startsWith( SOLUTION_PREFIX ))
+        {
+            int solutionId = Integer.valueOf( key.substring( SOLUTION_PREFIX.length() ) );
+            Solution solution = SolutionFactory.create( value, solutionId );
+            if (solutions.containsKey( solutionId ))
+            {
+                throw new DuplicateMetaKey( lines, lineNum );
+            }
+            solutions.put( solutionId, solution );
         }
         else if ( TextWorldManip.ABILITIES.contains( key ) )
         {

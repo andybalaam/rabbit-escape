@@ -12,6 +12,7 @@ import java.util.Map;
 
 import org.junit.Test;
 
+import rabbitescape.engine.solution.InvalidSolution;
 import rabbitescape.engine.textworld.DuplicateMetaKey;
 import rabbitescape.engine.textworld.ItemsLineProcessor;
 
@@ -1085,4 +1086,78 @@ public class TestTextWorldManip
         renderCompleteWorld( createWorld( lines ), true );
     }
 
+    @Test( expected=InvalidSolution.class )
+    public void Incorrect_solution_string_throws_exception()
+    {
+        String[] lines = {
+            ":num_rabbits=1",
+            ":solution.1=5",
+            "Q    ",
+            "    O",
+            "#####"
+        };
+        
+        createWorld( lines );
+    }
+    
+    @Test
+    public void Valid_solution_string_throws_no_exception()
+    {
+        String[] lines = {
+            ":num_rabbits=1",
+            ":solution.1=6",
+            "Q    ",
+            "    O",
+            "#####"
+        };
+        
+        createWorld( lines );
+    }
+    
+    @Test( expected=InvalidSolution.class )
+    public void Solution_too_many_steps_throws_exception()
+    {
+        String[] lines = {
+            ":num_rabbits=1",
+            ":solution.1=7",
+            "Q    ",
+            "    O",
+            "#####"
+        };
+        
+        createWorld( lines );
+    }
+
+    @Test
+    public void Complex_solution_strings()
+    {
+        String[] lines = {
+            ":num_rabbits=1",
+            ":bash=2",
+            ":solution.1=bash&(1,0);4;RUNNING;1;WON",
+            ":solution.2=bash;(1,1);1;(0,1);RUNNING;2;WON",
+            ":solution.3=bash;(1,1)&(1,1);5;RUNNING",
+            ":solution.4=bash;(4,1);(3,1);3;LOST",
+            "Q    ",
+            "  # O",
+            "#####"
+        };
+        
+        createWorld( lines );
+    }
+    
+    @Test
+    public void Obfuscated_solution()
+    {
+        String[] lines = {
+            ":num_rabbits=1",
+            ":bash=2",
+            ":solution.1.code=WTSMTzF4=n M>DmTBMTr}3$Mz~",
+            "Q    ",
+            "  # O",
+            "#####"
+        };
+        
+        createWorld( lines );
+    }
 }
