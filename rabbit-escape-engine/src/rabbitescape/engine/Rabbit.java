@@ -43,9 +43,9 @@ public class Rabbit extends Thing
 
         behavioursTriggerOrder.add( exploding );
         behavioursTriggerOrder.add( outOfBounds );
+        behavioursTriggerOrder.add( falling );
         behavioursTriggerOrder.add( exiting );
         behavioursTriggerOrder.add( climbing );
-        behavioursTriggerOrder.add( falling );
         behavioursTriggerOrder.add( bashing );
         behavioursTriggerOrder.add( digging );
         behavioursTriggerOrder.add( bridging );
@@ -54,8 +54,8 @@ public class Rabbit extends Thing
 
         behaviours.add( exploding );
         behaviours.add( outOfBounds );
-        behaviours.add( exiting );
         behaviours.add( falling );
+        behaviours.add( exiting );
         behaviours.add( bashing );
         behaviours.add( digging );
         behaviours.add( bridging );
