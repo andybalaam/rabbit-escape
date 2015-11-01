@@ -84,34 +84,107 @@ public class TestExit
     public void Splatting_prevents_exit()
     {
         World world = createWorld(
-            "r    ",
-            "#    ",
-            "     ",
-            "  r  ",
-            "  #  ",
-            "     ",
-            "#O O#",
-            "#####"
+            "r         #       ",
+            "# r       #       ",
+            "  # r     #       ",
+            "    # r   #       ",
+            "      # r #       ",
+            "        # r       ",
+            "          # r     ",
+            "            # r   ",
+            "              #   ",
+            " O O O O O O O O  ",
+            " # # # # # # # #  ",
+            "#                #",
+            "##################"
         );
 
-        for ( int i = 0; i < 5; i++ )
-        {
-            world.step();
-        }
-        assertThat( world.num_saved, equalTo ( 1 ) );
-        // Check there have been enough steps for both
+        world.step( 10 );
+
+        assertThat( world.num_saved, equalTo ( 3 ) );
+        // Check there have been enough steps for all
         // to exit or splat.
         assertThat(
             renderCompleteWorld( world, false ), 
             equalTo(new String[] {
+                "          #       ",
+                "#         #       ",
+                "  #       #       ",
+                "    #     #       ",
+                "      #   #       ",
+                "        #         ",
+                "          #       ",
+                "            #     ",
+                "              #   ",
+                " O O O O O O O O  ",
+                " # # # # # # # #  ",
+                "#                #",
+                "##################"
+            }));
+    }
+
+    @Test
+    public void Climb_into_exit()
+    {
+        // Has a trap to see if the rabbit climbed past
+        World world = createWorld(
+            "     ",
+            " O# #",
+            "  ###",
+            "rc#  ",
+            "###  "
+        );
+
+        world.step( 6 );
+
+        // The rabbit escaped
+        assertThat( world.num_saved, equalTo ( 1 ) );
+
+        // World is now devoid of life, and the climbing token has been
+        // consumed.
+        assertThat(
+            renderCompleteWorld( world, false ), 
+            equalTo(new String[] {
                 "     ",
-                "#    ",
-                "     ",
-                "     ",
+                " O# #",
+                "  ###",
                 "  #  ",
-                "     ",
-                "#O O#",
-                "#####"
+                "###  "
+            }));
+    }
+
+    @Test
+    public void Fall_past_exit()
+    {
+        // All must die
+        World world = createWorld(
+            "rrrrrrr",
+            "O      ",
+            " O     ",
+            "  O    ",
+            "   O   ",
+            "    O  ",
+            "     O ",
+            "      O"
+        );
+
+        world.step( 5 );
+
+        // None lived
+        assertThat( world.num_saved, equalTo ( 0 ) );
+
+        // World is now devoid of life
+        assertThat(
+            renderCompleteWorld( world, false ), 
+            equalTo(new String[] {
+                "       ",
+                "O      ",
+                " O     ",
+                "  O    ",
+                "   O   ",
+                "    O  ",
+                "     O ",
+                "      O"
             }));
     }
 }
