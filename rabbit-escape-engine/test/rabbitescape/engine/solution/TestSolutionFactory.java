@@ -109,7 +109,7 @@ public class TestSolutionFactory
     public void If_not_specified_assert_we_win_at_end()
     {
         assertThat(
-            SolutionFactory.create( "bridge;(2,4)", 2 ),
+            SolutionFactory.create( "bridge;(22,40)", 2 ),
             equalTo(
                 new Solution(
                     2,
@@ -118,7 +118,7 @@ public class TestSolutionFactory
                         {
                             new SelectInstruction( Token.Type.bridge ),
                             new WaitInstruction( 1 ),
-                            new PlaceTokenInstruction( 2, 4 ),
+                            new PlaceTokenInstruction( 22, 40 ),
                             new TargetState( World.CompletionState.WON, 2, 3 )
                         }
                     )

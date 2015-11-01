@@ -12,7 +12,7 @@ public class SolutionFactory
     private static final String STAGE_DELIMITER = ";";
     private static final String INSTRUCTION_DELIMITER = "&";
     private static final String WAIT_REGEX = "[1-9][0-9]*";
-    private static final String PLACE_TOKEN_REGEX = "\\((0|[1-9][0-9]*),(0|[1-9][0-9]*)\\)";
+    private static final String PLACE_TOKEN_REGEX = "\\((\\d+),(\\d+)\\)";
 
     private static final List<String> COMPLETION_STATES = new ArrayList<>();
     static
