@@ -68,7 +68,26 @@ public class SolutionFactory
     private static Instruction makeInstruction(
         String instructionString,
         int solutionId,
-        int instructionIndex )
+        int instructionIndex
+    )
+    {
+        try
+        {
+            return doMakeInstruction(
+                instructionString, solutionId, instructionIndex );
+        }
+        catch ( NumberFormatException e )
+        {
+            throw new InvalidInstruction( e, instructionString );
+        }
+    }
+
+    private static Instruction doMakeInstruction(
+        String instructionString,
+        int solutionId,
+        int instructionIndex
+    )
+    throws NumberFormatException, InvalidInstruction
     {
         if ( COMPLETION_STATES.contains( instructionString ) )
         {
