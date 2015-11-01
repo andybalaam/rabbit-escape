@@ -102,9 +102,14 @@ public class Falling extends Behaviour
         BehaviourTools t = new BehaviourTools( rabbit, world );
 
         //noinspection RedundantIfStatement
+        if ( t.isFlat( t.blockBelow() ) )
+        {
+            return false;
+        }
+
         if (
-               t.isFlat( t.blockBelow() )
-            || t.isOnSlopeStateUnreliable()
+               rabbit.onSlope 
+            && !t.sharesSquareWithDiggerOnSlope()
         )
         {
             return false;

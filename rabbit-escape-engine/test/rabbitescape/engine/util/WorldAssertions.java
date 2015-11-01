@@ -1,7 +1,7 @@
 package rabbitescape.engine.util;
 
 import static org.hamcrest.MatcherAssert.*;
-import static rabbitescape.engine.Tools.*;
+import static org.hamcrest.core.IsEqual.equalTo;
 import static rabbitescape.engine.textworld.TextWorldManip.*;
 import static rabbitescape.engine.util.Util.*;
 
@@ -129,5 +129,25 @@ public class WorldAssertions
                 equalTo( split( state, "\n" ) )
             );
         }
+    }
+    
+    /**
+     * @brief Note that this method steps the world, changing the input argument
+     * that is referenced.
+     */
+    public static void assertWorldEvolvesLike(
+        World world,
+        int nSteps,
+        String[] finalWorld )
+    {
+        for ( int i = 0; i < nSteps; i++ )
+        {
+            world.step();
+        }
+
+        assertThat(
+            renderCompleteWorld( world, false ), 
+            equalTo( finalWorld )
+            );
     }
 }

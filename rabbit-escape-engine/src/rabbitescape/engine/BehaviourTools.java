@@ -5,6 +5,7 @@ import static rabbitescape.engine.Block.Type.solid_up_left;
 import static rabbitescape.engine.Block.Type.solid_up_right;
 import static rabbitescape.engine.Direction.RIGHT;
 import static rabbitescape.engine.Direction.opposite;
+import rabbitescape.engine.ChangeDescription.State;
 
 public class BehaviourTools
 {
@@ -203,5 +204,33 @@ public class BehaviourTools
         {
             return rabbit.y;
         }
+    }
+    
+    public boolean isBashing()
+    {
+        State s = rabbit.state;
+        return
+               State.RABBIT_BASHING_RIGHT == s
+            || State.RABBIT_BASHING_LEFT == s
+            || State.RABBIT_BASHING_UP_RIGHT == s
+            || State.RABBIT_BASHING_UP_LEFT == s
+            || State.RABBIT_BASHING_USELESSLY_RIGHT == s
+            || State.RABBIT_BASHING_USELESSLY_LEFT == s ;
+    }
+    
+    public boolean sharesSquareWithDiggerOnSlope()
+    {
+        for (Rabbit r: world.rabbits)
+        {
+            if ( 
+                   State.RABBIT_DIGGING_ON_SLOPE == r.state
+                && rabbit.x == r.x
+                && rabbit.y == r.y
+            )
+            {
+                return true;
+            }
+        }
+        return false;
     }
 }

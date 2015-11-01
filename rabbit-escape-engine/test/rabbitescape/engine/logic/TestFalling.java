@@ -1076,21 +1076,18 @@ public class TestFalling
             "#### ## #### ## #### ##"
         );
 
-        world.step( 10 );
-
-        // None lived
-        assertThat( world.num_saved, equalTo ( 0 ) );
-
-        // World is now devoid of life.
-        // Some digging has occurred.
-        assertThat(
-            renderCompleteWorld( world, false ), 
-            equalTo(new String[] {
+        assertWorldEvolvesLike( 
+            world,
+            10,
+            new String[] {
                 "     (       /         ",
                 "                ####   ",
                 "   (  O    /  O       O",
                 "#### ## #### ## #### ##"
-            }));
+            });
+
+        // None lived
+        assertThat( world.num_saved, equalTo ( 0 ) );
     }
 
 }
