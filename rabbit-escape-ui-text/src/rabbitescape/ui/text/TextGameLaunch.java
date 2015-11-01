@@ -6,19 +6,20 @@ import static rabbitescape.engine.util.Util.*;
 import rabbitescape.engine.LevelWinListener;
 import rabbitescape.engine.World;
 import rabbitescape.engine.World.CompletionState;
+import rabbitescape.engine.solution.SandboxGame;
 import rabbitescape.engine.textworld.TextWorldManip;
 import rabbitescape.render.GameLaunch;
 
 public class TextGameLaunch implements GameLaunch
 {
-    private final World world;
+    private final SandboxGame sandboxGame;
     private final LevelWinListener winListener;
     private final Terminal terminal;
 
     public TextGameLaunch(
         World world, LevelWinListener winListener, Terminal terminal )
     {
-        this.world = world;
+        this.sandboxGame = new SandboxGame( world );
         this.winListener = winListener;
         this.terminal = terminal;
     }
@@ -32,7 +33,9 @@ public class TextGameLaunch implements GameLaunch
             useInput = true;
         }
 
-        while( world.completionState() == CompletionState.RUNNING )
+        while(
+            sandboxGame.getWorld().completionState() == CompletionState.RUNNING
+        )
         {
             try
             {
@@ -47,7 +50,7 @@ public class TextGameLaunch implements GameLaunch
                 if ( useInput )
                 {
                     InputHandler inputHandler =
-                        new InputHandler( world, terminal );
+                        new InputHandler( sandboxGame, terminal );
 
                     //noinspection StatementWithEmptyBody
                     while ( !inputHandler.handle() )
@@ -64,14 +67,14 @@ public class TextGameLaunch implements GameLaunch
                 e.printStackTrace();
             }
 
-            world.step();
+            sandboxGame.getWorld().step();
             checkWon();
         }
     }
 
     private void checkWon()
     {
-        if ( world.completionState() == CompletionState.WON )
+        if ( sandboxGame.getWorld().completionState() == CompletionState.WON )
         {
             winListener.won();
         }
@@ -89,7 +92,8 @@ public class TextGameLaunch implements GameLaunch
 
     private void printWorldImpl( boolean showChanges )
     {
-        String[] txt = TextWorldManip.renderWorld( world, showChanges, true );
+        String[] txt = TextWorldManip.renderWorld(
+            sandboxGame.getWorld(), showChanges, true );
 
         terminal.out.println( join( "\n", txt ) );
     }
@@ -97,7 +101,7 @@ public class TextGameLaunch implements GameLaunch
     @Override
     public void showResult()
     {
-        if ( world.completionState() == CompletionState.WON )
+        if ( sandboxGame.getWorld().completionState() == CompletionState.WON )
         {
             terminal.out.println( t( "You won!" ) );
         }

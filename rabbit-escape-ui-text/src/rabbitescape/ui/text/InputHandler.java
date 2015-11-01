@@ -1,14 +1,17 @@
 package rabbitescape.ui.text;
 
 import java.io.IOException;
+import java.util.List;
 
 import static rabbitescape.engine.i18n.Translation.*;
 import static rabbitescape.engine.util.Util.*;
 
-import rabbitescape.engine.Token;
 import rabbitescape.engine.World;
 import rabbitescape.engine.err.ExceptionTranslation;
 import rabbitescape.engine.err.RabbitEscapeException;
+import rabbitescape.engine.solution.Instruction;
+import rabbitescape.engine.solution.SandboxGame;
+import rabbitescape.engine.solution.SolutionFactory;
 
 public class InputHandler
 {
@@ -100,62 +103,12 @@ public class InputHandler
         private static final long serialVersionUID = 1L;
     }
 
-    private static class Command
-    {
-        public final String item;
-        public final int x;
-        public final int y;
-
-        public Command( String input, World world )
-            throws CommandCreationFailure
-        {
-            String[] vals = input.split( " +" );
-            if ( vals.length != 3 )
-            {
-                throw new WrongNumberOfParts( input, vals.length );
-            }
-
-            item = vals[0];
-            x = parseCoordinate( input, "x", vals[1] );
-            y = parseCoordinate( input, "y", vals[2] );
-
-            checkCoordinateInRange( x, input, "x", world.size.width );
-            checkCoordinateInRange( y, input, "y", world.size.height );
-        }
-
-        private void checkCoordinateInRange(
-            int value, String input, String coordinateName, double max )
-            throws CoordinateOutsideWorld
-        {
-            if ( value < 0 || value >= max )
-            {
-                throw new CoordinateOutsideWorld(
-                    input, coordinateName, value, (int)max );
-            }
-        }
-
-        private int parseCoordinate(
-            String input, String coordinateName, String coordinateValue )
-            throws NonnumericCoordinate
-        {
-            try
-            {
-                return Integer.valueOf( coordinateValue );
-            }
-            catch( java.lang.NumberFormatException e )
-            {
-                throw new NonnumericCoordinate(
-                    input, coordinateName, coordinateValue, e );
-            }
-        }
-    }
-
-    private final World world;
+    private final SandboxGame sandboxGame;
     private final Terminal terminal;
 
-    public InputHandler( World world, Terminal terminal )
+    public InputHandler( SandboxGame sandboxGame, Terminal terminal )
     {
-        this.world = world;
+        this.sandboxGame = sandboxGame;
         this.terminal = terminal;
     }
 
@@ -170,14 +123,12 @@ public class InputHandler
 
         try
         {
-            Command command = new Command( input, world );
-            if ( command.item.equals( "bash" ) )
+            List<Instruction> instructions =
+                SolutionFactory.createTimeStep( input, 1, 0 );
+
+            for ( Instruction instr : instructions )
             {
-                world.changes.addToken( command.x, command.y, Token.Type.bash );
-            }
-            else
-            {
-                throw new UnknownCommandName( input, command.item );
+                instr.performOn( sandboxGame );
             }
         }
         catch ( RabbitEscapeException e )
