@@ -2,20 +2,11 @@ package rabbitescape.engine.solution;
 
 public class WaitInstruction implements Instruction
 {
-    private final int steps;
+    public final int steps;
 
     public WaitInstruction( int steps )
     {
         this.steps = steps;
-    }
-
-    @Override
-    public void performOn( SandboxGame sandboxGame )
-    {
-        for ( int i = 0; i < steps; i++ )
-        {
-            sandboxGame.getWorld().step();
-        }
     }
 
     @Override
@@ -40,5 +31,11 @@ public class WaitInstruction implements Instruction
     public int hashCode()
     {
         return steps;
+    }
+
+    @Override
+    public void typeSwitch( InstructionTypeSwitch instructionTypeSwitch )
+    {
+        instructionTypeSwitch.caseWaitInstruction( this );
     }
 }

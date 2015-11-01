@@ -4,9 +4,9 @@ import rabbitescape.engine.World.CompletionState;
 
 public class TargetState implements ValidationInstruction
 {
-    private final CompletionState targetState;
-    private final int solutionId;
-    private final int instructionIndex;
+    public final CompletionState targetState;
+    public final int solutionId;
+    public final int instructionIndex;
 
     public TargetState(
         CompletionState targetState,
@@ -16,17 +16,6 @@ public class TargetState implements ValidationInstruction
         this.targetState = targetState;
         this.solutionId = solutionId;
         this.instructionIndex = instructionIndex;
-    }
-
-    @Override
-    public void performOn( SandboxGame sandboxGame )
-    {
-        if ( sandboxGame.getWorld().completionState() != targetState )
-        {
-            throw new InvalidSolution( "Solution " + solutionId
-                + " did not cause " + targetState
-                + " at instruction " + instructionIndex );
-        }
     }
 
     @Override
@@ -64,5 +53,11 @@ public class TargetState implements ValidationInstruction
         result = prime * result + solutionId;
         result = prime * result + targetState.hashCode();
         return result;
+    }
+
+    @Override
+    public void typeSwitch( InstructionTypeSwitch instructionTypeSwitch )
+    {
+        instructionTypeSwitch.caseTargetState( this );
     }
 }

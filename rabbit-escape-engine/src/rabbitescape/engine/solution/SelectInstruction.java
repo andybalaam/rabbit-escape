@@ -4,17 +4,11 @@ import rabbitescape.engine.Token;
 
 public class SelectInstruction implements Instruction
 {
-    private final Token.Type type;
+    public final Token.Type type;
 
     public SelectInstruction( Token.Type type )
     {
         this.type = type;
-    }
-
-    @Override
-    public void performOn( SandboxGame sandboxGame )
-    {
-        sandboxGame.setSelectedType( type );
     }
 
     @Override
@@ -39,5 +33,11 @@ public class SelectInstruction implements Instruction
     public int hashCode()
     {
         return type.hashCode();
+    }
+
+    @Override
+    public void typeSwitch( InstructionTypeSwitch instructionTypeSwitch )
+    {
+        instructionTypeSwitch.caseSelectInstruction( this );
     }
 }

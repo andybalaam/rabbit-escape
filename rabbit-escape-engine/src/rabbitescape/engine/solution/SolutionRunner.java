@@ -1,6 +1,7 @@
 package rabbitescape.engine.solution;
 
 import rabbitescape.engine.World;
+import rabbitescape.engine.Token.Type;
 import rabbitescape.engine.World.DontStepAfterFinish;
 import rabbitescape.engine.World.NoSuchAbilityInThisWorld;
 import rabbitescape.engine.World.NoneOfThisAbilityLeft;
@@ -16,7 +17,7 @@ public class SolutionRunner
         {
             try
             {
-                instruction.performOn( sandboxGame );
+                performInstruction( instruction, sandboxGame );
             }
             catch ( DontStepAfterFinish e )
             {
@@ -43,4 +44,47 @@ public class SolutionRunner
         }
     }
 
+    private static void performInstruction(
+        Instruction instruction, final SandboxGame sandboxGame )
+    {
+        instruction.typeSwitch( new InstructionTypeSwitch()
+            {
+                @Override
+                public void caseWaitInstruction( WaitInstruction w )
+                {
+                    for ( int i = 0; i < w.steps; i++ )
+                    {
+                        sandboxGame.getWorld().step();
+                    }
+                }
+
+                @Override
+                public void caseSelectInstruction( SelectInstruction s )
+                {
+                    sandboxGame.setSelectedType( s.type );
+                }
+
+                @Override
+                public void caseTargetState( TargetState s )
+                {
+                    if (
+                        sandboxGame.getWorld().completionState()
+                            != s.targetState
+                    )
+                    {
+                        throw new InvalidSolution( "Solution " + s.solutionId
+                            + " did not cause " + s.targetState
+                            + " at instruction " + s.instructionIndex );
+                    }
+                }
+
+                @Override
+                public void casePlaceTokenInstruction( PlaceTokenInstruction p )
+                {
+                    Type type = sandboxGame.getSelectedType();
+                    sandboxGame.getWorld().changes.addToken( p.x, p.y, type );
+                }
+            }
+        );
+    }
 }

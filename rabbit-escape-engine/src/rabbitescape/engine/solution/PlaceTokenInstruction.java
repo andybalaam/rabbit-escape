@@ -1,7 +1,5 @@
 package rabbitescape.engine.solution;
 
-import rabbitescape.engine.Token.Type;
-
 public class PlaceTokenInstruction implements Instruction
 {
     int x;
@@ -21,13 +19,6 @@ public class PlaceTokenInstruction implements Instruction
     public int getY()
     {
         return y;
-    }
-
-    @Override
-    public void performOn( SandboxGame sandboxGame )
-    {
-        Type type = sandboxGame.getSelectedType();
-        sandboxGame.getWorld().changes.addToken( x, y, type );
     }
 
     @Override
@@ -52,5 +43,11 @@ public class PlaceTokenInstruction implements Instruction
     public int hashCode()
     {
         return x + 31 * ( x + y );
+    }
+
+    @Override
+    public void typeSwitch( InstructionTypeSwitch instructionTypeSwitch )
+    {
+        instructionTypeSwitch.casePlaceTokenInstruction( this );
     }
 }

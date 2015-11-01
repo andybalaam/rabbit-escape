@@ -2,5 +2,5 @@ package rabbitescape.engine.solution;
 
 public interface Instruction
 {
-    void performOn( SandboxGame sandboxGame );
+    void typeSwitch( InstructionTypeSwitch instructionTypeSwitch );
 }
