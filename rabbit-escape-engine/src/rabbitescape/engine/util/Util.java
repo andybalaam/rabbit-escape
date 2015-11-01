@@ -230,12 +230,12 @@ public class Util
         return join( glue, Arrays.asList( items ) );
     }
 
-    public static String join( String glue, Iterable<String> items )
+    public static <T> String join( String glue, Iterable<T> items )
     {
         StringBuilder ret = new StringBuilder();
 
         boolean first = true;
-        for ( String item : items )
+        for ( T item : items )
         {
             if ( first )
             {

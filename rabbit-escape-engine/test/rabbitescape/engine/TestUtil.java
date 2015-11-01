@@ -60,6 +60,15 @@ public class TestUtil
     }
 
     @Test
+    public void Join_sticks_nonstring_items_together_with_glue()
+    {
+        assertThat(
+            join( "::", list( new Integer[] { 3, 4, 5 } ) ),
+            equalTo( "3::4::5" )
+        );
+    }
+
+    @Test
     public void Split_an_empty_string_gives_single_item_list()
     {
         assertThat( split( "", "x" ), equalTo( new String[] { "" } ) );
