@@ -7,14 +7,18 @@ import static rabbitescape.engine.ChangeDescription.State.*;
 import static rabbitescape.engine.Tools.*;
 import static rabbitescape.engine.textworld.TextWorldManip.*;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 import org.junit.Test;
 
 import rabbitescape.engine.solution.InvalidSolution;
+import rabbitescape.engine.solution.Solution;
 import rabbitescape.engine.textworld.DuplicateMetaKey;
 import rabbitescape.engine.textworld.ItemsLineProcessor;
+import rabbitescape.engine.textworld.LineProcessor;
+import rabbitescape.engine.util.VariantGenerator;
 
 public class TestTextWorldManip
 {
@@ -1096,10 +1100,10 @@ public class TestTextWorldManip
             "    O",
             "#####"
         };
-        
-        createWorld( lines );
+
+        runSolutions( lines );
     }
-    
+
     @Test
     public void Valid_solution_string_throws_no_exception()
     {
@@ -1110,8 +1114,8 @@ public class TestTextWorldManip
             "    O",
             "#####"
         };
-        
-        createWorld( lines );
+
+        runSolutions( lines );
     }
     
     @Test( expected=InvalidSolution.class )
@@ -1125,7 +1129,7 @@ public class TestTextWorldManip
             "#####"
         };
         
-        createWorld( lines );
+        runSolutions( lines );
     }
 
     @Test
@@ -1142,10 +1146,10 @@ public class TestTextWorldManip
             "  # O",
             "#####"
         };
-        
-        createWorld( lines );
+
+        runSolutions( lines );
     }
-    
+
     @Test
     public void Obfuscated_solution()
     {
@@ -1157,7 +1161,29 @@ public class TestTextWorldManip
             "  # O",
             "#####"
         };
-        
-        createWorld( lines );
+
+        runSolutions( lines );
+    }
+
+    // ---
+
+
+    private void runSolutions( String[] lines )
+    {
+        // TODO: hold solutions in the world, not the LineProcessor
+        LineProcessor processor = new LineProcessor(
+            new ArrayList<Block>(),
+            new ArrayList<Rabbit>(),
+            new ArrayList<Thing>(),
+            new HashMap<Token.Type, Integer>(),
+            lines,
+            new VariantGenerator( 1 )
+        );
+        World world = createWorld( lines );
+
+        for ( Solution solution : processor.getSolutions() )
+        {
+            solution.checkSolution( world );
+        }
     }
 }

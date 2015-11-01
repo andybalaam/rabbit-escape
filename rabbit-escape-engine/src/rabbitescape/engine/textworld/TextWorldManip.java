@@ -18,7 +18,6 @@ import rabbitescape.engine.Thing;
 import rabbitescape.engine.Token;
 import rabbitescape.engine.World;
 import rabbitescape.engine.WorldStatsListener;
-import rabbitescape.engine.solution.Solution;
 import rabbitescape.engine.util.Dimension;
 import rabbitescape.engine.util.VariantGenerator;
 
@@ -123,11 +122,6 @@ public class TextWorldManip
         World world = createWorldFromLineProcessor(
             nameIfNoneSupplied, statsListener, blocks, rabbits, things,
             abilities, processor, num_rabs );
-
-        for ( Solution solution : processor.getSolutions() )
-        {
-            solution.checkSolution( world );
-        }
 
         return world;
     }

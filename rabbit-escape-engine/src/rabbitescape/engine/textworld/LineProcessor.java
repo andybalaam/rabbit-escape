@@ -23,7 +23,7 @@ import rabbitescape.engine.util.Dimension;
 import rabbitescape.engine.util.MegaCoder;
 import rabbitescape.engine.util.VariantGenerator;
 
-class LineProcessor
+public class LineProcessor
 {
     private static final String CODE_SUFFIX = ".code";
     private static final String SOLUTION_PREFIX = "solution.";
