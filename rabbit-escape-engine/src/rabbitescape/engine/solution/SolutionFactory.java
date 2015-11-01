@@ -13,7 +13,7 @@ public class SolutionFactory
 {
     private static final String STAGE_DELIMITER = ";";
     private static final String INSTRUCTION_DELIMITER = "&";
-    private static final String WAIT_REGEX = "\\d+";
+    private static final Pattern WAIT_REGEX = Pattern.compile( "\\d+" );
 
     private static final Pattern PLACE_TOKEN_REGEX = Pattern.compile(
         "\\((\\d+),(\\d+)\\)" );
@@ -76,7 +76,7 @@ public class SolutionFactory
                 CompletionState.valueOf( instructionString ), solutionId,
                 instructionIndex );
         }
-        else if ( instructionString.matches( WAIT_REGEX ) )
+        else if ( WAIT_REGEX.matcher( instructionString ).matches() )
         {
             return new WaitInstruction( Integer.valueOf( instructionString ) );
         }
