@@ -11,6 +11,7 @@ import rabbitescape.engine.World;
 import rabbitescape.engine.World.CompletionState;
 import rabbitescape.engine.solution.SandboxGame;
 import rabbitescape.engine.textworld.TextWorldManip;
+import rabbitescape.engine.util.MegaCoder;
 import rabbitescape.render.GameLaunch;
 
 public class TextGameLaunch implements GameLaunch
@@ -36,6 +37,9 @@ public class TextGameLaunch implements GameLaunch
             useInput = true;
         }
 
+        InputHandler inputHandler =
+            new InputHandler( sandboxGame, terminal );
+
         while(
             sandboxGame.getWorld().completionState() == CompletionState.RUNNING
         )
@@ -52,9 +56,6 @@ public class TextGameLaunch implements GameLaunch
 
                 if ( useInput )
                 {
-                    InputHandler inputHandler =
-                        new InputHandler( sandboxGame, terminal );
-
                     //noinspection StatementWithEmptyBody
                     while ( !inputHandler.handle() )
                     {
@@ -73,6 +74,20 @@ public class TextGameLaunch implements GameLaunch
             sandboxGame.getWorld().step();
             checkWon();
         }
+        printSolution( inputHandler.solution() );
+    }
+
+    private void printSolution( String solution )
+    {
+        terminal.out.println(
+            t( ":solution.1=${solution}", newMap( "solution", solution ) ) );
+
+        terminal.out.println(
+            t(
+                ":solution.1.code=${solution}",
+                newMap( "solution", MegaCoder.encode( solution ) )
+            )
+        );
     }
 
     private void checkWon()

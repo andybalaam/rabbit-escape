@@ -103,11 +103,15 @@ public class InputHandler
 
     private final SandboxGame sandboxGame;
     private final Terminal terminal;
+    private final StringBuilder solution;
+    private boolean started;
 
     public InputHandler( SandboxGame sandboxGame, Terminal terminal )
     {
         this.sandboxGame = sandboxGame;
         this.terminal = terminal;
+        this.solution = new StringBuilder();
+        this.started = false;
     }
 
     public boolean handle()
@@ -116,6 +120,7 @@ public class InputHandler
 
         if ( input.equals( "" ) )
         {
+            append( input );
             return true;
         }
         else if ( input.equals( "help" ) )
@@ -138,6 +143,8 @@ public class InputHandler
             {
                 instr.performOn( sandboxGame );
             }
+
+            append( input );
         }
         catch ( RabbitEscapeException e )
         {
@@ -145,6 +152,16 @@ public class InputHandler
         }
 
         return true;
+    }
+
+    private void append( String input )
+    {
+        if ( started )
+        {
+            solution.append( ";" );
+        }
+        started = true;
+        solution.append( input );
     }
 
     private boolean help()
@@ -181,5 +198,10 @@ public class InputHandler
         {
             return "";
         }
+    }
+
+    public String solution()
+    {
+        return solution.toString();
     }
 }
