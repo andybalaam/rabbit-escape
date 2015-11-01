@@ -2,7 +2,7 @@ package rabbitescape.engine.solution;
 
 public class WaitInstruction implements Instruction
 {
-    private int steps;
+    private final int steps;
 
     public WaitInstruction( int steps )
     {
@@ -18,4 +18,21 @@ public class WaitInstruction implements Instruction
         }
     }
 
+    @Override
+    public boolean equals( Object otherObj )
+    {
+        if ( ! ( otherObj instanceof WaitInstruction ) )
+        {
+            return false;
+        }
+        WaitInstruction other = (WaitInstruction)otherObj;
+
+        return ( steps == other.steps );
+    }
+
+    @Override
+    public int hashCode()
+    {
+        return steps;
+    }
 }

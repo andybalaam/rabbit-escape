@@ -29,4 +29,22 @@ public class PlaceTokenInstruction implements Instruction
         Type type = sandboxGame.getSelectedType();
         sandboxGame.getWorld().changes.addToken( x, y, type );
     }
+
+    @Override
+    public boolean equals( Object otherObj )
+    {
+        if ( ! ( otherObj instanceof PlaceTokenInstruction ) )
+        {
+            return false;
+        }
+        PlaceTokenInstruction other = (PlaceTokenInstruction)otherObj;
+
+        return ( x == other.x && y == other.y );
+    }
+
+    @Override
+    public int hashCode()
+    {
+        return x + 31 * ( x + y );
+    }
 }

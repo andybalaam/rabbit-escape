@@ -4,9 +4,9 @@ import rabbitescape.engine.World.CompletionState;
 
 public class TargetState implements ValidationInstruction
 {
-    private CompletionState targetState;
-    private int solutionId;
-    private int instructionIndex;
+    private final CompletionState targetState;
+    private final int solutionId;
+    private final int instructionIndex;
 
     public TargetState(
         CompletionState targetState,
@@ -27,5 +27,32 @@ public class TargetState implements ValidationInstruction
                 + " did not cause " + targetState
                 + " at instruction " + instructionIndex );
         }
+    }
+
+    @Override
+    public boolean equals( Object otherObj )
+    {
+        if ( ! ( otherObj instanceof TargetState ) )
+        {
+            return false;
+        }
+        TargetState other = (TargetState)otherObj;
+
+        return (
+               targetState      == other.targetState
+            && solutionId       == other.solutionId
+            && instructionIndex == other.instructionIndex
+        );
+    }
+
+    @Override
+    public int hashCode()
+    {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + instructionIndex;
+        result = prime * result + solutionId;
+        result = prime * result + targetState.hashCode();
+        return result;
     }
 }

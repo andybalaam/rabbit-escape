@@ -4,7 +4,7 @@ import rabbitescape.engine.Token;
 
 public class SelectInstruction implements Instruction
 {
-    private Token.Type type;
+    private final Token.Type type;
 
     public SelectInstruction( Token.Type type )
     {
@@ -15,5 +15,23 @@ public class SelectInstruction implements Instruction
     public void performOn( SandboxGame sandboxGame )
     {
         sandboxGame.setSelectedType( type );
+    }
+
+    @Override
+    public boolean equals( Object otherObj )
+    {
+        if ( ! ( otherObj instanceof SelectInstruction ) )
+        {
+            return false;
+        }
+        SelectInstruction other = (SelectInstruction)otherObj;
+
+        return ( type == other.type );
+    }
+
+    @Override
+    public int hashCode()
+    {
+        return type.hashCode();
     }
 }
