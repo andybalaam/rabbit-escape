@@ -66,9 +66,21 @@ public class TestUtil
     }
 
     @Test
+    public void Splitn_an_empty_string_gives_single_item_list()
+    {
+        assertThat( split( "", "x", 2 ), equalTo( new String[] { "" } ) );
+    }
+
+    @Test
     public void Split_returns_just_the_string_if_no_delim_found()
     {
         assertThat( split( "yy", "x" ), equalTo( new String[] { "yy" } ) );
+    }
+
+    @Test
+    public void Splitn_returns_just_the_string_if_no_delim_found()
+    {
+        assertThat( split( "yy", "x", 1 ), equalTo( new String[] { "yy" } ) );
     }
 
     @Test
@@ -81,10 +93,37 @@ public class TestUtil
     }
 
     @Test
+    public void Splitn_breaks_on_a_single_char_delim()
+    {
+        assertThat(
+            split( "abc\ndef", "\n", 1 ),
+            equalTo( new String[] { "abc", "def" } )
+        );
+    }
+
+    @Test
+    public void Split0_refuses_to_break()
+    {
+        assertThat(
+            split( "abc\ndef", "\n", 0 ),
+            equalTo( new String[] { "abc\ndef" } )
+        );
+    }
+
+    @Test
     public void Split_breaks_on_a_multiple_char_delim()
     {
         assertThat(
             split( "ab|c|||d|ef", "|||" ),
+            equalTo( new String[] { "ab|c", "d|ef" } )
+        );
+    }
+
+    @Test
+    public void Splitn_breaks_on_a_multiple_char_delim()
+    {
+        assertThat(
+            split( "ab|c|||d|ef", "|||", 3 ),
             equalTo( new String[] { "ab|c", "d|ef" } )
         );
     }
@@ -99,10 +138,37 @@ public class TestUtil
     }
 
     @Test
+    public void Splitn_breaks_at_beginning()
+    {
+        assertThat(
+            split( "||a||b", "||", 2 ),
+            equalTo( new String[] { "", "a", "b" } )
+        );
+    }
+
+    @Test
+    public void Split1_breaks_only_once()
+    {
+        assertThat(
+            split( "||a||b", "||", 1 ),
+            equalTo( new String[] { "", "a||b" } )
+        );
+    }
+
+    @Test
     public void Split_breaks_at_end()
     {
         assertThat(
             split( "a||b||", "||" ),
+            equalTo( new String[] { "a", "b", "" } )
+        );
+    }
+
+    @Test
+    public void Splitn_breaks_at_end()
+    {
+        assertThat(
+            split( "a||b||", "||", 2 ),
             equalTo( new String[] { "a", "b", "" } )
         );
     }
@@ -117,11 +183,56 @@ public class TestUtil
     }
 
     @Test
+    public void Splitn_breaks_consecutive_delimiters_into_empty_string_lists()
+    {
+        assertThat(
+            split( "a|||b|", "|", 4 ),
+            equalTo( new String[] { "a", "", "", "b", "" } )
+        );
+    }
+
+    @Test
+    public void Split3_breaks_only_three_times()
+    {
+        assertThat(
+            split( "a|||b|c", "|", 3 ),
+            equalTo( new String[] { "a", "", "", "b|c" } )
+        );
+    }
+
+    @Test
+    public void Split3_breaks_only_three_times_even_at_end()
+    {
+        assertThat(
+            split( "a|||b|", "|", 3 ),
+            equalTo( new String[] { "a", "", "", "b|" } )
+        );
+    }
+
+    @Test
     public void Split_breaks_consecutive_multi_delimiters_to_empty_strings()
     {
         assertThat(
             split( "a||||||||||||b||||", "||||" ),
             equalTo( new String[] { "a", "", "", "b", "" } )
+        );
+    }
+
+    @Test
+    public void Splitn_breaks_consecutive_multi_delimiters_to_empty_strings()
+    {
+        assertThat(
+            split( "a||||||||||||b||||", "||||", 7 ),
+            equalTo( new String[] { "a", "", "", "b", "" } )
+        );
+    }
+
+    @Test
+    public void Splitn_stops_breaking_consecutive_delimiters()
+    {
+        assertThat(
+            split( "a||||||||||||b||||", "||", 2 ),
+            equalTo( new String[] { "a", "", "||||||||b||||" } )
         );
     }
 
