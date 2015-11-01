@@ -74,7 +74,7 @@ public class TextGameLaunch implements GameLaunch
             sandboxGame.getWorld().step();
             checkWon();
         }
-        printSolution( inputHandler.solution() );
+        printSolution( inputHandler.solution() + ";1" );
     }
 
     private void printSolution( String solution )

@@ -4,6 +4,8 @@ import rabbitescape.engine.World.CompletionState;
 
 public class TargetState implements ValidationInstruction
 {
+    public final static int INSTRUCTION_INDEX_NOT_SPECIFIED = -1;
+
     public final CompletionState targetState;
     public final int solutionId;
     public final int instructionIndex;
@@ -16,6 +18,13 @@ public class TargetState implements ValidationInstruction
         this.targetState = targetState;
         this.solutionId = solutionId;
         this.instructionIndex = instructionIndex;
+    }
+
+    public TargetState(
+        CompletionState targetState,
+        int solutionId )
+    {
+        this( targetState, solutionId, INSTRUCTION_INDEX_NOT_SPECIFIED );
     }
 
     @Override

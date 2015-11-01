@@ -49,8 +49,7 @@ public class SolutionFactory
         if ( instructions.size() > 0
             && !( instructions.get( instructions.size() - 1 ) instanceof ValidationInstruction ) )
         {
-            instructions.add( new TargetState( CompletionState.WON, solutionId,
-                instructions.size() ) );
+            instructions.add( new TargetState( CompletionState.WON, solutionId ) );
         }
 
         return new Solution( solutionId, instructions );

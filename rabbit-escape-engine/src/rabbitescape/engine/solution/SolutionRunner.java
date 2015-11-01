@@ -72,9 +72,15 @@ public class SolutionRunner
                             != s.targetState
                     )
                     {
+                        String instructionDescription = "";
+                        if ( s.instructionIndex != TargetState.INSTRUCTION_INDEX_NOT_SPECIFIED )
+                        {
+                            instructionDescription = " at instruction "
+                                + s.instructionIndex;
+                        }
                         throw new InvalidSolution( "Solution " + s.solutionId
                             + " did not cause " + s.targetState
-                            + " at instruction " + s.instructionIndex );
+                            + instructionDescription );
                     }
                 }
 

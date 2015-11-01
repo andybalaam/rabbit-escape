@@ -120,7 +120,7 @@ public class TestSolutionFactory
                             new SelectInstruction( Token.Type.bridge ),
                             new WaitInstruction( 1 ),
                             new PlaceTokenInstruction( 22, 40 ),
-                            new TargetState( World.CompletionState.WON, 2, 3 )
+                            new TargetState( World.CompletionState.WON, 2 )
                         }
                     )
                 )
