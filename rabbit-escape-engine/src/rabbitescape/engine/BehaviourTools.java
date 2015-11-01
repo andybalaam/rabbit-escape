@@ -120,6 +120,19 @@ public class BehaviourTools
             );
     }
 
+    public boolean isOnSlopeStateUnreliable()
+    {
+        Block block = blockHere();
+        return 
+            null != block &&
+            (
+                   solid_up_left == block.type
+                || solid_up_right == block.type
+                || Block.Type.bridge_up_left == block.type
+                || Block.Type.bridge_up_right == block.type
+            );
+    }
+
     public boolean isFlat( Block block )
     {
         return s_isFlat( block );

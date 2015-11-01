@@ -104,7 +104,7 @@ public class Falling extends Behaviour
         //noinspection RedundantIfStatement
         if (
                t.isFlat( t.blockBelow() )
-            || rabbit.onSlope
+            || t.isOnSlopeStateUnreliable()
         )
         {
             return false;
