@@ -31,6 +31,12 @@ public class PlaceTokenInstruction implements Instruction
     }
 
     @Override
+    public String toString()
+    {
+        return "PlaceTokenInstruction( " + x + ", " + y + " )";
+    }
+
+    @Override
     public boolean equals( Object otherObj )
     {
         if ( ! ( otherObj instanceof PlaceTokenInstruction ) )

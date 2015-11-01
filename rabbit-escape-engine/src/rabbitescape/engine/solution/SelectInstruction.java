@@ -18,6 +18,12 @@ public class SelectInstruction implements Instruction
     }
 
     @Override
+    public String toString()
+    {
+        return "SelectInstruction( " + type.name() + " )";
+    }
+
+    @Override
     public boolean equals( Object otherObj )
     {
         if ( ! ( otherObj instanceof SelectInstruction ) )

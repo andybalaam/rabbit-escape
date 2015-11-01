@@ -30,6 +30,16 @@ public class TargetState implements ValidationInstruction
     }
 
     @Override
+    public String toString()
+    {
+        return "TargetState( "
+            + targetState.name()
+            + ", " + solutionId
+            + ", " + instructionIndex
+            + " )";
+    }
+
+    @Override
     public boolean equals( Object otherObj )
     {
         if ( ! ( otherObj instanceof TargetState ) )

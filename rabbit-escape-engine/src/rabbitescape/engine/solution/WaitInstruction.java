@@ -19,6 +19,12 @@ public class WaitInstruction implements Instruction
     }
 
     @Override
+    public String toString()
+    {
+        return "WaitInstruction( " + steps + " )";
+    }
+
+    @Override
     public boolean equals( Object otherObj )
     {
         if ( ! ( otherObj instanceof WaitInstruction ) )
