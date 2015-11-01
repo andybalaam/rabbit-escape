@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.List;
 
 import static rabbitescape.engine.i18n.Translation.*;
-import static rabbitescape.engine.util.Util.*;
 
 import rabbitescape.engine.err.ExceptionTranslation;
 import rabbitescape.engine.err.RabbitEscapeException;
@@ -119,6 +118,16 @@ public class InputHandler
         {
             return true;
         }
+        else if ( input.equals( "help" ) )
+        {
+            return help();
+        }
+        else if ( input.equals( "exit" ) )
+        {
+            sandboxGame.getWorld().changes.explodeAllRabbits();
+            sandboxGame.getWorld().step();
+            return true;
+        }
 
         try
         {
@@ -138,6 +147,20 @@ public class InputHandler
         return true;
     }
 
+    private boolean help()
+    {
+        terminal.out.println( t(
+            "\n" +
+            "Press return to move forward a time step.\n" +
+            "Type 'exit' to stop.\n" +
+            "Type an ability name (e.g. 'bash') to switch to that ability.\n" +
+            "Type '(x,y)' (e.g '(2,3)') to place a token.\n" +
+            "Type a number (e.g. '5') to skip that many steps.\n"
+        ) );
+
+        return false;
+    }
+
     private boolean fail( String message )
     {
         terminal.out.println( message );
@@ -147,16 +170,14 @@ public class InputHandler
     private String input()
     {
         terminal.out.println(
-            t( "Press return or type 'ITEM x y' to place an item." ) );
-
-        terminal.out.println(
-            t( "ITEM = ${items}", newMap( "items", "bash" ) ) );
+            t( "Type 'help' then press return for help." ) );
 
         try
         {
+            terminal.out.print( "> " );
             return terminal.in.readLine();
         }
-        catch (IOException e)
+        catch ( IOException e )
         {
             return "";
         }

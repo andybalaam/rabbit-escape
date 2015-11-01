@@ -3,7 +3,10 @@ package rabbitescape.ui.text;
 import static rabbitescape.engine.i18n.Translation.*;
 import static rabbitescape.engine.util.Util.*;
 
+import java.util.Map;
+
 import rabbitescape.engine.LevelWinListener;
+import rabbitescape.engine.Token;
 import rabbitescape.engine.World;
 import rabbitescape.engine.World.CompletionState;
 import rabbitescape.engine.solution.SandboxGame;
@@ -83,11 +86,42 @@ public class TextGameLaunch implements GameLaunch
     private void printWorld()
     {
         printWorldImpl( false );
+        printState();
     }
 
     private void printWorldWithState()
     {
         printWorldImpl( true );
+
+    }
+
+    private void printState()
+    {
+        terminal.out.println();
+
+        for (
+            Map.Entry<Token.Type, Integer> entry :
+                sandboxGame.getWorld().abilities.entrySet()
+        )
+        {
+            terminal.out.println(
+                t(
+                    "${token}: ${number_left}${selected}",
+                    newMap(
+                        "token", entry.getKey().name(),
+                        "number_left", String.valueOf( entry.getValue() ),
+                        "selected", isSelected( entry.getKey() ) ? "*" : ""
+                    )
+                )
+            );
+        }
+
+        terminal.out.println();
+    }
+
+    private boolean isSelected( Token.Type ability )
+    {
+        return ability.equals( sandboxGame.getSelectedType() );
     }
 
     private void printWorldImpl( boolean showChanges )
@@ -95,6 +129,7 @@ public class TextGameLaunch implements GameLaunch
         String[] txt = TextWorldManip.renderWorld(
             sandboxGame.getWorld(), showChanges, true );
 
+        terminal.out.println();
         terminal.out.println( join( "\n", txt ) );
     }
 
