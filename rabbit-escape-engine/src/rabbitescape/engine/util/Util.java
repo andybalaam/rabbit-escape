@@ -589,4 +589,14 @@ public class Util
     {
         return ( str.length() == 0 );
     }
+
+    public static <T> List<String> toStringList( T[] values )
+    {
+        ArrayList<String> ret = new ArrayList<String>();
+        for( T t : values )
+        {
+            ret.add( t.toString() );
+        }
+        return ret;
+    }
 }

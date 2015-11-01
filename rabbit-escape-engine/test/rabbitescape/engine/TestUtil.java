@@ -791,4 +791,24 @@ public class TestUtil
             equalTo( true )
         );
     }
+
+    @Test
+    public void Empty_array_converts_to_empty_string_list()
+    {
+        assertThat(
+            toStringList( new String[] {} ),
+            equalTo( (List<String>)new ArrayList<String>() )
+        );
+    }
+
+    private static enum Foo { A, bc, d };
+
+    @Test
+    public void Can_convert_enum_to_string_list()
+    {
+        assertThat(
+            toStringList( Foo.values() ),
+            equalTo( list( new String[] { "A", "bc", "d" } ) )
+        );
+    }
 }

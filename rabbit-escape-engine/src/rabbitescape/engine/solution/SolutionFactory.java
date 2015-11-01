@@ -14,26 +14,11 @@ public class SolutionFactory
     private static final String WAIT_REGEX = "\\d+";
     private static final String PLACE_TOKEN_REGEX = "\\((\\d+),(\\d+)\\)";
 
-    private static final List<String> COMPLETION_STATES = new ArrayList<>();
-    static
-    {
-        // Initialise the completion state strings.
-        CompletionState[] completionStates = CompletionState.values();
-        for ( int i = 0; i < completionStates.length; i++ )
-        {
-            COMPLETION_STATES.add( completionStates[i].toString() );
-        }
-    }
-    private static final List<String> TOKEN_TYPES = new ArrayList<>();
-    static
-    {
-        // Initialise the completion state strings.
-        Type[] tokenTypes = Type.values();
-        for ( int i = 0; i < tokenTypes.length; i++ )
-        {
-            TOKEN_TYPES.add( tokenTypes[i].toString() );
-        }
-    }
+    private static final List<String> COMPLETION_STATES =
+        Util.toStringList( CompletionState.values() );
+
+    private static final List<String> TOKEN_TYPES =
+        Util.toStringList( Type.values() );
 
     public static Solution create( String solution, int solutionId )
     {
