@@ -219,6 +219,15 @@ public class TestUtil
     }
 
     @Test
+    public void Splitminus1_acts_like_split_with_no_n()
+    {
+        assertThat(
+            split( "a||||||||||||b||||", "||||", -1 ),
+            equalTo( new String[] { "a", "", "", "b", "" } )
+        );
+    }
+
+    @Test
     public void Splitn_breaks_consecutive_multi_delimiters_to_empty_strings()
     {
         assertThat(

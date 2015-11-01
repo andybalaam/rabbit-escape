@@ -263,44 +263,30 @@ public class Util
      */
     public static String[] split( String input, String delimiter )
     {
-        List<String> ret = new ArrayList<String>();
-
-        int lastI = 0;
-        int i = input.indexOf( delimiter );
-        while ( i != -1 )
-        {
-            ret.add( input.substring( lastI, i ) );
-            lastI = i + delimiter.length();
-            i = input.indexOf( delimiter, lastI );
-        }
-
-        ret.add( input.substring( lastI ) );
-
-        return ret.toArray( new String[ret.size()] );
+        return split( input, delimiter, -1 );
     }
 
     /**
      * Split input by finding all occurrences of delimiter. Works like a sane
      * version of String.split, but with no regular expressions.
      *
-     * @param delimiter
-     *            is not a regular expression, just a string.
-     * @param maxSplits
-     *            the maximum number of times the string should be split.
+     * @param delimiter is not a regular expression, just a string.
      *
-     * @return An array of strings that is always min(n + 1, maxSplits) long,
-     *         where n is the number of times the string delimiter appears in
-     *         input.
+     * @param maxSplits the maximum number of times the string should be split,
+     *                  or -1 for as many as possible.
+     *
+     * @return An array of strings that is always 1 + min(n, maxSplits)
+     *         long, where n is the number of times the string delimiter
+     *         appears in input.
      */
-    public static
-        String[]
-        split( String input, String delimiter, int maxSplits )
+    public static String[] split(
+        String input, String delimiter, int maxSplits )
     {
         List<String> ret = new ArrayList<String>();
 
         int lastI = 0;
         int i = input.indexOf( delimiter );
-        while ( i != -1 && ret.size() < maxSplits )
+        while ( i != -1 && ( maxSplits == -1 || ret.size() < maxSplits ) )
         {
             ret.add( input.substring( lastI, i ) );
             lastI = i + delimiter.length();
