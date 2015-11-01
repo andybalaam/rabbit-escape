@@ -6,7 +6,6 @@ import java.util.List;
 import static rabbitescape.engine.i18n.Translation.*;
 import static rabbitescape.engine.util.Util.*;
 
-import rabbitescape.engine.World;
 import rabbitescape.engine.err.ExceptionTranslation;
 import rabbitescape.engine.err.RabbitEscapeException;
 import rabbitescape.engine.solution.Instruction;
