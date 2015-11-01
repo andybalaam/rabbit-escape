@@ -19,7 +19,6 @@ import rabbitescape.engine.Exit;
 import rabbitescape.engine.Rabbit;
 import rabbitescape.engine.Thing;
 import rabbitescape.engine.Token;
-import rabbitescape.engine.solution.Solution;
 import rabbitescape.engine.util.Dimension;
 import rabbitescape.engine.util.MegaCoder;
 import rabbitescape.engine.util.VariantGenerator;
@@ -92,7 +91,6 @@ public class LineProcessor
     private final Map<String, Integer> m_metaInts;
     private final Map<String, Boolean> m_metaBools;
     private final Map<String, ArrayList<Integer>> m_metaIntArrays;
-    private final Map<Integer, Solution> solutions;
     private final List<Point> starPoints;
 
     private int width;
@@ -119,7 +117,6 @@ public class LineProcessor
         this.m_metaInts              = new HashMap<>();
         this.m_metaBools             = new HashMap<>();
         this.m_metaIntArrays         = new HashMap<>();
-        this.solutions               = new HashMap<>();
         starPoints = new ArrayList<Point>();
 
         width = -1;
@@ -206,11 +203,6 @@ public class LineProcessor
         {
             return ret;
         }
-    }
-
-    public Collection<Solution> getSolutions()
-    {
-        return solutions.values();
     }
 
     public Dimension size()
