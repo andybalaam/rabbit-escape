@@ -1,7 +1,7 @@
 package rabbitescape.engine;
 
 import static org.hamcrest.MatcherAssert.*;
-import static org.hamcrest.core.IsEqual.*;
+import static org.hamcrest.CoreMatchers.*;
 
 import java.io.IOException;
 import java.util.Locale;

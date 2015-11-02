@@ -1,7 +1,7 @@
 package rabbitescape.engine;
 
 import static org.hamcrest.MatcherAssert.*;
-import static org.hamcrest.core.IsNot.*;
+import static org.hamcrest.CoreMatchers.*;
 import static rabbitescape.engine.Tools.*;
 
 import org.junit.Test;

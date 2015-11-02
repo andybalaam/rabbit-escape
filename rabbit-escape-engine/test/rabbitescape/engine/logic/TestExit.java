@@ -1,6 +1,6 @@
 package rabbitescape.engine.logic;
 
-import static org.hamcrest.core.IsEqual.*;
+import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.*;
 import static rabbitescape.engine.Tools.*;
 import static rabbitescape.engine.textworld.TextWorldManip.*;

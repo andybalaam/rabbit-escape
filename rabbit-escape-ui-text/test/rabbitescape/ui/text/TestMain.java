@@ -1,8 +1,7 @@
 package rabbitescape.ui.text;
 
 import static org.hamcrest.MatcherAssert.*;
-import static org.hamcrest.core.IsEqual.*;
-import static org.hamcrest.core.IsNot.*;
+import static org.hamcrest.CoreMatchers.*;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;

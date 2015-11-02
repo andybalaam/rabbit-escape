@@ -1,6 +1,6 @@
 package rabbitescape.ui.swing;
 
-import static org.hamcrest.core.IsNot.*;
+import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.*;
 import static rabbitescape.ui.swing.Tools.*;
 
