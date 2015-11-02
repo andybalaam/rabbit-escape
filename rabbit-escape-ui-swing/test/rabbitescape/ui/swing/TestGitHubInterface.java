@@ -235,8 +235,7 @@ public class TestGitHubInterface
                 "```  \\r\\n" +
                 "\\r\\n" +
                 "Please somebody help me make theese levels harder";
-        GitHubIssue ghi = new GitHubIssue( 1,
-            "Level: test",
-            issueBodyText );
+
+        new GitHubIssue( 1, "Level: test", issueBodyText );
     }
 }
