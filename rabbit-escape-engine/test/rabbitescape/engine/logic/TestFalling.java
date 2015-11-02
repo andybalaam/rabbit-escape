@@ -1,7 +1,7 @@
 package rabbitescape.engine.logic;
 
 import static org.hamcrest.MatcherAssert.*;
-import static org.hamcrest.core.IsEqual.equalTo;
+import static org.hamcrest.CoreMatchers.*;
 import static rabbitescape.engine.Tools.*;
 import static rabbitescape.engine.textworld.TextWorldManip.*;
 import static rabbitescape.engine.util.WorldAssertions.*;
