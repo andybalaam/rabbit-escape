@@ -44,7 +44,7 @@ public class SolutionRunner
         }
     }
 
-    private static void performInstruction(
+    public static void performInstruction(
         Instruction instruction, final SandboxGame sandboxGame )
     {
         instruction.typeSwitch( new InstructionTypeSwitch()

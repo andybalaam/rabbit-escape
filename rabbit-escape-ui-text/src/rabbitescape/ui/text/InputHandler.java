@@ -10,6 +10,7 @@ import rabbitescape.engine.err.RabbitEscapeException;
 import rabbitescape.engine.solution.Instruction;
 import rabbitescape.engine.solution.SandboxGame;
 import rabbitescape.engine.solution.SolutionFactory;
+import rabbitescape.engine.solution.SolutionRunner;
 
 public class InputHandler
 {
@@ -141,7 +142,7 @@ public class InputHandler
 
             for ( Instruction instr : instructions )
             {
-                instr.performOn( sandboxGame );
+                SolutionRunner.performInstruction( instr, sandboxGame );
             }
 
             append( input );
