@@ -1,16 +1,18 @@
 package rabbitescape.ui.text;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static rabbitescape.engine.i18n.Translation.*;
-
 import rabbitescape.engine.err.ExceptionTranslation;
 import rabbitescape.engine.err.RabbitEscapeException;
 import rabbitescape.engine.solution.Instruction;
 import rabbitescape.engine.solution.SandboxGame;
 import rabbitescape.engine.solution.SolutionFactory;
 import rabbitescape.engine.solution.SolutionRunner;
+import rabbitescape.engine.solution.WaitInstruction;
 
 public class InputHandler
 {
@@ -104,15 +106,13 @@ public class InputHandler
 
     private final SandboxGame sandboxGame;
     private final Terminal terminal;
-    private final StringBuilder solution;
-    private boolean started;
+    private final List<List<Instruction>> solution;
 
     public InputHandler( SandboxGame sandboxGame, Terminal terminal )
     {
         this.sandboxGame = sandboxGame;
         this.terminal = terminal;
-        this.solution = new StringBuilder();
-        this.started = false;
+        this.solution = new ArrayList<>();
     }
 
     public boolean handle()
@@ -121,8 +121,7 @@ public class InputHandler
 
         if ( input.equals( "" ) )
         {
-            append( input );
-            return true;
+            input = "1";
         }
         else if ( input.equals( "help" ) )
         {
@@ -145,7 +144,7 @@ public class InputHandler
                 SolutionRunner.performInstruction( instr, sandboxGame );
             }
 
-            append( input );
+            append( instructions );
         }
         catch ( RabbitEscapeException e )
         {
@@ -155,14 +154,48 @@ public class InputHandler
         return true;
     }
 
-    private void append( String input )
+    private void append( List<Instruction> instructions )
     {
-        if ( started )
+        if ( !solution.isEmpty() )
         {
-            solution.append( ";" );
+            List<Instruction> lastStep = solution.get( solution.size() - 1 );
+            if ( instructions.size() == 1 && lastStep.size() == 1 )
+            {
+                Instruction combinedInstruction = tryToSimplify(
+                    lastStep.get( 0 ), instructions.get( 0 ) );
+                if ( combinedInstruction != null )
+                {
+                    solution.set( solution.size() - 1,
+                        Arrays.asList( combinedInstruction ) );
+                }
+                else
+                {
+                    solution.add( instructions );
+                }
+            }
         }
-        started = true;
-        solution.append( input );
+        else
+        {
+            solution.add( instructions );
+        }
+    }
+
+    /**
+     * Try to combine two instructions. If this is not possible then return
+     * null.
+     */
+    private Instruction tryToSimplify(
+        Instruction instruction1,
+        Instruction instruction2 )
+    {
+        if ( instruction1 instanceof WaitInstruction
+            && instruction2 instanceof WaitInstruction )
+        {
+            WaitInstruction wait1 = (WaitInstruction)instruction1;
+            WaitInstruction wait2 = (WaitInstruction)instruction2;
+            return new WaitInstruction( wait1.steps + wait2.steps );
+        }
+        return null;
     }
 
     private boolean help()
@@ -203,6 +236,7 @@ public class InputHandler
 
     public String solution()
     {
+        // TODO Fix this to return correctly constructed string.
         return solution.toString();
     }
 }
