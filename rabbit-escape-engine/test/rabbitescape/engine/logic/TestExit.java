@@ -4,6 +4,7 @@ import static org.hamcrest.core.IsEqual.*;
 import static org.hamcrest.MatcherAssert.*;
 import static rabbitescape.engine.Tools.*;
 import static rabbitescape.engine.textworld.TextWorldManip.*;
+import static rabbitescape.engine.util.WorldAssertions.*;
 
 import org.junit.Test;
 
@@ -99,14 +100,10 @@ public class TestExit
             "##################"
         );
 
-        world.step( 10 );
-
-        assertThat( world.num_saved, equalTo ( 3 ) );
-        // Check there have been enough steps for all
-        // to exit or splat.
-        assertThat(
-            renderCompleteWorld( world, false ), 
-            equalTo(new String[] {
+        assertWorldEvolvesLike( 
+            world,
+            10,
+            new String[] {
                 "          #       ",
                 "#         #       ",
                 "  #       #       ",
@@ -120,7 +117,9 @@ public class TestExit
                 " # # # # # # # #  ",
                 "#                #",
                 "##################"
-            }));
+            });
+
+        assertThat( world.num_saved, equalTo ( 3 ) );
     }
 
     @Test
@@ -135,22 +134,19 @@ public class TestExit
             "###  "
         );
 
-        world.step( 6 );
-
-        // The rabbit escaped
-        assertThat( world.num_saved, equalTo ( 1 ) );
-
-        // World is now devoid of life, and the climbing token has been
-        // consumed.
-        assertThat(
-            renderCompleteWorld( world, false ), 
-            equalTo(new String[] {
+        assertWorldEvolvesLike( 
+            world,
+            6,
+            new String[] {
                 "     ",
                 " O# #",
                 "  ###",
                 "  #  ",
                 "###  "
-            }));
+            });
+
+        // The rabbit escaped
+        assertThat( world.num_saved, equalTo ( 1 ) );
     }
 
     @Test
@@ -168,15 +164,10 @@ public class TestExit
             "      O"
         );
 
-        world.step( 5 );
-
-        // None lived
-        assertThat( world.num_saved, equalTo ( 0 ) );
-
-        // World is now devoid of life
-        assertThat(
-            renderCompleteWorld( world, false ), 
-            equalTo(new String[] {
+        assertWorldEvolvesLike( 
+            world,
+            5,
+            new String[] {
                 "       ",
                 "O      ",
                 " O     ",
@@ -185,6 +176,9 @@ public class TestExit
                 "    O  ",
                 "     O ",
                 "      O"
-            }));
+            });
+
+        // None lived
+        assertThat( world.num_saved, equalTo ( 0 ) );
     }
 }

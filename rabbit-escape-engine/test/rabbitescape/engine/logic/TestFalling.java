@@ -1,6 +1,7 @@
 package rabbitescape.engine.logic;
 
 import static org.hamcrest.MatcherAssert.*;
+import static org.hamcrest.core.IsEqual.equalTo;
 import static rabbitescape.engine.Tools.*;
 import static rabbitescape.engine.textworld.TextWorldManip.*;
 import static rabbitescape.engine.util.WorldAssertions.*;
@@ -1062,6 +1063,31 @@ public class TestFalling
             "fffff " + "\n" +
             "fffff "
         );
+    }
+
+    @Test
+    public void Fall_through_fresh_dig()
+    {
+        // All must die
+        World world = createWorld(
+            "    d(      d/  rrr d  ",
+            "    (       /   #####  ",
+            "rrr(  O rrr/  O       O",
+            "#### ## #### ## #### ##"
+        );
+
+        assertWorldEvolvesLike( 
+            world,
+            10,
+            new String[] {
+                "     (       /         ",
+                "                ####   ",
+                "   (  O    /  O       O",
+                "#### ## #### ## #### ##"
+            });
+
+        // None lived
+        assertThat( world.num_saved, equalTo ( 0 ) );
     }
 
 }

@@ -181,17 +181,6 @@ public class World
         }
     }
 
-    /**
-     * @brief Convenience for test methods. Do n steps. 
-     */
-    public void step( int n )
-    {
-        for ( int i = 0; i < n; i++)
-        {
-            step();
-        }
-    }
-
     public void step()
     {
         if ( completionState() != CompletionState.RUNNING )
