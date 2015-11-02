@@ -1,10 +1,23 @@
 package rabbitescape.engine.textworld;
 
-import java.util.*;
+import static rabbitescape.engine.util.Util.concat;
 
-import static rabbitescape.engine.util.Util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
-import rabbitescape.engine.*;
+import rabbitescape.engine.Block;
+import rabbitescape.engine.ChangeDescription;
+import rabbitescape.engine.IgnoreWorldStatsListener;
+import rabbitescape.engine.Rabbit;
+import rabbitescape.engine.Thing;
+import rabbitescape.engine.Token;
+import rabbitescape.engine.World;
+import rabbitescape.engine.WorldStatsListener;
 import rabbitescape.engine.util.Dimension;
 import rabbitescape.engine.util.VariantGenerator;
 
@@ -17,6 +30,7 @@ public class TextWorldManip
     private static final String hint1                = "hint1";
     private static final String hint2                = "hint2";
     private static final String hint3                = "hint3";
+    private static final String solution             = "solution";
     private static final String num_rabbits          = "num_rabbits";
     private static final String num_to_save          = "num_to_save";
     private static final String rabbit_delay         = "rabbit_delay";
@@ -49,6 +63,10 @@ public class TextWorldManip
         hint2,
         hint3,
         music
+    );
+
+    public static final List<String> META_STRING_ARRAYS_BY_KEY = Arrays.asList(
+        solution
     );
 
     public static final List<String> META_BOOLS = Arrays.asList(
@@ -104,8 +122,25 @@ public class TextWorldManip
             new VariantGenerator( variantSeed )
         );
 
-        int num_rabs = processor.metaInt( num_rabbits,  10 );
+        int num_rabs = processor.metaInt( num_rabbits, 10 );
 
+        World world = createWorldFromLineProcessor(
+            nameIfNoneSupplied, statsListener, blocks, rabbits, things,
+            abilities, processor, num_rabs );
+
+        return world;
+    }
+
+    private static World createWorldFromLineProcessor(
+        String nameIfNoneSupplied,
+        WorldStatsListener statsListener,
+        List<Block> blocks,
+        List<Rabbit> rabbits,
+        List<Thing> things,
+        Map<Token.Type, Integer> abilities,
+        LineProcessor processor,
+        int num_rabs )
+    {
         return new World(
             processor.size(),
             blocks,
@@ -119,6 +154,7 @@ public class TextWorldManip
             processor.metaString( hint1, "" ),
             processor.metaString( hint2, "" ),
             processor.metaString( hint3, "" ),
+            processor.metaStringArrayByKey( solution, new String[] {} ),
             num_rabs,
             processor.metaInt( num_to_save,  1 ),
             processor.metaIntArray( rabbit_delay, new int[]{4} ),
@@ -146,6 +182,7 @@ public class TextWorldManip
             "",            //hint1
             "",            //hint2
             "",            //hint3
+            new String[] {}, //solutions
             0,
             1,
             new int[]{4},

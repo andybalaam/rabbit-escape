@@ -60,6 +60,15 @@ public class TestUtil
     }
 
     @Test
+    public void Join_sticks_nonstring_items_together_with_glue()
+    {
+        assertThat(
+            join( "::", list( new Integer[] { 3, 4, 5 } ) ),
+            equalTo( "3::4::5" )
+        );
+    }
+
+    @Test
     public void Split_an_empty_string_gives_single_item_list()
     {
         assertThat( split( "", "x" ), equalTo( new String[] { "" } ) );
@@ -780,6 +789,26 @@ public class TestUtil
         assertThat(
             equalsOrBothNull( null, null ),
             equalTo( true )
+        );
+    }
+
+    @Test
+    public void Empty_array_converts_to_empty_string_list()
+    {
+        assertThat(
+            toStringList( new String[] {} ),
+            equalTo( (List<String>)new ArrayList<String>() )
+        );
+    }
+
+    private static enum Foo { A, bc, d };
+
+    @Test
+    public void Can_convert_enum_to_string_list()
+    {
+        assertThat(
+            toStringList( Foo.values() ),
+            equalTo( list( new String[] { "A", "bc", "d" } ) )
         );
     }
 }

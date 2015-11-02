@@ -9,6 +9,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import rabbitescape.engine.Block;
 import rabbitescape.engine.Entrance;
@@ -20,7 +22,7 @@ import rabbitescape.engine.util.Dimension;
 import rabbitescape.engine.util.MegaCoder;
 import rabbitescape.engine.util.VariantGenerator;
 
-class LineProcessor
+public class LineProcessor
 {
     private static final String CODE_SUFFIX = ".code";
 
@@ -36,12 +38,55 @@ class LineProcessor
         }
     }
 
+    public static class KeyListKey
+    {
+        public final String prefix;
+        public final int number;
+
+        public KeyListKey( String prefix, int number )
+        {
+            this.prefix = prefix;
+            this.number = number;
+        }
+
+        @Override
+        public String toString()
+        {
+            return "KeyListKey( " + prefix + ", " + number + " )";
+        }
+
+        @Override
+        public int hashCode()
+        {
+            return number + 31 * ( number + prefix.hashCode() );
+        }
+
+        @Override
+        public boolean equals( Object otherObj )
+        {
+            if ( ! ( otherObj instanceof KeyListKey ) )
+            {
+                return false;
+            }
+            KeyListKey other = (KeyListKey)otherObj;
+
+            return (
+                   number == other.number
+                && prefix.equals( other.prefix )
+            );
+        }
+    }
+
+    static final Pattern keyListKeyRegex = Pattern.compile(
+        "(.*)\\.(\\d{1,3})" );
+
     private final List<Block> blocks;
     private final List<Rabbit> rabbits;
     private final List<Thing> things;
     private final Map<Token.Type, Integer> abilities;
     public  final String[] lines;
     private final Map<String, String>  m_metaStrings;
+    private final Map<String, Map<Integer, String>> m_metaStringArraysByKey;
     private final Map<String, Integer> m_metaInts;
     private final Map<String, Boolean> m_metaBools;
     private final Map<String, ArrayList<Integer>> m_metaIntArrays;
@@ -66,10 +111,11 @@ class LineProcessor
         this.things = things;
         this.abilities = abilities;
         this.lines = lines;
-        this.m_metaStrings   = new HashMap<>();
-        this.m_metaInts      = new HashMap<>();
-        this.m_metaBools     = new HashMap<>();
-        this.m_metaIntArrays = new HashMap<>();
+        this.m_metaStrings           = new HashMap<>();
+        this.m_metaStringArraysByKey = new HashMap<>();
+        this.m_metaInts              = new HashMap<>();
+        this.m_metaBools             = new HashMap<>();
+        this.m_metaIntArrays         = new HashMap<>();
         starPoints = new ArrayList<Point>();
 
         width = -1;
@@ -93,6 +139,30 @@ class LineProcessor
         }
     }
 
+    public String[] metaStringArrayByKey( String key, String[] def )
+    {
+        Map<Integer, String> temp = m_metaStringArraysByKey.get( key );
+        if ( temp == null )
+        {
+            return def;
+        }
+        else
+        {
+            ArrayList<String> ret = new ArrayList<String>( temp.size() );
+
+            for ( Map.Entry<Integer, String> entry : temp.entrySet() )
+            {
+                while ( ret.size() < entry.getKey() - 1 )
+                {
+                    ret.add( "" );
+                }
+
+                ret.add( entry.getKey() - 1, entry.getValue() );
+            }
+            return ret.toArray( new String[ ret.size() ] );
+        }
+    }
+
     public int metaInt( String key, int def )
     {
         Integer ret = m_metaInts.get( key );
@@ -105,7 +175,7 @@ class LineProcessor
             return ret;
         }
     }
-    
+
     public int[] metaIntArray( String key, int[] def )
     {
         ArrayList<Integer> temp = m_metaIntArrays.get( key );
@@ -205,6 +275,26 @@ class LineProcessor
             duplicateMetaCheck( m_metaIntArrays.keySet(), key );
             m_metaIntArrays.put( key, toIntArray( value ) );
         }
+        else if (
+            matchesKeyList( TextWorldManip.META_STRING_ARRAYS_BY_KEY, key ) )
+        {
+            KeyListKey listKey = parseKeyListKey( key );
+
+            Map<Integer, String> list = m_metaStringArraysByKey.get(
+                listKey.prefix );
+
+            if ( list == null )
+            {
+                list = new HashMap<Integer, String>();
+                m_metaStringArraysByKey.put( listKey.prefix, list );
+            }
+            else if ( list.containsKey( listKey.number ) )
+            {
+                throw new DuplicateMetaKey( lines, lineNum );
+            }
+
+            list.put( listKey.number, value );
+        }
         else if ( TextWorldManip.ABILITIES.contains( key ) )
         {
             if ( abilities.keySet().contains( Token.Type.valueOf( key ) ) )
@@ -232,6 +322,25 @@ class LineProcessor
             throw new UnknownMetaKey( lines, lineNum );
         }
 
+    }
+
+    private boolean matchesKeyList( List<String> keyList, String key )
+    {
+        return keyList.contains( parseKeyListKey( key ).prefix );
+    }
+
+    public static KeyListKey parseKeyListKey( String key )
+    {
+        Matcher m = keyListKeyRegex.matcher( key );
+        if ( m.matches() )
+        {
+            return new KeyListKey(
+                m.group( 1 ), Integer.parseInt( m.group( 2 ) ) );
+        }
+        else
+        {
+            return new KeyListKey( "NO KEY LIST MATCH", -1 );
+        }
     }
 
     private int toInt( String value )

@@ -144,6 +144,7 @@ public class TestGameLoop
                 w.hint1,
                 w.hint2,
                 w.hint3,
+                w.solutions,
                 w.num_rabbits,
                 w.num_to_save,
                 w.rabbit_delay,

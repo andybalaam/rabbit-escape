@@ -1,8 +1,7 @@
 package rabbitescape.engine;
 
 import static org.hamcrest.MatcherAssert.*;
-import static org.hamcrest.core.IsEqual.*;
-import static org.junit.Assert.assertEquals;
+import static org.hamcrest.CoreMatchers.*;
 import static rabbitescape.engine.ChangeDescription.State.*;
 import static rabbitescape.engine.Tools.*;
 import static rabbitescape.engine.textworld.TextWorldManip.*;
@@ -12,8 +11,13 @@ import java.util.Map;
 
 import org.junit.Test;
 
+import rabbitescape.engine.solution.InvalidSolution;
+import rabbitescape.engine.solution.Solution;
+import rabbitescape.engine.solution.SolutionFactory;
+import rabbitescape.engine.solution.SolutionRunner;
 import rabbitescape.engine.textworld.DuplicateMetaKey;
 import rabbitescape.engine.textworld.ItemsLineProcessor;
+import rabbitescape.engine.textworld.LineProcessor;
 
 public class TestTextWorldManip
 {
@@ -469,9 +473,9 @@ public class TestTextWorldManip
 
         World world = createWorld( lines );
 
-        assertEquals( world.hint1, "Select the bash" );
-        assertEquals( world.hint2, "Use the bash" );
-        assertEquals( world.hint3, "Be the bash" );
+        assertThat( world.hint1, equalTo( "Select the bash" ) );
+        assertThat( world.hint2, equalTo( "Use the bash" ) );
+        assertThat( world.hint3, equalTo( "Be the bash" ) );
     }
 
     @Test
@@ -1085,4 +1089,210 @@ public class TestTextWorldManip
         renderCompleteWorld( createWorld( lines ), true );
     }
 
+    @Test( expected=InvalidSolution.class )
+    public void Incorrect_solution_string_throws_exception()
+    {
+        String[] lines = {
+            ":num_rabbits=1",
+            ":solution.1=5",
+            "Q    ",
+            "    O",
+            "#####"
+        };
+
+        runSolutions( lines );
+    }
+
+    @Test
+    public void Valid_solution_string_throws_no_exception()
+    {
+        String[] lines = {
+            ":num_rabbits=1",
+            ":solution.1=6",
+            "Q    ",
+            "    O",
+            "#####"
+        };
+
+        runSolutions( lines );
+    }
+
+    @Test( expected=InvalidSolution.class )
+    public void Solution_too_many_steps_throws_exception()
+    {
+        String[] lines = {
+            ":num_rabbits=1",
+            ":solution.1=7",
+            "Q    ",
+            "    O",
+            "#####"
+        };
+
+        runSolutions( lines );
+    }
+
+    @Test
+    public void Complex_solution_strings()
+    {
+        String[] lines = {
+            ":num_rabbits=1",
+            ":bash=2",
+            ":solution.1=bash&(1,0);4;RUNNING;1;WON",
+            ":solution.2=bash;(1,1);1;(0,1);RUNNING;2;WON",
+            ":solution.3=bash;(1,1)&(1,1);5;RUNNING",
+            ":solution.4=bash;(4,1);(3,1);3;LOST",
+            "Q    ",
+            "  # O",
+            "#####"
+        };
+
+        runSolutions( lines );
+    }
+
+    @Test
+    public void Obfuscated_solution()
+    {
+        String[] lines = {
+            ":num_rabbits=1",
+            ":bash=2",
+            ":solution.1.code=WTSMTzF4=n M>DmTBMTr}3$Mz~",
+            "Q    ",
+            "  # O",
+            "#####"
+        };
+
+        runSolutions( lines );
+    }
+
+    @Test
+    public void Solutions_are_held_in_world()
+    {
+        String[] lines = {
+            ":num_rabbits=1",
+            ":bash=2",
+            ":solution.1=1",
+            ":solution.2=2",
+            " Q   ",
+            "#   #",
+            "#####"
+        };
+
+        World world = createWorld( lines );
+
+        assertThat( world.solutions[0],  equalTo( "1" ) );
+        assertThat( world.solutions[1],  equalTo( "2" ) );
+    }
+
+    @Test
+    public void Over_10_solutions_are_held_in_world()
+    {
+        String[] lines = {
+            ":num_rabbits=1",
+            ":bash=2",
+            ":solution.1=10",
+            ":solution.2=10",
+            ":solution.3=10",
+            ":solution.4=10",
+            ":solution.5=10",
+            ":solution.6=10",
+            ":solution.7=10",
+            ":solution.8=10",
+            ":solution.9=10",
+            ":solution.10=10",
+            ":solution.11=10",
+            " Q   ",
+            "#   #",
+            "#####"
+        };
+
+        World world = createWorld( lines );
+
+        assertThat( world.solutions[0],  equalTo( "10" ) );
+        assertThat( world.solutions[1],  equalTo( "10" ) );
+        assertThat( world.solutions[9],  equalTo( "10" ) );
+        assertThat( world.solutions[10], equalTo( "10" ) );
+    }
+
+    @Test
+    public void Many_solutions_with_gaps()
+    {
+        String[] lines = {
+            ":num_rabbits=1",
+            ":bash=2",
+            ":solution.1=10",
+            ":solution.101=10;bash",
+            " Q   ",
+            "#   #",
+            "#####"
+        };
+
+        World world = createWorld( lines );
+
+        assertThat( world.solutions[0],   equalTo( "10" ) );
+        assertThat( world.solutions[1],   equalTo( "" ) );
+        assertThat( world.solutions[100], equalTo( "10;bash" ) );
+    }
+
+    @Test
+    public void Identical_KeyListKeys_are_equal()
+    {
+        assertThat(
+            new LineProcessor.KeyListKey( "xyz", 3 ),
+            equalTo( new LineProcessor.KeyListKey( "xyz", 3 ) )
+        );
+
+        assertThat(
+            new LineProcessor.KeyListKey( "xyz", 3 ).hashCode(),
+            equalTo( new LineProcessor.KeyListKey( "xyz", 3 ).hashCode() )
+        );
+    }
+
+    @Test
+    public void Different_KeyListKeys_are_not_equal()
+    {
+        assertThat(
+            new LineProcessor.KeyListKey( "xyz", 3 ),
+            not( equalTo( new LineProcessor.KeyListKey( "xyz", 4 ) ) )
+        );
+
+        assertThat(
+            new LineProcessor.KeyListKey( "xyz", 3 ).hashCode(),
+            not(
+                equalTo( new LineProcessor.KeyListKey( "xyz", 4 ).hashCode() )
+            )
+        );
+    }
+
+    @Test
+    public void Can_parse_KeyListKey()
+    {
+        assertThat(
+            LineProcessor.parseKeyListKey( "solution.1" ),
+            equalTo( new LineProcessor.KeyListKey( "solution", 1 ) )
+        );
+    }
+
+    @Test
+    public void Parsing_non_KeyListKey_returns_no_match()
+    {
+        assertThat(
+            LineProcessor.parseKeyListKey( "solution1" ),
+            equalTo( new LineProcessor.KeyListKey( "NO KEY LIST MATCH", -1 ) )
+        );
+    }
+
+    // ---
+
+    private void runSolutions( String[] lines )
+    {
+        World world = createWorld( lines );
+
+        int i = 0;
+        for ( String s : world.solutions )
+        {
+            Solution solution = SolutionFactory.create( s, i );
+            SolutionRunner.runSolution( solution, world );
+            ++i;
+        }
+    }
 }

@@ -230,12 +230,12 @@ public class Util
         return join( glue, Arrays.asList( items ) );
     }
 
-    public static String join( String glue, Iterable<String> items )
+    public static <T> String join( String glue, Iterable<T> items )
     {
         StringBuilder ret = new StringBuilder();
 
         boolean first = true;
-        for ( String item : items )
+        for ( T item : items )
         {
             if ( first )
             {
@@ -588,5 +588,15 @@ public class Util
     public static boolean isEmpty( String str )
     {
         return ( str.length() == 0 );
+    }
+
+    public static <T> List<String> toStringList( T[] values )
+    {
+        ArrayList<String> ret = new ArrayList<String>();
+        for( T t : values )
+        {
+            ret.add( t.toString() );
+        }
+        return ret;
     }
 }
