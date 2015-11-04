@@ -48,7 +48,7 @@ public class AndroidGameLaunch implements Runnable
         if ( savedInstanceState != null )
         {
             scrollX = savedInstanceState.getInt( STATE_SCROLL_X, 0 );
-            scrollY = savedInstanceState.getInt( STATE_SCROLL_Y, 0);
+            scrollY = savedInstanceState.getInt( STATE_SCROLL_Y, 0 );
 
         }
         else

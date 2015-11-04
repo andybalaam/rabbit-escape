@@ -98,6 +98,6 @@ public class GitHubJsonTools
 
     public static String regexReplacePreserveGroup( String s, String regex )
     {
-        return regexReplacePreserveGroup( s, regex, 0);
+        return regexReplacePreserveGroup( s, regex, 0 );
     }
 }

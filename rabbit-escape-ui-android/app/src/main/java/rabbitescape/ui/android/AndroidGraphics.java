@@ -162,7 +162,7 @@ public class AndroidGraphics implements Graphics
         {
             screenWidthPixels  = canvas.getWidth();
             screenHeightPixels = canvas.getHeight();
-            adjustRenderingTileSize(initialTileSize());
+            adjustRenderingTileSize( initialTileSize() );
         }
 
         drawToCanvas( canvas, -scrollX, -scrollY, frame );

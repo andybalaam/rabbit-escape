@@ -89,7 +89,7 @@ public class SwingConfigSetup
 
         definition.set(
             CFG_LOAD_LEVEL_PATH,
-            (new JFileChooser()).getCurrentDirectory().getAbsolutePath(),
+            new JFileChooser().getCurrentDirectory().getAbsolutePath(),
             "Default path in the dialog to load a level file for testing."
         );
 

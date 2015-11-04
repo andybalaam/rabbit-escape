@@ -486,7 +486,7 @@ public class AnimationTester extends JFrame
             {
                 frameNum = 0;
                 ++frameSetNum;
-                if ( frameSetNum == 3)
+                if ( frameSetNum == 3 )
                 {
                     frameSetNum = 0;
                 }
@@ -601,7 +601,7 @@ public class AnimationTester extends JFrame
         {
             Thread.sleep( 100 );
         }
-        catch (InterruptedException e)
+        catch ( InterruptedException e )
         {
             // Ignore
         }

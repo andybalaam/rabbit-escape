@@ -238,8 +238,8 @@ public class TextWorldManip
 
         ret.add( metaLine( name,         world.name ) );
         ret.add( metaLine( description,  world.description ) );
-        ret.add( metaLine( author_name,  world.author_name) );
-        ret.add( metaLine( author_url,   world.author_url) );
+        ret.add( metaLine( author_name,  world.author_name ) );
+        ret.add( metaLine( author_url,   world.author_url ) );
         ret.add( metaLine( hint1,        world.hint1 ) );
         ret.add( metaLine( hint2,        world.hint2 ) );
         ret.add( metaLine( hint3,        world.hint3 ) );
@@ -289,7 +289,7 @@ public class TextWorldManip
         {
             ret = ret + "," + Integer.toString( value[i] ) ;
         }
-        return metaLine( name, ret);
+        return metaLine( name, ret );
     }
 
     private static String metaLine( String name, String value )

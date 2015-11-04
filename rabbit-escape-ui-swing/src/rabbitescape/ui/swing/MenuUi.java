@@ -273,7 +273,7 @@ public class MenuUi
 
     private void chooseIssue()
     {
-        GitHubIssueDialog id = new GitHubIssueDialog(frame);
+        GitHubIssueDialog id = new GitHubIssueDialog( frame );
         String world = id.getWorld();
         if( null == world )
         {
@@ -282,13 +282,13 @@ public class MenuUi
         String path = ConfigTools.getString(
             uiConfig, ConfigKeys.CFG_LOAD_LEVEL_PATH );
 
-        File nameCandidate = new File (path + File.separator + id.generateFilename() + ".rel");
+        File nameCandidate = new File ( path + File.separator + id.generateFilename() + ".rel" );
         int version = 0;
         String filename = id.generateFilename();
-        while(nameCandidate.exists())
+        while( nameCandidate.exists() )
         {
             nameCandidate = new File (
-                path + File.separator + filename + "." + (version++) + ".rel"
+                path + File.separator + filename + "." + ( version++ ) + ".rel"
                 );
         }
         PrintWriter out;

@@ -191,7 +191,7 @@ public class World
 
         for ( Thing thing : allThings() )
         {
-            thing.step(this);
+            thing.step( this );
         }
 
         changes.rememberWhatWillHappen();

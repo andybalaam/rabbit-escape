@@ -41,7 +41,7 @@ public class Entrance extends Thing
 
         if ( timeToNextRabbit == 0 )
         {
-            birthRabbit(world);
+            birthRabbit( world );
         }
         --timeToNextRabbit;
     }
