@@ -148,4 +148,5 @@ public class Rabbit extends Thing
             behaviour.restoreFromState( state );
         }
     }
+
 }

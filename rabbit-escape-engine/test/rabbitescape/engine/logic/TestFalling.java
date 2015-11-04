@@ -1090,4 +1090,89 @@ public class TestFalling
         assertThat( world.num_saved, equalTo ( 0 ) );
     }
 
+    @Test
+    public void Fall_through_fresh_dig_again()
+    {
+        // All must exit
+        World world = createWorld(
+            "  r ",
+            " rd(",
+            " )( ",
+            " (O ",
+            " ###",
+            " d  ",
+            " )jj",
+            " O) ",
+            "####"
+        );
+
+        assertWorldEvolvesLike( 
+            world,
+            6,
+            new String[] {
+                "    ",
+                "   (",
+                " )  ",
+                " (O ",
+                " ###",
+                "    ",
+                "    ",
+                " O) ",
+                "####"
+            });
+
+        assertThat( world.num_saved, equalTo ( 4 ) );
+    }
+
+    @Test
+    public void Fall_through_fresh_dig_just_removed_block_cache_clear()
+    {
+        // First digs to exit. Next bridges over exit.
+        World world = createWorld(
+             "       ",
+             "   id( ",
+             "    (  ",
+             "r r(O  ",
+             "#######"
+        );
+
+        // Don't really need to insist on the double bridge
+        // block, but it seems harmless.
+        assertWorldEvolvesLike( 
+            world,
+            14,
+            new String[] {
+                "      (",
+                "     * ",
+                "    (  ",
+                "   (O  ",
+                "#######",
+                ":*=(("
+            });
+
+        assertThat( world.num_saved, equalTo ( 1 ) );
+    }
+    
+    @Test
+    public void Fall_through_fresh_bash()
+    {
+        World world = createWorld(
+              "      ",
+              "  rb( ",
+              " r (O ",
+              "######"
+        );
+
+        assertWorldEvolvesLike( 
+            world,
+            14,
+            new String[] {
+                "      ",
+                "      ",
+                "   (O ",
+                "######"
+            });
+
+        assertThat( world.num_saved, equalTo ( 2 ) );
+    }
 }

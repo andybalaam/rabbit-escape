@@ -183,6 +183,7 @@ public class World
 
     public void step()
     {
+
         if ( completionState() != CompletionState.RUNNING )
         {
             throw new DontStepAfterFinish( name );
@@ -201,6 +202,8 @@ public class World
         {
             thing.calcNewState( this );
         }
+
+        changes.blocksJustRemoved.clear();
 
         changes.apply();
     }
