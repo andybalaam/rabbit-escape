@@ -20,6 +20,11 @@ public class Falling extends Behaviour
     {
         this.climbing = climbing;
     }
+    
+    public boolean isFallingToDeath()
+    {
+        return heightFallen > fatalHeight ;
+    }
 
     @Override
     public void cancel()

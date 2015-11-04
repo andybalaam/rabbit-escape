@@ -14,6 +14,8 @@ public class Rabbit extends Thing
 {
     private final List<Behaviour> behaviours;
     private final List<Behaviour> behavioursTriggerOrder;
+    
+    private Falling falling;
 
     public Direction dir;
     public boolean onSlope;
@@ -35,7 +37,7 @@ public class Rabbit extends Thing
         Exploding exploding = new Exploding();
         OutOfBounds outOfBounds = new OutOfBounds();
         Exiting exiting = new Exiting();
-        Falling falling = new Falling( climbing );
+        falling = new Falling( climbing );
         Bashing bashing = new Bashing();
         Bridging bridging = new Bridging();
         Blocking blocking = new Blocking();
@@ -64,6 +66,11 @@ public class Rabbit extends Thing
         behaviours.add( walking );
 
         assert behavioursTriggerOrder.size() == behaviours.size();
+    }
+
+    public boolean isFallingToDeath()
+    {
+        return falling.isFallingToDeath();
     }
 
     @Override
