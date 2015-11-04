@@ -26,7 +26,7 @@ public class AndroidBitmapLoader implements BitmapLoader<AndroidBitmap>
     @Override
     public AndroidBitmap load( String name, int tileSize )
     {
-        reAssert( Arrays.binarySearch(SIZES, tileSize) >= 0 );
+        reAssert( Arrays.binarySearch( SIZES, tileSize ) >= 0 );
 
         String resourcePath = "images" + tileSize + "/" + name + ".png";
 

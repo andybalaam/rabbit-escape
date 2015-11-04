@@ -80,7 +80,7 @@ public class TopBar implements Physics.StatsChangedListener
 
     private void setCountText( JLabel label, String text, int num1, int num2 )
     {
-        setText( label, text, newMap( "num1", String.valueOf( num1 ), "num2", String.valueOf(num2) ) );
+        setText( label, text, newMap( "num1", String.valueOf( num1 ), "num2", String.valueOf( num2 ) ) );
     }
 
     private void setAbilityText(

@@ -30,7 +30,7 @@ public class SandboxGame
     /**
      * Create a sandbox game based on a given world. This allows playing with
      * the sandbox game without affecting the world in any way.
-     * 
+     *
      * @param world
      *            The world to copy.
      */
@@ -64,7 +64,7 @@ public class SandboxGame
 
     /**
      * Create a clone of the list of a given list of things.
-     * 
+     *
      * @param things
      *            The things to clone.
      * @return The cloned list of things.
@@ -105,7 +105,7 @@ public class SandboxGame
 
     /**
      * Make a clone of a list of rabbits.
-     * 
+     *
      * @param rabbits
      *            The list of rabbits to clone.
      * @return The cloned list.
@@ -122,7 +122,7 @@ public class SandboxGame
 
     /**
      * Clone a single rabbit.
-     * 
+     *
      * @param rabbit
      *            The rabbit to be cloned.
      * @return The cloned rabbit.
@@ -134,7 +134,7 @@ public class SandboxGame
 
     /**
      * Get the currently selected token type.
-     * 
+     *
      * @return The token type selected.
      */
     public Token.Type getSelectedType()
@@ -144,7 +144,7 @@ public class SandboxGame
 
     /**
      * Select a token type to place next.
-     * 
+     *
      * @param selectedType
      *            The type to select.
      */
@@ -155,7 +155,7 @@ public class SandboxGame
 
     /**
      * Get the current world.
-     * 
+     *
      * @return The sandboxed world.
      */
     public World getWorld()

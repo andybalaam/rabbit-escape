@@ -100,7 +100,7 @@ public class TestExit
             "##################"
         );
 
-        assertWorldEvolvesLike( 
+        assertWorldEvolvesLike(
             world,
             10,
             new String[] {
@@ -134,7 +134,7 @@ public class TestExit
             "###  "
         );
 
-        assertWorldEvolvesLike( 
+        assertWorldEvolvesLike(
             world,
             6,
             new String[] {
@@ -164,7 +164,7 @@ public class TestExit
             "      O"
         );
 
-        assertWorldEvolvesLike( 
+        assertWorldEvolvesLike(
             world,
             5,
             new String[] {

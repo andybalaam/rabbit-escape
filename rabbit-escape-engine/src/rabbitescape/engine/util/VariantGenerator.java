@@ -20,8 +20,8 @@ public class VariantGenerator
 
     public int next( int i )
     {
-        seed_z = 36969 * (seed_z & 65535) + (seed_z >> 16);
-        seed_w = 18000 * (seed_w & 65535) + (seed_w >> 16);
-        return ( (seed_z << 16) + seed_w ) % i;
+        seed_z = 36969 * ( seed_z & 65535 ) + ( seed_z >> 16 );
+        seed_w = 18000 * ( seed_w & 65535 ) + ( seed_w >> 16 );
+        return ( ( seed_z << 16 ) + seed_w ) % i;
     }
 }

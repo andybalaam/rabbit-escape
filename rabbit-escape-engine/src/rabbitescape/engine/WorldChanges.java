@@ -1,5 +1,6 @@
 package rabbitescape.engine;
 
+import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,6 +23,7 @@ public class WorldChanges
     public  final List<Token>  tokensToRemove = new ArrayList<Token>();
     private final List<Block>  blocksToAdd    = new ArrayList<Block>();
     private final List<Block>  blocksToRemove = new ArrayList<Block>();
+    public final List<Point>   blocksJustRemoved = new ArrayList<Point>();
 
     private boolean explodeAll = false;
 
@@ -187,6 +189,7 @@ public class WorldChanges
         {
             throw new NoBlockFound( x, y );
         }
+        blocksJustRemoved.add( new Point( x, y ) );
         blocksToRemove.add( block );
     }
 

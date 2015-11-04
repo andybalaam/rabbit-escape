@@ -108,8 +108,8 @@ public class Falling extends Behaviour
         }
 
         if (
-               rabbit.onSlope 
-            && !t.sharesSquareWithDiggerOnSlope()
+               rabbit.onSlope
+            && !t.blockHereJustRemoved()
         )
         {
             return false;

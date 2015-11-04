@@ -150,7 +150,7 @@ public class GameSurfaceView extends SurfaceView
     {
         boolean ret = scaleGestureDetector.onTouchEvent( event );
 
-        ret = scrolling.onTouchEvent(event) || ret;
+        ret = scrolling.onTouchEvent( event ) || ret;
 
         return ret || super.onTouchEvent( event );
     }
