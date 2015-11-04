@@ -40,10 +40,10 @@ public class GitHubJsonTools
      *            Something of the form array_name.member_name. If something of
      *            the form member_name is used, the whole string will be
      *            searched.
-     * 
+     *
      *            "thing1":"stuff" "thing2_array:[ { "subthing1":"more stuff" }
      *            { "subthing1":"even more" } ]
-     * 
+     *
      *            Using a key of "thing2_array.subthing1" will return [
      *            "more stuff", "even more"].
      */
@@ -95,7 +95,7 @@ public class GitHubJsonTools
 
         return sb.toString();
     }
-    
+
     public static String regexReplacePreserveGroup( String s, String regex )
     {
         return regexReplacePreserveGroup( s, regex, 0);

@@ -49,7 +49,7 @@ public class TextWorldManip
         num_killed,
         num_waiting
     );
-    
+
     public static final List<String> META_INT_ARRAYS = Arrays.asList(
         rabbit_delay
     );
@@ -289,7 +289,7 @@ public class TextWorldManip
         {
             ret = ret + "," + Integer.toString( value[i] ) ;
         }
-        return metaLine( name, ret); 
+        return metaLine( name, ret);
     }
 
     private static String metaLine( String name, String value )

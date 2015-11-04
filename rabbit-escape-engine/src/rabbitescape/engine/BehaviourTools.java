@@ -127,7 +127,7 @@ public class BehaviourTools
     public boolean isOnSlopeStateUnreliable()
     {
         Block block = blockHere();
-        return 
+        return
             null != block &&
             (
                    solid_up_left == block.type
@@ -211,7 +211,7 @@ public class BehaviourTools
 
     /**
      * @brief A rabbit may be on a slope block as a digger
-     *        or basher removes it. This is here to make sure 
+     *        or basher removes it. This is here to make sure
      *        they fall.
      */
     public boolean blockHereJustRemoved()

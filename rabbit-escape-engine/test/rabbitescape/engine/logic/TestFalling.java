@@ -1076,7 +1076,7 @@ public class TestFalling
             "#### ## #### ## #### ##"
         );
 
-        assertWorldEvolvesLike( 
+        assertWorldEvolvesLike(
             world,
             10,
             new String[] {
@@ -1106,7 +1106,7 @@ public class TestFalling
             "####"
         );
 
-        assertWorldEvolvesLike( 
+        assertWorldEvolvesLike(
             world,
             6,
             new String[] {
@@ -1138,7 +1138,7 @@ public class TestFalling
 
         // Don't really need to insist on the double bridge
         // block, but it seems harmless.
-        assertWorldEvolvesLike( 
+        assertWorldEvolvesLike(
             world,
             14,
             new String[] {
@@ -1152,7 +1152,7 @@ public class TestFalling
 
         assertThat( world.num_saved, equalTo ( 1 ) );
     }
-    
+
     @Test
     public void Fall_through_fresh_bash()
     {
@@ -1163,7 +1163,7 @@ public class TestFalling
               "######"
         );
 
-        assertWorldEvolvesLike( 
+        assertWorldEvolvesLike(
             world,
             14,
             new String[] {

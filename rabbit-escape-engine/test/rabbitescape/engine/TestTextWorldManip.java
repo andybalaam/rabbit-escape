@@ -937,7 +937,7 @@ public class TestTextWorldManip
             equalTo( lines )
         );
     }
-    
+
     @Test
     public void Test_variable_rabbit_delay()
     {
@@ -948,13 +948,13 @@ public class TestTextWorldManip
             "                                                                             ",
             "#############################################################################"
         };
-        
+
         World world = createWorld( lines );
         for ( int i = 0 ; i<16 ; i++ )
         {
             world.step();
         }
-        
+
         String[] resultLines=renderCompleteWorld( world, false );
 
         String[] expectedLines = {
@@ -994,7 +994,7 @@ public class TestTextWorldManip
             "#     #",
             "#######"
         };
-        
+
         assertThat(
             renderCompleteWorld( createWorld( lines ), true ),
             equalTo( lines )

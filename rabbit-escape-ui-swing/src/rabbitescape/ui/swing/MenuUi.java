@@ -281,7 +281,7 @@ public class MenuUi
         }
         String path = ConfigTools.getString(
             uiConfig, ConfigKeys.CFG_LOAD_LEVEL_PATH );
-        
+
         File nameCandidate = new File (path + File.separator + id.generateFilename() + ".rel");
         int version = 0;
         String filename = id.generateFilename();

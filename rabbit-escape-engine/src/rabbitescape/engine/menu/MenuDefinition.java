@@ -28,15 +28,15 @@ public class MenuDefinition
                 true
             ),
             item( "About",      Type.ABOUT, true ),
-            maybeItem( 
+            maybeItem(
                 includeLoadLevel,
-                "Custom Levels", 
+                "Custom Levels",
                 menu(
                     "Get from file or network",
                     item( "Load Level", Type.LOAD, true ),
                     item( "GitHub Issue", Type.GITHUB_ISSUE, true )
                 ),
-                true 
+                true
             ),
             item( "Quit",       Type.QUIT,  true )
         );

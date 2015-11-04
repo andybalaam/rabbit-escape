@@ -11,7 +11,7 @@ public class Entrance extends Thing
     private int[] delay = new int[1];
 
     private int timeToNextRabbit;
-    
+
     private int rabbitEntranceCount = 0;
 
     public Entrance( int x, int y )
@@ -45,17 +45,17 @@ public class Entrance extends Thing
         }
         --timeToNextRabbit;
     }
-    
+
     private void birthRabbit( World world )
     {
-        int delayIndex; 
-        
+        int delayIndex;
+
         delayIndex = rabbitEntranceCount >= delay.length ? delay.length-1 : rabbitEntranceCount ;
-        
+
         rabbitEntranceCount++ ;
-        
+
         timeToNextRabbit = delay[delayIndex];
-        
+
         world.changes.enterRabbit( new Rabbit( x, y + 1, RIGHT ) );
     }
 

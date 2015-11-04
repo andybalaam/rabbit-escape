@@ -354,7 +354,7 @@ public class LineProcessor
             throw new NonIntegerMetaValue( lines, lineNum );
         }
     }
-    
+
     private ArrayList<Integer> toIntArray( String value )
     {
         try
