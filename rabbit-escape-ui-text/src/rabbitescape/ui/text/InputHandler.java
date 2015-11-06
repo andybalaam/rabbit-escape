@@ -10,6 +10,7 @@ import rabbitescape.engine.err.RabbitEscapeException;
 import rabbitescape.engine.solution.Instruction;
 import rabbitescape.engine.solution.SandboxGame;
 import rabbitescape.engine.solution.Solution;
+import rabbitescape.engine.solution.SolutionExceptions;
 import rabbitescape.engine.solution.SolutionFactory;
 import rabbitescape.engine.solution.SolutionRunner;
 import rabbitescape.engine.solution.WaitInstruction;
@@ -115,7 +116,7 @@ public class InputHandler
         this.solution = new ArrayList<>();
     }
 
-    public boolean handle()
+    public boolean handle( int instructionIndex )
     {
         String input = input();
 
@@ -153,6 +154,12 @@ public class InputHandler
             }
 
             append( instructions );
+        }
+        catch ( SolutionExceptions.ProblemRunningSolution e )
+        {
+            e.instructionIndex = instructionIndex;
+            e.solutionId = 1;
+            return fail( ExceptionTranslation.translate( e, terminal.locale ) );
         }
         catch ( RabbitEscapeException e )
         {
