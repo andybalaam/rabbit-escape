@@ -198,6 +198,20 @@ public class TestSolutionRunner
         }
     }
 
+    @Test
+    public void Rabbit_dying_by_walking_out_of_level_is_not_an_error()
+    {
+        SolutionRunner.runSolution(
+            waitFiveThenLostSolution(),
+            TextWorldManip.createWorld(
+                "#r   ",
+                "#####",
+                ":num_rabbits=0",
+                ":num_to_save=1"
+            )
+        );
+    }
+
     // --
 
     private World neverEndingWorld()
@@ -248,6 +262,19 @@ public class TestSolutionRunner
                     new WaitInstruction( 1 ),
                     new WaitInstruction( 2 ),
                     new WaitInstruction( 2 )
+                }
+            )
+        );
+    }
+
+    private Solution waitFiveThenLostSolution()
+    {
+        return new Solution(
+            Arrays.asList(
+                new Instruction[]
+                {
+                    new WaitInstruction( 5 ),
+                    new TargetState( CompletionState.LOST, 1 )
                 }
             )
         );
