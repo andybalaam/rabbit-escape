@@ -2,11 +2,13 @@ package rabbitescape.engine.solution;
 
 import rabbitescape.engine.World;
 import rabbitescape.engine.Token.Type;
+import rabbitescape.engine.World.CantAddTokenOutsideWorld;
 import rabbitescape.engine.World.CompletionState;
 import rabbitescape.engine.World.DontStepAfterFinish;
 import rabbitescape.engine.World.NoSuchAbilityInThisWorld;
 import rabbitescape.engine.World.NoneOfThisAbilityLeft;
 import rabbitescape.engine.solution.SolutionExceptions;
+import rabbitescape.engine.util.Dimension;
 
 public class SolutionRunner
 {
@@ -39,6 +41,12 @@ public class SolutionRunner
             catch ( NoSuchAbilityInThisWorld e )
             {
                 throw new SolutionExceptions.UsedMissingAbility( i, e.ability );
+            }
+            catch ( CantAddTokenOutsideWorld e )
+            {
+                Dimension worldSize = sandboxGame.getWorld().size;
+                throw new SolutionExceptions.PlacedTokenOutsideWorld(
+                    i, e.x, e.y, worldSize.width, worldSize.height );
             }
             ++i;
         }

@@ -101,4 +101,33 @@ public class SolutionExceptions
             this.ability = ability;
         }
     }
+
+    /**
+     * We placed a token outside the size of this world.
+     */
+    public static class PlacedTokenOutsideWorld extends ProblemRunningSolution
+    {
+        private static final long serialVersionUID = 1L;
+
+        public final int x;
+        public final int y;
+        public final int worldWidth;
+        public final int worldHeight;
+
+        public PlacedTokenOutsideWorld(
+            int instructionIndex,
+            int x,
+            int y,
+            int worldWidth,
+            int worldHeight
+        )
+        {
+            this.instructionIndex = instructionIndex;
+            this.x = x;
+            this.y = y;
+            this.worldWidth = worldWidth;
+            this.worldHeight = worldHeight;
+        }
+    }
+    
 }

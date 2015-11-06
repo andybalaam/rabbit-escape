@@ -166,6 +166,38 @@ public class TestSolutionRunner
         }
     }
 
+    @Test( expected = SolutionExceptions.PlacedTokenOutsideWorld.class )
+    public void Placing_a_token_outside_the_world_is_an_error()
+    {
+        SolutionRunner.runSolution(
+            useBash100Solution(), neverEndingWorldWithBash() );
+    }
+
+    @Test
+    public void Placing_a_token_outside_the_world_is_serialised_nicely()
+    {
+        try
+        {
+            SolutionRunner.runSolution(
+                useBash100Solution(), neverEndingWorldWithBash() );
+
+            fail( "Expected exception!" );
+        }
+        catch( SolutionExceptions.PlacedTokenOutsideWorld e )
+        {
+            e.solutionId = 8;
+
+            assertThat(
+                e.getMessage(),
+                equalTo(
+                    "Solution failed: placed at token at (10, 0) but the"
+                    + " world is only 5x2 in size"
+                    + " at instruction 2 of solution 8."
+                )
+            );
+        }
+    }
+
     // --
 
     private World neverEndingWorld()
@@ -231,6 +263,19 @@ public class TestSolutionRunner
                     new PlaceTokenInstruction( 1, 0 ),
                     new WaitInstruction( 1 ),
                     new PlaceTokenInstruction( 3, 0 )
+                }
+            )
+        );
+    }
+
+    private Solution useBash100Solution()
+    {
+        return new Solution(
+            Arrays.asList(
+                new Instruction[]
+                {
+                    new SelectInstruction( Token.Type.bash ),
+                    new PlaceTokenInstruction( 10, 0 )
                 }
             )
         );
