@@ -1,5 +1,6 @@
 package rabbitescape.engine.solution;
 
+import rabbitescape.engine.Token;
 import rabbitescape.engine.World.CompletionState;
 import rabbitescape.engine.err.RabbitEscapeException;
 
@@ -53,4 +54,51 @@ public class SolutionExceptions
         }
     }
 
+    /**
+     * The solution went on longer, but the world was at WON or LOST.
+     */
+    public static class RanPastEnd extends ProblemRunningSolution
+    {
+        private static final long serialVersionUID = 1L;
+
+        public final CompletionState worldState;
+
+        public RanPastEnd( int instructionIndex, CompletionState worldState )
+        {
+            this.instructionIndex = instructionIndex;
+            this.worldState = worldState;
+        }
+    }
+
+    /**
+     * We used a token that we've already used up.
+     */
+    public static class UsedRunOutAbility extends ProblemRunningSolution
+    {
+        private static final long serialVersionUID = 1L;
+
+        public final Token.Type ability;
+
+        public UsedRunOutAbility( int instructionIndex, Token.Type ability )
+        {
+            this.instructionIndex = instructionIndex;
+            this.ability = ability;
+        }
+    }
+
+    /**
+     * We used a token that was not available in this world.
+     */
+    public static class UsedMissingAbility extends ProblemRunningSolution
+    {
+        private static final long serialVersionUID = 1L;
+
+        public final Token.Type ability;
+
+        public UsedMissingAbility( int instructionIndex, Token.Type ability )
+        {
+            this.instructionIndex = instructionIndex;
+            this.ability = ability;
+        }
+    }
 }

@@ -29,25 +29,16 @@ public class SolutionRunner
             }
             catch ( DontStepAfterFinish e )
             {
-                throw new InvalidSolution( "Solution " + i
-                    + " has steps that continue after the level has finished.",
-                    e );
+                throw new SolutionExceptions.RanPastEnd(
+                    i, sandboxGame.getWorld().completionState() );
             }
             catch ( NoneOfThisAbilityLeft e )
             {
-                throw new InvalidSolution( "Solution " + i
-                    + " attempts to use more " + sandboxGame.getSelectedType()
-                    + " tokens than are available.",
-                    e );
+                throw new SolutionExceptions.UsedRunOutAbility( i, e.ability );
             }
             catch ( NoSuchAbilityInThisWorld e )
             {
-                throw new InvalidSolution(
-                    "Solution " + i
-                        + " attempts to the ability '"
-                        + sandboxGame.getSelectedType()
-                        + "' which is not available in this world",
-                    e );
+                throw new SolutionExceptions.UsedMissingAbility( i, e.ability );
             }
             ++i;
         }

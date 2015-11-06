@@ -8,6 +8,7 @@ import java.util.Arrays;
 
 import org.junit.Test;
 
+import rabbitescape.engine.Token;
 import rabbitescape.engine.World;
 import rabbitescape.engine.World.CompletionState;
 import rabbitescape.engine.solution.SolutionExceptions;
@@ -75,6 +76,96 @@ public class TestSolutionRunner
         }
     }
 
+    @Test( expected = SolutionExceptions.RanPastEnd.class )
+    public void Going_on_beyond_the_end_is_an_error()
+    {
+        SolutionRunner.runSolution( waitFourSolution(), threeStepWorld() );
+    }
+
+    @Test
+    public void Going_on_beyond_the_end_is_serialised_to_helpful_message()
+    {
+        try
+        {
+            SolutionRunner.runSolution( waitFourSolution(), threeStepWorld() );
+            fail( "Expected exception!" );
+        }
+        catch( SolutionExceptions.RanPastEnd e )
+        {
+            e.solutionId = 5;
+
+            assertThat(
+                e.getMessage(),
+                equalTo(
+                    "Solution failed: world has stopped (state: WON) but"
+                    + " there are more solution steps"
+                    + " at instruction 3 of solution 5."
+                )
+            );
+        }
+    }
+
+    @Test( expected = SolutionExceptions.UsedRunOutAbility.class )
+    public void Using_missing_ability_is_an_error()
+    {
+        SolutionRunner.runSolution(
+            useBash30Solution(), neverEndingWorldWithBash() );
+    }
+
+    @Test
+    public void Using_missing_ability_is_serialised_to_helpful_message()
+    {
+        try
+        {
+            SolutionRunner.runSolution(
+                useBash30Solution(), neverEndingWorldWithBash() );
+
+            fail( "Expected exception!" );
+        }
+        catch( SolutionExceptions.UsedRunOutAbility e )
+        {
+            e.solutionId = 6;
+
+            assertThat(
+                e.getMessage(),
+                equalTo(
+                    "Solution failed: ability 'bash' was used when there"
+                    + " were none left at instruction 4 of solution 6."
+                )
+            );
+        }
+    }
+
+    @Test( expected = SolutionExceptions.UsedMissingAbility.class )
+    public void Using_run_out_ability_is_an_error()
+    {
+        SolutionRunner.runSolution( useBash30Solution(), neverEndingWorld() );
+    }
+
+    @Test
+    public void Using_run_out_ability_is_serialised_to_helpful_message()
+    {
+        try
+        {
+            SolutionRunner.runSolution(
+                useBash30Solution(), neverEndingWorld() );
+
+            fail( "Expected exception!" );
+        }
+        catch( SolutionExceptions.UsedMissingAbility e )
+        {
+            e.solutionId = 7;
+
+            assertThat(
+                e.getMessage(),
+                equalTo(
+                    "Solution failed: ability 'bash' was used but this level"
+                    + " does not provide it at instruction 2 of solution 7."
+                )
+            );
+        }
+    }
+
     // --
 
     private World neverEndingWorld()
@@ -85,6 +176,25 @@ public class TestSolutionRunner
         );
     }
 
+    private World neverEndingWorldWithBash()
+    {
+        return TextWorldManip.createWorld(
+            "#r  #",
+            "#####",
+            ":bash=1"
+        );
+    }
+
+    private World threeStepWorld()
+    {
+        return TextWorldManip.createWorld(
+            "#r O",
+            "####",
+            ":num_rabbits=0",
+            ":num_to_save=1"
+        );
+    }
+
     private Solution expectingSolution( CompletionState expected )
     {
         return new Solution(
@@ -92,6 +202,35 @@ public class TestSolutionRunner
                 new Instruction[]
                 {
                     new TargetState( expected, 1 )
+                }
+            )
+        );
+    }
+
+    private Solution waitFourSolution()
+    {
+        return new Solution(
+            Arrays.asList(
+                new Instruction[]
+                {
+                    new WaitInstruction( 1 ),
+                    new WaitInstruction( 2 ),
+                    new WaitInstruction( 2 )
+                }
+            )
+        );
+    }
+
+    private Solution useBash30Solution()
+    {
+        return new Solution(
+            Arrays.asList(
+                new Instruction[]
+                {
+                    new SelectInstruction( Token.Type.bash ),
+                    new PlaceTokenInstruction( 1, 0 ),
+                    new WaitInstruction( 1 ),
+                    new PlaceTokenInstruction( 3, 0 )
                 }
             )
         );

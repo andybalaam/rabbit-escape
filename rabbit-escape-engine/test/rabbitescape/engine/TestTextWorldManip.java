@@ -13,11 +13,11 @@ import java.util.Map;
 import org.junit.Test;
 
 import rabbitescape.engine.World.CompletionState;
-import rabbitescape.engine.solution.InvalidSolution;
 import rabbitescape.engine.solution.Solution;
 import rabbitescape.engine.solution.SolutionExceptions;
 import rabbitescape.engine.solution.SolutionFactory;
 import rabbitescape.engine.solution.SolutionRunner;
+import rabbitescape.engine.solution.SolutionExceptions.RanPastEnd;
 import rabbitescape.engine.textworld.DuplicateMetaKey;
 import rabbitescape.engine.textworld.ItemsLineProcessor;
 import rabbitescape.engine.textworld.LineProcessor;
@@ -1192,7 +1192,7 @@ public class TestTextWorldManip
         runSolutions( lines );
     }
 
-    @Test( expected=InvalidSolution.class )
+    @Test( expected = RanPastEnd.class )
     public void Solution_too_many_steps_throws_exception()
     {
         String[] lines = {
