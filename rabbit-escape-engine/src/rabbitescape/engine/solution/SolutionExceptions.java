@@ -129,5 +129,28 @@ public class SolutionExceptions
             this.worldHeight = worldHeight;
         }
     }
-    
+
+    /**
+     * We placed a token but the world wouldn't accept it (presumably because
+     * there was a block at that position).
+     */
+    public static class FailedToPlaceToken extends ProblemRunningSolution
+    {
+        private static final long serialVersionUID = 1L;
+
+        public final int x;
+        public final int y;
+        public final Token.Type type;
+
+        public FailedToPlaceToken(
+            int x,
+            int y,
+            Token.Type type
+        )
+        {
+            this.x = x;
+            this.y = y;
+            this.type = type;
+        }
+    }
 }

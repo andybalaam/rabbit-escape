@@ -190,7 +190,7 @@ public class TestSolutionRunner
             assertThat(
                 e.getMessage(),
                 equalTo(
-                    "Solution failed: placed at token at (10, 0) but the"
+                    "Solution failed: placed a token at (10, 0) but the"
                     + " world is only 5x2 in size"
                     + " at instruction 2 of solution 8."
                 )
@@ -210,6 +210,36 @@ public class TestSolutionRunner
                 ":num_to_save=1"
             )
         );
+    }
+
+    @Test( expected = SolutionExceptions.FailedToPlaceToken.class )
+    public void Placing_a_token_on_a_block_is_an_error()
+    {
+        SolutionRunner.runSolution( useBash30Solution(), blockAt30World() );
+    }
+
+    @Test
+    public void Placing_a_token_on_a_block_is_serialised_nicely()
+    {
+        try
+        {
+            SolutionRunner.runSolution( useBash30Solution(), blockAt30World() );
+
+            fail( "Expected exception!" );
+        }
+        catch( SolutionExceptions.FailedToPlaceToken e )
+        {
+            e.solutionId = 9;
+
+            assertThat(
+                e.getMessage(),
+                equalTo(
+                    "Solution failed: tried to place a bash token at (3, 0) but"
+                    + " a block was already there so it did not place"
+                    + " at instruction 4 of solution 9."
+                )
+            );
+        }
     }
 
     // --
@@ -238,6 +268,15 @@ public class TestSolutionRunner
             "####",
             ":num_rabbits=0",
             ":num_to_save=1"
+        );
+    }
+
+    private World blockAt30World()
+    {
+        return TextWorldManip.createWorld(
+            "#r ##",
+            "#####",
+            ":bash=2"
         );
     }
 

@@ -101,7 +101,18 @@ public class SolutionRunner
                 public void casePlaceTokenInstruction( PlaceTokenInstruction p )
                 {
                     Type type = sandboxGame.getSelectedType();
-                    sandboxGame.getWorld().changes.addToken( p.x, p.y, type );
+                    World world = sandboxGame.getWorld();
+
+                    Integer previousNum = world.abilities.get( type );
+                    // (Note: previousNum may be null, so can't be int.)
+
+                    world.changes.addToken( p.x, p.y, type );
+
+                    if ( world.abilities.get( type ) == previousNum )
+                    {
+                        throw new SolutionExceptions.FailedToPlaceToken(
+                            p.x, p.y, type );
+                    }
                 }
             }
         );
