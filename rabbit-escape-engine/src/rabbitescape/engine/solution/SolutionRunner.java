@@ -2,14 +2,16 @@ package rabbitescape.engine.solution;
 
 import rabbitescape.engine.World;
 import rabbitescape.engine.Token.Type;
+import rabbitescape.engine.World.CompletionState;
 import rabbitescape.engine.World.DontStepAfterFinish;
 import rabbitescape.engine.World.NoSuchAbilityInThisWorld;
 import rabbitescape.engine.World.NoneOfThisAbilityLeft;
+import rabbitescape.engine.solution.SolutionExceptions;
 
 public class SolutionRunner
 {
     public static void runSolution( Solution solution, World world )
-        throws InvalidSolution
+        throws SolutionExceptions.ProblemRunningSolution
     {
         SandboxGame sandboxGame = new SandboxGame( world );
 
@@ -19,6 +21,11 @@ public class SolutionRunner
             try
             {
                 performInstruction( instruction, sandboxGame );
+            }
+            catch ( SolutionExceptions.ProblemRunningSolution e )
+            {
+                e.instructionIndex = i;
+                throw e;
             }
             catch ( DontStepAfterFinish e )
             {
@@ -42,12 +49,13 @@ public class SolutionRunner
                         + "' which is not available in this world",
                     e );
             }
+            ++i;
         }
-        ++i;
     }
 
     public static void performInstruction(
         Instruction instruction, final SandboxGame sandboxGame )
+    throws SolutionExceptions.UnexpectedState
     {
         instruction.typeSwitch( new InstructionTypeSwitch()
             {
@@ -68,21 +76,25 @@ public class SolutionRunner
 
                 @Override
                 public void caseTargetState( TargetState s )
+                    throws SolutionExceptions.UnexpectedState
                 {
                     if (
                         sandboxGame.getWorld().completionState()
                             != s.targetState
                     )
                     {
-                        String instructionDescription = "";
-                        if ( s.instructionIndex != TargetState.INSTRUCTION_INDEX_NOT_SPECIFIED )
+                        if ( s.targetState == CompletionState.WON )
                         {
-                            instructionDescription = " at instruction "
-                                + s.instructionIndex;
+                            throw new SolutionExceptions.DidNotWin(
+                                sandboxGame.getWorld().completionState() );
                         }
-                        throw new InvalidSolution( "Solution " + s.solutionId
-                            + " did not cause " + s.targetState
-                            + instructionDescription );
+                        else
+                        {
+                            throw new SolutionExceptions.UnexpectedState(
+                                s.targetState,
+                                sandboxGame.getWorld().completionState()
+                            );
+                        }
                     }
                 }
 

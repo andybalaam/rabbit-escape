@@ -12,8 +12,10 @@ import java.util.Map;
 
 import org.junit.Test;
 
+import rabbitescape.engine.World.CompletionState;
 import rabbitescape.engine.solution.InvalidSolution;
 import rabbitescape.engine.solution.Solution;
+import rabbitescape.engine.solution.SolutionExceptions;
 import rabbitescape.engine.solution.SolutionFactory;
 import rabbitescape.engine.solution.SolutionRunner;
 import rabbitescape.engine.textworld.DuplicateMetaKey;
@@ -1134,7 +1136,7 @@ public class TestTextWorldManip
             ":num_rabbits=1",
             ":solution.1=5",
             "Q    ",
-            "    O",
+            "   p ",
             "#####"
         };
 
@@ -1143,12 +1145,11 @@ public class TestTextWorldManip
             runSolutions( lines );
             fail( "Exception expected!" );
         }
-        catch ( InvalidSolution e )
+        catch ( SolutionExceptions.DidNotWin e )
         {
-            // TODO: Make InvalidSolution hold solutionId (+ other stuff)
-            // as a field, and translate it like other exceptions using
-            // a string in rabbitescape.engine.err.exceptions_en.properties
-            assertThat( e.message, containsString( "Solution 1" ) );
+            assertThat( e.solutionId, equalTo( 1 ) );
+            assertThat( e.instructionIndex, equalTo( 2 ) );
+            assertThat( e.actual, equalTo( CompletionState.LOST ) );
         }
     }
 
@@ -1158,7 +1159,7 @@ public class TestTextWorldManip
         String[] lines = {
             ":num_rabbits=1",
             ":solution.1=6",
-            ":solution.2=5",
+            ":solution.2=1;WON",
             "Q    ",
             "    O",
             "#####"
@@ -1169,9 +1170,11 @@ public class TestTextWorldManip
             runSolutions( lines );
             fail( "Exception expected!" );
         }
-        catch ( InvalidSolution e )
+        catch ( SolutionExceptions.DidNotWin e )
         {
-            assertThat( e.message, containsString( "Solution 2" ) );
+            assertThat( e.solutionId, equalTo( 2 ) );
+            assertThat( e.instructionIndex, equalTo( 2 ) );
+            assertThat( e.actual, equalTo( CompletionState.RUNNING ) );
         }
     }
 
@@ -1363,7 +1366,15 @@ public class TestTextWorldManip
         for ( String s : world.solutions )
         {
             Solution solution = SolutionFactory.create( s, i );
-            SolutionRunner.runSolution( solution, world );
+            try
+            {
+                SolutionRunner.runSolution( solution, world );
+            }
+            catch ( SolutionExceptions.ProblemRunningSolution e )
+            {
+                e.solutionId = i;
+                throw e;
+            }
             ++i;
         }
     }
