@@ -29,30 +29,40 @@ public class SolutionRunner
                 e.instructionIndex = i;
                 throw e;
             }
-            catch ( DontStepAfterFinish e )
-            {
-                throw new SolutionExceptions.RanPastEnd(
-                    i, sandboxGame.getWorld().completionState() );
-            }
-            catch ( NoneOfThisAbilityLeft e )
-            {
-                throw new SolutionExceptions.UsedRunOutAbility( i, e.ability );
-            }
-            catch ( NoSuchAbilityInThisWorld e )
-            {
-                throw new SolutionExceptions.UsedMissingAbility( i, e.ability );
-            }
-            catch ( CantAddTokenOutsideWorld e )
-            {
-                Dimension worldSize = sandboxGame.getWorld().size;
-                throw new SolutionExceptions.PlacedTokenOutsideWorld(
-                    i, e.x, e.y, worldSize.width, worldSize.height );
-            }
             ++i;
         }
     }
 
     public static void performInstruction(
+        Instruction instruction, final SandboxGame sandboxGame )
+    throws SolutionExceptions.UnexpectedState
+    {
+        try
+        {
+            doPerformInstruction( instruction, sandboxGame );
+        }
+        catch ( DontStepAfterFinish e )
+        {
+            throw new SolutionExceptions.RanPastEnd(
+                sandboxGame.getWorld().completionState() );
+        }
+        catch ( NoneOfThisAbilityLeft e )
+        {
+            throw new SolutionExceptions.UsedRunOutAbility( e.ability );
+        }
+        catch ( NoSuchAbilityInThisWorld e )
+        {
+            throw new SolutionExceptions.UsedMissingAbility( e.ability );
+        }
+        catch ( CantAddTokenOutsideWorld e )
+        {
+            Dimension worldSize = sandboxGame.getWorld().size;
+            throw new SolutionExceptions.PlacedTokenOutsideWorld(
+                e.x, e.y, worldSize.width, worldSize.height );
+        }
+    }
+
+    private static void doPerformInstruction(
         Instruction instruction, final SandboxGame sandboxGame )
     throws SolutionExceptions.UnexpectedState
     {

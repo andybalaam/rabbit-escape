@@ -63,9 +63,8 @@ public class SolutionExceptions
 
         public final CompletionState worldState;
 
-        public RanPastEnd( int instructionIndex, CompletionState worldState )
+        public RanPastEnd( CompletionState worldState )
         {
-            this.instructionIndex = instructionIndex;
             this.worldState = worldState;
         }
     }
@@ -79,9 +78,8 @@ public class SolutionExceptions
 
         public final Token.Type ability;
 
-        public UsedRunOutAbility( int instructionIndex, Token.Type ability )
+        public UsedRunOutAbility( Token.Type ability )
         {
-            this.instructionIndex = instructionIndex;
             this.ability = ability;
         }
     }
@@ -95,9 +93,8 @@ public class SolutionExceptions
 
         public final Token.Type ability;
 
-        public UsedMissingAbility( int instructionIndex, Token.Type ability )
+        public UsedMissingAbility( Token.Type ability )
         {
-            this.instructionIndex = instructionIndex;
             this.ability = ability;
         }
     }
@@ -115,14 +112,12 @@ public class SolutionExceptions
         public final int worldHeight;
 
         public PlacedTokenOutsideWorld(
-            int instructionIndex,
             int x,
             int y,
             int worldWidth,
             int worldHeight
         )
         {
-            this.instructionIndex = instructionIndex;
             this.x = x;
             this.y = y;
             this.worldWidth = worldWidth;
