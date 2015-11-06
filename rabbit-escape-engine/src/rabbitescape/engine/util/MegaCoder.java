@@ -144,7 +144,7 @@ public class MegaCoder
     private static char[] getSortedUniqueChars( char[] charArray )
     {
         // Create a sorted copy of the input array.
-        char[] sortedCharsUsed = Arrays.copyOf( charArray, charArray.length );
+        char[] sortedCharsUsed = copyArray( charArray );
         Arrays.sort( sortedCharsUsed );
 
         // Handle the edge case of an empty array.
@@ -242,7 +242,7 @@ public class MegaCoder
      */
     private static char[] shuffle( char[] input, int key )
     {
-        char[] output = Arrays.copyOf( input, input.length );
+        char[] output = copyArray( input );
         Set<Integer> swappedIndexes = new HashSet<>();
         int length = output.length;
         for ( int i = 0; swappedIndexes.size() < ( length / 2 ) * 2; i++ )
@@ -264,5 +264,12 @@ public class MegaCoder
             }
         }
         return output;
+    }
+
+    private static char[] copyArray( char[] input )
+    {
+        char[] ret = new char[ input.length ];
+        System.arraycopy( input, 0, ret, 0, ret.length );
+        return ret;
     }
 }
