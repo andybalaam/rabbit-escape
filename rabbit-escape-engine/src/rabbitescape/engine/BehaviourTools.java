@@ -6,8 +6,6 @@ import static rabbitescape.engine.Block.Type.solid_up_right;
 import static rabbitescape.engine.Direction.RIGHT;
 import static rabbitescape.engine.Direction.opposite;
 
-import java.awt.Point;
-
 import rabbitescape.engine.ChangeDescription.State;
 
 public class BehaviourTools
@@ -239,7 +237,7 @@ public class BehaviourTools
      */
     public boolean blockHereJustRemoved()
     {
-        for ( Point p : world.changes.blocksJustRemoved )
+        for ( WorldChanges.Point p : world.changes.blocksJustRemoved )
         {
             if ( rabbit.x == p.x && rabbit.y == p.y )
             {

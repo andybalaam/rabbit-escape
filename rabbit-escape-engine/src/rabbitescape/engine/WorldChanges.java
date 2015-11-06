@@ -1,6 +1,5 @@
 package rabbitescape.engine;
 
-import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,6 +12,18 @@ import rabbitescape.engine.World.UnableToAddToken;
 
 public class WorldChanges
 {
+    public static class Point
+    {
+        public final int x;
+        public final int y;
+
+        public Point( int x, int y )
+        {
+            this.x = x;
+            this.y = y;
+        }
+    }
+
     private final World world;
     public final WorldStatsListener statsListener;
 
