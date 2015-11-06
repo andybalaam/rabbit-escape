@@ -52,7 +52,7 @@ public class SolutionFactory
             instructions.add( new TargetState( CompletionState.WON, solutionId ) );
         }
 
-        return new Solution( solutionId, instructions );
+        return new Solution( instructions );
     }
 
     public static List<Instruction> createTimeStep(

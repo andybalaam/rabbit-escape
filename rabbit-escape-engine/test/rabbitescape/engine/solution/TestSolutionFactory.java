@@ -19,7 +19,7 @@ public class TestSolutionFactory
     {
         assertThat(
             SolutionFactory.create( "", 1 ),
-            equalTo( new Solution( 1, new ArrayList<Instruction>() ) )
+            equalTo( new Solution( new ArrayList<Instruction>() ) )
         );
     }
 
@@ -30,7 +30,6 @@ public class TestSolutionFactory
             SolutionFactory.create( "WON", 1 ),
             equalTo(
                 new Solution(
-                    1,
                     Arrays.asList(
                         new Instruction[]
                         {
@@ -49,7 +48,6 @@ public class TestSolutionFactory
             SolutionFactory.create( "1;2;WON", 1 ),
             equalTo(
                 new Solution(
-                    1,
                     Arrays.asList(
                         new Instruction[]
                         {
@@ -70,7 +68,6 @@ public class TestSolutionFactory
             SolutionFactory.create( "bash&(1,1)&3;WON", 1 ),
             equalTo(
                 new Solution(
-                    1,
                     Arrays.asList(
                         new Instruction[]
                         {
@@ -92,7 +89,6 @@ public class TestSolutionFactory
             SolutionFactory.create( "bridge;LOST", 1 ),
             equalTo(
                 new Solution(
-                    1,
                     Arrays.asList(
                         new Instruction[]
                         {
@@ -113,7 +109,6 @@ public class TestSolutionFactory
             SolutionFactory.create( "bridge;(22,40)", 2 ),
             equalTo(
                 new Solution(
-                    2,
                     Arrays.asList(
                         new Instruction[]
                         {

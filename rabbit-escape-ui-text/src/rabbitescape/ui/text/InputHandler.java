@@ -2,7 +2,6 @@ package rabbitescape.ui.text;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import static rabbitescape.engine.i18n.Translation.*;
@@ -242,7 +241,7 @@ public class InputHandler
 
     public String solution()
     {
-        Solution s = new Solution( 0, solution );
+        Solution s = new Solution( solution );
         return s.relFormat();
     }
 }

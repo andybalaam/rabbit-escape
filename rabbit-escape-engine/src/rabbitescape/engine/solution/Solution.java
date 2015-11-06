@@ -7,12 +7,10 @@ import rabbitescape.engine.util.Util;
 
 public class Solution
 {
-    public final int solutionId;
     public final List<Instruction> instructions;
 
-    public Solution( int solutionId, List<Instruction> instructions )
+    public Solution( List<Instruction> instructions )
     {
-        this.solutionId = solutionId;
         this.instructions = instructions;
     }
 
@@ -36,10 +34,7 @@ public class Solution
     @Override
     public String toString()
     {
-        return "Solution( "
-            + solutionId
-            + ", [ " + Util.join( ", ", instructions )
-            + " ] )";
+        return "Solution( " + Util.join( ", ", instructions ) + ")";
     }
 
     @Override
@@ -51,12 +46,8 @@ public class Solution
         }
         Solution otherSolution = (Solution)other;
 
-        return (
-            solutionId == otherSolution.solutionId
-            &&
-            Arrays.deepEquals(
-                instructionsArray(), otherSolution.instructionsArray() )
-        );
+        return Arrays.deepEquals(
+            instructionsArray(), otherSolution.instructionsArray() );
     }
 
     private Instruction[] instructionsArray()
@@ -67,6 +58,6 @@ public class Solution
     @Override
     public int hashCode()
     {
-        return solutionId + Arrays.deepHashCode( instructionsArray() );
+        return Arrays.deepHashCode( instructionsArray() );
     }
 }

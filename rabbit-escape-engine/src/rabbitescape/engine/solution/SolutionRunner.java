@@ -13,6 +13,7 @@ public class SolutionRunner
     {
         SandboxGame sandboxGame = new SandboxGame( world );
 
+        int i = 1;
         for ( Instruction instruction : solution.instructions )
         {
             try
@@ -21,13 +22,13 @@ public class SolutionRunner
             }
             catch ( DontStepAfterFinish e )
             {
-                throw new InvalidSolution( "Solution " + solution.solutionId
+                throw new InvalidSolution( "Solution " + i
                     + " has steps that continue after the level has finished.",
                     e );
             }
             catch ( NoneOfThisAbilityLeft e )
             {
-                throw new InvalidSolution( "Solution " + solution.solutionId
+                throw new InvalidSolution( "Solution " + i
                     + " attempts to use more " + sandboxGame.getSelectedType()
                     + " tokens than are available.",
                     e );
@@ -35,13 +36,14 @@ public class SolutionRunner
             catch ( NoSuchAbilityInThisWorld e )
             {
                 throw new InvalidSolution(
-                    "Solution " + solution.solutionId
+                    "Solution " + i
                         + " attempts to the ability '"
                         + sandboxGame.getSelectedType()
                         + "' which is not available in this world",
                     e );
             }
         }
+        ++i;
     }
 
     public static void performInstruction(
