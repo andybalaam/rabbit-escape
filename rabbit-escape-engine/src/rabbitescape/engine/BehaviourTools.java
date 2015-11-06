@@ -34,8 +34,31 @@ public class BehaviourTools
         return pickUpToken( type, false );
     }
 
+    public boolean rabbitIsFalling()
+    {
+        return
+               State.RABBIT_FALLING == rabbit.state
+            || State.RABBIT_FALLING_1 == rabbit.state
+            || State.RABBIT_FALLING_1_TO_DEATH == rabbit.state
+            || State.RABBIT_DYING_OF_FALLING_2 == rabbit.state
+            || State.RABBIT_DYING_OF_FALLING == rabbit.state
+            || State.RABBIT_FALLING_ONTO_LOWER_RIGHT == rabbit.state
+            || State.RABBIT_FALLING_ONTO_RISE_RIGHT == rabbit.state
+            || State.RABBIT_FALLING_ONTO_LOWER_LEFT == rabbit.state
+            || State.RABBIT_FALLING_ONTO_RISE_LEFT == rabbit.state
+            || State.RABBIT_FALLING_1_ONTO_LOWER_RIGHT == rabbit.state
+            || State.RABBIT_FALLING_1_ONTO_RISE_RIGHT == rabbit.state
+            || State.RABBIT_FALLING_1_ONTO_LOWER_LEFT == rabbit.state
+            || State.RABBIT_FALLING_1_ONTO_RISE_LEFT == rabbit.state ;
+    }
+    
     public boolean pickUpToken( Token.Type type, boolean evenIfNotOnGround )
     {
+        if ( rabbitIsFalling() && rabbit.isFallingToDeath() )
+        {
+            return false; // Dying rabbits not allowed to consume tokens
+        }
+
         if ( evenIfNotOnGround || onGround() )
         {
             Token token = world.getTokenAt( rabbit.x, rabbit.y );
