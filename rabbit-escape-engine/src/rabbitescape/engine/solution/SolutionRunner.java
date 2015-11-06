@@ -80,6 +80,8 @@ public class SolutionRunner
                 @Override
                 public void caseSelectInstruction( SelectInstruction s )
                 {
+                    // TODO: check whether this ability exists, and throw if
+                    //       not.
                     sandboxGame.setSelectedType( s.type );
                 }
 
