@@ -6,6 +6,7 @@
 :hint1=With only one bash token, they can't get over the\nroof.
 :hint2=You have 3 block tokens and 3 expendable rabbits.
 :hint3=Let the first two drop down, then corral the rest\non the landing platform with a blocker at each end.\nGive the two in the hole the ability to climb.\nMake one a blocker just before the exit. Make the other\nbridge back across the gap. Explode the\nrabbits in the correct order to herd them towards freedom.
+:solution.1=block;6;(3,3);(5,3);(15,4);climb;(9,6);(9,6);bridge;6;(10,4);bash;2;(15,4);explode;6;(5,2);10;(3,3);7;WON
 :num_to_save=7
 :climb=2
 :block=3
