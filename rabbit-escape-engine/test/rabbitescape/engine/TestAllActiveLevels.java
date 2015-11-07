@@ -15,6 +15,7 @@ import rabbitescape.engine.menu.Menu;
 import rabbitescape.engine.menu.MenuDefinition;
 import rabbitescape.engine.menu.MenuItem;
 import rabbitescape.engine.solution.Solution;
+import rabbitescape.engine.solution.SolutionExceptions;
 import rabbitescape.engine.solution.SolutionFactory;
 import rabbitescape.engine.solution.SolutionRunner;
 import rabbitescape.engine.util.FileSystem;
@@ -119,11 +120,30 @@ public class TestAllActiveLevels
                 int i = 0;
                 for ( String s : world.solutions )
                 {
-                    Solution solution = SolutionFactory.create( s, i );
-                    SolutionRunner.runSolution( solution, world );
+                    runSolutionString( world, i, s );
                     ++i;
                 }
             }
+        }
+    }
+
+    // --
+
+    private void runSolutionString(
+        World world,
+        int solutionId,
+        String solutionString
+    )
+    {
+        Solution solution = SolutionFactory.create( solutionString );
+        try
+        {
+            SolutionRunner.runSolution( solution, world );
+        }
+        catch ( SolutionExceptions.ProblemRunningSolution e )
+        {
+            e.solutionId = solutionId;
+            throw e;
         }
     }
 }

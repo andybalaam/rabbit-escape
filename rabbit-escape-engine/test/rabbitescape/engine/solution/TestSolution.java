@@ -61,7 +61,7 @@ public class TestSolution
                     , new PlaceTokenInstruction( 3, 2 )
                     , new SelectInstruction( Token.Type.block )
                     , new TargetState(
-                        World.CompletionState.RUNNING, 1, 4 )
+                        World.CompletionState.RUNNING, 4 )
                 }
             )
         );

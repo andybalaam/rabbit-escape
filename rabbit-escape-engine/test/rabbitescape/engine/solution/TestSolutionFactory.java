@@ -18,7 +18,7 @@ public class TestSolutionFactory
     public void Empty_string_gives_empty_solution()
     {
         assertThat(
-            SolutionFactory.create( "", 1 ),
+            SolutionFactory.create( "" ),
             equalTo( new Solution( new ArrayList<Instruction>() ) )
         );
     }
@@ -27,13 +27,13 @@ public class TestSolutionFactory
     public void Single_status_gives_single_validation_instruction()
     {
         assertThat(
-            SolutionFactory.create( "WON", 1 ),
+            SolutionFactory.create( "WON" ),
             equalTo(
                 new Solution(
                     Arrays.asList(
                         new Instruction[]
                         {
-                            new TargetState( World.CompletionState.WON, 1, 0 )
+                            new TargetState( World.CompletionState.WON, 0 )
                         }
                     )
                 )
@@ -45,7 +45,7 @@ public class TestSolutionFactory
     public void Multiple_instructions_are_found_and_listed()
     {
         assertThat(
-            SolutionFactory.create( "1;2;WON", 1 ),
+            SolutionFactory.create( "1;2;WON" ),
             equalTo(
                 new Solution(
                     Arrays.asList(
@@ -53,7 +53,7 @@ public class TestSolutionFactory
                         {
                             new WaitInstruction( 1 ),
                             new WaitInstruction( 2 ),
-                            new TargetState( World.CompletionState.WON, 1, 2 )
+                            new TargetState( World.CompletionState.WON, 2 )
                         }
                     )
                 )
@@ -65,7 +65,7 @@ public class TestSolutionFactory
     public void Simultaneous_instructions_are_noted()
     {
         assertThat(
-            SolutionFactory.create( "bash&(1,1)&3;WON", 1 ),
+            SolutionFactory.create( "bash&(1,1)&3;WON" ),
             equalTo(
                 new Solution(
                     Arrays.asList(
@@ -74,7 +74,7 @@ public class TestSolutionFactory
                             new SelectInstruction( Token.Type.bash ),
                             new PlaceTokenInstruction( 1, 1 ),
                             new WaitInstruction( 3 ),
-                            new TargetState( World.CompletionState.WON, 1, 1 )
+                            new TargetState( World.CompletionState.WON, 1 )
                         }
                     )
                 )
@@ -86,7 +86,7 @@ public class TestSolutionFactory
     public void Nonwait_instructions_get_a_wait_appended()
     {
         assertThat(
-            SolutionFactory.create( "bridge;LOST", 1 ),
+            SolutionFactory.create( "bridge;LOST" ),
             equalTo(
                 new Solution(
                     Arrays.asList(
@@ -94,7 +94,7 @@ public class TestSolutionFactory
                         {
                             new SelectInstruction( Token.Type.bridge ),
                             new WaitInstruction( 1 ),
-                            new TargetState( World.CompletionState.LOST, 1, 1 )
+                            new TargetState( World.CompletionState.LOST, 1 )
                         }
                     )
                 )
@@ -106,7 +106,7 @@ public class TestSolutionFactory
     public void If_not_specified_assert_we_win_at_end()
     {
         assertThat(
-            SolutionFactory.create( "bridge;(22,40)", 2 ),
+            SolutionFactory.create( "bridge;(22,40)" ),
             equalTo(
                 new Solution(
                     Arrays.asList(
@@ -115,7 +115,10 @@ public class TestSolutionFactory
                             new SelectInstruction( Token.Type.bridge ),
                             new WaitInstruction( 1 ),
                             new PlaceTokenInstruction( 22, 40 ),
-                            new TargetState( World.CompletionState.WON, 2 )
+                            new TargetState(
+                                World.CompletionState.WON,
+                                TargetState.INSTRUCTION_INDEX_NOT_SPECIFIED
+                            )
                         }
                     )
                 )
@@ -127,7 +130,7 @@ public class TestSolutionFactory
     public void Can_parse_single_instruction()
     {
         assertThat(
-            SolutionFactory.createTimeStep( "bash", 1, 1 ),
+            SolutionFactory.createTimeStep( "bash", 1 ),
             equalTo(
                 Arrays.asList(
                     new Instruction[]
@@ -143,7 +146,7 @@ public class TestSolutionFactory
     public void Can_parse_multiple_single_instructions()
     {
         assertThat(
-            SolutionFactory.createTimeStep( "bash&(1,2)", 1, 1 ),
+            SolutionFactory.createTimeStep( "bash&(1,2)", 1 ),
             equalTo(
                 Arrays.asList(
                     new Instruction[]
@@ -161,7 +164,7 @@ public class TestSolutionFactory
     {
         try
         {
-            SolutionFactory.create( "unknown_ability", 1 );
+            SolutionFactory.create( "unknown_ability" );
             fail( "Expected an InvalidInstruction!" );
         }
         catch ( InvalidInstruction e )
@@ -175,7 +178,7 @@ public class TestSolutionFactory
     {
         try
         {
-            SolutionFactory.create( "1;UNKNOWN_STATE", 1 );
+            SolutionFactory.create( "1;UNKNOWN_STATE" );
             fail( "Expected an InvalidInstruction!" );
         }
         catch ( InvalidInstruction e )
@@ -189,7 +192,7 @@ public class TestSolutionFactory
     {
         try
         {
-            SolutionFactory.create( "bash;(3,a)", 1 );
+            SolutionFactory.create( "bash;(3,a)" );
             fail( "Expected an InvalidInstruction!" );
         }
         catch ( InvalidInstruction e )
@@ -205,7 +208,7 @@ public class TestSolutionFactory
 
         try
         {
-            SolutionFactory.create( bigNum, 1 );
+            SolutionFactory.create( bigNum );
             fail( "Expected an InvalidInstruction!" );
         }
         catch ( InvalidInstruction e )
@@ -221,7 +224,7 @@ public class TestSolutionFactory
 
         try
         {
-            SolutionFactory.create( "bash;(3," + bigNum + ")", 1 );
+            SolutionFactory.create( "bash;(3," + bigNum + ")" );
             fail( "Expected an InvalidInstruction!" );
         }
         catch ( InvalidInstruction e )

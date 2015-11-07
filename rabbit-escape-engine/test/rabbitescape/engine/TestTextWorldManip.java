@@ -1365,7 +1365,7 @@ public class TestTextWorldManip
         int i = 1;
         for ( String s : world.solutions )
         {
-            Solution solution = SolutionFactory.create( s, i );
+            Solution solution = SolutionFactory.create( s );
             try
             {
                 SolutionRunner.runSolution( solution, world );

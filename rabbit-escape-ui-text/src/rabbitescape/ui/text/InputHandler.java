@@ -50,7 +50,7 @@ public class InputHandler
         try
         {
             List<Instruction> instructions = SolutionFactory.createTimeStep(
-                input, 1, 0 );
+                input, 0 );
 
             Instruction lastInstruction = instructions
                 .get( instructions.size() - 1 );

@@ -24,7 +24,7 @@ public class SolutionFactory
     private static final List<String> TOKEN_TYPES =
         Util.toStringList( Type.values() );
 
-    public static Solution create( String solution, int solutionId )
+    public static Solution create( String solution )
     {
         String[] instructionStages = Util.split( solution, STAGE_DELIMITER );
 
@@ -32,7 +32,7 @@ public class SolutionFactory
         for ( int i = 0; i < instructionStages.length; i++ )
         {
             instructions.addAll(
-                createTimeStep( instructionStages[i], solutionId, i ) );
+                createTimeStep( instructionStages[i], i ) );
 
             // Wait one step after every semicolon (unless the last instruction
             // was a wait instruction).
@@ -49,14 +49,14 @@ public class SolutionFactory
         if ( instructions.size() > 0
             && !( instructions.get( instructions.size() - 1 ) instanceof ValidationInstruction ) )
         {
-            instructions.add( new TargetState( CompletionState.WON, solutionId ) );
+            instructions.add( new TargetState( CompletionState.WON ) );
         }
 
         return new Solution( instructions );
     }
 
     public static List<Instruction> createTimeStep(
-        String timeStepString, int solutionId, int instructionIndex )
+        String timeStepString, int instructionIndex )
     {
         ArrayList<Instruction> ret = new ArrayList<Instruction>();
 
@@ -70,7 +70,6 @@ public class SolutionFactory
                 ret.add(
                     makeInstruction(
                         instructionStrings[j],
-                        solutionId,
                         instructionIndex
                     )
                 );
@@ -82,14 +81,13 @@ public class SolutionFactory
 
     private static Instruction makeInstruction(
         String instructionString,
-        int solutionId,
         int instructionIndex
     )
     {
         try
         {
             return doMakeInstruction(
-                instructionString, solutionId, instructionIndex );
+                instructionString, instructionIndex );
         }
         catch ( NumberFormatException e )
         {
@@ -99,7 +97,6 @@ public class SolutionFactory
 
     private static Instruction doMakeInstruction(
         String instructionString,
-        int solutionId,
         int instructionIndex
     )
     throws NumberFormatException, InvalidInstruction
@@ -107,7 +104,7 @@ public class SolutionFactory
         if ( COMPLETION_STATES.contains( instructionString ) )
         {
             return new TargetState(
-                CompletionState.valueOf( instructionString ), solutionId,
+                CompletionState.valueOf( instructionString ),
                 instructionIndex );
         }
         else if ( WAIT_REGEX.matcher( instructionString ).matches() )

@@ -13,10 +13,10 @@ public class TestTargetState
     public void Equal_instructions_are_equal()
     {
         TargetState instr1 = new TargetState(
-            World.CompletionState.RUNNING, 1, 2 );
+            World.CompletionState.RUNNING, 2 );
 
         TargetState instr2 = new TargetState(
-            World.CompletionState.RUNNING, 1, 2 );
+            World.CompletionState.RUNNING, 2 );
 
         assertThat( instr1, equalTo( instr2 ) );
         assertThat( instr1.hashCode(), equalTo( instr2.hashCode() ) );
@@ -26,10 +26,10 @@ public class TestTargetState
     public void Different_instructions_are_unequal()
     {
         TargetState instr1 = new TargetState(
-            World.CompletionState.RUNNING, 1, 2 );
+            World.CompletionState.RUNNING, 2 );
 
         TargetState instr2 = new TargetState(
-            World.CompletionState.LOST, 1, 2 );
+            World.CompletionState.LOST, 2 );
 
         assertThat( instr1, not( equalTo( instr2 ) ) );
 

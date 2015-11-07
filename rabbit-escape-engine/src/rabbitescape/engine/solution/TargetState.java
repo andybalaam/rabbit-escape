@@ -7,24 +7,21 @@ public class TargetState implements ValidationInstruction
     public final static int INSTRUCTION_INDEX_NOT_SPECIFIED = -1;
 
     public final CompletionState targetState;
-    public final int solutionId;
     public final int instructionIndex;
 
     public TargetState(
         CompletionState targetState,
-        int solutionId,
         int instructionIndex )
     {
         this.targetState = targetState;
-        this.solutionId = solutionId;
         this.instructionIndex = instructionIndex;
     }
 
     public TargetState(
-        CompletionState targetState,
-        int solutionId )
+        CompletionState targetState
+    )
     {
-        this( targetState, solutionId, INSTRUCTION_INDEX_NOT_SPECIFIED );
+        this( targetState, INSTRUCTION_INDEX_NOT_SPECIFIED );
     }
 
     public String relFormat( boolean firstInStep )
@@ -41,7 +38,6 @@ public class TargetState implements ValidationInstruction
     {
         return "TargetState( "
             + targetState.name()
-            + ", " + solutionId
             + ", " + instructionIndex
             + " )";
     }
@@ -57,7 +53,6 @@ public class TargetState implements ValidationInstruction
 
         return (
                targetState      == other.targetState
-            && solutionId       == other.solutionId
             && instructionIndex == other.instructionIndex
         );
     }
@@ -68,7 +63,6 @@ public class TargetState implements ValidationInstruction
         final int prime = 31;
         int result = 1;
         result = prime * result + instructionIndex;
-        result = prime * result + solutionId;
         result = prime * result + targetState.hashCode();
         return result;
     }
