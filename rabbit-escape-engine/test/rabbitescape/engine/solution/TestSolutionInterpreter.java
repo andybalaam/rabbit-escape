@@ -47,8 +47,8 @@ public class TestSolutionInterpreter
     public void Multiple_waits_wait_for_the_total()
     {
         Solution solution = new Solution(
-              new SolutionStep( new WaitInstruction( 1 ) )
-            , new SolutionStep( new WaitInstruction( 2 ) )
+              new SolutionStep(
+                  new WaitInstruction( 1 ), new WaitInstruction( 2 ) )
             , new SolutionStep( new WaitInstruction( 3 ) )
         );
 

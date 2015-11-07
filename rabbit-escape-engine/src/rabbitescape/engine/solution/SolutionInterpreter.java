@@ -17,40 +17,37 @@ public class SolutionInterpreter implements Iterable<SolutionTimeStep>
     {
         return new Iterator<SolutionTimeStep>()
         {
-            Iterator<SolutionStep> it = Arrays.asList(
+            Iterator<SolutionStep> steps = Arrays.asList(
                 solution.steps ).iterator();
 
+            Iterator<Instruction> instrs = null;
+
             int waitTimeLeft = 0;
+
+            Instruction nextInstruction = rollToNextInstruction();
 
             @Override
             public boolean hasNext()
             {
-                return
-                (
+                return (
                        waitTimeLeft > 0
-                    || it.hasNext()
+                    || nextInstruction != null
                 );
             }
+
 
             @Override
             public SolutionTimeStep next()
             {
                 if ( waitTimeLeft > 0 )
                 {
-                    return waitThisTimeStep();
+                    return waitOneTimeStep();
                 }
                 else
                 {
-                    Instruction instruction = it.next().instructions[0];
-                    if ( instruction instanceof WaitInstruction )
-                    {
-                        waitTimeLeft = ( (WaitInstruction)instruction ).steps;
-                        return waitThisTimeStep();
-                    }
-                    else
-                    {
-                        throw new RuntimeException( "boo" );
-                    }
+                    Instruction thisInstruction = nextInstruction;
+                    nextInstruction = rollToNextInstruction();
+                    return handleInstruction( thisInstruction );
                 }
             }
 
@@ -60,10 +57,45 @@ public class SolutionInterpreter implements Iterable<SolutionTimeStep>
                 throw new UnsupportedOperationException();
             }
 
-            private SolutionTimeStep waitThisTimeStep()
+            private Instruction rollToNextInstruction()
+            {
+                if ( instrs != null && instrs.hasNext() )
+                {
+                    return instrs.next();
+                }
+
+                while ( steps.hasNext() )
+                {
+                    SolutionStep s = steps.next();
+                    instrs = Arrays.asList( s.instructions ).iterator();
+
+                    if ( instrs.hasNext() )
+                    {
+                        return instrs.next();
+                    }
+                }
+
+                return null;
+            }
+
+            private SolutionTimeStep waitOneTimeStep()
             {
                 --waitTimeLeft;
                 return new SolutionTimeStep();
+            }
+
+            private SolutionTimeStep handleInstruction(
+                Instruction instruction )
+            {
+                if ( instruction instanceof WaitInstruction )
+                {
+                    waitTimeLeft = ( (WaitInstruction)instruction ).steps;
+                    return waitOneTimeStep();
+                }
+                else
+                {
+                    throw new RuntimeException( "boo" );
+                }
             }
         };
     }

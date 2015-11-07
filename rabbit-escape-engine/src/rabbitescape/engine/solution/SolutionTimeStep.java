@@ -2,6 +2,13 @@ package rabbitescape.engine.solution;
 
 public class SolutionTimeStep
 {
+    /*public final Instruction[] instructions;
+
+    public SolutionTimeStep( Instruction[] instructions )
+    {
+        this.instructions = instructions;
+    }*/
+
     @Override
     public boolean equals( Object otherObj )
     {
