@@ -19,7 +19,7 @@ public class TestSolutionFactory
             SolutionFactory.create( "" ),
             equalTo(
                 new Solution(
-                      new SolutionStep()
+                      new SolutionStep( new WaitInstruction( 1 ) )
                     , new SolutionStep( new TargetState( CompletionState.WON ) )
                 )
             )
@@ -92,13 +92,14 @@ public class TestSolutionFactory
         );
     }
 
-    @Test @Ignore( "Fails because of bug in SolutionFactory?" )
+    @Test
     public void Empty_steps_get_a_wait_appended_except_at_end()
     {
         assertThat(
             SolutionFactory.create( ";;" ),
             equalTo(
                 new Solution(
+                    new SolutionStep( new WaitInstruction( 1 ) ),
                     new SolutionStep( new WaitInstruction( 1 ) ),
                     new SolutionStep( new WaitInstruction( 1 ) ),
                     new SolutionStep(
@@ -119,7 +120,10 @@ public class TestSolutionFactory
                         new SelectInstruction( Token.Type.bridge ),
                         new WaitInstruction( 1 )
                     ),
-                    new SolutionStep( new PlaceTokenInstruction( 22, 40 ) ),
+                    new SolutionStep(
+                        new PlaceTokenInstruction( 22, 40 ),
+                        new WaitInstruction( 1 )
+                    ),
                     new SolutionStep(
                         new TargetState( World.CompletionState.WON ) )
                 )

@@ -37,9 +37,11 @@ public class SolutionFactory
             // Wait one step after every semicolon (unless the last instruction
             // was a wait instruction).
             if (
-                   step.instructions.length > 0  // TODO: bug?
-                && ! ( step.lastInstruction() instanceof WaitInstruction )
-                && i < stringSteps.length - 1
+                   ! ( step.lastInstruction() instanceof WaitInstruction )
+                && (
+                       ( i < stringSteps.length - 1 )
+                    || ! ( step.lastInstruction() instanceof TargetState )
+                )
             )
             {
                 step = new SolutionStep(
