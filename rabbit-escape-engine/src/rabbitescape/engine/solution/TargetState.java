@@ -27,6 +27,15 @@ public class TargetState implements ValidationInstruction
         this( targetState, solutionId, INSTRUCTION_INDEX_NOT_SPECIFIED );
     }
 
+    public String relFormat( boolean firstInStep )
+    {
+        if ( firstInStep )
+        {
+            targetState.name();
+        }
+        return SolutionFactory.INSTRUCTION_DELIMITER + targetState.name();
+    }
+
     @Override
     public String toString()
     {

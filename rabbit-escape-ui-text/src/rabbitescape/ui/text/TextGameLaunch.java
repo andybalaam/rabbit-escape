@@ -71,10 +71,9 @@ public class TextGameLaunch implements GameLaunch
                 e.printStackTrace();
             }
 
-            sandboxGame.getWorld().step();
             checkWon();
         }
-        printSolution( inputHandler.solution() + ";1" );
+        printSolution( inputHandler.solution() );
     }
 
     private void printSolution( String solution )

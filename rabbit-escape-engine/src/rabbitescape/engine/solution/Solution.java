@@ -16,6 +16,23 @@ public class Solution
         this.instructions = instructions;
     }
 
+    public String relFormat()
+    {
+        StringBuilder sb = new StringBuilder();
+        boolean firstInStep = true;
+        Instruction previousInstruction = null;
+        for ( Instruction instruction : instructions )
+        {
+            if (previousInstruction != null)
+            {
+                firstInStep = (previousInstruction instanceof WaitInstruction);
+            }
+            sb.append( instruction.relFormat( firstInStep ) );
+            previousInstruction = instruction;
+        }
+        return sb.toString();
+    }
+
     @Override
     public String toString()
     {
