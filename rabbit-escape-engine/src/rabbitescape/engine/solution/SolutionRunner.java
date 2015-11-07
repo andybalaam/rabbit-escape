@@ -19,18 +19,15 @@ public class SolutionRunner
     {
         SandboxGame sandboxGame = new SandboxGame( world );
 
-        for (
-            IdxObj<Instruction> instruction
-                : enumerate1( solution.instructions )
-        )
+        for ( IdxObj<SolutionStep> step : enumerate1( solution.steps ) )
         {
             try
             {
-                performInstruction( instruction.object, sandboxGame );
+                performInstruction( step.object.instructions[0], sandboxGame );
             }
             catch ( SolutionExceptions.ProblemRunningSolution e )
             {
-                e.instructionIndex = instruction.index;
+                e.instructionIndex = step.index;
                 throw e;
             }
         }

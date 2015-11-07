@@ -26,7 +26,9 @@ public class TestSolutionInterpreter
     @Test
     public void One_wait_waits_for_that_long()
     {
-        Solution solution = new Solution( new WaitInstruction( 3 ) );
+        Solution solution = new Solution(
+            new SolutionStep( new WaitInstruction( 3 ) ) );
+
         SolutionInterpreter interpreter = new SolutionInterpreter( solution );
 
         assertThat(
@@ -45,9 +47,9 @@ public class TestSolutionInterpreter
     public void Multiple_waits_wait_for_the_total()
     {
         Solution solution = new Solution(
-              new WaitInstruction( 1 )
-            , new WaitInstruction( 2 )
-            , new WaitInstruction( 3 )
+              new SolutionStep( new WaitInstruction( 1 ) )
+            , new SolutionStep( new WaitInstruction( 2 ) )
+            , new SolutionStep( new WaitInstruction( 3 ) )
         );
 
         SolutionInterpreter interpreter = new SolutionInterpreter( solution );

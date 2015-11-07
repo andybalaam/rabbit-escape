@@ -8,26 +8,29 @@ import rabbitescape.engine.util.Util;
 
 public class Solution
 {
-    public final Instruction[] instructions;
+    public final SolutionStep[] steps;
 
-    public Solution( Instruction... instructions )
+    public Solution( SolutionStep... steps )
     {
-        this.instructions = instructions;
+        this.steps = steps;
     }
 
     public String relFormat()
     {
         StringBuilder sb = new StringBuilder();
-        boolean firstInStep = true;
         Instruction previousInstruction = null;
-        for ( Instruction instruction : instructions )
+        for ( SolutionStep step : steps )
         {
-            if (previousInstruction != null)
+            boolean firstInStep = true;
+            for ( Instruction instruction : step.instructions )
             {
-                firstInStep = (previousInstruction instanceof WaitInstruction);
+                if (previousInstruction != null)
+                {
+                    firstInStep = (previousInstruction instanceof WaitInstruction);
+                }
+                sb.append( instruction.relFormat( firstInStep ) );
+                previousInstruction = instruction;
             }
-            sb.append( instruction.relFormat( firstInStep ) );
-            previousInstruction = instruction;
         }
         return sb.toString();
     }
@@ -36,8 +39,8 @@ public class Solution
     public String toString()
     {
         return "Solution( "
-            + Util.join( ", ", toStringList( instructions ) )
-            + ")";
+            + Util.join( ", ", toStringList( steps ) )
+            + " )";
     }
 
     @Override
@@ -49,12 +52,12 @@ public class Solution
         }
         Solution otherSolution = (Solution)other;
 
-        return Arrays.deepEquals( instructions, otherSolution.instructions );
+        return Arrays.deepEquals( steps, otherSolution.steps );
     }
 
     @Override
     public int hashCode()
     {
-        return Arrays.deepHashCode( instructions );
+        return Arrays.deepHashCode( steps );
     }
 }

@@ -29,7 +29,8 @@ public class TestSolutionFactory
             SolutionFactory.create( "WON" ),
             equalTo(
                 new Solution(
-                    new TargetState( World.CompletionState.WON )
+                    new SolutionStep(
+                        new TargetState( World.CompletionState.WON ) )
                 )
             )
         );
@@ -42,9 +43,10 @@ public class TestSolutionFactory
             SolutionFactory.create( "1;2;WON" ),
             equalTo(
                 new Solution(
-                    new WaitInstruction( 1 ),
-                    new WaitInstruction( 2 ),
-                    new TargetState( World.CompletionState.WON )
+                    new SolutionStep( new WaitInstruction( 1 ) ),
+                    new SolutionStep(  new WaitInstruction( 2 ) ),
+                    new SolutionStep(
+                        new TargetState( World.CompletionState.WON ) )
                 )
             )
         );
@@ -57,10 +59,12 @@ public class TestSolutionFactory
             SolutionFactory.create( "bash&(1,1)&3;WON" ),
             equalTo(
                 new Solution(
-                    new SelectInstruction( Token.Type.bash ),
-                    new PlaceTokenInstruction( 1, 1 ),
-                    new WaitInstruction( 3 ),
-                    new TargetState( World.CompletionState.WON )
+                    new SolutionStep(
+                        new SelectInstruction( Token.Type.bash ) ),
+                    new SolutionStep( new PlaceTokenInstruction( 1, 1 ) ),
+                    new SolutionStep( new WaitInstruction( 3 ) ),
+                    new SolutionStep(
+                        new TargetState( World.CompletionState.WON ) )
                 )
             )
         );
@@ -73,9 +77,11 @@ public class TestSolutionFactory
             SolutionFactory.create( "bridge;LOST" ),
             equalTo(
                 new Solution(
-                    new SelectInstruction( Token.Type.bridge ),
-                    new WaitInstruction( 1 ),
-                    new TargetState( World.CompletionState.LOST )
+                    new SolutionStep(
+                        new SelectInstruction( Token.Type.bridge ) ),
+                    new SolutionStep( new WaitInstruction( 1 ) ),
+                    new SolutionStep(
+                        new TargetState( World.CompletionState.LOST ) )
                 )
             )
         );
@@ -88,10 +94,12 @@ public class TestSolutionFactory
             SolutionFactory.create( "bridge;(22,40)" ),
             equalTo(
                 new Solution(
-                    new SelectInstruction( Token.Type.bridge ),
-                    new WaitInstruction( 1 ),
-                    new PlaceTokenInstruction( 22, 40 ),
-                    new TargetState( World.CompletionState.WON )
+                    new SolutionStep(
+                        new SelectInstruction( Token.Type.bridge ) ),
+                    new SolutionStep( new WaitInstruction( 1 ) ),
+                    new SolutionStep( new PlaceTokenInstruction( 22, 40 ) ),
+                    new SolutionStep(
+                        new TargetState( World.CompletionState.WON ) )
                 )
             )
         );
@@ -104,9 +112,10 @@ public class TestSolutionFactory
             SolutionFactory.createTimeStep( "bash" ),
             equalTo(
                 Arrays.asList(
-                    new Instruction[]
+                    new SolutionStep[]
                     {
-                        new SelectInstruction( Token.Type.bash )
+                        new SolutionStep(
+                            new SelectInstruction( Token.Type.bash ) )
                     }
                 )
             )
@@ -120,10 +129,11 @@ public class TestSolutionFactory
             SolutionFactory.createTimeStep( "bash&(1,2)" ),
             equalTo(
                 Arrays.asList(
-                    new Instruction[]
+                    new SolutionStep[]
                     {
-                          new SelectInstruction( Token.Type.bash )
-                        , new PlaceTokenInstruction( 1, 2 )
+                          new SolutionStep(
+                              new SelectInstruction( Token.Type.bash ) )
+                        , new SolutionStep( new PlaceTokenInstruction( 1, 2 ) )
                     }
                 )
             )

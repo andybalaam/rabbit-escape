@@ -17,8 +17,8 @@ public class SolutionInterpreter implements Iterable<SolutionTimeStep>
     {
         return new Iterator<SolutionTimeStep>()
         {
-            Iterator<Instruction> it = Arrays.asList(
-                solution.instructions ).iterator();
+            Iterator<SolutionStep> it = Arrays.asList(
+                solution.steps ).iterator();
 
             int waitTimeLeft = 0;
 
@@ -41,7 +41,7 @@ public class SolutionInterpreter implements Iterable<SolutionTimeStep>
                 }
                 else
                 {
-                    Instruction instruction = it.next();
+                    Instruction instruction = it.next().instructions[0];
                     if ( instruction instanceof WaitInstruction )
                     {
                         waitTimeLeft = ( (WaitInstruction)instruction ).steps;

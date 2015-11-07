@@ -14,12 +14,13 @@ import rabbitescape.engine.solution.SolutionExceptions;
 import rabbitescape.engine.solution.SolutionFactory;
 import rabbitescape.engine.solution.SolutionRunner;
 import rabbitescape.engine.solution.WaitInstruction;
+import rabbitescape.engine.solution.SolutionStep;
 
 public class InputHandler
 {
     private final SandboxGame sandboxGame;
     private final Terminal terminal;
-    private final List<Instruction> solution;
+    private final List<SolutionStep> solution;
 
     public InputHandler( SandboxGame sandboxGame, Terminal terminal )
     {
@@ -49,23 +50,37 @@ public class InputHandler
 
         try
         {
-            List<Instruction> instructions = SolutionFactory.createTimeStep(
-                input );
+            List<SolutionStep> steps =
+                SolutionFactory.createTimeStep( input );
 
-            Instruction lastInstruction = instructions
-                .get( instructions.size() - 1 );
+            if ( steps.isEmpty() )
+            {
+                return fail( t( "Unexpected problem: no SolutionStep" ) );
+            }
+
+            SolutionStep lastStep = steps.get( steps.size() - 1 );
+
+            if ( lastStep.instructions.length == 0 )
+            {
+                return fail( t( "Unexpected problem: no Instruction" ) );
+            }
+
+            Instruction lastInstruction = lastStep.instructions[
+                lastStep.instructions.length - 1 ];
+
             if ( !( lastInstruction instanceof WaitInstruction ) )
             {
                 WaitInstruction waitInstruction = new WaitInstruction( 1 );
-                instructions.add( waitInstruction );
+                steps.add( new SolutionStep( waitInstruction ) );
             }
 
-            for ( Instruction instr : instructions )
+            for ( SolutionStep step : steps )
             {
-                SolutionRunner.performInstruction( instr, sandboxGame );
+                SolutionRunner.performInstruction(
+                    step.instructions[0], sandboxGame );
             }
 
-            append( instructions );
+            append( steps );
         }
         catch ( SolutionExceptions.ProblemRunningSolution e )
         {
@@ -81,43 +96,48 @@ public class InputHandler
         return true;
     }
 
-    private void append( List<Instruction> instructions )
+    private void append( List<SolutionStep> steps )
     {
-        if ( !solution.isEmpty() && instructions.size() == 1 )
+        if ( !solution.isEmpty() && steps.size() == 1 )
         {
-            Instruction lastInstruction = solution.get( solution.size() - 1 );
-            Instruction combinedInstruction = tryToSimplify(
-                lastInstruction, instructions.get( 0 ) );
-            if ( combinedInstruction != null )
+            SolutionStep lastExistingStep = solution.get( solution.size() - 1 );
+            SolutionStep newStep = steps.get( 0 );
+
+            SolutionStep combinedStep = tryToSimplify(
+                lastExistingStep, newStep );
+
+            if ( combinedStep != null )
             {
-                solution.set( solution.size() - 1,
-                    combinedInstruction );
+                solution.set( solution.size() - 1, combinedStep );
             }
             else
             {
-                solution.addAll( instructions );
+                solution.addAll( steps );
             }
         }
         else
         {
-            solution.addAll( instructions );
+            solution.addAll( steps );
         }
     }
 
     /**
-     * Try to combine two instructions. If this is not possible then return
+     * Try to combine two steps. If this is not possible then return
      * null.
      */
-    private Instruction tryToSimplify(
-        Instruction instruction1,
-        Instruction instruction2 )
+    private SolutionStep tryToSimplify(
+        SolutionStep existingStep, SolutionStep newStep )
     {
+        Instruction instruction1 = existingStep.instructions[0];
+        Instruction instruction2 = newStep.instructions[0];
+
         if ( instruction1 instanceof WaitInstruction
             && instruction2 instanceof WaitInstruction )
         {
             WaitInstruction wait1 = (WaitInstruction)instruction1;
             WaitInstruction wait2 = (WaitInstruction)instruction2;
-            return new WaitInstruction( wait1.steps + wait2.steps );
+            return new SolutionStep(
+                new WaitInstruction( wait1.steps + wait2.steps ) );
         }
         return null;
     }
@@ -161,7 +181,7 @@ public class InputHandler
     public String solution()
     {
         Solution s = new Solution(
-            solution.toArray( new Instruction[ solution.size() ] ) );
+            solution.toArray( new SolutionStep[ solution.size() ] ) );
 
         return s.relFormat();
     }

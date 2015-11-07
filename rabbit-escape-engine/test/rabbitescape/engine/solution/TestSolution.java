@@ -21,7 +21,7 @@ public class TestSolution
     }
 
     @Test
-    public void Different_instruction_lists_make_them_unequal()
+    public void Different_step_lists_make_them_unequal()
     {
         Solution solution1 = makeSolution( 3 );
         Solution solution2 = makeShortSolution( 3 );
@@ -35,7 +35,7 @@ public class TestSolution
     }
 
     @Test
-    public void Different_instructions_make_them_unequal()
+    public void Different_steps_make_them_unequal()
     {
         Solution solution1 = makeSolution( 3 );
         Solution solution2 = makeSolution( 2 );
@@ -53,19 +53,20 @@ public class TestSolution
     private static Solution makeSolution( int waitTime )
     {
         return new Solution(
-              new WaitInstruction( waitTime )
-            , new PlaceTokenInstruction( 3, 2 )
-            , new SelectInstruction( Token.Type.block )
-            , new TargetState( World.CompletionState.RUNNING )
+              new SolutionStep( new WaitInstruction( waitTime ) )
+            , new SolutionStep( new PlaceTokenInstruction( 3, 2 ) )
+            , new SolutionStep( new SelectInstruction( Token.Type.block ) )
+            , new SolutionStep(
+                new TargetState( World.CompletionState.RUNNING ) )
         );
     }
 
     private static Solution makeShortSolution( int waitTime )
     {
         return new Solution(
-              new WaitInstruction( waitTime )
-            , new PlaceTokenInstruction( 3, 2 )
-            , new SelectInstruction( Token.Type.block )
+              new SolutionStep( new WaitInstruction( waitTime ) )
+            , new SolutionStep( new PlaceTokenInstruction( 3, 2 ) )
+            , new SolutionStep( new SelectInstruction( Token.Type.block ) )
         );
     }
 }

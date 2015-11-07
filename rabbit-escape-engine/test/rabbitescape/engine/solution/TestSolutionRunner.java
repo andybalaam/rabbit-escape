@@ -280,41 +280,41 @@ public class TestSolutionRunner
 
     private Solution expectingSolution( CompletionState expected )
     {
-        return new Solution( new TargetState( expected ) );
+        return new Solution( new SolutionStep( new TargetState( expected ) ) );
     }
 
     private Solution waitFourSolution()
     {
         return new Solution(
-            new WaitInstruction( 1 ),
-            new WaitInstruction( 2 ),
-            new WaitInstruction( 2 )
+            new SolutionStep( new WaitInstruction( 1 ) ),
+            new SolutionStep( new WaitInstruction( 2 ) ),
+            new SolutionStep( new WaitInstruction( 2 ) )
         );
     }
 
     private Solution waitFiveThenLostSolution()
     {
         return new Solution(
-            new WaitInstruction( 5 ),
-            new TargetState( CompletionState.LOST )
+            new SolutionStep( new WaitInstruction( 5 ) ),
+            new SolutionStep( new TargetState( CompletionState.LOST ) )
         );
     }
 
     private Solution useBash30Solution()
     {
         return new Solution(
-            new SelectInstruction( Token.Type.bash ),
-            new PlaceTokenInstruction( 1, 0 ),
-            new WaitInstruction( 1 ),
-            new PlaceTokenInstruction( 3, 0 )
+            new SolutionStep( new SelectInstruction( Token.Type.bash ) ),
+            new SolutionStep( new PlaceTokenInstruction( 1, 0 ) ),
+            new SolutionStep( new WaitInstruction( 1 ) ),
+            new SolutionStep( new PlaceTokenInstruction( 3, 0 ) )
         );
     }
 
     private Solution useBash100Solution()
     {
         return new Solution(
-            new SelectInstruction( Token.Type.bash ),
-            new PlaceTokenInstruction( 10, 0 )
+            new SolutionStep( new SelectInstruction( Token.Type.bash ) ),
+            new SolutionStep( new PlaceTokenInstruction( 10, 0 ) )
         );
     }
 }

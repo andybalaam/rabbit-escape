@@ -28,36 +28,42 @@ public class SolutionFactory
     {
         String[] instructionStages = Util.split( solution, STAGE_DELIMITER );
 
-        List<Instruction> instructions = new ArrayList<>();
+        List<SolutionStep> steps = new ArrayList<>();
         for ( int i = 0; i < instructionStages.length; i++ )
         {
-            instructions.addAll( createTimeStep( instructionStages[i] ) );
+            steps.addAll( createTimeStep( instructionStages[i] ) );
 
             // Wait one step after every semicolon (unless the last instruction
             // was a wait instruction).
-            if ( instructions.size() > 0
-                && !( instructions.get( instructions.size() - 1 ) instanceof WaitInstruction )
+            if ( steps.size() > 0
+                && !(
+                    steps.get( steps.size() - 1 ).instructions[0]
+                        instanceof WaitInstruction )
                 && ( i < instructionStages.length - 1 ) )
             {
-                instructions.add( new WaitInstruction( 1 ) );
+                steps.add( new SolutionStep( new WaitInstruction( 1 ) ) );
             }
         }
 
         // If the last instruction is not a validation step then assume this was
         // a 'normal' winning solution.
-        if ( instructions.size() > 0
-            && !( instructions.get( instructions.size() - 1 ) instanceof ValidationInstruction ) )
+        if ( steps.size() > 0
+            && !(
+                steps.get( steps.size() - 1 ).instructions[0]
+                    instanceof ValidationInstruction )
+            )
         {
-            instructions.add( new TargetState( CompletionState.WON ) );
+            steps.add(
+                new SolutionStep( new TargetState( CompletionState.WON ) ) );
         }
 
         return new Solution(
-            instructions.toArray( new Instruction[ instructions.size() ] ) );
+            steps.toArray( new SolutionStep[ steps.size() ] ) );
     }
 
-    public static List<Instruction> createTimeStep( String timeStepString )
+    public static List<SolutionStep> createTimeStep( String timeStepString )
     {
-        ArrayList<Instruction> ret = new ArrayList<Instruction>();
+        ArrayList<SolutionStep> ret = new ArrayList<SolutionStep>();
 
         String[] instructionStrings = Util.split(
             timeStepString, INSTRUCTION_DELIMITER );
@@ -66,7 +72,7 @@ public class SolutionFactory
         {
             if ( !instructionStrings[j].equals( "" ) )
             {
-                ret.add( makeInstruction( instructionStrings[j] ) );
+                ret.add( new SolutionStep( makeInstruction( instructionStrings[j] ) ) );
             }
         }
 
