@@ -49,7 +49,7 @@ public class TextWorldManip
         num_killed,
         num_waiting
     );
-    
+
     public static final List<String> META_INT_ARRAYS = Arrays.asList(
         rabbit_delay
     );
@@ -238,8 +238,9 @@ public class TextWorldManip
 
         ret.add( metaLine( name,         world.name ) );
         ret.add( metaLine( description,  world.description ) );
-        ret.add( metaLine( author_name,  world.author_name) );
-        ret.add( metaLine( author_url,   world.author_url) );
+        ret.add( metaLine( author_name,  world.author_name ) );
+        ret.add( metaLine( author_url,   world.author_url ) );
+        addMetaKeyArrayLines( ret, solution, world.solutions );
         ret.add( metaLine( hint1,        world.hint1 ) );
         ret.add( metaLine( hint2,        world.hint2 ) );
         ret.add( metaLine( hint3,        world.hint3 ) );
@@ -254,6 +255,17 @@ public class TextWorldManip
         abilityMetaLines( world, ret );
 
         return ret.toArray( new String[ret.size()] );
+    }
+
+    private static void addMetaKeyArrayLines(
+        List<String> ret, String name, String[] values )
+    {
+        int i = 1;
+        for ( String value : values )
+        {
+            ret.add( metaLine( name + "." + i, value ) );
+            ++i;
+	}
     }
 
     private static void abilityMetaLines( World world, List<String> ret )
@@ -289,7 +301,7 @@ public class TextWorldManip
         {
             ret = ret + "," + Integer.toString( value[i] ) ;
         }
-        return metaLine( name, ret); 
+        return metaLine( name, ret );
     }
 
     private static String metaLine( String name, String value )

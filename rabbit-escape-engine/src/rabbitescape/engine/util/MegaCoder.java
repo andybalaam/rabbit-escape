@@ -62,7 +62,7 @@ import java.util.Set;
  * x = replace(k1, x)
  * Output: The modified array x
  * </pre>
- * 
+ *
  * @author tttppp
  */
 public class MegaCoder
@@ -91,7 +91,7 @@ public class MegaCoder
 
     /**
      * Encode a string using the MegaCoder obfuscation routine.
-     * 
+     *
      * @param input
      *            The plaintext to encode.
      * @return The obfuscated ciphertext.
@@ -113,7 +113,7 @@ public class MegaCoder
 
     /**
      * Decode a string using the MegaCoder obfuscation routine.
-     * 
+     *
      * @param input
      *            The ciphertext to decode.
      * @return The plaintext.
@@ -136,7 +136,7 @@ public class MegaCoder
     /**
      * Create a new character array containing every character that appears in a
      * given array once. The new array will be sorted by natural order.
-     * 
+     *
      * @param charArray
      *            The character array to process.
      * @return An array containing the sorted set of characters in the input.
@@ -179,7 +179,7 @@ public class MegaCoder
 
     /**
      * Replace characters in a string using a key.
-     * 
+     *
      * @param charsListKey
      *            A list of distinct characters. The first will be swapped with
      *            the last, and so on. If there is an odd number of characters
@@ -203,7 +203,7 @@ public class MegaCoder
 
     /**
      * Swap two characters with each other in a given characters list.
-     * 
+     *
      * @param chars
      *            The list of characters to search through.
      * @param a
@@ -233,7 +233,7 @@ public class MegaCoder
 
     /**
      * Shuffle the characters in the given string.
-     * 
+     *
      * @param input
      *            The string to be shuffled.
      * @param key

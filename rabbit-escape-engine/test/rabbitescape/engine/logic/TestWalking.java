@@ -2178,7 +2178,7 @@ public class TestWalking
             "#####"
         );
     }
-    
+
 
     @Test
     public void Bump_head_on_slope_not_past_roof()

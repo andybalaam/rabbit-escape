@@ -2,6 +2,7 @@ package rabbitescape.engine;
 
 import static org.hamcrest.MatcherAssert.*;
 import static org.hamcrest.CoreMatchers.*;
+import static org.junit.Assert.fail;
 import static rabbitescape.engine.ChangeDescription.State.*;
 import static rabbitescape.engine.Tools.*;
 import static rabbitescape.engine.textworld.TextWorldManip.*;
@@ -937,7 +938,7 @@ public class TestTextWorldManip
             equalTo( lines )
         );
     }
-    
+
     @Test
     public void Test_variable_rabbit_delay()
     {
@@ -948,13 +949,13 @@ public class TestTextWorldManip
             "                                                                             ",
             "#############################################################################"
         };
-        
+
         World world = createWorld( lines );
         for ( int i = 0 ; i<16 ; i++ )
         {
             world.step();
         }
-        
+
         String[] resultLines=renderCompleteWorld( world, false );
 
         String[] expectedLines = {
@@ -994,7 +995,7 @@ public class TestTextWorldManip
             "#     #",
             "#######"
         };
-        
+
         assertThat(
             renderCompleteWorld( createWorld( lines ), true ),
             equalTo( lines )
@@ -1089,7 +1090,44 @@ public class TestTextWorldManip
         renderCompleteWorld( createWorld( lines ), true );
     }
 
-    @Test( expected=InvalidSolution.class )
+    /**
+     * @brief Test an example world with some solutions.
+     * Parse it, reserialise it, and test for changes.
+     */
+    @Test
+    public void Round_trip_for_solutions()
+    {
+        String[] lines = {
+            ":name=var delay round trip",
+            ":description=trippy",
+            ":author_name=cyril",
+            ":author_url=",
+            ":solution.1=10;6",
+            ":solution.2=bash;(3,2)",
+            ":solution.3=6;5",
+            ":hint1=",
+            ":hint2=",
+            ":hint3=",
+            ":num_rabbits=20",
+            ":num_to_save=18",
+            ":rabbit_delay=10,3,2,10",
+            ":num_saved=0",
+            ":num_killed=0",
+            ":num_waiting=20",
+            ":paused=false",
+            "#######",
+            "#Q   Q#",
+            "#     #",
+            "#######"
+        };
+
+        assertThat(
+            renderCompleteWorld( createWorld( lines ), true ),
+            equalTo( lines )
+        );
+    }
+
+    @Test
     public void Incorrect_solution_string_throws_exception()
     {
         String[] lines = {
@@ -1100,7 +1138,41 @@ public class TestTextWorldManip
             "#####"
         };
 
-        runSolutions( lines );
+        try
+        {
+            runSolutions( lines );
+            fail( "Exception expected!" );
+        }
+        catch ( InvalidSolution e )
+        {
+            // TODO: Make InvalidSolution hold solutionId (+ other stuff)
+            // as a field, and translate it like other exceptions using
+            // a string in rabbitescape.engine.err.exceptions_en.properties
+            assertThat( e.message, containsString( "Solution 1" ) );
+        }
+    }
+
+    @Test
+    public void Incorrect_solution_2_string_throws_exception()
+    {
+        String[] lines = {
+            ":num_rabbits=1",
+            ":solution.1=6",
+            ":solution.2=5",
+            "Q    ",
+            "    O",
+            "#####"
+        };
+
+        try
+        {
+            runSolutions( lines );
+            fail( "Exception expected!" );
+        }
+        catch ( InvalidSolution e )
+        {
+            assertThat( e.message, containsString( "Solution 2" ) );
+        }
     }
 
     @Test
@@ -1287,7 +1359,7 @@ public class TestTextWorldManip
     {
         World world = createWorld( lines );
 
-        int i = 0;
+        int i = 1;
         for ( String s : world.solutions )
         {
             Solution solution = SolutionFactory.create( s, i );

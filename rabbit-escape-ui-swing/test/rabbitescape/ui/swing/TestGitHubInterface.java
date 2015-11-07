@@ -56,7 +56,7 @@ public class TestGitHubInterface
                 "#######\n";
         assertThat( wrappedWorld, equalTo( expectedWrappedWorld ) );
     }
-    
+
     @Test
     public void Strip_trailing_white_from_meta_lines()
     {

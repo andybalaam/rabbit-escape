@@ -20,6 +20,11 @@ public class Falling extends Behaviour
     {
         this.climbing = climbing;
     }
+    
+    public boolean isFallingToDeath()
+    {
+        return heightFallen > fatalHeight ;
+    }
 
     @Override
     public void cancel()
@@ -108,8 +113,8 @@ public class Falling extends Behaviour
         }
 
         if (
-               rabbit.onSlope 
-            && !t.sharesSquareWithDiggerOnSlope()
+               rabbit.onSlope
+            && !t.blockHereJustRemoved()
         )
         {
             return false;

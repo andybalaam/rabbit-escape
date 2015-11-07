@@ -130,7 +130,7 @@ public class WorldAssertions
             );
         }
     }
-    
+
     /**
      * @brief Note that this method steps the world, changing the input argument
      * that is referenced.
@@ -146,7 +146,7 @@ public class WorldAssertions
         }
 
         assertThat(
-            renderCompleteWorld( world, false ), 
+            renderCompleteWorld( world, false ),
             equalTo( finalWorld )
             );
     }

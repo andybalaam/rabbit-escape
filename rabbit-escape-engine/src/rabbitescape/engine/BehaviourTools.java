@@ -5,6 +5,9 @@ import static rabbitescape.engine.Block.Type.solid_up_left;
 import static rabbitescape.engine.Block.Type.solid_up_right;
 import static rabbitescape.engine.Direction.RIGHT;
 import static rabbitescape.engine.Direction.opposite;
+
+import java.awt.Point;
+
 import rabbitescape.engine.ChangeDescription.State;
 
 public class BehaviourTools
@@ -31,8 +34,31 @@ public class BehaviourTools
         return pickUpToken( type, false );
     }
 
+    public boolean rabbitIsFalling()
+    {
+        return
+               State.RABBIT_FALLING == rabbit.state
+            || State.RABBIT_FALLING_1 == rabbit.state
+            || State.RABBIT_FALLING_1_TO_DEATH == rabbit.state
+            || State.RABBIT_DYING_OF_FALLING_2 == rabbit.state
+            || State.RABBIT_DYING_OF_FALLING == rabbit.state
+            || State.RABBIT_FALLING_ONTO_LOWER_RIGHT == rabbit.state
+            || State.RABBIT_FALLING_ONTO_RISE_RIGHT == rabbit.state
+            || State.RABBIT_FALLING_ONTO_LOWER_LEFT == rabbit.state
+            || State.RABBIT_FALLING_ONTO_RISE_LEFT == rabbit.state
+            || State.RABBIT_FALLING_1_ONTO_LOWER_RIGHT == rabbit.state
+            || State.RABBIT_FALLING_1_ONTO_RISE_RIGHT == rabbit.state
+            || State.RABBIT_FALLING_1_ONTO_LOWER_LEFT == rabbit.state
+            || State.RABBIT_FALLING_1_ONTO_RISE_LEFT == rabbit.state ;
+    }
+    
     public boolean pickUpToken( Token.Type type, boolean evenIfNotOnGround )
     {
+        if ( rabbitIsFalling() && rabbit.isFallingToDeath() )
+        {
+            return false; // Dying rabbits not allowed to consume tokens
+        }
+
         if ( evenIfNotOnGround || onGround() )
         {
             Token token = world.getTokenAt( rabbit.x, rabbit.y );
@@ -124,7 +150,7 @@ public class BehaviourTools
     public boolean isOnSlopeStateUnreliable()
     {
         Block block = blockHere();
-        return 
+        return
             null != block &&
             (
                    solid_up_left == block.type
@@ -205,28 +231,17 @@ public class BehaviourTools
             return rabbit.y;
         }
     }
-    
-    public boolean isBashing()
+
+    /**
+     * @brief A rabbit may be on a slope block as a digger
+     *        or basher removes it. This is here to make sure
+     *        they fall.
+     */
+    public boolean blockHereJustRemoved()
     {
-        State s = rabbit.state;
-        return
-               State.RABBIT_BASHING_RIGHT == s
-            || State.RABBIT_BASHING_LEFT == s
-            || State.RABBIT_BASHING_UP_RIGHT == s
-            || State.RABBIT_BASHING_UP_LEFT == s
-            || State.RABBIT_BASHING_USELESSLY_RIGHT == s
-            || State.RABBIT_BASHING_USELESSLY_LEFT == s ;
-    }
-    
-    public boolean sharesSquareWithDiggerOnSlope()
-    {
-        for (Rabbit r: world.rabbits)
+        for ( Point p : world.changes.blocksJustRemoved )
         {
-            if ( 
-                   State.RABBIT_DIGGING_ON_SLOPE == r.state
-                && rabbit.x == r.x
-                && rabbit.y == r.y
-            )
+            if ( rabbit.x == p.x && rabbit.y == p.y )
             {
                 return true;
             }

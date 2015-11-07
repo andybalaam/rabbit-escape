@@ -262,4 +262,76 @@ public class TestTokens
             "#D#"
         );
     }
+    
+    @Test
+    public void Rabbits_falling_to_death_do_not_consume_tokens()
+    {
+        World world = createWorld(
+            " r       ",
+            "  j      ",
+            "   r     ",
+            "    j    ",
+            "     r   ",
+            "      j  ",
+            "       r ",
+            "         ",
+            "         ",
+            "         ",
+            "         ",
+            "#bdikcp*#",
+            "####)(*/#",
+            "#########",
+            ":*=db",
+            ":*=\\"
+        );
+
+        assertWorldEvolvesLike( 
+            world,
+            8,
+            new String[] {
+                "         ",
+                "         ",
+                "         ",
+                "         ",
+                "         ",
+                "         ",
+                "         ",
+                "         ",
+                "         ",
+                "         ",
+                "         ",
+                "#bdi    #",
+                "####****#",
+                "#########",
+                ":*=)k",
+                ":*=(c",
+                ":*=\\p",
+                ":*=/db"
+            });
+    }
+    
+    @Test
+    public void Rabbits_falling_and_living_do_consume_tokens()
+    {
+        World world = createWorld(
+            " r       ",
+            "   r   r ",
+            "     r   ",
+            "#bpbpcpdp",
+            "####)(\\/#",
+            "#########"
+        );
+
+        assertWorldEvolvesLike( 
+            world,
+            8,
+            new String[] {
+                "         ",
+                "         ",
+                "         ",
+                "#       p",
+                "####)(\\ #",
+                "####### #"
+            });
+    }
 }
