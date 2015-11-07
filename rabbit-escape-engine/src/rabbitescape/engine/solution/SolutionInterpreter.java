@@ -1,5 +1,6 @@
 package rabbitescape.engine.solution;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 
@@ -24,6 +25,8 @@ public class SolutionInterpreter implements Iterable<SolutionTimeStep>
 
             int waitTimeLeft = 0;
 
+            boolean enteredNextStep = false;
+
             Instruction nextInstruction = rollToNextInstruction();
 
             @Override
@@ -45,9 +48,7 @@ public class SolutionInterpreter implements Iterable<SolutionTimeStep>
                 }
                 else
                 {
-                    Instruction thisInstruction = nextInstruction;
-                    nextInstruction = rollToNextInstruction();
-                    return handleInstruction( thisInstruction );
+                    return handleAllInstructionsInStep();
                 }
             }
 
@@ -67,11 +68,18 @@ public class SolutionInterpreter implements Iterable<SolutionTimeStep>
                 while ( steps.hasNext() )
                 {
                     SolutionStep s = steps.next();
+                    enteredNextStep = true;
+
                     instrs = Arrays.asList( s.instructions ).iterator();
 
                     if ( instrs.hasNext() )
                     {
                         return instrs.next();
+                    }
+                    else
+                    {
+                        // No instructions in that step - this means wait 1
+                        ++waitTimeLeft;
                     }
                 }
 
@@ -84,18 +92,35 @@ public class SolutionInterpreter implements Iterable<SolutionTimeStep>
                 return new SolutionTimeStep();
             }
 
-            private SolutionTimeStep handleInstruction(
-                Instruction instruction )
+            private SolutionTimeStep handleAllInstructionsInStep()
             {
-                if ( instruction instanceof WaitInstruction )
+                ArrayList<Instruction> ret = new ArrayList<Instruction>();
+
+                boolean alreadyWaited = false;
+                enteredNextStep = false;
+                while( nextInstruction != null && !enteredNextStep )
                 {
-                    waitTimeLeft = ( (WaitInstruction)instruction ).steps;
-                    return waitOneTimeStep();
+                    if ( nextInstruction instanceof WaitInstruction )
+                    {
+                        WaitInstruction wait = (WaitInstruction)nextInstruction;
+                        waitTimeLeft += wait.steps;
+                        if ( !alreadyWaited )
+                        {
+                            --waitTimeLeft;
+                            alreadyWaited = true;
+                        }
+                    }
+                    else
+                    {
+                        ret.add( nextInstruction );
+                    }
+                    nextInstruction = rollToNextInstruction();
                 }
-                else
-                {
-                    throw new RuntimeException( "boo" );
-                }
+
+                // TODO: annotate time step with the solution step number
+                // TODO: rename solution step to a clearer name
+                return new SolutionTimeStep(
+                    ret.toArray( new Instruction[ ret.size() ] ) );
             }
         };
     }

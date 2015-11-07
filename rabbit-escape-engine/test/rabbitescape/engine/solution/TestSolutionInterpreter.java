@@ -10,6 +10,9 @@ import org.junit.*;
 import java.util.Arrays;
 import java.util.Iterator;
 
+import rabbitescape.engine.Token;
+import rabbitescape.engine.World.CompletionState;
+
 public class TestSolutionInterpreter
 {
     @Test
@@ -64,6 +67,219 @@ public class TestSolutionInterpreter
                     , new SolutionTimeStep()
                     , new SolutionTimeStep()
                     , new SolutionTimeStep()
+                )
+            )
+        );
+    }
+
+    @Test
+    public void Single_nonwait_instruction_makes_single_time_step()
+    {
+        Solution solution = new Solution(
+            new SolutionStep( new SelectInstruction( Token.Type.explode ) )
+        );
+
+        SolutionInterpreter interpreter = new SolutionInterpreter( solution );
+
+        assertThat(
+            list( interpreter ),
+            equalTo(
+                Arrays.asList(
+                    new SolutionTimeStep(
+                        new SelectInstruction( Token.Type.explode ) )
+                )
+            )
+        );
+    }
+
+    @Test
+    public void Multiple_nonwait_instructions_in_single_step_make_1_time_step()
+    {
+        Solution solution = new Solution(
+            new SolutionStep(
+                new SelectInstruction( Token.Type.explode ),
+                new PlaceTokenInstruction( 2, 2 )
+            )
+        );
+
+        SolutionInterpreter interpreter = new SolutionInterpreter( solution );
+
+        assertThat(
+            list( interpreter ),
+            equalTo(
+                Arrays.asList(
+                    new SolutionTimeStep(
+                          new SelectInstruction( Token.Type.explode )
+                        , new PlaceTokenInstruction( 2, 2 )
+                    )
+                )
+            )
+        );
+    }
+
+    @Test
+    public void Do_then_wait_then_do_translates_into_time_steps()
+    {
+        Solution solution = new Solution(
+            new SolutionStep(
+                new SelectInstruction( Token.Type.explode ),
+                new PlaceTokenInstruction( 2, 2 )
+            ),
+            new SolutionStep( new WaitInstruction( 4 ) ),
+            new SolutionStep( new PlaceTokenInstruction( 3, 2 ) )
+        );
+
+        SolutionInterpreter interpreter = new SolutionInterpreter( solution );
+
+        assertThat(
+            list( interpreter ),
+            equalTo(
+                Arrays.asList(
+                    new SolutionTimeStep(
+                          new SelectInstruction( Token.Type.explode )
+                        , new PlaceTokenInstruction( 2, 2 )
+                    ),
+                    new SolutionTimeStep(),
+                    new SolutionTimeStep(),
+                    new SolutionTimeStep(),
+                    new SolutionTimeStep(),
+                    new SolutionTimeStep( new PlaceTokenInstruction( 3, 2 ) )
+                )
+            )
+        );
+    }
+
+    @Test
+    public void Wait_then_do_then_wait_translates_into_time_steps()
+    {
+        Solution solution = new Solution(
+            new SolutionStep(),
+            new SolutionStep( new WaitInstruction( 1 ) ),
+            new SolutionStep(
+                new SelectInstruction( Token.Type.explode ),
+                new PlaceTokenInstruction( 2, 2 )
+            ),
+            new SolutionStep( new WaitInstruction( 2 ) ),
+            new SolutionStep()
+        );
+
+        SolutionInterpreter interpreter = new SolutionInterpreter( solution );
+
+        assertThat(
+            list( interpreter ),
+            equalTo(
+                Arrays.asList(
+                    new SolutionTimeStep(),
+                    new SolutionTimeStep(),
+                    new SolutionTimeStep(
+                          new SelectInstruction( Token.Type.explode )
+                        , new PlaceTokenInstruction( 2, 2 )
+                    ),
+                    new SolutionTimeStep(),
+                    new SolutionTimeStep(),
+                    new SolutionTimeStep()
+                )
+            )
+        );
+    }
+
+    @Test
+    public void Waits_mixed_with_dos_wait_after_doing_no_matter_the_order()
+    {
+        Solution solution = new Solution(
+            new SolutionStep(
+                new WaitInstruction( 3 ),
+                new SelectInstruction( Token.Type.explode ),
+                new PlaceTokenInstruction( 2, 2 )
+            ),
+            new SolutionStep( new WaitInstruction( 2 ) ),
+            new SolutionStep(
+                new SelectInstruction( Token.Type.dig ),
+                new PlaceTokenInstruction( 1, 1 ),
+                new WaitInstruction( 3 )
+            )
+        );
+
+        SolutionInterpreter interpreter = new SolutionInterpreter( solution );
+
+        assertThat(
+            list( interpreter ),
+            equalTo(
+                Arrays.asList(
+                    new SolutionTimeStep(
+                          new SelectInstruction( Token.Type.explode )
+                        , new PlaceTokenInstruction( 2, 2 )
+                    ),
+                    new SolutionTimeStep(),
+                    new SolutionTimeStep(),
+
+                    new SolutionTimeStep(),
+                    new SolutionTimeStep(),
+
+                    new SolutionTimeStep(
+                        new SelectInstruction( Token.Type.dig ),
+                        new PlaceTokenInstruction( 1, 1 )
+                    ),
+                    new SolutionTimeStep(),
+                    new SolutionTimeStep()
+                )
+            )
+        );
+    }
+
+    @Test
+    public void Empty_step_is_like_wait_1()
+    {
+        Solution solution = new Solution(
+            new SolutionStep()
+        );
+
+        SolutionInterpreter interpreter = new SolutionInterpreter( solution );
+
+        assertThat(
+            list( interpreter ),
+            equalTo(
+                Arrays.asList(
+                    new SolutionTimeStep()
+                )
+            )
+        );
+    }
+
+    @Test
+    public void Many_empty_steps()
+    {
+        Solution solution = new Solution(
+            new SolutionStep(),
+            new SolutionStep( new SelectInstruction( Token.Type.dig ) ),
+            new SolutionStep( new PlaceTokenInstruction( 1, 1 ) ),
+            new SolutionStep( new TargetState( CompletionState.RUNNING ) ),
+            new SolutionStep(),
+            new SolutionStep(),
+            new SolutionStep()
+        );
+
+        SolutionInterpreter interpreter = new SolutionInterpreter( solution );
+
+        assertThat(
+            list( interpreter ),
+            equalTo(
+                Arrays.asList(
+                    new SolutionTimeStep(),
+
+                    new SolutionTimeStep(
+                        new SelectInstruction( Token.Type.dig ) ),
+
+                    new SolutionTimeStep( new PlaceTokenInstruction( 1, 1 ) ),
+
+                    new SolutionTimeStep(
+                        new TargetState( CompletionState.RUNNING ) ),
+
+                    new SolutionTimeStep(),
+
+                    new SolutionTimeStep(),
+
+                    new SolutionTimeStep()
                 )
             )
         );
