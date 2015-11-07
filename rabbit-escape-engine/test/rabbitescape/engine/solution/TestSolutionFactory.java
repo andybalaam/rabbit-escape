@@ -127,7 +127,7 @@ public class TestSolutionFactory
     public void Can_parse_single_instruction()
     {
         assertThat(
-            SolutionFactory.createTimeStep( "bash", 1 ),
+            SolutionFactory.createTimeStep( "bash" ),
             equalTo(
                 Arrays.asList(
                     new Instruction[]
@@ -143,7 +143,7 @@ public class TestSolutionFactory
     public void Can_parse_multiple_single_instructions()
     {
         assertThat(
-            SolutionFactory.createTimeStep( "bash&(1,2)", 1 ),
+            SolutionFactory.createTimeStep( "bash&(1,2)" ),
             equalTo(
                 Arrays.asList(
                     new Instruction[]

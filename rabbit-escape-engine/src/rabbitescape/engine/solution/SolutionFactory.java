@@ -31,8 +31,7 @@ public class SolutionFactory
         List<Instruction> instructions = new ArrayList<>();
         for ( int i = 0; i < instructionStages.length; i++ )
         {
-            instructions.addAll(
-                createTimeStep( instructionStages[i], i ) );
+            instructions.addAll( createTimeStep( instructionStages[i] ) );
 
             // Wait one step after every semicolon (unless the last instruction
             // was a wait instruction).
@@ -55,8 +54,7 @@ public class SolutionFactory
         return new Solution( instructions );
     }
 
-    public static List<Instruction> createTimeStep(
-        String timeStepString, int instructionIndex )
+    public static List<Instruction> createTimeStep( String timeStepString )
     {
         ArrayList<Instruction> ret = new ArrayList<Instruction>();
 
@@ -67,27 +65,18 @@ public class SolutionFactory
         {
             if ( !instructionStrings[j].equals( "" ) )
             {
-                ret.add(
-                    makeInstruction(
-                        instructionStrings[j],
-                        instructionIndex
-                    )
-                );
+                ret.add( makeInstruction( instructionStrings[j] ) );
             }
         }
 
         return ret;
     }
 
-    private static Instruction makeInstruction(
-        String instructionString,
-        int instructionIndex
-    )
+    private static Instruction makeInstruction( String instructionString )
     {
         try
         {
-            return doMakeInstruction(
-                instructionString, instructionIndex );
+            return doMakeInstruction( instructionString );
         }
         catch ( NumberFormatException e )
         {
@@ -95,10 +84,7 @@ public class SolutionFactory
         }
     }
 
-    private static Instruction doMakeInstruction(
-        String instructionString,
-        int instructionIndex
-    )
+    private static Instruction doMakeInstruction( String instructionString )
     throws NumberFormatException, InvalidInstruction
     {
         if ( COMPLETION_STATES.contains( instructionString ) )
