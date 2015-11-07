@@ -27,6 +27,11 @@ public class TargetState implements ValidationInstruction
         this( targetState, solutionId, INSTRUCTION_INDEX_NOT_SPECIFIED );
     }
 
+    public String relFormat()
+    {
+        return targetState.name();
+    }
+
     @Override
     public String toString()
     {

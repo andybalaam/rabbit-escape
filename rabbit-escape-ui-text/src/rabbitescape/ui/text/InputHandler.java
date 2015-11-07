@@ -10,6 +10,7 @@ import rabbitescape.engine.err.ExceptionTranslation;
 import rabbitescape.engine.err.RabbitEscapeException;
 import rabbitescape.engine.solution.Instruction;
 import rabbitescape.engine.solution.SandboxGame;
+import rabbitescape.engine.solution.Solution;
 import rabbitescape.engine.solution.SolutionFactory;
 import rabbitescape.engine.solution.SolutionRunner;
 import rabbitescape.engine.solution.WaitInstruction;
@@ -106,7 +107,7 @@ public class InputHandler
 
     private final SandboxGame sandboxGame;
     private final Terminal terminal;
-    private final List<List<Instruction>> solution;
+    private final List<Instruction> solution;
 
     public InputHandler( SandboxGame sandboxGame, Terminal terminal )
     {
@@ -158,25 +159,25 @@ public class InputHandler
     {
         if ( !solution.isEmpty() )
         {
-            List<Instruction> lastStep = solution.get( solution.size() - 1 );
-            if ( instructions.size() == 1 && lastStep.size() == 1 )
+            Instruction lastInstruction = solution.get( solution.size() - 1 );
+            if ( instructions.size() == 1 )
             {
                 Instruction combinedInstruction = tryToSimplify(
-                    lastStep.get( 0 ), instructions.get( 0 ) );
+                    lastInstruction, instructions.get( 0 ) );
                 if ( combinedInstruction != null )
                 {
                     solution.set( solution.size() - 1,
-                        Arrays.asList( combinedInstruction ) );
+                        combinedInstruction );
                 }
                 else
                 {
-                    solution.add( instructions );
+                    solution.addAll( instructions );
                 }
             }
         }
         else
         {
-            solution.add( instructions );
+            solution.addAll( instructions );
         }
     }
 
@@ -236,7 +237,7 @@ public class InputHandler
 
     public String solution()
     {
-        // TODO Fix this to return correctly constructed string.
-        return solution.toString();
+        Solution s = new Solution( 0, solution );
+        return s.relFormat();
     }
 }

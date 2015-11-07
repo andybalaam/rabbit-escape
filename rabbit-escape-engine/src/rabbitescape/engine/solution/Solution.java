@@ -16,6 +16,22 @@ public class Solution
         this.instructions = instructions;
     }
 
+    public String relFormat()
+    {
+        StringBuilder sb = new StringBuilder();
+        boolean first = true;
+        for ( Instruction instruction : instructions )
+        {
+            if (!first)
+            {
+                sb.append( SolutionFactory.INSTRUCTION_DELIMITER );
+            }
+            sb.append( instruction.relFormat() );
+            first = false;
+        }
+        return sb.toString();
+    }
+
     @Override
     public String toString()
     {

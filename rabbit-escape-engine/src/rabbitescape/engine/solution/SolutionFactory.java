@@ -11,8 +11,8 @@ import rabbitescape.engine.util.Util;
 
 public class SolutionFactory
 {
-    private static final String STAGE_DELIMITER = ";";
-    private static final String INSTRUCTION_DELIMITER = "&";
+    public static final String STAGE_DELIMITER = ";";
+    public static final String INSTRUCTION_DELIMITER = "&";
     private static final Pattern WAIT_REGEX = Pattern.compile( "\\d+" );
 
     private static final Pattern PLACE_TOKEN_REGEX = Pattern.compile(

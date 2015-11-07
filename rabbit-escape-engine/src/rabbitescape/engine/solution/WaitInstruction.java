@@ -9,6 +9,11 @@ public class WaitInstruction implements Instruction
         this.steps = steps;
     }
 
+    public String relFormat()
+    {
+        return String.valueOf( steps );
+    }
+
     @Override
     public String toString()
     {

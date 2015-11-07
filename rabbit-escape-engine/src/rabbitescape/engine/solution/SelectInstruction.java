@@ -11,6 +11,11 @@ public class SelectInstruction implements Instruction
         this.type = type;
     }
 
+    public String relFormat()
+    {
+        return type.name();
+    }
+
     @Override
     public String toString()
     {
