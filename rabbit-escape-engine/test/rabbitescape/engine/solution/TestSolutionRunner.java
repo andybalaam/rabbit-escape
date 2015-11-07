@@ -38,7 +38,7 @@ public class TestSolutionRunner
                 e.getMessage(),
                 equalTo(
                     "Solution failed: state was RUNNING but we expected LOST"
-                    + " at instruction 1 of solution 3."
+                    + " at step 1 of solution 3."
                 )
             );
         }
@@ -68,7 +68,7 @@ public class TestSolutionRunner
                 e.getMessage(),
                 equalTo(
                     "Solution failed: We expected to win, but the state was"
-                    + " RUNNING at instruction 1 of solution 4."
+                    + " RUNNING at step 1 of solution 4."
                 )
             );
         }
@@ -97,7 +97,7 @@ public class TestSolutionRunner
                 equalTo(
                     "Solution failed: world has stopped (state: WON) but"
                     + " there are more solution steps"
-                    + " at instruction 3 of solution 5."
+                    + " at step 3 of solution 5."
                 )
             );
         }
@@ -128,7 +128,7 @@ public class TestSolutionRunner
                 e.getMessage(),
                 equalTo(
                     "Solution failed: ability 'bash' was used when there"
-                    + " were none left at instruction 4 of solution 6."
+                    + " were none left at step 4 of solution 6."
                 )
             );
         }
@@ -158,7 +158,7 @@ public class TestSolutionRunner
                 e.getMessage(),
                 equalTo(
                     "Solution failed: ability 'bash' was used but this level"
-                    + " does not provide it at instruction 2 of solution 7."
+                    + " does not provide it at step 2 of solution 7."
                 )
             );
         }
@@ -190,7 +190,7 @@ public class TestSolutionRunner
                 equalTo(
                     "Solution failed: placed a token at (10, 0) but the"
                     + " world is only 5x2 in size"
-                    + " at instruction 2 of solution 8."
+                    + " at step 2 of solution 8."
                 )
             );
         }
@@ -234,7 +234,7 @@ public class TestSolutionRunner
                 equalTo(
                     "Solution failed: tried to place a bash token at (3, 0) but"
                     + " a block was already there so it did not place"
-                    + " at instruction 4 of solution 9."
+                    + " at step 4 of solution 9."
                 )
             );
         }

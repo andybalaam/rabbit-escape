@@ -81,7 +81,7 @@ public class InputHandler
         }
         catch ( SolutionExceptions.ProblemRunningSolution e )
         {
-            e.instructionIndex = instructionIndex;
+            e.stepIndex = instructionIndex;
             e.solutionId = 1;
             return fail( ExceptionTranslation.translate( e, terminal.locale ) );
         }

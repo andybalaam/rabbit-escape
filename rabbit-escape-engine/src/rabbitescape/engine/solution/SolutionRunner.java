@@ -30,7 +30,7 @@ public class SolutionRunner
             }
             catch ( SolutionExceptions.ProblemRunningSolution e )
             {
-                e.instructionIndex = step.index;
+                e.stepIndex = step.index;
                 throw e;
             }
         }

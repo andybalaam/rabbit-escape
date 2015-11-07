@@ -17,7 +17,7 @@ public class SolutionExceptions
         private static final long serialVersionUID = 1L;
 
         public int solutionId = -1;
-        public int instructionIndex = -1;
+        public int stepIndex = -1;
     }
 
     /**
