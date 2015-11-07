@@ -4,5 +4,5 @@ public interface Instruction
 {
     void typeSwitch( InstructionTypeSwitch instructionTypeSwitch );
 
-    String relFormat();
+    String relFormat( boolean firstInStep );
 }

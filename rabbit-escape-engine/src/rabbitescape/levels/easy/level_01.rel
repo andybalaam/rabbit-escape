@@ -8,7 +8,7 @@
 :num_rabbits=3
 :num_to_save=1
 :dig=5
-:solution.1.code=\;;ye?%tDex^eo
+:solution.1=dig;(7,2);15
 :music=tryad-witness
 ###########
 #   Q     #

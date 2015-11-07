@@ -11,9 +11,13 @@ public class PlaceTokenInstruction implements Instruction
         this.y = y;
     }
 
-    public String relFormat()
+    public String relFormat( boolean firstInStep )
     {
-        return "(" + x + "," + y + ")";
+        if ( firstInStep )
+        {
+            return "(" + x + "," + y + ")";
+        }
+        return SolutionFactory.INSTRUCTION_DELIMITER + "(" + x + "," + y + ")";
     }
 
     public int getX()

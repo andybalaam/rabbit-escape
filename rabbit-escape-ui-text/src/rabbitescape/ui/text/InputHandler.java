@@ -137,8 +137,16 @@ public class InputHandler
 
         try
         {
-            List<Instruction> instructions =
-                SolutionFactory.createTimeStep( input, 1, 0 );
+            List<Instruction> instructions = SolutionFactory.createTimeStep(
+                input, 1, 0 );
+
+            Instruction lastInstruction = instructions
+                .get( instructions.size() - 1 );
+            if ( !( lastInstruction instanceof WaitInstruction ) )
+            {
+                WaitInstruction waitInstruction = new WaitInstruction( 1 );
+                instructions.add( waitInstruction );
+            }
 
             for ( Instruction instr : instructions )
             {
@@ -157,22 +165,19 @@ public class InputHandler
 
     private void append( List<Instruction> instructions )
     {
-        if ( !solution.isEmpty() )
+        if ( !solution.isEmpty() && instructions.size() == 1 )
         {
             Instruction lastInstruction = solution.get( solution.size() - 1 );
-            if ( instructions.size() == 1 )
+            Instruction combinedInstruction = tryToSimplify(
+                lastInstruction, instructions.get( 0 ) );
+            if ( combinedInstruction != null )
             {
-                Instruction combinedInstruction = tryToSimplify(
-                    lastInstruction, instructions.get( 0 ) );
-                if ( combinedInstruction != null )
-                {
-                    solution.set( solution.size() - 1,
-                        combinedInstruction );
-                }
-                else
-                {
-                    solution.addAll( instructions );
-                }
+                solution.set( solution.size() - 1,
+                    combinedInstruction );
+            }
+            else
+            {
+                solution.addAll( instructions );
             }
         }
         else

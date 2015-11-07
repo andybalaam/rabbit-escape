@@ -19,15 +19,16 @@ public class Solution
     public String relFormat()
     {
         StringBuilder sb = new StringBuilder();
-        boolean first = true;
+        boolean firstInStep = true;
+        Instruction previousInstruction = null;
         for ( Instruction instruction : instructions )
         {
-            if (!first)
+            if (previousInstruction != null)
             {
-                sb.append( SolutionFactory.INSTRUCTION_DELIMITER );
+                firstInStep = (previousInstruction instanceof WaitInstruction);
             }
-            sb.append( instruction.relFormat() );
-            first = false;
+            sb.append( instruction.relFormat( firstInStep ) );
+            previousInstruction = instruction;
         }
         return sb.toString();
     }
