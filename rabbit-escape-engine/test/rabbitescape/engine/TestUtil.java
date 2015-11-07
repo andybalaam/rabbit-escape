@@ -864,4 +864,19 @@ public class TestUtil
             )
         );
     }
+
+    @Test
+    public void Enumerating_an_array_gives_each_item_with_numbers()
+    {
+        assertThat(
+            list( enumerate( new String[] { "x", "y", "z" } ) ),
+            equalTo(
+                Arrays.asList(
+                      Pair.make( 0, "x" )
+                    , Pair.make( 1, "y" )
+                    , Pair.make( 2, "z" )
+                )
+            )
+        );
+    }
 }

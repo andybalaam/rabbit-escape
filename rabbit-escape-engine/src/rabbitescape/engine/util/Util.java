@@ -651,7 +651,13 @@ public class Util
         }
     }
 
-    public static <T> Iterable<Pair<Integer, T>> enumerate( final Iterable<T> i )
+    public static <T> Iterable<Pair<Integer, T>> enumerate( final T[] array )
+    {
+        return enumerate( Arrays.asList( array ) );
+    }
+
+    public static <T> Iterable<Pair<Integer, T>> enumerate(
+        final Iterable<T> i )
     {
         return new Iterable<Pair<Integer, T>>()
         {
