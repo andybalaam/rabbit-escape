@@ -40,4 +40,16 @@ public class SolutionStep
     {
         return Arrays.deepHashCode( instructions );
     }
+
+    public Instruction lastInstruction()
+    {
+        if ( instructions.length == 0 )
+        {
+            return null;
+        }
+        else
+        {
+            return instructions[ instructions.length - 1 ];
+        }
+    }
 }

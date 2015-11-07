@@ -5,13 +5,14 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import static rabbitescape.engine.util.Util.*;
+
 import rabbitescape.engine.Token.Type;
 import rabbitescape.engine.World.CompletionState;
-import rabbitescape.engine.util.Util;
 
 public class SolutionFactory
 {
-    public static final String STAGE_DELIMITER = ";";
+    public static final String STEP_DELIMITER = ";";
     public static final String INSTRUCTION_DELIMITER = "&";
     private static final Pattern WAIT_REGEX = Pattern.compile( "\\d+" );
 
@@ -19,37 +20,44 @@ public class SolutionFactory
         "\\((\\d+),(\\d+)\\)" );
 
     private static final List<String> COMPLETION_STATES =
-        Util.toStringList( CompletionState.values() );
+        toStringList( CompletionState.values() );
 
     private static final List<String> TOKEN_TYPES =
-        Util.toStringList( Type.values() );
+        toStringList( Type.values() );
 
     public static Solution create( String solution )
     {
-        String[] instructionStages = Util.split( solution, STAGE_DELIMITER );
+        String[] stringSteps = split( solution, STEP_DELIMITER );
 
         List<SolutionStep> steps = new ArrayList<>();
-        for ( int i = 0; i < instructionStages.length; i++ )
+        for ( int i = 0; i < stringSteps.length; i++ )
         {
-            steps.addAll( createTimeStep( instructionStages[i] ) );
+            SolutionStep step = createStep( stringSteps[i] );
 
             // Wait one step after every semicolon (unless the last instruction
             // was a wait instruction).
-            if ( steps.size() > 0
-                && !(
-                    steps.get( steps.size() - 1 ).instructions[0]
-                        instanceof WaitInstruction )
-                && ( i < instructionStages.length - 1 ) )
+            if (
+                   step.instructions.length > 0  // TODO: bug?
+                && ! ( step.lastInstruction() instanceof WaitInstruction )
+                && i < stringSteps.length - 1
+            )
             {
-                steps.add( new SolutionStep( new WaitInstruction( 1 ) ) );
+                step = new SolutionStep(
+                    concat(
+                        step.instructions,
+                        new Instruction[] { new WaitInstruction( 1 ) }
+                    )
+                );
             }
+
+            steps.add( step );
         }
 
         // If the last instruction is not a validation step then assume this was
         // a 'normal' winning solution.
         if ( steps.size() > 0
             && !(
-                steps.get( steps.size() - 1 ).instructions[0]
+                steps.get( steps.size() - 1 ).lastInstruction()
                     instanceof ValidationInstruction )
             )
         {
@@ -61,22 +69,23 @@ public class SolutionFactory
             steps.toArray( new SolutionStep[ steps.size() ] ) );
     }
 
-    public static List<SolutionStep> createTimeStep( String timeStepString )
+    public static SolutionStep createStep( String stepString )
     {
-        ArrayList<SolutionStep> ret = new ArrayList<SolutionStep>();
+        ArrayList<Instruction> instructions = new ArrayList<Instruction>();
 
-        String[] instructionStrings = Util.split(
-            timeStepString, INSTRUCTION_DELIMITER );
+        String[] instructionStrings = split(
+            stepString, INSTRUCTION_DELIMITER );
 
         for ( int j = 0; j < instructionStrings.length; j++ )
         {
             if ( !instructionStrings[j].equals( "" ) )
             {
-                ret.add( new SolutionStep( makeInstruction( instructionStrings[j] ) ) );
+                instructions.add( makeInstruction( instructionStrings[j] ) );
             }
         }
 
-        return ret;
+        return new SolutionStep(
+            instructions.toArray( new Instruction[ instructions.size() ] ) );
     }
 
     private static Instruction makeInstruction( String instructionString )

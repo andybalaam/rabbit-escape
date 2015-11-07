@@ -23,7 +23,10 @@ public class SolutionRunner
         {
             try
             {
-                performInstruction( step.object.instructions[0], sandboxGame );
+                for ( Instruction instruction : step.object.instructions )
+                {
+                    performInstruction( instruction, sandboxGame );
+                }
             }
             catch ( SolutionExceptions.ProblemRunningSolution e )
             {

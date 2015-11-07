@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static rabbitescape.engine.i18n.Translation.*;
+import static rabbitescape.engine.util.Util.*;
 import rabbitescape.engine.err.ExceptionTranslation;
 import rabbitescape.engine.err.RabbitEscapeException;
 import rabbitescape.engine.solution.Instruction;
@@ -50,37 +51,33 @@ public class InputHandler
 
         try
         {
-            List<SolutionStep> steps =
-                SolutionFactory.createTimeStep( input );
+            SolutionStep step = SolutionFactory.createStep( input );
 
-            if ( steps.isEmpty() )
-            {
-                return fail( t( "Unexpected problem: no SolutionStep" ) );
-            }
-
-            SolutionStep lastStep = steps.get( steps.size() - 1 );
-
-            if ( lastStep.instructions.length == 0 )
+            if ( step.instructions.length == 0 )
             {
                 return fail( t( "Unexpected problem: no Instruction" ) );
             }
 
-            Instruction lastInstruction = lastStep.instructions[
-                lastStep.instructions.length - 1 ];
+            Instruction lastInstruction = step.instructions[
+                step.instructions.length - 1 ];
 
             if ( !( lastInstruction instanceof WaitInstruction ) )
             {
                 WaitInstruction waitInstruction = new WaitInstruction( 1 );
-                steps.add( new SolutionStep( waitInstruction ) );
+                step = new SolutionStep(
+                    concat(
+                        step.instructions,
+                        new Instruction[] { waitInstruction }
+                    )
+                );
             }
 
-            for ( SolutionStep step : steps )
+            for ( Instruction instruction : step.instructions )
             {
-                SolutionRunner.performInstruction(
-                    step.instructions[0], sandboxGame );
+                SolutionRunner.performInstruction( instruction, sandboxGame );
             }
 
-            append( steps );
+            append( step );
         }
         catch ( SolutionExceptions.ProblemRunningSolution e )
         {
@@ -96,12 +93,11 @@ public class InputHandler
         return true;
     }
 
-    private void append( List<SolutionStep> steps )
+    private void append( SolutionStep newStep )
     {
-        if ( !solution.isEmpty() && steps.size() == 1 )
+        if ( !solution.isEmpty() )
         {
             SolutionStep lastExistingStep = solution.get( solution.size() - 1 );
-            SolutionStep newStep = steps.get( 0 );
 
             SolutionStep combinedStep = tryToSimplify(
                 lastExistingStep, newStep );
@@ -112,12 +108,12 @@ public class InputHandler
             }
             else
             {
-                solution.addAll( steps );
+                solution.add( newStep );
             }
         }
         else
         {
-            solution.addAll( steps );
+            solution.add( newStep );
         }
     }
 

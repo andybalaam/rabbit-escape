@@ -9,20 +9,21 @@ public class WaitInstruction implements Instruction
         this.steps = steps;
     }
 
+    @Override
     public String relFormat( boolean firstInStep )
     {
         if ( firstInStep )
         {
-            return String.valueOf( steps ) + SolutionFactory.STAGE_DELIMITER;
+            return String.valueOf( steps ) + SolutionFactory.STEP_DELIMITER;
         }
         else if ( steps == 1 )
         {
-            return SolutionFactory.STAGE_DELIMITER;
+            return SolutionFactory.STEP_DELIMITER;
         }
         else if ( steps > 1 )
         {
-            return SolutionFactory.STAGE_DELIMITER + String.valueOf( steps - 1 )
-                + SolutionFactory.STAGE_DELIMITER;
+            return SolutionFactory.STEP_DELIMITER + String.valueOf( steps - 1 )
+                + SolutionFactory.STEP_DELIMITER;
         }
         else
         {
