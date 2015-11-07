@@ -12,6 +12,8 @@ import java.util.Map;
 
 import org.junit.Test;
 
+import static rabbitescape.engine.util.Util.*;
+
 import rabbitescape.engine.World.CompletionState;
 import rabbitescape.engine.solution.Solution;
 import rabbitescape.engine.solution.SolutionExceptions;
@@ -21,6 +23,7 @@ import rabbitescape.engine.solution.SolutionExceptions.RanPastEnd;
 import rabbitescape.engine.textworld.DuplicateMetaKey;
 import rabbitescape.engine.textworld.ItemsLineProcessor;
 import rabbitescape.engine.textworld.LineProcessor;
+import rabbitescape.engine.util.Util.IdxObj;
 
 public class TestTextWorldManip
 {
@@ -1362,20 +1365,18 @@ public class TestTextWorldManip
     {
         World world = createWorld( lines );
 
-        int i = 1;
-        for ( String s : world.solutions )
+        for ( IdxObj<String> s : enumerate1( world.solutions ) )
         {
-            Solution solution = SolutionFactory.create( s );
+            Solution solution = SolutionFactory.create( s.object );
             try
             {
                 SolutionRunner.runSolution( solution, world );
             }
             catch ( SolutionExceptions.ProblemRunningSolution e )
             {
-                e.solutionId = i;
+                e.solutionId = s.index;
                 throw e;
             }
-            ++i;
         }
     }
 }

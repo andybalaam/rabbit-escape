@@ -38,17 +38,14 @@ public class LevelsMenu extends Menu
 
         MenuItem[] ret = new MenuItem[ levelFileNames.length ];
 
-        int i = 1;
-        for ( String fileName : levelFileNames )
+        for ( IdxObj<String> fileName : enumerate1( levelFileNames ) )
         {
-            ret[i-1] = new LevelMenuItem(
-                levelsDir + "/" + fileName + ".rel",
+            ret[fileName.index - 1] = new LevelMenuItem(
+                levelsDir + "/" + fileName.object + ".rel",
                 levelsDir,
-                i,
+                fileName.index,
                 true
             );
-
-            ++i;
         }
 
         return ret;
@@ -80,11 +77,9 @@ public class LevelsMenu extends Menu
         int lastEnabled =
             levelsCompleted.highestLevelCompleted( levelsDir ) + 1;
 
-        int i = 1;
-        for ( MenuItem item : items )
+        for ( IdxObj<MenuItem> item : enumerate1( items ) )
         {
-            item.enabled = ( i <= lastEnabled );
-            ++i;
+            item.object.enabled = ( item.index <= lastEnabled );
         }
     }
 }

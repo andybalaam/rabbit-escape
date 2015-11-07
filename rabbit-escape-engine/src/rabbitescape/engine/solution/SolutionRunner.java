@@ -1,5 +1,7 @@
 package rabbitescape.engine.solution;
 
+import static rabbitescape.engine.util.Util.*;
+
 import rabbitescape.engine.World;
 import rabbitescape.engine.Token.Type;
 import rabbitescape.engine.World.CantAddTokenOutsideWorld;
@@ -17,19 +19,20 @@ public class SolutionRunner
     {
         SandboxGame sandboxGame = new SandboxGame( world );
 
-        int i = 1;
-        for ( Instruction instruction : solution.instructions )
+        for (
+            IdxObj<Instruction> instruction
+                : enumerate1( solution.instructions )
+        )
         {
             try
             {
-                performInstruction( instruction, sandboxGame );
+                performInstruction( instruction.object, sandboxGame );
             }
             catch ( SolutionExceptions.ProblemRunningSolution e )
             {
-                e.instructionIndex = i;
+                e.instructionIndex = instruction.index;
                 throw e;
             }
-            ++i;
         }
     }
 
