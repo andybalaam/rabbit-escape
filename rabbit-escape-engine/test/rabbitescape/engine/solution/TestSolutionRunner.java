@@ -283,12 +283,7 @@ public class TestSolutionRunner
     private Solution expectingSolution( CompletionState expected )
     {
         return new Solution(
-            Arrays.asList(
-                new Instruction[]
-                {
-                    new TargetState( expected, 1 )
-                }
-            )
+            Arrays.asList( new Instruction[] { new TargetState( expected ) } )
         );
     }
 
@@ -313,7 +308,7 @@ public class TestSolutionRunner
                 new Instruction[]
                 {
                     new WaitInstruction( 5 ),
-                    new TargetState( CompletionState.LOST, 1 )
+                    new TargetState( CompletionState.LOST )
                 }
             )
         );

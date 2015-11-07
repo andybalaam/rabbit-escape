@@ -60,8 +60,7 @@ public class TestSolution
                       new WaitInstruction( waitTime )
                     , new PlaceTokenInstruction( 3, 2 )
                     , new SelectInstruction( Token.Type.block )
-                    , new TargetState(
-                        World.CompletionState.RUNNING, 4 )
+                    , new TargetState( World.CompletionState.RUNNING )
                 }
             )
         );

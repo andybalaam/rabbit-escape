@@ -4,24 +4,11 @@ import rabbitescape.engine.World.CompletionState;
 
 public class TargetState implements ValidationInstruction
 {
-    public final static int INSTRUCTION_INDEX_NOT_SPECIFIED = -1;
-
     public final CompletionState targetState;
-    public final int instructionIndex;
 
-    public TargetState(
-        CompletionState targetState,
-        int instructionIndex )
+    public TargetState( CompletionState targetState )
     {
         this.targetState = targetState;
-        this.instructionIndex = instructionIndex;
-    }
-
-    public TargetState(
-        CompletionState targetState
-    )
-    {
-        this( targetState, INSTRUCTION_INDEX_NOT_SPECIFIED );
     }
 
     public String relFormat( boolean firstInStep )
@@ -36,10 +23,7 @@ public class TargetState implements ValidationInstruction
     @Override
     public String toString()
     {
-        return "TargetState( "
-            + targetState.name()
-            + ", " + instructionIndex
-            + " )";
+        return "TargetState( " + targetState.name() + " )";
     }
 
     @Override
@@ -51,20 +35,13 @@ public class TargetState implements ValidationInstruction
         }
         TargetState other = (TargetState)otherObj;
 
-        return (
-               targetState      == other.targetState
-            && instructionIndex == other.instructionIndex
-        );
+        return ( targetState == other.targetState );
     }
 
     @Override
     public int hashCode()
     {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + instructionIndex;
-        result = prime * result + targetState.hashCode();
-        return result;
+        return targetState.hashCode();
     }
 
     @Override

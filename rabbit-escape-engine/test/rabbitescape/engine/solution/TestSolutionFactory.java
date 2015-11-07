@@ -33,7 +33,7 @@ public class TestSolutionFactory
                     Arrays.asList(
                         new Instruction[]
                         {
-                            new TargetState( World.CompletionState.WON, 0 )
+                            new TargetState( World.CompletionState.WON )
                         }
                     )
                 )
@@ -53,7 +53,7 @@ public class TestSolutionFactory
                         {
                             new WaitInstruction( 1 ),
                             new WaitInstruction( 2 ),
-                            new TargetState( World.CompletionState.WON, 2 )
+                            new TargetState( World.CompletionState.WON )
                         }
                     )
                 )
@@ -74,7 +74,7 @@ public class TestSolutionFactory
                             new SelectInstruction( Token.Type.bash ),
                             new PlaceTokenInstruction( 1, 1 ),
                             new WaitInstruction( 3 ),
-                            new TargetState( World.CompletionState.WON, 1 )
+                            new TargetState( World.CompletionState.WON )
                         }
                     )
                 )
@@ -94,7 +94,7 @@ public class TestSolutionFactory
                         {
                             new SelectInstruction( Token.Type.bridge ),
                             new WaitInstruction( 1 ),
-                            new TargetState( World.CompletionState.LOST, 1 )
+                            new TargetState( World.CompletionState.LOST )
                         }
                     )
                 )
@@ -115,10 +115,7 @@ public class TestSolutionFactory
                             new SelectInstruction( Token.Type.bridge ),
                             new WaitInstruction( 1 ),
                             new PlaceTokenInstruction( 22, 40 ),
-                            new TargetState(
-                                World.CompletionState.WON,
-                                TargetState.INSTRUCTION_INDEX_NOT_SPECIFIED
-                            )
+                            new TargetState( World.CompletionState.WON )
                         }
                     )
                 )

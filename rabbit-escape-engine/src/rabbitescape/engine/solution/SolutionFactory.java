@@ -104,8 +104,7 @@ public class SolutionFactory
         if ( COMPLETION_STATES.contains( instructionString ) )
         {
             return new TargetState(
-                CompletionState.valueOf( instructionString ),
-                instructionIndex );
+                CompletionState.valueOf( instructionString ) );
         }
         else if ( WAIT_REGEX.matcher( instructionString ).matches() )
         {
