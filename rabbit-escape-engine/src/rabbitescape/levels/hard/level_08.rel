@@ -5,6 +5,7 @@
 :hint1=There are not enough bridges to get over all the\ngaps.
 :hint2=The platform has been built to a high standard.\nLovely and thick.
 :hint3=Bridge to the platform, aiming for the upper row,\nnot the top. Bash through.
+:solution.1=bridge;(7,6);bash;22;(10,3);51;WON
 :num_rabbits=1
 :num_to_save=1
 :bridge=3
