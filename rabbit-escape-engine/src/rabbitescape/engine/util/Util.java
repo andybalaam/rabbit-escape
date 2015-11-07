@@ -656,8 +656,23 @@ public class Util
         return enumerate1( Arrays.asList( array ) );
     }
 
-    public static <T> Iterable<IdxObj<T>> enumerate1(
-        final Iterable<T> i )
+    public static <T> Iterable<IdxObj<T>> enumerate( final T[] array )
+    {
+        return enumerate( Arrays.asList( array ) );
+    }
+
+    public static <T> Iterable<IdxObj<T>> enumerate1( final Iterable<T> i )
+    {
+        return enumerateN( i, 1 );
+    }
+
+    public static <T> Iterable<IdxObj<T>> enumerate( final Iterable<T> i )
+    {
+        return enumerateN( i, 0 );
+    }
+
+    private static <T> Iterable<IdxObj<T>> enumerateN(
+        final Iterable<T> i, final int startAtIndex )
     {
         return new Iterable<IdxObj<T>>()
         {
@@ -667,7 +682,7 @@ public class Util
                 return new Iterator<IdxObj<T>>()
                 {
                     private final Iterator<T> it = i.iterator();
-                    private int index = 0; // So first index will be 1
+                    private int index = startAtIndex - 1;
 
                     @Override
                     public boolean hasNext()
