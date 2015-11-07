@@ -600,74 +600,74 @@ public class Util
         return ret;
     }
 
-    public static class Pair<F, S>
+    public static class IdxObj<T>
     {
-        public static <F, S> Pair<F, S> make( F first, S second )
+        public static <T> IdxObj<T> make( int index, T object )
         {
-            return new Pair<F, S>( first, second );
+            return new IdxObj<T>( index, object );
         }
 
-        public final F first;
-        public final S second;
+        public final int index;
+        public final T object;
 
-        public Pair( F first, S second )
+        public IdxObj( int index, T object )
         {
-            if ( first == null || second == null )
+            if ( object == null )
             {
                 throw new NullPointerException();
             }
 
-            this.first = first;
-            this.second = second;
+            this.index = index;
+            this.object = object;
         }
 
         @Override
         public int hashCode()
         {
-            return 31 * ( 31 + first.hashCode() ) + second.hashCode();
+            return 31 * ( 31 + index ) + object.hashCode();
         }
 
         @Override
         public boolean equals( Object otherObj )
         {
-            if ( ! ( otherObj instanceof Pair ) )
+            if ( ! ( otherObj instanceof IdxObj ) )
             {
                 return false;
             }
 
             @SuppressWarnings( "unchecked" )
-            Pair<F, S> other = (Pair<F, S>)otherObj;
+            IdxObj<T> other = (IdxObj<T>)otherObj;
 
             return (
-                   first.equals( other.first )
-                && second.equals( other.second )
+                   index == other.index
+                && object.equals( other.object )
             );
         }
 
         @Override
         public String toString()
         {
-            return "Pair( " + first + ", " + second + " )";
+            return "IdxObj( " + index + ", " + object + " )";
         }
     }
 
-    public static <T> Iterable<Pair<Integer, T>> enumerate( final T[] array )
+    public static <T> Iterable<IdxObj<T>> enumerate1( final T[] array )
     {
-        return enumerate( Arrays.asList( array ) );
+        return enumerate1( Arrays.asList( array ) );
     }
 
-    public static <T> Iterable<Pair<Integer, T>> enumerate(
+    public static <T> Iterable<IdxObj<T>> enumerate1(
         final Iterable<T> i )
     {
-        return new Iterable<Pair<Integer, T>>()
+        return new Iterable<IdxObj<T>>()
         {
             @Override
-            public Iterator<Pair<Integer, T>> iterator()
+            public Iterator<IdxObj<T>> iterator()
             {
-                return new Iterator<Pair<Integer, T>>()
+                return new Iterator<IdxObj<T>>()
                 {
                     private final Iterator<T> it = i.iterator();
-                    private int index = -1;
+                    private int index = 0; // So first index will be 1
 
                     @Override
                     public boolean hasNext()
@@ -676,13 +676,13 @@ public class Util
                     }
 
                     @Override
-                    public Pair<Integer, T> next()
+                    public IdxObj<T> next()
                     {
                         // If next throws, we don't update index either.
                         T n = it.next();
                         ++index;
 
-                        return Pair.make( index, n );
+                        return IdxObj.make( index, n );
                     }
 
                     @Override

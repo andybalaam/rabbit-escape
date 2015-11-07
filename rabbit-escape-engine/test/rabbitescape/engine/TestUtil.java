@@ -816,8 +816,8 @@ public class TestUtil
     @Test
     public void Identical_Pairs_are_equal()
     {
-        Pair<String, Integer> p1 = Pair.make( "x", 3 );
-        Pair<String, Integer> p2 = Pair.make( "x", 3 );
+        IdxObj<String> p1 = IdxObj.make( 3, "x" );
+        IdxObj<String> p2 = IdxObj.make( 3, "x" );
 
         assertThat( p1, equalTo( p2 ) );
         assertThat( p1.hashCode(), equalTo( p2.hashCode() ) );
@@ -826,9 +826,9 @@ public class TestUtil
     @Test
     public void Different_Pairs_are_unequal()
     {
-        Pair<String, Integer> p1 = Pair.make( "x", 3 );
-        Pair<String, Integer> p2 = Pair.make( "x", 5 );
-        Pair<String, Integer> p3 = Pair.make( "y", 3 );
+        IdxObj<String> p1 = IdxObj.make( 3, "x" );
+        IdxObj<String> p2 = IdxObj.make( 5, "x" );
+        IdxObj<String> p3 = IdxObj.make( 3, "y" );
 
         assertThat( p1, not( equalTo( p2 ) ) );
         assertThat( p1, not( equalTo( p3 ) ) );
@@ -842,11 +842,9 @@ public class TestUtil
     public void Enumerating_an_empty_list_gives_empty_list()
     {
         assertThat(
-            list( enumerate( new ArrayList<String>() ) ),
+            list( enumerate1( new ArrayList<String>() ) ),
             equalTo(
-                (List<Pair<Integer, String>>)
-                    new ArrayList<Pair<Integer, String>>()
-            )
+                (List<IdxObj<String>>)new ArrayList<IdxObj<String>>() )
         );
     }
 
@@ -854,12 +852,12 @@ public class TestUtil
     public void Enumerating_a_list_gives_each_item_with_numbers()
     {
         assertThat(
-            list( enumerate( list( new String[] { "x", "y", "z" } ) ) ),
+            list( enumerate1( list( new String[] { "x", "y", "z" } ) ) ),
             equalTo(
                 Arrays.asList(
-                      Pair.make( 0, "x" )
-                    , Pair.make( 1, "y" )
-                    , Pair.make( 2, "z" )
+                      IdxObj.make( 1, "x" )
+                    , IdxObj.make( 2, "y" )
+                    , IdxObj.make( 3, "z" )
                 )
             )
         );
@@ -869,12 +867,12 @@ public class TestUtil
     public void Enumerating_an_array_gives_each_item_with_numbers()
     {
         assertThat(
-            list( enumerate( new String[] { "x", "y", "z" } ) ),
+            list( enumerate1( new String[] { "x", "y", "z" } ) ),
             equalTo(
                 Arrays.asList(
-                      Pair.make( 0, "x" )
-                    , Pair.make( 1, "y" )
-                    , Pair.make( 2, "z" )
+                      IdxObj.make( 1, "x" )
+                    , IdxObj.make( 2, "y" )
+                    , IdxObj.make( 3, "z" )
                 )
             )
         );
