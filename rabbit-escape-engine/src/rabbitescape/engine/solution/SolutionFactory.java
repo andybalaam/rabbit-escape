@@ -25,46 +25,67 @@ public class SolutionFactory
     private static final List<String> TOKEN_TYPES =
         toStringList( Type.values() );
 
-    public static Solution create( String solution )
+    public static Solution create( String solutionString )
     {
-        String[] stringSteps = split( solution, STEP_DELIMITER );
+        return expand( parse( solutionString ) );
+    }
 
-        List<SolutionStep> steps = new ArrayList<>();
-        for ( int i = 0; i < stringSteps.length; i++ )
+    private static Solution expand( Solution solution )
+    {
+        List<SolutionStep> expandedSteps = new ArrayList<SolutionStep>();
+
+        for ( IdxObj<SolutionStep> step : enumerate( solution.steps ) )
         {
-            SolutionStep step = createStep( stringSteps[i] );
-
             // Wait one step after every semicolon (unless the last instruction
             // was a wait instruction).
+
+            SolutionStep newStep = step.object;
+            Instruction last = newStep.lastInstruction();
+
             if (
-                   ! ( step.lastInstruction() instanceof WaitInstruction )
+                   ! ( last instanceof WaitInstruction )
                 && (
-                       ( i < stringSteps.length - 1 )
-                    || ! ( step.lastInstruction() instanceof TargetState )
+                       ( step.index < solution.steps.length - 1 )
+                    || ! ( last instanceof TargetState )
                 )
             )
             {
-                step = new SolutionStep(
+                newStep = new SolutionStep(
                     concat(
-                        step.instructions,
+                        step.object.instructions,
                         new Instruction[] { new WaitInstruction( 1 ) }
                     )
                 );
             }
 
-            steps.add( step );
+            expandedSteps.add( newStep );
         }
 
         // If the last instruction is not a validation step then assume this was
         // a 'normal' winning solution.
-        if ( steps.size() > 0
+        if ( expandedSteps.size() > 0
             && !(
-                steps.get( steps.size() - 1 ).lastInstruction()
+                expandedSteps.get( expandedSteps.size() - 1 ).lastInstruction()
                     instanceof ValidationInstruction )
             )
         {
-            steps.add(
+            expandedSteps.add(
                 new SolutionStep( new TargetState( CompletionState.WON ) ) );
+        }
+
+        return new Solution(
+            expandedSteps.toArray( new SolutionStep[ expandedSteps.size() ] ) );
+    }
+
+    public static Solution parse( String solution )
+    {
+        String[] stringSteps = split( solution, STEP_DELIMITER );
+
+        List<SolutionStep> steps = new ArrayList<>();
+
+        for ( int i = 0; i < stringSteps.length; i++ )
+        {
+            steps.add( createStep( stringSteps[i] ) );
         }
 
         return new Solution(
