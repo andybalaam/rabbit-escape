@@ -599,4 +599,93 @@ public class Util
         }
         return ret;
     }
+
+    public static class Pair<F, S>
+    {
+        public static <F, S> Pair<F, S> make( F first, S second )
+        {
+            return new Pair<F, S>( first, second );
+        }
+
+        public final F first;
+        public final S second;
+
+        public Pair( F first, S second )
+        {
+            if ( first == null || second == null )
+            {
+                throw new NullPointerException();
+            }
+
+            this.first = first;
+            this.second = second;
+        }
+
+        @Override
+        public int hashCode()
+        {
+            return 31 * ( 31 + first.hashCode() ) + second.hashCode();
+        }
+
+        @Override
+        public boolean equals( Object otherObj )
+        {
+            if ( ! ( otherObj instanceof Pair ) )
+            {
+                return false;
+            }
+
+            @SuppressWarnings( "unchecked" )
+            Pair<F, S> other = (Pair<F, S>)otherObj;
+
+            return (
+                   first.equals( other.first )
+                && second.equals( other.second )
+            );
+        }
+
+        @Override
+        public String toString()
+        {
+            return "Pair( " + first + ", " + second + " )";
+        }
+    }
+
+    public static <T> Iterable<Pair<Integer, T>> enumerate( final Iterable<T> i )
+    {
+        return new Iterable<Pair<Integer, T>>()
+        {
+            @Override
+            public Iterator<Pair<Integer, T>> iterator()
+            {
+                return new Iterator<Pair<Integer, T>>()
+                {
+                    private final Iterator<T> it = i.iterator();
+                    private int index = -1;
+
+                    @Override
+                    public boolean hasNext()
+                    {
+                        return it.hasNext();
+                    }
+
+                    @Override
+                    public Pair<Integer, T> next()
+                    {
+                        // If next throws, we don't update index either.
+                        T n = it.next();
+                        ++index;
+
+                        return Pair.make( index, n );
+                    }
+
+                    @Override
+                    public void remove()
+                    {
+                        throw new UnsupportedOperationException();
+                    }
+                };
+            }
+        };
+    }
 }
