@@ -51,7 +51,8 @@ public class SolutionFactory
             instructions.add( new TargetState( CompletionState.WON ) );
         }
 
-        return new Solution( instructions );
+        return new Solution(
+            instructions.toArray( new Instruction[ instructions.size() ] ) );
     }
 
     public static List<Instruction> createTimeStep( String timeStepString )

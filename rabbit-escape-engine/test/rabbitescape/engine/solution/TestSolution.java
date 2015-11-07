@@ -3,7 +3,6 @@ package rabbitescape.engine.solution;
 import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.*;
 
-import java.util.Arrays;
 import org.junit.*;
 
 import rabbitescape.engine.Token;
@@ -54,29 +53,19 @@ public class TestSolution
     private static Solution makeSolution( int waitTime )
     {
         return new Solution(
-            Arrays.asList(
-                new Instruction[]
-                {
-                      new WaitInstruction( waitTime )
-                    , new PlaceTokenInstruction( 3, 2 )
-                    , new SelectInstruction( Token.Type.block )
-                    , new TargetState( World.CompletionState.RUNNING )
-                }
-            )
+              new WaitInstruction( waitTime )
+            , new PlaceTokenInstruction( 3, 2 )
+            , new SelectInstruction( Token.Type.block )
+            , new TargetState( World.CompletionState.RUNNING )
         );
     }
 
     private static Solution makeShortSolution( int waitTime )
     {
         return new Solution(
-            Arrays.asList(
-                new Instruction[]
-                {
-                      new WaitInstruction( waitTime )
-                    , new PlaceTokenInstruction( 3, 2 )
-                    , new SelectInstruction( Token.Type.block )
-                }
-            )
+              new WaitInstruction( waitTime )
+            , new PlaceTokenInstruction( 3, 2 )
+            , new SelectInstruction( Token.Type.block )
         );
     }
 }

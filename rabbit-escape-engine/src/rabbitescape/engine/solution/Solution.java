@@ -1,15 +1,16 @@
 package rabbitescape.engine.solution;
 
+import static rabbitescape.engine.util.Util.*;
+
 import java.util.Arrays;
-import java.util.List;
 
 import rabbitescape.engine.util.Util;
 
 public class Solution
 {
-    public final List<Instruction> instructions;
+    public final Instruction[] instructions;
 
-    public Solution( List<Instruction> instructions )
+    public Solution( Instruction... instructions )
     {
         this.instructions = instructions;
     }
@@ -34,7 +35,9 @@ public class Solution
     @Override
     public String toString()
     {
-        return "Solution( " + Util.join( ", ", instructions ) + ")";
+        return "Solution( "
+            + Util.join( ", ", toStringList( instructions ) )
+            + ")";
     }
 
     @Override
@@ -46,18 +49,12 @@ public class Solution
         }
         Solution otherSolution = (Solution)other;
 
-        return Arrays.deepEquals(
-            instructionsArray(), otherSolution.instructionsArray() );
-    }
-
-    private Instruction[] instructionsArray()
-    {
-        return instructions.toArray( new Instruction[ instructions.size() ] );
+        return Arrays.deepEquals( instructions, otherSolution.instructions );
     }
 
     @Override
     public int hashCode()
     {
-        return Arrays.deepHashCode( instructionsArray() );
+        return Arrays.deepHashCode( instructions );
     }
 }

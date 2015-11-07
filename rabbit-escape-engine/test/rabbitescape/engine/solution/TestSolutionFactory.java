@@ -1,6 +1,5 @@
 package rabbitescape.engine.solution;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 
 import org.junit.*;
@@ -19,7 +18,7 @@ public class TestSolutionFactory
     {
         assertThat(
             SolutionFactory.create( "" ),
-            equalTo( new Solution( new ArrayList<Instruction>() ) )
+            equalTo( new Solution() )
         );
     }
 
@@ -30,12 +29,7 @@ public class TestSolutionFactory
             SolutionFactory.create( "WON" ),
             equalTo(
                 new Solution(
-                    Arrays.asList(
-                        new Instruction[]
-                        {
-                            new TargetState( World.CompletionState.WON )
-                        }
-                    )
+                    new TargetState( World.CompletionState.WON )
                 )
             )
         );
@@ -48,14 +42,9 @@ public class TestSolutionFactory
             SolutionFactory.create( "1;2;WON" ),
             equalTo(
                 new Solution(
-                    Arrays.asList(
-                        new Instruction[]
-                        {
-                            new WaitInstruction( 1 ),
-                            new WaitInstruction( 2 ),
-                            new TargetState( World.CompletionState.WON )
-                        }
-                    )
+                    new WaitInstruction( 1 ),
+                    new WaitInstruction( 2 ),
+                    new TargetState( World.CompletionState.WON )
                 )
             )
         );
@@ -68,15 +57,10 @@ public class TestSolutionFactory
             SolutionFactory.create( "bash&(1,1)&3;WON" ),
             equalTo(
                 new Solution(
-                    Arrays.asList(
-                        new Instruction[]
-                        {
-                            new SelectInstruction( Token.Type.bash ),
-                            new PlaceTokenInstruction( 1, 1 ),
-                            new WaitInstruction( 3 ),
-                            new TargetState( World.CompletionState.WON )
-                        }
-                    )
+                    new SelectInstruction( Token.Type.bash ),
+                    new PlaceTokenInstruction( 1, 1 ),
+                    new WaitInstruction( 3 ),
+                    new TargetState( World.CompletionState.WON )
                 )
             )
         );
@@ -89,14 +73,9 @@ public class TestSolutionFactory
             SolutionFactory.create( "bridge;LOST" ),
             equalTo(
                 new Solution(
-                    Arrays.asList(
-                        new Instruction[]
-                        {
-                            new SelectInstruction( Token.Type.bridge ),
-                            new WaitInstruction( 1 ),
-                            new TargetState( World.CompletionState.LOST )
-                        }
-                    )
+                    new SelectInstruction( Token.Type.bridge ),
+                    new WaitInstruction( 1 ),
+                    new TargetState( World.CompletionState.LOST )
                 )
             )
         );
@@ -109,15 +88,10 @@ public class TestSolutionFactory
             SolutionFactory.create( "bridge;(22,40)" ),
             equalTo(
                 new Solution(
-                    Arrays.asList(
-                        new Instruction[]
-                        {
-                            new SelectInstruction( Token.Type.bridge ),
-                            new WaitInstruction( 1 ),
-                            new PlaceTokenInstruction( 22, 40 ),
-                            new TargetState( World.CompletionState.WON )
-                        }
-                    )
+                    new SelectInstruction( Token.Type.bridge ),
+                    new WaitInstruction( 1 ),
+                    new PlaceTokenInstruction( 22, 40 ),
+                    new TargetState( World.CompletionState.WON )
                 )
             )
         );

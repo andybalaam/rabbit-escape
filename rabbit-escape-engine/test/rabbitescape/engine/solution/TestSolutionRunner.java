@@ -4,8 +4,6 @@ import static org.junit.Assert.fail;
 import static org.hamcrest.MatcherAssert.*;
 import static org.hamcrest.CoreMatchers.*;
 
-import java.util.Arrays;
-
 import org.junit.Test;
 
 import rabbitescape.engine.Token;
@@ -282,63 +280,41 @@ public class TestSolutionRunner
 
     private Solution expectingSolution( CompletionState expected )
     {
-        return new Solution(
-            Arrays.asList( new Instruction[] { new TargetState( expected ) } )
-        );
+        return new Solution( new TargetState( expected ) );
     }
 
     private Solution waitFourSolution()
     {
         return new Solution(
-            Arrays.asList(
-                new Instruction[]
-                {
-                    new WaitInstruction( 1 ),
-                    new WaitInstruction( 2 ),
-                    new WaitInstruction( 2 )
-                }
-            )
+            new WaitInstruction( 1 ),
+            new WaitInstruction( 2 ),
+            new WaitInstruction( 2 )
         );
     }
 
     private Solution waitFiveThenLostSolution()
     {
         return new Solution(
-            Arrays.asList(
-                new Instruction[]
-                {
-                    new WaitInstruction( 5 ),
-                    new TargetState( CompletionState.LOST )
-                }
-            )
+            new WaitInstruction( 5 ),
+            new TargetState( CompletionState.LOST )
         );
     }
 
     private Solution useBash30Solution()
     {
         return new Solution(
-            Arrays.asList(
-                new Instruction[]
-                {
-                    new SelectInstruction( Token.Type.bash ),
-                    new PlaceTokenInstruction( 1, 0 ),
-                    new WaitInstruction( 1 ),
-                    new PlaceTokenInstruction( 3, 0 )
-                }
-            )
+            new SelectInstruction( Token.Type.bash ),
+            new PlaceTokenInstruction( 1, 0 ),
+            new WaitInstruction( 1 ),
+            new PlaceTokenInstruction( 3, 0 )
         );
     }
 
     private Solution useBash100Solution()
     {
         return new Solution(
-            Arrays.asList(
-                new Instruction[]
-                {
-                    new SelectInstruction( Token.Type.bash ),
-                    new PlaceTokenInstruction( 10, 0 )
-                }
-            )
+            new SelectInstruction( Token.Type.bash ),
+            new PlaceTokenInstruction( 10, 0 )
         );
     }
 }

@@ -160,7 +160,9 @@ public class InputHandler
 
     public String solution()
     {
-        Solution s = new Solution( solution );
+        Solution s = new Solution(
+            solution.toArray( new Instruction[ solution.size() ] ) );
+
         return s.relFormat();
     }
 }
