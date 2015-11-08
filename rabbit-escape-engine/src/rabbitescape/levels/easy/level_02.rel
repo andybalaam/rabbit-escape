@@ -9,6 +9,7 @@
 :num_to_save=1
 :bash=10
 :music=tryad-witness
+:solution.1=bash;(7,2);until
 ###########
 #   Q   # #
 # /\    # #

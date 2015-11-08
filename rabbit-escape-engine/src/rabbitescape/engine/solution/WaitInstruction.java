@@ -1,6 +1,6 @@
 package rabbitescape.engine.solution;
 
-public class WaitInstruction implements Instruction
+public class WaitInstruction implements PassTimeInstruction
 {
     public final int steps;
 

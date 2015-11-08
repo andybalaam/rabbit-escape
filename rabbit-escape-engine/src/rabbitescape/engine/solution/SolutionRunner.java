@@ -90,6 +90,17 @@ public class SolutionRunner
                     Type type = sandboxGame.getSelectedType();
                     sandboxGame.getWorld().changes.addToken( p.x, p.y, type );
                 }
+
+                @Override
+                public void caseUntilInstruction( UntilInstruction u )
+                {
+                    World world = sandboxGame.getWorld();
+                    for ( int i = 0; world.completionState() == World.CompletionState.RUNNING
+                        && i < u.maximumSteps; i++ )
+                    {
+                        world.step();
+                    }
+                }
             }
         );
     }

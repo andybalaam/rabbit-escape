@@ -8,6 +8,7 @@ import java.util.List;
 import static rabbitescape.engine.i18n.Translation.*;
 import rabbitescape.engine.err.ExceptionTranslation;
 import rabbitescape.engine.err.RabbitEscapeException;
+import rabbitescape.engine.solution.PassTimeInstruction;
 import rabbitescape.engine.solution.Instruction;
 import rabbitescape.engine.solution.SandboxGame;
 import rabbitescape.engine.solution.Solution;
@@ -142,7 +143,7 @@ public class InputHandler
 
             Instruction lastInstruction = instructions
                 .get( instructions.size() - 1 );
-            if ( !( lastInstruction instanceof WaitInstruction ) )
+            if ( !( lastInstruction instanceof PassTimeInstruction )  )
             {
                 WaitInstruction waitInstruction = new WaitInstruction( 1 );
                 instructions.add( waitInstruction );

@@ -23,6 +23,7 @@ public class SolutionFactory
 
     private static final List<String> TOKEN_TYPES =
         Util.toStringList( Type.values() );
+    public static final String UNTIL_INSTRUCTION = "until";
 
     public static Solution create( String solution, int solutionId )
     {
@@ -117,6 +118,10 @@ public class SolutionFactory
         else if ( TOKEN_TYPES.contains( instructionString ) )
         {
             return new SelectInstruction( Type.valueOf( instructionString ) );
+        }
+        else if ( instructionString.equals( UNTIL_INSTRUCTION ) )
+        {
+            return new UntilInstruction();
         }
         else
         {
