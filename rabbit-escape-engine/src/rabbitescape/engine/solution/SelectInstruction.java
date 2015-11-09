@@ -11,6 +11,15 @@ public class SelectInstruction implements Instruction
         this.type = type;
     }
 
+    public String relFormat( boolean firstInStep )
+    {
+        if ( firstInStep )
+        {
+            return type.name();
+        }
+        return SolutionFactory.INSTRUCTION_DELIMITER + type.name();
+    }
+
     @Override
     public String toString()
     {

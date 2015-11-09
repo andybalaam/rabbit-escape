@@ -9,6 +9,28 @@ public class WaitInstruction implements Instruction
         this.steps = steps;
     }
 
+    public String relFormat( boolean firstInStep )
+    {
+        if ( firstInStep )
+        {
+            return String.valueOf( steps ) + SolutionFactory.STAGE_DELIMITER;
+        }
+        else if ( steps == 1 )
+        {
+            return SolutionFactory.STAGE_DELIMITER;
+        }
+        else if ( steps > 1 )
+        {
+            return SolutionFactory.STAGE_DELIMITER + String.valueOf( steps - 1 )
+                + SolutionFactory.STAGE_DELIMITER;
+        }
+        else
+        {
+            throw new IllegalArgumentException(
+                "Waiting for non-positive number of steps: " + steps );
+        }
+    }
+
     @Override
     public String toString()
     {
