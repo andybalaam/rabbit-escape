@@ -8,4 +8,5 @@ public interface InstructionTypeSwitch
 
     void casePlaceTokenInstruction(
         PlaceTokenInstruction placeTokenInstruction );
+    void caseUntilInstruction( UntilInstruction untilInstruction );
 }
