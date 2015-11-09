@@ -5,6 +5,7 @@
 :hint1=There are not enough bridges.
 :hint2=That's a nice thick roof.
 :hint3=Put a bridge token just before the first mine.\nExtend the bridge using a second bridge token. Bash at\nthe wall at the top. Convert the rabbit to a digger\nafter the mines.
+:solution.1=bridge;(6,6);11;(9,4);bash;10;(11,2);dig;38;(22,1);6;WON
 :num_rabbits=1
 :num_to_save=1
 :bridge=2

@@ -5,6 +5,7 @@
 :hint1=The fall is too great.
 :hint2=The rabbits need to dig together.
 :hint3=Place a dig token for the first rabbit, and\nexplode after 2-4 squares. Wait for all the\nrabbits to be trapped in the hole. Drop in a dig\ntoken.
+:solution.1=dig;(10,2);block;10;(10,5);dig;48;(10,2);36;WON
 :num_rabbits=10
 :num_to_save=8
 :rabbit_delay=5

@@ -5,6 +5,7 @@
 :hint1=They will need to climb the far wall.
 :hint2=Go over the top.
 :hint3=Bridge just before the downward slope. Climb the next wall.\nBridge on the slope over the second gap, bash the barrier,\nand drop down on the handy cheese wedges.
+:solution.1=bridge;(3,5);(7,2);bash;(10,1);climb;(5,4);(5,4);50;WON
 :num_rabbits=2
 :num_to_save=2
 :rabbit_delay=8

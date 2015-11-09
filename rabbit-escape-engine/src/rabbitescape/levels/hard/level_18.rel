@@ -5,6 +5,7 @@
 :hint1=Only one of them can possibly survive the fall.
 :hint2=Make the left rabbit dig straight above the little wall.
 :hint3=After dropping, build a bridge up to the exit platform\nfrom the right side. The right rabbit can bash\nout on to it.
+:solution.1=dig;(3,2);bridge;18;(15,8);7;(12,6);bash;6;(14,2);11;WON
 :num_rabbits=1
 :num_to_save=2
 :bridge=4
