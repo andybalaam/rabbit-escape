@@ -1,6 +1,6 @@
 package rabbitescape.engine.textworld;
 
-import static rabbitescape.engine.util.Util.concat;
+import static rabbitescape.engine.util.Util.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -20,6 +20,7 @@ import rabbitescape.engine.World;
 import rabbitescape.engine.WorldStatsListener;
 import rabbitescape.engine.util.Dimension;
 import rabbitescape.engine.util.VariantGenerator;
+import rabbitescape.engine.util.Util.IdxObj;
 
 public class TextWorldManip
 {
@@ -260,12 +261,10 @@ public class TextWorldManip
     private static void addMetaKeyArrayLines(
         List<String> ret, String name, String[] values )
     {
-        int i = 1;
-        for ( String value : values )
+        for ( IdxObj<String> value : enumerate1( values ) )
         {
-            ret.add( metaLine( name + "." + i, value ) );
-            ++i;
-	}
+            ret.add( metaLine( name + "." + value.index, value.object ) );
+        }
     }
 
     private static void abilityMetaLines( World world, List<String> ret )

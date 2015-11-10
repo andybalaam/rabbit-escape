@@ -120,6 +120,18 @@ public class Util
         return Arrays.asList( input );
     }
 
+    public static <T> List<T> list( Iterator<T> input )
+    {
+        List<T> ret = new ArrayList<>();
+
+        while ( input.hasNext() )
+        {
+            ret.add( input.next() );
+        }
+
+        return ret;
+    }
+
     public static String[] stringArray( List<String> list )
     {
         return list.toArray( new String[list.size()] );
@@ -598,5 +610,116 @@ public class Util
             ret.add( t.toString() );
         }
         return ret;
+    }
+
+    public static class IdxObj<T>
+    {
+        public static <T> IdxObj<T> make( int index, T object )
+        {
+            return new IdxObj<T>( index, object );
+        }
+
+        public final int index;
+        public final T object;
+
+        public IdxObj( int index, T object )
+        {
+            if ( object == null )
+            {
+                throw new NullPointerException();
+            }
+
+            this.index = index;
+            this.object = object;
+        }
+
+
+        @Override
+        public int hashCode()
+        {
+            return ( 31 * index ) + object.hashCode();
+        }
+
+        @Override
+        public boolean equals( Object otherObj )
+        {
+            if ( ! ( otherObj instanceof IdxObj ) )
+            {
+                return false;
+            }
+
+            @SuppressWarnings( "unchecked" )
+            IdxObj<T> other = (IdxObj<T>)otherObj;
+
+            return (
+                   index == other.index
+                && object.equals( other.object )
+            );
+        }
+
+        @Override
+        public String toString()
+        {
+            return "IdxObj( " + index + ", " + object + " )";
+        }
+    }
+
+    public static <T> Iterable<IdxObj<T>> enumerate1( final T[] array )
+    {
+        return enumerate1( Arrays.asList( array ) );
+    }
+
+    public static <T> Iterable<IdxObj<T>> enumerate( final T[] array )
+    {
+        return enumerate( Arrays.asList( array ) );
+    }
+
+    public static <T> Iterable<IdxObj<T>> enumerate1( final Iterable<T> i )
+    {
+        return enumerateN( i, 1 );
+    }
+
+    public static <T> Iterable<IdxObj<T>> enumerate( final Iterable<T> i )
+    {
+        return enumerateN( i, 0 );
+    }
+
+    private static <T> Iterable<IdxObj<T>> enumerateN(
+        final Iterable<T> i, final int startAtIndex )
+    {
+        return new Iterable<IdxObj<T>>()
+        {
+            @Override
+            public Iterator<IdxObj<T>> iterator()
+            {
+                return new Iterator<IdxObj<T>>()
+                {
+                    private final Iterator<T> it = i.iterator();
+                    private int index = startAtIndex - 1;
+
+                    @Override
+                    public boolean hasNext()
+                    {
+                        return it.hasNext();
+                    }
+
+                    @Override
+                    public IdxObj<T> next()
+                    {
+                        // If next throws, we don't update index either.
+                        T n = it.next();
+                        ++index;
+
+                        return IdxObj.make( index, n );
+                    }
+
+                    @Override
+                    public void remove()
+                    {
+                        throw new UnsupportedOperationException();
+                    }
+                };
+            }
+        };
     }
 }

@@ -1,34 +1,36 @@
 package rabbitescape.engine.solution;
 
+import static rabbitescape.engine.util.Util.*;
+
 import java.util.Arrays;
-import java.util.List;
 
 import rabbitescape.engine.util.Util;
 
 public class Solution
 {
-    public final int solutionId;
-    public final List<Instruction> instructions;
+    public final SolutionCommand[] commands;
 
-    public Solution( int solutionId, List<Instruction> instructions )
+    public Solution( SolutionCommand... commands )
     {
-        this.solutionId = solutionId;
-        this.instructions = instructions;
+        this.commands = commands;
     }
 
     public String relFormat()
     {
         StringBuilder sb = new StringBuilder();
-        boolean firstInStep = true;
-        Instruction previousInstruction = null;
-        for ( Instruction instruction : instructions )
+        SolutionAction previousAction = null;
+        for ( SolutionCommand command : commands )
         {
-            if (previousInstruction != null)
+            boolean firstInCommand = true;
+            for ( SolutionAction action : command.actions )
             {
-                firstInStep = (previousInstruction instanceof WaitInstruction);
+                if (previousAction != null)
+                {
+                    firstInCommand = (previousAction instanceof WaitAction);
+                }
+                sb.append( action.relFormat( firstInCommand ) );
+                previousAction = action;
             }
-            sb.append( instruction.relFormat( firstInStep ) );
-            previousInstruction = instruction;
         }
         return sb.toString();
     }
@@ -37,9 +39,8 @@ public class Solution
     public String toString()
     {
         return "Solution( "
-            + solutionId
-            + ", [ " + Util.join( ", ", instructions )
-            + " ] )";
+            + Util.join( ", ", toStringList( commands ) )
+            + " )";
     }
 
     @Override
@@ -51,22 +52,12 @@ public class Solution
         }
         Solution otherSolution = (Solution)other;
 
-        return (
-            solutionId == otherSolution.solutionId
-            &&
-            Arrays.deepEquals(
-                instructionsArray(), otherSolution.instructionsArray() )
-        );
-    }
-
-    private Instruction[] instructionsArray()
-    {
-        return instructions.toArray( new Instruction[ instructions.size() ] );
+        return Arrays.deepEquals( commands, otherSolution.commands );
     }
 
     @Override
     public int hashCode()
     {
-        return solutionId + Arrays.deepHashCode( instructionsArray() );
+        return Arrays.deepHashCode( commands );
     }
 }

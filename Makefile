@@ -190,7 +190,12 @@ versioncheck:
 	grep "version = \"${VERSION}\"" rabbit-escape-engine/src/rabbitescape/engine/menu/AboutText.java
 	grep "versionName \"${VERSION}\"" rabbit-escape-ui-android/app/build.gradle
 
-compile: no-make-warnings images sounds music animations levels versioncheck
+# Fails if we use java.awt in the engine code - this is not available on Android
+no-awt-in-engine:
+	! find rabbit-escape-engine/src -name "*.java" -print0 | xargs -0 grep 'java\.awt'
+	! find rabbit-escape-render/src -name "*.java" -print0 | xargs -0 grep 'java\.awt'
+
+compile: no-make-warnings images sounds music animations levels versioncheck no-awt-in-engine
 	ant compile
 
 clean: no-make-warnings

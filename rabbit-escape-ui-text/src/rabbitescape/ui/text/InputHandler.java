@@ -2,112 +2,26 @@ package rabbitescape.ui.text;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import static rabbitescape.engine.i18n.Translation.*;
+import static rabbitescape.engine.util.Util.*;
 import rabbitescape.engine.err.ExceptionTranslation;
 import rabbitescape.engine.err.RabbitEscapeException;
-import rabbitescape.engine.solution.Instruction;
+import rabbitescape.engine.solution.SolutionAction;
 import rabbitescape.engine.solution.SandboxGame;
 import rabbitescape.engine.solution.Solution;
+import rabbitescape.engine.solution.SolutionExceptions;
 import rabbitescape.engine.solution.SolutionFactory;
 import rabbitescape.engine.solution.SolutionRunner;
-import rabbitescape.engine.solution.WaitInstruction;
+import rabbitescape.engine.solution.WaitAction;
+import rabbitescape.engine.solution.SolutionCommand;
 
 public class InputHandler
 {
-    public static abstract class CommandCreationFailure
-        extends RabbitEscapeException
-    {
-        public CommandCreationFailure()
-        {
-        }
-
-        public CommandCreationFailure( Throwable cause )
-        {
-            super( cause );
-        }
-
-        private static final long serialVersionUID = 1L;
-    }
-
-    public static class WrongNumberOfParts extends CommandCreationFailure
-    {
-        public final String command;
-        public final int numberOfParts;
-
-        public WrongNumberOfParts( String command, int numberOfParts )
-        {
-            this.command = command;
-            this.numberOfParts = numberOfParts;
-        }
-
-        private static final long serialVersionUID = 1L;
-    }
-
-    public static class NonnumericCoordinate extends CommandCreationFailure
-    {
-        public final String command;
-        public final String coordinateName;
-        public final String coordinateValue;
-
-        public NonnumericCoordinate(
-            String command,
-            String coordinateName,
-            String coordinateValue,
-            NumberFormatException cause
-        )
-        {
-            super( cause );
-            this.command = command;
-            this.coordinateName = coordinateName;
-            this.coordinateValue = coordinateValue;
-        }
-
-        private static final long serialVersionUID = 1L;
-    }
-
-    public static class CoordinateOutsideWorld extends CommandCreationFailure
-    {
-        public final String command;
-        public final String coordinateName;
-        public final int coordinateValue;
-        public final int max;
-
-        public CoordinateOutsideWorld(
-            String command,
-            String coordinateName,
-            int coordinateValue,
-            int max
-        )
-        {
-            this.command = command;
-            this.coordinateName = coordinateName;
-            this.coordinateValue = coordinateValue;
-            this.max = max;
-        }
-
-        private static final long serialVersionUID = 1L;
-    }
-
-    public static class UnknownCommandName extends CommandCreationFailure
-    {
-        public final String command;
-        public final String commandName;
-
-        public UnknownCommandName( String command, String commandName )
-        {
-            this.command = command;
-            this.commandName = commandName;
-        }
-
-        private static final long serialVersionUID = 1L;
-    }
-
     private final SandboxGame sandboxGame;
     private final Terminal terminal;
-    private final List<Instruction> solution;
+    private final List<SolutionCommand> solution;
 
     public InputHandler( SandboxGame sandboxGame, Terminal terminal )
     {
@@ -116,7 +30,7 @@ public class InputHandler
         this.solution = new ArrayList<>();
     }
 
-    public boolean handle()
+    public boolean handle( int commandIndex )
     {
         String input = input();
 
@@ -137,23 +51,39 @@ public class InputHandler
 
         try
         {
-            List<Instruction> instructions = SolutionFactory.createTimeStep(
-                input, 1, 0 );
+            SolutionCommand command = SolutionFactory.createCommand( input );
 
-            Instruction lastInstruction = instructions
-                .get( instructions.size() - 1 );
-            if ( !( lastInstruction instanceof WaitInstruction ) )
+            if ( command.actions.length == 0 )
             {
-                WaitInstruction waitInstruction = new WaitInstruction( 1 );
-                instructions.add( waitInstruction );
+                return fail( t( "Unexpected problem: no Action" ) );
             }
 
-            for ( Instruction instr : instructions )
+            SolutionAction lastAction = command.actions[
+                command.actions.length - 1 ];
+
+            if ( !( lastAction instanceof WaitAction ) )
             {
-                SolutionRunner.performInstruction( instr, sandboxGame );
+                WaitAction waitAction = new WaitAction( 1 );
+                command = new SolutionCommand(
+                    concat(
+                        command.actions,
+                        new SolutionAction[] { waitAction }
+                    )
+                );
             }
 
-            append( instructions );
+            for ( SolutionAction action : command.actions )
+            {
+                SolutionRunner.performAction( action, sandboxGame );
+            }
+
+            append( command );
+        }
+        catch ( SolutionExceptions.ProblemRunningSolution e )
+        {
+            e.commandIndex = commandIndex;
+            e.solutionId = 1;
+            return fail( ExceptionTranslation.translate( e, terminal.locale ) );
         }
         catch ( RabbitEscapeException e )
         {
@@ -163,43 +93,48 @@ public class InputHandler
         return true;
     }
 
-    private void append( List<Instruction> instructions )
+    private void append( SolutionCommand newStep )
     {
-        if ( !solution.isEmpty() && instructions.size() == 1 )
+        if ( !solution.isEmpty() )
         {
-            Instruction lastInstruction = solution.get( solution.size() - 1 );
-            Instruction combinedInstruction = tryToSimplify(
-                lastInstruction, instructions.get( 0 ) );
-            if ( combinedInstruction != null )
+            SolutionCommand lastExistingStep = solution.get( solution.size() - 1 );
+
+            SolutionCommand combinedStep = tryToSimplify(
+                lastExistingStep, newStep );
+
+            if ( combinedStep != null )
             {
-                solution.set( solution.size() - 1,
-                    combinedInstruction );
+                solution.set( solution.size() - 1, combinedStep );
             }
             else
             {
-                solution.addAll( instructions );
+                solution.add( newStep );
             }
         }
         else
         {
-            solution.addAll( instructions );
+            solution.add( newStep );
         }
     }
 
     /**
-     * Try to combine two instructions. If this is not possible then return
-     * null.
+     * Try to combine two commands. If this is not possible then return null.
      */
-    private Instruction tryToSimplify(
-        Instruction instruction1,
-        Instruction instruction2 )
+    private SolutionCommand tryToSimplify(
+        SolutionCommand existingCmd, SolutionCommand newCmd )
     {
-        if ( instruction1 instanceof WaitInstruction
-            && instruction2 instanceof WaitInstruction )
+        SolutionAction action1 = existingCmd.actions[0];
+        SolutionAction action2 = newCmd.actions[0];
+
+        if (
+               action1 instanceof WaitAction
+            && action2 instanceof WaitAction
+        )
         {
-            WaitInstruction wait1 = (WaitInstruction)instruction1;
-            WaitInstruction wait2 = (WaitInstruction)instruction2;
-            return new WaitInstruction( wait1.steps + wait2.steps );
+            WaitAction wait1 = (WaitAction)action1;
+            WaitAction wait2 = (WaitAction)action2;
+            return new SolutionCommand(
+                new WaitAction( wait1.steps + wait2.steps ) );
         }
         return null;
     }
@@ -242,7 +177,9 @@ public class InputHandler
 
     public String solution()
     {
-        Solution s = new Solution( 0, solution );
+        Solution s = new Solution(
+            solution.toArray( new SolutionCommand[ solution.size() ] ) );
+
         return s.relFormat();
     }
 }

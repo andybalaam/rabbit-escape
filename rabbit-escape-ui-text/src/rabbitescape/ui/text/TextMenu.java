@@ -207,12 +207,9 @@ public class TextMenu
     {
         StringBuilder ret = new StringBuilder();
 
-        int i = 1;
-        for ( MenuItem item : menu.items )
+        for ( IdxObj<MenuItem> item : enumerate1( menu.items ) )
         {
-            ret.append( renderItem( i, item ) );
-
-            ++i;
+            ret.append( renderItem( item.index, item.object ) );
         }
 
         return ret.toString();

@@ -10,26 +10,20 @@ import rabbitescape.engine.World;
 public class TestTargetState
 {
     @Test
-    public void Equal_instructions_are_equal()
+    public void Equal_actions_are_equal()
     {
-        TargetState instr1 = new TargetState(
-            World.CompletionState.RUNNING, 1, 2 );
-
-        TargetState instr2 = new TargetState(
-            World.CompletionState.RUNNING, 1, 2 );
+        AssertStateAction instr1 = new AssertStateAction( World.CompletionState.RUNNING );
+        AssertStateAction instr2 = new AssertStateAction( World.CompletionState.RUNNING );
 
         assertThat( instr1, equalTo( instr2 ) );
         assertThat( instr1.hashCode(), equalTo( instr2.hashCode() ) );
     }
 
     @Test
-    public void Different_instructions_are_unequal()
+    public void Different_actions_are_unequal()
     {
-        TargetState instr1 = new TargetState(
-            World.CompletionState.RUNNING, 1, 2 );
-
-        TargetState instr2 = new TargetState(
-            World.CompletionState.LOST, 1, 2 );
+        AssertStateAction instr1 = new AssertStateAction( World.CompletionState.RUNNING );
+        AssertStateAction instr2 = new AssertStateAction( World.CompletionState.LOST );
 
         assertThat( instr1, not( equalTo( instr2 ) ) );
 

@@ -29,6 +29,7 @@ import javax.swing.SwingUtilities;
 import javax.swing.SwingWorker;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
+import static rabbitescape.engine.util.Util.*;
 import static rabbitescape.engine.i18n.Translation.*;
 import static rabbitescape.ui.swing.SwingConfigSetup.*;
 
@@ -48,6 +49,7 @@ import rabbitescape.engine.menu.Menu;
 import rabbitescape.engine.menu.MenuDefinition;
 import rabbitescape.engine.menu.MenuItem;
 import rabbitescape.engine.util.RealFileSystem;
+import rabbitescape.engine.util.Util.IdxObj;
 import rabbitescape.render.BitmapCache;
 
 public class MenuUi
@@ -229,17 +231,17 @@ public class MenuUi
         label.setPreferredSize( buttonSize );
         menuPanel.add( label, constraints( 0 ) );
 
-        int i = 1;
-        for ( MenuItem item : menu.items )
+        for ( IdxObj<MenuItem> item : enumerate1( menu.items ) )
         {
-            JButton button = new JButton( t( item.name, item.nameParams ) );
+            JButton button = new JButton(
+                t( item.object.name, item.object.nameParams ) );
+
             button.setBackground( buttonColor );
-            button.addActionListener( new ButtonListener( item ) );
+            button.addActionListener( new ButtonListener( item.object ) );
             button.setVisible( true );
-            button.setEnabled( item.enabled );
+            button.setEnabled( item.object.enabled );
             button.setPreferredSize( buttonSize );
-            menuPanel.add( button, constraints( i ) );
-            ++i;
+            menuPanel.add( button, constraints( item.index ) );
         }
 
         sound.setMusic( "tryad-let_them_run" );

@@ -2,6 +2,7 @@ package rabbitescape.engine;
 
 import static org.hamcrest.MatcherAssert.*;
 import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.not;
 import static org.junit.Assert.fail;
 
 import static rabbitescape.engine.util.Util.*;
@@ -266,12 +267,34 @@ public class TestUtil
     }
 
     @Test
+    public void Empty_iterator_builds_into_empty_list()
+    {
+        Iterable<String> input = Arrays.asList( new String[] {} );
+
+        assertThat(
+            stringArray( list( input.iterator() ) ),
+            equalTo( new String[] {} )
+        );
+    }
+
+    @Test
     public void Build_list_from_iterable_with_list()
     {
         Iterable<String> input = Arrays.asList( "a", "c", "b" );
 
         assertThat(
             stringArray( list( input ) ),
+            equalTo( new String[] { "a", "c", "b" } )
+        );
+    }
+
+    @Test
+    public void Build_list_from_iterator_with_list()
+    {
+        Iterable<String> input = Arrays.asList( "a", "c", "b" );
+
+        assertThat(
+            stringArray( list( input.iterator() ) ),
             equalTo( new String[] { "a", "c", "b" } )
         );
     }
@@ -809,6 +832,112 @@ public class TestUtil
         assertThat(
             toStringList( Foo.values() ),
             equalTo( list( new String[] { "A", "bc", "d" } ) )
+        );
+    }
+
+    @Test
+    public void Identical_IdxObjs_are_equal()
+    {
+        IdxObj<String> p1 = IdxObj.make( 3, "x" );
+        IdxObj<String> p2 = IdxObj.make( 3, "x" );
+
+        assertThat( p1, equalTo( p2 ) );
+        assertThat( p1.hashCode(), equalTo( p2.hashCode() ) );
+    }
+
+    @Test
+    public void Different_IdxObjs_are_unequal()
+    {
+        IdxObj<String> p1 = IdxObj.make( 3, "x" );
+        IdxObj<String> p2 = IdxObj.make( 5, "x" );
+        IdxObj<String> p3 = IdxObj.make( 3, "y" );
+
+        assertThat( p1, not( equalTo( p2 ) ) );
+        assertThat( p1, not( equalTo( p3 ) ) );
+
+        // Doesn't strictly have to be true, but would be nice
+        assertThat( p1.hashCode(), not( equalTo( p2.hashCode() ) ) );
+        assertThat( p1.hashCode(), not( equalTo( p3.hashCode() ) ) );
+    }
+
+    @Test
+    public void Enumerating1_an_empty_list_gives_empty_list()
+    {
+        assertThat(
+            list( enumerate1( new ArrayList<String>() ) ),
+            equalTo(
+                (List<IdxObj<String>>)new ArrayList<IdxObj<String>>() )
+        );
+    }
+
+    @Test
+    public void Enumerating1_a_list_gives_each_item_with_numbers()
+    {
+        assertThat(
+            list( enumerate1( list( new String[] { "x", "y", "z" } ) ) ),
+            equalTo(
+                Arrays.asList(
+                      IdxObj.make( 1, "x" )
+                    , IdxObj.make( 2, "y" )
+                    , IdxObj.make( 3, "z" )
+                )
+            )
+        );
+    }
+
+    @Test
+    public void Enumerating1_an_array_gives_each_item_with_numbers()
+    {
+        assertThat(
+            list( enumerate1( new String[] { "x", "y", "z" } ) ),
+            equalTo(
+                Arrays.asList(
+                      IdxObj.make( 1, "x" )
+                    , IdxObj.make( 2, "y" )
+                    , IdxObj.make( 3, "z" )
+                )
+            )
+        );
+    }
+
+
+    @Test
+    public void Enumerating_an_empty_list_gives_empty_list()
+    {
+        assertThat(
+            list( enumerate( new ArrayList<String>() ) ),
+            equalTo(
+                (List<IdxObj<String>>)new ArrayList<IdxObj<String>>() )
+        );
+    }
+
+    @Test
+    public void Enumerating_a_list_gives_each_item_with_numbers()
+    {
+        assertThat(
+            list( enumerate( list( new String[] { "x", "y", "z" } ) ) ),
+            equalTo(
+                Arrays.asList(
+                      IdxObj.make( 0, "x" )
+                    , IdxObj.make( 1, "y" )
+                    , IdxObj.make( 2, "z" )
+                )
+            )
+        );
+    }
+
+    @Test
+    public void Enumerating_an_array_gives_each_item_with_numbers()
+    {
+        assertThat(
+            list( enumerate( new String[] { "x", "y", "z" } ) ),
+            equalTo(
+                Arrays.asList(
+                      IdxObj.make( 0, "x" )
+                    , IdxObj.make( 1, "y" )
+                    , IdxObj.make( 2, "z" )
+                )
+            )
         );
     }
 }

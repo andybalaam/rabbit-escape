@@ -12,13 +12,18 @@ import java.util.Map;
 
 import org.junit.Test;
 
-import rabbitescape.engine.solution.InvalidSolution;
+import static rabbitescape.engine.util.Util.*;
+
+import rabbitescape.engine.World.CompletionState;
 import rabbitescape.engine.solution.Solution;
+import rabbitescape.engine.solution.SolutionExceptions;
 import rabbitescape.engine.solution.SolutionFactory;
 import rabbitescape.engine.solution.SolutionRunner;
+import rabbitescape.engine.solution.SolutionExceptions.RanPastEnd;
 import rabbitescape.engine.textworld.DuplicateMetaKey;
 import rabbitescape.engine.textworld.ItemsLineProcessor;
 import rabbitescape.engine.textworld.LineProcessor;
+import rabbitescape.engine.util.Util.IdxObj;
 
 public class TestTextWorldManip
 {
@@ -1134,7 +1139,7 @@ public class TestTextWorldManip
             ":num_rabbits=1",
             ":solution.1=5",
             "Q    ",
-            "    O",
+            "   p ",
             "#####"
         };
 
@@ -1143,12 +1148,11 @@ public class TestTextWorldManip
             runSolutions( lines );
             fail( "Exception expected!" );
         }
-        catch ( InvalidSolution e )
+        catch ( SolutionExceptions.DidNotWin e )
         {
-            // TODO: Make InvalidSolution hold solutionId (+ other stuff)
-            // as a field, and translate it like other exceptions using
-            // a string in rabbitescape.engine.err.exceptions_en.properties
-            assertThat( e.message, containsString( "Solution 1" ) );
+            assertThat( e.solutionId, equalTo( 1 ) );
+            assertThat( e.commandIndex, equalTo( 2 ) );
+            assertThat( e.actual, equalTo( CompletionState.LOST ) );
         }
     }
 
@@ -1158,7 +1162,7 @@ public class TestTextWorldManip
         String[] lines = {
             ":num_rabbits=1",
             ":solution.1=6",
-            ":solution.2=5",
+            ":solution.2=1;WON",
             "Q    ",
             "    O",
             "#####"
@@ -1169,9 +1173,11 @@ public class TestTextWorldManip
             runSolutions( lines );
             fail( "Exception expected!" );
         }
-        catch ( InvalidSolution e )
+        catch ( SolutionExceptions.DidNotWin e )
         {
-            assertThat( e.message, containsString( "Solution 2" ) );
+            assertThat( e.solutionId, equalTo( 2 ) );
+            assertThat( e.commandIndex, equalTo( 2 ) );
+            assertThat( e.actual, equalTo( CompletionState.RUNNING ) );
         }
     }
 
@@ -1189,7 +1195,7 @@ public class TestTextWorldManip
         runSolutions( lines );
     }
 
-    @Test( expected=InvalidSolution.class )
+    @Test( expected = RanPastEnd.class )
     public void Solution_too_many_steps_throws_exception()
     {
         String[] lines = {
@@ -1359,12 +1365,18 @@ public class TestTextWorldManip
     {
         World world = createWorld( lines );
 
-        int i = 1;
-        for ( String s : world.solutions )
+        for ( IdxObj<String> s : enumerate1( world.solutions ) )
         {
-            Solution solution = SolutionFactory.create( s, i );
-            SolutionRunner.runSolution( solution, world );
-            ++i;
+            Solution solution = SolutionFactory.create( s.object );
+            try
+            {
+                SolutionRunner.runSolution( solution, world );
+            }
+            catch ( SolutionExceptions.ProblemRunningSolution e )
+            {
+                e.solutionId = s.index;
+                throw e;
+            }
         }
     }
 }
