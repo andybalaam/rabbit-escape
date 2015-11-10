@@ -19,7 +19,9 @@ public class TestSolutionInterpreter
     public void Empty_solution_does_nothing()
     {
         Solution solution = new Solution();
-        SolutionInterpreter interpreter = new SolutionInterpreter( solution );
+
+        SolutionInterpreter interpreter =
+            new SolutionInterpreter( solution, false );
 
         Iterator<SolutionTimeStep> it = interpreter.iterator();
 
@@ -32,7 +34,8 @@ public class TestSolutionInterpreter
         Solution solution = new Solution(
             new SolutionCommand( new WaitAction( 3 ) ) );
 
-        SolutionInterpreter interpreter = new SolutionInterpreter( solution );
+        SolutionInterpreter interpreter =
+            new SolutionInterpreter(solution, false );
 
         assertThat(
             list( interpreter ),
@@ -55,7 +58,8 @@ public class TestSolutionInterpreter
             , new SolutionCommand( new WaitAction( 3 ) )
         );
 
-        SolutionInterpreter interpreter = new SolutionInterpreter( solution );
+        SolutionInterpreter interpreter =
+            new SolutionInterpreter( solution, false );
 
         assertThat(
             list( interpreter ),
@@ -79,7 +83,8 @@ public class TestSolutionInterpreter
             new SolutionCommand( new SelectAction( Token.Type.explode ) )
         );
 
-        SolutionInterpreter interpreter = new SolutionInterpreter( solution );
+        SolutionInterpreter interpreter =
+            new SolutionInterpreter( solution, false );
 
         assertThat(
             list( interpreter ),
@@ -102,7 +107,8 @@ public class TestSolutionInterpreter
             )
         );
 
-        SolutionInterpreter interpreter = new SolutionInterpreter( solution );
+        SolutionInterpreter interpreter =
+            new SolutionInterpreter( solution, false );
 
         assertThat(
             list( interpreter ),
@@ -129,7 +135,8 @@ public class TestSolutionInterpreter
             new SolutionCommand( new PlaceTokenAction( 3, 2 ) )
         );
 
-        SolutionInterpreter interpreter = new SolutionInterpreter( solution );
+        SolutionInterpreter interpreter =
+            new SolutionInterpreter( solution, false );
 
         assertThat(
             list( interpreter ),
@@ -163,7 +170,8 @@ public class TestSolutionInterpreter
             new SolutionCommand()
         );
 
-        SolutionInterpreter interpreter = new SolutionInterpreter( solution );
+        SolutionInterpreter interpreter = new SolutionInterpreter(
+            solution, false );
 
         assertThat(
             list( interpreter ),
@@ -200,7 +208,8 @@ public class TestSolutionInterpreter
             )
         );
 
-        SolutionInterpreter interpreter = new SolutionInterpreter( solution );
+        SolutionInterpreter interpreter =
+            new SolutionInterpreter( solution, false );
 
         assertThat(
             list( interpreter ),
@@ -234,7 +243,8 @@ public class TestSolutionInterpreter
             new SolutionCommand()
         );
 
-        SolutionInterpreter interpreter = new SolutionInterpreter( solution );
+        SolutionInterpreter interpreter =
+            new SolutionInterpreter( solution, false );
 
         assertThat(
             list( interpreter ),
@@ -259,7 +269,8 @@ public class TestSolutionInterpreter
             new SolutionCommand()
         );
 
-        SolutionInterpreter interpreter = new SolutionInterpreter( solution );
+        SolutionInterpreter interpreter =
+            new SolutionInterpreter( solution, false );
 
         assertThat(
             list( interpreter ),
@@ -280,6 +291,147 @@ public class TestSolutionInterpreter
                     new SolutionTimeStep(),
 
                     new SolutionTimeStep()
+                )
+            )
+        );
+    }
+
+    @Test
+    public void If_no_commands_we_do_a_final_assert()
+    {
+        Solution solution = new Solution();
+
+        SolutionInterpreter interpreter = new SolutionInterpreter( solution );
+
+        assertThat(
+            list( interpreter ),
+            equalTo(
+                Arrays.asList(
+                    new SolutionTimeStep(
+                        new AssertStateAction( CompletionState.WON ) )
+                )
+            )
+        );
+    }
+
+    @Test
+    public void If_normal_commands_we_do_a_final_assert()
+    {
+        Solution solution = new Solution(
+            new SolutionCommand(
+                new SelectAction( Token.Type.dig ),
+                new PlaceTokenAction( 1, 1 ) ),
+            new SolutionCommand( new PlaceTokenAction( 1, 1 ) )
+        );
+
+        SolutionInterpreter interpreter = new SolutionInterpreter( solution );
+
+        assertThat(
+            list( interpreter ),
+            equalTo(
+                Arrays.asList(
+                    new SolutionTimeStep(
+                        new SelectAction( Token.Type.dig ),
+                        new PlaceTokenAction( 1, 1 )
+                    ),
+                    new SolutionTimeStep( new PlaceTokenAction( 1, 1 ) ),
+                    new SolutionTimeStep(
+                        new AssertStateAction( CompletionState.WON ) )
+                )
+            )
+        );
+    }
+
+    @Test
+    public void If_last_command_is_empty_we_do_a_final_assert()
+    {
+        Solution solution = new Solution(
+            new SolutionCommand(
+                new SelectAction( Token.Type.dig ),
+                new PlaceTokenAction( 1, 1 ) ),
+            new SolutionCommand( new PlaceTokenAction( 1, 1 ) ),
+            new SolutionCommand()
+        );
+
+        SolutionInterpreter interpreter = new SolutionInterpreter( solution );
+
+        assertThat(
+            list( interpreter ),
+            equalTo(
+                Arrays.asList(
+                    new SolutionTimeStep(
+                        new SelectAction( Token.Type.dig ),
+                        new PlaceTokenAction( 1, 1 )
+                    ),
+                    new SolutionTimeStep( new PlaceTokenAction( 1, 1 ) ),
+                    new SolutionTimeStep(),
+                    new SolutionTimeStep(
+                        new AssertStateAction( CompletionState.WON ) )
+                )
+            )
+        );
+    }
+
+    @Test
+    public void If_last_command_is_assert_we_do_not_add_an_assert()
+    {
+        Solution solution = new Solution(
+            new SolutionCommand(
+                new SelectAction( Token.Type.dig ),
+                new PlaceTokenAction( 1, 1 ) ),
+            new SolutionCommand( new PlaceTokenAction( 1, 1 ) ),
+            new SolutionCommand(
+                new AssertStateAction( CompletionState.LOST ) )
+        );
+
+        SolutionInterpreter interpreter = new SolutionInterpreter( solution );
+
+        assertThat(
+            list( interpreter ),
+            equalTo(
+                Arrays.asList(
+                    new SolutionTimeStep(
+                        new SelectAction( Token.Type.dig ),
+                        new PlaceTokenAction( 1, 1 )
+                    ),
+                    new SolutionTimeStep( new PlaceTokenAction( 1, 1 ) ),
+                    new SolutionTimeStep(
+                        new AssertStateAction( CompletionState.LOST ) )
+                )
+            )
+        );
+    }
+
+    @Test
+    public void If_assert_then_wait_we_do_add_a_final_assert()
+    {
+        Solution solution = new Solution(
+            new SolutionCommand(
+                new SelectAction( Token.Type.dig ),
+                new PlaceTokenAction( 1, 1 )
+            ),
+            new SolutionCommand( new PlaceTokenAction( 1, 1 ) ),
+            new SolutionCommand(
+                new AssertStateAction( CompletionState.WON ) ),
+            new SolutionCommand()
+        );
+
+        SolutionInterpreter interpreter = new SolutionInterpreter( solution );
+
+        assertThat(
+            list( interpreter ),
+            equalTo(
+                Arrays.asList(
+                    new SolutionTimeStep(
+                        new SelectAction( Token.Type.dig ),
+                        new PlaceTokenAction( 1, 1 )
+                    ),
+                    new SolutionTimeStep( new PlaceTokenAction( 1, 1 ) ),
+                    new SolutionTimeStep(
+                        new AssertStateAction( CompletionState.WON ) ),
+                    new SolutionTimeStep(),
+                    new SolutionTimeStep(
+                        new AssertStateAction( CompletionState.WON ) )
                 )
             )
         );

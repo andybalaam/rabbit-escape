@@ -4,13 +4,27 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 
+import rabbitescape.engine.World.CompletionState;
+
 public class SolutionInterpreter implements Iterable<SolutionTimeStep>
 {
     private final Solution solution;
+    private final boolean appendWon;
 
     public SolutionInterpreter( Solution solution )
     {
+        this( solution, true );
+    }
+
+    /**
+     * @param solution
+     * @param appendWon add a "WON" assertion at the end, if the last command
+     *        is not already a single state assertion.
+     */
+    public SolutionInterpreter( Solution solution, boolean appendWon )
+    {
         this.solution = solution;
+        this.appendWon = appendWon;
     }
 
     @Override
@@ -29,15 +43,46 @@ public class SolutionInterpreter implements Iterable<SolutionTimeStep>
 
             SolutionAction nextAction = rollToNextAction();
 
+            SolutionCommand lastCommand = null;
+
+            private boolean alreadyAppendedLastAssertion = false;
+
             @Override
             public boolean hasNext()
             {
                 return (
                        waitTimeLeft > 0
                     || nextAction != null
+                    || ( appendWon && willAppendLastAssertion() )
                 );
             }
 
+            private boolean willAppendLastAssertion()
+            {
+                if ( alreadyAppendedLastAssertion  )
+                {
+                    return false;
+                }
+                else
+                {
+                    return !( isSingleStateAssertion( lastCommand ) );
+                }
+            }
+
+            private boolean isSingleStateAssertion( SolutionCommand command )
+            {
+                if ( command == null )
+                {
+                    return false;
+                }
+                else
+                {
+                    return (
+                           ( command.actions.length == 1 )
+                        && ( command.actions[0] instanceof ValidationAction )
+                    );
+                }
+            }
 
             @Override
             public SolutionTimeStep next()
@@ -46,9 +91,15 @@ public class SolutionInterpreter implements Iterable<SolutionTimeStep>
                 {
                     return waitOneTimeStep();
                 }
-                else
+                else if ( nextAction != null )
                 {
                     return handleAllActionsInStep();
+                }
+                else
+                {
+                    alreadyAppendedLastAssertion = true;
+                    return new SolutionTimeStep(
+                        new AssertStateAction( CompletionState.WON ) );
                 }
             }
 
@@ -67,10 +118,10 @@ public class SolutionInterpreter implements Iterable<SolutionTimeStep>
 
                 while ( commands.hasNext() )
                 {
-                    SolutionCommand s = commands.next();
+                    lastCommand = commands.next();
                     enteredNextCommand = true;
 
-                    instrs = Arrays.asList( s.actions ).iterator();
+                    instrs = Arrays.asList( lastCommand.actions ).iterator();
 
                     if ( instrs.hasNext() )
                     {
