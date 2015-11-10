@@ -117,10 +117,10 @@ public class TestAllActiveLevels
                     new NothingExistsFileSystem() ).load(
                         new IgnoreWorldStatsListener(), lev.fileName );
 
-                int i = 0;
+                int i = 1;
                 for ( String s : world.solutions )
                 {
-                    runSolutionString( world, i, s );
+                    runSolutionString( world, lev.fileName, i, s );
                     ++i;
                 }
             }
@@ -131,6 +131,7 @@ public class TestAllActiveLevels
 
     private void runSolutionString(
         World world,
+        String worldFileName,
         int solutionId,
         String solutionString
     )
@@ -143,6 +144,7 @@ public class TestAllActiveLevels
         catch ( SolutionExceptions.ProblemRunningSolution e )
         {
             e.solutionId = solutionId;
+            e.level = worldFileName;
             throw e;
         }
     }

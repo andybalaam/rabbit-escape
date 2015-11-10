@@ -2,6 +2,8 @@ package rabbitescape.engine.solution;
 
 import static rabbitescape.engine.util.Util.*;
 
+import java.util.Iterator;
+
 import rabbitescape.engine.World;
 import rabbitescape.engine.Token.Type;
 import rabbitescape.engine.World.CantAddTokenOutsideWorld;
@@ -10,6 +12,7 @@ import rabbitescape.engine.World.DontStepAfterFinish;
 import rabbitescape.engine.World.NoSuchAbilityInThisWorld;
 import rabbitescape.engine.World.NoneOfThisAbilityLeft;
 import rabbitescape.engine.solution.SolutionExceptions;
+import rabbitescape.engine.textworld.TextWorldManip;
 import rabbitescape.engine.util.Dimension;
 
 public class SolutionRunner
@@ -18,20 +21,42 @@ public class SolutionRunner
         throws SolutionExceptions.ProblemRunningSolution
     {
         SandboxGame sandboxGame = new SandboxGame( world );
+        SolutionInterpreter interpreter = new SolutionInterpreter( solution );
 
-        for (
-            IdxObj<SolutionCommand> command : enumerate1( solution.commands ) )
+        Iterator<SolutionTimeStep> it = interpreter.iterator();
+        while ( it.hasNext() )
         {
+            SolutionTimeStep step  = it.next();
             try
             {
-                for ( SolutionAction action : command.object.actions )
+                for ( SolutionAction action : step.actions )
                 {
                     performAction( action, sandboxGame );
+                }
+
+                try
+                {
+                    // TODO: this is messy - interpreter runs for 1 more step than
+                    //       the world!
+                    if ( it.hasNext() )
+                    {
+                        sandboxGame.getWorld().step();
+                    }
+                }
+                catch ( DontStepAfterFinish e )
+                {
+                    throw new SolutionExceptions.RanPastEnd(
+                        sandboxGame.getWorld().completionState() );
                 }
             }
             catch ( SolutionExceptions.ProblemRunningSolution e )
             {
-                e.commandIndex = command.index;
+                e.commandIndex = step.commandIndex;
+                e.world = join(
+                    "\n",
+                    TextWorldManip.renderWorld(
+                        sandboxGame.getWorld(), false, false )
+                );
                 throw e;
             }
         }
@@ -41,6 +66,9 @@ public class SolutionRunner
         SolutionAction action, final SandboxGame sandboxGame )
     throws SolutionExceptions.UnexpectedState
     {
+        // TODO: stop using WaitAction to step in the command line interface -
+        // then we can stop catching DontStepAfterFinish.
+
         try
         {
             doPerformAction( action, sandboxGame );
@@ -75,6 +103,9 @@ public class SolutionRunner
                 @Override
                 public void caseWaitAction( WaitAction w )
                 {
+                    // TODO: delete this, and make a SolutionAction interface
+                    //       that does not include wait actions, and delete
+                    //       related code.
                     for ( int i = 0; i < w.steps; i++ )
                     {
                         sandboxGame.getWorld().step();

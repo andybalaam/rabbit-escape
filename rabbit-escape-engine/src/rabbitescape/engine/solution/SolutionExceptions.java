@@ -18,6 +18,8 @@ public class SolutionExceptions
 
         public int solutionId = -1;
         public int commandIndex = -1;
+        public String level = "<>";
+        public String world = "";
     }
 
     /**

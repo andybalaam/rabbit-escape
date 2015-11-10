@@ -8,7 +8,7 @@ import rabbitescape.engine.util.Util;
 
 public class SolutionTimeStep
 {
-    private final int commandIndex;
+    public final int commandIndex;
     public final SolutionAction[] actions;
 
     public SolutionTimeStep( int commandIndex, SolutionAction... actions )
