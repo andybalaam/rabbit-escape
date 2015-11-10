@@ -30,7 +30,7 @@ public class TestSolutionInterpreter
     public void One_wait_waits_for_that_long()
     {
         Solution solution = new Solution(
-            new SolutionStep( new WaitInstruction( 3 ) ) );
+            new SolutionCommand( new WaitInstruction( 3 ) ) );
 
         SolutionInterpreter interpreter = new SolutionInterpreter( solution );
 
@@ -50,9 +50,9 @@ public class TestSolutionInterpreter
     public void Multiple_waits_wait_for_the_total()
     {
         Solution solution = new Solution(
-              new SolutionStep(
+              new SolutionCommand(
                   new WaitInstruction( 1 ), new WaitInstruction( 2 ) )
-            , new SolutionStep( new WaitInstruction( 3 ) )
+            , new SolutionCommand( new WaitInstruction( 3 ) )
         );
 
         SolutionInterpreter interpreter = new SolutionInterpreter( solution );
@@ -76,7 +76,7 @@ public class TestSolutionInterpreter
     public void Single_nonwait_instruction_makes_single_time_step()
     {
         Solution solution = new Solution(
-            new SolutionStep( new SelectInstruction( Token.Type.explode ) )
+            new SolutionCommand( new SelectInstruction( Token.Type.explode ) )
         );
 
         SolutionInterpreter interpreter = new SolutionInterpreter( solution );
@@ -93,10 +93,10 @@ public class TestSolutionInterpreter
     }
 
     @Test
-    public void Multiple_nonwait_instructions_in_single_step_make_1_time_step()
+    public void Multiple_nonwait_instructions_in_single_cmd_make_1_time_step()
     {
         Solution solution = new Solution(
-            new SolutionStep(
+            new SolutionCommand(
                 new SelectInstruction( Token.Type.explode ),
                 new PlaceTokenInstruction( 2, 2 )
             )
@@ -121,12 +121,12 @@ public class TestSolutionInterpreter
     public void Do_then_wait_then_do_translates_into_time_steps()
     {
         Solution solution = new Solution(
-            new SolutionStep(
+            new SolutionCommand(
                 new SelectInstruction( Token.Type.explode ),
                 new PlaceTokenInstruction( 2, 2 )
             ),
-            new SolutionStep( new WaitInstruction( 4 ) ),
-            new SolutionStep( new PlaceTokenInstruction( 3, 2 ) )
+            new SolutionCommand( new WaitInstruction( 4 ) ),
+            new SolutionCommand( new PlaceTokenInstruction( 3, 2 ) )
         );
 
         SolutionInterpreter interpreter = new SolutionInterpreter( solution );
@@ -153,14 +153,14 @@ public class TestSolutionInterpreter
     public void Wait_then_do_then_wait_translates_into_time_steps()
     {
         Solution solution = new Solution(
-            new SolutionStep(),
-            new SolutionStep( new WaitInstruction( 1 ) ),
-            new SolutionStep(
+            new SolutionCommand(),
+            new SolutionCommand( new WaitInstruction( 1 ) ),
+            new SolutionCommand(
                 new SelectInstruction( Token.Type.explode ),
                 new PlaceTokenInstruction( 2, 2 )
             ),
-            new SolutionStep( new WaitInstruction( 2 ) ),
-            new SolutionStep()
+            new SolutionCommand( new WaitInstruction( 2 ) ),
+            new SolutionCommand()
         );
 
         SolutionInterpreter interpreter = new SolutionInterpreter( solution );
@@ -187,13 +187,13 @@ public class TestSolutionInterpreter
     public void Waits_mixed_with_dos_wait_after_doing_no_matter_the_order()
     {
         Solution solution = new Solution(
-            new SolutionStep(
+            new SolutionCommand(
                 new WaitInstruction( 3 ),
                 new SelectInstruction( Token.Type.explode ),
                 new PlaceTokenInstruction( 2, 2 )
             ),
-            new SolutionStep( new WaitInstruction( 2 ) ),
-            new SolutionStep(
+            new SolutionCommand( new WaitInstruction( 2 ) ),
+            new SolutionCommand(
                 new SelectInstruction( Token.Type.dig ),
                 new PlaceTokenInstruction( 1, 1 ),
                 new WaitInstruction( 3 )
@@ -228,10 +228,10 @@ public class TestSolutionInterpreter
     }
 
     @Test
-    public void Empty_step_is_like_wait_1()
+    public void Empty_command_is_like_wait_1()
     {
         Solution solution = new Solution(
-            new SolutionStep()
+            new SolutionCommand()
         );
 
         SolutionInterpreter interpreter = new SolutionInterpreter( solution );
@@ -247,16 +247,16 @@ public class TestSolutionInterpreter
     }
 
     @Test
-    public void Many_empty_steps()
+    public void Many_empty_commands()
     {
         Solution solution = new Solution(
-            new SolutionStep(),
-            new SolutionStep( new SelectInstruction( Token.Type.dig ) ),
-            new SolutionStep( new PlaceTokenInstruction( 1, 1 ) ),
-            new SolutionStep( new TargetState( CompletionState.RUNNING ) ),
-            new SolutionStep(),
-            new SolutionStep(),
-            new SolutionStep()
+            new SolutionCommand(),
+            new SolutionCommand( new SelectInstruction( Token.Type.dig ) ),
+            new SolutionCommand( new PlaceTokenInstruction( 1, 1 ) ),
+            new SolutionCommand( new TargetState( CompletionState.RUNNING ) ),
+            new SolutionCommand(),
+            new SolutionCommand(),
+            new SolutionCommand()
         );
 
         SolutionInterpreter interpreter = new SolutionInterpreter( solution );

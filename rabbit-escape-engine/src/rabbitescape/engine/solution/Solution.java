@@ -8,27 +8,27 @@ import rabbitescape.engine.util.Util;
 
 public class Solution
 {
-    public final SolutionStep[] steps;
+    public final SolutionCommand[] commands;
 
-    public Solution( SolutionStep... steps )
+    public Solution( SolutionCommand... commands )
     {
-        this.steps = steps;
+        this.commands = commands;
     }
 
     public String relFormat()
     {
         StringBuilder sb = new StringBuilder();
         Instruction previousInstruction = null;
-        for ( SolutionStep step : steps )
+        for ( SolutionCommand command : commands )
         {
-            boolean firstInStep = true;
-            for ( Instruction instruction : step.instructions )
+            boolean firstInCommand = true;
+            for ( Instruction instruction : command.instructions )
             {
                 if (previousInstruction != null)
                 {
-                    firstInStep = (previousInstruction instanceof WaitInstruction);
+                    firstInCommand = (previousInstruction instanceof WaitInstruction);
                 }
-                sb.append( instruction.relFormat( firstInStep ) );
+                sb.append( instruction.relFormat( firstInCommand ) );
                 previousInstruction = instruction;
             }
         }
@@ -39,7 +39,7 @@ public class Solution
     public String toString()
     {
         return "Solution( "
-            + Util.join( ", ", toStringList( steps ) )
+            + Util.join( ", ", toStringList( commands ) )
             + " )";
     }
 
@@ -52,12 +52,12 @@ public class Solution
         }
         Solution otherSolution = (Solution)other;
 
-        return Arrays.deepEquals( steps, otherSolution.steps );
+        return Arrays.deepEquals( commands, otherSolution.commands );
     }
 
     @Override
     public int hashCode()
     {
-        return Arrays.deepHashCode( steps );
+        return Arrays.deepHashCode( commands );
     }
 }

@@ -11,9 +11,9 @@ public class SelectInstruction implements Instruction
         this.type = type;
     }
 
-    public String relFormat( boolean firstInStep )
+    public String relFormat( boolean firstInCommand )
     {
-        if ( firstInStep )
+        if ( firstInCommand )
         {
             return type.name();
         }

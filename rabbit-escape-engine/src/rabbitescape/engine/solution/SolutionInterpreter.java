@@ -18,14 +18,14 @@ public class SolutionInterpreter implements Iterable<SolutionTimeStep>
     {
         return new Iterator<SolutionTimeStep>()
         {
-            Iterator<SolutionStep> steps = Arrays.asList(
-                solution.steps ).iterator();
+            Iterator<SolutionCommand> commands = Arrays.asList(
+                solution.commands ).iterator();
 
             Iterator<Instruction> instrs = null;
 
             int waitTimeLeft = 0;
 
-            boolean enteredNextStep = false;
+            boolean enteredNextCommand = false;
 
             Instruction nextInstruction = rollToNextInstruction();
 
@@ -65,10 +65,10 @@ public class SolutionInterpreter implements Iterable<SolutionTimeStep>
                     return instrs.next();
                 }
 
-                while ( steps.hasNext() )
+                while ( commands.hasNext() )
                 {
-                    SolutionStep s = steps.next();
-                    enteredNextStep = true;
+                    SolutionCommand s = commands.next();
+                    enteredNextCommand = true;
 
                     instrs = Arrays.asList( s.instructions ).iterator();
 
@@ -78,7 +78,7 @@ public class SolutionInterpreter implements Iterable<SolutionTimeStep>
                     }
                     else
                     {
-                        // No instructions in that step - this means wait 1
+                        // No instructions in that command - this means wait 1
                         ++waitTimeLeft;
                     }
                 }
@@ -98,8 +98,8 @@ public class SolutionInterpreter implements Iterable<SolutionTimeStep>
                     new ArrayList<Instruction>();
 
                 boolean alreadyWaited = false;
-                enteredNextStep = false;
-                while( nextInstruction != null && !enteredNextStep )
+                enteredNextCommand = false;
+                while( nextInstruction != null && !enteredNextCommand )
                 {
                     if ( nextInstruction instanceof WaitInstruction )
                     {
@@ -118,8 +118,7 @@ public class SolutionInterpreter implements Iterable<SolutionTimeStep>
                     nextInstruction = rollToNextInstruction();
                 }
 
-                // TODO: annotate time step with the solution step number
-                // TODO: rename solution step to a clearer name
+                // TODO: annotate time step with the solution command number
                 return new SolutionTimeStep(
                     instructions.toArray(
                         new Instruction[ instructions.size() ] )

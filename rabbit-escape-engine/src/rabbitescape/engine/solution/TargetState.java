@@ -11,9 +11,9 @@ public class TargetState implements ValidationInstruction
         this.targetState = targetState;
     }
 
-    public String relFormat( boolean firstInStep )
+    public String relFormat( boolean firstInCommand )
     {
-        if ( firstInStep )
+        if ( firstInCommand )
         {
             targetState.name();
         }

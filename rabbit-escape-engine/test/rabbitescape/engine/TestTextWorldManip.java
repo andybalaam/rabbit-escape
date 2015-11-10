@@ -1151,7 +1151,7 @@ public class TestTextWorldManip
         catch ( SolutionExceptions.DidNotWin e )
         {
             assertThat( e.solutionId, equalTo( 1 ) );
-            assertThat( e.stepIndex, equalTo( 2 ) );
+            assertThat( e.commandIndex, equalTo( 2 ) );
             assertThat( e.actual, equalTo( CompletionState.LOST ) );
         }
     }
@@ -1176,7 +1176,7 @@ public class TestTextWorldManip
         catch ( SolutionExceptions.DidNotWin e )
         {
             assertThat( e.solutionId, equalTo( 2 ) );
-            assertThat( e.stepIndex, equalTo( 2 ) );
+            assertThat( e.commandIndex, equalTo( 2 ) );
             assertThat( e.actual, equalTo( CompletionState.RUNNING ) );
         }
     }

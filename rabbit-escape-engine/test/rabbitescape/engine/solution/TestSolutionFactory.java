@@ -19,8 +19,8 @@ public class TestSolutionFactory
             SolutionFactory.create( "" ),
             equalTo(
                 new Solution(
-                      new SolutionStep( new WaitInstruction( 1 ) )
-                    , new SolutionStep( new TargetState( CompletionState.WON ) )
+                      new SolutionCommand( new WaitInstruction( 1 ) )
+                    , new SolutionCommand( new TargetState( CompletionState.WON ) )
                 )
             )
         );
@@ -33,7 +33,7 @@ public class TestSolutionFactory
             SolutionFactory.create( "WON" ),
             equalTo(
                 new Solution(
-                    new SolutionStep(
+                    new SolutionCommand(
                         new TargetState( World.CompletionState.WON ) )
                 )
             )
@@ -47,9 +47,9 @@ public class TestSolutionFactory
             SolutionFactory.create( "1;2;WON" ),
             equalTo(
                 new Solution(
-                    new SolutionStep( new WaitInstruction( 1 ) ),
-                    new SolutionStep(  new WaitInstruction( 2 ) ),
-                    new SolutionStep(
+                    new SolutionCommand( new WaitInstruction( 1 ) ),
+                    new SolutionCommand(  new WaitInstruction( 2 ) ),
+                    new SolutionCommand(
                         new TargetState( World.CompletionState.WON ) )
                 )
             )
@@ -63,11 +63,11 @@ public class TestSolutionFactory
             SolutionFactory.create( "bash&(1,1)&3;WON" ),
             equalTo(
                 new Solution(
-                    new SolutionStep(
+                    new SolutionCommand(
                         new SelectInstruction( Token.Type.bash ),
                         new PlaceTokenInstruction( 1, 1 ),
                         new WaitInstruction( 3 ) ),
-                    new SolutionStep(
+                    new SolutionCommand(
                         new TargetState( World.CompletionState.WON ) )
                 )
             )
@@ -81,11 +81,11 @@ public class TestSolutionFactory
             SolutionFactory.create( "bridge;LOST" ),
             equalTo(
                 new Solution(
-                    new SolutionStep(
+                    new SolutionCommand(
                         new SelectInstruction( Token.Type.bridge ),
                         new WaitInstruction( 1 )
                     ),
-                    new SolutionStep(
+                    new SolutionCommand(
                         new TargetState( World.CompletionState.LOST ) )
                 )
             )
@@ -93,16 +93,16 @@ public class TestSolutionFactory
     }
 
     @Test
-    public void Empty_steps_get_a_wait_appended_except_at_end()
+    public void Empty_commands_get_a_wait_appended_except_at_end()
     {
         assertThat(
             SolutionFactory.create( ";;" ),
             equalTo(
                 new Solution(
-                    new SolutionStep( new WaitInstruction( 1 ) ),
-                    new SolutionStep( new WaitInstruction( 1 ) ),
-                    new SolutionStep( new WaitInstruction( 1 ) ),
-                    new SolutionStep(
+                    new SolutionCommand( new WaitInstruction( 1 ) ),
+                    new SolutionCommand( new WaitInstruction( 1 ) ),
+                    new SolutionCommand( new WaitInstruction( 1 ) ),
+                    new SolutionCommand(
                         new TargetState( World.CompletionState.WON ) )
                 )
             )
@@ -116,15 +116,15 @@ public class TestSolutionFactory
             SolutionFactory.create( "bridge;(22,40)" ),
             equalTo(
                 new Solution(
-                    new SolutionStep(
+                    new SolutionCommand(
                         new SelectInstruction( Token.Type.bridge ),
                         new WaitInstruction( 1 )
                     ),
-                    new SolutionStep(
+                    new SolutionCommand(
                         new PlaceTokenInstruction( 22, 40 ),
                         new WaitInstruction( 1 )
                     ),
-                    new SolutionStep(
+                    new SolutionCommand(
                         new TargetState( World.CompletionState.WON ) )
                 )
             )
@@ -135,9 +135,9 @@ public class TestSolutionFactory
     public void Can_parse_single_instruction()
     {
         assertThat(
-            SolutionFactory.createStep( "bash" ),
+            SolutionFactory.createCommand( "bash" ),
             equalTo(
-                new SolutionStep(
+                new SolutionCommand(
                     new SelectInstruction( Token.Type.bash ) )
             )
         );
@@ -147,9 +147,9 @@ public class TestSolutionFactory
     public void Can_parse_multiple_single_instructions()
     {
         assertThat(
-            SolutionFactory.createStep( "bash&(1,2)" ),
+            SolutionFactory.createCommand( "bash&(1,2)" ),
             equalTo(
-                new SolutionStep(
+                new SolutionCommand(
                       new SelectInstruction( Token.Type.bash )
                     , new PlaceTokenInstruction( 1, 2 )
                 )

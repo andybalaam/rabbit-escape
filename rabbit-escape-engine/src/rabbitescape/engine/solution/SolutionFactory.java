@@ -12,7 +12,7 @@ import rabbitescape.engine.World.CompletionState;
 
 public class SolutionFactory
 {
-    public static final String STEP_DELIMITER = ";";
+    public static final String COMMAND_DELIMITER = ";";
     public static final String INSTRUCTION_DELIMITER = "&";
     private static final Pattern WAIT_REGEX = Pattern.compile( "\\d+" );
 
@@ -32,72 +32,76 @@ public class SolutionFactory
 
     private static Solution expand( Solution solution )
     {
-        List<SolutionStep> expandedSteps = new ArrayList<SolutionStep>();
+        List<SolutionCommand> expandedCommands = new ArrayList<SolutionCommand>();
 
-        for ( IdxObj<SolutionStep> step : enumerate( solution.steps ) )
+        for ( IdxObj<SolutionCommand> command : enumerate( solution.commands ) )
         {
             // Wait one step after every semicolon (unless the last instruction
             // was a wait instruction).
 
-            SolutionStep newStep = step.object;
-            Instruction last = newStep.lastInstruction();
+            SolutionCommand newCommand = command.object;
+            Instruction last = newCommand.lastInstruction();
 
             if (
                    ! ( last instanceof WaitInstruction )
                 && (
-                       ( step.index < solution.steps.length - 1 )
+                       ( command.index < solution.commands.length - 1 )
                     || ! ( last instanceof TargetState )
                 )
             )
             {
-                newStep = new SolutionStep(
+                newCommand = new SolutionCommand(
                     concat(
-                        step.object.instructions,
+                        command.object.instructions,
                         new Instruction[] { new WaitInstruction( 1 ) }
                     )
                 );
             }
 
-            expandedSteps.add( newStep );
+            expandedCommands.add( newCommand );
         }
 
-        // If the last instruction is not a validation step then assume this was
+        // If the last instruction is not a validation then assume this was
         // a 'normal' winning solution.
-        if ( expandedSteps.size() > 0
+        if ( expandedCommands.size() > 0
             && !(
-                expandedSteps.get( expandedSteps.size() - 1 ).lastInstruction()
-                    instanceof ValidationInstruction )
+                expandedCommands.get(
+                    expandedCommands.size() - 1 ).lastInstruction()
+                instanceof ValidationInstruction
             )
+        )
         {
-            expandedSteps.add(
-                new SolutionStep( new TargetState( CompletionState.WON ) ) );
+            expandedCommands.add(
+                new SolutionCommand( new TargetState( CompletionState.WON ) ) );
         }
 
         return new Solution(
-            expandedSteps.toArray( new SolutionStep[ expandedSteps.size() ] ) );
+            expandedCommands.toArray(
+                new SolutionCommand[ expandedCommands.size() ] )
+        );
     }
 
     public static Solution parse( String solution )
     {
-        String[] stringSteps = split( solution, STEP_DELIMITER );
+        String[] stringCommands = split( solution, COMMAND_DELIMITER );
 
-        List<SolutionStep> steps = new ArrayList<>();
+        List<SolutionCommand> commands = new ArrayList<>();
 
-        for ( int i = 0; i < stringSteps.length; i++ )
+        for ( int i = 0; i < stringCommands.length; i++ )
         {
-            steps.add( createStep( stringSteps[i] ) );
+            commands.add( createCommand( stringCommands[i] ) );
         }
 
         return new Solution(
-            steps.toArray( new SolutionStep[ steps.size() ] ) );
+            commands.toArray( new SolutionCommand[ commands.size() ] ) );
     }
 
-    public static SolutionStep createStep( String stepString )
+    public static SolutionCommand createCommand( String commandString )
     {
         ArrayList<Instruction> instructions = new ArrayList<Instruction>();
 
         String[] instructionStrings = split(
-            stepString, INSTRUCTION_DELIMITER );
+            commandString, INSTRUCTION_DELIMITER );
 
         for ( int j = 0; j < instructionStrings.length; j++ )
         {
@@ -107,7 +111,7 @@ public class SolutionFactory
             }
         }
 
-        return new SolutionStep(
+        return new SolutionCommand(
             instructions.toArray( new Instruction[ instructions.size() ] ) );
     }
 

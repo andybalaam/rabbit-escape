@@ -10,20 +10,22 @@ public class WaitInstruction implements Instruction
     }
 
     @Override
-    public String relFormat( boolean firstInStep )
+    public String relFormat( boolean firstInCommand )
     {
-        if ( firstInStep )
+        if ( firstInCommand )
         {
-            return String.valueOf( steps ) + SolutionFactory.STEP_DELIMITER;
+            return String.valueOf( steps ) + SolutionFactory.COMMAND_DELIMITER;
         }
         else if ( steps == 1 )
         {
-            return SolutionFactory.STEP_DELIMITER;
+            return SolutionFactory.COMMAND_DELIMITER;
         }
         else if ( steps > 1 )
         {
-            return SolutionFactory.STEP_DELIMITER + String.valueOf( steps - 1 )
-                + SolutionFactory.STEP_DELIMITER;
+            return
+                  SolutionFactory.COMMAND_DELIMITER
+                + String.valueOf( steps - 1 )
+                + SolutionFactory.COMMAND_DELIMITER;
         }
         else
         {

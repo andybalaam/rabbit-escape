@@ -15,13 +15,13 @@ import rabbitescape.engine.solution.SolutionExceptions;
 import rabbitescape.engine.solution.SolutionFactory;
 import rabbitescape.engine.solution.SolutionRunner;
 import rabbitescape.engine.solution.WaitInstruction;
-import rabbitescape.engine.solution.SolutionStep;
+import rabbitescape.engine.solution.SolutionCommand;
 
 public class InputHandler
 {
     private final SandboxGame sandboxGame;
     private final Terminal terminal;
-    private final List<SolutionStep> solution;
+    private final List<SolutionCommand> solution;
 
     public InputHandler( SandboxGame sandboxGame, Terminal terminal )
     {
@@ -51,37 +51,37 @@ public class InputHandler
 
         try
         {
-            SolutionStep step = SolutionFactory.createStep( input );
+            SolutionCommand command = SolutionFactory.createCommand( input );
 
-            if ( step.instructions.length == 0 )
+            if ( command.instructions.length == 0 )
             {
                 return fail( t( "Unexpected problem: no Instruction" ) );
             }
 
-            Instruction lastInstruction = step.instructions[
-                step.instructions.length - 1 ];
+            Instruction lastInstruction = command.instructions[
+                command.instructions.length - 1 ];
 
             if ( !( lastInstruction instanceof WaitInstruction ) )
             {
                 WaitInstruction waitInstruction = new WaitInstruction( 1 );
-                step = new SolutionStep(
+                command = new SolutionCommand(
                     concat(
-                        step.instructions,
+                        command.instructions,
                         new Instruction[] { waitInstruction }
                     )
                 );
             }
 
-            for ( Instruction instruction : step.instructions )
+            for ( Instruction instruction : command.instructions )
             {
                 SolutionRunner.performInstruction( instruction, sandboxGame );
             }
 
-            append( step );
+            append( command );
         }
         catch ( SolutionExceptions.ProblemRunningSolution e )
         {
-            e.stepIndex = instructionIndex;
+            e.commandIndex = instructionIndex;
             e.solutionId = 1;
             return fail( ExceptionTranslation.translate( e, terminal.locale ) );
         }
@@ -93,13 +93,13 @@ public class InputHandler
         return true;
     }
 
-    private void append( SolutionStep newStep )
+    private void append( SolutionCommand newStep )
     {
         if ( !solution.isEmpty() )
         {
-            SolutionStep lastExistingStep = solution.get( solution.size() - 1 );
+            SolutionCommand lastExistingStep = solution.get( solution.size() - 1 );
 
-            SolutionStep combinedStep = tryToSimplify(
+            SolutionCommand combinedStep = tryToSimplify(
                 lastExistingStep, newStep );
 
             if ( combinedStep != null )
@@ -118,21 +118,22 @@ public class InputHandler
     }
 
     /**
-     * Try to combine two steps. If this is not possible then return
-     * null.
+     * Try to combine two commands. If this is not possible then return null.
      */
-    private SolutionStep tryToSimplify(
-        SolutionStep existingStep, SolutionStep newStep )
+    private SolutionCommand tryToSimplify(
+        SolutionCommand existingCmd, SolutionCommand newCmd )
     {
-        Instruction instruction1 = existingStep.instructions[0];
-        Instruction instruction2 = newStep.instructions[0];
+        Instruction instruction1 = existingCmd.instructions[0];
+        Instruction instruction2 = newCmd.instructions[0];
 
-        if ( instruction1 instanceof WaitInstruction
-            && instruction2 instanceof WaitInstruction )
+        if (
+               instruction1 instanceof WaitInstruction
+            && instruction2 instanceof WaitInstruction
+        )
         {
             WaitInstruction wait1 = (WaitInstruction)instruction1;
             WaitInstruction wait2 = (WaitInstruction)instruction2;
-            return new SolutionStep(
+            return new SolutionCommand(
                 new WaitInstruction( wait1.steps + wait2.steps ) );
         }
         return null;
@@ -177,7 +178,7 @@ public class InputHandler
     public String solution()
     {
         Solution s = new Solution(
-            solution.toArray( new SolutionStep[ solution.size() ] ) );
+            solution.toArray( new SolutionCommand[ solution.size() ] ) );
 
         return s.relFormat();
     }

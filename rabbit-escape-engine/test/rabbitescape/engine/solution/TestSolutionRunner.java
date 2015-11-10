@@ -38,7 +38,7 @@ public class TestSolutionRunner
                 e.getMessage(),
                 equalTo(
                     "Solution failed: state was RUNNING but we expected LOST"
-                    + " at step 1 of solution 3."
+                    + " at command 1 of solution 3."
                 )
             );
         }
@@ -68,7 +68,7 @@ public class TestSolutionRunner
                 e.getMessage(),
                 equalTo(
                     "Solution failed: We expected to win, but the state was"
-                    + " RUNNING at step 1 of solution 4."
+                    + " RUNNING at command 1 of solution 4."
                 )
             );
         }
@@ -96,8 +96,8 @@ public class TestSolutionRunner
                 e.getMessage(),
                 equalTo(
                     "Solution failed: world has stopped (state: WON) but"
-                    + " there are more solution steps"
-                    + " at step 3 of solution 5."
+                    + " there are more solution commands"
+                    + " at command 3 of solution 5."
                 )
             );
         }
@@ -128,7 +128,7 @@ public class TestSolutionRunner
                 e.getMessage(),
                 equalTo(
                     "Solution failed: ability 'bash' was used when there"
-                    + " were none left at step 4 of solution 6."
+                    + " were none left at command 4 of solution 6."
                 )
             );
         }
@@ -158,7 +158,7 @@ public class TestSolutionRunner
                 e.getMessage(),
                 equalTo(
                     "Solution failed: ability 'bash' was used but this level"
-                    + " does not provide it at step 2 of solution 7."
+                    + " does not provide it at command 2 of solution 7."
                 )
             );
         }
@@ -190,7 +190,7 @@ public class TestSolutionRunner
                 equalTo(
                     "Solution failed: placed a token at (10, 0) but the"
                     + " world is only 5x2 in size"
-                    + " at step 2 of solution 8."
+                    + " at command 2 of solution 8."
                 )
             );
         }
@@ -234,7 +234,7 @@ public class TestSolutionRunner
                 equalTo(
                     "Solution failed: tried to place a bash token at (3, 0) but"
                     + " a block was already there so it did not place"
-                    + " at step 4 of solution 9."
+                    + " at command 4 of solution 9."
                 )
             );
         }
@@ -280,41 +280,41 @@ public class TestSolutionRunner
 
     private Solution expectingSolution( CompletionState expected )
     {
-        return new Solution( new SolutionStep( new TargetState( expected ) ) );
+        return new Solution( new SolutionCommand( new TargetState( expected ) ) );
     }
 
     private Solution waitFourSolution()
     {
         return new Solution(
-            new SolutionStep( new WaitInstruction( 1 ) ),
-            new SolutionStep( new WaitInstruction( 2 ) ),
-            new SolutionStep( new WaitInstruction( 2 ) )
+            new SolutionCommand( new WaitInstruction( 1 ) ),
+            new SolutionCommand( new WaitInstruction( 2 ) ),
+            new SolutionCommand( new WaitInstruction( 2 ) )
         );
     }
 
     private Solution waitFiveThenLostSolution()
     {
         return new Solution(
-            new SolutionStep( new WaitInstruction( 5 ) ),
-            new SolutionStep( new TargetState( CompletionState.LOST ) )
+            new SolutionCommand( new WaitInstruction( 5 ) ),
+            new SolutionCommand( new TargetState( CompletionState.LOST ) )
         );
     }
 
     private Solution useBash30Solution()
     {
         return new Solution(
-            new SolutionStep( new SelectInstruction( Token.Type.bash ) ),
-            new SolutionStep( new PlaceTokenInstruction( 1, 0 ) ),
-            new SolutionStep( new WaitInstruction( 1 ) ),
-            new SolutionStep( new PlaceTokenInstruction( 3, 0 ) )
+            new SolutionCommand( new SelectInstruction( Token.Type.bash ) ),
+            new SolutionCommand( new PlaceTokenInstruction( 1, 0 ) ),
+            new SolutionCommand( new WaitInstruction( 1 ) ),
+            new SolutionCommand( new PlaceTokenInstruction( 3, 0 ) )
         );
     }
 
     private Solution useBash100Solution()
     {
         return new Solution(
-            new SolutionStep( new SelectInstruction( Token.Type.bash ) ),
-            new SolutionStep( new PlaceTokenInstruction( 10, 0 ) )
+            new SolutionCommand( new SelectInstruction( Token.Type.bash ) ),
+            new SolutionCommand( new PlaceTokenInstruction( 10, 0 ) )
         );
     }
 }
