@@ -136,7 +136,7 @@ public class TestAllActiveLevels
         String solutionString
     )
     {
-        Solution solution = SolutionFactory.create( solutionString );
+        Solution solution = SolutionFactory.parse( solutionString );
         try
         {
             SolutionRunner.runSolution( solution, world );

@@ -1367,7 +1367,7 @@ public class TestTextWorldManip
 
         for ( IdxObj<String> s : enumerate1( world.solutions ) )
         {
-            Solution solution = SolutionFactory.create( s.object );
+            Solution solution = SolutionFactory.parse( s.object );
             try
             {
                 SolutionRunner.runSolution( solution, world );
