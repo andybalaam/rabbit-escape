@@ -1,5 +1,8 @@
 package rabbitescape.engine.solution;
 
+import org.hamcrest.BaseMatcher;
+import org.hamcrest.Description;
+import org.hamcrest.Matcher;
 import org.junit.*;
 
 import rabbitescape.engine.Token;
@@ -31,6 +34,56 @@ public class TestSolutionParser
                 new Solution(
                     new SolutionCommand(
                         new AssertStateAction( World.CompletionState.WON ) )
+                )
+            )
+        );
+    }
+
+    @Test
+    public void Trailing_semicolon_means_empty_command_at_end()
+    {
+        assertThat(
+            SolutionParser.parse( "WON;" ),
+            equalTo(
+                new Solution(
+                    new SolutionCommand(
+                        new AssertStateAction( World.CompletionState.WON ) ),
+                    new SolutionCommand()
+                )
+            )
+        );
+    }
+
+    @Test
+    public void Leading_semicolon_means_empty_command_at_start()
+    {
+        assertThat(
+            SolutionParser.parse( ";WON" ),
+            equalTo(
+                new Solution(
+                    new SolutionCommand(),
+                    new SolutionCommand(
+                        new AssertStateAction( World.CompletionState.WON ) )
+                )
+            )
+        );
+    }
+
+    @Test
+    public void Lots_of_empty_commands_preserved()
+    {
+        assertThat(
+            SolutionParser.parse( ";;;WON;;;" ),
+            equalTo(
+                new Solution(
+                    new SolutionCommand(),
+                    new SolutionCommand(),
+                    new SolutionCommand(),
+                    new SolutionCommand(
+                        new AssertStateAction( World.CompletionState.WON ) ),
+                    new SolutionCommand(),
+                    new SolutionCommand(),
+                    new SolutionCommand()
                 )
             )
         );
@@ -218,5 +271,116 @@ public class TestSolutionParser
         {
             assertThat( e.action, equalTo( "(3," + bigNum + ")" ) );
         }
+    }
+
+    @Test
+    public void Empty_string_round_trips()
+    {
+        assertThat( "", roundTrips() );
+    }
+
+    @Test
+    public void Wait_then_empty_round_trips()
+    {
+        assertThat( "1;", roundTrips() );
+    }
+
+    @Test
+    public void Two_waits_then_empty_round_trips()
+    {
+        assertThat( "5;6;", roundTrips() );
+    }
+
+    @Test @Ignore( "Fails because removes leading semicolon" )
+    public void Empty_at_start_round_trips()
+    {
+        assertThat( ";5;6;", roundTrips() );
+    }
+
+    @Test
+    public void Single_choose_token_round_trips()
+    {
+        assertThat( "bash", roundTrips() );
+    }
+
+    @Test @Ignore( "Fails because inserts leading ampersand" )
+    public void Single_assert_round_trips()
+    {
+        assertThat( "WON", roundTrips() );
+    }
+
+    @Test @Ignore( "Fails because combines into single time step" )
+    public void Two_normal_commands_round_trips()
+    {
+        assertThat( "bash;(3,2)", roundTrips() );
+    }
+
+    @Test
+    public void Two_normal_actions_round_trips()
+    {
+        assertThat( "bash&(3,2)", roundTrips() );
+    }
+
+    @Test @Ignore( "Fails because combines some commands" )
+    public void Multiple_actions_and_commands_round_trips()
+    {
+        assertThat( "1;bash&(3,2);RUNNING;3;bash", roundTrips() );
+    }
+
+    @Test @Ignore( "Fails because strips semicolons and combines commands" )
+    public void Leading_and_trailing_empty_actions()
+    {
+        assertThat( ";;;1;bash&(3,2);RUNNING;3;bash;;;", roundTrips() );
+    }
+
+    @Test @Ignore( "Fails because removes trailing semicolon" )
+    public void Single_choose_token_plus_empty_round_trips()
+    {
+        assertThat( "bash;", roundTrips() );
+    }
+
+    @Test @Ignore( "Fails because adds a trailing semicolon" )
+    public void Single_wait_round_trips()
+    {
+        assertThat( "1", roundTrips() );
+    }
+
+    @Test @Ignore( "Fails because adds a trailing semicolon" )
+    public void Two_waits_round_trip()
+    {
+        assertThat( "5;6", roundTrips() );
+    }
+
+    // ---
+
+    private Matcher<String> roundTrips()
+    {
+        return new BaseMatcher<String>()
+        {
+            private String after = null;
+
+            @Override
+            public void describeTo( Description desc )
+            {
+                desc.appendText( "\"" + after + "\"" );
+            }
+
+            @Override
+            public boolean matches( Object inputObj )
+            {
+                if ( !( inputObj instanceof String ) )
+                {
+                    return false;
+                }
+
+                String before = (String)inputObj;
+
+                Solution x = SolutionParser.parse( before );
+
+                after = x.relFormat();
+
+                return after.equals( before );
+            }
+        };
     }
 }
