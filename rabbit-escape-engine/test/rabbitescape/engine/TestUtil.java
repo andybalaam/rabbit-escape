@@ -267,12 +267,34 @@ public class TestUtil
     }
 
     @Test
+    public void Empty_iterator_builds_into_empty_list()
+    {
+        Iterable<String> input = Arrays.asList( new String[] {} );
+
+        assertThat(
+            stringArray( list( input.iterator() ) ),
+            equalTo( new String[] {} )
+        );
+    }
+
+    @Test
     public void Build_list_from_iterable_with_list()
     {
         Iterable<String> input = Arrays.asList( "a", "c", "b" );
 
         assertThat(
             stringArray( list( input ) ),
+            equalTo( new String[] { "a", "c", "b" } )
+        );
+    }
+
+    @Test
+    public void Build_list_from_iterator_with_list()
+    {
+        Iterable<String> input = Arrays.asList( "a", "c", "b" );
+
+        assertThat(
+            stringArray( list( input.iterator() ) ),
             equalTo( new String[] { "a", "c", "b" } )
         );
     }

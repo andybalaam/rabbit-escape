@@ -120,6 +120,18 @@ public class Util
         return Arrays.asList( input );
     }
 
+    public static <T> List<T> list( Iterator<T> input )
+    {
+        List<T> ret = new ArrayList<>();
+
+        while ( input.hasNext() )
+        {
+            ret.add( input.next() );
+        }
+
+        return ret;
+    }
+
     public static String[] stringArray( List<String> list )
     {
         return list.toArray( new String[list.size()] );
