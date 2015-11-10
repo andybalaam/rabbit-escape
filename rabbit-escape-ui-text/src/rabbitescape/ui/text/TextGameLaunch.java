@@ -53,7 +53,7 @@ public class TextGameLaunch implements GameLaunch
                     Thread.sleep( 200 );
                 }
 
-                printWorld();
+                printWorld(inputHandler);
 
                 if ( useInput )
                 {
@@ -75,20 +75,23 @@ public class TextGameLaunch implements GameLaunch
 
             checkWon();
         }
-        printSolution( inputHandler.solution() );
+        printSolution( inputHandler.solution(), true );
     }
 
-    private void printSolution( String solution )
+    private void printSolution( String solution, boolean withObfuscation )
     {
         terminal.out.println(
             t( ":solution.1=${solution}", newMap( "solution", solution ) ) );
 
-        terminal.out.println(
-            t(
-                ":solution.1.code=${solution}",
-                newMap( "solution", MegaCoder.encode( solution ) )
-            )
-        );
+        if ( withObfuscation )
+        {
+            terminal.out.println(
+                t(
+                    ":solution.1.code=${solution}",
+                    newMap( "solution", MegaCoder.encode( solution ) )
+                )
+            );
+        }
     }
 
     private void checkWon()
@@ -99,8 +102,9 @@ public class TextGameLaunch implements GameLaunch
         }
     }
 
-    private void printWorld()
+    private void printWorld( InputHandler inputHandler )
     {
+        printSolution( inputHandler.solution(), false );
         printWorldImpl( false );
         printState();
     }
