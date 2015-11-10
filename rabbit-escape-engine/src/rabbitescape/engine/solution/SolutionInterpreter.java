@@ -94,7 +94,8 @@ public class SolutionInterpreter implements Iterable<SolutionTimeStep>
 
             private SolutionTimeStep handleAllInstructionsInStep()
             {
-                ArrayList<Instruction> ret = new ArrayList<Instruction>();
+                ArrayList<Instruction> instructions =
+                    new ArrayList<Instruction>();
 
                 boolean alreadyWaited = false;
                 enteredNextStep = false;
@@ -112,7 +113,7 @@ public class SolutionInterpreter implements Iterable<SolutionTimeStep>
                     }
                     else
                     {
-                        ret.add( nextInstruction );
+                        instructions.add( nextInstruction );
                     }
                     nextInstruction = rollToNextInstruction();
                 }
@@ -120,7 +121,9 @@ public class SolutionInterpreter implements Iterable<SolutionTimeStep>
                 // TODO: annotate time step with the solution step number
                 // TODO: rename solution step to a clearer name
                 return new SolutionTimeStep(
-                    ret.toArray( new Instruction[ ret.size() ] ) );
+                    instructions.toArray(
+                        new Instruction[ instructions.size() ] )
+                );
             }
         };
     }
