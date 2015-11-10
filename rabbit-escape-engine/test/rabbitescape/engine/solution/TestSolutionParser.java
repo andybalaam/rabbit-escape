@@ -9,7 +9,7 @@ import static org.junit.Assert.fail;
 import static org.hamcrest.MatcherAssert.*;
 import static org.hamcrest.CoreMatchers.*;
 
-public class TestSolutionFactory
+public class TestSolutionParser
 {
     @Test
     public void Empty_string_gives_single_empty_command()
