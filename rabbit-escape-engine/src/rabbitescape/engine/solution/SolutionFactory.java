@@ -25,62 +25,6 @@ public class SolutionFactory
     private static final List<String> TOKEN_TYPES =
         toStringList( Type.values() );
 
-    public static Solution create( String solutionString )
-    {
-        return expand( parse( solutionString ) );
-    }
-
-    private static Solution expand( Solution solution )
-    {
-        List<SolutionCommand> expandedCommands = new ArrayList<SolutionCommand>();
-
-        for ( IdxObj<SolutionCommand> command : enumerate( solution.commands ) )
-        {
-            // Wait one step after every semicolon (unless the last action
-            // was a wait action).
-
-            SolutionCommand newCommand = command.object;
-            SolutionAction last = newCommand.lastAction();
-
-            if (
-                   ! ( last instanceof WaitAction )
-                && (
-                       ( command.index < solution.commands.length - 1 )
-                    || ! ( last instanceof AssertStateAction )
-                )
-            )
-            {
-                newCommand = new SolutionCommand(
-                    concat(
-                        command.object.actions,
-                        new SolutionAction[] { new WaitAction( 1 ) }
-                    )
-                );
-            }
-
-            expandedCommands.add( newCommand );
-        }
-
-        // If the last action is not a validation then assume this was
-        // a 'normal' winning solution.
-        if ( expandedCommands.size() > 0
-            && !(
-                expandedCommands.get(
-                    expandedCommands.size() - 1 ).lastAction()
-                instanceof ValidationAction
-            )
-        )
-        {
-            expandedCommands.add(
-                new SolutionCommand( new AssertStateAction( CompletionState.WON ) ) );
-        }
-
-        return new Solution(
-            expandedCommands.toArray(
-                new SolutionCommand[ expandedCommands.size() ] )
-        );
-    }
-
     public static Solution parse( String solution )
     {
         String[] stringCommands = split( solution, COMMAND_DELIMITER );

@@ -4,7 +4,6 @@ import org.junit.*;
 
 import rabbitescape.engine.Token;
 import rabbitescape.engine.World;
-import rabbitescape.engine.World.CompletionState;
 
 import static org.junit.Assert.fail;
 import static org.hamcrest.MatcherAssert.*;
@@ -13,15 +12,12 @@ import static org.hamcrest.CoreMatchers.*;
 public class TestSolutionFactory
 {
     @Test
-    public void Empty_string_gives_empty_solution_TODO_NOT_AT_MOMENT()
+    public void Empty_string_gives_single_empty_command()
     {
         assertThat(
-            SolutionFactory.create( "" ),
+            SolutionFactory.parse( "" ),
             equalTo(
-                new Solution(
-                      new SolutionCommand( new WaitAction( 1 ) )
-                    , new SolutionCommand( new AssertStateAction( CompletionState.WON ) )
-                )
+                new Solution( new SolutionCommand() )
             )
         );
     }
@@ -30,7 +26,7 @@ public class TestSolutionFactory
     public void Single_status_gives_single_validation_action()
     {
         assertThat(
-            SolutionFactory.create( "WON" ),
+            SolutionFactory.parse( "WON" ),
             equalTo(
                 new Solution(
                     new SolutionCommand(
@@ -44,7 +40,7 @@ public class TestSolutionFactory
     public void Multiple_actions_are_found_and_listed()
     {
         assertThat(
-            SolutionFactory.create( "1;2;WON" ),
+            SolutionFactory.parse( "1;2;WON" ),
             equalTo(
                 new Solution(
                     new SolutionCommand( new WaitAction( 1 ) ),
@@ -60,7 +56,7 @@ public class TestSolutionFactory
     public void Simultaneous_actions_are_noted()
     {
         assertThat(
-            SolutionFactory.create( "bash&(1,1)&3;WON" ),
+            SolutionFactory.parse( "bash&(1,1)&3;WON" ),
             equalTo(
                 new Solution(
                     new SolutionCommand(
@@ -75,15 +71,14 @@ public class TestSolutionFactory
     }
 
     @Test
-    public void Nonwait_actions_get_a_wait_appended_except_at_end()
+    public void Nonwait_actions_dont_get_a_wait_appended()
     {
         assertThat(
-            SolutionFactory.create( "bridge;LOST" ),
+            SolutionFactory.parse( "bridge;LOST" ),
             equalTo(
                 new Solution(
                     new SolutionCommand(
-                        new SelectAction( Token.Type.bridge ),
-                        new WaitAction( 1 )
+                        new SelectAction( Token.Type.bridge )
                     ),
                     new SolutionCommand(
                         new AssertStateAction( World.CompletionState.LOST ) )
@@ -93,39 +88,33 @@ public class TestSolutionFactory
     }
 
     @Test
-    public void Empty_commands_get_a_wait_appended_except_at_end()
+    public void Empty_commands_dont_get_a_wait_appended()
     {
         assertThat(
-            SolutionFactory.create( ";;" ),
+            SolutionFactory.parse( ";;" ),
             equalTo(
                 new Solution(
-                    new SolutionCommand( new WaitAction( 1 ) ),
-                    new SolutionCommand( new WaitAction( 1 ) ),
-                    new SolutionCommand( new WaitAction( 1 ) ),
-                    new SolutionCommand(
-                        new AssertStateAction( World.CompletionState.WON ) )
+                    new SolutionCommand(),
+                    new SolutionCommand(),
+                    new SolutionCommand()
                 )
             )
         );
     }
 
     @Test
-    public void If_not_specified_assert_we_win_at_end()
+    public void No_assert_added_at_end()
     {
         assertThat(
-            SolutionFactory.create( "bridge;(22,40)" ),
+            SolutionFactory.parse( "bridge;(22,40)" ),
             equalTo(
                 new Solution(
                     new SolutionCommand(
-                        new SelectAction( Token.Type.bridge ),
-                        new WaitAction( 1 )
+                        new SelectAction( Token.Type.bridge )
                     ),
                     new SolutionCommand(
-                        new PlaceTokenAction( 22, 40 ),
-                        new WaitAction( 1 )
-                    ),
-                    new SolutionCommand(
-                        new AssertStateAction( World.CompletionState.WON ) )
+                        new PlaceTokenAction( 22, 40 )
+                    )
                 )
             )
         );
@@ -162,7 +151,7 @@ public class TestSolutionFactory
     {
         try
         {
-            SolutionFactory.create( "unknown_ability" );
+            SolutionFactory.parse( "unknown_ability" );
             fail( "Expected an InvalidAction!" );
         }
         catch ( InvalidAction e )
@@ -176,7 +165,7 @@ public class TestSolutionFactory
     {
         try
         {
-            SolutionFactory.create( "1;UNKNOWN_STATE" );
+            SolutionFactory.parse( "1;UNKNOWN_STATE" );
             fail( "Expected an InvalidAction!" );
         }
         catch ( InvalidAction e )
@@ -190,7 +179,7 @@ public class TestSolutionFactory
     {
         try
         {
-            SolutionFactory.create( "bash;(3,a)" );
+            SolutionFactory.parse( "bash;(3,a)" );
             fail( "Expected an InvalidAction!" );
         }
         catch ( InvalidAction e )
@@ -206,7 +195,7 @@ public class TestSolutionFactory
 
         try
         {
-            SolutionFactory.create( bigNum );
+            SolutionFactory.parse( bigNum );
             fail( "Expected an InvalidAction!" );
         }
         catch ( InvalidAction e )
@@ -222,7 +211,7 @@ public class TestSolutionFactory
 
         try
         {
-            SolutionFactory.create( "bash;(3," + bigNum + ")" );
+            SolutionFactory.parse( "bash;(3," + bigNum + ")" );
             fail( "Expected an InvalidAction!" );
         }
         catch ( InvalidAction e )
