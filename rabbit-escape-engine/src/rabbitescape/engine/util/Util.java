@@ -621,10 +621,11 @@ public class Util
             this.object = object;
         }
 
+
         @Override
         public int hashCode()
         {
-            return 31 * ( 31 + index ) + object.hashCode();
+            return ( 31 * index ) + object.hashCode();
         }
 
         @Override
