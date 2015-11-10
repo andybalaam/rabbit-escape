@@ -30,7 +30,7 @@ public class TestSolutionInterpreter
     public void One_wait_waits_for_that_long()
     {
         Solution solution = new Solution(
-            new SolutionCommand( new WaitInstruction( 3 ) ) );
+            new SolutionCommand( new WaitAction( 3 ) ) );
 
         SolutionInterpreter interpreter = new SolutionInterpreter( solution );
 
@@ -51,8 +51,8 @@ public class TestSolutionInterpreter
     {
         Solution solution = new Solution(
               new SolutionCommand(
-                  new WaitInstruction( 1 ), new WaitInstruction( 2 ) )
-            , new SolutionCommand( new WaitInstruction( 3 ) )
+                  new WaitAction( 1 ), new WaitAction( 2 ) )
+            , new SolutionCommand( new WaitAction( 3 ) )
         );
 
         SolutionInterpreter interpreter = new SolutionInterpreter( solution );
@@ -73,10 +73,10 @@ public class TestSolutionInterpreter
     }
 
     @Test
-    public void Single_nonwait_instruction_makes_single_time_step()
+    public void Single_nonwait_action_makes_single_time_step()
     {
         Solution solution = new Solution(
-            new SolutionCommand( new SelectInstruction( Token.Type.explode ) )
+            new SolutionCommand( new SelectAction( Token.Type.explode ) )
         );
 
         SolutionInterpreter interpreter = new SolutionInterpreter( solution );
@@ -86,19 +86,19 @@ public class TestSolutionInterpreter
             equalTo(
                 Arrays.asList(
                     new SolutionTimeStep(
-                        new SelectInstruction( Token.Type.explode ) )
+                        new SelectAction( Token.Type.explode ) )
                 )
             )
         );
     }
 
     @Test
-    public void Multiple_nonwait_instructions_in_single_cmd_make_1_time_step()
+    public void Multiple_nonwait_actions_in_single_cmd_make_1_time_step()
     {
         Solution solution = new Solution(
             new SolutionCommand(
-                new SelectInstruction( Token.Type.explode ),
-                new PlaceTokenInstruction( 2, 2 )
+                new SelectAction( Token.Type.explode ),
+                new PlaceTokenAction( 2, 2 )
             )
         );
 
@@ -109,8 +109,8 @@ public class TestSolutionInterpreter
             equalTo(
                 Arrays.asList(
                     new SolutionTimeStep(
-                          new SelectInstruction( Token.Type.explode )
-                        , new PlaceTokenInstruction( 2, 2 )
+                          new SelectAction( Token.Type.explode )
+                        , new PlaceTokenAction( 2, 2 )
                     )
                 )
             )
@@ -122,11 +122,11 @@ public class TestSolutionInterpreter
     {
         Solution solution = new Solution(
             new SolutionCommand(
-                new SelectInstruction( Token.Type.explode ),
-                new PlaceTokenInstruction( 2, 2 )
+                new SelectAction( Token.Type.explode ),
+                new PlaceTokenAction( 2, 2 )
             ),
-            new SolutionCommand( new WaitInstruction( 4 ) ),
-            new SolutionCommand( new PlaceTokenInstruction( 3, 2 ) )
+            new SolutionCommand( new WaitAction( 4 ) ),
+            new SolutionCommand( new PlaceTokenAction( 3, 2 ) )
         );
 
         SolutionInterpreter interpreter = new SolutionInterpreter( solution );
@@ -136,14 +136,14 @@ public class TestSolutionInterpreter
             equalTo(
                 Arrays.asList(
                     new SolutionTimeStep(
-                          new SelectInstruction( Token.Type.explode )
-                        , new PlaceTokenInstruction( 2, 2 )
+                          new SelectAction( Token.Type.explode )
+                        , new PlaceTokenAction( 2, 2 )
                     ),
                     new SolutionTimeStep(),
                     new SolutionTimeStep(),
                     new SolutionTimeStep(),
                     new SolutionTimeStep(),
-                    new SolutionTimeStep( new PlaceTokenInstruction( 3, 2 ) )
+                    new SolutionTimeStep( new PlaceTokenAction( 3, 2 ) )
                 )
             )
         );
@@ -154,12 +154,12 @@ public class TestSolutionInterpreter
     {
         Solution solution = new Solution(
             new SolutionCommand(),
-            new SolutionCommand( new WaitInstruction( 1 ) ),
+            new SolutionCommand( new WaitAction( 1 ) ),
             new SolutionCommand(
-                new SelectInstruction( Token.Type.explode ),
-                new PlaceTokenInstruction( 2, 2 )
+                new SelectAction( Token.Type.explode ),
+                new PlaceTokenAction( 2, 2 )
             ),
-            new SolutionCommand( new WaitInstruction( 2 ) ),
+            new SolutionCommand( new WaitAction( 2 ) ),
             new SolutionCommand()
         );
 
@@ -172,8 +172,8 @@ public class TestSolutionInterpreter
                     new SolutionTimeStep(),
                     new SolutionTimeStep(),
                     new SolutionTimeStep(
-                          new SelectInstruction( Token.Type.explode )
-                        , new PlaceTokenInstruction( 2, 2 )
+                          new SelectAction( Token.Type.explode )
+                        , new PlaceTokenAction( 2, 2 )
                     ),
                     new SolutionTimeStep(),
                     new SolutionTimeStep(),
@@ -188,15 +188,15 @@ public class TestSolutionInterpreter
     {
         Solution solution = new Solution(
             new SolutionCommand(
-                new WaitInstruction( 3 ),
-                new SelectInstruction( Token.Type.explode ),
-                new PlaceTokenInstruction( 2, 2 )
+                new WaitAction( 3 ),
+                new SelectAction( Token.Type.explode ),
+                new PlaceTokenAction( 2, 2 )
             ),
-            new SolutionCommand( new WaitInstruction( 2 ) ),
+            new SolutionCommand( new WaitAction( 2 ) ),
             new SolutionCommand(
-                new SelectInstruction( Token.Type.dig ),
-                new PlaceTokenInstruction( 1, 1 ),
-                new WaitInstruction( 3 )
+                new SelectAction( Token.Type.dig ),
+                new PlaceTokenAction( 1, 1 ),
+                new WaitAction( 3 )
             )
         );
 
@@ -207,8 +207,8 @@ public class TestSolutionInterpreter
             equalTo(
                 Arrays.asList(
                     new SolutionTimeStep(
-                          new SelectInstruction( Token.Type.explode )
-                        , new PlaceTokenInstruction( 2, 2 )
+                          new SelectAction( Token.Type.explode )
+                        , new PlaceTokenAction( 2, 2 )
                     ),
                     new SolutionTimeStep(),
                     new SolutionTimeStep(),
@@ -217,8 +217,8 @@ public class TestSolutionInterpreter
                     new SolutionTimeStep(),
 
                     new SolutionTimeStep(
-                        new SelectInstruction( Token.Type.dig ),
-                        new PlaceTokenInstruction( 1, 1 )
+                        new SelectAction( Token.Type.dig ),
+                        new PlaceTokenAction( 1, 1 )
                     ),
                     new SolutionTimeStep(),
                     new SolutionTimeStep()
@@ -251,9 +251,9 @@ public class TestSolutionInterpreter
     {
         Solution solution = new Solution(
             new SolutionCommand(),
-            new SolutionCommand( new SelectInstruction( Token.Type.dig ) ),
-            new SolutionCommand( new PlaceTokenInstruction( 1, 1 ) ),
-            new SolutionCommand( new TargetState( CompletionState.RUNNING ) ),
+            new SolutionCommand( new SelectAction( Token.Type.dig ) ),
+            new SolutionCommand( new PlaceTokenAction( 1, 1 ) ),
+            new SolutionCommand( new AssertStateAction( CompletionState.RUNNING ) ),
             new SolutionCommand(),
             new SolutionCommand(),
             new SolutionCommand()
@@ -268,12 +268,12 @@ public class TestSolutionInterpreter
                     new SolutionTimeStep(),
 
                     new SolutionTimeStep(
-                        new SelectInstruction( Token.Type.dig ) ),
+                        new SelectAction( Token.Type.dig ) ),
 
-                    new SolutionTimeStep( new PlaceTokenInstruction( 1, 1 ) ),
+                    new SolutionTimeStep( new PlaceTokenAction( 1, 1 ) ),
 
                     new SolutionTimeStep(
-                        new TargetState( CompletionState.RUNNING ) ),
+                        new AssertStateAction( CompletionState.RUNNING ) ),
 
                     new SolutionTimeStep(),
 

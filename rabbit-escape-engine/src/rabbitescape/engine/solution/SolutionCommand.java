@@ -6,11 +6,11 @@ import java.util.Arrays;
 
 import rabbitescape.engine.util.Util;
 
-public class SolutionTimeStep
+public class SolutionCommand
 {
     public final SolutionAction[] actions;
 
-    public SolutionTimeStep( SolutionAction... actions )
+    public SolutionCommand( SolutionAction... actions )
     {
         this.actions = actions;
     }
@@ -18,7 +18,7 @@ public class SolutionTimeStep
     @Override
     public String toString()
     {
-        return "SolutionTimeStep( "
+        return "SolutionCommand( "
             + Util.join( ", ", toStringList( actions ) )
             + " )";
     }
@@ -26,11 +26,11 @@ public class SolutionTimeStep
     @Override
     public boolean equals( Object other )
     {
-        if ( ! ( other instanceof SolutionTimeStep ) )
+        if ( ! ( other instanceof SolutionCommand ) )
         {
             return false;
         }
-        SolutionTimeStep otherSolution = (SolutionTimeStep)other;
+        SolutionCommand otherSolution = (SolutionCommand)other;
 
         return Arrays.deepEquals( actions, otherSolution.actions );
     }
@@ -41,4 +41,15 @@ public class SolutionTimeStep
         return Arrays.deepHashCode( actions );
     }
 
+    public SolutionAction lastAction()
+    {
+        if ( actions.length == 0 )
+        {
+            return null;
+        }
+        else
+        {
+            return actions[ actions.length - 1 ];
+        }
+    }
 }

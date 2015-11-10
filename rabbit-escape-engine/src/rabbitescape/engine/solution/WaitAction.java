@@ -1,10 +1,10 @@
 package rabbitescape.engine.solution;
 
-public class WaitInstruction implements Instruction
+public class WaitAction implements SolutionAction
 {
     public final int steps;
 
-    public WaitInstruction( int steps )
+    public WaitAction( int steps )
     {
         this.steps = steps;
     }
@@ -37,17 +37,17 @@ public class WaitInstruction implements Instruction
     @Override
     public String toString()
     {
-        return "WaitInstruction( " + steps + " )";
+        return "WaitAction( " + steps + " )";
     }
 
     @Override
     public boolean equals( Object otherObj )
     {
-        if ( ! ( otherObj instanceof WaitInstruction ) )
+        if ( ! ( otherObj instanceof WaitAction ) )
         {
             return false;
         }
-        WaitInstruction other = (WaitInstruction)otherObj;
+        WaitAction other = (WaitAction)otherObj;
 
         return ( steps == other.steps );
     }
@@ -59,8 +59,8 @@ public class WaitInstruction implements Instruction
     }
 
     @Override
-    public void typeSwitch( InstructionTypeSwitch instructionTypeSwitch )
+    public void typeSwitch( ActionTypeSwitch actionTypeSwitch )
     {
-        instructionTypeSwitch.caseWaitInstruction( this );
+        actionTypeSwitch.caseWaitAction( this );
     }
 }

@@ -280,41 +280,41 @@ public class TestSolutionRunner
 
     private Solution expectingSolution( CompletionState expected )
     {
-        return new Solution( new SolutionCommand( new TargetState( expected ) ) );
+        return new Solution( new SolutionCommand( new AssertStateAction( expected ) ) );
     }
 
     private Solution waitFourSolution()
     {
         return new Solution(
-            new SolutionCommand( new WaitInstruction( 1 ) ),
-            new SolutionCommand( new WaitInstruction( 2 ) ),
-            new SolutionCommand( new WaitInstruction( 2 ) )
+            new SolutionCommand( new WaitAction( 1 ) ),
+            new SolutionCommand( new WaitAction( 2 ) ),
+            new SolutionCommand( new WaitAction( 2 ) )
         );
     }
 
     private Solution waitFiveThenLostSolution()
     {
         return new Solution(
-            new SolutionCommand( new WaitInstruction( 5 ) ),
-            new SolutionCommand( new TargetState( CompletionState.LOST ) )
+            new SolutionCommand( new WaitAction( 5 ) ),
+            new SolutionCommand( new AssertStateAction( CompletionState.LOST ) )
         );
     }
 
     private Solution useBash30Solution()
     {
         return new Solution(
-            new SolutionCommand( new SelectInstruction( Token.Type.bash ) ),
-            new SolutionCommand( new PlaceTokenInstruction( 1, 0 ) ),
-            new SolutionCommand( new WaitInstruction( 1 ) ),
-            new SolutionCommand( new PlaceTokenInstruction( 3, 0 ) )
+            new SolutionCommand( new SelectAction( Token.Type.bash ) ),
+            new SolutionCommand( new PlaceTokenAction( 1, 0 ) ),
+            new SolutionCommand( new WaitAction( 1 ) ),
+            new SolutionCommand( new PlaceTokenAction( 3, 0 ) )
         );
     }
 
     private Solution useBash100Solution()
     {
         return new Solution(
-            new SolutionCommand( new SelectInstruction( Token.Type.bash ) ),
-            new SolutionCommand( new PlaceTokenInstruction( 10, 0 ) )
+            new SolutionCommand( new SelectAction( Token.Type.bash ) ),
+            new SolutionCommand( new PlaceTokenAction( 10, 0 ) )
         );
     }
 }

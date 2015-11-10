@@ -18,18 +18,18 @@ public class Solution
     public String relFormat()
     {
         StringBuilder sb = new StringBuilder();
-        Instruction previousInstruction = null;
+        SolutionAction previousAction = null;
         for ( SolutionCommand command : commands )
         {
             boolean firstInCommand = true;
-            for ( Instruction instruction : command.instructions )
+            for ( SolutionAction action : command.actions )
             {
-                if (previousInstruction != null)
+                if (previousAction != null)
                 {
-                    firstInCommand = (previousInstruction instanceof WaitInstruction);
+                    firstInCommand = (previousAction instanceof WaitAction);
                 }
-                sb.append( instruction.relFormat( firstInCommand ) );
-                previousInstruction = instruction;
+                sb.append( action.relFormat( firstInCommand ) );
+                previousAction = action;
             }
         }
         return sb.toString();

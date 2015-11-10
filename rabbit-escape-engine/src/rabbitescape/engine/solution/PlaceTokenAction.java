@@ -1,23 +1,24 @@
 package rabbitescape.engine.solution;
 
-public class PlaceTokenInstruction implements Instruction
+public class PlaceTokenAction implements SolutionAction
 {
     public final int x;
     public final int y;
 
-    public PlaceTokenInstruction( int x, int y )
+    public PlaceTokenAction( int x, int y )
     {
         this.x = x;
         this.y = y;
     }
 
+    @Override
     public String relFormat( boolean firstInCommand )
     {
         if ( firstInCommand )
         {
             return "(" + x + "," + y + ")";
         }
-        return SolutionFactory.INSTRUCTION_DELIMITER + "(" + x + "," + y + ")";
+        return SolutionFactory.ACTION_DELIMITER + "(" + x + "," + y + ")";
     }
 
     public int getX()
@@ -33,17 +34,17 @@ public class PlaceTokenInstruction implements Instruction
     @Override
     public String toString()
     {
-        return "PlaceTokenInstruction( " + x + ", " + y + " )";
+        return "PlaceTokenAction( " + x + ", " + y + " )";
     }
 
     @Override
     public boolean equals( Object otherObj )
     {
-        if ( ! ( otherObj instanceof PlaceTokenInstruction ) )
+        if ( ! ( otherObj instanceof PlaceTokenAction ) )
         {
             return false;
         }
-        PlaceTokenInstruction other = (PlaceTokenInstruction)otherObj;
+        PlaceTokenAction other = (PlaceTokenAction)otherObj;
 
         return ( x == other.x && y == other.y );
     }
@@ -55,8 +56,8 @@ public class PlaceTokenInstruction implements Instruction
     }
 
     @Override
-    public void typeSwitch( InstructionTypeSwitch instructionTypeSwitch )
+    public void typeSwitch( ActionTypeSwitch actionTypeSwitch )
     {
-        instructionTypeSwitch.casePlaceTokenInstruction( this );
+        actionTypeSwitch.casePlaceTokenAction( this );
     }
 }

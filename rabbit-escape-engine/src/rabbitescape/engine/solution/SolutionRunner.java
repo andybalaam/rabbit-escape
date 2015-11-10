@@ -24,9 +24,9 @@ public class SolutionRunner
         {
             try
             {
-                for ( Instruction instruction : command.object.instructions )
+                for ( SolutionAction action : command.object.actions )
                 {
-                    performInstruction( instruction, sandboxGame );
+                    performAction( action, sandboxGame );
                 }
             }
             catch ( SolutionExceptions.ProblemRunningSolution e )
@@ -37,13 +37,13 @@ public class SolutionRunner
         }
     }
 
-    public static void performInstruction(
-        Instruction instruction, final SandboxGame sandboxGame )
+    public static void performAction(
+        SolutionAction action, final SandboxGame sandboxGame )
     throws SolutionExceptions.UnexpectedState
     {
         try
         {
-            doPerformInstruction( instruction, sandboxGame );
+            doPerformAction( action, sandboxGame );
         }
         catch ( DontStepAfterFinish e )
         {
@@ -66,14 +66,14 @@ public class SolutionRunner
         }
     }
 
-    private static void doPerformInstruction(
-        Instruction instruction, final SandboxGame sandboxGame )
+    private static void doPerformAction(
+        SolutionAction action, final SandboxGame sandboxGame )
     throws SolutionExceptions.UnexpectedState
     {
-        instruction.typeSwitch( new InstructionTypeSwitch()
+        action.typeSwitch( new ActionTypeSwitch()
             {
                 @Override
-                public void caseWaitInstruction( WaitInstruction w )
+                public void caseWaitAction( WaitAction w )
                 {
                     for ( int i = 0; i < w.steps; i++ )
                     {
@@ -82,7 +82,7 @@ public class SolutionRunner
                 }
 
                 @Override
-                public void caseSelectInstruction( SelectInstruction s )
+                public void caseSelectAction( SelectAction s )
                 {
                     // TODO: check whether this ability exists, and throw if
                     //       not.
@@ -90,7 +90,7 @@ public class SolutionRunner
                 }
 
                 @Override
-                public void caseTargetState( TargetState s )
+                public void caseAssertStateAction( AssertStateAction s )
                     throws SolutionExceptions.UnexpectedState
                 {
                     if (
@@ -114,7 +114,7 @@ public class SolutionRunner
                 }
 
                 @Override
-                public void casePlaceTokenInstruction( PlaceTokenInstruction p )
+                public void casePlaceTokenAction( PlaceTokenAction p )
                 {
                     Type type = sandboxGame.getSelectedType();
                     World world = sandboxGame.getWorld();

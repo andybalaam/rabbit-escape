@@ -2,11 +2,11 @@ package rabbitescape.engine.solution;
 
 import rabbitescape.engine.World.CompletionState;
 
-public class TargetState implements ValidationInstruction
+public class AssertStateAction implements ValidationAction
 {
     public final CompletionState targetState;
 
-    public TargetState( CompletionState targetState )
+    public AssertStateAction( CompletionState targetState )
     {
         this.targetState = targetState;
     }
@@ -17,7 +17,7 @@ public class TargetState implements ValidationInstruction
         {
             targetState.name();
         }
-        return SolutionFactory.INSTRUCTION_DELIMITER + targetState.name();
+        return SolutionFactory.ACTION_DELIMITER + targetState.name();
     }
 
     @Override
@@ -29,11 +29,11 @@ public class TargetState implements ValidationInstruction
     @Override
     public boolean equals( Object otherObj )
     {
-        if ( ! ( otherObj instanceof TargetState ) )
+        if ( ! ( otherObj instanceof AssertStateAction ) )
         {
             return false;
         }
-        TargetState other = (TargetState)otherObj;
+        AssertStateAction other = (AssertStateAction)otherObj;
 
         return ( targetState == other.targetState );
     }
@@ -45,8 +45,8 @@ public class TargetState implements ValidationInstruction
     }
 
     @Override
-    public void typeSwitch( InstructionTypeSwitch instructionTypeSwitch )
+    public void typeSwitch( ActionTypeSwitch actionTypeSwitch )
     {
-        instructionTypeSwitch.caseTargetState( this );
+        actionTypeSwitch.caseAssertStateAction( this );
     }
 }

@@ -25,11 +25,11 @@ public class TestSolutionTimeStep
     public void Identical_nonempty_timesteps_are_equal()
     {
         SolutionTimeStep ts1 = new SolutionTimeStep(
-            new WaitInstruction( 3 ), new SelectInstruction( Token.Type.bridge )
+            new WaitAction( 3 ), new SelectAction( Token.Type.bridge )
         );
 
         SolutionTimeStep ts2 = new SolutionTimeStep(
-            new WaitInstruction( 3 ), new SelectInstruction( Token.Type.bridge )
+            new WaitAction( 3 ), new SelectAction( Token.Type.bridge )
         );
 
         assertThat( ts1, equalTo( ts2 ) );
@@ -39,7 +39,7 @@ public class TestSolutionTimeStep
 
 
     @Test
-    public void Different_instruction_lists_make_them_unequal()
+    public void Different_action_lists_make_them_unequal()
     {
         SolutionTimeStep s1 = makeSolutionTimeStep( 3 );
         SolutionTimeStep s2 = makeShortSolutionTimeStep( 3 );
@@ -52,7 +52,7 @@ public class TestSolutionTimeStep
     }
 
     @Test
-    public void Different_instructions_make_them_unequal()
+    public void Different_actions_make_them_unequal()
     {
         SolutionTimeStep s1 = makeSolutionTimeStep( 3 );
         SolutionTimeStep s2 = makeSolutionTimeStep( 2 );
@@ -69,19 +69,19 @@ public class TestSolutionTimeStep
     private static SolutionTimeStep makeSolutionTimeStep( int waitTime )
     {
         return new SolutionTimeStep(
-              new WaitInstruction( waitTime )
-            , new PlaceTokenInstruction( 3, 2 )
-            , new SelectInstruction( Token.Type.block )
-            , new TargetState( World.CompletionState.RUNNING )
+              new WaitAction( waitTime )
+            , new PlaceTokenAction( 3, 2 )
+            , new SelectAction( Token.Type.block )
+            , new AssertStateAction( World.CompletionState.RUNNING )
         );
     }
 
     private static SolutionTimeStep makeShortSolutionTimeStep( int waitTime )
     {
         return new SolutionTimeStep(
-              new WaitInstruction( waitTime )
-            , new PlaceTokenInstruction( 3, 2 )
-            , new SelectInstruction( Token.Type.block )
+              new WaitAction( waitTime )
+            , new PlaceTokenAction( 3, 2 )
+            , new SelectAction( Token.Type.block )
         );
     }
 }

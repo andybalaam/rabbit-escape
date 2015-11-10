@@ -53,20 +53,20 @@ public class TestSolution
     private static Solution makeSolution( int waitTime )
     {
         return new Solution(
-              new SolutionCommand( new WaitInstruction( waitTime ) )
-            , new SolutionCommand( new PlaceTokenInstruction( 3, 2 ) )
-            , new SolutionCommand( new SelectInstruction( Token.Type.block ) )
+              new SolutionCommand( new WaitAction( waitTime ) )
+            , new SolutionCommand( new PlaceTokenAction( 3, 2 ) )
+            , new SolutionCommand( new SelectAction( Token.Type.block ) )
             , new SolutionCommand(
-                new TargetState( World.CompletionState.RUNNING ) )
+                new AssertStateAction( World.CompletionState.RUNNING ) )
         );
     }
 
     private static Solution makeShortSolution( int waitTime )
     {
         return new Solution(
-              new SolutionCommand( new WaitInstruction( waitTime ) )
-            , new SolutionCommand( new PlaceTokenInstruction( 3, 2 ) )
-            , new SolutionCommand( new SelectInstruction( Token.Type.block ) )
+              new SolutionCommand( new WaitAction( waitTime ) )
+            , new SolutionCommand( new PlaceTokenAction( 3, 2 ) )
+            , new SolutionCommand( new SelectAction( Token.Type.block ) )
         );
     }
 }

@@ -8,13 +8,13 @@ import static rabbitescape.engine.i18n.Translation.*;
 import static rabbitescape.engine.util.Util.*;
 import rabbitescape.engine.err.ExceptionTranslation;
 import rabbitescape.engine.err.RabbitEscapeException;
-import rabbitescape.engine.solution.Instruction;
+import rabbitescape.engine.solution.SolutionAction;
 import rabbitescape.engine.solution.SandboxGame;
 import rabbitescape.engine.solution.Solution;
 import rabbitescape.engine.solution.SolutionExceptions;
 import rabbitescape.engine.solution.SolutionFactory;
 import rabbitescape.engine.solution.SolutionRunner;
-import rabbitescape.engine.solution.WaitInstruction;
+import rabbitescape.engine.solution.WaitAction;
 import rabbitescape.engine.solution.SolutionCommand;
 
 public class InputHandler
@@ -30,7 +30,7 @@ public class InputHandler
         this.solution = new ArrayList<>();
     }
 
-    public boolean handle( int instructionIndex )
+    public boolean handle( int commandIndex )
     {
         String input = input();
 
@@ -53,35 +53,35 @@ public class InputHandler
         {
             SolutionCommand command = SolutionFactory.createCommand( input );
 
-            if ( command.instructions.length == 0 )
+            if ( command.actions.length == 0 )
             {
-                return fail( t( "Unexpected problem: no Instruction" ) );
+                return fail( t( "Unexpected problem: no Action" ) );
             }
 
-            Instruction lastInstruction = command.instructions[
-                command.instructions.length - 1 ];
+            SolutionAction lastAction = command.actions[
+                command.actions.length - 1 ];
 
-            if ( !( lastInstruction instanceof WaitInstruction ) )
+            if ( !( lastAction instanceof WaitAction ) )
             {
-                WaitInstruction waitInstruction = new WaitInstruction( 1 );
+                WaitAction waitAction = new WaitAction( 1 );
                 command = new SolutionCommand(
                     concat(
-                        command.instructions,
-                        new Instruction[] { waitInstruction }
+                        command.actions,
+                        new SolutionAction[] { waitAction }
                     )
                 );
             }
 
-            for ( Instruction instruction : command.instructions )
+            for ( SolutionAction action : command.actions )
             {
-                SolutionRunner.performInstruction( instruction, sandboxGame );
+                SolutionRunner.performAction( action, sandboxGame );
             }
 
             append( command );
         }
         catch ( SolutionExceptions.ProblemRunningSolution e )
         {
-            e.commandIndex = instructionIndex;
+            e.commandIndex = commandIndex;
             e.solutionId = 1;
             return fail( ExceptionTranslation.translate( e, terminal.locale ) );
         }
@@ -123,18 +123,18 @@ public class InputHandler
     private SolutionCommand tryToSimplify(
         SolutionCommand existingCmd, SolutionCommand newCmd )
     {
-        Instruction instruction1 = existingCmd.instructions[0];
-        Instruction instruction2 = newCmd.instructions[0];
+        SolutionAction action1 = existingCmd.actions[0];
+        SolutionAction action2 = newCmd.actions[0];
 
         if (
-               instruction1 instanceof WaitInstruction
-            && instruction2 instanceof WaitInstruction
+               action1 instanceof WaitAction
+            && action2 instanceof WaitAction
         )
         {
-            WaitInstruction wait1 = (WaitInstruction)instruction1;
-            WaitInstruction wait2 = (WaitInstruction)instruction2;
+            WaitAction wait1 = (WaitAction)action1;
+            WaitAction wait2 = (WaitAction)action2;
             return new SolutionCommand(
-                new WaitInstruction( wait1.steps + wait2.steps ) );
+                new WaitAction( wait1.steps + wait2.steps ) );
         }
         return null;
     }

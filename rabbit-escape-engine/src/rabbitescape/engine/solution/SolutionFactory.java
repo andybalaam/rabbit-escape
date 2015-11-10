@@ -13,7 +13,7 @@ import rabbitescape.engine.World.CompletionState;
 public class SolutionFactory
 {
     public static final String COMMAND_DELIMITER = ";";
-    public static final String INSTRUCTION_DELIMITER = "&";
+    public static final String ACTION_DELIMITER = "&";
     private static final Pattern WAIT_REGEX = Pattern.compile( "\\d+" );
 
     private static final Pattern PLACE_TOKEN_REGEX = Pattern.compile(
@@ -36,24 +36,24 @@ public class SolutionFactory
 
         for ( IdxObj<SolutionCommand> command : enumerate( solution.commands ) )
         {
-            // Wait one step after every semicolon (unless the last instruction
-            // was a wait instruction).
+            // Wait one step after every semicolon (unless the last action
+            // was a wait action).
 
             SolutionCommand newCommand = command.object;
-            Instruction last = newCommand.lastInstruction();
+            SolutionAction last = newCommand.lastAction();
 
             if (
-                   ! ( last instanceof WaitInstruction )
+                   ! ( last instanceof WaitAction )
                 && (
                        ( command.index < solution.commands.length - 1 )
-                    || ! ( last instanceof TargetState )
+                    || ! ( last instanceof AssertStateAction )
                 )
             )
             {
                 newCommand = new SolutionCommand(
                     concat(
-                        command.object.instructions,
-                        new Instruction[] { new WaitInstruction( 1 ) }
+                        command.object.actions,
+                        new SolutionAction[] { new WaitAction( 1 ) }
                     )
                 );
             }
@@ -61,18 +61,18 @@ public class SolutionFactory
             expandedCommands.add( newCommand );
         }
 
-        // If the last instruction is not a validation then assume this was
+        // If the last action is not a validation then assume this was
         // a 'normal' winning solution.
         if ( expandedCommands.size() > 0
             && !(
                 expandedCommands.get(
-                    expandedCommands.size() - 1 ).lastInstruction()
-                instanceof ValidationInstruction
+                    expandedCommands.size() - 1 ).lastAction()
+                instanceof ValidationAction
             )
         )
         {
             expandedCommands.add(
-                new SolutionCommand( new TargetState( CompletionState.WON ) ) );
+                new SolutionCommand( new AssertStateAction( CompletionState.WON ) ) );
         }
 
         return new Solution(
@@ -98,62 +98,61 @@ public class SolutionFactory
 
     public static SolutionCommand createCommand( String commandString )
     {
-        ArrayList<Instruction> instructions = new ArrayList<Instruction>();
+        ArrayList<SolutionAction> actions = new ArrayList<SolutionAction>();
 
-        String[] instructionStrings = split(
-            commandString, INSTRUCTION_DELIMITER );
+        String[] actionStrings = split( commandString, ACTION_DELIMITER );
 
-        for ( int j = 0; j < instructionStrings.length; j++ )
+        for ( int j = 0; j < actionStrings.length; j++ )
         {
-            if ( !instructionStrings[j].equals( "" ) )
+            if ( !actionStrings[j].equals( "" ) )
             {
-                instructions.add( makeInstruction( instructionStrings[j] ) );
+                actions.add( makeAction( actionStrings[j] ) );
             }
         }
 
         return new SolutionCommand(
-            instructions.toArray( new Instruction[ instructions.size() ] ) );
+            actions.toArray( new SolutionAction[ actions.size() ] ) );
     }
 
-    private static Instruction makeInstruction( String instructionString )
+    private static SolutionAction makeAction( String actionString )
     {
         try
         {
-            return doMakeInstruction( instructionString );
+            return doMakeAction( actionString );
         }
         catch ( NumberFormatException e )
         {
-            throw new InvalidInstruction( e, instructionString );
+            throw new InvalidAction( e, actionString );
         }
     }
 
-    private static Instruction doMakeInstruction( String instructionString )
-    throws NumberFormatException, InvalidInstruction
+    private static SolutionAction doMakeAction( String actionString )
+    throws NumberFormatException, InvalidAction
     {
-        if ( COMPLETION_STATES.contains( instructionString ) )
+        if ( COMPLETION_STATES.contains( actionString ) )
         {
-            return new TargetState(
-                CompletionState.valueOf( instructionString ) );
+            return new AssertStateAction(
+                CompletionState.valueOf( actionString ) );
         }
-        else if ( WAIT_REGEX.matcher( instructionString ).matches() )
+        else if ( WAIT_REGEX.matcher( actionString ).matches() )
         {
-            return new WaitInstruction( Integer.valueOf( instructionString ) );
+            return new WaitAction( Integer.valueOf( actionString ) );
         }
-        else if ( TOKEN_TYPES.contains( instructionString ) )
+        else if ( TOKEN_TYPES.contains( actionString ) )
         {
-            return new SelectInstruction( Type.valueOf( instructionString ) );
+            return new SelectAction( Type.valueOf( actionString ) );
         }
         else
         {
-            Matcher m = PLACE_TOKEN_REGEX.matcher( instructionString );
+            Matcher m = PLACE_TOKEN_REGEX.matcher( actionString );
             if ( m.matches() )
             {
-                return new PlaceTokenInstruction(
+                return new PlaceTokenAction(
                     Integer.valueOf( m.group( 1 ) ),
                     Integer.valueOf( m.group( 2 ) ) );
             }
         }
-        throw new InvalidInstruction( instructionString );
+        throw new InvalidAction( actionString );
     }
 
 }

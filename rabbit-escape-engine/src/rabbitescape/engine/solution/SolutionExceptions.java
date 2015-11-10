@@ -9,7 +9,7 @@ public class SolutionExceptions
     /**
      * Base class for everything that can go wrong when running a solution.
      * The member variables get filled in as we roll up the stack through
-     * the instruction we are on, and the solution we are running.
+     * the command we are on, and the solution we are running.
      */
     public static abstract class ProblemRunningSolution
         extends RabbitEscapeException

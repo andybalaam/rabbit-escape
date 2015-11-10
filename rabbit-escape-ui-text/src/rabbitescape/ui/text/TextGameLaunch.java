@@ -40,7 +40,7 @@ public class TextGameLaunch implements GameLaunch
         InputHandler inputHandler =
             new InputHandler( sandboxGame, terminal );
 
-        int instructionIndex = 1;
+        int commandIndex = 1;
         while(
             sandboxGame.getWorld().completionState() == CompletionState.RUNNING
         )
@@ -58,10 +58,10 @@ public class TextGameLaunch implements GameLaunch
                 if ( useInput )
                 {
                     //noinspection StatementWithEmptyBody
-                    while ( !inputHandler.handle( instructionIndex ) )
+                    while ( !inputHandler.handle( commandIndex ) )
                     {
                     }
-                    ++instructionIndex;
+                    ++commandIndex;
                 }
                 else
                 {

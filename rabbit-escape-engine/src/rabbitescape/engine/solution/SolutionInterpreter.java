@@ -21,20 +21,20 @@ public class SolutionInterpreter implements Iterable<SolutionTimeStep>
             Iterator<SolutionCommand> commands = Arrays.asList(
                 solution.commands ).iterator();
 
-            Iterator<Instruction> instrs = null;
+            Iterator<SolutionAction> instrs = null;
 
             int waitTimeLeft = 0;
 
             boolean enteredNextCommand = false;
 
-            Instruction nextInstruction = rollToNextInstruction();
+            SolutionAction nextAction = rollToNextAction();
 
             @Override
             public boolean hasNext()
             {
                 return (
                        waitTimeLeft > 0
-                    || nextInstruction != null
+                    || nextAction != null
                 );
             }
 
@@ -48,7 +48,7 @@ public class SolutionInterpreter implements Iterable<SolutionTimeStep>
                 }
                 else
                 {
-                    return handleAllInstructionsInStep();
+                    return handleAllActionsInStep();
                 }
             }
 
@@ -58,7 +58,7 @@ public class SolutionInterpreter implements Iterable<SolutionTimeStep>
                 throw new UnsupportedOperationException();
             }
 
-            private Instruction rollToNextInstruction()
+            private SolutionAction rollToNextAction()
             {
                 if ( instrs != null && instrs.hasNext() )
                 {
@@ -70,7 +70,7 @@ public class SolutionInterpreter implements Iterable<SolutionTimeStep>
                     SolutionCommand s = commands.next();
                     enteredNextCommand = true;
 
-                    instrs = Arrays.asList( s.instructions ).iterator();
+                    instrs = Arrays.asList( s.actions ).iterator();
 
                     if ( instrs.hasNext() )
                     {
@@ -78,7 +78,7 @@ public class SolutionInterpreter implements Iterable<SolutionTimeStep>
                     }
                     else
                     {
-                        // No instructions in that command - this means wait 1
+                        // No action in that command - this means wait 1
                         ++waitTimeLeft;
                     }
                 }
@@ -92,18 +92,18 @@ public class SolutionInterpreter implements Iterable<SolutionTimeStep>
                 return new SolutionTimeStep();
             }
 
-            private SolutionTimeStep handleAllInstructionsInStep()
+            private SolutionTimeStep handleAllActionsInStep()
             {
-                ArrayList<Instruction> instructions =
-                    new ArrayList<Instruction>();
+                ArrayList<SolutionAction> actions =
+                    new ArrayList<SolutionAction>();
 
                 boolean alreadyWaited = false;
                 enteredNextCommand = false;
-                while( nextInstruction != null && !enteredNextCommand )
+                while( nextAction != null && !enteredNextCommand )
                 {
-                    if ( nextInstruction instanceof WaitInstruction )
+                    if ( nextAction instanceof WaitAction )
                     {
-                        WaitInstruction wait = (WaitInstruction)nextInstruction;
+                        WaitAction wait = (WaitAction)nextAction;
                         waitTimeLeft += wait.steps;
                         if ( !alreadyWaited )
                         {
@@ -113,15 +113,15 @@ public class SolutionInterpreter implements Iterable<SolutionTimeStep>
                     }
                     else
                     {
-                        instructions.add( nextInstruction );
+                        actions.add( nextAction );
                     }
-                    nextInstruction = rollToNextInstruction();
+                    nextAction = rollToNextAction();
                 }
 
                 // TODO: annotate time step with the solution command number
                 return new SolutionTimeStep(
-                    instructions.toArray(
-                        new Instruction[ instructions.size() ] )
+                    actions.toArray(
+                        new SolutionAction[ actions.size() ] )
                 );
             }
         };

@@ -2,38 +2,39 @@ package rabbitescape.engine.solution;
 
 import rabbitescape.engine.Token;
 
-public class SelectInstruction implements Instruction
+public class SelectAction implements SolutionAction
 {
     public final Token.Type type;
 
-    public SelectInstruction( Token.Type type )
+    public SelectAction( Token.Type type )
     {
         this.type = type;
     }
 
+    @Override
     public String relFormat( boolean firstInCommand )
     {
         if ( firstInCommand )
         {
             return type.name();
         }
-        return SolutionFactory.INSTRUCTION_DELIMITER + type.name();
+        return SolutionFactory.ACTION_DELIMITER + type.name();
     }
 
     @Override
     public String toString()
     {
-        return "SelectInstruction( " + type.name() + " )";
+        return "SelectAction( " + type.name() + " )";
     }
 
     @Override
     public boolean equals( Object otherObj )
     {
-        if ( ! ( otherObj instanceof SelectInstruction ) )
+        if ( ! ( otherObj instanceof SelectAction ) )
         {
             return false;
         }
-        SelectInstruction other = (SelectInstruction)otherObj;
+        SelectAction other = (SelectAction)otherObj;
 
         return ( type == other.type );
     }
@@ -45,8 +46,8 @@ public class SelectInstruction implements Instruction
     }
 
     @Override
-    public void typeSwitch( InstructionTypeSwitch instructionTypeSwitch )
+    public void typeSwitch( ActionTypeSwitch actionTypeSwitch )
     {
-        instructionTypeSwitch.caseSelectInstruction( this );
+        actionTypeSwitch.caseSelectAction( this );
     }
 }
