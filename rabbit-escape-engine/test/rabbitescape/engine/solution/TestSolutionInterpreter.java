@@ -41,9 +41,9 @@ public class TestSolutionInterpreter
             list( interpreter ),
             equalTo(
                 Arrays.asList(
-                      new SolutionTimeStep()
-                    , new SolutionTimeStep()
-                    , new SolutionTimeStep()
+                      new SolutionTimeStep( 1 )
+                    , new SolutionTimeStep( 1 )
+                    , new SolutionTimeStep( 1 )
                 )
             )
         );
@@ -65,12 +65,12 @@ public class TestSolutionInterpreter
             list( interpreter ),
             equalTo(
                 Arrays.asList(
-                      new SolutionTimeStep()
-                    , new SolutionTimeStep()
-                    , new SolutionTimeStep()
-                    , new SolutionTimeStep()
-                    , new SolutionTimeStep()
-                    , new SolutionTimeStep()
+                      new SolutionTimeStep( 1 )
+                    , new SolutionTimeStep( 1 )
+                    , new SolutionTimeStep( 1 )
+                    , new SolutionTimeStep( 2 )
+                    , new SolutionTimeStep( 2 )
+                    , new SolutionTimeStep( 2 )
                 )
             )
         );
@@ -91,7 +91,7 @@ public class TestSolutionInterpreter
             equalTo(
                 Arrays.asList(
                     new SolutionTimeStep(
-                        new SelectAction( Token.Type.explode ) )
+                        1, new SelectAction( Token.Type.explode ) )
                 )
             )
         );
@@ -115,7 +115,8 @@ public class TestSolutionInterpreter
             equalTo(
                 Arrays.asList(
                     new SolutionTimeStep(
-                          new SelectAction( Token.Type.explode )
+                        1
+                        , new SelectAction( Token.Type.explode )
                         , new PlaceTokenAction( 2, 2 )
                     )
                 )
@@ -143,14 +144,15 @@ public class TestSolutionInterpreter
             equalTo(
                 Arrays.asList(
                     new SolutionTimeStep(
-                          new SelectAction( Token.Type.explode )
+                        1
+                        , new SelectAction( Token.Type.explode )
                         , new PlaceTokenAction( 2, 2 )
                     ),
-                    new SolutionTimeStep(),
-                    new SolutionTimeStep(),
-                    new SolutionTimeStep(),
-                    new SolutionTimeStep(),
-                    new SolutionTimeStep( new PlaceTokenAction( 3, 2 ) )
+                    new SolutionTimeStep( 2 ),
+                    new SolutionTimeStep( 2 ),
+                    new SolutionTimeStep( 2 ),
+                    new SolutionTimeStep( 2 ),
+                    new SolutionTimeStep( 3, new PlaceTokenAction( 3, 2 ) )
                 )
             )
         );
@@ -177,15 +179,16 @@ public class TestSolutionInterpreter
             list( interpreter ),
             equalTo(
                 Arrays.asList(
-                    new SolutionTimeStep(),
-                    new SolutionTimeStep(),
+                    new SolutionTimeStep( 1 ),
+                    new SolutionTimeStep( 2 ),
                     new SolutionTimeStep(
-                          new SelectAction( Token.Type.explode )
+                          3
+                        , new SelectAction( Token.Type.explode )
                         , new PlaceTokenAction( 2, 2 )
                     ),
-                    new SolutionTimeStep(),
-                    new SolutionTimeStep(),
-                    new SolutionTimeStep()
+                    new SolutionTimeStep( 4 ),
+                    new SolutionTimeStep( 4 ),
+                    new SolutionTimeStep( 5 )
                 )
             )
         );
@@ -216,21 +219,23 @@ public class TestSolutionInterpreter
             equalTo(
                 Arrays.asList(
                     new SolutionTimeStep(
-                          new SelectAction( Token.Type.explode )
+                        1
+                        , new SelectAction( Token.Type.explode )
                         , new PlaceTokenAction( 2, 2 )
                     ),
-                    new SolutionTimeStep(),
-                    new SolutionTimeStep(),
+                    new SolutionTimeStep( 1 ),
+                    new SolutionTimeStep( 1 ),
 
-                    new SolutionTimeStep(),
-                    new SolutionTimeStep(),
+                    new SolutionTimeStep( 2 ),
+                    new SolutionTimeStep( 2 ),
 
                     new SolutionTimeStep(
+                        3,
                         new SelectAction( Token.Type.dig ),
                         new PlaceTokenAction( 1, 1 )
                     ),
-                    new SolutionTimeStep(),
-                    new SolutionTimeStep()
+                    new SolutionTimeStep( 3 ),
+                    new SolutionTimeStep( 3 )
                 )
             )
         );
@@ -250,7 +255,7 @@ public class TestSolutionInterpreter
             list( interpreter ),
             equalTo(
                 Arrays.asList(
-                    new SolutionTimeStep()
+                    new SolutionTimeStep( 1 )
                 )
             )
         );
@@ -263,7 +268,8 @@ public class TestSolutionInterpreter
             new SolutionCommand(),
             new SolutionCommand( new SelectAction( Token.Type.dig ) ),
             new SolutionCommand( new PlaceTokenAction( 1, 1 ) ),
-            new SolutionCommand( new AssertStateAction( CompletionState.RUNNING ) ),
+            new SolutionCommand(
+                new AssertStateAction( CompletionState.RUNNING ) ),
             new SolutionCommand(),
             new SolutionCommand(),
             new SolutionCommand()
@@ -276,21 +282,21 @@ public class TestSolutionInterpreter
             list( interpreter ),
             equalTo(
                 Arrays.asList(
-                    new SolutionTimeStep(),
+                    new SolutionTimeStep( 1 ),
 
                     new SolutionTimeStep(
-                        new SelectAction( Token.Type.dig ) ),
+                        2, new SelectAction( Token.Type.dig ) ),
 
-                    new SolutionTimeStep( new PlaceTokenAction( 1, 1 ) ),
+                    new SolutionTimeStep( 3, new PlaceTokenAction( 1, 1 ) ),
 
                     new SolutionTimeStep(
-                        new AssertStateAction( CompletionState.RUNNING ) ),
+                        4, new AssertStateAction( CompletionState.RUNNING ) ),
 
-                    new SolutionTimeStep(),
+                    new SolutionTimeStep( 5 ),
 
-                    new SolutionTimeStep(),
+                    new SolutionTimeStep( 6 ),
 
-                    new SolutionTimeStep()
+                    new SolutionTimeStep( 7 )
                 )
             )
         );
@@ -308,7 +314,7 @@ public class TestSolutionInterpreter
             equalTo(
                 Arrays.asList(
                     new SolutionTimeStep(
-                        new AssertStateAction( CompletionState.WON ) )
+                        1, new AssertStateAction( CompletionState.WON ) )
                 )
             )
         );
@@ -331,12 +337,13 @@ public class TestSolutionInterpreter
             equalTo(
                 Arrays.asList(
                     new SolutionTimeStep(
+                        1,
                         new SelectAction( Token.Type.dig ),
                         new PlaceTokenAction( 1, 1 )
                     ),
-                    new SolutionTimeStep( new PlaceTokenAction( 1, 1 ) ),
+                    new SolutionTimeStep( 2, new PlaceTokenAction( 1, 1 ) ),
                     new SolutionTimeStep(
-                        new AssertStateAction( CompletionState.WON ) )
+                        3, new AssertStateAction( CompletionState.WON ) )
                 )
             )
         );
@@ -348,7 +355,9 @@ public class TestSolutionInterpreter
         Solution solution = new Solution(
             new SolutionCommand(
                 new SelectAction( Token.Type.dig ),
-                new PlaceTokenAction( 1, 1 ) ),
+                new PlaceTokenAction( 1, 1 ),
+                new WaitAction( 3 )
+            ),
             new SolutionCommand( new PlaceTokenAction( 1, 1 ) ),
             new SolutionCommand()
         );
@@ -360,13 +369,16 @@ public class TestSolutionInterpreter
             equalTo(
                 Arrays.asList(
                     new SolutionTimeStep(
+                        1,
                         new SelectAction( Token.Type.dig ),
                         new PlaceTokenAction( 1, 1 )
                     ),
-                    new SolutionTimeStep( new PlaceTokenAction( 1, 1 ) ),
-                    new SolutionTimeStep(),
+                    new SolutionTimeStep( 1 ),
+                    new SolutionTimeStep( 1 ),
+                    new SolutionTimeStep( 2, new PlaceTokenAction( 1, 1 ) ),
+                    new SolutionTimeStep( 3 ),
                     new SolutionTimeStep(
-                        new AssertStateAction( CompletionState.WON ) )
+                        4, new AssertStateAction( CompletionState.WON ) )
                 )
             )
         );
@@ -391,12 +403,13 @@ public class TestSolutionInterpreter
             equalTo(
                 Arrays.asList(
                     new SolutionTimeStep(
+                        1,
                         new SelectAction( Token.Type.dig ),
                         new PlaceTokenAction( 1, 1 )
                     ),
-                    new SolutionTimeStep( new PlaceTokenAction( 1, 1 ) ),
+                    new SolutionTimeStep( 2, new PlaceTokenAction( 1, 1 ) ),
                     new SolutionTimeStep(
-                        new AssertStateAction( CompletionState.LOST ) )
+                        3, new AssertStateAction( CompletionState.LOST ) )
                 )
             )
         );
@@ -423,15 +436,16 @@ public class TestSolutionInterpreter
             equalTo(
                 Arrays.asList(
                     new SolutionTimeStep(
+                        1,
                         new SelectAction( Token.Type.dig ),
                         new PlaceTokenAction( 1, 1 )
                     ),
-                    new SolutionTimeStep( new PlaceTokenAction( 1, 1 ) ),
+                    new SolutionTimeStep( 2, new PlaceTokenAction( 1, 1 ) ),
                     new SolutionTimeStep(
-                        new AssertStateAction( CompletionState.WON ) ),
-                    new SolutionTimeStep(),
+                        3, new AssertStateAction( CompletionState.WON ) ),
+                    new SolutionTimeStep( 4 ),
                     new SolutionTimeStep(
-                        new AssertStateAction( CompletionState.WON ) )
+                        5, new AssertStateAction( CompletionState.WON ) )
                 )
             )
         );

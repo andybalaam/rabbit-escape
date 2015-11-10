@@ -8,10 +8,12 @@ import rabbitescape.engine.util.Util;
 
 public class SolutionTimeStep
 {
+    private final int commandIndex;
     public final SolutionAction[] actions;
 
-    public SolutionTimeStep( SolutionAction... actions )
+    public SolutionTimeStep( int commandIndex, SolutionAction... actions )
     {
+        this.commandIndex = commandIndex;
         this.actions = actions;
     }
 
@@ -19,26 +21,30 @@ public class SolutionTimeStep
     public String toString()
     {
         return "SolutionTimeStep( "
+            + commandIndex + ( actions.length > 0 ? ", " : "" )
             + Util.join( ", ", toStringList( actions ) )
             + " )";
     }
 
     @Override
-    public boolean equals( Object other )
+    public boolean equals( Object otherObj )
     {
-        if ( ! ( other instanceof SolutionTimeStep ) )
+        if ( ! ( otherObj instanceof SolutionTimeStep ) )
         {
             return false;
         }
-        SolutionTimeStep otherSolution = (SolutionTimeStep)other;
+        SolutionTimeStep other = (SolutionTimeStep)otherObj;
 
-        return Arrays.deepEquals( actions, otherSolution.actions );
+        return (
+               commandIndex == other.commandIndex
+            && Arrays.deepEquals( actions, other.actions )
+        );
     }
 
     @Override
     public int hashCode()
     {
-        return Arrays.deepHashCode( actions );
+        return ( 31 * commandIndex ) + Arrays.deepHashCode( actions );
     }
 
 }

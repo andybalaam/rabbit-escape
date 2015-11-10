@@ -3,14 +3,21 @@ package rabbitescape.engine.solution;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
+import java.util.List;
+
+import static rabbitescape.engine.util.SimpleIterator.*;
 
 import rabbitescape.engine.World.CompletionState;
+import rabbitescape.engine.util.Nextable;
 
 public class SolutionInterpreter implements Iterable<SolutionTimeStep>
 {
     private final Solution solution;
     private final boolean appendWon;
 
+    /**
+     * appendWon defaults to true if you omit it.
+     */
     public SolutionInterpreter( Solution solution )
     {
         this( solution, true );
@@ -30,152 +37,140 @@ public class SolutionInterpreter implements Iterable<SolutionTimeStep>
     @Override
     public Iterator<SolutionTimeStep> iterator()
     {
-        return new Iterator<SolutionTimeStep>()
+        return simpleIterator( new CmdNextable( solution, appendWon ) );
+    }
+
+    private static class CmdNextable implements Nextable<SolutionTimeStep>
+    {
+        private final Iterator<SolutionCommand> commandIt;
+        private int commandIndex;
+
+        private final WonAssertCreator wonAssert;
+        private WaitNextable wait;
+        private SolutionCommand command;
+
+        public CmdNextable( Solution solution, boolean appendWon )
         {
-            Iterator<SolutionCommand> commands = Arrays.asList(
-                solution.commands ).iterator();
+            this.commandIt = Arrays.asList( solution.commands ).iterator();
+            this.commandIndex = 0;
 
-            Iterator<SolutionAction> instrs = null;
+            this.wonAssert = new WonAssertCreator( appendWon );
+            this.wait = null;
+            this.command = null;
+        }
 
-            int waitTimeLeft = 0;
-
-            boolean enteredNextCommand = false;
-
-            SolutionAction nextAction = rollToNextAction();
-
-            SolutionCommand lastCommand = null;
-
-            private boolean alreadyAppendedLastAssertion = false;
-
-            @Override
-            public boolean hasNext()
+        @Override
+        public SolutionTimeStep next()
+        {
+            if ( wait != null )
             {
-                return (
-                       waitTimeLeft > 0
-                    || nextAction != null
-                    || ( appendWon && willAppendLastAssertion() )
-                );
+                SolutionTimeStep ret = wait.next();
+                if ( ret  != null )
+                {
+                    return ret;
+                }
             }
 
-            private boolean willAppendLastAssertion()
+            return nextTimeStep();
+        }
+
+        private SolutionTimeStep nextTimeStep()
+        {
+            wait = null;
+
+            if ( ! commandIt.hasNext() )
             {
-                if ( alreadyAppendedLastAssertion  )
+                ++commandIndex;
+                return wonAssert.create( commandIndex, command );
+            }
+
+            command = commandIt.next();
+            ++commandIndex;
+
+            int stepsToWait = 0;
+
+            List<SolutionAction> tsActions = new ArrayList<SolutionAction>();
+
+            for ( SolutionAction action : command.actions )
+            {
+                if ( action instanceof WaitAction )
                 {
-                    return false;
+                    WaitAction waitAction = (WaitAction)action;
+                    stepsToWait  += waitAction.steps;
                 }
                 else
                 {
-                    return !( isSingleStateAssertion( lastCommand ) );
+                    tsActions.add( action );
                 }
             }
 
-            private boolean isSingleStateAssertion( SolutionCommand command )
+            if ( stepsToWait > 1 )
             {
-                if ( command == null )
-                {
-                    return false;
-                }
-                else
-                {
-                    return (
-                           ( command.actions.length == 1 )
-                        && ( command.actions[0] instanceof ValidationAction )
-                    );
-                }
+                wait = new WaitNextable( commandIndex, stepsToWait - 1 );
             }
 
-            @Override
-            public SolutionTimeStep next()
+            return new SolutionTimeStep(
+                commandIndex,
+                tsActions.toArray( new SolutionAction[ tsActions.size() ] )
+            );
+        }
+    }
+
+    private static class WaitNextable implements Nextable<SolutionTimeStep>
+    {
+        private final int commandIndex;
+        private int stepsLeft;
+
+        public WaitNextable( int commandIndex, int steps )
+        {
+            this.commandIndex = commandIndex;
+            this.stepsLeft = steps;
+        }
+
+        @Override
+        public SolutionTimeStep next()
+        {
+            if ( stepsLeft > 0 )
             {
-                if ( waitTimeLeft > 0 )
-                {
-                    return waitOneTimeStep();
-                }
-                else if ( nextAction != null )
-                {
-                    return handleAllActionsInStep();
-                }
-                else
-                {
-                    alreadyAppendedLastAssertion = true;
-                    return new SolutionTimeStep(
-                        new AssertStateAction( CompletionState.WON ) );
-                }
+                --stepsLeft;
+                return new SolutionTimeStep( commandIndex );
             }
+            return null;
+        }
+    }
 
-            @Override
-            public void remove()
+    private static class WonAssertCreator
+    {
+        private final boolean appendWon;
+        private boolean done;
+
+        public WonAssertCreator( boolean appendWon )
+        {
+            this.appendWon = appendWon;
+            this.done = false;
+        }
+
+        public SolutionTimeStep create(
+            int commandIndex, SolutionCommand lastCommand )
+        {
+            if ( done || !appendWon )
             {
-                throw new UnsupportedOperationException();
-            }
-
-            private SolutionAction rollToNextAction()
-            {
-                if ( instrs != null && instrs.hasNext() )
-                {
-                    return instrs.next();
-                }
-
-                while ( commands.hasNext() )
-                {
-                    lastCommand = commands.next();
-                    enteredNextCommand = true;
-
-                    instrs = Arrays.asList( lastCommand.actions ).iterator();
-
-                    if ( instrs.hasNext() )
-                    {
-                        return instrs.next();
-                    }
-                    else
-                    {
-                        // No action in that command - this means wait 1
-                        ++waitTimeLeft;
-                    }
-                }
-
                 return null;
             }
 
-            private SolutionTimeStep waitOneTimeStep()
+            if (
+                   lastCommand != null
+                && lastCommand.actions.length == 1
+                && lastCommand.actions[0] instanceof AssertStateAction
+            )
             {
-                --waitTimeLeft;
-                return new SolutionTimeStep();
+                return null;
             }
 
-            private SolutionTimeStep handleAllActionsInStep()
-            {
-                ArrayList<SolutionAction> actions =
-                    new ArrayList<SolutionAction>();
+            done = true;
 
-                boolean alreadyWaited = false;
-                enteredNextCommand = false;
-                while( nextAction != null && !enteredNextCommand )
-                {
-                    if ( nextAction instanceof WaitAction )
-                    {
-                        WaitAction wait = (WaitAction)nextAction;
-                        waitTimeLeft += wait.steps;
-                        if ( !alreadyWaited )
-                        {
-                            --waitTimeLeft;
-                            alreadyWaited = true;
-                        }
-                    }
-                    else
-                    {
-                        actions.add( nextAction );
-                    }
-                    nextAction = rollToNextAction();
-                }
-
-                // TODO: annotate time step with the solution command number
-                return new SolutionTimeStep(
-                    actions.toArray(
-                        new SolutionAction[ actions.size() ] )
-                );
-            }
-        };
+            return new SolutionTimeStep(
+                commandIndex, new AssertStateAction( CompletionState.WON ) );
+        }
     }
-
 }
