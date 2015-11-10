@@ -16,7 +16,7 @@ import rabbitescape.engine.menu.MenuDefinition;
 import rabbitescape.engine.menu.MenuItem;
 import rabbitescape.engine.solution.Solution;
 import rabbitescape.engine.solution.SolutionExceptions;
-import rabbitescape.engine.solution.SolutionFactory;
+import rabbitescape.engine.solution.SolutionParser;
 import rabbitescape.engine.solution.SolutionRunner;
 import rabbitescape.engine.util.FileSystem;
 
@@ -136,7 +136,7 @@ public class TestAllActiveLevels
         String solutionString
     )
     {
-        Solution solution = SolutionFactory.parse( solutionString );
+        Solution solution = SolutionParser.parse( solutionString );
         try
         {
             SolutionRunner.runSolution( solution, world );

@@ -15,7 +15,7 @@ public class TestSolutionFactory
     public void Empty_string_gives_single_empty_command()
     {
         assertThat(
-            SolutionFactory.parse( "" ),
+            SolutionParser.parse( "" ),
             equalTo(
                 new Solution( new SolutionCommand() )
             )
@@ -26,7 +26,7 @@ public class TestSolutionFactory
     public void Single_status_gives_single_validation_action()
     {
         assertThat(
-            SolutionFactory.parse( "WON" ),
+            SolutionParser.parse( "WON" ),
             equalTo(
                 new Solution(
                     new SolutionCommand(
@@ -40,7 +40,7 @@ public class TestSolutionFactory
     public void Multiple_actions_are_found_and_listed()
     {
         assertThat(
-            SolutionFactory.parse( "1;2;WON" ),
+            SolutionParser.parse( "1;2;WON" ),
             equalTo(
                 new Solution(
                     new SolutionCommand( new WaitAction( 1 ) ),
@@ -56,7 +56,7 @@ public class TestSolutionFactory
     public void Simultaneous_actions_are_noted()
     {
         assertThat(
-            SolutionFactory.parse( "bash&(1,1)&3;WON" ),
+            SolutionParser.parse( "bash&(1,1)&3;WON" ),
             equalTo(
                 new Solution(
                     new SolutionCommand(
@@ -74,7 +74,7 @@ public class TestSolutionFactory
     public void Nonwait_actions_dont_get_a_wait_appended()
     {
         assertThat(
-            SolutionFactory.parse( "bridge;LOST" ),
+            SolutionParser.parse( "bridge;LOST" ),
             equalTo(
                 new Solution(
                     new SolutionCommand(
@@ -91,7 +91,7 @@ public class TestSolutionFactory
     public void Empty_commands_dont_get_a_wait_appended()
     {
         assertThat(
-            SolutionFactory.parse( ";;" ),
+            SolutionParser.parse( ";;" ),
             equalTo(
                 new Solution(
                     new SolutionCommand(),
@@ -106,7 +106,7 @@ public class TestSolutionFactory
     public void No_assert_added_at_end()
     {
         assertThat(
-            SolutionFactory.parse( "bridge;(22,40)" ),
+            SolutionParser.parse( "bridge;(22,40)" ),
             equalTo(
                 new Solution(
                     new SolutionCommand(
@@ -124,7 +124,7 @@ public class TestSolutionFactory
     public void Can_parse_single_action()
     {
         assertThat(
-            SolutionFactory.createCommand( "bash" ),
+            SolutionParser.parseCommand( "bash" ),
             equalTo(
                 new SolutionCommand(
                     new SelectAction( Token.Type.bash ) )
@@ -136,7 +136,7 @@ public class TestSolutionFactory
     public void Can_parse_multiple_single_actions()
     {
         assertThat(
-            SolutionFactory.createCommand( "bash&(1,2)" ),
+            SolutionParser.parseCommand( "bash&(1,2)" ),
             equalTo(
                 new SolutionCommand(
                       new SelectAction( Token.Type.bash )
@@ -151,7 +151,7 @@ public class TestSolutionFactory
     {
         try
         {
-            SolutionFactory.parse( "unknown_ability" );
+            SolutionParser.parse( "unknown_ability" );
             fail( "Expected an InvalidAction!" );
         }
         catch ( InvalidAction e )
@@ -165,7 +165,7 @@ public class TestSolutionFactory
     {
         try
         {
-            SolutionFactory.parse( "1;UNKNOWN_STATE" );
+            SolutionParser.parse( "1;UNKNOWN_STATE" );
             fail( "Expected an InvalidAction!" );
         }
         catch ( InvalidAction e )
@@ -179,7 +179,7 @@ public class TestSolutionFactory
     {
         try
         {
-            SolutionFactory.parse( "bash;(3,a)" );
+            SolutionParser.parse( "bash;(3,a)" );
             fail( "Expected an InvalidAction!" );
         }
         catch ( InvalidAction e )
@@ -195,7 +195,7 @@ public class TestSolutionFactory
 
         try
         {
-            SolutionFactory.parse( bigNum );
+            SolutionParser.parse( bigNum );
             fail( "Expected an InvalidAction!" );
         }
         catch ( InvalidAction e )
@@ -211,7 +211,7 @@ public class TestSolutionFactory
 
         try
         {
-            SolutionFactory.parse( "bash;(3," + bigNum + ")" );
+            SolutionParser.parse( "bash;(3," + bigNum + ")" );
             fail( "Expected an InvalidAction!" );
         }
         catch ( InvalidAction e )

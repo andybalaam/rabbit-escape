@@ -17,7 +17,7 @@ import static rabbitescape.engine.util.Util.*;
 import rabbitescape.engine.World.CompletionState;
 import rabbitescape.engine.solution.Solution;
 import rabbitescape.engine.solution.SolutionExceptions;
-import rabbitescape.engine.solution.SolutionFactory;
+import rabbitescape.engine.solution.SolutionParser;
 import rabbitescape.engine.solution.SolutionRunner;
 import rabbitescape.engine.solution.SolutionExceptions.RanPastEnd;
 import rabbitescape.engine.textworld.DuplicateMetaKey;
@@ -1367,7 +1367,7 @@ public class TestTextWorldManip
 
         for ( IdxObj<String> s : enumerate1( world.solutions ) )
         {
-            Solution solution = SolutionFactory.parse( s.object );
+            Solution solution = SolutionParser.parse( s.object );
             try
             {
                 SolutionRunner.runSolution( solution, world );

@@ -14,18 +14,18 @@ public class WaitAction implements SolutionAction
     {
         if ( firstInCommand )
         {
-            return String.valueOf( steps ) + SolutionFactory.COMMAND_DELIMITER;
+            return String.valueOf( steps ) + SolutionParser.COMMAND_DELIMITER;
         }
         else if ( steps == 1 )
         {
-            return SolutionFactory.COMMAND_DELIMITER;
+            return SolutionParser.COMMAND_DELIMITER;
         }
         else if ( steps > 1 )
         {
             return
-                  SolutionFactory.COMMAND_DELIMITER
+                  SolutionParser.COMMAND_DELIMITER
                 + String.valueOf( steps - 1 )
-                + SolutionFactory.COMMAND_DELIMITER;
+                + SolutionParser.COMMAND_DELIMITER;
         }
         else
         {

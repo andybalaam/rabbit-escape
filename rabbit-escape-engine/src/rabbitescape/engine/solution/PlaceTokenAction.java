@@ -18,7 +18,7 @@ public class PlaceTokenAction implements SolutionAction
         {
             return "(" + x + "," + y + ")";
         }
-        return SolutionFactory.ACTION_DELIMITER + "(" + x + "," + y + ")";
+        return SolutionParser.ACTION_DELIMITER + "(" + x + "," + y + ")";
     }
 
     public int getX()

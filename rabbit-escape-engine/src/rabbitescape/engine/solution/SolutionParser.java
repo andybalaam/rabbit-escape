@@ -10,7 +10,7 @@ import static rabbitescape.engine.util.Util.*;
 import rabbitescape.engine.Token.Type;
 import rabbitescape.engine.World.CompletionState;
 
-public class SolutionFactory
+public class SolutionParser
 {
     public static final String COMMAND_DELIMITER = ";";
     public static final String ACTION_DELIMITER = "&";
@@ -33,14 +33,14 @@ public class SolutionFactory
 
         for ( int i = 0; i < stringCommands.length; i++ )
         {
-            commands.add( createCommand( stringCommands[i] ) );
+            commands.add( parseCommand( stringCommands[i] ) );
         }
 
         return new Solution(
             commands.toArray( new SolutionCommand[ commands.size() ] ) );
     }
 
-    public static SolutionCommand createCommand( String commandString )
+    public static SolutionCommand parseCommand( String commandString )
     {
         ArrayList<SolutionAction> actions = new ArrayList<SolutionAction>();
 

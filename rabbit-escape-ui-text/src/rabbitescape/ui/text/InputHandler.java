@@ -12,7 +12,7 @@ import rabbitescape.engine.solution.SolutionAction;
 import rabbitescape.engine.solution.SandboxGame;
 import rabbitescape.engine.solution.Solution;
 import rabbitescape.engine.solution.SolutionExceptions;
-import rabbitescape.engine.solution.SolutionFactory;
+import rabbitescape.engine.solution.SolutionParser;
 import rabbitescape.engine.solution.SolutionRunner;
 import rabbitescape.engine.solution.WaitAction;
 import rabbitescape.engine.solution.SolutionCommand;
@@ -51,7 +51,7 @@ public class InputHandler
 
         try
         {
-            SolutionCommand command = SolutionFactory.createCommand( input );
+            SolutionCommand command = SolutionParser.parseCommand( input );
 
             if ( command.actions.length == 0 )
             {

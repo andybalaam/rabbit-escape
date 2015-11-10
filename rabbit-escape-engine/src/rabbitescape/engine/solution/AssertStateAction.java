@@ -17,7 +17,7 @@ public class AssertStateAction implements ValidationAction
         {
             targetState.name();
         }
-        return SolutionFactory.ACTION_DELIMITER + targetState.name();
+        return SolutionParser.ACTION_DELIMITER + targetState.name();
     }
 
     @Override

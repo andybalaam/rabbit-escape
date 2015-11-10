@@ -18,7 +18,7 @@ public class SelectAction implements SolutionAction
         {
             return type.name();
         }
-        return SolutionFactory.ACTION_DELIMITER + type.name();
+        return SolutionParser.ACTION_DELIMITER + type.name();
     }
 
     @Override
