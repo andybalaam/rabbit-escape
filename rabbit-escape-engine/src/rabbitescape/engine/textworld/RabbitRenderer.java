@@ -4,6 +4,7 @@ import static rabbitescape.engine.Direction.*;
 
 import java.util.List;
 
+import rabbitescape.engine.ChangeDescription.State;
 import rabbitescape.engine.Rabbit;
 
 public class RabbitRenderer
@@ -12,6 +13,10 @@ public class RabbitRenderer
     {
         for ( Rabbit rabbit : rabbits )
         {
+            if ( State.RABBIT_OUT_OF_BOUNDS == rabbit.state )
+            {
+                continue;
+            }
             chars.set(
                 rabbit.x,
                 rabbit.y,
