@@ -6,6 +6,10 @@ import java.util.Arrays;
 
 import rabbitescape.engine.util.Util;
 
+/**
+ * A command is composed of one or more actions. See SoltionParser for the characters
+ * that separate actions within commands and that separate commands.
+ */
 public class SolutionCommand
 {
     public final SolutionAction[] actions;

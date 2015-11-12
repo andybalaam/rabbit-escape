@@ -15,6 +15,7 @@ public class SolutionParser
     public static final String COMMAND_DELIMITER = ";";
     public static final String ACTION_DELIMITER = "&";
     private static final Pattern WAIT_REGEX = Pattern.compile( "\\d+" );
+    private static final Pattern UNTIL_REGEX = Pattern.compile( "until:([A-Z]+)" );
 
     private static final Pattern PLACE_TOKEN_REGEX = Pattern.compile(
         "\\((\\d+),(\\d+)\\)" );
@@ -73,6 +74,8 @@ public class SolutionParser
     private static SolutionAction doMakeAction( String actionString )
     throws NumberFormatException, InvalidAction
     {
+        Matcher untilMatcher = UNTIL_REGEX.matcher( actionString );
+        
         if ( COMPLETION_STATES.contains( actionString ) )
         {
             return new AssertStateAction(
@@ -85,6 +88,10 @@ public class SolutionParser
         else if ( TOKEN_TYPES.contains( actionString ) )
         {
             return new SelectAction( Type.valueOf( actionString ) );
+        }
+        else if ( untilMatcher.matches() )
+        {
+            return new UntilAction( untilMatcher.group( 1 ) );
         }
         else
         {

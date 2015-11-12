@@ -17,6 +17,7 @@ import rabbitescape.engine.util.Dimension;
 
 public class SolutionRunner
 {
+
     public static void runSolution( Solution solution, World world )
         throws SolutionExceptions.ProblemRunningSolution
     {
@@ -29,16 +30,18 @@ public class SolutionRunner
             SolutionTimeStep step  = it.next();
             try
             {
+                SolutionAction lastAction = new WaitAction( 1 );
                 for ( SolutionAction action : step.actions )
                 {
                     performAction( action, sandboxGame );
+                    lastAction = action;
                 }
 
                 try
                 {
                     // TODO: this is messy - interpreter runs for 1 more step than
                     //       the world!
-                    if ( it.hasNext() )
+                    if ( it.hasNext() && !( lastAction instanceof UntilAction ) )
                     {
                         sandboxGame.getWorld().step();
                     }
@@ -110,6 +113,20 @@ public class SolutionRunner
                     {
                         sandboxGame.getWorld().step();
                     }
+                }
+                
+                @Override
+                public void caseUntilAction( UntilAction u )
+                {
+                    World w = sandboxGame.getWorld();
+                    for ( int i = 0; w.completionState() != u.completionState; i++ )
+                    {
+                        w.step();
+                        if ( i >= UntilAction.maxSteps ) {
+                            throw new InvalidAction( "action " + u + " got to " + i + " steps" );
+                        }
+                    } 
+                    
                 }
 
                 @Override

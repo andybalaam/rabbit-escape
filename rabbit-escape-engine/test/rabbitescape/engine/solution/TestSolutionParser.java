@@ -320,6 +320,13 @@ public class TestSolutionParser
     {
         assertThat( "bash&(3,2)", roundTrips() );
     }
+    
+    @Test
+    public void UntilAction_round_trips()
+    {
+        UntilAction u = new UntilAction( "WON" );
+        assertThat("until:WON", equalTo( u.relFormat( false ) ) );
+    }
 
     @Test @Ignore( "Fails because combines some commands" )
     public void Multiple_actions_and_commands_round_trips()
