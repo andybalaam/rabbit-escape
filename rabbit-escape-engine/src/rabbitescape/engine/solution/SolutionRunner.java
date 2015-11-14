@@ -104,13 +104,8 @@ public class SolutionRunner
                 @Override
                 public void caseWaitAction( WaitAction w )
                 {
-                    // TODO: delete this, and make a SolutionAction interface
-                    //       that does not include wait actions, and delete
-                    //       related code.
-                    for ( int i = 0; i < w.steps; i++ )
-                    {
-                        sandboxGame.getWorld().step();
-                    }
+                    throw new AssertionError(
+                        "Should not perform wait action" );
                 }
 
                 @Override
