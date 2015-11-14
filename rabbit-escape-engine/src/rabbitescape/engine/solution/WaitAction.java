@@ -1,5 +1,7 @@
 package rabbitescape.engine.solution;
 
+import rabbitescape.engine.World;
+
 public class WaitAction implements SolutionAction
 {
     public final int steps;
@@ -57,10 +59,14 @@ public class WaitAction implements SolutionAction
     {
         return steps;
     }
-
+    
     @Override
-    public void typeSwitch( ActionTypeSwitch actionTypeSwitch )
+    public void perform( SandboxGame sbg, World w )
     {
-        actionTypeSwitch.caseWaitAction( this );
+        for ( int i = 0; i < steps; i++ )
+        {
+            w.step();
+        }
     }
+
 }

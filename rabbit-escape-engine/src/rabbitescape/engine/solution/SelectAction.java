@@ -1,6 +1,7 @@
 package rabbitescape.engine.solution;
 
 import rabbitescape.engine.Token;
+import rabbitescape.engine.World;
 
 public class SelectAction implements SolutionAction
 {
@@ -44,10 +45,13 @@ public class SelectAction implements SolutionAction
     {
         return type.hashCode();
     }
-
+    
     @Override
-    public void typeSwitch( ActionTypeSwitch actionTypeSwitch )
+    public void perform( SandboxGame sbg, World w )
     {
-        actionTypeSwitch.caseSelectAction( this );
+        // TODO: check whether this ability exists, and throw if
+        //       not.
+        sbg.setSelectedType( type );
     }
+
 }

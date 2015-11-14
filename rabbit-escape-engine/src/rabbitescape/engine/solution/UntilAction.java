@@ -1,10 +1,11 @@
 package rabbitescape.engine.solution;
 
+import rabbitescape.engine.World;
 import rabbitescape.engine.World.CompletionState;
 
 public class UntilAction implements SolutionAction
 {
-    /** until action will cause an exception to be thrown after this. */
+    /** until action will throw an exception after this. */
     public static final int maxSteps = 500;
 
     public CompletionState completionState;
@@ -23,11 +24,20 @@ public class UntilAction implements SolutionAction
     }
 
     @Override
-    public void typeSwitch( ActionTypeSwitch actionTypeSwitch )
+    public void perform( SandboxGame sbg, World w )
     {
-        actionTypeSwitch.caseUntilAction( this );
+        for ( int i = 0; w.completionState() != this.completionState; i++ )
+        {
+            w.step();
+            if ( i >= UntilAction.maxSteps ) {
+                throw new InvalidAction( 
+                    "action " + this.relFormat( false ) + 
+                    " got to " + i + " steps" 
+                );
+            }
+        } 
     }
-
+    
     @Override
     public String relFormat( boolean firstInCommand )
     {

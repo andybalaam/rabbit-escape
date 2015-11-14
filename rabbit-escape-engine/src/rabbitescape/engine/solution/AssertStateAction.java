@@ -1,5 +1,6 @@
 package rabbitescape.engine.solution;
 
+import rabbitescape.engine.World;
 import rabbitescape.engine.World.CompletionState;
 
 public class AssertStateAction implements ValidationAction
@@ -43,10 +44,25 @@ public class AssertStateAction implements ValidationAction
     {
         return targetState.hashCode();
     }
-
+    
     @Override
-    public void typeSwitch( ActionTypeSwitch actionTypeSwitch )
+    public void perform( SandboxGame sbg, World w )
     {
-        actionTypeSwitch.caseAssertStateAction( this );
+        if ( w.completionState() != this.targetState )
+        {
+            if ( this.targetState == CompletionState.WON )
+            {
+                throw new SolutionExceptions.DidNotWin(
+                    w.completionState() );
+            }
+            else
+            {
+                throw new SolutionExceptions.UnexpectedState(
+                    this.targetState,
+                    w.completionState()
+                );
+            }
+        }
     }
+
 }

@@ -1,5 +1,8 @@
 package rabbitescape.engine.solution;
 
+import rabbitescape.engine.World;
+import rabbitescape.engine.Token.Type;
+
 public class PlaceTokenAction implements SolutionAction
 {
     public final int x;
@@ -54,10 +57,22 @@ public class PlaceTokenAction implements SolutionAction
     {
         return x + 31 * ( x + y );
     }
-
+    
     @Override
-    public void typeSwitch( ActionTypeSwitch actionTypeSwitch )
+    public void perform( SandboxGame sbg, World w )
     {
-        actionTypeSwitch.casePlaceTokenAction( this );
+        Type type = sbg.getSelectedType();
+
+        Integer previousNum = w.abilities.get( type );
+        // (Note: previousNum may be null, so can't be int.)
+
+        w.changes.addToken( this.x, this.y, type );
+
+        if ( w.abilities.get( type ) == previousNum )
+        {
+            throw new SolutionExceptions.FailedToPlaceToken(
+                this.x, this.y, type );
+        }
     }
+
 }

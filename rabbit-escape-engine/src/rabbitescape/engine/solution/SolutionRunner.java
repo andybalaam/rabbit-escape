@@ -74,7 +74,7 @@ public class SolutionRunner
 
         try
         {
-            doPerformAction( action, sandboxGame );
+            action.perform( sandboxGame, sandboxGame.getWorld() );
         }
         catch ( DontStepAfterFinish e )
         {
@@ -97,88 +97,4 @@ public class SolutionRunner
         }
     }
 
-    private static void doPerformAction(
-        SolutionAction action, final SandboxGame sandboxGame )
-    throws SolutionExceptions.UnexpectedState
-    {
-        action.typeSwitch( new ActionTypeSwitch()
-            {
-                @Override
-                public void caseWaitAction( WaitAction w )
-                {
-                    // TODO: delete this, and make a SolutionAction interface
-                    //       that does not include wait actions, and delete
-                    //       related code.
-                    for ( int i = 0; i < w.steps; i++ )
-                    {
-                        sandboxGame.getWorld().step();
-                    }
-                }
-                
-                @Override
-                public void caseUntilAction( UntilAction u )
-                {
-                    World w = sandboxGame.getWorld();
-                    for ( int i = 0; w.completionState() != u.completionState; i++ )
-                    {
-                        w.step();
-                        if ( i >= UntilAction.maxSteps ) {
-                            throw new InvalidAction( "action " + u + " got to " + i + " steps" );
-                        }
-                    } 
-                    
-                }
-
-                @Override
-                public void caseSelectAction( SelectAction s )
-                {
-                    // TODO: check whether this ability exists, and throw if
-                    //       not.
-                    sandboxGame.setSelectedType( s.type );
-                }
-
-                @Override
-                public void caseAssertStateAction( AssertStateAction s )
-                    throws SolutionExceptions.UnexpectedState
-                {
-                    if (
-                        sandboxGame.getWorld().completionState()
-                            != s.targetState
-                    )
-                    {
-                        if ( s.targetState == CompletionState.WON )
-                        {
-                            throw new SolutionExceptions.DidNotWin(
-                                sandboxGame.getWorld().completionState() );
-                        }
-                        else
-                        {
-                            throw new SolutionExceptions.UnexpectedState(
-                                s.targetState,
-                                sandboxGame.getWorld().completionState()
-                            );
-                        }
-                    }
-                }
-
-                @Override
-                public void casePlaceTokenAction( PlaceTokenAction p )
-                {
-                    Type type = sandboxGame.getSelectedType();
-                    World world = sandboxGame.getWorld();
-
-                    Integer previousNum = world.abilities.get( type );
-                    // (Note: previousNum may be null, so can't be int.)
-
-                    world.changes.addToken( p.x, p.y, type );
-
-                    if ( world.abilities.get( type ) == previousNum )
-                    {
-                        throw new SolutionExceptions.FailedToPlaceToken(
-                            p.x, p.y, type );
-                    }
-                }
-            }
-        );
-    }
 }
