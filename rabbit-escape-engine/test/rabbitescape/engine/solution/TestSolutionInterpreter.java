@@ -14,6 +14,10 @@ import rabbitescape.engine.World.CompletionState;
 
 public class TestSolutionInterpreter
 {
+    private static final CompletionState R = CompletionState.RUNNING;
+    private static final CompletionState W = CompletionState.WON;
+    //private static final CompletionState L = CompletionState.LOST;
+
     @Test
     public void Empty_solution_does_nothing()
     {
@@ -446,6 +450,36 @@ public class TestSolutionInterpreter
                 )
             )
         );
+    }
+
+    @Test
+    public void Until_stops_with_assert_when_not_running()
+    {
+        // Just one until action ...
+        Solution solution = new Solution(
+            new SolutionCommand( new UntilAction( CompletionState.WON ) )
+        );
+
+        SolutionInterpreter i = new SolutionInterpreter( solution );
+
+        // ... leads to lots of time steps...
+        assertThat( i.next( R ), equalTo( new SolutionTimeStep( 1 ) ) );
+        assertThat( i.next( R ), equalTo( new SolutionTimeStep( 1 ) ) );
+        assertThat( i.next( R ), equalTo( new SolutionTimeStep( 1 ) ) );
+
+        // ... and when we've finished, an assert.
+        assertThat(
+            i.next( W ),
+            equalTo(
+                new SolutionTimeStep(
+                      1
+                    , new AssertStateAction( CompletionState.WON )
+                )
+            )
+        );
+
+        // Then we're done
+        assertThat( i.next( R ), nullValue() );
     }
 
     // ---

@@ -11,6 +11,7 @@ public class AssertStateAction implements ValidationAction
         this.targetState = targetState;
     }
 
+    @Override
     public String relFormat( boolean firstInCommand )
     {
         if ( firstInCommand )
@@ -23,7 +24,7 @@ public class AssertStateAction implements ValidationAction
     @Override
     public String toString()
     {
-        return "TargetState( " + targetState.name() + " )";
+        return "AssertStateAction( " + targetState.name() + " )";
     }
 
     @Override

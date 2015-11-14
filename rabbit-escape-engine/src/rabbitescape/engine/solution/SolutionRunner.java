@@ -109,6 +109,13 @@ public class SolutionRunner
                 }
 
                 @Override
+                public void caseAssertStateAction( UntilAction u )
+                {
+                    throw new AssertionError(
+                        "Should not perform until action" );
+                }
+
+                @Override
                 public void caseSelectAction( SelectAction s )
                 {
                     // TODO: check whether this ability exists, and throw if

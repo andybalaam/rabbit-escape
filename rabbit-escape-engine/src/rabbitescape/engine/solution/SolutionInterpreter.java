@@ -14,6 +14,7 @@ public class SolutionInterpreter
 
     private final WonAssertCreator wonAssert;
     private WaitNextable wait;
+    private CompletionState untilState;
     private SolutionCommand command;
 
     /**
@@ -36,10 +37,17 @@ public class SolutionInterpreter
 
         this.wonAssert = new WonAssertCreator( appendWon );
         this.wait = null;
+        this.untilState = null;
         this.command = null;
     }
 
     public SolutionTimeStep next()
+    {
+        // TODO: delete this - for now we provide it as a stop-gap
+        return next( CompletionState.RUNNING );
+    }
+
+    public SolutionTimeStep next( CompletionState worldState )
     {
         if ( wait != null )
         {
@@ -50,10 +58,27 @@ public class SolutionInterpreter
             }
         }
 
-        return nextTimeStep();
+        if ( untilState != null )
+        {
+            if ( worldState != CompletionState.RUNNING )
+            {
+                SolutionTimeStep ret = new SolutionTimeStep(
+                    commandIndex, new AssertStateAction( untilState ) );
+                untilState = null;
+                wonAssert.done = true; // TODO: this will suppress wonassert
+                                       // always, instead of just for 1 step
+                return ret;
+            }
+            else
+            {
+                return new SolutionTimeStep( commandIndex );
+            }
+        }
+
+        return nextTimeStep( worldState );
     }
 
-    private SolutionTimeStep nextTimeStep()
+    private SolutionTimeStep nextTimeStep( CompletionState worldState )
     {
         wait = null;
 
@@ -76,6 +101,20 @@ public class SolutionInterpreter
             {
                 WaitAction waitAction = (WaitAction)action;
                 stepsToWait  += waitAction.steps;
+            }
+            else if ( action instanceof UntilAction )
+            {
+                UntilAction untilAction = (UntilAction)action;
+                untilState = untilAction.targetState;
+
+                if ( worldState != CompletionState.RUNNING )
+                {
+                    // TODO: combine with similar code in next()?
+                    tsActions.add( new AssertStateAction( untilState ) );
+                    wonAssert.done = true; // TODO: this will suppress wonassert
+                                           // always, instead of just for 1 step
+                    untilState = null;
+                }
             }
             else
             {
@@ -119,7 +158,7 @@ public class SolutionInterpreter
     private static class WonAssertCreator
     {
         private final boolean appendWon;
-        private boolean done;
+        public boolean done;
 
         public WonAssertCreator( boolean appendWon )
         {

@@ -10,4 +10,6 @@ public interface ActionTypeSwitch
         throws SolutionExceptions.UnexpectedState;
 
     void casePlaceTokenAction( PlaceTokenAction placeTokenAction );
+
+    void caseAssertStateAction( UntilAction untilAction );
 }
