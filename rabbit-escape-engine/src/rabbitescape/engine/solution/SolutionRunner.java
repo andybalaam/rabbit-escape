@@ -2,8 +2,6 @@ package rabbitescape.engine.solution;
 
 import static rabbitescape.engine.util.Util.*;
 
-import java.util.Iterator;
-
 import rabbitescape.engine.World;
 import rabbitescape.engine.Token.Type;
 import rabbitescape.engine.World.CantAddTokenOutsideWorld;
@@ -23,10 +21,11 @@ public class SolutionRunner
         SandboxGame sandboxGame = new SandboxGame( world );
         SolutionInterpreter interpreter = new SolutionInterpreter( solution );
 
-        Iterator<SolutionTimeStep> it = interpreter.iterator();
-        while ( it.hasNext() )
+        SolutionTimeStep step = interpreter.next();
+        while ( step != null )
         {
-            SolutionTimeStep step  = it.next();
+            SolutionTimeStep nextStep = interpreter.next();
+
             try
             {
                 for ( SolutionAction action : step.actions )
@@ -38,7 +37,7 @@ public class SolutionRunner
                 {
                     // TODO: this is messy - interpreter runs for 1 more step than
                     //       the world!
-                    if ( it.hasNext() )
+                    if ( nextStep != null )
                     {
                         sandboxGame.getWorld().step();
                     }
@@ -59,6 +58,8 @@ public class SolutionRunner
                 );
                 throw e;
             }
+
+            step = nextStep;
         }
     }
 

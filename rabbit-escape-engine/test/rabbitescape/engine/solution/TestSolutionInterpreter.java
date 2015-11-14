@@ -3,12 +3,11 @@ package rabbitescape.engine.solution;
 import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.*;
 
-import static rabbitescape.engine.util.Util.*;
-
 import org.junit.*;
 
+import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Iterator;
+import java.util.List;
 
 import rabbitescape.engine.Token;
 import rabbitescape.engine.World.CompletionState;
@@ -23,9 +22,7 @@ public class TestSolutionInterpreter
         SolutionInterpreter interpreter =
             new SolutionInterpreter( solution, false );
 
-        Iterator<SolutionTimeStep> it = interpreter.iterator();
-
-        assertThat( it.hasNext(), is( false ) );
+        assertThat( interpreter.next(), nullValue() );
     }
 
     @Test
@@ -38,7 +35,7 @@ public class TestSolutionInterpreter
             new SolutionInterpreter(solution, false );
 
         assertThat(
-            list( interpreter ),
+            interpreterList( interpreter ),
             equalTo(
                 Arrays.asList(
                       new SolutionTimeStep( 1 )
@@ -62,7 +59,7 @@ public class TestSolutionInterpreter
             new SolutionInterpreter( solution, false );
 
         assertThat(
-            list( interpreter ),
+            interpreterList( interpreter ),
             equalTo(
                 Arrays.asList(
                       new SolutionTimeStep( 1 )
@@ -87,7 +84,7 @@ public class TestSolutionInterpreter
             new SolutionInterpreter( solution, false );
 
         assertThat(
-            list( interpreter ),
+            interpreterList( interpreter ),
             equalTo(
                 Arrays.asList(
                     new SolutionTimeStep(
@@ -111,7 +108,7 @@ public class TestSolutionInterpreter
             new SolutionInterpreter( solution, false );
 
         assertThat(
-            list( interpreter ),
+            interpreterList( interpreter ),
             equalTo(
                 Arrays.asList(
                     new SolutionTimeStep(
@@ -140,7 +137,7 @@ public class TestSolutionInterpreter
             new SolutionInterpreter( solution, false );
 
         assertThat(
-            list( interpreter ),
+            interpreterList( interpreter ),
             equalTo(
                 Arrays.asList(
                     new SolutionTimeStep(
@@ -176,7 +173,7 @@ public class TestSolutionInterpreter
             solution, false );
 
         assertThat(
-            list( interpreter ),
+            interpreterList( interpreter ),
             equalTo(
                 Arrays.asList(
                     new SolutionTimeStep( 1 ),
@@ -215,7 +212,7 @@ public class TestSolutionInterpreter
             new SolutionInterpreter( solution, false );
 
         assertThat(
-            list( interpreter ),
+            interpreterList( interpreter ),
             equalTo(
                 Arrays.asList(
                     new SolutionTimeStep(
@@ -252,7 +249,7 @@ public class TestSolutionInterpreter
             new SolutionInterpreter( solution, false );
 
         assertThat(
-            list( interpreter ),
+            interpreterList( interpreter ),
             equalTo(
                 Arrays.asList(
                     new SolutionTimeStep( 1 )
@@ -279,7 +276,7 @@ public class TestSolutionInterpreter
             new SolutionInterpreter( solution, false );
 
         assertThat(
-            list( interpreter ),
+            interpreterList( interpreter ),
             equalTo(
                 Arrays.asList(
                     new SolutionTimeStep( 1 ),
@@ -310,7 +307,7 @@ public class TestSolutionInterpreter
         SolutionInterpreter interpreter = new SolutionInterpreter( solution );
 
         assertThat(
-            list( interpreter ),
+            interpreterList( interpreter ),
             equalTo(
                 Arrays.asList(
                     new SolutionTimeStep(
@@ -333,7 +330,7 @@ public class TestSolutionInterpreter
         SolutionInterpreter interpreter = new SolutionInterpreter( solution );
 
         assertThat(
-            list( interpreter ),
+            interpreterList( interpreter ),
             equalTo(
                 Arrays.asList(
                     new SolutionTimeStep(
@@ -365,7 +362,7 @@ public class TestSolutionInterpreter
         SolutionInterpreter interpreter = new SolutionInterpreter( solution );
 
         assertThat(
-            list( interpreter ),
+            interpreterList( interpreter ),
             equalTo(
                 Arrays.asList(
                     new SolutionTimeStep(
@@ -399,7 +396,7 @@ public class TestSolutionInterpreter
         SolutionInterpreter interpreter = new SolutionInterpreter( solution );
 
         assertThat(
-            list( interpreter ),
+            interpreterList( interpreter ),
             equalTo(
                 Arrays.asList(
                     new SolutionTimeStep(
@@ -432,7 +429,7 @@ public class TestSolutionInterpreter
         SolutionInterpreter interpreter = new SolutionInterpreter( solution );
 
         assertThat(
-            list( interpreter ),
+            interpreterList( interpreter ),
             equalTo(
                 Arrays.asList(
                     new SolutionTimeStep(
@@ -449,5 +446,24 @@ public class TestSolutionInterpreter
                 )
             )
         );
+    }
+
+    // ---
+
+    private List<SolutionTimeStep> interpreterList(
+        SolutionInterpreter interpreter )
+    {
+        List<SolutionTimeStep> ret = new ArrayList<SolutionTimeStep>();
+
+        for (
+            SolutionTimeStep step = interpreter.next();
+            step != null;
+            step = interpreter.next()
+        )
+        {
+            ret.add( step );
+        }
+
+        return ret;
     }
 }
