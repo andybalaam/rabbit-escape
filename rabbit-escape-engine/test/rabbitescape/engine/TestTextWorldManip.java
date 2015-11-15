@@ -1359,6 +1359,58 @@ public class TestTextWorldManip
         );
     }
 
+    @Test
+    public void Comments_in_rel_are_ignored_and_comment_char_only_active_at_start_of_line()
+    {
+        String[] lines = {
+            ":name=Commentary % look at me",
+            ":description=trippy",
+            "% ignore me",
+            ":author_name=cyril",
+            ":author_url=",
+            ":hint1=",
+            ":hint2=",
+            ":hint3=",
+            ":num_rabbits=20",
+            ":num_to_save=18",
+            ":rabbit_delay=1",
+            ":num_saved=0",
+            ":num_killed=0",
+            ":num_waiting=20",
+            ":paused=false",
+            "#######",
+            "#Q   Q#",
+            "#     #",
+            "#######"
+        };
+
+        String[] linesNoComment = {
+            ":name=Commentary % look at me",
+            ":description=trippy",
+            ":author_name=cyril",
+            ":author_url=",
+            ":hint1=",
+            ":hint2=",
+            ":hint3=",
+            ":num_rabbits=20",
+            ":num_to_save=18",
+            ":rabbit_delay=1",
+            ":num_saved=0",
+            ":num_killed=0",
+            ":num_waiting=20",
+            ":paused=false",
+            "#######",
+            "#Q   Q#",
+            "#     #",
+            "#######"
+        };
+        
+        assertThat(
+            renderCompleteWorld( createWorld( lines ), true ),
+            equalTo( linesNoComment )
+        );
+    }
+
     // ---
 
     private void runSolutions( String[] lines )
@@ -1379,4 +1431,5 @@ public class TestTextWorldManip
             }
         }
     }
+
 }
