@@ -1,0 +1,26 @@
+:name=Dig For Victory
+:description=Can you navigate the warren?
+:hint1=Get the rabbits from both exits\ntogether and dig a single\npath for them.
+:hint2=Watch the rabbits move for a  while\nbefore spending a token.
+:solution.1=dig;(7,2);(1,3);(1,4);(4,7);(5,9);(4,10);(3,6);until&WON
+:num_rabbits=10
+:num_to_save=10
+:dig=7
+:music=tryad-witness
+#########
+# Q # Q #
+#(((#)()#
+#()(#(((#
+#)()((((#
+#)))())(#
+#(()((()#
+#)()()()#
+#(()))()#
+#)))()()#
+#)())))(#
+#()) ())#
+#### ####
+###   ###
+### # ###
+### O ###
+#########

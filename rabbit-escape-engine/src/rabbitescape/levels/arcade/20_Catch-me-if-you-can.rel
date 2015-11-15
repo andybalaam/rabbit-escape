@@ -1,0 +1,17 @@
+:name=Catch Me If You Can
+:description=Meet your falling friends before they meet their maker.
+:num_rabbits=25
+:num_to_save=13
+:bridge=99
+:rabbit_delay=10
+:music=tryad-witness
+#Q Q Q Q Q    #
+#             #
+#             #
+#             #
+#             #
+#\           O#
+##\         /##
+###\       /###
+####\     /####
+###############

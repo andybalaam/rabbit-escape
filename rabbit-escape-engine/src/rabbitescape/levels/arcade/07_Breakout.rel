@@ -1,0 +1,26 @@
+:name=Breakout
+:description=This level is not related to the Atari game of the same name, and any resemblance is purely coincidental.
+:solution.1=dig;11;(12,2);2;(11,2);2;(10,2);2;(9,2);2;bridge;(9,8);11;(12,6);11;(9,4);until&WON
+:hint1=Let the first rabbit from the top entrance\nwalk straight to the exit.
+:hint2=Dig down from the\ntop, placing the dig\ntoken one away from the\nexit.
+:hint3=Dig 4 columns out.\nBridge up, back and forth\nacross the hole.\nThe first bridge\n should rise right from the bat.
+:num_rabbits=10
+:num_to_save=10
+:block=2
+:climb=4
+:dig=4
+:bridge=3
+:bash=3
+:explode=2
+:music=tryad-witness
+################
+#Q             #
+#             O#
+################
+################
+################
+######   #######
+#Q     #       #
+#              #
+#      /##\    #
+################

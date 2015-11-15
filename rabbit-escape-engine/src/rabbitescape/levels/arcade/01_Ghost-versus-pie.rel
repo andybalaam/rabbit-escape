@@ -1,0 +1,25 @@
+:name=Ghost versus pie
+:description=Head for the pill.
+:hint1=Bridge over to the ghost.
+:hint2=when a rabbit has bashed from the\nghost's eye, bridge and bash.
+:hint3=Use a bash token to stop\ndigging too far between the eyes.
+:solution.1=bridge;(12,4);(5,8);bash;(2,6);bridge;11;(15,8);bash;2;(13,7);12;(21,5);until&WON
+:num_rabbits=6
+:num_to_save=6
+:rabbit_delay=20
+:bridge=4
+:bash=4
+:block=1
+     Q                      
+                            
+     #####         /#d#\    
+    #######      /#######\  
+   #########    /#()###()#\ 
+     ########   #    #  Q # 
+ #     ######  /#    #    #\
+#O#      ####  ##    #    ##
+ #     ######  ##b   #b   ##
+     ########  ###)(###)(###
+   #########   #############
+    #######    ## ####### ##
+     #####     #   #  #    #

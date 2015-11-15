@@ -1,0 +1,25 @@
+:name=Asteroids
+:description=There's nothing to shoot them with.
+:hint1=Fetch the climbing tokens\nand climb into the exit.
+:hint2=Use a blocker to prevent\nthe rabbits falling off the left.
+:hint3=Two bridges can be used to\nget to the side of the\asteroid with the exit.
+:solution.1=bridge;(6,10);block;(13,6);17;(2,6);bridge;6;(8,9);39;(5,7);31;explode;(13,6);(2,6);until&WON
+:block=2
+:bridge=3
+:rabbit_delay=8
+:num_rabbits=7
+:num_to_save=5
+:explode=2
+               
+Q            # 
+        ##     
+##     O####   
+##   #  ####   
+     #  ###    
+               
+  ###      *## 
+   ##     #####
+           ##  
+#              
+     ##        
+:*=cccccc
