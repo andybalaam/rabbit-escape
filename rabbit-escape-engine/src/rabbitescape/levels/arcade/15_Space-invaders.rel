@@ -1,6 +1,6 @@
 :name=Space Invader
 :description=
-:solution.1=bash;(6,8);block;(5,8);bridge;2;(8,8);dig;(8,3);bridge;3;(11,6);12;(12,5);12;bash;(9,3);3;bridge;3;(9,3);6;(5,8);until&WON
+:solution.1=bash;(6,8);block;(5,8);bridge;2;(8,8);dig;(8,3);bridge;3;(11,6);12;(12,5);12;bash;(9,3);3;bridge;3;(9,3);6;(5,8);until:WON
 :num_to_save=10
 :num_rabbits=10
 :dig=3

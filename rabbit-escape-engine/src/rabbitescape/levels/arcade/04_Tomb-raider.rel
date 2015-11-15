@@ -3,7 +3,7 @@
 :hint1=Dig.
 :hint2=Use a bridge token to stop excavating.
 :hint3=Careful timing is required to\nbash the correct direction.
-:solution.1=dig;(12,3);bridge;5;(12,5);bash;4;(12,5);dig;4;(9,5);until&WON
+:solution.1=dig;(12,3);bridge;5;(12,5);bash;4;(12,5);dig;4;(9,5);until:WON
 :num_to_save=3
 :num_rabbits=3
 :dig=5

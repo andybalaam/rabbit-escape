@@ -3,7 +3,7 @@
 :hint1=There are 5 tokens on one square.
 :hint2=The bridges can't get\nthe rabbits high enough.\nThe rabbits can climb into\nthe exit.
 :hint3=Use a bridge to get over the\ntokens and pick them up\nwith the rabbits walking right.
-:solution.1=bridge;(5,7);91;climb;(7,7);until&WON
+:solution.1=bridge;(5,7);91;climb;(7,7);until:WON
 :num_rabbits=6
 :num_to_save=6
 :block=2

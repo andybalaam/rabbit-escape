@@ -3,7 +3,7 @@
 :hint1=Work fast, before the rabbit flood.
 :hint2=Climbers are unlikely to make it.
 :hint3=Precision bashing is required.
-:solution.1=bash;(6,3);(7,4);4;(9,6);6;(10,7);4;(8,9);until&WON
+:solution.1=bash;(6,3);(7,4);4;(9,6);6;(10,7);4;(8,9);until:WON
 :num_rabbits=24
 :num_to_save=24
 :rabbit_delay=16,8,4,2,1

@@ -3,7 +3,7 @@
 :hint1=Place a bash token\nimmediately under the\nleft entrance.
 :hint2=As soon as the basher\nhas moved place a block token in the\nsame place.
 :hint3=Bash across to the other eye.\n Remove the top of the head\nstarting on the right with\n3 dig tokens. Use the 2 bridge tokens\nto ascend.
-:solution.1=bash;(1,5);block;(1,5);bash;(4,5);dig;3;(7,3);1;(6,3);2;(5,3);bridge;9;(4,5);8;(8,2);explode;7;(1,5);until&WON
+:solution.1=bash;(1,5);block;(1,5);bash;(4,5);dig;3;(7,3);1;(6,3);2;(5,3);bridge;9;(4,5);8;(8,2);explode;7;(1,5);until:WON
 :num_rabbits=9
 :num_to_save=8
 :block=2
