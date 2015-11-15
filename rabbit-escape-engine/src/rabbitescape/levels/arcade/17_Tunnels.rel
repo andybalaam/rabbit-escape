@@ -1,5 +1,8 @@
 :name=Tunnels
 :description=Dig a path through the minefield!
+:hint1=Consider the mine closest to\nthe exit. Sacrifice the first rabbit\nby bashing under it.
+:hint2=Sacrifice the second rabbit\nbridging above it and bashing a block out.
+:hint3=There is now space to\bridge over it, bash along 1\nand dig down to the exit.
 :solution.1=dig;(4,2);bash;(3,2);(8,4);2;(4,5);bridge;(6,5);bash;2;(6,5);(4,5);2;(7,4);dig;1;(10,4);bash;(9,4);3;(10,7);2;(10,7);dig;5;(15,7);bridge;2;(15,9);bash;(12,7);(14,7);2;(16,9);1;dig;(15,9);bash;4;(15,10);4;bridge;(15,10);19;bash;5;(17,9);dig;3;(18,8);22;WON
 :num_rabbits=4
 :num_to_save=2
