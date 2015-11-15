@@ -1,6 +1,8 @@
 :name=Space Invader
 :description=Pew pew.
 :hint1=Bash through the gun.\nBridge as soon as the last\nslope block is removed\nbut before the rabbit moves right.
+:hint2=Turn at the first invader and bridge\nleft toward the exit.
+:hint3=Free blockers with\nbridge tokens.
 :solution.1=bash;(6,8);block;(5,8);bridge;2;(8,8);dig;(8,3);bridge;3;(11,6);12;(12,5);12;bash;(9,3);3;bridge;3;(9,3);6;(5,8);until:WON
 :num_to_save=10
 :num_rabbits=10
