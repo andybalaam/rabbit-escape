@@ -1,5 +1,8 @@
 :name=Galton Box
-:description=
+:description=Converge to the limit.
+:hint1=Most types of token will\nnot be useful.
+:hint2=Bridge up from a corner\nin one long section.
+:hint3=Keep dropping more bridge tokens\nThe close roof will make\the bunnies nervous\nand stop bridging.
 :solution.1=bridge;2;(15,6);4;(14,6);4;(13,5);8;(12,4);2;(11,3);5;(9,1);1;(10,2);3;(9,1);7;(10,2);16;WON
 :num_rabbits=30
 :num_to_save=21
