@@ -1,5 +1,7 @@
 :name=Space Invader
 :description=Pew pew.
+:author_name=tttppp
+:author_url=https://github.com/tttppp
 :hint1=Bash through the gun.\nBridge as soon as the last\nslope block is removed\nbut before the rabbit moves right.
 :hint2=Turn at the first invader and bridge\nleft toward the exit.
 :hint3=Free blockers with\nbridge tokens.

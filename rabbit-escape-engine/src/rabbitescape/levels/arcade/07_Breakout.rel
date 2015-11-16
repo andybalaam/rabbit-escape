@@ -1,5 +1,7 @@
 :name=Breakout
 :description=This level is not related to the Atari game of the same name, and any resemblance is purely coincidental.
+:author_name=tttppp
+:author_url=https://github.com/tttppp
 :solution.1=dig;11;(12,2);2;(11,2);2;(10,2);2;(9,2);2;bridge;(9,8);11;(12,6);11;(9,4);until:WON
 :hint1=Let the first rabbit from the top entrance\nwalk straight to the exit.
 :hint2=Dig down from the\ntop, placing the dig\ntoken one away from the\nexit.

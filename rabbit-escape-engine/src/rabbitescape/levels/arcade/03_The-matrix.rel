@@ -3,6 +3,8 @@
 :hint1=Work fast, before the rabbit flood.
 :hint2=Climbers are unlikely to make it.
 :hint3=Precision bashing is required.
+:author_name=colonelfazackerley
+:author_url=https://github.com/colonelfazackerley
 :solution.1=bash;(6,3);(7,4);4;(9,6);6;(10,7);4;(8,9);until:WON
 :num_rabbits=24
 :num_to_save=24

@@ -1,5 +1,7 @@
 :name=Galton Box
 :description=Converge to the limit.
+:author_name=tttppp
+:author_url=https://github.com/tttppp
 :hint1=Most types of token will\nnot be useful.
 :hint2=Bridge up from a corner\nin one long section.
 :hint3=Keep dropping more bridge tokens\nThe close roof will make\the bunnies nervous\nand stop bridging.

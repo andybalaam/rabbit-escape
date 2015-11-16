@@ -1,5 +1,7 @@
 :name=The Traitor
 :description=Get your rabbits out before it's too late!
+:author_name=tttppp
+:author_url=https://github.com/tttppp
 :hint1=Bash the block at\nthe top of the first\nshort bridge, and extend\nthe bridge.
 :hint2=Bridge off the next tower.\nDrop down one square from\nthe next tower and bridge\nagain.
 :hint3=Bridge across to catch\nthe traitor's dig token.

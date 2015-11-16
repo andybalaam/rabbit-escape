@@ -1,5 +1,7 @@
 :name=Tunnels
 :description=Dig a path through the minefield!
+:author_name=tttppp
+:author_url=https://github.com/tttppp
 :hint1=Consider the mine closest to\nthe exit. Sacrifice the first rabbit\nby bashing under it.
 :hint2=Sacrifice the second rabbit\nbridging above it and bashing a block out.
 :hint3=There is now space to\bridge over it, bash along 1\nand dig down to the exit.

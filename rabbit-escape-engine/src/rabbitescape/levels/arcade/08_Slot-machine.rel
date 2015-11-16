@@ -1,5 +1,7 @@
 :name=Slot Machine
 :description=Drop in a token and see where the rabbit ends up.
+:author_name=tttppp
+:author_url=https://github.com/tttppp
 :hint1=Consider the direction the\nrabbit is walking when\digging starts.
 :hint2=Dig to the right side\nof the entrance.
 :hint3=The rabbit should be walking left.\nDrop the token one square\nback from the right edge,\nover the bash token.

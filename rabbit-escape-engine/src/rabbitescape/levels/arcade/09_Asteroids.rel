@@ -1,5 +1,7 @@
 :name=Asteroids
 :description=There's nothing to shoot them with.
+:author_name=colonelfazackerley
+:author_url=https://github.com/colonelfazackerley
 :hint1=Fetch the climbing tokens\nand climb into the exit.
 :hint2=Use a blocker to prevent\nthe rabbits falling off the left.
 :hint3=Two bridges can be used to\nget to the side of the\asteroid with the exit.

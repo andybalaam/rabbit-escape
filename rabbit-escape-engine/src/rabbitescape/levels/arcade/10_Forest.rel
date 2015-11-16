@@ -1,5 +1,7 @@
 :name=Forest
 :description=Pining for the exit.
+:author_name=tttppp
+:author_url=https://github.com/tttppp
 :hint1=Bash through the first tree\nand use a bridge to hold\nrabbits between the first\n2 trees. Slow the second with\na bridge token.
 :hint2=Bridge up to the right cloud\nand go over.
 :hint3=Use a blocker to ensure that\nnone fall between the last\2 trees. Free the blocker with\na bridge token.
