@@ -12,6 +12,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.TreeSet;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import rabbitescape.engine.err.RabbitEscapeException;
 
@@ -237,6 +239,42 @@ public class Util
         return ret.toString();
     }
 
+    /**
+     * @brief         Split a long string into lines
+     * @param s       The string to split.
+     * @param maxChar The maximum requested line length.
+     * @return        Each line is an element in the array.
+     * Lines will be split at spaces. Words will never be split.
+     */
+    public static String[] wrap(String s, int maxChar)
+    {
+        // Match a bunch of anything apart from a space
+        Pattern p = Pattern.compile( "([^ ]+)" );
+        Matcher m = p.matcher( s );
+        ArrayList<String> al = new ArrayList<String>();
+        if ( !m.find() ) // No spaces to split on
+        {
+            return new String[] { s };
+        }
+        String line = m.group(1); // No space before first word
+        while ( m.find() )
+        {
+            String word = m.group(1);
+            int lineLength = line.length() + word.length() + 1;// + 1 for " "
+            if ( lineLength <= maxChar )
+            {
+                line = line + " " + word; // Replace space between words
+            }
+            else // Previous line is full
+            {
+                al.add( line ); // Store it
+                line = word;    // and start the next one
+            }
+        }
+        al.add( line ); // Don't forget the last line
+        return al.toArray( new String[al.size()] );
+    }
+    
     public static String join( String glue, String[] items )
     {
         return join( glue, Arrays.asList( items ) );
