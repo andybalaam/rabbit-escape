@@ -2,9 +2,9 @@
 :description=Combine forces.
 :author_name=Andy Balaam
 :author_url=http://artificialworlds.net/rabbit-escape/
-:hint1=Use a bridge to stop the foolhardy right\nrabbit attempting the minefield.
-:hint2=The left rabbit can bridge to freedom using\nthree bridges. The first bridge token should be\nplaced under the entrance.
-:hint3=The right rabbit can bash through the middle\nlayer of the block.
+:hint1=Use a bridge to stop the foolhardy right rabbit attempting the minefield.
+:hint2=The left rabbit can bridge to freedom using three bridges. The first bridge token should be placed under the entrance.
+:hint3=The right rabbit can bash through the middle layer of the block.
 :solution.1=dig;(4,3);bridge;(13,6);bash;16;(10,4);10;bridge;4;(1,6);20;bridge;(4,4);30;(2,3);47;WON
 :num_rabbits=2
 :num_to_save=2
