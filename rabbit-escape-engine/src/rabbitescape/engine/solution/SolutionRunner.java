@@ -21,49 +21,75 @@ public class SolutionRunner
         SandboxGame sandboxGame = new SandboxGame( world );
         SolutionInterpreter interpreter = new SolutionInterpreter( solution );
 
+        runSolutionInSandbox( interpreter, sandboxGame );
+    }
+
+    public static void runSingleCommand(
+        SolutionCommand command, final SandboxGame sandboxGame )
+    {
+        SolutionInterpreter interpreter = new SolutionInterpreter(
+            new Solution( command ), false );
+
+        runSolutionInSandbox( interpreter, sandboxGame );
+    }
+
+    private static void runSolutionInSandbox(
+        SolutionInterpreter interpreter,
+        SandboxGame sandboxGame
+    )
+    {
         SolutionTimeStep step = interpreter.next();
         while ( step != null )
         {
             SolutionTimeStep nextStep = interpreter.next();
 
-            try
-            {
-                for ( SolutionAction action : step.actions )
-                {
-                    performAction( action, sandboxGame );
-                }
-
-                try
-                {
-                    // TODO: this is messy - interpreter runs for 1 more step than
-                    //       the world!
-                    if ( nextStep != null )
-                    {
-                        sandboxGame.getWorld().step();
-                    }
-                }
-                catch ( DontStepAfterFinish e )
-                {
-                    throw new SolutionExceptions.RanPastEnd(
-                        sandboxGame.getWorld().completionState() );
-                }
-            }
-            catch ( SolutionExceptions.ProblemRunningSolution e )
-            {
-                e.commandIndex = step.commandIndex;
-                e.world = join(
-                    "\n",
-                    TextWorldManip.renderWorld(
-                        sandboxGame.getWorld(), false, false )
-                );
-                throw e;
-            }
+            runTimeStep( sandboxGame, step, nextStep );
 
             step = nextStep;
         }
     }
 
-    public static void performAction(
+    private static void runTimeStep(
+        SandboxGame sandboxGame,
+        SolutionTimeStep step,
+        SolutionTimeStep nextStep
+    )
+    {
+        try
+        {
+            for ( SolutionAction action : step.actions )
+            {
+                performAction( action, sandboxGame );
+            }
+
+            try
+            {
+                // TODO: this is messy - interpreter runs for 1 more step than
+                //       the world!
+                if ( nextStep != null )
+                {
+                    sandboxGame.getWorld().step();
+                }
+            }
+            catch ( DontStepAfterFinish e )
+            {
+                throw new SolutionExceptions.RanPastEnd(
+                    sandboxGame.getWorld().completionState() );
+            }
+        }
+        catch ( SolutionExceptions.ProblemRunningSolution e )
+        {
+            e.commandIndex = step.commandIndex;
+            e.world = join(
+                "\n",
+                TextWorldManip.renderWorld(
+                    sandboxGame.getWorld(), false, false )
+            );
+            throw e;
+        }
+    }
+
+    private static void performAction(
         SolutionAction action, final SandboxGame sandboxGame )
     throws SolutionExceptions.UnexpectedState
     {

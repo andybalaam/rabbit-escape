@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static rabbitescape.engine.i18n.Translation.*;
-import static rabbitescape.engine.util.Util.*;
 import rabbitescape.engine.err.ExceptionTranslation;
 import rabbitescape.engine.err.RabbitEscapeException;
 import rabbitescape.engine.solution.SolutionAction;
@@ -58,24 +57,10 @@ public class InputHandler
                 return fail( t( "Unexpected problem: no Action" ) );
             }
 
-            SolutionAction lastAction = command.actions[
-                command.actions.length - 1 ];
-
-            if ( !( lastAction instanceof WaitAction ) )
-            {
-                WaitAction waitAction = new WaitAction( 1 );
-                command = new SolutionCommand(
-                    concat(
-                        command.actions,
-                        new SolutionAction[] { waitAction }
-                    )
-                );
-            }
-
-            for ( SolutionAction action : command.actions )
-            {
-                SolutionRunner.performAction( action, sandboxGame );
-            }
+            SolutionRunner.runSingleCommand( command, sandboxGame );
+            // TODO: it's weird we have to do the last time step
+            //       outside of runSingleCommand
+            sandboxGame.getWorld().step();
 
             append( command );
         }

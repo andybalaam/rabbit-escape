@@ -217,6 +217,10 @@ public class LineProcessor
             {
                 processMetaLine( line, variantGen );
             }
+            else if ( line.startsWith( "%" ) )
+            {
+                // Ignore comment
+            }
             else
             {
                 processItemsLine( line, variantGen );
