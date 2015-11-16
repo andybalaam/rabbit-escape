@@ -17,12 +17,16 @@ import rabbitescape.engine.util.Util;
 
 public class DialogText
 {
+    /**
+     * Length of line before wrapping.
+     */
+    public static final int lineLength = 50;
 
     static String descriptionHtml( World world )
     {
         return
               "<p>"
-            + Util.join( "<br/>", Util.split( t( world.description ), "\\n" ) )
+            + Util.join( "<br/>", Util.wrap( t( world.description ), lineLength ) )
             + "</p>";
     }
 

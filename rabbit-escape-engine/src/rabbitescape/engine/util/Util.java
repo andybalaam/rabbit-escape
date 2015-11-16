@@ -275,6 +275,20 @@ public class Util
         return al.toArray( new String[al.size()] );
     }
     
+    /**
+     * As wrap(), but returns a single string with newlines.
+     */
+    public static String wrapToNewline( String s, int maxChar)
+    {
+        String[] ss = wrap( s, maxChar );
+        String ret = "";
+        for ( String l: ss)
+        {
+            ret = ret + l + "\n";
+        }
+        return ret;
+    }
+    
     public static String join( String glue, String[] items )
     {
         return join( glue, Arrays.asList( items ) );
