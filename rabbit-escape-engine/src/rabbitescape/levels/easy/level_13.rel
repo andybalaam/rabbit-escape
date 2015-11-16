@@ -1,10 +1,10 @@
 :name=Give us a leg up
-:description=You'll need to work together to get three of your\nrabbits to the exit!
+:description=You'll need to work together to get three of your rabbits to the exit!
 :author_name=Andy Balaam
 :author_url=http://artificialworlds.net/rabbit-escape/
 :hint1=Can the top rabbit clear the way for the others?
 :hint2=Dig from the top to allow the other three to climb up.
-:hint3=Place a dig token on the first square of the slope.\nPlace three climb tokens just before the wall on the right.
+:hint3=Place a dig token on the first square of the slope. Place three climb tokens just before the wall on the right.
 :num_rabbits=4
 :num_to_save=3
 :climb=3
