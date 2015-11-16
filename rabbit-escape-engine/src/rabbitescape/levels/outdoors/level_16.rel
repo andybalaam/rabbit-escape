@@ -1,9 +1,9 @@
 :name=Half The World Away
 :author_name=tttppp
 :author_url=https://github.com/tttppp
-:hint1=The rabbits must\nbe separated and one\nslowed down.
-:hint2=At the foot of the\nfirst drop, send\nthe second rabbit\nright using a bash token.
-:hint3=While the second rabbit\nbridges, use dig, climb and\nbash tokens to slow the\nfirst.
+:hint1=The rabbits must be separated and one slowed down.
+:hint2=At the foot of the first drop, send the second rabbit right using a bash token.
+:hint3=While the second rabbit bridges, use dig, climb and bash tokens to slow the first.
 :description=Dreaming of jetpacks...
 :num_rabbits=2
 :num_to_save=2
