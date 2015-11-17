@@ -280,13 +280,7 @@ public class Util
      */
     public static String wrapToNewline( String s, int maxChar)
     {
-        String[] ss = wrap( s, maxChar );
-        String ret = "";
-        for ( String l: ss)
-        {
-            ret = ret + l + "\n";
-        }
-        return ret;
+        return Util.join( "\n", wrap( s, maxChar ) );
     }
     
     public static String join( String glue, String[] items )
