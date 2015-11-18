@@ -3,8 +3,8 @@
 :author_name=Andy Balaam
 :author_url=http://artificialworlds.net/rabbit-escape/
 :hint1=There aren't enough bridges to use those alone.
-:hint2=There are three rabbits at the bottom and there\nare three climbing tokens.
-:hint3=Use the upper rabbit to dig down through the spike,\nand convert to a bridger after three digs.\nGive the lower three climbing tokens.
+:hint2=There are three rabbits at the bottom and there are three climbing tokens.
+:hint3=Use the upper rabbit to dig down through the spike, and convert to a bridger after three digs. Give the lower three climbing tokens.
 :solution.1=dig;(12,2);bridge;12;(12,4);climb;(11,9);(11,9);(11,9);25;WON
 :num_rabbits=4
 :num_to_save=4

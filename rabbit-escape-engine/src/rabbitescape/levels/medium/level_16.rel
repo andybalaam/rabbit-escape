@@ -3,8 +3,8 @@
 :author_name=Andy Balaam
 :author_url=http://artificialworlds.net/rabbit-escape/
 :hint1=Get to the floor of the main chamber.
-:hint2=Dig near the entrance, then by the right-hand wall.\nFind a way through the last wall in your way.
-:hint3=After walking up the left-hand limb of the 'y'\ninstruct the lead rabbit to dig down into\nthe wall of the exit chamber.\nExplode the rabbit to stop digging\nwhen level with the chamber floor.
+:hint2=Dig near the entrance, then by the right-hand wall. Find a way through the last wall in your way.
+:hint3=After walking up the left-hand limb of the 'y' instruct the lead rabbit to dig down into the wall of the exit chamber. Explode the rabbit to stop digging when level with the chamber floor.
 :num_rabbits=2
 :rabbit_delay=15
 :num_to_save=1

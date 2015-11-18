@@ -2,9 +2,9 @@
 :description=You have 15 bridges for a reason.
 :author_name=Andy Balaam
 :author_url=http://artificialworlds.net/rabbit-escape/
-:hint1=Build a safety bridge first, to catch any\nfalling workers.
+:hint1=Build a safety bridge first, to catch any falling workers.
 :hint2=The lowest floating block is not helpful.
-:hint3=Bridge rightwards to drop onto the higher floating block\n(you may need to dig to stop bridging).\nBridge from there to the top.\nDrop a token as the rabbit turns,\nso you bridge leftwards towards the exit.
+:hint3=Bridge rightwards to drop onto the higher floating block (you may need to dig to stop bridging). Bridge from there to the top. Drop a token as the rabbit turns, so you bridge leftwards towards the exit.
 :solution.1=bridge;37;(16,12);(13,12);6;(16,10);8;(9,12);6;(12,10);8;1;(16,7);10;(15,2);(12,2);2;(23,4);79;WON
 :num_rabbits=10
 :num_to_save=7

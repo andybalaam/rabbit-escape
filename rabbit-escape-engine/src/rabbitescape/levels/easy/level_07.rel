@@ -1,10 +1,10 @@
 :name=Get in the burrow
-:description=You will need to dig accurately\nto get your rabbits home.
+:description=You will need to dig accurately to get your rabbits home.
 :author_name=Andy Balaam
 :author_url=http://artificialworlds.net/rabbit-escape/
-:hint1=Can you dig in exactly the right place\nto get them to the exit?
-:hint2=Your second digger should be placed so\nthe rabbits will fall near the exit.
-:hint3=Dig on the far left, then in the\nmiddle of the slope.
+:hint1=Can you dig in exactly the right place to get them to the exit?
+:hint2=Your second digger should be placed so the rabbits will fall near the exit.
+:hint3=Dig on the far left, then in the middle of the slope.
 :bash=1
 :dig=2
 :num_rabbits=20

@@ -4,7 +4,7 @@
 :author_url=http://artificialworlds.net/rabbit-escape/
 :hint1=Bash the first block.
 :hint2=Put a block token in the hole in the wall, as far right as possible.
-:hint3=Place a bridge token on the second rabbit as it is turning,\nso it has room to bridge up to the exit.
+:hint3=Place a bridge token on the second rabbit as it is turning, so it has room to bridge up to the exit.
 :num_rabbits=2
 :rabbit_delay=10
 :num_to_save=1

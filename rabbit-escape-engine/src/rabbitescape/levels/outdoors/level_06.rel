@@ -1,9 +1,9 @@
 :name=Spare a blocker
 :author_name=Andy Balaam
 :author_url=http://artificialworlds.net/rabbit-escape/
-:hint1=The first rabbit should\nbuild a bridge from the end\nof the platform.
-:hint2=Corral the other rabbits\nwith a pair of blockers.
-:hint3=Free one of the blockers\nby digging down one square,\nthen bashing under the\nblocker.
+:hint1=The first rabbit should build a bridge from the end of the platform.
+:hint2=Corral the other rabbits with a pair of blockers.
+:hint3=Free one of the blockers by digging down one square, then bashing under the blocker.
 :description=How to rescue 9?
 :num_rabbits=10
 :num_to_save=9

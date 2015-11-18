@@ -4,7 +4,7 @@
 :author_url=http://artificialworlds.net/rabbit-escape/
 :hint1=There is a climb token for each rabbit.
 :hint2=How can that awkward overhang be removed?
-:hint3=Get the rabbit on the right to climb on to the\nwall and dig down from the highest point. Then get the\ntrapped rabbit to climb out too.
+:hint3=Get the rabbit on the right to climb on to the wall and dig down from the highest point. Then get the trapped rabbit to climb out too.
 :solution.1=climb;(9,7);(7,6);dig;(7,1);54;WON
 :num_rabbits=2
 :num_to_save=2

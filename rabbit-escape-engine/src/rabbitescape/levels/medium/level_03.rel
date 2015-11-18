@@ -4,7 +4,7 @@
 :author_url=http://artificialworlds.net/rabbit-escape/
 :hint1=Avoid walking on the mines.
 :hint2=Bridge over them.
-:hint3=Place a bridge token on each single block.\nYou can do all of them at the beginning if you like.
+:hint3=Place a bridge token on each single block. You can do all of them at the beginning if you like.
 :num_rabbits=1
 :num_to_save=1
 :bridge=4

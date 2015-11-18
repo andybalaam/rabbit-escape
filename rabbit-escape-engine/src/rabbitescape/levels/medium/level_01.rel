@@ -4,7 +4,7 @@
 :author_url=http://artificialworlds.net/rabbit-escape/
 :hint1=Each rabbit only needs to look after itself.
 :hint2=Can you climb the left-hand rabbit out?
-:hint3=Ignore the right-hand rabbit.\nThe left-hand rabbit can bridge rightwards\nto the wall and then climb over it.
+:hint3=Ignore the right-hand rabbit. The left-hand rabbit can bridge rightwards to the wall and then climb over it.
 :num_rabbits=2
 :num_to_save=2
 :dig=1

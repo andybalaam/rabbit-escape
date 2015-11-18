@@ -19,6 +19,8 @@ import java.util.TreeMap;
 
 import org.junit.Test;
 
+import rabbitescape.engine.util.Util;
+
 public class TestUtil
 {
     @Test
@@ -939,5 +941,58 @@ public class TestUtil
                 )
             )
         );
+    }
+    
+    @Test 
+    public void Test_text_line_wrapping()
+    {   
+        String s;
+        String[] l;
+        // Note that the "...Orion." line is 47 chars, when the the
+        // trailing space is stripped.
+        //            1         2         3         4      |
+        //   1234567890123456789012345678901234567890123456789
+        s = "I've seen things you people wouldn't believe. " + 
+            "Attack ships on fire off the shoulder of Orion. "+
+            "I watched C-beams glitter in the dark near the " +
+            "Tannhauser Gate. All those moments will be lost " +
+            "in time, like tears...in...rain. Time to die";
+        l = new String[] {
+            "I've seen things you people wouldn't believe.",
+            "Attack ships on fire off the shoulder of Orion.",
+            "I watched C-beams glitter in the dark near the",
+            "Tannhauser Gate. All those moments will be lost",
+            "in time, like tears...in...rain. Time to die"
+        };
+          assertThat( Util.wrap( s, 47 ), equalTo(l));
+        
+        s = "";
+        l = new String[] { "" };
+        assertThat( Util.wrap( s, 5 ), equalTo(l));
+        
+        //            1         2         3         4      |
+        //   1234567890123456789012345678901234567890123456789
+        s = "It's " +
+            "supercalifragilisticexpialidocious " +
+            "Even " +
+            "though the " +
+            "sound of " +
+            "it is " +
+            "something " +
+            "quite " +
+            "atrocious.";
+        l = new String[] {
+            "It's",
+            "supercalifragilisticexpialidocious",
+            "Even",
+            "though the",
+            "sound of",
+            "it is",
+            "something",
+            "quite",
+            "atrocious."
+        };
+        // When a word is longer than the requested line, it does not split it.
+        assertThat( Util.wrap( s, 10 ), equalTo(l));
     }
 }

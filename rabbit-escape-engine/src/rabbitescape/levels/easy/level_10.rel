@@ -1,10 +1,10 @@
 :name=Cliff face
-:description=Get the hang of placing bridging tokens at the end of a\nbridge.  Use a blocker to slow the others down.
+:description=Get the hang of placing bridging tokens at the end of a bridge.  Use a blocker to slow the others down.
 :author_name=Andy Balaam
 :author_url=http://artificialworlds.net/rabbit-escape/
 :hint1=Judge how far back you need to start bridging.
-:hint2=After three squares, the bridger stops.\nDrop another bridging token at the end to\ncarry on. The extension token can be dropped when\nthe rabbit has just started building the\nlast section of the previous bridge.
-:hint3=Place your first bridging token about 5-7 squares\nbefore the wall.  Place another at the top of the bridge.
+:hint2=After three squares, the bridger stops. Drop another bridging token at the end to carry on. The extension token can be dropped when the rabbit has just started building the last section of the previous bridge.
+:hint3=Place your first bridging token about 5-7 squares before the wall.  Place another at the top of the bridge.
 :num_rabbits=12
 :num_to_save=11
 :climb=20
