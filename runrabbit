@@ -16,9 +16,9 @@ elif [ "$1" == "text" ]
     else
         java -cp $CP rabbitescape.ui.text.TextSingleGameMain "$2"
     fi
-elif [ "$1" == "help" ]
+elif [ "$1" == "--help" ] || [ "$1" == "-h" ]
     then
-    echo "./runrabbit help            (This) message and exit."
+    echo "./runrabbit [--help|-h]     (This) message and exit."
     echo "./runrabbit                 Play using the swing GUI menus."
     echo "./runrabbit swing           Play using the swing GUI menus."
     echo "./runrabbit swing level.rel Play a single level using the swing GUI."
@@ -26,6 +26,6 @@ elif [ "$1" == "help" ]
     echo "./runrabbit text level.rel  Play a single level using the text UI."
 else
     echo "Option not recognised. You may find"
-    echo "./runrabbit help"
+    echo "./runrabbit --help"
     echo "useful."
 fi
