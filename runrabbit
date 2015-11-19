@@ -1,0 +1,31 @@
+#!/bin/bash
+CP=rabbit-escape-engine/bin/:rabbit-escape-render/bin/:rabbit-escape-ui-text/bin/:rabbit-escape-ui-swing/bin/
+if [ "$1" == "swing" ] || [ "$1" == "" ] # swing is the defualt
+    then
+    if [ "$2" == "" ]
+        then
+        java -cp $CP rabbitescape.ui.swing.SwingMain
+    else
+        java -cp $CP rabbitescape.ui.swing.SwingSingleGameMain "$2"
+    fi
+elif [ "$1" == "text" ]
+    then
+    if [ "$2" == "" ]
+        then
+        java -cp $CP rabbitescape.ui.text.TextMain
+    else
+        java -cp $CP rabbitescape.ui.text.TextSingleGameMain "$2"
+    fi
+elif [ "$1" == "help" ]
+    then
+    echo "./runrabbit help            (This) message and exit."
+    echo "./runrabbit                 Play using the swing GUI menus."
+    echo "./runrabbit swing           Play using the swing GUI menus."
+    echo "./runrabbit swing level.rel Play a single level using the swing GUI."
+    echo "./runrabbit text            Play using the text UI."
+    echo "./runrabbit text level.rel  Play a single level using the text UI."
+else
+    echo "Option not recognised. You may find"
+    echo "./runrabbit help"
+    echo "useful."
+fi
