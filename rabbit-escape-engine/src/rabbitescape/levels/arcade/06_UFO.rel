@@ -2,9 +2,9 @@
 :description=Alien invasion.
 :author_name=tttppp
 :author_url=https://github.com/tttppp
-:hint1=Digging into the exit chamber too\nearly is bad.
+:hint1=Digging into the exit chamber too early is bad.
 :hint2=Find a way to get the rabbits\all hopping clockwise or anticlockwise.
-:hint3=A bridge on the ground floor\ncan do it.
+:hint3=A bridge on the ground floor can do it.
 :solution.1=2;bridge;53;(15,15);44;dig;(16,8);until:WON
 :num_rabbits=20
 :num_to_save=18

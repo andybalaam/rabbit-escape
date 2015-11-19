@@ -2,9 +2,9 @@
 :description=Become the King of the castle
 :author_name=colonelfazackerley
 :author_url=https://github.com/colonelfazackerley
-:hint1=Bridge up to the castle's\nfirst floor and bash through both walls.
-:hint2=Build a bridge to catch\nthe rabbits falling from the\nright entrance.
-:hint3=Use a blocker to prevent\nrabbits falling off the bridge.\nbridge back left and up to\nthe exit.
+:hint1=Bridge up to the castle's first floor and bash through both walls.
+:hint2=Build a bridge to catch the rabbits falling from the right entrance.
+:hint3=Use a blocker to prevent rabbits falling off the bridge. bridge back left and up to the exit.
 :solution.1=bridge;(4,13);(18,3);bash;7;(7,11);(17,11);bridge;12;(18,11);6;(21,9);block;7;(24,6);bridge;10;(23,7);8;(20,5);12;(17,4);98;explode;(24,3);until:WON
 :num_rabbits=20
 :num_to_save=15
