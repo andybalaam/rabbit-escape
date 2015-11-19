@@ -232,10 +232,10 @@ clean-music: no-make-warnings
 clean-all: clean clean-images clean-sounds clean-music clean-doxygen
 
 run: compile
-	java -cp $(CLASSPATH) rabbitescape.ui.text.TextSingleGameMain test/level_01.rel
+	java -cp $(CLASSPATH) rabbitescape.ui.text.TextMain test/level_01.rel
 
 runinteractive: compile
-	java -cp $(CLASSPATH) rabbitescape.ui.text.TextSingleGameMain test/level_01.rel --interactive
+	java -cp $(CLASSPATH) rabbitescape.ui.text.TextMain test/level_01.rel --interactive
 
 runmenu: compile
 	java -cp $(CLASSPATH) rabbitescape.ui.text.TextMain
@@ -244,7 +244,7 @@ rungui: compile
 	java -cp $(CLASSPATH) rabbitescape.ui.swing.SwingMain
 
 runlevel: compile
-	java -cp $(CLASSPATH) rabbitescape.ui.swing.SwingSingleGameMain test/level_01.rel
+	java -cp $(CLASSPATH) rabbitescape.ui.swing.SwingMain test/level_01.rel
 
 runat: compile
 	java -cp $(CLASSPATH) rabbitescape.ui.swing.AnimationTester

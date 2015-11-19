@@ -367,7 +367,7 @@ public class MenuUi
             {
                 uninit();
 
-                new SwingSingleGameMain(
+                new SwingSingleGameEntryPoint(
                     fs,
                     out,
                     locale,

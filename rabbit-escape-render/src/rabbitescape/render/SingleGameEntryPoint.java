@@ -12,7 +12,7 @@ import rabbitescape.engine.LoadWorldFile;
 import rabbitescape.engine.World;
 import rabbitescape.engine.util.FileSystem;
 
-public abstract class Main
+public abstract class SingleGameEntryPoint
 {
     public abstract GameLaunch createGameLaunch(
         World world, LevelWinListener winListener );
@@ -25,7 +25,7 @@ public abstract class Main
     private final PrintStream out;
     private final Locale locale;
 
-    public Main( FileSystem fs, PrintStream out, Locale locale )
+    public SingleGameEntryPoint( FileSystem fs, PrintStream out, Locale locale )
     {
         this.fs = fs;
         this.out = out;
