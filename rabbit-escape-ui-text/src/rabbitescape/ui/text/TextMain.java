@@ -18,6 +18,12 @@ public class TextMain
 
     public static void main( String[] args )
     {
+        if ( args.length > 0 )
+        {
+            TextSingleGameEntryPoint.entryPoint( args );
+            return;
+        }
+        
         Locale locale = Locale.getDefault();
         Translation.init( locale );
 

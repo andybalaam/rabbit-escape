@@ -2,20 +2,10 @@
 CP=rabbit-escape-engine/bin/:rabbit-escape-render/bin/:rabbit-escape-ui-text/bin/:rabbit-escape-ui-swing/bin/
 if [ "$1" == "swing" ] || [ "$1" == "" ] # swing is the defualt
     then
-    if [ "$2" == "" ]
-        then
-        java -cp $CP rabbitescape.ui.swing.SwingMain
-    else
-        java -cp $CP rabbitescape.ui.swing.SwingSingleGameMain "$2"
-    fi
+    java -cp $CP rabbitescape.ui.swing.SwingMain $2
 elif [ "$1" == "text" ]
     then
-    if [ "$2" == "" ]
-        then
-        java -cp $CP rabbitescape.ui.text.TextMain
-    else
-        java -cp $CP rabbitescape.ui.text.TextSingleGameMain "$2"
-    fi
+    java -cp $CP rabbitescape.ui.text.TextMain $2
 elif [ "$1" == "--help" ] || [ "$1" == "-h" ]
     then
     echo "./runrabbit [--help|-h]     (This) message and exit."
