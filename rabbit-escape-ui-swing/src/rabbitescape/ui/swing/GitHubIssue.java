@@ -302,7 +302,7 @@ public class GitHubIssue
         fixed = fixed.replaceAll( "^\n", "" );
 
         // Strip trailing spaces from meta lines
-        fixed = Util.regexReplacePreserveGroup( fixed, "^(:.*?) *?$", Pattern.MULTILINE );
+        fixed = Util.regexRemovePreserveGroup( fixed, "^(:.*?) *?$", Pattern.MULTILINE );
         return fixed;
     }
 
@@ -325,12 +325,12 @@ public class GitHubIssue
         String s2;
         s2 = s1.replaceAll( "(\\\\r)", "" );
 
-        s2 = Util.regexReplacePreserveGroup( s2, "\\\\(\\\")" );
+        s2 = Util.regexRemovePreserveGroup( s2, "\\\\(\\\")" );
 
         // Undouble slashes
         // I don't understand why this does not work without the capturing group
         // and back reference.
-        s2 = Util.regexReplacePreserveGroup( s2, "(\\\\)\\\\" );
+        s2 = Util.regexRemovePreserveGroup( s2, "(\\\\)\\\\" );
 
         return s2;
     }

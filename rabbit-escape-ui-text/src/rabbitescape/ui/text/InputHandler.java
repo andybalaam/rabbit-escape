@@ -16,6 +16,7 @@ import rabbitescape.engine.solution.SolutionRunner;
 import rabbitescape.engine.solution.UntilAction;
 import rabbitescape.engine.solution.WaitAction;
 import rabbitescape.engine.solution.SolutionCommand;
+import rabbitescape.engine.util.Util;
 
 public class InputHandler
 {
@@ -86,13 +87,18 @@ public class InputHandler
         return true;
     }
 
+    /**
+     * Note: changes the argument.
+     */
     private String expandAbbreviations( String input )
     {
         if ( input.equals( "" ) )
         {
             return "1";
         }
-        return null;
+        // Surround coordinates with brackets
+        input = Util.regexReplace( input, "\\(?+([0-9]+,[0-9]+)\\)?+", "($1)" );
+        return input;
     }
 
     private void append( SolutionCommand newStep )

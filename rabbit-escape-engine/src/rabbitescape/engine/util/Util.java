@@ -787,7 +787,7 @@ public class Util
      *        Compare to String.replaceAll, which replaces the whole match.
      * @param patternFlags The flags from java.util.regex.Pattern.
      */
-    public static String regexReplacePreserveGroup( String s, String regex, int patternFlags )
+    public static String regexRemovePreserveGroup( String s, String regex, int patternFlags )
     {
         Pattern p = Pattern.compile( regex, patternFlags );
         Matcher dsMatcher = p.matcher( s );
@@ -801,8 +801,23 @@ public class Util
         return sb.toString();
     }
 
-    public static String regexReplacePreserveGroup( String s, String regex )
+    public static String regexRemovePreserveGroup( String s, String regex )
     {
-        return regexReplacePreserveGroup( s, regex, 0 );
+        return regexRemovePreserveGroup( s, regex, 0 );
     }
+    
+    public static String regexReplace( String s, String regex, String replacement )
+    {
+        Pattern p = Pattern.compile( regex );
+        Matcher dsMatcher = p.matcher( s );
+        StringBuffer sb = new StringBuffer();
+        while ( dsMatcher.find() )
+        {
+            dsMatcher.appendReplacement( sb, replacement );
+        }
+        dsMatcher.appendTail( sb );
+
+        return sb.toString();
+    }
+    
 }
