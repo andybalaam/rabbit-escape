@@ -6,6 +6,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import rabbitescape.engine.World.CompletionState;
+import rabbitescape.engine.solution.SolutionExceptions.UnexpectedState;
 
 public class SolutionInterpreter
 {
@@ -82,7 +83,7 @@ public class SolutionInterpreter
         return nextTimeStep( worldState );
     }
 
-    private SolutionTimeStep nextTimeStep( CompletionState worldState )
+    private SolutionTimeStep nextTimeStep( final CompletionState worldState )
     {
         wait = null;
 
@@ -95,41 +96,61 @@ public class SolutionInterpreter
         command = commandIt.next();
         ++commandIndex;
 
-        int stepsToWait = 0;
+        // Work around need for final variable
+        class StepsToWait { int value = 0; };
+        final StepsToWait stepsToWait = new StepsToWait();
 
-        List<SolutionAction> tsActions = new ArrayList<SolutionAction>();
+        final List<SolutionAction> tsActions = new ArrayList<SolutionAction>();
 
         for ( SolutionAction action : command.actions )
         {
-            if ( action instanceof WaitAction )
+            action.typeSwitch( new ActionTypeSwitch()
             {
-                WaitAction waitAction = (WaitAction)action;
-                stepsToWait  += waitAction.steps;
-            }
-            else if ( action instanceof UntilAction )
-            {
-                UntilAction untilAction = (UntilAction)action;
-                untilState = untilAction.targetState;
-                untilCount = 0;
-
-                if ( worldState != CompletionState.RUNNING )
+                @Override
+                public void caseWaitAction( WaitAction waitAction )
                 {
-                    // TODO: combine with similar code in next()?
-                    tsActions.add( new AssertStateAction( untilState ) );
-                    wonAssert.done = true; // TODO: this will suppress wonassert
-                                           // always, instead of just for 1 step
-                    untilState = null;
+                    stepsToWait.value  += waitAction.steps;
                 }
-            }
-            else
-            {
-                tsActions.add( action );
-            }
+
+                @Override
+                public void caseUntilAction( UntilAction untilAction )
+                {
+                    untilState = untilAction.targetState;
+                    untilCount = 0;
+
+                    if ( worldState != CompletionState.RUNNING )
+                    {
+                        tsActions.add( new AssertStateAction( untilState ) );
+                        wonAssert.done = true;
+                        untilState = null;
+                    }
+                }
+
+                @Override
+                public void caseSelectAction( SelectAction action )
+                {
+                    tsActions.add( action );
+                }
+
+                @Override
+                public void casePlaceTokenAction( PlaceTokenAction action )
+                {
+                    tsActions.add( action );
+                }
+
+                @Override
+                public void caseAssertStateAction( AssertStateAction action )
+                    throws UnexpectedState
+                {
+                    tsActions.add( action );
+                }
+                // Curse you, Java, for making me this way
+            } );
         }
 
-        if ( stepsToWait > 1 )
+        if ( stepsToWait.value > 1 )
         {
-            wait = new WaitNextable( commandIndex, stepsToWait - 1 );
+            wait = new WaitNextable( commandIndex, stepsToWait.value - 1 );
         }
 
         return new SolutionTimeStep(
