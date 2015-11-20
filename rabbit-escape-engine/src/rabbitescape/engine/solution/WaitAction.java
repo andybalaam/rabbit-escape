@@ -12,25 +12,13 @@ public class WaitAction implements CommandAction
     @Override
     public String relFormat( boolean firstInCommand )
     {
-        if ( firstInCommand )
+        if ( steps == 1 )
         {
-            return String.valueOf( steps ) + SolutionParser.COMMAND_DELIMITER;
-        }
-        else if ( steps == 1 )
-        {
-            return SolutionParser.COMMAND_DELIMITER;
-        }
-        else if ( steps > 1 )
-        {
-            return
-                  SolutionParser.COMMAND_DELIMITER
-                + String.valueOf( steps - 1 )
-                + SolutionParser.COMMAND_DELIMITER;
+            return "";
         }
         else
         {
-            throw new IllegalArgumentException(
-                "Waiting for non-positive number of steps: " + steps );
+            return String.valueOf( steps );
         }
     }
 

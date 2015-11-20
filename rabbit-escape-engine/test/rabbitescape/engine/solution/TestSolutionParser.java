@@ -282,7 +282,7 @@ public class TestSolutionParser
     @Test
     public void Wait_then_empty_round_trips()
     {
-        assertThat( "1;", roundTrips() );
+        assertThat( "2;", roundTrips() );
     }
 
     @Test
@@ -291,7 +291,7 @@ public class TestSolutionParser
         assertThat( "5;6;", roundTrips() );
     }
 
-    @Test @Ignore( "Fails because removes leading semicolon" )
+    @Test
     public void Empty_at_start_round_trips()
     {
         assertThat( ";5;6;", roundTrips() );
@@ -303,13 +303,13 @@ public class TestSolutionParser
         assertThat( "bash", roundTrips() );
     }
 
-    @Test @Ignore( "Fails because inserts leading ampersand" )
+    @Test
     public void Single_assert_round_trips()
     {
         assertThat( "WON", roundTrips() );
     }
 
-    @Test @Ignore( "Fails because combines into single time step" )
+    @Test
     public void Two_normal_commands_round_trips()
     {
         assertThat( "bash;(3,2)", roundTrips() );
@@ -321,31 +321,37 @@ public class TestSolutionParser
         assertThat( "bash&(3,2)", roundTrips() );
     }
 
-    @Test @Ignore( "Fails because combines some commands" )
+    @Test
     public void Multiple_actions_and_commands_round_trips()
     {
-        assertThat( "1;bash&(3,2);RUNNING;3;bash", roundTrips() );
+        assertThat( ";bash&(3,2);RUNNING;3;bash", roundTrips() );
     }
 
-    @Test @Ignore( "Fails because strips semicolons and combines commands" )
+    @Test
     public void Leading_and_trailing_empty_actions()
     {
-        assertThat( ";;;1;bash&(3,2);RUNNING;3;bash;;;", roundTrips() );
+        assertThat( ";;;2;bash&(3,2);RUNNING;3;bash;;;", roundTrips() );
     }
 
-    @Test @Ignore( "Fails because removes trailing semicolon" )
+    @Test
     public void Single_choose_token_plus_empty_round_trips()
     {
         assertThat( "bash;", roundTrips() );
     }
 
-    @Test @Ignore( "Fails because adds a trailing semicolon" )
+    @Test
     public void Single_wait_round_trips()
     {
-        assertThat( "1", roundTrips() );
+        assertThat( "", roundTrips() );
     }
 
-    @Test @Ignore( "Fails because adds a trailing semicolon" )
+    @Test
+    public void Wait_1_changes_to_blank()
+    {
+        assertThat( SolutionParser.parse( "1" ).relFormat(), equalTo( "" ) );
+    }
+
+    @Test
     public void Two_waits_round_trip()
     {
         assertThat( "5;6", roundTrips() );

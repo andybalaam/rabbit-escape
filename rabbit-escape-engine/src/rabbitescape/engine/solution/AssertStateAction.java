@@ -14,11 +14,7 @@ public class AssertStateAction implements ValidationAction
     @Override
     public String relFormat( boolean firstInCommand )
     {
-        if ( firstInCommand )
-        {
-            targetState.name();
-        }
-        return SolutionParser.ACTION_DELIMITER + targetState.name();
+        return targetState.name();
     }
 
     @Override

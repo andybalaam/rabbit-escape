@@ -5,6 +5,7 @@ import static rabbitescape.engine.util.Util.*;
 import java.util.Arrays;
 
 import rabbitescape.engine.util.Util;
+import rabbitescape.engine.util.Util.Function;
 
 public class Solution
 {
@@ -17,22 +18,31 @@ public class Solution
 
     public String relFormat()
     {
-        StringBuilder sb = new StringBuilder();
-        CommandAction previousAction = null;
-        for ( SolutionCommand command : commands )
+        return join( ";", map( relFormatCommand(), commands ) );
+    }
+
+    private Function<SolutionCommand, String> relFormatCommand()
+    {
+        return new Function<SolutionCommand, String>()
         {
-            boolean firstInCommand = true;
-            for ( CommandAction action : command.actions )
+            @Override
+            public String apply( SolutionCommand command )
             {
-                if (previousAction != null)
-                {
-                    firstInCommand = (previousAction instanceof WaitAction);
-                }
-                sb.append( action.relFormat( firstInCommand ) );
-                previousAction = action;
+                return join( "&", map( relFormatAction(), command.actions ) );
             }
-        }
-        return sb.toString();
+        };
+    }
+
+    protected Function<CommandAction, String> relFormatAction()
+    {
+        return new Function<CommandAction, String>()
+        {
+            @Override
+            public String apply( CommandAction action )
+            {
+                return action.relFormat( true );
+            }
+        };
     }
 
     @Override
