@@ -63,7 +63,7 @@ public class SolutionInterpreter
                 SolutionTimeStep ret = new SolutionTimeStep(
                     commandIndex, new AssertStateAction( untilState ) );
                 untilState = null;
-                untilCount = 0;
+                untilCount = -1;
                 wonAssert.done = true;
                 return ret;
             }
@@ -110,6 +110,7 @@ public class SolutionInterpreter
             {
                 UntilAction untilAction = (UntilAction)action;
                 untilState = untilAction.targetState;
+                untilCount = 0;
 
                 if ( worldState != CompletionState.RUNNING )
                 {
