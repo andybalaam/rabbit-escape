@@ -13,6 +13,7 @@ import rabbitescape.engine.solution.Solution;
 import rabbitescape.engine.solution.SolutionExceptions;
 import rabbitescape.engine.solution.SolutionParser;
 import rabbitescape.engine.solution.SolutionRunner;
+import rabbitescape.engine.solution.UntilAction;
 import rabbitescape.engine.solution.WaitAction;
 import rabbitescape.engine.solution.SolutionCommand;
 
@@ -58,9 +59,18 @@ public class InputHandler
             }
 
             SolutionRunner.runSingleCommand( command, sandboxGame );
-            // TODO: it's weird we have to do the last time step
-            //       outside of runSingleCommand
-            sandboxGame.getWorld().step();
+
+            // TODO: until commands step past the last time step, so we
+            //       avoid stepping here.
+            if ( ! (
+                   command.actions.length == 1
+                && command.actions[0] instanceof UntilAction
+            ) )
+            {
+                // TODO: it's weird we have to do the last time step
+                //       outside of runSingleCommand
+                sandboxGame.getWorld().step();
+            }
 
             append( command );
         }
