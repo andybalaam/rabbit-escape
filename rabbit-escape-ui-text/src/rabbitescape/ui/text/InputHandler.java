@@ -34,11 +34,9 @@ public class InputHandler
     {
         String input = input();
 
-        if ( input.equals( "" ) )
-        {
-            input = "1";
-        }
-        else if ( input.equals( "help" ) )
+        input = expandAbbreviations( input );
+        
+        if ( input.equals( "help" ) )
         {
             return help();
         }
@@ -86,6 +84,15 @@ public class InputHandler
         }
 
         return true;
+    }
+
+    private String expandAbbreviations( String input )
+    {
+        if ( input.equals( "" ) )
+        {
+            return "1";
+        }
+        return null;
     }
 
     private void append( SolutionCommand newStep )

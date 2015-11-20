@@ -5,6 +5,8 @@ import java.util.Collections;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import rabbitescape.engine.util.Util;
+
 /**
  * @brief encapsulates what has been retrieved about a github issue
  */
@@ -300,7 +302,7 @@ public class GitHubIssue
         fixed = fixed.replaceAll( "^\n", "" );
 
         // Strip trailing spaces from meta lines
-        fixed = GitHubJsonTools.regexReplacePreserveGroup( fixed, "^(:.*?) *?$", Pattern.MULTILINE );
+        fixed = Util.regexReplacePreserveGroup( fixed, "^(:.*?) *?$", Pattern.MULTILINE );
         return fixed;
     }
 
@@ -323,12 +325,12 @@ public class GitHubIssue
         String s2;
         s2 = s1.replaceAll( "(\\\\r)", "" );
 
-        s2 = GitHubJsonTools.regexReplacePreserveGroup( s2, "\\\\(\\\")" );
+        s2 = Util.regexReplacePreserveGroup( s2, "\\\\(\\\")" );
 
         // Undouble slashes
         // I don't understand why this does not work without the capturing group
         // and back reference.
-        s2 = GitHubJsonTools.regexReplacePreserveGroup( s2, "(\\\\)\\\\" );
+        s2 = Util.regexReplacePreserveGroup( s2, "(\\\\)\\\\" );
 
         return s2;
     }
