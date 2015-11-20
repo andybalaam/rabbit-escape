@@ -41,11 +41,24 @@ public class SolutionRunner
         SolutionTimeStep step = interpreter.next();
         while ( step != null )
         {
-            SolutionTimeStep nextStep = interpreter.next();
+            try
+            {
+                SolutionTimeStep nextStep = interpreter.next();
 
-            runTimeStep( sandboxGame, step, nextStep );
+                runTimeStep( sandboxGame, step, nextStep );
 
-            step = nextStep;
+                step = nextStep;
+            }
+            catch ( SolutionExceptions.ProblemRunningSolution e )
+            {
+                e.commandIndex = step.commandIndex;
+                e.world = join(
+                    "\n",
+                    TextWorldManip.renderWorld(
+                        sandboxGame.getWorld(), false, false )
+                );
+                throw e;
+            }
         }
     }
 
@@ -55,37 +68,24 @@ public class SolutionRunner
         SolutionTimeStep nextStep
     )
     {
+        for ( SolutionAction action : step.actions )
+        {
+            performAction( action, sandboxGame );
+        }
+
         try
         {
-            for ( SolutionAction action : step.actions )
+            // TODO: this is messy - interpreter runs for 1 more step than
+            //       the world!
+            if ( nextStep != null )
             {
-                performAction( action, sandboxGame );
-            }
-
-            try
-            {
-                // TODO: this is messy - interpreter runs for 1 more step than
-                //       the world!
-                if ( nextStep != null )
-                {
-                    sandboxGame.getWorld().step();
-                }
-            }
-            catch ( DontStepAfterFinish e )
-            {
-                throw new SolutionExceptions.RanPastEnd(
-                    sandboxGame.getWorld().completionState() );
+                sandboxGame.getWorld().step();
             }
         }
-        catch ( SolutionExceptions.ProblemRunningSolution e )
+        catch ( DontStepAfterFinish e )
         {
-            e.commandIndex = step.commandIndex;
-            e.world = join(
-                "\n",
-                TextWorldManip.renderWorld(
-                    sandboxGame.getWorld(), false, false )
-            );
-            throw e;
+            throw new SolutionExceptions.RanPastEnd(
+                sandboxGame.getWorld().completionState() );
         }
     }
 
