@@ -38,12 +38,14 @@ public class SolutionRunner
         SandboxGame sandboxGame
     )
     {
-        SolutionTimeStep step = interpreter.next();
+        SolutionTimeStep step = interpreter.next(
+            sandboxGame.getWorld().completionState() );
         while ( step != null )
         {
             try
             {
-                SolutionTimeStep nextStep = interpreter.next();
+                SolutionTimeStep nextStep = interpreter.next(
+                    sandboxGame.getWorld().completionState() );
 
                 runTimeStep( sandboxGame, step, nextStep );
 

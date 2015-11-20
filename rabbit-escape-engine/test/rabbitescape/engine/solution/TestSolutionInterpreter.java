@@ -26,7 +26,7 @@ public class TestSolutionInterpreter
         SolutionInterpreter interpreter =
             new SolutionInterpreter( solution, false );
 
-        assertThat( interpreter.next(), nullValue() );
+        assertThat( interpreter.next( R ), nullValue() );
     }
 
     @Test
@@ -587,9 +587,9 @@ public class TestSolutionInterpreter
         List<SolutionTimeStep> ret = new ArrayList<SolutionTimeStep>();
 
         for (
-            SolutionTimeStep step = interpreter.next();
+            SolutionTimeStep step = interpreter.next( R );
             step != null;
-            step = interpreter.next()
+            step = interpreter.next( R )
         )
         {
             ret.add( step );

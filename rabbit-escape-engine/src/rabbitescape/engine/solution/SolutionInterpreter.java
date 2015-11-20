@@ -45,12 +45,6 @@ public class SolutionInterpreter
         this.untilCount = -1;
     }
 
-    public SolutionTimeStep next()
-    {
-        // TODO: delete this - for now we provide it as a stop-gap
-        return next( CompletionState.RUNNING );
-    }
-
     public SolutionTimeStep next( CompletionState worldState )
     {
         if ( wait != null )
