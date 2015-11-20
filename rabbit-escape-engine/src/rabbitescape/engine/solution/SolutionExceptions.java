@@ -1,6 +1,7 @@
 package rabbitescape.engine.solution;
 
 import rabbitescape.engine.Token;
+import rabbitescape.engine.World;
 import rabbitescape.engine.World.CompletionState;
 import rabbitescape.engine.err.RabbitEscapeException;
 
@@ -148,6 +149,21 @@ public class SolutionExceptions
             this.x = x;
             this.y = y;
             this.type = type;
+        }
+    }
+
+    /**
+     * We had an until action, but the level never ended.
+     */
+    public static class UntilActionNeverEnded extends ProblemRunningSolution
+    {
+        private static final long serialVersionUID = 1L;
+
+        public final World.CompletionState expectedState;
+
+        public UntilActionNeverEnded( World.CompletionState expectedState )
+        {
+            this.expectedState = expectedState;
         }
     }
 }

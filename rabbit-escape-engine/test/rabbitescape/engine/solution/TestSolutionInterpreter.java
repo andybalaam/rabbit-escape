@@ -16,7 +16,7 @@ public class TestSolutionInterpreter
 {
     private static final CompletionState R = CompletionState.RUNNING;
     private static final CompletionState W = CompletionState.WON;
-    //private static final CompletionState L = CompletionState.LOST;
+    private static final CompletionState L = CompletionState.LOST;
 
     @Test
     public void Empty_solution_does_nothing()
@@ -453,7 +453,7 @@ public class TestSolutionInterpreter
     }
 
     @Test
-    public void Until_stops_with_assert_when_not_running()
+    public void Until_stops_with_assert_when_won()
     {
         // Just one until action ...
         Solution solution = new Solution(
@@ -480,6 +480,103 @@ public class TestSolutionInterpreter
 
         // Then we're done
         assertThat( i.next( R ), nullValue() );
+    }
+
+    @Test
+    public void Until_stops_with_assert_when_lost_after_other_steps()
+    {
+        // Actions followed by an Until
+        Solution solution = new Solution(
+            new SolutionCommand( new WaitAction( 2 ) ),
+            new SolutionCommand( new SelectAction( Token.Type.bridge ) ),
+            new SolutionCommand( new PlaceTokenAction( 2, 3 ) ),
+            new SolutionCommand( new UntilAction( CompletionState.WON ) )
+        );
+
+        SolutionInterpreter i = new SolutionInterpreter( solution );
+
+        // Leads to actions, followed by waiting
+        assertThat( i.next( R ), equalTo( new SolutionTimeStep( 1 ) ) );
+        assertThat( i.next( R ), equalTo( new SolutionTimeStep( 1 ) ) );
+
+        assertThat(
+            i.next( R ),
+            equalTo(
+                new SolutionTimeStep(
+                    2,
+                    new SelectAction( Token.Type.bridge )
+                )
+            )
+        );
+
+        assertThat(
+            i.next( R ),
+            equalTo(
+                new SolutionTimeStep( 3, new PlaceTokenAction( 2, 3 ) )
+            )
+        );
+
+        assertThat( i.next( R ), equalTo( new SolutionTimeStep( 4 ) ) );
+        assertThat( i.next( R ), equalTo( new SolutionTimeStep( 4 ) ) );
+        assertThat( i.next( R ), equalTo( new SolutionTimeStep( 4 ) ) );
+        assertThat( i.next( R ), equalTo( new SolutionTimeStep( 4 ) ) );
+        assertThat( i.next( R ), equalTo( new SolutionTimeStep( 4 ) ) );
+
+        // ... until we lose (i.e. not running) at which time we assert.
+        assertThat(
+            i.next( L ),
+            equalTo(
+                new SolutionTimeStep(
+                      4
+                    , new AssertStateAction( CompletionState.WON )
+                )
+            )
+        );
+
+        // Then we're done
+        assertThat( i.next( R ), nullValue() );
+    }
+
+    @Test
+    public void Until_can_assert_lost()
+    {
+        // Just one until action ...
+        Solution solution = new Solution(
+            new SolutionCommand( new UntilAction( CompletionState.LOST ) )
+        );
+
+        SolutionInterpreter i = new SolutionInterpreter( solution );
+
+        // ... leads to lots of time steps...
+        assertThat( i.next( R ), equalTo( new SolutionTimeStep( 1 ) ) );
+
+        // ... and when we've finished, an assert.
+        assertThat(
+            i.next( W ),
+            equalTo(
+                new SolutionTimeStep(
+                      1
+                    , new AssertStateAction( CompletionState.LOST )
+                )
+            )
+        );
+
+        // Then we're done
+        assertThat( i.next( R ), nullValue() );
+    }
+
+    @Test( expected = SolutionExceptions.UntilActionNeverEnded.class )
+    public void Until_stops_and_fails_after_many_time_steps()
+    {
+        Solution solution = new Solution(
+            new SolutionCommand( new UntilAction( CompletionState.LOST ) ) );
+
+        SolutionInterpreter i = new SolutionInterpreter( solution );
+
+        for ( int n = 0; n < 2000; ++n )
+        {
+            assertThat( i.next( R ), equalTo( new SolutionTimeStep( 1 ) ) );
+        }
     }
 
     // ---

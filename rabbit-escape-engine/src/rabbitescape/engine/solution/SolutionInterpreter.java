@@ -9,6 +9,8 @@ import rabbitescape.engine.World.CompletionState;
 
 public class SolutionInterpreter
 {
+    private static final int maxUntils = 1000;
+
     private final Iterator<SolutionCommand> commandIt;
     private int commandIndex;
 
@@ -16,6 +18,7 @@ public class SolutionInterpreter
     private WaitNextable wait;
     private CompletionState untilState;
     private SolutionCommand command;
+    private int untilCount;
 
     /**
      * appendWon defaults to true if you omit it.
@@ -39,6 +42,7 @@ public class SolutionInterpreter
         this.wait = null;
         this.untilState = null;
         this.command = null;
+        this.untilCount = -1;
     }
 
     public SolutionTimeStep next()
@@ -65,12 +69,18 @@ public class SolutionInterpreter
                 SolutionTimeStep ret = new SolutionTimeStep(
                     commandIndex, new AssertStateAction( untilState ) );
                 untilState = null;
-                wonAssert.done = true; // TODO: this will suppress wonassert
-                                       // always, instead of just for 1 step
+                untilCount = 0;
+                wonAssert.done = true;
                 return ret;
+            }
+            else if ( untilCount > maxUntils )
+            {
+                throw new SolutionExceptions.UntilActionNeverEnded(
+                    untilState );
             }
             else
             {
+                ++untilCount;
                 return new SolutionTimeStep( commandIndex );
             }
         }
