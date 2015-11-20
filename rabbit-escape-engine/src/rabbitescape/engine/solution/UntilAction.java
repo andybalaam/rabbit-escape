@@ -12,16 +12,6 @@ public class UntilAction implements CommandAction
     }
 
     @Override
-    public String relFormat( boolean firstInCommand )
-    {
-        if ( firstInCommand )
-        {
-            targetState.name();
-        }
-        return SolutionParser.ACTION_DELIMITER + targetState.name();
-    }
-
-    @Override
     public String toString()
     {
         return "UntilAction( " + targetState.name() + " )";

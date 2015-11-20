@@ -162,9 +162,10 @@ public class InputHandler
 
     public String solution()
     {
-        Solution s = new Solution(
-            solution.toArray( new SolutionCommand[ solution.size() ] ) );
-
-        return s.relFormat();
+        return SolutionParser.serialise(
+            new Solution(
+                solution.toArray( new SolutionCommand[ solution.size() ] )
+            )
+        );
     }
 }

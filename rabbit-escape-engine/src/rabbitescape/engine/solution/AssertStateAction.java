@@ -12,12 +12,6 @@ public class AssertStateAction implements ValidationAction
     }
 
     @Override
-    public String relFormat( boolean firstInCommand )
-    {
-        return targetState.name();
-    }
-
-    @Override
     public String toString()
     {
         return "AssertStateAction( " + targetState.name() + " )";

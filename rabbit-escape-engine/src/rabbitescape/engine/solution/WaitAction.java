@@ -10,19 +10,6 @@ public class WaitAction implements CommandAction
     }
 
     @Override
-    public String relFormat( boolean firstInCommand )
-    {
-        if ( steps == 1 )
-        {
-            return "";
-        }
-        else
-        {
-            return String.valueOf( steps );
-        }
-    }
-
-    @Override
     public String toString()
     {
         return "WaitAction( " + steps + " )";

@@ -12,16 +12,6 @@ public class SelectAction implements CommandAction, TimeStepAction
     }
 
     @Override
-    public String relFormat( boolean firstInCommand )
-    {
-        if ( firstInCommand )
-        {
-            return type.name();
-        }
-        return SolutionParser.ACTION_DELIMITER + type.name();
-    }
-
-    @Override
     public String toString()
     {
         return "SelectAction( " + type.name() + " )";

@@ -348,7 +348,10 @@ public class TestSolutionParser
     @Test
     public void Wait_1_changes_to_blank()
     {
-        assertThat( SolutionParser.parse( "1" ).relFormat(), equalTo( "" ) );
+        assertThat(
+            SolutionParser.serialise( SolutionParser.parse( "1" ) ),
+            equalTo( "" )
+        );
     }
 
     @Test
@@ -381,9 +384,8 @@ public class TestSolutionParser
 
                 String before = (String)inputObj;
 
-                Solution x = SolutionParser.parse( before );
-
-                after = x.relFormat();
+                after = SolutionParser.serialise(
+                    SolutionParser.parse( before ) );
 
                 return after.equals( before );
             }

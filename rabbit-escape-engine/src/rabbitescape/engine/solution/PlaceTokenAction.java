@@ -11,16 +11,6 @@ public class PlaceTokenAction implements CommandAction, TimeStepAction
         this.y = y;
     }
 
-    @Override
-    public String relFormat( boolean firstInCommand )
-    {
-        if ( firstInCommand )
-        {
-            return "(" + x + "," + y + ")";
-        }
-        return SolutionParser.ACTION_DELIMITER + "(" + x + "," + y + ")";
-    }
-
     public int getX()
     {
         return x;

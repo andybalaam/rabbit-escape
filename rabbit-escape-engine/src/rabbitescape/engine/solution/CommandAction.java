@@ -9,6 +9,4 @@ package rabbitescape.engine.solution;
 public interface CommandAction
 {
     void typeSwitch( CommandActionTypeSwitch actionTypeSwitch );
-
-    String relFormat( boolean firstInCommand );
 }

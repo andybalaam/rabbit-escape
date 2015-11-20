@@ -9,6 +9,7 @@ import static rabbitescape.engine.util.Util.*;
 
 import rabbitescape.engine.Token.Type;
 import rabbitescape.engine.World.CompletionState;
+import rabbitescape.engine.util.Util.Function;
 
 public class SolutionParser
 {
@@ -59,6 +60,13 @@ public class SolutionParser
             actions.toArray( new CommandAction[ actions.size() ] ) );
     }
 
+    public static String serialise( Solution solution )
+    {
+        return join( ";", map( serialiseCommand(), solution.commands ) );
+    }
+
+    // ---
+
     private static CommandAction makeAction( String actionString )
     {
         try
@@ -105,4 +113,71 @@ public class SolutionParser
         throw new InvalidAction( actionString );
     }
 
+    private static Function<SolutionCommand, String> serialiseCommand()
+    {
+        return new Function<SolutionCommand, String>()
+        {
+            @Override
+            public String apply( SolutionCommand command )
+            {
+                return join( "&", map( serialiseAction(), command.actions ) );
+            }
+        };
+    }
+
+    private static Function<CommandAction, String> serialiseAction()
+    {
+        return new Function<CommandAction, String>()
+        {
+            @Override
+            public String apply( CommandAction action )
+            {
+                ActionSerialiser s = new ActionSerialiser();
+                action.typeSwitch( s );
+                return s.ret;
+            }
+        };
+    }
+
+    private static class ActionSerialiser implements CommandActionTypeSwitch
+    {
+        public String ret = null;
+
+        @Override
+        public void caseWaitAction( WaitAction waitAction )
+        {
+            if ( waitAction.steps == 1 )
+            {
+                ret = "";
+            }
+            else
+            {
+                ret = String.valueOf( waitAction.steps );
+            }
+        }
+
+        @Override
+        public void caseSelectAction( SelectAction selectAction )
+        {
+            ret = selectAction.type.name();
+        }
+
+        @Override
+        public void caseAssertStateAction( AssertStateAction targetStateAction )
+        {
+            ret = targetStateAction.targetState.name();
+        }
+
+        @Override
+        public void casePlaceTokenAction( PlaceTokenAction placeTokenAction )
+        {
+            ret = "(" + placeTokenAction.x + "," + placeTokenAction.y + ")";
+        }
+
+        @Override
+        public void caseUntilAction( UntilAction untilAction )
+        {
+            ret = untilAction.targetState.name();
+        }
+    }
 }
