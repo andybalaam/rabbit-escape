@@ -287,6 +287,36 @@ public class TestSolutionRunner
         }
     }
 
+    @Test
+    public void Real_level_with_until_WON_works()
+    {
+        World world = TextWorldManip.createWorld(
+            ":num_rabbits=1",
+            ":num_to_save=1",
+            "Q    ",
+            "    O",
+            "#####"
+        );
+
+        SolutionRunner.runSolution(
+            SolutionParser.parse( "until:WON" ), world );
+    }
+
+    @Test
+    public void Real_level_with_until_LOST_works()
+    {
+        World world = TextWorldManip.createWorld(
+            ":num_rabbits=1",
+            ":num_to_save=1",
+            "Q    ",
+            "     ",
+            "#####"
+        );
+
+        SolutionRunner.runSolution(
+            SolutionParser.parse( "until:LOST" ), world );
+    }
+
     // --
 
     private World neverEndingWorld()
