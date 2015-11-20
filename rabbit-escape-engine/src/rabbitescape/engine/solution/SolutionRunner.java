@@ -77,9 +77,7 @@ public class SolutionRunner
 
         try
         {
-            // TODO: this is messy - interpreter runs for 1 more step than
-            //       the world!
-            if ( nextStep != null )
+            if ( shouldStepWorld( nextStep, sandboxGame ) )
             {
                 sandboxGame.getWorld().step();
             }
@@ -89,6 +87,37 @@ public class SolutionRunner
             throw new SolutionExceptions.RanPastEnd(
                 sandboxGame.getWorld().completionState() );
         }
+    }
+
+    /**
+     * If we have no next step, or the world is finished and the step is just
+     * an assertion step, return false.  Otherwise, true.
+     */
+    private static boolean shouldStepWorld(
+        SolutionTimeStep step, SandboxGame game )
+    {
+        // TODO: yuck: why do we need an if at all, and why do we have to
+        //       tolerate assertions that happen after the world has ended
+        //       as well as those that happen as it ends?: it should be one
+        //       or the other.
+
+        if ( step == null )
+        {
+            return false;
+        }
+
+        if (
+            game.getWorld().completionState() != CompletionState.RUNNING
+            && (
+                   step.actions.length == 1
+                && step.actions[0] instanceof AssertStateAction
+            )
+        )
+        {
+            return false;
+        }
+
+        return true;
     }
 
     private static void performAction(
