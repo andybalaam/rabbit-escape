@@ -48,6 +48,6 @@ public class UntilAction implements SolutionAction
     @Override
     public void typeSwitch( ActionTypeSwitch actionTypeSwitch )
     {
-        actionTypeSwitch.caseAssertStateAction( this );
+        actionTypeSwitch.caseUntilAction( this );
     }
 }

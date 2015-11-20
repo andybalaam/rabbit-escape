@@ -2,7 +2,7 @@ package rabbitescape.engine.solution;
 
 public interface ActionTypeSwitch
 {
-    void caseWaitAction( WaitAction action );
+    void caseWaitAction( WaitAction waitAction );
 
     void caseSelectAction( SelectAction selectAction );
 
@@ -11,5 +11,5 @@ public interface ActionTypeSwitch
 
     void casePlaceTokenAction( PlaceTokenAction placeTokenAction );
 
-    void caseAssertStateAction( UntilAction untilAction );
+    void caseUntilAction( UntilAction untilAction );
 }

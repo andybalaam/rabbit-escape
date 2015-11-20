@@ -166,7 +166,7 @@ public class SolutionRunner
                 }
 
                 @Override
-                public void caseAssertStateAction( UntilAction u )
+                public void caseUntilAction( UntilAction u )
                 {
                     throw new AssertionError(
                         "Should not perform until action" );
