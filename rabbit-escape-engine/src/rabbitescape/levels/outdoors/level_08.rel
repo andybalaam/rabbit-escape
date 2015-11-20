@@ -1,9 +1,9 @@
 :name=Rabbit hole descent
 :author_name=colonelfazackerley
 :author_url=https://github.com/colonelfazackerley
-:hint1=There are several ways\nof completing this level.
-:hint2=Dig down 4 squares\nat the edge of the hole.\nThen bridge.
-:hint3=Dig down 4, then bash.\nUse a blocker to turn\nback toward the exit.
+:hint1=There are several ways of completing this level.
+:hint2=Dig down 4 squares at the edge of the hole. Then bridge.
+:hint3=Dig down 4, then bash. Use a blocker to turn back toward the exit.
 :description=You should have taken the blue pill.
 :num_rabbits=4
 :num_to_save=2

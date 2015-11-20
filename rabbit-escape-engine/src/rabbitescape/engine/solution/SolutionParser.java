@@ -9,12 +9,14 @@ import static rabbitescape.engine.util.Util.*;
 
 import rabbitescape.engine.Token.Type;
 import rabbitescape.engine.World.CompletionState;
+import rabbitescape.engine.util.Util.Function;
 
 public class SolutionParser
 {
     public static final String COMMAND_DELIMITER = ";";
     public static final String ACTION_DELIMITER = "&";
     private static final Pattern WAIT_REGEX = Pattern.compile( "\\d+" );
+    private static final Pattern UNTIL_REGEX = Pattern.compile( "until:([A-Z]+)" );
 
     private static final Pattern PLACE_TOKEN_REGEX = Pattern.compile(
         "\\((\\d+),(\\d+)\\)" );
@@ -42,7 +44,7 @@ public class SolutionParser
 
     public static SolutionCommand parseCommand( String commandString )
     {
-        ArrayList<SolutionAction> actions = new ArrayList<SolutionAction>();
+        ArrayList<CommandAction> actions = new ArrayList<CommandAction>();
 
         String[] actionStrings = split( commandString, ACTION_DELIMITER );
 
@@ -55,10 +57,17 @@ public class SolutionParser
         }
 
         return new SolutionCommand(
-            actions.toArray( new SolutionAction[ actions.size() ] ) );
+            actions.toArray( new CommandAction[ actions.size() ] ) );
     }
 
-    private static SolutionAction makeAction( String actionString )
+    public static String serialise( Solution solution )
+    {
+        return join( ";", map( serialiseCommand(), solution.commands ) );
+    }
+
+    // ---
+
+    private static CommandAction makeAction( String actionString )
     {
         try
         {
@@ -70,13 +79,18 @@ public class SolutionParser
         }
     }
 
-    private static SolutionAction doMakeAction( String actionString )
+    private static CommandAction doMakeAction( String actionString )
     throws NumberFormatException, InvalidAction
     {
+        Matcher untilMatcher = UNTIL_REGEX.matcher( actionString );
         if ( COMPLETION_STATES.contains( actionString ) )
         {
             return new AssertStateAction(
                 CompletionState.valueOf( actionString ) );
+        }
+        else if ( untilMatcher.matches() ) {
+            CompletionState state = CompletionState.valueOf( untilMatcher.group( 1 ) );
+            return new UntilAction(state);
         }
         else if ( WAIT_REGEX.matcher( actionString ).matches() )
         {
@@ -99,4 +113,71 @@ public class SolutionParser
         throw new InvalidAction( actionString );
     }
 
+    private static Function<SolutionCommand, String> serialiseCommand()
+    {
+        return new Function<SolutionCommand, String>()
+        {
+            @Override
+            public String apply( SolutionCommand command )
+            {
+                return join( "&", map( serialiseAction(), command.actions ) );
+            }
+        };
+    }
+
+    private static Function<CommandAction, String> serialiseAction()
+    {
+        return new Function<CommandAction, String>()
+        {
+            @Override
+            public String apply( CommandAction action )
+            {
+                ActionSerialiser s = new ActionSerialiser();
+                action.typeSwitch( s );
+                return s.ret;
+            }
+        };
+    }
+
+    private static class ActionSerialiser implements CommandActionTypeSwitch
+    {
+        public String ret = null;
+
+        @Override
+        public void caseWaitAction( WaitAction waitAction )
+        {
+            if ( waitAction.steps == 1 )
+            {
+                ret = "";
+            }
+            else
+            {
+                ret = String.valueOf( waitAction.steps );
+            }
+        }
+
+        @Override
+        public void caseSelectAction( SelectAction selectAction )
+        {
+            ret = selectAction.type.name();
+        }
+
+        @Override
+        public void caseAssertStateAction( AssertStateAction targetStateAction )
+        {
+            ret = targetStateAction.targetState.name();
+        }
+
+        @Override
+        public void casePlaceTokenAction( PlaceTokenAction placeTokenAction )
+        {
+            ret = "(" + placeTokenAction.x + "," + placeTokenAction.y + ")";
+        }
+
+        @Override
+        public void caseUntilAction( UntilAction untilAction )
+        {
+            ret = "until:" + untilAction.targetState.name();
+        }
+    }
 }

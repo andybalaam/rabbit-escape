@@ -22,7 +22,7 @@ public class TestMain
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         FileSystem fs = new NothingExistsFileSystem();
 
-        TextSingleGameMain main = new TextSingleGameMain(
+        TextSingleGameEntryPoint main = new TextSingleGameEntryPoint(
             fs, new PrintStream( out ), Locale.ENGLISH );
 
         int status = main.launchGame(
@@ -46,7 +46,7 @@ public class TestMain
         String[] badLevel = new String[] { "##", "#" };
         FileSystem fs = new FakeFileSystem( "file1", badLevel );
 
-        TextSingleGameMain main = new TextSingleGameMain(
+        TextSingleGameEntryPoint main = new TextSingleGameEntryPoint(
             fs, new PrintStream( out ), Locale.ENGLISH );
 
         int status = main.launchGame(
@@ -72,7 +72,7 @@ public class TestMain
         String[] badLevel = new String[] { "##", "#z" };
         FileSystem fs = new FakeFileSystem( "file1", badLevel );
 
-        TextSingleGameMain main = new TextSingleGameMain(
+        TextSingleGameEntryPoint main = new TextSingleGameEntryPoint(
             fs, new PrintStream( out ), Locale.ENGLISH );
 
         int status = main.launchGame(

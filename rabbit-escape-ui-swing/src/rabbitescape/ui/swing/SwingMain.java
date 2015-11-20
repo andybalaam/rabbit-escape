@@ -41,6 +41,12 @@ public class SwingMain
 
     public static void main( String[] args )
     {
+        if ( args.length > 0 )
+        {
+            SwingSingleGameEntryPoint.entryPoint( args );
+            return;
+        }
+        
         Locale locale = Locale.getDefault();
         Translation.init( locale );
         Config config = SwingConfigSetup.createConfig();

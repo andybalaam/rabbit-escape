@@ -195,13 +195,13 @@ public class SwingGameLaunch implements GameLaunch
      */
     private void showIntroDialog()
     {
-        Util.Function<String, String> slashNToNewline =
+        Util.Function<String, String> insertNewlines =
             new Util.Function<String, String>()
         {
             @Override
             public String apply( String inp )
             {
-                return inp.replace( "\\n", "\n" );
+                return Util.wrapToNewline( inp, DialogText.lineLength );
             }
         };
 
@@ -210,7 +210,7 @@ public class SwingGameLaunch implements GameLaunch
             Util.concat(
                 new Object[] { DialogText.introText( this.frame, world ) },
                 Util.map(
-                    slashNToNewline,
+                    insertNewlines,
                     new String[] { world.hint1, world.hint2, world.hint3 },
                     new String[3]
                 )

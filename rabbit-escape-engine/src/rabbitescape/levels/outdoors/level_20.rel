@@ -2,8 +2,8 @@
 :author_name=tttppp
 :author_url=https://github.com/tttppp
 :hint1=The exit is treacherous.
-:hint2=Find a way to prevent\nall the rabbits from\ngetting climbing tokens.
-:hint3=Build a bridge over\nthe climbing tokens as fast\nas possible.
+:hint2=Find a way to prevent all the rabbits from getting climbing tokens.
+:hint3=Build a bridge over the climbing tokens as fast as possible.
 :description=Climb up from base camp and down the other side.
 :num_rabbits=10
 :num_to_save=2

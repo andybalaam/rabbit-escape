@@ -4,7 +4,7 @@
 :author_url=http://artificialworlds.net/rabbit-escape/
 :hint1=Find a good place to block so you can bridge to the exit.
 :hint2=The first rabbit should bridge then become a blocker.
-:hint3=Bridge leftwards after climbing the stairs.\nBlock in the middle of the next platform.\nWait, then bridge from the right of that platform as the rabbit turns around.
+:hint3=Bridge leftwards after climbing the stairs. Block in the middle of the next platform. Wait, then bridge from the right of that platform as the rabbit turns around.
 % This is not the intended solution. Another is needed
 :solution.1=block;(7,3);bridge;9;(9,13);(12,5);41;(9,3);dig;(12,10);explode;69;(7,2);2;WON
 :num_rabbits=10

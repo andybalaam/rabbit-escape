@@ -12,16 +12,6 @@ public class AssertStateAction implements ValidationAction
     }
 
     @Override
-    public String relFormat( boolean firstInCommand )
-    {
-        if ( firstInCommand )
-        {
-            targetState.name();
-        }
-        return SolutionParser.ACTION_DELIMITER + targetState.name();
-    }
-
-    @Override
     public String toString()
     {
         return "AssertStateAction( " + targetState.name() + " )";
@@ -46,8 +36,14 @@ public class AssertStateAction implements ValidationAction
     }
 
     @Override
-    public void typeSwitch( ActionTypeSwitch actionTypeSwitch )
+    public void typeSwitch( CommandActionTypeSwitch actionTypeSwitch )
     {
         actionTypeSwitch.caseAssertStateAction( this );
+    }
+
+    @Override
+    public void typeSwitch( TimeStepActionTypeSwitch timeStepActionTypeSwitch )
+    {
+        timeStepActionTypeSwitch.caseAssertStateAction( this );
     }
 }

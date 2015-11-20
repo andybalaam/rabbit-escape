@@ -254,6 +254,69 @@ public class TestSolutionRunner
         }
     }
 
+    @Test
+    public void Until_never_ending_is_serialised_nicely()
+    {
+        try
+        {
+            SolutionRunner.runSolution(
+                new Solution(
+                    new SolutionCommand(
+                        new UntilAction( CompletionState.WON )
+                    )
+                ),
+                neverEndingWorld()
+            );
+
+            fail( "Expected exception!" );
+        }
+        catch( SolutionExceptions.UntilActionNeverEnded e )
+        {
+            e.solutionId = 10;
+            e.level = "qux";
+            e.world = "x\ny";
+
+            assertThat(
+                e.getMessage(),
+                equalTo(
+                    "Solution failed: the level never finished, but"
+                    + " there was an until:WON"
+                    + " action at command 1 of solution 10 in qux:\nx\ny."
+                )
+            );
+        }
+    }
+
+    @Test
+    public void Real_level_with_until_WON_works()
+    {
+        World world = TextWorldManip.createWorld(
+            ":num_rabbits=1",
+            ":num_to_save=1",
+            "Q    ",
+            "    O",
+            "#####"
+        );
+
+        SolutionRunner.runSolution(
+            SolutionParser.parse( "until:WON" ), world );
+    }
+
+    @Test
+    public void Real_level_with_until_LOST_works()
+    {
+        World world = TextWorldManip.createWorld(
+            ":num_rabbits=1",
+            ":num_to_save=1",
+            "Q    ",
+            "     ",
+            "#####"
+        );
+
+        SolutionRunner.runSolution(
+            SolutionParser.parse( "until:LOST" ), world );
+    }
+
     // --
 
     private World neverEndingWorld()

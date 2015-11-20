@@ -1,9 +1,9 @@
 :name=Platforms, small
 :author_name=colonelfazackerley
 :author_url=https://github.com/colonelfazackerley
-:hint1=Use a bridge to turn the\nrabbits.
-:hint2=Position the bridge\nto lead up to the edge of\na platform.
-:hint3=Bridge up to the next\nplatform and dig.
+:hint1=Use a bridge to turn the rabbits.
+:hint2=Position the bridge to lead up to the edge of a platform.
+:hint3=Bridge up to the next platform and dig.
 :description=It's a long way down.
 :num_rabbits=5
 :num_to_save=5

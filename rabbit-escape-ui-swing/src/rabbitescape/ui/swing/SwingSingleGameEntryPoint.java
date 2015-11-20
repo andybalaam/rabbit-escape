@@ -15,9 +15,9 @@ import rabbitescape.engine.util.FileSystem;
 import rabbitescape.engine.util.RealFileSystem;
 import rabbitescape.render.BitmapCache;
 import rabbitescape.render.GameLaunch;
-import rabbitescape.render.Main;
+import rabbitescape.render.SingleGameEntryPoint;
 
-public class SwingSingleGameMain extends Main
+public class SwingSingleGameEntryPoint extends SingleGameEntryPoint
 {
     private final BitmapCache<SwingBitmap> bitmapCache;
     private final Config uiConfig;
@@ -25,7 +25,7 @@ public class SwingSingleGameMain extends Main
     private final SwingSound sound;
     private final MenuUi menuUi;
 
-    public SwingSingleGameMain(
+    public SwingSingleGameEntryPoint(
         FileSystem fs,
         PrintStream out,
         Locale locale,
@@ -44,14 +44,14 @@ public class SwingSingleGameMain extends Main
         this.menuUi = menuUi;
     }
 
-    public static void main( String[] args )
+    public static void entryPoint( String[] args )
     {
         Config cfg = SwingConfigSetup.createConfig();
 
         SwingSound sound = new SwingSound(
             ConfigTools.getBool( cfg, CFG_MUTED ) );
 
-        Main m = new SwingSingleGameMain(
+        SingleGameEntryPoint m = new SwingSingleGameEntryPoint(
             new RealFileSystem(),
             System.out,
             Locale.getDefault(),

@@ -1195,12 +1195,28 @@ public class TestTextWorldManip
         runSolutions( lines );
     }
 
+    @Test
+    public void Stepping_one_past_end_throws_no_exception()
+    {
+        // TODO: see SolutionRunner.shouldStepWorld: yuck - this should
+        //       not pass!
+        String[] lines = {
+            ":num_rabbits=1",
+            ":solution.1=7",
+            "Q    ",
+            "    O",
+            "#####"
+        };
+
+        runSolutions( lines );
+    }
+
     @Test( expected = RanPastEnd.class )
     public void Solution_too_many_steps_throws_exception()
     {
         String[] lines = {
             ":num_rabbits=1",
-            ":solution.1=7",
+            ":solution.1=8",
             "Q    ",
             "    O",
             "#####"

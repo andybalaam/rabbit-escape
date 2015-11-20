@@ -2,9 +2,9 @@
 :description=Find some way of delaying some of the rabbits.
 :author_name=Andy Balaam
 :author_url=http://artificialworlds.net/rabbit-escape/
-:hint1=The lead rabbit needs to build a 2-token bridge\nfrom the end of the slope.
+:hint1=The lead rabbit needs to build a 2-token bridge from the end of the slope.
 :hint2=You need to drop 4 or 5 bridge tokens quickly on the same square to slow them all down.
-:hint3=Drop 5 bridge tokens at the end of the slope.\nDrop 5 more on the third bridge square as it is built.
+:hint3=Drop 5 bridge tokens at the end of the slope. Drop 5 more on the third bridge square as it is built.
 :solution.1=bridge;(8,9);(8,9)&(8,9);(8,9)&(8,9);9;(11,7)&(11,7)&(11,7)&(11,7)&(11,7);11;WON
 :solution.2=bridge;(8,9);block;(3,4);1;(6,7);1;bridge;5;(11,7);6;bash;(6,7);3;(3,4);12;WON
 :num_rabbits=5

@@ -1,9 +1,9 @@
 :name=Sailing
 :author_name=colonelfazackerley
 :author_url=https://github.com/colonelfazackerley
-:hint1=Build a 2 token bridge\nto get the first rabbit\nonto the sail.
-:hint2=Slow the second rabbit\nwith a bridge token.
-:hint3=Dig into the mast and\nand bridge to hold\nthe rabbits while\none builds bridges to\nget to the exit.
+:hint1=Build a 2 token bridge to get the first rabbit onto the sail.
+:hint2=Slow the second rabbit with a bridge token.
+:hint3=Dig into the mast and and bridge to hold the rabbits while one builds bridges to get to the exit.
 :description=Sink or swim
 :num_to_save=3
 :num_rabbits=3

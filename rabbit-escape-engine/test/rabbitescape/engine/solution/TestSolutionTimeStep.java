@@ -25,11 +25,15 @@ public class TestSolutionTimeStep
     public void Identical_nonempty_timesteps_are_equal()
     {
         SolutionTimeStep ts1 = new SolutionTimeStep(
-            2, new WaitAction( 3 ), new SelectAction( Token.Type.bridge )
+            2,
+            new PlaceTokenAction( 2, 2 ),
+            new SelectAction( Token.Type.bridge )
         );
 
         SolutionTimeStep ts2 = new SolutionTimeStep(
-            2, new WaitAction( 3 ), new SelectAction( Token.Type.bridge )
+            2,
+            new PlaceTokenAction( 2, 2 ),
+            new SelectAction( Token.Type.bridge )
         );
 
         assertThat( ts1, equalTo( ts2 ) );
@@ -80,24 +84,22 @@ public class TestSolutionTimeStep
     // ---
 
     private static SolutionTimeStep makeSolutionTimeStep(
-        int commandIndex, int waitTime )
+        int commandIndex, int yCoord )
     {
         return new SolutionTimeStep(
               commandIndex
-            , new WaitAction( waitTime )
-            , new PlaceTokenAction( 3, 2 )
+            , new PlaceTokenAction( 3, yCoord )
             , new SelectAction( Token.Type.block )
             , new AssertStateAction( World.CompletionState.RUNNING )
         );
     }
 
     private static SolutionTimeStep makeShortSolutionTimeStep(
-        int commandIndex, int waitTime )
+        int commandIndex, int yCoord )
     {
         return new SolutionTimeStep(
               commandIndex
-            , new WaitAction( waitTime )
-            , new PlaceTokenAction( 3, 2 )
+            , new PlaceTokenAction( 3, yCoord )
             , new SelectAction( Token.Type.block )
         );
     }

@@ -4,7 +4,7 @@
 :author_url=http://artificialworlds.net/rabbit-escape/
 :hint1=You can't fall the whole way down, even if you dig.
 :hint2=Break their fall halfway down.
-:hint3=Dig down into the middle of the bucket.\nAfter digging three squares, turn the digger into a basher.
+:hint3=Dig down into the middle of the bucket. After digging three squares, turn the digger into a basher.
 :num_rabbits=20
 :num_to_save=10
 :bash=3

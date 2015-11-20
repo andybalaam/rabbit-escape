@@ -9,21 +9,21 @@ import rabbitescape.engine.i18n.Translation;
 import rabbitescape.engine.util.FileSystem;
 import rabbitescape.engine.util.RealFileSystem;
 import rabbitescape.render.GameLaunch;
-import rabbitescape.render.Main;
+import rabbitescape.render.SingleGameEntryPoint;
 
-public class TextSingleGameMain extends Main
+public class TextSingleGameEntryPoint extends SingleGameEntryPoint
 {
-    public TextSingleGameMain( FileSystem fs, PrintStream out, Locale locale )
+    public TextSingleGameEntryPoint( FileSystem fs, PrintStream out, Locale locale )
     {
         super( fs, out, locale );
     }
 
-    public static void main( String[] args )
+    public static void entryPoint( String[] args )
     {
         Locale locale = Locale.getDefault();
         Translation.init( locale );
 
-        Main m = new TextSingleGameMain(
+        SingleGameEntryPoint m = new TextSingleGameEntryPoint(
             new RealFileSystem(), System.out, locale );
 
         m.run( args );

@@ -15,26 +15,6 @@ public class Solution
         this.commands = commands;
     }
 
-    public String relFormat()
-    {
-        StringBuilder sb = new StringBuilder();
-        SolutionAction previousAction = null;
-        for ( SolutionCommand command : commands )
-        {
-            boolean firstInCommand = true;
-            for ( SolutionAction action : command.actions )
-            {
-                if (previousAction != null)
-                {
-                    firstInCommand = (previousAction instanceof WaitAction);
-                }
-                sb.append( action.relFormat( firstInCommand ) );
-                previousAction = action;
-            }
-        }
-        return sb.toString();
-    }
-
     @Override
     public String toString()
     {

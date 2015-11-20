@@ -7,12 +7,13 @@ import java.util.List;
 import static rabbitescape.engine.i18n.Translation.*;
 import rabbitescape.engine.err.ExceptionTranslation;
 import rabbitescape.engine.err.RabbitEscapeException;
-import rabbitescape.engine.solution.SolutionAction;
+import rabbitescape.engine.solution.CommandAction;
 import rabbitescape.engine.solution.SandboxGame;
 import rabbitescape.engine.solution.Solution;
 import rabbitescape.engine.solution.SolutionExceptions;
 import rabbitescape.engine.solution.SolutionParser;
 import rabbitescape.engine.solution.SolutionRunner;
+import rabbitescape.engine.solution.UntilAction;
 import rabbitescape.engine.solution.WaitAction;
 import rabbitescape.engine.solution.SolutionCommand;
 
@@ -58,9 +59,18 @@ public class InputHandler
             }
 
             SolutionRunner.runSingleCommand( command, sandboxGame );
-            // TODO: it's weird we have to do the last time step
-            //       outside of runSingleCommand
-            sandboxGame.getWorld().step();
+
+            // TODO: until commands step past the last time step, so we
+            //       avoid stepping here.
+            if ( ! (
+                   command.actions.length == 1
+                && command.actions[0] instanceof UntilAction
+            ) )
+            {
+                // TODO: it's weird we have to do the last time step
+                //       outside of runSingleCommand
+                sandboxGame.getWorld().step();
+            }
 
             append( command );
         }
@@ -108,8 +118,8 @@ public class InputHandler
     private SolutionCommand tryToSimplify(
         SolutionCommand existingCmd, SolutionCommand newCmd )
     {
-        SolutionAction action1 = existingCmd.actions[0];
-        SolutionAction action2 = newCmd.actions[0];
+        CommandAction action1 = existingCmd.actions[0];
+        CommandAction action2 = newCmd.actions[0];
 
         if (
                action1 instanceof WaitAction
@@ -162,9 +172,10 @@ public class InputHandler
 
     public String solution()
     {
-        Solution s = new Solution(
-            solution.toArray( new SolutionCommand[ solution.size() ] ) );
-
-        return s.relFormat();
+        return SolutionParser.serialise(
+            new Solution(
+                solution.toArray( new SolutionCommand[ solution.size() ] )
+            )
+        );
     }
 }

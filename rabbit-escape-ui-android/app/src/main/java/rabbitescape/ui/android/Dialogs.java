@@ -158,7 +158,7 @@ public class Dialogs
 
         private String readyForDialog( String message )
         {
-            return t( message ).replaceAll( "\\\\n", " " );
+            return t( message );
         }
 
     }

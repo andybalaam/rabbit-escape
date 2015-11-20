@@ -38,14 +38,29 @@ public class SolutionRunner
         SandboxGame sandboxGame
     )
     {
-        SolutionTimeStep step = interpreter.next();
+        SolutionTimeStep step = interpreter.next(
+            sandboxGame.getWorld().completionState() );
         while ( step != null )
         {
-            SolutionTimeStep nextStep = interpreter.next();
+            try
+            {
+                SolutionTimeStep nextStep = interpreter.next(
+                    sandboxGame.getWorld().completionState() );
 
-            runTimeStep( sandboxGame, step, nextStep );
+                runTimeStep( sandboxGame, step, nextStep );
 
-            step = nextStep;
+                step = nextStep;
+            }
+            catch ( SolutionExceptions.ProblemRunningSolution e )
+            {
+                e.commandIndex = step.commandIndex;
+                e.world = join(
+                    "\n",
+                    TextWorldManip.renderWorld(
+                        sandboxGame.getWorld(), false, false )
+                );
+                throw e;
+            }
         }
     }
 
@@ -55,42 +70,58 @@ public class SolutionRunner
         SolutionTimeStep nextStep
     )
     {
+        for ( TimeStepAction action : step.actions )
+        {
+            performAction( action, sandboxGame );
+        }
+
         try
         {
-            for ( SolutionAction action : step.actions )
+            if ( shouldStepWorld( nextStep, sandboxGame ) )
             {
-                performAction( action, sandboxGame );
-            }
-
-            try
-            {
-                // TODO: this is messy - interpreter runs for 1 more step than
-                //       the world!
-                if ( nextStep != null )
-                {
-                    sandboxGame.getWorld().step();
-                }
-            }
-            catch ( DontStepAfterFinish e )
-            {
-                throw new SolutionExceptions.RanPastEnd(
-                    sandboxGame.getWorld().completionState() );
+                sandboxGame.getWorld().step();
             }
         }
-        catch ( SolutionExceptions.ProblemRunningSolution e )
+        catch ( DontStepAfterFinish e )
         {
-            e.commandIndex = step.commandIndex;
-            e.world = join(
-                "\n",
-                TextWorldManip.renderWorld(
-                    sandboxGame.getWorld(), false, false )
-            );
-            throw e;
+            throw new SolutionExceptions.RanPastEnd(
+                sandboxGame.getWorld().completionState() );
         }
     }
 
+    /**
+     * If we have no next step, or the world is finished and the step is just
+     * an assertion step, return false.  Otherwise, true.
+     */
+    private static boolean shouldStepWorld(
+        SolutionTimeStep step, SandboxGame game )
+    {
+        // TODO: yuck: why do we need an if at all, and why do we have to
+        //       tolerate assertions that happen after the world has ended
+        //       as well as those that happen as it ends?: it should be one
+        //       or the other.
+
+        if ( step == null )
+        {
+            return false;
+        }
+
+        if (
+            game.getWorld().completionState() != CompletionState.RUNNING
+            && (
+                   step.actions.length == 1
+                && step.actions[0] instanceof AssertStateAction
+            )
+        )
+        {
+            return false;
+        }
+
+        return true;
+    }
+
     private static void performAction(
-        SolutionAction action, final SandboxGame sandboxGame )
+        TimeStepAction action, final SandboxGame sandboxGame )
     throws SolutionExceptions.UnexpectedState
     {
         // TODO: stop using WaitAction to step in the command line interface -
@@ -122,25 +153,11 @@ public class SolutionRunner
     }
 
     private static void doPerformAction(
-        SolutionAction action, final SandboxGame sandboxGame )
+        TimeStepAction action, final SandboxGame sandboxGame )
     throws SolutionExceptions.UnexpectedState
     {
-        action.typeSwitch( new ActionTypeSwitch()
+        action.typeSwitch( new TimeStepActionTypeSwitch()
             {
-                @Override
-                public void caseWaitAction( WaitAction w )
-                {
-                    throw new AssertionError(
-                        "Should not perform wait action" );
-                }
-
-                @Override
-                public void caseAssertStateAction( UntilAction u )
-                {
-                    throw new AssertionError(
-                        "Should not perform until action" );
-                }
-
                 @Override
                 public void caseSelectAction( SelectAction s )
                 {

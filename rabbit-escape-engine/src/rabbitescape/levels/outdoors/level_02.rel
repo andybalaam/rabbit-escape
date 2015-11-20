@@ -1,9 +1,9 @@
 :name=Saw
 :author_name=colonelfazackerley
 :author_url=https://github.com/colonelfazackerley
-:hint1=Use bridges to get\nover the saw teeth.
-:hint2=Use a blocker at\nthe end of the handle.
-:hint3=Get to the gap just\npast the exit.
+:hint1=Use bridges to get over the saw teeth.
+:hint2=Use a blocker at the end of the handle.
+:hint3=Get to the gap just past the exit.
 :description=One way
 :num_rabbits=6
 :num_to_save=4

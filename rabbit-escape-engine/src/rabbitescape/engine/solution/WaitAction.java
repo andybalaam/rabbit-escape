@@ -1,37 +1,12 @@
 package rabbitescape.engine.solution;
 
-public class WaitAction implements SolutionAction
+public class WaitAction implements CommandAction
 {
     public final int steps;
 
     public WaitAction( int steps )
     {
         this.steps = steps;
-    }
-
-    @Override
-    public String relFormat( boolean firstInCommand )
-    {
-        if ( firstInCommand )
-        {
-            return String.valueOf( steps ) + SolutionParser.COMMAND_DELIMITER;
-        }
-        else if ( steps == 1 )
-        {
-            return SolutionParser.COMMAND_DELIMITER;
-        }
-        else if ( steps > 1 )
-        {
-            return
-                  SolutionParser.COMMAND_DELIMITER
-                + String.valueOf( steps - 1 )
-                + SolutionParser.COMMAND_DELIMITER;
-        }
-        else
-        {
-            throw new IllegalArgumentException(
-                "Waiting for non-positive number of steps: " + steps );
-        }
     }
 
     @Override
@@ -59,7 +34,7 @@ public class WaitAction implements SolutionAction
     }
 
     @Override
-    public void typeSwitch( ActionTypeSwitch actionTypeSwitch )
+    public void typeSwitch( CommandActionTypeSwitch actionTypeSwitch )
     {
         actionTypeSwitch.caseWaitAction( this );
     }

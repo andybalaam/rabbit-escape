@@ -2,23 +2,13 @@ package rabbitescape.engine.solution;
 
 import rabbitescape.engine.World.CompletionState;
 
-public class UntilAction implements SolutionAction
+public class UntilAction implements CommandAction
 {
     public final CompletionState targetState;
 
     public UntilAction( CompletionState targetState )
     {
         this.targetState = targetState;
-    }
-
-    @Override
-    public String relFormat( boolean firstInCommand )
-    {
-        if ( firstInCommand )
-        {
-            targetState.name();
-        }
-        return SolutionParser.ACTION_DELIMITER + targetState.name();
     }
 
     @Override
@@ -46,8 +36,8 @@ public class UntilAction implements SolutionAction
     }
 
     @Override
-    public void typeSwitch( ActionTypeSwitch actionTypeSwitch )
+    public void typeSwitch( CommandActionTypeSwitch actionTypeSwitch )
     {
-        actionTypeSwitch.caseAssertStateAction( this );
+        actionTypeSwitch.caseUntilAction( this );
     }
 }
