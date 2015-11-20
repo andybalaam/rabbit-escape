@@ -360,6 +360,18 @@ public class TestSolutionParser
         assertThat( "5;6", roundTrips() );
     }
 
+    @Test
+    public void Until_WON_round_trips()
+    {
+        assertThat( "5;6;until:WON", roundTrips() );
+    }
+
+    @Test
+    public void Until_LOST_round_trips()
+    {
+        assertThat( "dig&(7,4);until:LOST", roundTrips() );
+    }
+
     // ---
 
     private Matcher<String> roundTrips()

@@ -177,7 +177,7 @@ public class SolutionParser
         @Override
         public void caseUntilAction( UntilAction untilAction )
         {
-            ret = untilAction.targetState.name();
+            ret = "until:" + untilAction.targetState.name();
         }
     }
 }
