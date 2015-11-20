@@ -18,11 +18,11 @@ public class Solution
     public String relFormat()
     {
         StringBuilder sb = new StringBuilder();
-        SolutionAction previousAction = null;
+        CommandAction previousAction = null;
         for ( SolutionCommand command : commands )
         {
             boolean firstInCommand = true;
-            for ( SolutionAction action : command.actions )
+            for ( CommandAction action : command.actions )
             {
                 if (previousAction != null)
                 {

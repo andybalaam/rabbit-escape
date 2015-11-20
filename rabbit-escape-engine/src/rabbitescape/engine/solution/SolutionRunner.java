@@ -70,7 +70,7 @@ public class SolutionRunner
         SolutionTimeStep nextStep
     )
     {
-        for ( SolutionAction action : step.actions )
+        for ( TimeStepAction action : step.actions )
         {
             performAction( action, sandboxGame );
         }
@@ -121,7 +121,7 @@ public class SolutionRunner
     }
 
     private static void performAction(
-        SolutionAction action, final SandboxGame sandboxGame )
+        TimeStepAction action, final SandboxGame sandboxGame )
     throws SolutionExceptions.UnexpectedState
     {
         // TODO: stop using WaitAction to step in the command line interface -
@@ -153,25 +153,11 @@ public class SolutionRunner
     }
 
     private static void doPerformAction(
-        SolutionAction action, final SandboxGame sandboxGame )
+        TimeStepAction action, final SandboxGame sandboxGame )
     throws SolutionExceptions.UnexpectedState
     {
-        action.typeSwitch( new ActionTypeSwitch()
+        action.typeSwitch( new TimeStepActionTypeSwitch()
             {
-                @Override
-                public void caseWaitAction( WaitAction w )
-                {
-                    throw new AssertionError(
-                        "Should not perform wait action" );
-                }
-
-                @Override
-                public void caseUntilAction( UntilAction u )
-                {
-                    throw new AssertionError(
-                        "Should not perform until action" );
-                }
-
                 @Override
                 public void caseSelectAction( SelectAction s )
                 {

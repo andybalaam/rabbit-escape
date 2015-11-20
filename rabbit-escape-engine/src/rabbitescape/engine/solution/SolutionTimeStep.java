@@ -9,9 +9,9 @@ import rabbitescape.engine.util.Util;
 public class SolutionTimeStep
 {
     public final int commandIndex;
-    public final SolutionAction[] actions;
+    public final TimeStepAction[] actions;
 
-    public SolutionTimeStep( int commandIndex, SolutionAction... actions )
+    public SolutionTimeStep( int commandIndex, TimeStepAction... actions )
     {
         this.commandIndex = commandIndex;
         this.actions = actions;

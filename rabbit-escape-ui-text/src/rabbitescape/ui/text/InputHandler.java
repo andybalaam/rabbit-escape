@@ -7,7 +7,7 @@ import java.util.List;
 import static rabbitescape.engine.i18n.Translation.*;
 import rabbitescape.engine.err.ExceptionTranslation;
 import rabbitescape.engine.err.RabbitEscapeException;
-import rabbitescape.engine.solution.SolutionAction;
+import rabbitescape.engine.solution.CommandAction;
 import rabbitescape.engine.solution.SandboxGame;
 import rabbitescape.engine.solution.Solution;
 import rabbitescape.engine.solution.SolutionExceptions;
@@ -108,8 +108,8 @@ public class InputHandler
     private SolutionCommand tryToSimplify(
         SolutionCommand existingCmd, SolutionCommand newCmd )
     {
-        SolutionAction action1 = existingCmd.actions[0];
-        SolutionAction action2 = newCmd.actions[0];
+        CommandAction action1 = existingCmd.actions[0];
+        CommandAction action2 = newCmd.actions[0];
 
         if (
                action1 instanceof WaitAction

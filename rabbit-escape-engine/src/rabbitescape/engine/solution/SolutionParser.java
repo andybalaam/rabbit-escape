@@ -43,7 +43,7 @@ public class SolutionParser
 
     public static SolutionCommand parseCommand( String commandString )
     {
-        ArrayList<SolutionAction> actions = new ArrayList<SolutionAction>();
+        ArrayList<CommandAction> actions = new ArrayList<CommandAction>();
 
         String[] actionStrings = split( commandString, ACTION_DELIMITER );
 
@@ -56,10 +56,10 @@ public class SolutionParser
         }
 
         return new SolutionCommand(
-            actions.toArray( new SolutionAction[ actions.size() ] ) );
+            actions.toArray( new CommandAction[ actions.size() ] ) );
     }
 
-    private static SolutionAction makeAction( String actionString )
+    private static CommandAction makeAction( String actionString )
     {
         try
         {
@@ -71,7 +71,7 @@ public class SolutionParser
         }
     }
 
-    private static SolutionAction doMakeAction( String actionString )
+    private static CommandAction doMakeAction( String actionString )
     throws NumberFormatException, InvalidAction
     {
         Matcher untilMatcher = UNTIL_REGEX.matcher( actionString );

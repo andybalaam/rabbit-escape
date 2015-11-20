@@ -1,6 +1,6 @@
 package rabbitescape.engine.solution;
 
-public class WaitAction implements SolutionAction
+public class WaitAction implements CommandAction
 {
     public final int steps;
 
@@ -59,7 +59,7 @@ public class WaitAction implements SolutionAction
     }
 
     @Override
-    public void typeSwitch( ActionTypeSwitch actionTypeSwitch )
+    public void typeSwitch( CommandActionTypeSwitch actionTypeSwitch )
     {
         actionTypeSwitch.caseWaitAction( this );
     }

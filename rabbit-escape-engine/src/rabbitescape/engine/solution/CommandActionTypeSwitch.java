@@ -1,6 +1,6 @@
 package rabbitescape.engine.solution;
 
-public interface ActionTypeSwitch
+public interface CommandActionTypeSwitch
 {
     void caseWaitAction( WaitAction waitAction );
 

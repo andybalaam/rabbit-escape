@@ -46,8 +46,14 @@ public class AssertStateAction implements ValidationAction
     }
 
     @Override
-    public void typeSwitch( ActionTypeSwitch actionTypeSwitch )
+    public void typeSwitch( CommandActionTypeSwitch actionTypeSwitch )
     {
         actionTypeSwitch.caseAssertStateAction( this );
+    }
+
+    @Override
+    public void typeSwitch( TimeStepActionTypeSwitch timeStepActionTypeSwitch )
+    {
+        timeStepActionTypeSwitch.caseAssertStateAction( this );
     }
 }

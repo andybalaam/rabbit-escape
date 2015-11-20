@@ -8,9 +8,9 @@ import rabbitescape.engine.util.Util;
 
 public class SolutionCommand
 {
-    public final SolutionAction[] actions;
+    public final CommandAction[] actions;
 
-    public SolutionCommand( SolutionAction... actions )
+    public SolutionCommand( CommandAction... actions )
     {
         this.actions = actions;
     }
@@ -41,7 +41,7 @@ public class SolutionCommand
         return Arrays.deepHashCode( actions );
     }
 
-    public SolutionAction lastAction()
+    public CommandAction lastAction()
     {
         if ( actions.length == 0 )
         {

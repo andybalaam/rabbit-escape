@@ -100,11 +100,11 @@ public class SolutionInterpreter
         class StepsToWait { int value = 0; };
         final StepsToWait stepsToWait = new StepsToWait();
 
-        final List<SolutionAction> tsActions = new ArrayList<SolutionAction>();
+        final List<TimeStepAction> tsActions = new ArrayList<TimeStepAction>();
 
-        for ( SolutionAction action : command.actions )
+        for ( CommandAction action : command.actions )
         {
-            action.typeSwitch( new ActionTypeSwitch()
+            action.typeSwitch( new CommandActionTypeSwitch()
             {
                 @Override
                 public void caseWaitAction( WaitAction waitAction )
@@ -155,7 +155,7 @@ public class SolutionInterpreter
 
         return new SolutionTimeStep(
             commandIndex,
-            tsActions.toArray( new SolutionAction[ tsActions.size() ] )
+            tsActions.toArray( new TimeStepAction[ tsActions.size() ] )
         );
     }
 

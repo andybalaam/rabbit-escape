@@ -2,7 +2,7 @@ package rabbitescape.engine.solution;
 
 import rabbitescape.engine.World.CompletionState;
 
-public class UntilAction implements SolutionAction
+public class UntilAction implements CommandAction
 {
     public final CompletionState targetState;
 
@@ -46,7 +46,7 @@ public class UntilAction implements SolutionAction
     }
 
     @Override
-    public void typeSwitch( ActionTypeSwitch actionTypeSwitch )
+    public void typeSwitch( CommandActionTypeSwitch actionTypeSwitch )
     {
         actionTypeSwitch.caseUntilAction( this );
     }

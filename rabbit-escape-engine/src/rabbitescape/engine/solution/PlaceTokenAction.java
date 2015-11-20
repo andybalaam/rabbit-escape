@@ -1,6 +1,6 @@
 package rabbitescape.engine.solution;
 
-public class PlaceTokenAction implements SolutionAction
+public class PlaceTokenAction implements CommandAction, TimeStepAction
 {
     public final int x;
     public final int y;
@@ -56,8 +56,14 @@ public class PlaceTokenAction implements SolutionAction
     }
 
     @Override
-    public void typeSwitch( ActionTypeSwitch actionTypeSwitch )
+    public void typeSwitch( CommandActionTypeSwitch actionTypeSwitch )
     {
         actionTypeSwitch.casePlaceTokenAction( this );
+    }
+
+    @Override
+    public void typeSwitch( TimeStepActionTypeSwitch timeStepActionTypeSwitch )
+    {
+        timeStepActionTypeSwitch.casePlaceTokenAction( this );
     }
 }

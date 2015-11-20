@@ -2,7 +2,7 @@ package rabbitescape.engine.solution;
 
 import rabbitescape.engine.Token;
 
-public class SelectAction implements SolutionAction
+public class SelectAction implements CommandAction, TimeStepAction
 {
     public final Token.Type type;
 
@@ -46,8 +46,14 @@ public class SelectAction implements SolutionAction
     }
 
     @Override
-    public void typeSwitch( ActionTypeSwitch actionTypeSwitch )
+    public void typeSwitch( CommandActionTypeSwitch actionTypeSwitch )
     {
         actionTypeSwitch.caseSelectAction( this );
+    }
+
+    @Override
+    public void typeSwitch( TimeStepActionTypeSwitch timeStepActionTypeSwitch )
+    {
+        timeStepActionTypeSwitch.caseSelectAction( this );
     }
 }
