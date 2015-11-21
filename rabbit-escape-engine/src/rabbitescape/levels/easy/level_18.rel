@@ -5,6 +5,7 @@
 :hint1=Place your climb tokens when the rabbits are facing the right way.
 :hint2=You can drop tokens on top of each other.
 :hint3=Immediately place 10 climbing tokens as fast as you can under the entrance.
+:solution.1=climb;(15,4);(15,4);(15,4);(15,4);(15,4);(15,4);(15,4);(15,4);(15,4);(15,4);33
 :num_rabbits=10
 :num_to_save=10
 :climb=10
