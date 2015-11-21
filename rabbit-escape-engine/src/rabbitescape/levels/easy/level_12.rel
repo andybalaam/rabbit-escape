@@ -5,6 +5,7 @@
 :hint1=Don't panic: you only need to save two! Focus on saving the first rabbit.
 :hint2=Build a bridge from the bottom of the slope, and place another when the bridger is about to stop.
 :hint3=Place a bridge token at the very bottom of the slope. After three squares, place another at end of the bridge.
+:solution.1=bridge;(8,9);11;(11,7);15
 :num_rabbits=5
 :num_to_save=2
 :rabbit_delay=4

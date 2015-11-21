@@ -5,6 +5,7 @@
 :hint1=You only need to place one token to solve this level.
 :hint2=What is the best way to go downwards?
 :hint3=Place a dig token on the top platform directly above the exit.
+:solution.1=dig;(12,4);11
 :num_rabbits=2
 :num_to_save=1
 :block=1
