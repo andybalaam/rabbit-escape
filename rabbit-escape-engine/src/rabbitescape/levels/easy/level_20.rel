@@ -5,6 +5,7 @@
 :hint1=Can you climb up somewhere?
 :hint2=Climb up the right of the column to the exit.
 :hint3=Bash through the column.  Bridge up to the right-hand side of the column.  Climb up.
+:solution.1=bash;(8,9);8;bridge;2;(13,9);7;climb;(12,9);(12,9);(12,9);(12,9);(12,9);34
 :num_rabbits=4
 :num_to_save=4
 :climb=5
