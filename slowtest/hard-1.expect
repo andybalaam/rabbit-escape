@@ -1,17 +1,17 @@
 #!/usr/bin/expect
 # sudo apt-get install expect
 
-set timeout 20
+set timeout 2
 
 spawn java -cp rabbit-escape-engine/bin/:rabbit-escape-render/bin/:rabbit-escape-ui-text/bin/:rabbit-escape-ui-swing/bin/ rabbitescape.ui.text.TextMain
 
 # Start Game. Select hard set. Select Level 1 
-send "1\r3\r1r"
+send "1\r3\r1\r"
 
 # play
 # :solution.2=bridge;(11,7);11;(12,7);2;(12,7);4;(12,7);2;(10,6);16;(13,4);5;(13,4);14
+expect ">"
 
-expect ">" 
 send "bridge\r"
 send "(11,7)\r"
 send "11\r"
@@ -31,3 +31,5 @@ send "14\r"
 # Leave hard set menu. Leave set selection menu. Leave game
 send "0\r0\r0\r"
 
+# java exits and closes stream
+expect eof
