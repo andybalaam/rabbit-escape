@@ -444,7 +444,8 @@ public class Bridging extends Behaviour
                         rabbit.x,
                         rabbit.y,
                         Block.Type.bridge_up_right,
-                        0
+                        0,
+                        world
                     )
                 );
 
@@ -459,7 +460,8 @@ public class Bridging extends Behaviour
                         rabbit.x,
                         rabbit.y,
                         Block.Type.bridge_up_left,
-                        0
+                        0,
+                        world
                     )
                 );
 
@@ -474,7 +476,8 @@ public class Bridging extends Behaviour
                         rabbit.x,
                         rabbit.y,
                         Block.Type.bridge_up_right,
-                        0
+                        0,
+                        world
                     )
                 );
 
@@ -489,7 +492,8 @@ public class Bridging extends Behaviour
                         rabbit.x,
                         rabbit.y,
                         Block.Type.bridge_up_left,
-                        0
+                        0,
+                        world
                     )
                 );
 
@@ -503,7 +507,8 @@ public class Bridging extends Behaviour
                         rabbit.x,
                         rabbit.y,
                         Block.Type.bridge_up_right,
-                        0
+                        0,
+                        world
                     )
                 );
                 return true;
@@ -516,7 +521,8 @@ public class Bridging extends Behaviour
                         rabbit.x,
                         rabbit.y,
                         Block.Type.bridge_up_left,
-                        0
+                        0,
+                        world
                     )
                 );
                 return true;
@@ -530,7 +536,8 @@ public class Bridging extends Behaviour
                         rabbit.x,
                         rabbit.y,
                         Block.Type.bridge_up_right,
-                        0
+                        0,
+                        world
                     )
                 );
                 return true;
@@ -544,7 +551,8 @@ public class Bridging extends Behaviour
                         rabbit.x,
                         rabbit.y,
                         Block.Type.bridge_up_left,
-                        0
+                        0,
+                        world
                     )
                 );
                 return true;
