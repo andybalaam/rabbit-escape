@@ -4,6 +4,7 @@
 :hint1=Dig.
 :hint2=Bash.
 :hint3=Profit.
+:solution.1=dig;(11,1);bash;(10,3);dig;(4,3);bash;(4,5);dig;(2,5);(3,9);bash;(4,14);bridge;(11,14);82
 :description=Down and around.
 :num_rabbits=9
 :num_to_save=9
