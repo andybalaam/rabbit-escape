@@ -1,0 +1,29 @@
+:name=Invader
+:description=Alien beings from a dying planet.
+:hint1=Place a bash token immediately under the left entrance.
+:hint2=As soon as the basher has moved place a block token in the same place.
+:hint3=Bash across to the other eye.  Remove the top of the head starting on the right with 3 dig tokens. Use the 2 bridge tokens to ascend.
+:author_name=colonelfazackerley
+:author_url=https://github.com/colonelfazackerley
+:solution.1=bash;(1,5);block;(1,5);bash;(4,5);dig;3;(7,3);1;(6,3);2;(5,3);bridge;9;(4,5);8;(8,2);explode;7;(1,5);until:WON
+:num_rabbits=9
+:num_to_save=8
+:block=2
+:climb=1
+:dig=4
+:bridge=2
+:bash=2
+:explode=2
+:rabbit_delay=10
+:music=tryad-witness
+   Q         
+  Q      O   
+ Q #     #   
+    #   #    
+   #######   
+  ## ### ##  
+ ########### 
+ # ####### # 
+ # #     # # 
+    ## ##    
+             

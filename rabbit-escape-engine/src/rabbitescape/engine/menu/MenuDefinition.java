@@ -23,7 +23,8 @@ public class MenuDefinition
                     item( "Easy",     levels( "easy",     levelsCompleted ), true ),
                     item( "Medium",   levels( "medium",   levelsCompleted ), true ),
                     item( "Hard",     levels( "hard",     levelsCompleted ), true ),
-                    item( "Outdoors", levels( "outdoors", levelsCompleted ), true )
+                    item( "Outdoors", levels( "outdoors", levelsCompleted ), true ),
+                    item( "Arcade",   levels( "arcade",   levelsCompleted ), true )
                 ),
                 true
             ),

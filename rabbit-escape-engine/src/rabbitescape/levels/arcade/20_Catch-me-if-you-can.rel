@@ -1,0 +1,23 @@
+:name=Catch Me If You Can
+:description=Meet your falling friends before they meet their maker.
+:author_name=tttppp
+:author_url=https://github.com/tttppp
+:hint1=Place a bridge token under the 3rd entrance. Extend the bridge with a second token.
+:hint2=Start another 2 token bridge\under the 2nd entrance.
+:hint3=Start a 1 token bridge between the 1st and 2nd entrances. Finally, start a 1 token bridge under the 1st entrance.
+:solution.1=bridge;(5,8);4;(3,6);6;(8,6);1;(2,6);5;(6,5);2;(1,5);until:WON
+:num_rabbits=25
+:num_to_save=12
+:bridge=99
+:rabbit_delay=10
+:music=tryad-witness
+#Q Q Q Q Q    #
+#             #
+#             #
+#             #
+#             #
+#\           O#
+##\         /##
+###\       /###
+####\     /####
+###############
