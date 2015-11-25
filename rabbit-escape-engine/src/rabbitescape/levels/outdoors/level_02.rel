@@ -4,7 +4,7 @@
 :hint1=Use bridges to get over the saw teeth.
 :hint2=Use a blocker at the end of the handle.
 :hint3=Get to the gap just past the exit.
-:solution.1=block;(23,3);bridge;9;(20,4);(16,5);(13,5);(10,5);(7,5);(4,5);dig;61;(2,2);bridge;3;(2,5);65;explode;(23,3);7
+:solution.1=block;(23,3);bridge;(18,5);16;(17,5);17;(14,5);(11,5);(8,5);38;(5,5);63;explode;(23,3);
 :description=One way
 :num_rabbits=6
 :num_to_save=4
@@ -18,7 +18,8 @@
                          
                    Q     
                          
-   O                /### 
- ///////////////// /#  # 
+                    /### 
+ //*////////////// /#  # 
  ####################  # 
  ####################### 
+:*=O/
