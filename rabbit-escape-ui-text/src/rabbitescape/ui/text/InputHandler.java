@@ -16,13 +16,14 @@ import rabbitescape.engine.solution.SolutionRunner;
 import rabbitescape.engine.solution.UntilAction;
 import rabbitescape.engine.solution.WaitAction;
 import rabbitescape.engine.solution.SolutionCommand;
+import rabbitescape.engine.util.Util;
 
 public class InputHandler
 {
     private final SandboxGame sandboxGame;
     private final Terminal terminal;
     private final List<SolutionCommand> solution;
-
+    
     public InputHandler( SandboxGame sandboxGame, Terminal terminal )
     {
         this.sandboxGame = sandboxGame;
@@ -34,11 +35,9 @@ public class InputHandler
     {
         String input = input();
 
-        if ( input.equals( "" ) )
-        {
-            input = "1";
-        }
-        else if ( input.equals( "help" ) )
+        input = expandAbbreviations( input );
+        
+        if ( input.equals( "help" ) )
         {
             return help();
         }
@@ -88,6 +87,30 @@ public class InputHandler
         return true;
     }
 
+    /**
+     * Note: changes the argument.
+     */
+    static String expandAbbreviations( String input )
+    {
+        if ( input.equals( "" ) )
+        {
+            return "1";
+        }
+        // Surround coordinates with brackets
+        input = Util.regexReplace( input, "\\(?+([0-9]+,[0-9]+)\\)?+", "($1)" );
+        // Expand token selection shortcuts
+        for ( InputExpansion e : InputExpansion.expansions )
+        {
+            input = Util.regexReplace( 
+                input, 
+                "\\b" + e.character + "\\b", 
+                e.expansion
+            );
+        }
+        return input;
+    }
+
+
     private void append( SolutionCommand newStep )
     {
         if ( !solution.isEmpty() )
@@ -136,14 +159,23 @@ public class InputHandler
 
     private boolean help()
     {
-        terminal.out.println( t(
+        String msg = 
             "\n" +
             "Press return to move forward a time step.\n" +
             "Type 'exit' to stop.\n" +
             "Type an ability name (e.g. 'bash') to switch to that ability.\n" +
             "Type '(x,y)' (e.g '(2,3)') to place a token.\n" +
-            "Type a number (e.g. '5') to skip that many steps.\n"
-        ) );
+            "Type a number (e.g. '5') to skip that many steps.\n" +
+            "\n" +
+            "The following abbreviations are available:\n" ;
+        for ( InputExpansion e : InputExpansion.expansions )
+        {
+            msg = msg + e + "\n";
+        }
+        msg = msg + 
+            "Brackets may be omitted when placing tokens: '2,3'.\n";
+                
+        terminal.out.println( t( msg ) );
 
         return false;
     }

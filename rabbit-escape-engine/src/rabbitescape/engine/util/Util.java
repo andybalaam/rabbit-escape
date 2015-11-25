@@ -781,4 +781,43 @@ public class Util
             }
         };
     }
+    
+    /**
+     * @brief Replace all matches, but preserves the first capturing group.
+     *        Compare to String.replaceAll, which replaces the whole match.
+     * @param patternFlags The flags from java.util.regex.Pattern.
+     */
+    public static String regexRemovePreserveGroup( String s, String regex, int patternFlags )
+    {
+        Pattern p = Pattern.compile( regex, patternFlags );
+        Matcher dsMatcher = p.matcher( s );
+        StringBuffer sb = new StringBuffer();
+        while ( dsMatcher.find() )
+        {
+            dsMatcher.appendReplacement( sb, "$1" );
+        }
+        dsMatcher.appendTail( sb );
+
+        return sb.toString();
+    }
+
+    public static String regexRemovePreserveGroup( String s, String regex )
+    {
+        return regexRemovePreserveGroup( s, regex, 0 );
+    }
+    
+    public static String regexReplace( String s, String regex, String replacement )
+    {
+        Pattern p = Pattern.compile( regex );
+        Matcher dsMatcher = p.matcher( s );
+        StringBuffer sb = new StringBuffer();
+        while ( dsMatcher.find() )
+        {
+            dsMatcher.appendReplacement( sb, replacement );
+        }
+        dsMatcher.appendTail( sb );
+
+        return sb.toString();
+    }
+    
 }
