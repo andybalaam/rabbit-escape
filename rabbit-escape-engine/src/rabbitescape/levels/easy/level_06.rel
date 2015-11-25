@@ -5,6 +5,7 @@
 :hint1=Can you join up your two groups of rabbits somehow?
 :hint2=Bash through the central barrier to get all your rabbits together.
 :hint3=Place a basher near the middle column then use two diggers to get to the exit.
+:solution.1=bash;(6,3);dig;(15,3);(14,5);50
 :num_rabbits=20
 :num_to_save=15
 :dig=2

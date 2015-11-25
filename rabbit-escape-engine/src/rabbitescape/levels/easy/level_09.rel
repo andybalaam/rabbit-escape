@@ -5,6 +5,7 @@
 :hint1=Once a rabbit is a climber, it stays a climber.
 :hint2=Make all your rabbits into climbers.
 :hint3=Place climbing tokens near the rabbits and watch them walk home!
+:solution.1=climb;(4,4);9;(4,4);(4,4);(4,4);(4,4);(4,4);20
 :num_rabbits=4
 :climb=20
 :num_to_save=4

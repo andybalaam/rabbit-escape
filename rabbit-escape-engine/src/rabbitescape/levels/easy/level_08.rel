@@ -5,6 +5,7 @@
 :hint1=If the rabbits fall more than 4 squares they don't land well.
 :hint2=If you need more time, pause and choose the digger, then unpause to place it.
 :hint3=Dig on the last or second-last square of the top platform.
+:solution.1=dig;(5,4);14
 :num_rabbits=1
 :dig=2
 :num_to_save=1
