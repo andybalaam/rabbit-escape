@@ -16,7 +16,6 @@ import rabbitescape.engine.solution.SolutionRunner;
 import rabbitescape.engine.solution.UntilAction;
 import rabbitescape.engine.solution.WaitAction;
 import rabbitescape.engine.solution.SolutionCommand;
-import rabbitescape.engine.textworld.InputExpansion;
 import rabbitescape.engine.util.Util;
 
 public class InputHandler
@@ -91,7 +90,7 @@ public class InputHandler
     /**
      * Note: changes the argument.
      */
-    private String expandAbbreviations( String input )
+    static String expandAbbreviations( String input )
     {
         if ( input.equals( "" ) )
         {

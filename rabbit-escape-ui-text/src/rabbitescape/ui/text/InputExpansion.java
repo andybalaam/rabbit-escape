@@ -1,4 +1,4 @@
-package rabbitescape.engine.textworld;
+package rabbitescape.ui.text;
 
 public class InputExpansion
 {
