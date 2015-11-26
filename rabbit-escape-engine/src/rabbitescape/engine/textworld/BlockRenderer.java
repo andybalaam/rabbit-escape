@@ -10,6 +10,10 @@ public class BlockRenderer
     {
         for ( Block block : blocks )
         {
+            if ( block.outOfBounds )
+            {
+                continue;
+            }
             chars.set( block.x, block.y, charForBlock( block ) );
         }
     }

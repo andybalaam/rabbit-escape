@@ -17,13 +17,34 @@ public class Block
     public final int y;
     public final Type type;
     public final int variant;
+    public final boolean outOfBounds;
 
+    /**
+     * Blocks that are added later (bridges built by rabbits, for example) 
+     * may be tested for bounds as they are added.
+     */
+    public Block( int x, int y, Type type, int variant, World w )
+    {
+        this.x = x;
+        this.y = y;
+        this.type = type;
+        this.variant = variant;
+        this.outOfBounds =    x <  0 
+                           || y <  0
+                           || x >= w.size.width
+                           || y >= w.size.height ;
+    }
+
+    /**
+     * Blocks may be created before the world. Bounds checking is done elsewhere
+     */
     public Block( int x, int y, Type type, int variant )
     {
         this.x = x;
         this.y = y;
         this.type = type;
         this.variant = variant;
+        this.outOfBounds = false ;
     }
 
     public Direction riseDir()
