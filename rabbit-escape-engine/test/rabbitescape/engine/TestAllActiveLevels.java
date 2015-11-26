@@ -22,61 +22,6 @@ import rabbitescape.engine.util.FileSystem;
 
 public class TestAllActiveLevels
 {
-    private static class IgnoreLevelsCompleted implements LevelsCompleted
-    {
-        @Override
-        public int highestLevelCompleted( String levelsDir )
-        {
-            return 0;
-        }
-
-        @Override
-        public void setCompletedLevel( String levelsDir, int levelNum )
-        {
-        }
-    }
-
-    private static class NothingExistsFileSystem implements FileSystem
-    {
-        @Override
-        public boolean exists( String fileName )
-        {
-            return false;
-        }
-
-        @Override
-        public String[] readLines( String fileName )
-            throws FileNotFoundException, IOException
-        {
-            throw new UnsupportedOperationException();
-        }
-
-        @Override
-        public String read( String fileName )
-            throws FileNotFoundException, IOException
-        {
-            throw new UnsupportedOperationException();
-        }
-
-        @Override
-        public void write( String fileName, String contents ) throws IOException
-        {
-            throw new UnsupportedOperationException();
-        }
-
-        @Override
-        public String parent( String filePath )
-        {
-            throw new UnsupportedOperationException();
-        }
-
-        @Override
-        public void mkdirs( String dirPath )
-        {
-            throw new UnsupportedOperationException();
-        }
-    }
-
     @Test
     public void All_levels_load_and_round_trip()
     {
@@ -146,6 +91,61 @@ public class TestAllActiveLevels
             e.solutionId = solutionId;
             e.level = worldFileName;
             throw e;
+        }
+    }
+
+    private static class IgnoreLevelsCompleted implements LevelsCompleted
+    {
+        @Override
+        public int highestLevelCompleted( String levelsDir )
+        {
+            return 0;
+        }
+
+        @Override
+        public void setCompletedLevel( String levelsDir, int levelNum )
+        {
+        }
+    }
+
+    private static class NothingExistsFileSystem implements FileSystem
+    {
+        @Override
+        public boolean exists( String fileName )
+        {
+            return false;
+        }
+
+        @Override
+        public String[] readLines( String fileName )
+            throws FileNotFoundException, IOException
+        {
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
+        public String read( String fileName )
+            throws FileNotFoundException, IOException
+        {
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
+        public void write( String fileName, String contents ) throws IOException
+        {
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
+        public String parent( String filePath )
+        {
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
+        public void mkdirs( String dirPath )
+        {
+            throw new UnsupportedOperationException();
         }
     }
 }
