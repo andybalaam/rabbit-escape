@@ -264,7 +264,7 @@ test: compile
 	# Work around what looks like an Ant 1.9 bug by including the classpath here
 	CLASSPATH=lib/org.hamcrest.core_1.3.0.jar:lib/junit.jar ant test
 
-slowtest: compile
+slowtest: test
 	./slowtest/hard-1.expect | grep 'You won!'
 
 # Android
