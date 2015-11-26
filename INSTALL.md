@@ -108,3 +108,7 @@ Then build it with:
 
     make doxygen
 
+More Info
+---------
+
+There is more developer documentation at https://github.com/andybalaam/rabbit-escape/wiki
