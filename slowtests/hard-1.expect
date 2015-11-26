@@ -1,54 +1,32 @@
+# This file is written in a special dialect of expect
+# that adds a 'demand' command that is an expect that
+# fails when it times out.
+#
+# Details are in the file "slowtests/slowtest"
+
 set timeout 2
 
 spawn java -cp rabbit-escape-engine/bin/:rabbit-escape-render/bin/:rabbit-escape-ui-text/bin/:rabbit-escape-ui-swing/bin/ rabbitescape.ui.text.TextMain
 
 # Navigate the menus to level hard 1
 
-expect {
-    timeout {exit 101}
-    "1. Start Game"
-}
-
-expect {
-    timeout {exit 102}
-    "Enter a number (1-4), or 0 to go back: "
-}
+demand "1. Start Game"
+demand "Enter a number (1-4), or 0 to go back: "
 
 send "1\r"
 
-expect {
-    timeout {exit 103}
-    "3. Hard"
-}
-
-expect {
-    timeout {exit 104}
-    "or 0 to go back: "
-}
+demand "3. Hard"
+demand "or 0 to go back: "
 
 send "3\r"
 
-expect {
-    timeout {exit 105}
-    "1. Level 1"
-}
-
-expect {
-    timeout {exit 106}
-    "or 0 to go back: "
-}
+demand "1. Level 1"
+demand "or 0 to go back: "
 
 send "1\r"
 
-expect {
-    timeout {exit 107}
-    "bridge: 100"
-}
-
-expect {
-    timeout {exit 108}
-    ">"
-}
+demand "bridge: 100"
+demand ">"
 
 # Play a solution move by move
 
@@ -70,45 +48,21 @@ send "14\r"
 
 # Exit by choosing "back" each time
 
-expect {
-    timeout {exit 109}
-    "You won!"
-}
-
-expect {
-    timeout {exit 110}
-    "or 0 to go back: "
-}
+demand "You won!"
+demand "or 0 to go back: "
 
 send "0\r"
 
-expect {
-    timeout {exit 111}
-    "Choose a set of levels"
-}
-
-expect {
-    timeout {exit 112}
-    "or 0 to go back: "
-}
+demand "Choose a set of levels"
+demand "or 0 to go back: "
 
 send "0\r"
 
-expect {
-    timeout {exit 113}
-    "Welcome to Rabbit Escape"
-}
-
-expect {
-    timeout {exit 114}
-    "or 0 to go back: "
-}
+demand "Welcome to Rabbit Escape"
+demand "or 0 to go back: "
 
 send "0\r"
 
 # java exits and closes stream
-expect {
-    timeout {exit 115}
-    eof
-}
+demand eof
 
