@@ -260,9 +260,14 @@ runlevel: compile
 runat: compile
 	java -cp $(CLASSPATH) rabbitescape.ui.swing.AnimationTester
 
+JAVA_DIRS = rabbit-escape-engine rabbit-escape-render rabbit-escape-ui-text rabbit-escape-ui-swing
+TEST_FILES = $(shell find ${JAVA_DIRS} -name "Test*.java")
+TEST_CLASSES = $(shell echo ${TEST_FILES} | sed 's/[-a-z]*\/[a-z]*\/\([^ ]*\)\.java/\1/g' | sed 's/\//./g') 
+
 test: compile
 	# Work around what looks like an Ant 1.9 bug by including the classpath here
-	CLASSPATH=lib/org.hamcrest.core_1.3.0.jar:lib/junit.jar ant test
+	java -cp ${CLASSPATH}:lib/org.hamcrest.core_1.3.0.jar:lib/junit.jar org.junit.runner.JUnitCore ${TEST_CLASSES}
+
 
 slowtest: test
 	./slowtest/hard-1.expect | grep 'You won!'
