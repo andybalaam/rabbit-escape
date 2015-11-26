@@ -46,11 +46,24 @@ public class TestAllActiveLevels
             @Override public void run( World world, LevelMenuItem lev )
         {
 
+            boolean solved = false;
             int i = 1;
             for ( String s : world.solutions )
             {
-                runSolutionString( world, lev.fileName, i, s );
+                boolean thisS = runSolutionString( world, lev.fileName, i, s );
+                if ( thisS )
+                {
+                    solved = true;
+                }
                 ++i;
+            }
+
+            if ( !solved )
+            {
+                //TODO throw new AssertionError(
+                //    "Level " + lev.fileName + " has no solution!" );
+                System.err.println(
+                    "WARNING: Level " + lev.fileName + " has no solution!" );
             }
 
         } } );
@@ -77,7 +90,7 @@ public class TestAllActiveLevels
         }
     }
 
-    private void runSolutionString(
+    private boolean runSolutionString(
         World world,
         String worldFileName,
         int solutionId,
@@ -87,7 +100,7 @@ public class TestAllActiveLevels
         Solution solution = SolutionParser.parse( solutionString );
         try
         {
-            SolutionRunner.runSolution( solution, world );
+            return SolutionRunner.runSolution( solution, world );
         }
         catch ( SolutionExceptions.ProblemRunningSolution e )
         {

@@ -15,13 +15,16 @@ import rabbitescape.engine.util.Dimension;
 
 public class SolutionRunner
 {
-    public static void runSolution( Solution solution, World world )
+    /**
+     * @return true if the supplied solution solved the level
+     */
+    public static boolean runSolution( Solution solution, World world )
         throws SolutionExceptions.ProblemRunningSolution
     {
         SandboxGame sandboxGame = new SandboxGame( world );
         SolutionInterpreter interpreter = new SolutionInterpreter( solution );
 
-        runSolutionInSandbox( interpreter, sandboxGame );
+        return runSolutionInSandbox( interpreter, sandboxGame );
     }
 
     public static void runSingleCommand(
@@ -33,7 +36,7 @@ public class SolutionRunner
         runSolutionInSandbox( interpreter, sandboxGame );
     }
 
-    private static void runSolutionInSandbox(
+    private static boolean runSolutionInSandbox(
         SolutionInterpreter interpreter,
         SandboxGame sandboxGame
     )
@@ -62,6 +65,9 @@ public class SolutionRunner
                 throw e;
             }
         }
+
+        return sandboxGame.getWorld().completionState().equals(
+            CompletionState.WON );
     }
 
     private static void runTimeStep(

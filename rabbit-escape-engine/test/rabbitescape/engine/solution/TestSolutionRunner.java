@@ -288,6 +288,74 @@ public class TestSolutionRunner
     }
 
     @Test
+    public void Real_level_with_WON_at_end_works()
+    {
+        World world = TextWorldManip.createWorld(
+            ":num_rabbits=1",
+            ":num_to_save=1",
+            "Q    ",
+            "    O",
+            "#####"
+        );
+
+        boolean solved = SolutionRunner.runSolution(
+            SolutionParser.parse( "6;WON" ), world );
+
+        assertThat( solved, is( true ) );
+    }
+
+    @Test
+    public void Real_level_with_no_assert_but_we_won_works()
+    {
+        World world = TextWorldManip.createWorld(
+            ":num_rabbits=1",
+            ":num_to_save=1",
+            "Q    ",
+            "    O",
+            "#####"
+        );
+
+        boolean solved = SolutionRunner.runSolution(
+            SolutionParser.parse( "6" ), world );
+
+        assertThat( solved, is( true ) );
+    }
+
+    @Test
+    public void Real_level_with_LOST_at_end_works()
+    {
+        World world = TextWorldManip.createWorld(
+            ":num_rabbits=1",
+            ":num_to_save=1",
+            "Q    ",
+            "     ",
+            "#####"
+        );
+
+        boolean solved = SolutionRunner.runSolution(
+            SolutionParser.parse( "7;LOST" ), world );
+
+        assertThat( solved, is( false ) );
+    }
+
+    @Test
+    public void Real_level_with_no_assert_and_still_running_did_not_solve()
+    {
+        World world = TextWorldManip.createWorld(
+            ":num_rabbits=1",
+            ":num_to_save=1",
+            "Q    ",
+            "     ",
+            "#####"
+        );
+
+        boolean solved = SolutionRunner.runSolution(
+            SolutionParser.parse( "2;RUNNING" ), world );
+
+        assertThat( solved, is( false ) );
+    }
+
+    @Test
     public void Real_level_with_until_WON_works()
     {
         World world = TextWorldManip.createWorld(
@@ -298,8 +366,10 @@ public class TestSolutionRunner
             "#####"
         );
 
-        SolutionRunner.runSolution(
+        boolean solved = SolutionRunner.runSolution(
             SolutionParser.parse( "until:WON" ), world );
+
+        assertThat( solved, is( true ) );
     }
 
     @Test
@@ -313,8 +383,10 @@ public class TestSolutionRunner
             "#####"
         );
 
-        SolutionRunner.runSolution(
+        boolean solved = SolutionRunner.runSolution(
             SolutionParser.parse( "until:LOST" ), world );
+
+        assertThat( solved, is( false ) );
     }
 
     // --
