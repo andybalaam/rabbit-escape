@@ -199,22 +199,34 @@ no-awt-in-engine:
 	! find rabbit-escape-engine/src -name "*.java" -print0 | xargs -0 grep 'java\.awt'
 	! find rabbit-escape-render/src -name "*.java" -print0 | xargs -0 grep 'java\.awt'
 
+
+
+JAVA_DIRS := rabbit-escape-engine rabbit-escape-render rabbit-escape-ui-swing rabbit-escape-ui-text
+JAVA_FILES := $(shell find ${JAVA_DIRS} -name "*.java")
+CLASSES_DIR := bin/classes
+CLASSES_MARKER := bin/classes.marker
+
+${CLASSES_MARKER}: ${JAVA_FILES}
+	mkdir -p ${CLASSES_DIR}
+	javac -d ${CLASSES_DIR} -cp 'lib/org.hamcrest.core_1.3.0.jar:lib/junit.jar' $?
+	touch $@
+
+javac: bin/classes.marker
+
 compile-noui: \
 		no-make-warnings \
 		versioncheck \
 		no-awt-in-engine \
 		animations \
-		levels
-	ant compile
+		levels \
+		javac
 
 compile: compile-noui images sounds music
 
 clean: no-make-warnings
 	- rm -r \
-		rabbit-escape-engine/bin/* \
-		rabbit-escape-render/bin/* \
-		rabbit-escape-ui-text/bin/* \
-		rabbit-escape-ui-swing/bin/*
+		${CLASSES_DIR} \
+		${CLASSES_MARKER}
 	find ./ -name "ls.txt" -delete
 	- rm -r dist
 
