@@ -1,8 +1,3 @@
-#!/usr/bin/expect
-
-# Prerequisites:
-# sudo apt-get install expect
-
 set timeout 2
 
 spawn java -cp rabbit-escape-engine/bin/:rabbit-escape-render/bin/:rabbit-escape-ui-text/bin/:rabbit-escape-ui-swing/bin/ rabbitescape.ui.text.TextMain

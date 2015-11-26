@@ -1,8 +1,16 @@
 #!/bin/bash
 
+# Prerequisites:
+# sudo apt-get install expect
+
 set -e
 set -u
 set -x
 
-./slowtests/hard-1.expect
+for E in slowtests/*.expect; do
+{
+    expect $E
+}; done
+
+
 
