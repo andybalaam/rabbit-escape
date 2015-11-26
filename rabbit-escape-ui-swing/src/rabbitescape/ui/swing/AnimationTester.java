@@ -107,8 +107,8 @@ public class AnimationTester extends JFrame
 
     private static final String[] defaultBlockNames = new String[] {
         NONE, NONE, NONE,
-        "land-rising-left", NONE, "bridge-rising-right",
-        "land-block", "land-block", "land-block",
+        "land_rising_left_1", NONE, "bridge_rising_right",
+        "land_block_1", "land_block_2", "land_block_3",
     };
 
     private class Listener implements
