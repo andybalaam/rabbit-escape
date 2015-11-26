@@ -265,7 +265,7 @@ test: compile
 	CLASSPATH=lib/org.hamcrest.core_1.3.0.jar:lib/junit.jar ant test
 
 slowtest: compile
-	./slowtest/hard-1.expect | grep WON
+	./slowtest/hard-1.expect | grep 'You won!'
 
 # Android
 # -------

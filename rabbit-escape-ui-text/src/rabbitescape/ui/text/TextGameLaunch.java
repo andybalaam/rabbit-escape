@@ -75,18 +75,13 @@ public class TextGameLaunch implements GameLaunch
 
             checkWon();
         }
-        printSolution( inputHandler.solution(), true, true );
+        printSolution( inputHandler.solution(), true );
     }
 
-    private void printSolution( 
-        String solution, boolean withObfuscation, boolean assertCompletionState )
+    private void printSolution( String solution, boolean withObfuscation )
     {
-        String stateStr = assertCompletionState 
-                        ? ";" + sandboxGame.getWorld().completionState()
-                        : "" ;
-        
-        terminal.out.println( t( ":solution.1=${solution}" + stateStr,
-                                 newMap( "solution", solution ) ) );
+        terminal.out.println(
+            t( ":solution.1=${solution}", newMap( "solution", solution ) ) );
 
         if ( withObfuscation )
         {
@@ -109,7 +104,7 @@ public class TextGameLaunch implements GameLaunch
 
     private void printWorld( InputHandler inputHandler )
     {
-        printSolution( inputHandler.solution(), false, false );
+        printSolution( inputHandler.solution(), false );
         printWorldImpl( false );
         printState();
     }
