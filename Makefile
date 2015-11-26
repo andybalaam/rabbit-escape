@@ -199,8 +199,15 @@ no-awt-in-engine:
 	! find rabbit-escape-engine/src -name "*.java" -print0 | xargs -0 grep 'java\.awt'
 	! find rabbit-escape-render/src -name "*.java" -print0 | xargs -0 grep 'java\.awt'
 
-compile: no-make-warnings images sounds music animations levels versioncheck no-awt-in-engine
+compile-noui: \
+		no-make-warnings \
+		versioncheck \
+		no-awt-in-engine \
+		animations \
+		levels
 	ant compile
+
+compile: compile-noui images sounds music
 
 clean: no-make-warnings
 	- rm -r \
@@ -241,7 +248,7 @@ run: compile
 runinteractive: compile
 	java -cp $(CLASSPATH) rabbitescape.ui.text.TextMain test/level_01.rel --interactive
 
-runmenu: compile
+runmenu: compile-noui
 	java -cp $(CLASSPATH) rabbitescape.ui.text.TextMain
 
 rungui: compile
@@ -259,7 +266,7 @@ test: compile
 
 slowtest: compile
 	./slowtest/hard-1.expect | grep WON
-	
+
 # Android
 # -------
 
