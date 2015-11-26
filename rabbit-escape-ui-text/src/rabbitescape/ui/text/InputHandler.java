@@ -7,6 +7,7 @@ import java.util.List;
 import static rabbitescape.engine.i18n.Translation.*;
 import rabbitescape.engine.err.ExceptionTranslation;
 import rabbitescape.engine.err.RabbitEscapeException;
+import rabbitescape.engine.solution.AssertStateAction;
 import rabbitescape.engine.solution.CommandAction;
 import rabbitescape.engine.solution.SandboxGame;
 import rabbitescape.engine.solution.Solution;
@@ -50,28 +51,38 @@ public class InputHandler
 
         try
         {
-            SolutionCommand command = SolutionParser.parseCommand( input );
+            Solution partialSolution = SolutionParser.parse( input );
 
-            if ( command.actions.length == 0 )
+            SolutionRunner.runPartialSolution( partialSolution, sandboxGame );
+
+            if ( partialSolution.commands.length == 0 )
             {
-                return fail( t( "Unexpected problem: no Action" ) );
+                return fail( t( "Unexpected problem: no SolutionCommand" ) );
             }
 
-            SolutionRunner.runSingleCommand( command, sandboxGame );
+            SolutionCommand command =
+                partialSolution.commands[ partialSolution.commands.length - 1 ];
 
             // TODO: until commands step past the last time step, so we
             //       avoid stepping here.
-            if ( ! (
-                   command.actions.length == 1
-                && command.actions[0] instanceof UntilAction
-            ) )
+            if (
+                ! (
+                    (
+                           command.actions.length == 1
+                        && (
+                               command.actions[0] instanceof UntilAction
+                            || command.actions[0] instanceof AssertStateAction
+                        )
+                    )
+                )
+            )
             {
                 // TODO: it's weird we have to do the last time step
                 //       outside of runSingleCommand
                 sandboxGame.getWorld().step();
             }
 
-            append( command );
+            appendAll( partialSolution );
         }
         catch ( SolutionExceptions.ProblemRunningSolution e )
         {
@@ -110,6 +121,13 @@ public class InputHandler
         return input;
     }
 
+    private void appendAll( Solution solution )
+    {
+        for ( SolutionCommand command : solution.commands )
+        {
+            append( command );
+        }
+    }
 
     private void append( SolutionCommand newStep )
     {
@@ -159,7 +177,7 @@ public class InputHandler
 
     private boolean help()
     {
-        String msg = 
+        String msg =
             "\n" +
             "Press return to move forward a time step.\n" +
             "Type 'exit' to stop.\n" +
@@ -172,9 +190,10 @@ public class InputHandler
         {
             msg = msg + e + "\n";
         }
-        msg = msg + 
-            "Brackets may be omitted when placing tokens: '2,3'.\n";
-                
+        msg +=
+            "Brackets may be omitted when placing tokens: '2,3'.\n" +
+            "Multiple commands may be joined by ';'.\n";
+
         terminal.out.println( t( msg ) );
 
         return false;

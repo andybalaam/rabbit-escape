@@ -27,11 +27,11 @@ public class SolutionRunner
         return runSolutionInSandbox( interpreter, sandboxGame );
     }
 
-    public static void runSingleCommand(
-        SolutionCommand command, final SandboxGame sandboxGame )
+    public static void runPartialSolution(
+        Solution solution, final SandboxGame sandboxGame )
     {
         SolutionInterpreter interpreter = new SolutionInterpreter(
-            new Solution( command ), false );
+            solution, false );
 
         runSolutionInSandbox( interpreter, sandboxGame );
     }
