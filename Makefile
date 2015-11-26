@@ -265,7 +265,6 @@ TEST_FILES = $(shell find ${JAVA_DIRS} -name "Test*.java")
 TEST_CLASSES = $(shell echo ${TEST_FILES} | sed 's/[-a-z]*\/[a-z]*\/\([^ ]*\)\.java/\1/g' | sed 's/\//./g') 
 
 test: compile
-	# Work around what looks like an Ant 1.9 bug by including the classpath here
 	java -cp ${CLASSPATH}:lib/org.hamcrest.core_1.3.0.jar:lib/junit.jar org.junit.runner.JUnitCore ${TEST_CLASSES}
 
 
