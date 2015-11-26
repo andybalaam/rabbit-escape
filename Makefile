@@ -159,6 +159,8 @@ dist/rabbit-escape-generic.jar: compile
 		jar -cf ../../dist/rabbit-escape-generic.jar `find ./`
 	cd rabbit-escape-render/bin; \
 		jar -uf ../../dist/rabbit-escape-generic.jar `find ./`
+	chmod ug+rw $@
+	chmod o+r $@
 
 dist/rabbit-escape-${VERSION}.jar: compile
 	mkdir -p dist
@@ -172,6 +174,8 @@ dist/rabbit-escape-${VERSION}.jar: compile
 	cd rabbit-escape-ui-swing/bin; \
 		jar -uf ../../dist/rabbit-escape-${VERSION}.jar `find ./`
 	jar -ufm dist/rabbit-escape-${VERSION}.jar MANIFEST.MF
+	chmod ug+rwx $@
+	chmod o+r $@
 
 images: no-make-warnings $(SVGIMAGES32) $(PNGIMAGES32) $(SVGIMAGES64) $(PNGIMAGES64) $(SVGIMAGES128) $(PNGIMAGES128)
 
