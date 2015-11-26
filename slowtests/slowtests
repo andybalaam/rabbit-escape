@@ -1,0 +1,4 @@
+#!/bin/bash
+
+./slowtests/hard-1.expect | grep 'You won!'
+
