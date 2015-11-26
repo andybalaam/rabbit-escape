@@ -1,11 +1,12 @@
 package rabbitescape.engine.logic;
 
+import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.*;
 import static rabbitescape.engine.textworld.TextWorldManip.*;
 import static rabbitescape.engine.util.WorldAssertions.*;
 import static rabbitescape.engine.Tools.*;
 
-import org.junit.*;
+import org.junit.Test;
 
 import rabbitescape.engine.Direction;
 import rabbitescape.engine.Rabbit;
@@ -1555,5 +1556,45 @@ public class TestBridging
                 "####"
             )
         );
+    }
+    
+    @Test
+    public void Bridge_out_of_bounds()
+    {
+        World world = createWorld(
+            "       *",
+            "*     ##",
+            "###  ###",
+            "        ",
+            "ij    ri",
+            "###  ###",
+            "        ",
+            "        ",
+            " ij  ri ",
+            "###  ###",
+            ":*=ij",
+            ":*=ir"
+        );
+
+        // The test will find out of 
+        // bounds exceptions from rendering
+        // bridges outside the world.
+        assertWorldEvolvesLike(
+            world,
+            10,
+            new String[] {
+                "  (   ) ",
+                " (    ##",
+                "###  ###",
+                "        ",
+                "        ",
+                "###  ###",
+                "        ",
+                "        ",
+                ")      (",
+                "###  ###",
+            });
+
+        assertThat( world.num_killed, equalTo ( 6 ) );
     }
 }

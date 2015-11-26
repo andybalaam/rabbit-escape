@@ -145,8 +145,12 @@ public class WorldAssertions
             world.step();
         }
 
+        String[] steppedWorld = renderCompleteWorld( world, false );
+        
+        assertThat( steppedWorld.length, equalTo( finalWorld.length ) );
+            
         assertThat(
-            renderCompleteWorld( world, false ),
+            steppedWorld,
             equalTo( finalWorld )
             );
     }
