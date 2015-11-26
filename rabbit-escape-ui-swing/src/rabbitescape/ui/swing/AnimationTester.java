@@ -431,7 +431,11 @@ public class AnimationTester extends JFrame
 
         for ( String blockName : blockNames )
         {
-            if ( !blockName.equals( NONE ) )
+            if ( blockName.equals( NONE ) )
+            {
+                ret.add( null );
+            }
+            else
             {
                 try
                 {
