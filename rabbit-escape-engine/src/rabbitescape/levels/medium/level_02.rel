@@ -5,6 +5,7 @@
 :hint1=Bridge in exactly the right places.
 :hint2=You don't need the dig token.
 :hint3=Place bridge tokens: one square to the right of the entrance, immediately after the first wall, two away from the second wall, and two away from the third wall.
+:solution.1=bridge;(4,8);(6,8);(12,8);(19,8);41;(22,6);23
 :num_rabbits=3
 :num_to_save=3
 :rabbit_delay=2
