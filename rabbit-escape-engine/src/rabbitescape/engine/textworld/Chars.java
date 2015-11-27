@@ -56,11 +56,14 @@ public class Chars
     private final boolean starsMode;
     private final char[][] impl;
     private final Map<Point, String> stars;
+    private final int worldWidth, worldHeight;
 
     public Chars( World world, boolean starsMode )
     {
         this.starsMode = starsMode;
-        this.impl = new char[world.size.height][world.size.width];
+        this.worldWidth = world.size.width;
+        this.worldHeight = world.size.height;
+        this.impl = new char[worldHeight][worldWidth];
         this.stars = new TreeMap<Point, String>();
 
         for( int i = 0; i < world.size.height; ++i )
@@ -71,6 +74,15 @@ public class Chars
 
     public void set( int x, int y, char ch )
     {
+        if ( // Rabbits may try to build bridges out of bounds
+                x <  0
+             || y <  0
+             || x >= worldWidth
+             || y >= worldHeight
+           )
+        {
+            return;
+        }
         set( x, y, ch, null );
     }
 
