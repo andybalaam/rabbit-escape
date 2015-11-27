@@ -5,6 +5,7 @@
 :hint1=You only need to save one rabbit. The other one will help.
 :hint2=How can you make the digging rabbit stop at the right time?
 :hint3=Wait until the digging rabbit has dug the entire wall down to floor level, then drop an explode token on it.
+:solution.1=explode;20;(8,10);21
 :num_rabbits=2
 :num_to_save=1
 :explode=1
