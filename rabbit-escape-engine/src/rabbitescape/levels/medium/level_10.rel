@@ -5,6 +5,8 @@
 :hint1=Climb but don't get stuck.
 :hint2=Towards the end, go over the top and get down somehow.
 :hint3=Place a bridger under the entrance going right. Climb over and bridge from the block to the right of the first tower. Bridge from the right of the second tower onto the wall, and dig down from the top of the wall.
+% This is not quite the hinted solution
+:solution.1=bridge;(1,7);6;bash;;(4,5);;climb;(6,4);;bridge;(10,5);5;bash;(19,7);22
 :num_rabbits=1
 :num_to_save=1
 :bridge=4
