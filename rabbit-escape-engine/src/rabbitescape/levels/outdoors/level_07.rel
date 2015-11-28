@@ -4,6 +4,7 @@
 :hint1=The rightmost rabbit does not have far to fall.
 :hint2=Bridge up to the left rabbit. Then the left rabbit can bash out.
 :hint3=From the right rabbit's cell wall bridge up to the middle rabbit's cell.
+:solution.1=dig;(22,3);bridge;(12,7);32;bash;(7,4);bridge;(9,4);12;bash;(13,2);11;dig;(11,3);4;until:WON
 :description=Who should escape first?
 :num_rabbits=3
 :num_to_save=3
