@@ -4,6 +4,7 @@
 :hint1=Put a blocker next to the chimney.
 :hint2=Bridge up to the wall to save the bunnies falling from the roof.
 :hint3=Bash through the house's walls.
+:solution.1=bridge&(1,13);block;(15,0);bridge;(2,13);(2,13);3;(4,11);(4,11);bash;2;(6,9);2;block;(1,13);11;bash;;(13,9);(19,9);30;explode;(15,0);(1,13);
 :description=Save the chimney bunnies!
 :num_rabbits=8
 :num_to_save=6
