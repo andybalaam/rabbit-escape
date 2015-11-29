@@ -4,6 +4,7 @@
 :hint1=Bridge the gap.
 :hint2=Build 2 bridges simultaneously.
 :hint3=Drop the bridge tokens as soon as the level starts. Use pause.
+:solution.1=bridge;(8,9);(15,9);bash;13;(6,9);2;dig;(4,9);31
 :description=Don't fall down
 :num_rabbits=6
 :num_to_save=6

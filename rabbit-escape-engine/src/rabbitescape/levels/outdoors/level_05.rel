@@ -4,6 +4,7 @@
 :hint1=Use a bridge to turn the rabbits.
 :hint2=Position the bridge to lead up to the edge of a platform.
 :hint3=Bridge up to the next platform and dig.
+:solution.1=bridge;(13,7);(10,7);dig;(5,4);20;bridge;(10,7);45;WON
 :description=It's a long way down.
 :num_rabbits=5
 :num_to_save=5
