@@ -5,6 +5,7 @@
 :hint1=Avoid walking on the mines.
 :hint2=Bridge over them.
 :hint3=Place a bridge token on each single block. You can do all of them at the beginning if you like.
+:solution.1=bridge;(6,6);(10,6);(14,6);(18,6);52
 :num_rabbits=1
 :num_to_save=1
 :bridge=4

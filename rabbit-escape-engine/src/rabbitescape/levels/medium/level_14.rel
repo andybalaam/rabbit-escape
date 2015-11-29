@@ -5,6 +5,7 @@
 :hint1=Bash with consideration, or run out of bash tokens.
 :hint2=All rabbits need to climb from the start.
 :hint3=Bash out the first block next to the ceiling then bash out two more blocks under the last block attached to the ceiling.
+:solution.1=climb;(1,3);bash;(3,1);(8,2);(9,3);climb;(1,3);(1,3);22
 :num_rabbits=3
 :num_to_save=3
 :climb=3

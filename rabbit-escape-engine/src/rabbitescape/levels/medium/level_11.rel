@@ -5,6 +5,7 @@
 :hint1=The top rabbit must dig.
 :hint2=There is only one safe place to start digging.
 :hint3=The top rabbit must dig down the central wall. Stop digging at the slopes using a bash token. If necessary, the other rabbit can build a bridge to hop over the remnant of the wall.
+:solution.1=dig;(8,2);bash;(7,10);23
 :num_rabbits=2
 :num_to_save=2
 :dig=1

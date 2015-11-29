@@ -5,6 +5,7 @@
 :hint1=Go over the top.
 :hint2=Make sure climbers don't climb walls that are too high.
 :hint3=Bridge rightwards to the wall and climb all the way up. Bash through the one-block wall, and dig one square to the left of the right-hand wall.
+:solution.1=bridge;(2,14);2;climb;4;(5,12);2;bash;(18,3);17;dig;4;(24,3);18
 :num_rabbits=1
 :num_to_save=1
 :dig=1
