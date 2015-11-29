@@ -5,7 +5,7 @@ import java.util.Vector;
 public class LookupItems2D <T extends LookupItem2D>
 {
 
-    private Vector<T> items;
+    private final Vector<T> items;
     public final Position position;
     
     public LookupItems2D( final Position position )

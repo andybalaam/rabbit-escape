@@ -6,7 +6,7 @@ import java.util.Vector;
 public class LookupTable2D <T extends LookupItem2D>
 {
     // Arrays of generics not allowed, use Vector instead
-    private Vector<Vector<LookupItems2D<T>>> table;
+    private final Vector<Vector<LookupItems2D<T>>> table;
     
     public LookupTable2D( List<T> list, Dimension size )
     {
