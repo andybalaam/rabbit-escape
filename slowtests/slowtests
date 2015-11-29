@@ -30,5 +30,8 @@ for E in slowtests/*.expect; do
     expect_with_prejudice $E
 }; done
 
+echo
+echo "All slow tests passed."
+echo
 
 
