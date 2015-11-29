@@ -225,7 +225,42 @@ public class World
         return chain( rabbits, things );
     }
 
+    private long totalBlockAtTimeNanoSec = 0, timeForLastFewNanoSec = 0;
+    private long numBlockAtCalls = 0, numLastFew = 0, totLastFew = 2000;
+    
     public Block getBlockAt( int x, int y )
+    {
+        long startTimeNanoSec = System.nanoTime();
+        
+        Block b = getBlockAtTimed( x, y );
+        
+        long endTimeNanoSec = System.nanoTime();
+        long timeTakenNanoSec = endTimeNanoSec - startTimeNanoSec;
+        totalBlockAtTimeNanoSec += timeTakenNanoSec;
+        numBlockAtCalls++;
+        timeForLastFewNanoSec += timeTakenNanoSec;
+        numLastFew++;
+        
+        
+        
+        if ( numLastFew == totLastFew )
+        {
+            System.out.printf( 
+                "%d  getBlockAt:%dns  mean time:%dns  mean over last %d:%dns\n", 
+                numBlockAtCalls, 
+                timeTakenNanoSec, 
+                totalBlockAtTimeNanoSec / numBlockAtCalls,
+                numLastFew,
+                timeForLastFewNanoSec / numLastFew
+            );
+            numLastFew = 0;
+            timeForLastFewNanoSec = 0;
+        }
+        
+        return b;
+    }
+    
+    public Block getBlockAtTimed( int x, int y )
     {
         // TODO: faster
         for ( Block block : blocks )
