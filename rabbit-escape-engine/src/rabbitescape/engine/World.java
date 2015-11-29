@@ -231,6 +231,11 @@ public class World
 
     public Block getBlockAt( int x, int y)
     {
+        if ( x <  0          || y <  0           ||
+             x >= size.width || y >= size.height  ) 
+        {
+            return null;
+        }
         return blockTable.getItemAt( x, y );
     }
 
