@@ -23,7 +23,7 @@ Prerequisites
 You need Java, Git, Make, Sox and Inkscape to be able to build the
 images, sounds and code.  On Ubuntu, Debian and similar:
 
-    sudo apt-get install git make openjdk-7-jdk ant sox inkscape
+    sudo apt-get install git make openjdk-7-jdk ant sox inkscape expect
 
 Run tests
 ---------
