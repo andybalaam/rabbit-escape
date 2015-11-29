@@ -8,6 +8,7 @@ import java.util.Map;
 
 import rabbitescape.engine.err.RabbitEscapeException;
 import rabbitescape.engine.util.Dimension;
+import rabbitescape.engine.util.LookupTable2D;
 
 public class World
 {
@@ -97,6 +98,7 @@ public class World
 
     public final Dimension size;
     public final List<Block> blocks;
+    private final LookupTable2D<Block> blockTable;
     public final List<Rabbit> rabbits;
     public final List<Thing> things;
     public final Map<Token.Type, Integer> abilities;
@@ -167,6 +169,8 @@ public class World
         this.num_killed = num_killed;
         this.num_waiting = num_waiting;
         this.paused = paused;
+        
+        this.blockTable = new LookupTable2D<Block>( blocks, size );
 
         this.changes = new WorldChanges( this, statsListener );
 
@@ -225,52 +229,9 @@ public class World
         return chain( rabbits, things );
     }
 
-    private long totalBlockAtTimeNanoSec = 0, timeForLastFewNanoSec = 0;
-    private long numBlockAtCalls = 0, numLastFew = 0, totLastFew = 2000;
-    
-    public Block getBlockAt( int x, int y )
+    public Block getBlockAt( int x, int y)
     {
-        long startTimeNanoSec = System.nanoTime();
-        
-        Block b = getBlockAtTimed( x, y );
-        
-        long endTimeNanoSec = System.nanoTime();
-        long timeTakenNanoSec = endTimeNanoSec - startTimeNanoSec;
-        totalBlockAtTimeNanoSec += timeTakenNanoSec;
-        numBlockAtCalls++;
-        timeForLastFewNanoSec += timeTakenNanoSec;
-        numLastFew++;
-        
-        
-        
-        if ( numLastFew == totLastFew )
-        {
-            System.out.printf( 
-                "%d  getBlockAt:%dns  mean time:%dns  mean over last %d:%dns\n", 
-                numBlockAtCalls, 
-                timeTakenNanoSec, 
-                totalBlockAtTimeNanoSec / numBlockAtCalls,
-                numLastFew,
-                timeForLastFewNanoSec / numLastFew
-            );
-            numLastFew = 0;
-            timeForLastFewNanoSec = 0;
-        }
-        
-        return b;
-    }
-    
-    public Block getBlockAtTimed( int x, int y )
-    {
-        // TODO: faster
-        for ( Block block : blocks )
-        {
-            if ( block.x == x && block.y == y )
-            {
-                return block;
-            }
-        }
-        return null;
+        return blockTable.getItemAt( x, y );
     }
 
     public CompletionState completionState()
