@@ -55,7 +55,7 @@ public class SpriteAnimator<T extends Bitmap>
     {
         List<Sprite<T>> ret = new ArrayList<>();
 
-        for ( Block block : world.blocks )
+        for ( Block block : world.blockTable )
         {
             addBlock( block, ret );
         }

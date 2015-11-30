@@ -19,6 +19,11 @@ public class LookupItems2D <T extends LookupItem2D>
         items.add( item );
     }
     
+    public void remove( T item)
+    {
+        items.remove( item );
+    }
+    
 
     public T getItem( int index )
     {
@@ -28,4 +33,5 @@ public class LookupItems2D <T extends LookupItem2D>
         }
         return null;
     }
+
 }

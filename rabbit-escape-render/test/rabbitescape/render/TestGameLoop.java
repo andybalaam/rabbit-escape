@@ -133,7 +133,7 @@ public class TestGameLoop
         {
             super(
                 w.size,
-                w.blocks,
+                w.blockTable.getListCopy(),
                 w.rabbits,
                 w.things,
                 w.abilities,

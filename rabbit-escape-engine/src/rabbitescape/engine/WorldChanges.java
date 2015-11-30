@@ -56,13 +56,13 @@ public class WorldChanges
         }
         world.rabbits.addAll( rabbitsToEnter );
         world.things.addAll( tokensToAdd );
-        world.blocks.addAll( blocksToAdd );
+        world.blockTable.addAll( blocksToAdd );
 
         // Remove dead/saved rabbits, used tokens, dug out blocks
         world.rabbits.removeAll( rabbitsToKill );
         world.rabbits.removeAll( rabbitsToSave );
         world.things.removeAll(  tokensToRemove );
-        world.blocks.removeAll(  blocksToRemove );
+        world.blockTable.removeAll(  blocksToRemove );
 
         if ( rabbitsToSave.size() > 0 )
         {

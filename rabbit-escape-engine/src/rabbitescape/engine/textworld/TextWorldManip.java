@@ -201,7 +201,7 @@ public class TextWorldManip
     {
         Chars chars = new Chars( world, false );
 
-        BlockRenderer.render( chars, world.blocks );
+        BlockRenderer.render( chars, world.blockTable );
         RabbitRenderer.render( chars, world.rabbits );
         ThingRenderer.render( chars, world.things );
 
@@ -217,7 +217,7 @@ public class TextWorldManip
     {
         Chars chars = new Chars( world, true );
 
-        BlockRenderer.render( chars, world.blocks );
+        BlockRenderer.render( chars, world.blockTable );
         RabbitRenderer.render( chars, world.rabbits );
         ThingRenderer.render( chars, world.things );
 

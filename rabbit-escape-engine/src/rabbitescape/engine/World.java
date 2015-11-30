@@ -97,8 +97,8 @@ public class World
     }
 
     public final Dimension size;
-    public final List<Block> blocks;
-    private final LookupTable2D<Block> blockTable;
+//    public final List<Block> blocks;
+    public final LookupTable2D<Block> blockTable;
     public final List<Rabbit> rabbits;
     public final List<Thing> things;
     public final Map<Token.Type, Integer> abilities;
@@ -149,7 +149,6 @@ public class World
     )
     {
         this.size = size;
-        this.blocks = blocks;
         this.rabbits = rabbits;
         this.things = things;
         this.abilities = abilities;
@@ -170,7 +169,14 @@ public class World
         this.num_waiting = num_waiting;
         this.paused = paused;
         
-        this.blockTable = new LookupTable2D<Block>( blocks, size );
+        if ( -1 == size.width )
+        {
+            this.blockTable = null; // make allowance for tests with no world
+        }
+        else 
+        {
+            this.blockTable = new LookupTable2D<Block>( blocks, size );
+        }
 
         this.changes = new WorldChanges( this, statsListener );
 
