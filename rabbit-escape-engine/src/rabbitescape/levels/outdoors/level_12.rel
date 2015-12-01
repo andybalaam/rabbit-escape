@@ -5,6 +5,9 @@
 :hint1=The first rabbit on the right cloud should dig.
 :hint2=The first rabbit on the middle cloud should bridge to the right cloud.
 :hint3=Dig into the very end of the left cloud. Explode the digger leaving one block.
+:solution.1=dig;(12,3);(27,4);bridge;(17,7);10;(20,5);explode&(12,5);65
+% Save 9 solution for Deja Vu
+:solution.2.code=%}}hH}<&Z|E}t6Y%^<EH&E}}@[&H@Ht~~6<@h}b%EF~&}666%%&EZt}H}
 :num_rabbits=9
 :num_to_save=8
 :rabbit_delay=20

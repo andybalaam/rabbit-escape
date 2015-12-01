@@ -4,6 +4,7 @@
 :hint1=Bridge out from the rocket.
 :hint2=Put a blocker at the end of the bridge.
 :hint3=Bash out of the moon and dig down the rocket.
+:solution.1=bash;(10,11);bridge;4;(11,11);3;dig;(7,11);(8,17);(9,14);;bash;(15,7);11;(10,20);42
 :description=Return from button moon.
 :num_rabbits=6
 :num_to_save=5
