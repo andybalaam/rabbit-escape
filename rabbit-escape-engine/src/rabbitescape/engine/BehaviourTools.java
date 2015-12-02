@@ -3,6 +3,8 @@ package rabbitescape.engine;
 import static rabbitescape.engine.Block.Type.solid_flat;
 import static rabbitescape.engine.Block.Type.solid_up_left;
 import static rabbitescape.engine.Block.Type.solid_up_right;
+import static rabbitescape.engine.Block.Type.bridge_up_right;
+import static rabbitescape.engine.Block.Type.bridge_up_left;
 import static rabbitescape.engine.Direction.RIGHT;
 import static rabbitescape.engine.Direction.opposite;
 
@@ -47,7 +49,8 @@ public class BehaviourTools
             || State.RABBIT_FALLING_1_ONTO_LOWER_RIGHT == rabbit.state
             || State.RABBIT_FALLING_1_ONTO_RISE_RIGHT == rabbit.state
             || State.RABBIT_FALLING_1_ONTO_LOWER_LEFT == rabbit.state
-            || State.RABBIT_FALLING_1_ONTO_RISE_LEFT == rabbit.state ;
+            || State.RABBIT_FALLING_1_ONTO_RISE_LEFT == rabbit.state 
+            || State.RABBIT_DYING_OF_FALLING_SLOPE_RISE_RIGHT == rabbit.state;
     }
     
     public boolean pickUpToken( Token.Type type, boolean evenIfNotOnGround )
@@ -122,7 +125,27 @@ public class BehaviourTools
             )
         );
     }
+    
+    public boolean isRightRiseSlope( Block b )
+    {
+        if( b == null )
+        {
+            return false;
+        }
+        return b.type == solid_up_right 
+            || b.type == bridge_up_right;
+    }
 
+    public boolean isLeftRiseSlope( Block b )
+    {
+        if( b == null )
+        {
+            return false;
+        }
+        return b.type == solid_up_left 
+            || b.type == bridge_up_left;
+    }
+    
     private boolean isSolid( Block block )
     {
         return (

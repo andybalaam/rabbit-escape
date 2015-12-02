@@ -77,6 +77,7 @@ public class Falling extends Behaviour
                 rabbit.y = rabbit.y + 2;
                 return true;
             }
+            case RABBIT_DYING_OF_FALLING_SLOPE_RISE_RIGHT:
             case RABBIT_FALLING_1_TO_DEATH:
             case RABBIT_FALLING_1:
             case RABBIT_FALLING_1_ONTO_LOWER_RIGHT:
@@ -133,6 +134,7 @@ public class Falling extends Behaviour
                 if ( heightFallen % 2 == 0 )
                 {
                     // TODO: handle falling onto slopes
+
                     return RABBIT_DYING_OF_FALLING;
                 }
                 else
@@ -153,7 +155,14 @@ public class Falling extends Behaviour
         )
         {
             // TODO: handle falling onto slopes
-            return State.RABBIT_FALLING_1_TO_DEATH;
+            if( t.isRightRiseSlope( t.blockBelow() ) )
+            {
+                return RABBIT_DYING_OF_FALLING_SLOPE_RISE_RIGHT;
+            }
+            else
+            {
+                return State.RABBIT_FALLING_1_TO_DEATH;
+            }
         }
         else
         {
