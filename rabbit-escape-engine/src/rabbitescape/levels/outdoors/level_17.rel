@@ -2,8 +2,11 @@
 :author_name=colonelfazackerley
 :author_url=https://github.com/colonelfazackerley
 :hint1=Block the upper rabbits at the edge and bridge up from below.
-:hint2=when the bridge is complete rescue the blocker with digtoken.
+:hint2=When the bridge is complete rescue the blocker with a dig token.
 :hint3=Don't dig too far: Use a bridge token to stop digging. Then a dig token so the bridge does not get too high.
+:solution.1=block;(4,1);bridge;(11,8);10;(8,6);13;dig;(1,1);5;(4,1);bridge;(4,2);(4,2);dig;(5,1);28
+:solution.2=dig&(1,1);bridge;(12,8);10;(9,6);;(9,6);6;(6,3);23
+:solution.3=dig;(2,1);bridge;2;(2,3);(12,8);6;(9,6);8;(6,3);23;LOST
 :description=Up and over
 :num_to_save=10
 :num_rabbits=10

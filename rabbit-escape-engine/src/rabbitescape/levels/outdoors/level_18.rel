@@ -4,6 +4,7 @@
 :hint1=Bridge together from both sides of each gap.
 :hint2=Experiment with timings for releasing the rabbits.
 :hint3=Use a blocker on the far right. bridge the right gap first.
+:solution.1=block;(7,11);dig;(5,8);bridge;(14,11);block;(30,11);dig;3;(16,8);2;bridge;2;(7,11);3;dig;(28,8);block;(25,11);bridge;4;(18,11);3;(25,11);86;explode;(30,11);
 :description=Keep your eye on the ball.
 :num_rabbits=9
 :num_to_save=6

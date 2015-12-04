@@ -4,6 +4,7 @@
 :hint1=The exit is treacherous.
 :hint2=Find a way to prevent all the rabbits from getting climbing tokens.
 :hint3=Build a bridge over the climbing tokens as fast as possible.
+:solution.1=block;(6,11);bridge;5;(4,11);8;explode;(6,11);bridge;(7,10);15;(5,9);(14,7);10;(21,4);explode;7;(23,3);32
 :description=Climb up from base camp and down the other side.
 :num_rabbits=10
 :num_to_save=2
