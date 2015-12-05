@@ -222,6 +222,14 @@ public class AnimationTester extends JFrame
             case KeyEvent.VK_LEFT: // Slow
                 msFrameLength += 50;
                 return;
+            case KeyEvent.VK_H:
+                System.out.println("");
+                System.out.println("Right arrow  Speed up");
+                System.out.println("Left arrow   Slow down");
+                System.out.println("Q            Quit");
+                return;
+            case KeyEvent.VK_Q:
+                System.exit( 0 );
             default:
                 // Ignore fat fingers
             }
