@@ -5,8 +5,8 @@
 :hint1=Each rabbit only needs to look after itself.
 :hint2=Can you climb the left-hand rabbit out?
 :hint3=Ignore the right-hand rabbit. The left-hand rabbit can bridge rightwards to the wall and then climb over it.
-% This is not the solution described in the hints.
-:solution.1=climb;(9,7);dig;(7,2);climb;(1,6);53
+:solution.1=climb;(4,6);bridge;(5,6);22
+:solution.2=climb;(9,7);dig;(7,2);climb;(1,6);53
 :num_rabbits=2
 :num_to_save=2
 :dig=1
