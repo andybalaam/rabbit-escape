@@ -14,7 +14,7 @@ import javax.swing.*;
 
 import java.awt.*;
 import java.awt.event.ComponentEvent;
-import java.awt.event.ComponentListener;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferStrategy;
 import java.util.*;
@@ -111,8 +111,7 @@ public class AnimationTester extends JFrame
         "land_block_1", "land_block_2", "land_block_3",
     };
 
-    private class Listener implements
-        java.awt.event.MouseListener, ComponentListener
+    private class Listener extends EmptyListener
     {
         @Override
         public void mouseClicked( MouseEvent mouseEvent )
@@ -202,31 +201,6 @@ public class AnimationTester extends JFrame
         }
 
         @Override
-        public void mousePressed( MouseEvent mouseEvent )
-        {
-        }
-
-        @Override
-        public void mouseReleased( MouseEvent mouseEvent )
-        {
-        }
-
-        @Override
-        public void mouseEntered( MouseEvent mouseEvent )
-        {
-        }
-
-        @Override
-        public void mouseExited( MouseEvent mouseEvent )
-        {
-        }
-
-        @Override
-        public void componentHidden( ComponentEvent arg0 )
-        {
-        }
-
-        @Override
         public void componentMoved( ComponentEvent arg0 )
         {
             ConfigTools.setInt( atConfig, CFG_AT_WINDOW_LEFT, getX() );
@@ -235,16 +209,28 @@ public class AnimationTester extends JFrame
         }
 
         @Override
-        public void componentResized( ComponentEvent arg0 )
+        public void keyPressed( KeyEvent e )
         {
+            switch( e.getKeyCode() )
+            {
+            case KeyEvent.VK_RIGHT: // Speed up
+                if( msFrameLength > 50 )
+                {
+                    msFrameLength -= 50;
+                }
+                return;
+            case KeyEvent.VK_LEFT: // Slow
+                msFrameLength += 50;
+                return;
+            default:
+                // Ignore fat fingers
+            }
+            
         }
 
-        @Override
-        public void componentShown( ComponentEvent arg0 )
-        {
-        }
     }
 
+    private int msFrameLength = 100 ;
     private final int tileSize;
     private final int numTilesX;
     boolean running;
@@ -352,6 +338,7 @@ public class AnimationTester extends JFrame
 
         Listener listener = new Listener();
         canvas.addMouseListener( listener );
+        addKeyListener( listener );
         addComponentListener( listener );
 
         setBoundsFromConfig();
@@ -603,7 +590,7 @@ public class AnimationTester extends JFrame
     {
         try
         {
-            Thread.sleep( 100 );
+            Thread.sleep( msFrameLength );
         }
         catch ( InterruptedException e )
         {
