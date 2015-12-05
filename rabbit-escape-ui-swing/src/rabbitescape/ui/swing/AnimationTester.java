@@ -31,18 +31,21 @@ public class AnimationTester extends JFrame
         public final int offsetX;
         public final int offsetY;
         public final String soundEffect;
+        public final String frameName;
 
         public SwingBitmapAndOffset(
             ScaledBitmap<SwingBitmap> bitmap,
             int offsetX,
             int offsetY,
-            String soundEffect
+            String soundEffect, 
+            String frameName
         )
         {
             this.bitmap = bitmap;
             this.offsetX = offsetX;
             this.offsetY = offsetY;
             this.soundEffect = soundEffect;
+            this.frameName = frameName;
         }
     }
 
@@ -61,7 +64,7 @@ public class AnimationTester extends JFrame
 
                 this.bitmaps.add(
                     new SwingBitmapAndOffset(
-                        bmp, frame.offsetX, frame.offsetY, frame.soundEffect )
+                        bmp, frame.offsetX, frame.offsetY, frame.soundEffect, frame.name )
                 );
             }
         }
@@ -226,7 +229,12 @@ public class AnimationTester extends JFrame
                 System.out.println("");
                 System.out.println("Right arrow  Speed up");
                 System.out.println("Left arrow   Slow down");
+                System.out.println("H            Print this help");
+                System.out.println("L            Toggle printing log of frames");
                 System.out.println("Q            Quit");
+                return;
+            case KeyEvent.VK_L:
+                frameLogging = !frameLogging;
                 return;
             case KeyEvent.VK_Q:
                 System.exit( 0 );
@@ -238,6 +246,7 @@ public class AnimationTester extends JFrame
 
     }
 
+    private boolean frameLogging = false;
     private int msFrameLength = 100 ;
     private final int tileSize;
     private final int numTilesX;
@@ -247,6 +256,9 @@ public class AnimationTester extends JFrame
     private final Config atConfig;
     private SwingBitmapScaler scaler;
     private SwingPaint paint;
+    /** [0-8][0-2] position in 3x3 grid, and triplet of consecutive animations for 
+     * that position.
+     */
     private SwingAnimation[][] frames;
     private List<ScaledBitmap<SwingBitmap>> blockBitmaps;
     private final AnimationCache animationCache;
@@ -321,6 +333,7 @@ public class AnimationTester extends JFrame
         this.numTilesX = 3;
         this.animationCache = new AnimationCache( new AnimationLoader() );
 
+        /** Name of .rea files (changed to caps it's also the name of the state) */
         this.animationNames = animationsFromConfig(
             atConfig.get( CFG_AT_ANIMATIONS ) );
 
@@ -569,6 +582,10 @@ public class AnimationTester extends JFrame
                     bmp.offsetX,
                     bmp.offsetY
                 );
+                
+                if( frameLogging ){
+                    System.out.println(bmp.frameName);
+                }
 
                 sprites.add( sprite );
                 ++i;
