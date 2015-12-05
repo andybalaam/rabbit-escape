@@ -463,7 +463,8 @@ public class GameUi implements StatsChangedListener
         this.topBar = new TopBar(
             backgroundColor,
             gameLaunch.world.num_to_save,
-            middlePanel
+            middlePanel,
+            gameLaunch.world.name
         );
 
         frame.pack();
