@@ -225,16 +225,28 @@ public class AnimationTester extends JFrame
             case KeyEvent.VK_LEFT: // Slow
                 msFrameLength += 50;
                 return;
+            case KeyEvent.VK_A:
+                backwardStep = true;
+                return;
+            case KeyEvent.VK_D:
+                forwardStep = true;
+                return;
             case KeyEvent.VK_H:
                 System.out.println("");
                 System.out.println("Right arrow  Speed up");
                 System.out.println("Left arrow   Slow down");
+                System.out.println("A            In step mode, back one frame");
+                System.out.println("D            In step mode, forward one frame");
                 System.out.println("H            Print this help");
                 System.out.println("L            Toggle printing log of frames");
+                System.out.println("S            Toggle step mode");
                 System.out.println("Q            Quit");
                 return;
             case KeyEvent.VK_L:
                 frameLogging = !frameLogging;
+                return;
+            case KeyEvent.VK_S:
+                stepMode = !stepMode;
                 return;
             case KeyEvent.VK_Q:
                 System.exit( 0 );
@@ -246,6 +258,9 @@ public class AnimationTester extends JFrame
 
     }
 
+    private boolean stepMode = false;
+    private boolean forwardStep = false;
+    private boolean backwardStep = false;
     private boolean frameLogging = false;
     private int msFrameLength = 100 ;
     private final int tileSize;
@@ -472,6 +487,50 @@ public class AnimationTester extends JFrame
             System.exit( 2 );
         }
     }
+    
+    private class FrameCounter
+    {
+        private int frameNum = 0;
+        private int frameSetNum = 0;
+        
+        public void inc()
+        {
+            ++frameNum;
+            if ( frameNum == 10 )
+            {
+                frameNum = 0;
+                ++frameSetNum;
+                if ( frameSetNum == 3 )
+                {
+                    frameSetNum = 0;
+                }
+            }
+        }
+        
+        public void dec()
+        {
+            --frameNum;
+            if( frameNum == 0)
+            {
+                frameNum = 9;
+                --frameSetNum;
+                if( frameSetNum == 0 )
+                {
+                    frameSetNum = 2;
+                }
+            }
+        }
+        
+        public int getFrameNum()
+        {
+            return frameNum;
+        }
+        
+        public int getFrameSetNum()
+        {
+            return frameSetNum;
+        }
+    }
 
     private void loop()
     {
@@ -483,25 +542,45 @@ public class AnimationTester extends JFrame
         SoundPlayer<SwingBitmap> soundPlayer =
             new SoundPlayer<SwingBitmap>( new SwingSound( false ) );
 
-        int frameSetNum = 0;
-        int frameNum = 0;
+        FrameCounter counter = new FrameCounter();
         running = true;
         while( running && this.isVisible() )
         {
             new DrawFrame(
-                strategy, renderer, soundPlayer, frameSetNum, frameNum ).run();
+                strategy, renderer, soundPlayer, counter.getFrameSetNum(), 
+                counter.getFrameNum() ).run();
 
-            pause();
-
-            ++frameNum;
-            if ( frameNum == 10 )
+            if( stepMode )
             {
-                frameNum = 0;
-                ++frameSetNum;
-                if ( frameSetNum == 3 )
+                while( true )
                 {
-                    frameSetNum = 0;
+                    try
+                    {
+                        Thread.sleep( 50 );
+                    }
+                    catch ( InterruptedException e )
+                    {
+                        // Ignore
+                    }
+                    if( forwardStep )
+                    {
+                        forwardStep = false;
+                        counter.inc();
+                        break;
+                    }
+                    if( backwardStep )
+                    {
+                        backwardStep = false;
+                        counter.dec();
+                        break;
+                    }
+                    
                 }
+            }
+            else
+            {
+                pause();
+                counter.inc();
             }
         }
     }
