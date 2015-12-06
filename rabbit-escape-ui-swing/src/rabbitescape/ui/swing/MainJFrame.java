@@ -69,6 +69,16 @@ public class MainJFrame extends JFrame
         addComponentListener( listener );
 
         setBoundsFromConfig();
+        
+        setIcon();
+    }
+    
+    private void setIcon()
+    {
+        SwingBitmapLoader l = new SwingBitmapLoader();
+        int s = l.sizeFor( 128 );
+        SwingBitmap bmp = l.load( "ic_launcher", s );
+        this.setIconImage(bmp.image);
     }
 
     public void setBoundsFromConfig()

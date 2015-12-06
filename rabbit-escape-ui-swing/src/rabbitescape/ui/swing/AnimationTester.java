@@ -355,6 +355,8 @@ public class AnimationTester extends JFrame
         addComponentListener( listener );
 
         setBoundsFromConfig();
+        
+        setIcon();
 
         setTitle( t( "Animation Tester" ) );
         pack();
@@ -705,5 +707,13 @@ public class AnimationTester extends JFrame
         }
 
         return cfgEntry.split( " " );
+    }
+    
+    private void setIcon()
+    {
+        SwingBitmapLoader l = new SwingBitmapLoader();
+        int s = l.sizeFor( 128 );
+        SwingBitmap bmp = l.load( "rabbit_fall_01", s );
+        this.setIconImage(bmp.image);
     }
 }
