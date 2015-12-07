@@ -1,7 +1,7 @@
 :name=Ghost versus pie
 :description=Head for the pill.
 :hint1=Bridge over to the ghost.
-:hint2=when a rabbit has bashed from the ghost's eye, bridge and bash.
+:hint2=When a rabbit has bashed from the ghost's eye, bridge and bash.
 :hint3=Use a bash token to stop digging too far between the eyes.
 :author_name=colonelfazackerley
 :author_url=https://github.com/colonelfazackerley
@@ -12,6 +12,7 @@
 :bridge=4
 :bash=4
 :block=1
+:explode=1
      Q                      
                             
      #####         /#d#\    

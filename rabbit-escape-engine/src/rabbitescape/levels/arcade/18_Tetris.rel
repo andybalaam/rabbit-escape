@@ -4,8 +4,8 @@
 :author_url=https://github.com/colonelfazackerley
 :solution.1=bridge;(3,13);(6,12);(4,3);(3,6);block;(3,9);bridge;6;(7,11);bash;(6,11);1;bridge;(6,11);23;(5,10);7;(7,9);5;(6,9);7;bash;(5,8);1;bridge;3;(2,7);1;block;11;(0,5);2;bridge;23;(2,7);4;block;4;bridge;(4,6);6;block;3;(3,7);1;bridge;2;(6,4);4;block;6;(1,1);bridge;(2,2);19;(3,7);21;explode;(3,9);(0,5);(1,1);1;WON
 :hint1=Use several bridges to climb onto the T. A bash is also necessary. Block on the left of the top.
-:hint2=Use more bridges to get up to the square, and bash out it's top row.
-:hint3=Bridge left off the remains of the square and block on the bridge. Bridge up to the higher square. One more blocker on a bridge is required to bridge up tothe exit.
+:hint2=Use more bridges to get up to the square, and bash out its top row.
+:hint3=Bridge left off the remains of the square and block on the bridge. Bridge up to the higher square. One more blocker on a bridge is required to bridge up to the exit.
 :bridge=20
 :bash=4
 :block=4
