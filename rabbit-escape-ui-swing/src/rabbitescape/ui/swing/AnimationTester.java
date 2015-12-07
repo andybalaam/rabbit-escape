@@ -14,7 +14,7 @@ import javax.swing.*;
 
 import java.awt.*;
 import java.awt.event.ComponentEvent;
-import java.awt.event.ComponentListener;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferStrategy;
 import java.util.*;
@@ -31,18 +31,21 @@ public class AnimationTester extends JFrame
         public final int offsetX;
         public final int offsetY;
         public final String soundEffect;
+        public final String frameName;
 
         public SwingBitmapAndOffset(
             ScaledBitmap<SwingBitmap> bitmap,
             int offsetX,
             int offsetY,
-            String soundEffect
+            String soundEffect, 
+            String frameName
         )
         {
             this.bitmap = bitmap;
             this.offsetX = offsetX;
             this.offsetY = offsetY;
             this.soundEffect = soundEffect;
+            this.frameName = frameName;
         }
     }
 
@@ -61,7 +64,7 @@ public class AnimationTester extends JFrame
 
                 this.bitmaps.add(
                     new SwingBitmapAndOffset(
-                        bmp, frame.offsetX, frame.offsetY, frame.soundEffect )
+                        bmp, frame.offsetX, frame.offsetY, frame.soundEffect, frame.name )
                 );
             }
         }
@@ -111,8 +114,7 @@ public class AnimationTester extends JFrame
         "land_block_1", "land_block_2", "land_block_3",
     };
 
-    private class Listener implements
-        java.awt.event.MouseListener, ComponentListener
+    private class Listener extends EmptyListener
     {
         @Override
         public void mouseClicked( MouseEvent mouseEvent )
@@ -202,31 +204,6 @@ public class AnimationTester extends JFrame
         }
 
         @Override
-        public void mousePressed( MouseEvent mouseEvent )
-        {
-        }
-
-        @Override
-        public void mouseReleased( MouseEvent mouseEvent )
-        {
-        }
-
-        @Override
-        public void mouseEntered( MouseEvent mouseEvent )
-        {
-        }
-
-        @Override
-        public void mouseExited( MouseEvent mouseEvent )
-        {
-        }
-
-        @Override
-        public void componentHidden( ComponentEvent arg0 )
-        {
-        }
-
-        @Override
         public void componentMoved( ComponentEvent arg0 )
         {
             ConfigTools.setInt( atConfig, CFG_AT_WINDOW_LEFT, getX() );
@@ -235,16 +212,57 @@ public class AnimationTester extends JFrame
         }
 
         @Override
-        public void componentResized( ComponentEvent arg0 )
+        public void keyPressed( KeyEvent e )
         {
+            switch( e.getKeyCode() )
+            {
+            case KeyEvent.VK_RIGHT: // Speed up
+                if( msFrameLength > 50 )
+                {
+                    msFrameLength -= 50;
+                }
+                return;
+            case KeyEvent.VK_LEFT: // Slow
+                msFrameLength += 50;
+                return;
+            case KeyEvent.VK_A:
+                backwardStep = true;
+                return;
+            case KeyEvent.VK_D:
+                forwardStep = true;
+                return;
+            case KeyEvent.VK_H:
+                System.out.println("");
+                System.out.println("Right arrow  Speed up");
+                System.out.println("Left arrow   Slow down");
+                System.out.println("A            In step mode, back one frame");
+                System.out.println("D            In step mode, forward one frame");
+                System.out.println("H            Print this help");
+                System.out.println("L            Toggle printing log of frames");
+                System.out.println("S            Toggle step mode");
+                System.out.println("Q            Quit");
+                return;
+            case KeyEvent.VK_L:
+                frameLogging = !frameLogging;
+                return;
+            case KeyEvent.VK_S:
+                stepMode = !stepMode;
+                return;
+            case KeyEvent.VK_Q:
+                System.exit( 0 );
+            default:
+                // Ignore fat fingers
+            }
+            
         }
 
-        @Override
-        public void componentShown( ComponentEvent arg0 )
-        {
-        }
     }
 
+    private boolean stepMode = false;
+    private boolean forwardStep = false;
+    private boolean backwardStep = false;
+    private boolean frameLogging = false;
+    private int msFrameLength = 100 ;
     private final int tileSize;
     private final int numTilesX;
     boolean running;
@@ -253,6 +271,9 @@ public class AnimationTester extends JFrame
     private final Config atConfig;
     private SwingBitmapScaler scaler;
     private SwingPaint paint;
+    /** [0-8][0-2] position in 3x3 grid, and triplet of consecutive animations for 
+     * that position.
+     */
     private SwingAnimation[][] frames;
     private List<ScaledBitmap<SwingBitmap>> blockBitmaps;
     private final AnimationCache animationCache;
@@ -327,6 +348,7 @@ public class AnimationTester extends JFrame
         this.numTilesX = 3;
         this.animationCache = new AnimationCache( new AnimationLoader() );
 
+        /** Name of .rea files (changed to caps it's also the name of the state) */
         this.animationNames = animationsFromConfig(
             atConfig.get( CFG_AT_ANIMATIONS ) );
 
@@ -352,6 +374,7 @@ public class AnimationTester extends JFrame
 
         Listener listener = new Listener();
         canvas.addMouseListener( listener );
+        addKeyListener( listener );
         addComponentListener( listener );
 
         setBoundsFromConfig();
@@ -464,6 +487,50 @@ public class AnimationTester extends JFrame
             System.exit( 2 );
         }
     }
+    
+    private class FrameCounter
+    {
+        private int frameNum = 0;
+        private int frameSetNum = 0;
+        
+        public void inc()
+        {
+            ++frameNum;
+            if ( frameNum == 10 )
+            {
+                frameNum = 0;
+                ++frameSetNum;
+                if ( frameSetNum == 3 )
+                {
+                    frameSetNum = 0;
+                }
+            }
+        }
+        
+        public void dec()
+        {
+            --frameNum;
+            if( frameNum == 0)
+            {
+                frameNum = 9;
+                --frameSetNum;
+                if( frameSetNum == 0 )
+                {
+                    frameSetNum = 2;
+                }
+            }
+        }
+        
+        public int getFrameNum()
+        {
+            return frameNum;
+        }
+        
+        public int getFrameSetNum()
+        {
+            return frameSetNum;
+        }
+    }
 
     private void loop()
     {
@@ -475,25 +542,45 @@ public class AnimationTester extends JFrame
         SoundPlayer<SwingBitmap> soundPlayer =
             new SoundPlayer<SwingBitmap>( new SwingSound( false ) );
 
-        int frameSetNum = 0;
-        int frameNum = 0;
+        FrameCounter counter = new FrameCounter();
         running = true;
         while( running && this.isVisible() )
         {
             new DrawFrame(
-                strategy, renderer, soundPlayer, frameSetNum, frameNum ).run();
+                strategy, renderer, soundPlayer, counter.getFrameSetNum(), 
+                counter.getFrameNum() ).run();
 
-            pause();
-
-            ++frameNum;
-            if ( frameNum == 10 )
+            if( stepMode )
             {
-                frameNum = 0;
-                ++frameSetNum;
-                if ( frameSetNum == 3 )
+                while( true )
                 {
-                    frameSetNum = 0;
+                    try
+                    {
+                        Thread.sleep( 50 );
+                    }
+                    catch ( InterruptedException e )
+                    {
+                        // Ignore
+                    }
+                    if( forwardStep )
+                    {
+                        forwardStep = false;
+                        counter.inc();
+                        break;
+                    }
+                    if( backwardStep )
+                    {
+                        backwardStep = false;
+                        counter.dec();
+                        break;
+                    }
+                    
                 }
+            }
+            else
+            {
+                pause();
+                counter.inc();
             }
         }
     }
@@ -574,6 +661,10 @@ public class AnimationTester extends JFrame
                     bmp.offsetX,
                     bmp.offsetY
                 );
+                
+                if( frameLogging ){
+                    System.out.println(bmp.frameName);
+                }
 
                 sprites.add( sprite );
                 ++i;
@@ -603,7 +694,7 @@ public class AnimationTester extends JFrame
     {
         try
         {
-            Thread.sleep( 100 );
+            Thread.sleep( msFrameLength );
         }
         catch ( InterruptedException e )
         {
