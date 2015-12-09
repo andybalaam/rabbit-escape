@@ -250,6 +250,7 @@ public class AnimationTester extends JFrame
                 return;
             case KeyEvent.VK_Q:
                 System.exit( 0 );
+                return; // Should not be necessary. Gets rid of intermittent compiler warning
             default:
                 // Ignore fat fingers
             }

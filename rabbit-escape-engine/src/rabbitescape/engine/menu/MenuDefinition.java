@@ -20,11 +20,11 @@ public class MenuDefinition
                 "Start Game",
                 menu(
                     "Choose a set of levels:",
-                    item( "Easy",     levels( "easy",     levelsCompleted ), true ),
-                    item( "Medium",   levels( "medium",   levelsCompleted ), true ),
-                    item( "Hard",     levels( "hard",     levelsCompleted ), true ),
-                    item( "Outdoors", levels( "outdoors", levelsCompleted ), true ),
-                    item( "Arcade",   levels( "arcade",   levelsCompleted ), true )
+                    item( "Easy",     levels( "00_easy",     levelsCompleted ), true ),
+                    item( "Medium",   levels( "01_medium",   levelsCompleted ), true ),
+                    item( "Hard",     levels( "02_hard",     levelsCompleted ), true ),
+                    item( "Outdoors", levels( "03_outdoors", levelsCompleted ), true ),
+                    item( "Arcade",   levels( "04_arcade",   levelsCompleted ), true )
                 ),
                 true
             ),
