@@ -1,5 +1,6 @@
 package rabbitescape.engine.textworld;
 
+import static rabbitescape.engine.ChangeDescription.State.RABBIT_DYING_OF_FALLING_SLOPE_RISE_RIGHT;
 import rabbitescape.engine.ChangeDescription;
 import rabbitescape.engine.ChangeDescription.Change;
 import rabbitescape.engine.RabbitStates;
@@ -143,6 +144,9 @@ public class ChangeRenderer
                 break;
             case RABBIT_FALLING_1_ONTO_RISE_LEFT:
                 chars.set( change.x, change.y + 1, 'a' );
+                break;
+            case RABBIT_DYING_OF_FALLING_SLOPE_RISE_RIGHT:
+                chars.set( change.x, change.y + 1, 'x' );
                 break;
             case RABBIT_FALLING_1_TO_DEATH:
                 chars.set( change.x, change.y + 1, 'x' );
