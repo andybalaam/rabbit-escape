@@ -3,7 +3,7 @@
 :author_url=https://github.com/colonelfazackerley
 :hint1=Use a blocker to turn the rabbits on the lower platform.
 :hint2=Use bridges up to the edges of platforms to hold the rabbits from the left entrance.
-:hint3=When the rabbits from the lower entrance have bridged up\to catch the upper rabbits dig through the bridges.
+:hint3=When the rabbits from the lower entrance have bridged up to catch the upper rabbits dig through the bridges.
 :solution.1=block;(21,14);bridge;(6,5);5;(17,3);6;(9,3);(9,3);(18,14);7;(15,12);14;bash&(16,3);31;explode;(21,14);
 :description=Here and there
 :num_rabbits=6
