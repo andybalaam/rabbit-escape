@@ -6,7 +6,7 @@ import rabbitescape.engine.Block;
 
 public class BlockRenderer
 {
-    public static void render( Chars chars, List<Block> blocks )
+    public static void render( Chars chars, Iterable<Block> blocks )
     {
         for ( Block block : blocks )
         {

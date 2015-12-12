@@ -39,7 +39,7 @@ public class SandboxGame
         List<Rabbit> clonedRabbits = makeClonedRabbits( world.rabbits );
         List<Thing> clonedThings = makeClonedThings( world.things );
         this.world = new World( world.size,
-            new ArrayList<>( world.blocks ),
+            world.blockTable.getListCopy(),
             clonedRabbits,
             clonedThings,
             new HashMap<>( world.abilities ),

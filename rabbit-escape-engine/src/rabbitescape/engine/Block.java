@@ -1,8 +1,10 @@
 package rabbitescape.engine;
 
 import static rabbitescape.engine.Direction.*;
+import rabbitescape.engine.util.LookupItem2D;
+import rabbitescape.engine.util.Position;
 
-public class Block
+public class Block implements LookupItem2D
 {
     public enum Type
     {
@@ -44,5 +46,11 @@ public class Block
             default:
                 throw new RuntimeException( "Unknown block type " + type );
         }
+    }
+
+    @Override
+    public Position getPosition()
+    {
+        return new Position( x, y );
     }
 }

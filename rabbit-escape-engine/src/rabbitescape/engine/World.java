@@ -8,6 +8,7 @@ import java.util.Map;
 
 import rabbitescape.engine.err.RabbitEscapeException;
 import rabbitescape.engine.util.Dimension;
+import rabbitescape.engine.util.LookupTable2D;
 
 public class World
 {
@@ -96,7 +97,8 @@ public class World
     }
 
     public final Dimension size;
-    public final List<Block> blocks;
+//    public final List<Block> blocks;
+    public final LookupTable2D<Block> blockTable;
     public final List<Rabbit> rabbits;
     public final List<Thing> things;
     public final Map<Token.Type, Integer> abilities;
@@ -147,7 +149,6 @@ public class World
     )
     {
         this.size = size;
-        this.blocks = blocks;
         this.rabbits = rabbits;
         this.things = things;
         this.abilities = abilities;
@@ -167,6 +168,15 @@ public class World
         this.num_killed = num_killed;
         this.num_waiting = num_waiting;
         this.paused = paused;
+        
+        if ( -1 == size.width )
+        {
+            this.blockTable = null; // make allowance for tests with no world
+        }
+        else 
+        {
+            this.blockTable = new LookupTable2D<Block>( blocks, size );
+        }
 
         this.changes = new WorldChanges( this, statsListener );
 
@@ -225,17 +235,14 @@ public class World
         return chain( rabbits, things );
     }
 
-    public Block getBlockAt( int x, int y )
+    public Block getBlockAt( int x, int y)
     {
-        // TODO: faster
-        for ( Block block : blocks )
+        if ( x <  0          || y <  0           ||
+             x >= size.width || y >= size.height  ) 
         {
-            if ( block.x == x && block.y == y )
-            {
-                return block;
-            }
+            return null;
         }
-        return null;
+        return blockTable.getItemAt( x, y );
     }
 
     public CompletionState completionState()
