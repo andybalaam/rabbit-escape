@@ -54,8 +54,8 @@ SVGANDROIDICONSHDPI  := $(SVGICONSSRC:images-src/icons/%.svg=$(ANDROIDICONSHDPI_
 SVGANDROIDICONSXHDPI := $(SVGICONSSRC:images-src/icons/%.svg=$(ANDROIDICONSXHDPI_DEST)/%.png)
 
 ANIMATIONS_DIR := rabbit-escape-render/src/rabbitescape/render/animations
-LEVELS_DIRS := $(wildcard rabbit-escape-engine/src/rabbitescape/levels/*) \
-               $(wildcard rabbit-escape-engine/test/rabbitescape/levels/*)
+LEVELS_DIRS := $(shell \
+	find rabbit-escape-engine/ -name '*.rel' | xargs -n 1 dirname | uniq)
 
 $(SOUNDSWAV_DEST)/%.wav: sounds-src/%.flac
 	mkdir -p $(SOUNDSWAV_DEST); sox $< $@
