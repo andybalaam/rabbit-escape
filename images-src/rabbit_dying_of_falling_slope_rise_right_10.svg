@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="32"
+   height="32"
+   id="svg2"
+   version="1.1"
+   inkscape:version="0.48.5 r10040"
+   sodipodi:docname="rabbit_dying_of_falling_slope_rise_right_10.svg">
+  <defs
+     id="defs4" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="16.750001"
+     inkscape:cx="13.148541"
+     inkscape:cy="17.499479"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="true"
+     inkscape:window-width="1920"
+     inkscape:window-height="1014"
+     inkscape:window-x="0"
+     inkscape:window-y="27"
+     inkscape:window-maximized="1">
+    <inkscape:grid
+       type="xygrid"
+       id="grid10074"
+       empspacing="5"
+       visible="true"
+       enabled="true"
+       snapvisiblegridlinesonly="true" />
+  </sodipodi:namedview>
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(0,-1020.3622)">
+    <path
+       sodipodi:type="arc"
+       style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-opacity:1"
+       id="path3768"
+       sodipodi:cx="13.262222"
+       sodipodi:cy="21.297777"
+       sodipodi:rx="5.3688889"
+       sodipodi:ry="8.6400003"
+       d="m 18.631111,21.297777 a 5.3688889,8.6400003 0 1 1 -10.7377776,0 5.3688889,8.6400003 0 1 1 10.7377776,0 z"
+       transform="matrix(0.03665851,0.18698833,-0.32490596,0.35539687,16.630417,1027.3171)" />
+    <path
+       sodipodi:type="arc"
+       style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-opacity:1"
+       id="path3770"
+       sodipodi:cx="16.782223"
+       sodipodi:cy="9.8488894"
+       sodipodi:rx="4.8355556"
+       sodipodi:ry="3.9466667"
+       d="m 21.617778,9.8488894 a 4.8355556,3.9466667 0 1 1 -9.671111,0 4.8355556,3.9466667 0 1 1 9.671111,0 z"
+       transform="matrix(0.31832779,-0.4726179,0.86915282,0.55808576,-2.4721813,1032.9998)" />
+    <path
+       sodipodi:type="arc"
+       style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-opacity:1"
+       id="path3794"
+       sodipodi:cx="20.088888"
+       sodipodi:cy="9.7066669"
+       sodipodi:rx="0.39111111"
+       sodipodi:ry="0.39111111"
+       d="m 20.479999,9.7066669 a 0.39111111,0.39111111 0 1 1 -0.782222,0 0.39111111,0.39111111 0 1 1 0.782222,0 z"
+       transform="matrix(1.1807069,0.14432601,-0.14432601,1.1807069,-10.261717,1015.5403)" />
+    <path
+       sodipodi:type="arc"
+       style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-opacity:1"
+       id="path3794-0"
+       sodipodi:cx="20.088888"
+       sodipodi:cy="9.7066669"
+       sodipodi:rx="0.39111111"
+       sodipodi:ry="0.39111111"
+       d="m 20.479999,9.7066669 a 0.39111111,0.39111111 0 1 1 -0.782222,0 0.39111111,0.39111111 0 1 1 0.782222,0 z"
+       transform="matrix(1.2905733,0.15775574,-0.13156293,1.0762943,-15.144388,1015.8075)" />
+  </g>
+</svg>
