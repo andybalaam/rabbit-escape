@@ -6,6 +6,7 @@
 :author_name=colonelfazackerley
 :author_url=https://github.com/colonelfazackerley
 :solution.1=bridge;(12,4);(5,8);bash;(2,6);bridge;11;(15,8);bash;2;(13,7);12;(21,5);until:WON
+:music=tryad-beat_into_submission
 :num_rabbits=6
 :num_to_save=6
 :rabbit_delay=20

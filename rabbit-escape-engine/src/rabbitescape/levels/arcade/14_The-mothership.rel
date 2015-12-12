@@ -6,6 +6,7 @@
 :hint2=Bridge to the stars.
 :hint3=From the middle of the top bridge left. From the first star bridge left again.
 :solution.1=bridge;(6,1);28;(13,7);6;(10,5);19;dig;(10,8);until:WON
+:music=tryad-beat_into_submission
 :num_rabbits=20
 :num_to_save=18
 :dig=1

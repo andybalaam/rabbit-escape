@@ -7,6 +7,7 @@
 :hint3=A bridge on the ground floor can do it.
 :solution.1=2;bridge;53;(15,15);44;dig;(16,8);until:WON
 :solution.2=bridge;(13,7);29;(10,5);6;(6,1);10;dig;(10,8);72
+:music=tryad-beat_into_submission
 :num_rabbits=20
 :num_to_save=18
 :dig=1

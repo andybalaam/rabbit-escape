@@ -6,6 +6,7 @@
 :author_name=colonelfazackerley
 :author_url=https://github.com/colonelfazackerley
 :solution.1=bridge;(5,7);91;climb;(7,7);until:WON
+:music=tryad-beat_into_submission
 :num_rabbits=4
 :num_to_save=4
 :block=2
@@ -15,7 +16,6 @@
 :bash=2
 :explode=2
 :rabbit_delay=10,10,4
-:music=tryad-witness
 ###########
 #        O#
 #         #

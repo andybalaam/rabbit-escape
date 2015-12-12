@@ -6,6 +6,7 @@
 :author_name=colonelfazackerley
 :author_url=https://github.com/colonelfazackerley
 :solution.1=dig;(12,3);bridge;5;(12,5);bash;4;(12,5);dig;4;(9,5);until:WON
+:music=tryad-beat_into_submission
 :num_to_save=3
 :num_rabbits=3
 :dig=5

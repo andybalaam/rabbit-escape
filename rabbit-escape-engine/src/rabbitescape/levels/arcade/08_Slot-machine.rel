@@ -6,10 +6,10 @@
 :hint2=Dig to the right side of the entrance.
 :hint3=The rabbit should be walking left. Drop the token one square back from the right edge, over the bash token.
 :solution.1=dig;7;(16,2);until:WON
+:music=tryad-beat_into_submission
 :num_rabbits=1
 :num_to_save=1
 :dig=1
-:music=tryad-witness
          Q         
                    
 #       /#\       #

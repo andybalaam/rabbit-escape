@@ -6,13 +6,13 @@
 :author_name=colonelfazackerley
 :author_url=https://github.com/colonelfazackerley
 :solution.1=bash;(6,3);(7,4);4;(9,6);6;(10,7);4;(8,9);until:WON
+:music=tryad-beat_into_submission
 :num_rabbits=24
 :num_to_save=24
 :rabbit_delay=16,8,4,2,1
 :bridge=3
 :bash=5
 :climb=1
-:music=tryad-witness
      Q         
 ###         ###
 ##  #  #  #  ##

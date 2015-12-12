@@ -6,12 +6,12 @@
 :hint2=Bridge off the next tower. Drop down one square from the next tower and bridge again.
 :hint3=Bridge across to catch the traitor's dig token.
 :solution.1=bash;(2,13);bridge;(2,13);(6,9);(10,11);(16,11);(12,10);bash;10;(8,11);3;(7,9);14;(13,10);28;WON
+:music=tryad-beat_into_submission
 :num_rabbits=5
 :num_to_save=5
 :bridge=5
 :bash=5
 :rabbit_delay=5
-:music=tryad-witness
 ###################
 #r                #
 #c# # # # # # # #*#

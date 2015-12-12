@@ -6,6 +6,7 @@
 :author_name=colonelfazackerley
 :author_url=https://github.com/colonelfazackerley
 :solution.1=bash;(1,5);block;(1,5);bash;(4,5);dig;3;(7,3);1;(6,3);2;(5,3);bridge;9;(4,5);8;(8,2);explode;7;(1,5);until:WON
+:music=tryad-beat_into_submission
 :num_rabbits=9
 :num_to_save=8
 :block=2
@@ -15,7 +16,6 @@
 :bash=2
 :explode=2
 :rabbit_delay=10
-:music=tryad-witness
    Q         
   Q      O   
  Q #     #   
