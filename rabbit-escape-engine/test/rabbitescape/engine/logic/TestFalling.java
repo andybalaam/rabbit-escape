@@ -384,7 +384,7 @@ public class TestFalling
             "   " + "\n" +
             "r r" + "\n" +
             "f f" + "\n" +
-            "e h",             // TODO: should die here?
+            "x h",             // TODO: should die here (rise right done, rise left outstanding)
 
             "   " + "\n" +
             "   " + "\n" +
@@ -777,6 +777,7 @@ public class TestFalling
     {
         // The animation for this is wrong so this test will need updating,
         // but the behaviour must show the rabbits dying.
+        // done for right slope. left rise outstanding.
 
         World world = createWorld(
             "rrrr",
@@ -801,7 +802,7 @@ public class TestFalling
                 "    ",
                 "rrrr",
                 "fxxf",
-                "h##e",
+                "x##e",
                 "####"
             )
         );

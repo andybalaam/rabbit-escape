@@ -60,6 +60,7 @@ public class Falling extends Behaviour
             case RABBIT_DYING_OF_FALLING:
             case RABBIT_DYING_OF_FALLING_2:
             case RABBIT_DYING_OF_FALLING_SLOPE_RISE_RIGHT_2:
+            case RABBIT_DYING_OF_FALLING_2_SLOPE_RISE_RIGHT_2:
             {
                 world.changes.killRabbit( rabbit );
                 return true;
@@ -69,6 +70,7 @@ public class Falling extends Behaviour
             case RABBIT_FALLING_ONTO_LOWER_LEFT:
             case RABBIT_FALLING_ONTO_RISE_RIGHT:
             case RABBIT_FALLING_ONTO_RISE_LEFT:
+            case RABBIT_DYING_OF_FALLING_2_SLOPE_RISE_RIGHT:
             {
                 heightFallen += 2;
                 rabbit.y = rabbit.y + 2;
@@ -127,6 +129,11 @@ public class Falling extends Behaviour
         if ( RABBIT_DYING_OF_FALLING_SLOPE_RISE_RIGHT == t.rabbit.state )
         { // part 2 of animation always comes next
             return RABBIT_DYING_OF_FALLING_SLOPE_RISE_RIGHT_2;
+        }
+        
+        if ( RABBIT_DYING_OF_FALLING_2_SLOPE_RISE_RIGHT == t.rabbit.state )
+        {
+            return RABBIT_DYING_OF_FALLING_2_SLOPE_RISE_RIGHT_2;
         }
         
         if ( !triggered )
@@ -191,6 +198,11 @@ public class Falling extends Behaviour
             Block twoBelow = t.block2Below();
             if ( twoBelow != null )
             {
+                if (   heightFallen + 1 > fatalHeight 
+                    && t.isRightRiseSlope( twoBelow ) )
+                {
+                    return RABBIT_DYING_OF_FALLING_2_SLOPE_RISE_RIGHT;
+                }
                 if ( t.isFlat( twoBelow ) ) // Flat block
                 {
                     return State.RABBIT_FALLING_1;
