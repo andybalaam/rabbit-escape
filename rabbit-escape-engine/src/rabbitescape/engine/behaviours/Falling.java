@@ -58,11 +58,8 @@ public class Falling extends Behaviour
         switch ( state )
         {
             case RABBIT_DYING_OF_FALLING:
-            {
-                world.changes.killRabbit( rabbit );
-                return true;
-            }
             case RABBIT_DYING_OF_FALLING_2:
+            case RABBIT_DYING_OF_FALLING_SLOPE_RISE_RIGHT_2:
             {
                 world.changes.killRabbit( rabbit );
                 return true;
@@ -127,6 +124,11 @@ public class Falling extends Behaviour
     @Override
     public State newState( BehaviourTools t, boolean triggered )
     {
+        if ( RABBIT_DYING_OF_FALLING_SLOPE_RISE_RIGHT == t.rabbit.state )
+        { // part 2 of animation always comes next
+            return RABBIT_DYING_OF_FALLING_SLOPE_RISE_RIGHT_2;
+        }
+        
         if ( !triggered )
         {
             if ( heightFallen > fatalHeight )
