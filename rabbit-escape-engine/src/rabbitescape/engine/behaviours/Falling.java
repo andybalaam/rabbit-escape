@@ -61,6 +61,7 @@ public class Falling extends Behaviour
             case RABBIT_DYING_OF_FALLING_2:
             case RABBIT_DYING_OF_FALLING_SLOPE_RISE_RIGHT_2:
             case RABBIT_DYING_OF_FALLING_2_SLOPE_RISE_RIGHT_2:
+            case RABBIT_DYING_OF_FALLING_SLOPE_RISE_LEFT_2:
             {
                 world.changes.killRabbit( rabbit );
                 return true;
@@ -77,6 +78,7 @@ public class Falling extends Behaviour
                 return true;
             }
             case RABBIT_DYING_OF_FALLING_SLOPE_RISE_RIGHT:
+            case RABBIT_DYING_OF_FALLING_SLOPE_RISE_LEFT:
             case RABBIT_FALLING_1_TO_DEATH:
             case RABBIT_FALLING_1:
             case RABBIT_FALLING_1_ONTO_LOWER_RIGHT:
@@ -126,6 +128,11 @@ public class Falling extends Behaviour
     @Override
     public State newState( BehaviourTools t, boolean triggered )
     {
+        if ( RABBIT_DYING_OF_FALLING_SLOPE_RISE_LEFT == t.rabbit.state )
+        { // part 2 of animation always comes next
+            return RABBIT_DYING_OF_FALLING_SLOPE_RISE_LEFT_2;
+        }
+        
         if ( RABBIT_DYING_OF_FALLING_SLOPE_RISE_RIGHT == t.rabbit.state )
         { // part 2 of animation always comes next
             return RABBIT_DYING_OF_FALLING_SLOPE_RISE_RIGHT_2;
@@ -167,6 +174,10 @@ public class Falling extends Behaviour
             if( t.isRightRiseSlope( t.blockBelow() ) )
             {
                 return RABBIT_DYING_OF_FALLING_SLOPE_RISE_RIGHT;
+            }
+            else if( t.isLeftRiseSlope( t.blockBelow() ) )
+            {
+                return RABBIT_DYING_OF_FALLING_SLOPE_RISE_LEFT;
             }
             else
             {
