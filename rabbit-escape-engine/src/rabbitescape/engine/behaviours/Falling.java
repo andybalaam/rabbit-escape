@@ -62,6 +62,7 @@ public class Falling extends Behaviour
             case RABBIT_DYING_OF_FALLING_SLOPE_RISE_RIGHT_2:
             case RABBIT_DYING_OF_FALLING_2_SLOPE_RISE_RIGHT_2:
             case RABBIT_DYING_OF_FALLING_SLOPE_RISE_LEFT_2:
+            case RABBIT_DYING_OF_FALLING_2_SLOPE_RISE_LEFT_2:
             {
                 world.changes.killRabbit( rabbit );
                 return true;
@@ -72,6 +73,7 @@ public class Falling extends Behaviour
             case RABBIT_FALLING_ONTO_RISE_RIGHT:
             case RABBIT_FALLING_ONTO_RISE_LEFT:
             case RABBIT_DYING_OF_FALLING_2_SLOPE_RISE_RIGHT:
+            case RABBIT_DYING_OF_FALLING_2_SLOPE_RISE_LEFT:
             {
                 heightFallen += 2;
                 rabbit.y = rabbit.y + 2;
@@ -131,6 +133,11 @@ public class Falling extends Behaviour
         if ( RABBIT_DYING_OF_FALLING_SLOPE_RISE_LEFT == t.rabbit.state )
         { // part 2 of animation always comes next
             return RABBIT_DYING_OF_FALLING_SLOPE_RISE_LEFT_2;
+        }
+
+        if ( RABBIT_DYING_OF_FALLING_2_SLOPE_RISE_LEFT == t.rabbit.state )
+        { // part 2 of animation always comes next
+            return RABBIT_DYING_OF_FALLING_2_SLOPE_RISE_LEFT_2;
         }
         
         if ( RABBIT_DYING_OF_FALLING_SLOPE_RISE_RIGHT == t.rabbit.state )
@@ -214,11 +221,16 @@ public class Falling extends Behaviour
                 {
                     return RABBIT_DYING_OF_FALLING_2_SLOPE_RISE_RIGHT;
                 }
+                if (   heightFallen + 1 > fatalHeight 
+                    && t.isLeftRiseSlope( twoBelow ) )
+                {
+                    return RABBIT_DYING_OF_FALLING_2_SLOPE_RISE_LEFT;
+                }
                 if ( t.isFlat( twoBelow ) ) // Flat block
                 {
                     return State.RABBIT_FALLING_1;
                 }
-                else if( t.isUpSlope( twoBelow ) )
+                if( t.isUpSlope( twoBelow ) )
                 {
                     return t.rl(
                         RABBIT_FALLING_ONTO_RISE_RIGHT,

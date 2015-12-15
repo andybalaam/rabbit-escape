@@ -37,6 +37,12 @@ public class ChangeDescription
         /** Part 2 of the animation for RABBIT_DYING_OF_FALLING_SLOPE_RISE_LEFT */
         RABBIT_DYING_OF_FALLING_SLOPE_RISE_LEFT_2,
         
+        /** The slope is two squares below where this starts. */
+        RABBIT_DYING_OF_FALLING_2_SLOPE_RISE_LEFT,
+        
+        /** Part 2 of RABBIT_DYING_OF_FALLING_2_SLOPE_RISE_RIGHT. */
+        RABBIT_DYING_OF_FALLING_2_SLOPE_RISE_LEFT_2,
+        
         /** The slope is one square below where this starts. */
         RABBIT_DYING_OF_FALLING_SLOPE_RISE_RIGHT,
         
