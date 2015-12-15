@@ -58,11 +58,11 @@ public class Falling extends Behaviour
         switch ( state )
         {
             case RABBIT_DYING_OF_FALLING:
-            {
-                world.changes.killRabbit( rabbit );
-                return true;
-            }
             case RABBIT_DYING_OF_FALLING_2:
+            case RABBIT_DYING_OF_FALLING_SLOPE_RISE_RIGHT_2:
+            case RABBIT_DYING_OF_FALLING_2_SLOPE_RISE_RIGHT_2:
+            case RABBIT_DYING_OF_FALLING_SLOPE_RISE_LEFT_2:
+            case RABBIT_DYING_OF_FALLING_2_SLOPE_RISE_LEFT_2:
             {
                 world.changes.killRabbit( rabbit );
                 return true;
@@ -72,12 +72,15 @@ public class Falling extends Behaviour
             case RABBIT_FALLING_ONTO_LOWER_LEFT:
             case RABBIT_FALLING_ONTO_RISE_RIGHT:
             case RABBIT_FALLING_ONTO_RISE_LEFT:
+            case RABBIT_DYING_OF_FALLING_2_SLOPE_RISE_RIGHT:
+            case RABBIT_DYING_OF_FALLING_2_SLOPE_RISE_LEFT:
             {
                 heightFallen += 2;
                 rabbit.y = rabbit.y + 2;
                 return true;
             }
             case RABBIT_DYING_OF_FALLING_SLOPE_RISE_RIGHT:
+            case RABBIT_DYING_OF_FALLING_SLOPE_RISE_LEFT:
             case RABBIT_FALLING_1_TO_DEATH:
             case RABBIT_FALLING_1:
             case RABBIT_FALLING_1_ONTO_LOWER_RIGHT:
@@ -127,19 +130,36 @@ public class Falling extends Behaviour
     @Override
     public State newState( BehaviourTools t, boolean triggered )
     {
+        if ( RABBIT_DYING_OF_FALLING_SLOPE_RISE_LEFT == t.rabbit.state )
+        { // part 2 of animation always comes next
+            return RABBIT_DYING_OF_FALLING_SLOPE_RISE_LEFT_2;
+        }
+
+        if ( RABBIT_DYING_OF_FALLING_2_SLOPE_RISE_LEFT == t.rabbit.state )
+        { // part 2 of animation always comes next
+            return RABBIT_DYING_OF_FALLING_2_SLOPE_RISE_LEFT_2;
+        }
+        
+        if ( RABBIT_DYING_OF_FALLING_SLOPE_RISE_RIGHT == t.rabbit.state )
+        { // part 2 of animation always comes next
+            return RABBIT_DYING_OF_FALLING_SLOPE_RISE_RIGHT_2;
+        }
+        
+        if ( RABBIT_DYING_OF_FALLING_2_SLOPE_RISE_RIGHT == t.rabbit.state )
+        {
+            return RABBIT_DYING_OF_FALLING_2_SLOPE_RISE_RIGHT_2;
+        }
+        
         if ( !triggered )
         {
             if ( heightFallen > fatalHeight )
             {
                 if ( heightFallen % 2 == 0 )
                 {
-                    // TODO: handle falling onto slopes
-
                     return RABBIT_DYING_OF_FALLING;
                 }
                 else
                 {
-                    // TODO: handle falling onto slopes
                     return RABBIT_DYING_OF_FALLING_2;
                 }
             }
@@ -154,10 +174,13 @@ public class Falling extends Behaviour
             )
         )
         {
-            // TODO: handle falling onto slopes
             if( t.isRightRiseSlope( t.blockBelow() ) )
             {
                 return RABBIT_DYING_OF_FALLING_SLOPE_RISE_RIGHT;
+            }
+            else if( t.isLeftRiseSlope( t.blockBelow() ) )
+            {
+                return RABBIT_DYING_OF_FALLING_SLOPE_RISE_LEFT;
             }
             else
             {
@@ -189,11 +212,21 @@ public class Falling extends Behaviour
             Block twoBelow = t.block2Below();
             if ( twoBelow != null )
             {
+                if (   heightFallen + 1 > fatalHeight 
+                    && t.isRightRiseSlope( twoBelow ) )
+                {
+                    return RABBIT_DYING_OF_FALLING_2_SLOPE_RISE_RIGHT;
+                }
+                if (   heightFallen + 1 > fatalHeight 
+                    && t.isLeftRiseSlope( twoBelow ) )
+                {
+                    return RABBIT_DYING_OF_FALLING_2_SLOPE_RISE_LEFT;
+                }
                 if ( t.isFlat( twoBelow ) ) // Flat block
                 {
                     return State.RABBIT_FALLING_1;
                 }
-                else if( t.isUpSlope( twoBelow ) )
+                if( t.isUpSlope( twoBelow ) )
                 {
                     return t.rl(
                         RABBIT_FALLING_ONTO_RISE_RIGHT,

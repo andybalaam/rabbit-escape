@@ -3,6 +3,9 @@ package rabbitescape.engine;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * This class contains the monolothic enum of rabbit and token states.
+ */
 public class ChangeDescription
 {
     public enum State
@@ -18,10 +21,40 @@ public class ChangeDescription
         RABBIT_TURNING_RIGHT_TO_LEFT_LOWERING,
         RABBIT_FALLING,
         RABBIT_FALLING_1,
+        
+        /** The flat block is two squares below where this starts.*/
         RABBIT_FALLING_1_TO_DEATH,
+        
+        /** Part 2 of the animation for RABBIT_FALLING_1_TO_DEATH.*/
         RABBIT_DYING_OF_FALLING_2,
+        
+        /** The rabbit starts on the death square.*/
         RABBIT_DYING_OF_FALLING,
+
+        /** The slope is one square below where this starts. */
+        RABBIT_DYING_OF_FALLING_SLOPE_RISE_LEFT,
+        
+        /** Part 2 of the animation for RABBIT_DYING_OF_FALLING_SLOPE_RISE_LEFT */
+        RABBIT_DYING_OF_FALLING_SLOPE_RISE_LEFT_2,
+        
+        /** The slope is two squares below where this starts. */
+        RABBIT_DYING_OF_FALLING_2_SLOPE_RISE_LEFT,
+        
+        /** Part 2 of RABBIT_DYING_OF_FALLING_2_SLOPE_RISE_RIGHT. */
+        RABBIT_DYING_OF_FALLING_2_SLOPE_RISE_LEFT_2,
+        
+        /** The slope is one square below where this starts. */
         RABBIT_DYING_OF_FALLING_SLOPE_RISE_RIGHT,
+        
+        /** Part 2 of the animation for RABBIT_DYING_OF_FALLING_SLOPE_RISE_RIGHT */
+        RABBIT_DYING_OF_FALLING_SLOPE_RISE_RIGHT_2,
+        
+        /** The slope is two squares below where this starts. */
+        RABBIT_DYING_OF_FALLING_2_SLOPE_RISE_RIGHT,
+        
+        /** Part 2 of RABBIT_DYING_OF_FALLING_2_SLOPE_RISE_RIGHT. */
+        RABBIT_DYING_OF_FALLING_2_SLOPE_RISE_RIGHT_2,
+        
         RABBIT_FALLING_ONTO_LOWER_RIGHT,
         RABBIT_FALLING_ONTO_RISE_RIGHT,
         RABBIT_FALLING_ONTO_LOWER_LEFT,
