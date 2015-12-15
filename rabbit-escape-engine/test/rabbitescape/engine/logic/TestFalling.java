@@ -384,7 +384,7 @@ public class TestFalling
             "   " + "\n" +
             "r r" + "\n" +
             "f f" + "\n" +
-            "x h",             // TODO: should die here (rise right done, rise left outstanding)
+            "x x",
 
             "   " + "\n" +
             "   " + "\n" +
@@ -802,7 +802,7 @@ public class TestFalling
                 "    ",
                 "rrrr",
                 "fxxf",
-                "x##e",
+                "x##x",
                 "####"
             )
         );
@@ -871,7 +871,7 @@ public class TestFalling
                 "    ",
                 "rrrr",
                 "fxxf",
-                "h##e",
+                "x##x",
                 "####"
             )
         );
