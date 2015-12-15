@@ -156,13 +156,10 @@ public class Falling extends Behaviour
             {
                 if ( heightFallen % 2 == 0 )
                 {
-                    // TODO: handle falling onto slopes
-
                     return RABBIT_DYING_OF_FALLING;
                 }
                 else
                 {
-                    // TODO: handle falling onto slopes
                     return RABBIT_DYING_OF_FALLING_2;
                 }
             }
@@ -177,7 +174,6 @@ public class Falling extends Behaviour
             )
         )
         {
-            // TODO: handle falling onto slopes
             if( t.isRightRiseSlope( t.blockBelow() ) )
             {
                 return RABBIT_DYING_OF_FALLING_SLOPE_RISE_RIGHT;
