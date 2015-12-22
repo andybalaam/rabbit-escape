@@ -2,6 +2,6 @@ package rabbitescape.render;
 
 public interface SizedRecyclable
 {
-    int size();
+    long size();
     void recycle();
 }

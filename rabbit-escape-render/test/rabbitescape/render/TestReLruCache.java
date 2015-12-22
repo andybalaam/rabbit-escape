@@ -177,7 +177,7 @@ public class TestReLruCache
         }
 
         @Override
-        public int size()
+        public long size()
         {
             return sz;
         }

@@ -56,7 +56,10 @@ public class SwingSingleGameEntryPoint extends SingleGameEntryPoint
             System.out,
             Locale.getDefault(),
             new BitmapCache<>(
-                new SwingBitmapLoader(), new SwingBitmapScaler(), 500 ),
+                new SwingBitmapLoader(),
+                new SwingBitmapScaler(),
+                SwingMain.cacheSize()
+            ),
             cfg,
             new MainJFrame( cfg, sound ),
             sound,

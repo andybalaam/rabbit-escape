@@ -38,9 +38,19 @@ public class ScaledBitmap<T extends Bitmap> implements SizedRecyclable
     }
 
     @Override
-    public int size()
+    public long size()
     {
-        return 1;
+        long ret = 0;
+        if ( bitmap != null )
+        {
+            ret += bitmap.getByteCount();
+        }
+        if ( unscaledBitmap != null && unscaledBitmap != bitmap )
+        {
+            ret += unscaledBitmap.getByteCount();
+        }
+        // Hack to make even not-yet-initialised images need some space
+        return ret > 0 ? ret : 1;
     }
 
     @Override

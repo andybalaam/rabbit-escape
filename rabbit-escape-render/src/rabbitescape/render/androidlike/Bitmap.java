@@ -10,6 +10,11 @@ public interface Bitmap
     public int height();
 
     /**
+     * @return the number of bytes of memory used by this bitmap
+     */
+    public long getByteCount();
+
+    /**
      * Reclaim the memory of this bitmap, if possible on this platform.
      */
     public void recycle();

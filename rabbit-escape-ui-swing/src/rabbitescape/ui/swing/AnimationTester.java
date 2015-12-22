@@ -408,7 +408,7 @@ public class AnimationTester extends JFrame
         SwingBitmapLoader bitmapLoader = new SwingBitmapLoader();
 
         BitmapCache<SwingBitmap> bitmapCache = new BitmapCache<SwingBitmap>(
-            bitmapLoader, scaler, 500 );
+            bitmapLoader, scaler, SwingMain.cacheSize() );
 
         frames = loadAllFrames( bitmapCache, animationNames );
         blockBitmaps = loadAllBlockBitmaps( bitmapCache, blockNames );

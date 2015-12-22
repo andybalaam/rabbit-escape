@@ -254,6 +254,12 @@ public class TestRendering
         public void recycle()
         {
         }
+
+        @Override
+        public long getByteCount()
+        {
+            return 1;
+        }
     }
 
     private static class FakePaint implements Paint

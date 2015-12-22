@@ -9,11 +9,14 @@ public class BitmapCache<T extends Bitmap>
     private final ReLruCache<ScaledBitmap<T>> cache;
 
     public BitmapCache(
-        BitmapLoader<T> loader, BitmapScaler<T> scaler, int maxSize )
+        BitmapLoader<T> loader,
+        BitmapScaler<T> scaler,
+        long cacheSize
+    )
     {
         this.loader = loader;
         this.scaler = scaler;
-        this.cache = new ReLruCache<ScaledBitmap<T>>( maxSize );
+        this.cache = new ReLruCache<ScaledBitmap<T>>( cacheSize );
     }
 
     public ScaledBitmap<T> get( String fileName )

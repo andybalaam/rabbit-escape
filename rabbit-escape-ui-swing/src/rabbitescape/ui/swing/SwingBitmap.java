@@ -44,4 +44,11 @@ public class SwingBitmap implements Bitmap
     {
         // We don't do anything here in the Swing world
     }
+
+    @Override
+    public long getByteCount()
+    {
+        // This is an estimate: about 4 bytes per pixel
+        return width() * height() * 4;
+    }
 }

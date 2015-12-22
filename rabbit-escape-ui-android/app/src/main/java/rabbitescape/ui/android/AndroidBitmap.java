@@ -30,6 +30,13 @@ public class AndroidBitmap implements Bitmap
     }
 
     @Override
+    public long getByteCount()
+    {
+        return bitmap.getRowBytes() * bitmap.getHeight();
+        // API level 12+: return bitmap.getByteCount();
+    }
+
+    @Override
     public void recycle()
     {
         bitmap.recycle();

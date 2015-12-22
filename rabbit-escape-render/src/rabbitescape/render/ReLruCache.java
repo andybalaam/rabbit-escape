@@ -57,14 +57,22 @@ public class ReLruCache<T extends SizedRecyclable>
 
     public long currentSize()
     {
-        return curSize;
+        // TODO: when values coming in here are already sized:
+        // return curSize;
+
+        long ret = 0;
+        for ( T value : map.values() )
+        {
+            ret += value.size();
+        }
+        return ret;
     }
 
     // ---
 
     private void makeSpaceFor( T value )
     {
-        int valueSize = value.size();
+        long valueSize = value.size();
         while ( !isEmpty() && currentSize() + valueSize > maxSize )
         {
             recycleOldest();

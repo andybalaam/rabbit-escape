@@ -244,6 +244,12 @@ public class TestBitmapCache
 
             recycled = true;
         }
+
+        @Override
+        public long getByteCount()
+        {
+            return 1;
+        }
     }
 
     private static class TrackingBitmapLoader

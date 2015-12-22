@@ -196,7 +196,13 @@ public class AndroidGameActivity extends RabbitEscapeActivity
     private BitmapCache<AndroidBitmap> createBitmapCache( Resources resources )
     {
         return new BitmapCache<AndroidBitmap>(
-            new AndroidBitmapLoader( resources ), new AndroidBitmapScaler(), 500 );
+            new AndroidBitmapLoader( resources ), new AndroidBitmapScaler(), cacheSize() );
+    }
+
+    private long cacheSize()
+    {
+        // About half of our memory will go on bitmaps
+        return Runtime.getRuntime().maxMemory() / 2;
     }
 
     @Override

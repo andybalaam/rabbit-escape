@@ -59,12 +59,18 @@ public class SwingMain
             System.out,
             locale,
             new BitmapCache<>(
-                new SwingBitmapLoader(), new SwingBitmapScaler(), 500 ),
+                new SwingBitmapLoader(), new SwingBitmapScaler(), cacheSize() ),
             config,
             sound
         );
 
         m.run( args );
+    }
+
+    public static long cacheSize()
+    {
+        // About half of the available memory we will give to images
+        return Runtime.getRuntime().maxMemory() / 2;
     }
 
     public void run( String[] args )
