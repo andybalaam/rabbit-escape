@@ -1,28 +1,19 @@
 package rabbitescape.render;
 
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.Map;
-import java.util.Queue;
-
 import rabbitescape.render.androidlike.Bitmap;
 
 public class BitmapCache<T extends Bitmap>
 {
     private final BitmapLoader<T> loader;
     private final BitmapScaler<T> scaler;
-    private final int size;
-    private final Map<String, ScaledBitmap<T>> cache;
-    private final Queue<String> usedKeys;
+    private final ReLruCache<ScaledBitmap<T>> cache;
 
     public BitmapCache(
-        BitmapLoader<T> loader, BitmapScaler<T> scaler, int size )
+        BitmapLoader<T> loader, BitmapScaler<T> scaler, int maxSize )
     {
         this.loader = loader;
         this.scaler = scaler;
-        this.size = size;
-        this.cache = new HashMap<>();
-        usedKeys = new LinkedList<>();
+        this.cache = new ReLruCache<ScaledBitmap<T>>( maxSize );
     }
 
     public ScaledBitmap<T> get( String fileName )
@@ -31,28 +22,10 @@ public class BitmapCache<T extends Bitmap>
 
         if ( ret == null )
         {
-            if ( full() )
-            {
-                String purgedKey = usedKeys.remove();
-                ScaledBitmap<T> removed = cache.remove( purgedKey );
-                if ( removed != null )
-                {
-                    removed.recycle();
-                }
-            }
-
             ret = new ScaledBitmap<T>( scaler, loader, fileName );
-
             cache.put( fileName, ret );
         }
 
-        usedKeys.remove( fileName );
-        usedKeys.add( fileName );
         return ret;
-    }
-
-    private boolean full()
-    {
-        return ( usedKeys.size() == size );
     }
 }

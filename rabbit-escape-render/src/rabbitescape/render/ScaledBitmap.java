@@ -2,7 +2,7 @@ package rabbitescape.render;
 
 import rabbitescape.render.androidlike.Bitmap;
 
-public class ScaledBitmap<T extends Bitmap>
+public class ScaledBitmap<T extends Bitmap> implements SizedRecyclable
 {
     private final BitmapScaler<T> scaler;
     private final BitmapLoader<T> loader;
@@ -37,6 +37,13 @@ public class ScaledBitmap<T extends Bitmap>
         return bitmap;
     }
 
+    @Override
+    public int size()
+    {
+        return 1;
+    }
+
+    @Override
     public void recycle()
     {
         replaceBitmap( null );
