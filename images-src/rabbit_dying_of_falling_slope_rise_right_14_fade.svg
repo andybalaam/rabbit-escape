@@ -14,7 +14,7 @@
    id="svg2"
    version="1.1"
    inkscape:version="0.48.5 r10040"
-   sodipodi:docname="rabbit_dying_of_falling_slope_rise_right_14.svg">
+   sodipodi:docname="rabbit_dying_of_falling_slope_rise_right_14_fade.svg">
   <defs
      id="defs4" />
   <sodipodi:namedview
@@ -51,7 +51,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title />
+        <dc:title></dc:title>
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -62,7 +62,7 @@
      transform="translate(0,-1020.3622)">
     <path
        sodipodi:type="arc"
-       style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-opacity:1;stroke-width:2.318677;stroke-miterlimit:4;stroke-dasharray:none"
+       style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-opacity:1;stroke-width:2.31867700000000010;stroke-miterlimit:4;stroke-dasharray:none;opacity:0.33"
        id="path3770"
        sodipodi:cx="16.782223"
        sodipodi:cy="9.8488894"
@@ -72,7 +72,7 @@
        transform="matrix(-0.11435277,-0.19424529,0.63912841,-0.54091493,8.0107311,1041.0337)" />
     <path
        sodipodi:type="arc"
-       style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-opacity:1;stroke-width:0.84069277;stroke-miterlimit:4;stroke-dasharray:none"
+       style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-opacity:1;stroke-width:0.84069276999999998;stroke-miterlimit:4;stroke-dasharray:none;opacity:0.33"
        id="path3794"
        sodipodi:cx="20.088888"
        sodipodi:cy="9.7066669"
