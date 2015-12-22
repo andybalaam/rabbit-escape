@@ -77,6 +77,8 @@ public class TestReLruCache
         // This is what we are testing: obj1 got removed
         assertThat( cache.get( "obj1" ), nullValue() );
         assertThat( obj1.recycled, is( true ) );
+
+        assertThat( cache.currentSize(), is( 10 ) );
     }
 
     @Test
@@ -102,6 +104,8 @@ public class TestReLruCache
         // This is what we are testing: obj2 got removed
         assertThat( cache.get( "obj2" ), nullValue() );
         assertThat( obj2.recycled, is( true ) );
+
+        assertThat( cache.currentSize(), is( 10 ) );
     }
 
     @Test
@@ -128,6 +132,8 @@ public class TestReLruCache
         // This is what we are testing: obj2 got removed
         assertThat( cache.get( "obj2" ), nullValue() );
         assertThat( obj2.recycled, is( true ) );
+
+        assertThat( cache.currentSize(), is( 10 ) );
     }
 
     @Test
@@ -154,6 +160,8 @@ public class TestReLruCache
         assertThat( cache.get( "obj2" ), nullValue() );
         assertThat( obj1.recycled, is( true ) );
         assertThat( obj2.recycled, is( true ) );
+
+        assertThat( cache.currentSize(), is( 15 ) );
     }
 
     // ---

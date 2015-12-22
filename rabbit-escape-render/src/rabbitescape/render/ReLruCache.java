@@ -8,12 +8,14 @@ import java.util.Queue;
 public class ReLruCache<T extends SizedRecyclable>
 {
     private final int maxSize;
+    private int curSize;
     private final Map<String, T> map;
     private final Queue<String> usedKeys;
 
     public ReLruCache( int maxSize )
     {
         this.maxSize = maxSize;
+        this.curSize = 0;
         this.map = new HashMap<>();
         this.usedKeys = new LinkedList<>();
     }
@@ -22,13 +24,22 @@ public class ReLruCache<T extends SizedRecyclable>
     {
         if ( value == null )
         {
-            throw new IllegalArgumentException( "Null values are not allowed in LruCache" );
+            throw new IllegalArgumentException(
+                "Null values are not allowed in LruCache" );
         }
 
         makeSpaceFor( value );
 
+        T existing = map.get( key );
+        if ( existing != null )
+        {
+            usedKeys.remove( key );
+            curSize -= existing.size();
+        }
+
         usedKeys.add( key );
         map.put( key, value );
+        curSize += value.size();
     }
 
     public T get( String key )
@@ -46,7 +57,7 @@ public class ReLruCache<T extends SizedRecyclable>
 
     public int currentSize()
     {
-        return sumOfValueSizes( map );
+        return curSize;
     }
 
     // ---
@@ -69,19 +80,8 @@ public class ReLruCache<T extends SizedRecyclable>
     {
         String oldestKey = usedKeys.remove();
         T value = map.remove( oldestKey );
+        curSize -= value.size();
         value.recycle();
-    }
-
-    private int sumOfValueSizes( Map<String, T> map2 )
-    {
-        int ret = 0;
-
-        for ( T value : map2.values() )
-        {
-            ret += value.size();
-        }
-
-        return ret;
     }
 }
 
