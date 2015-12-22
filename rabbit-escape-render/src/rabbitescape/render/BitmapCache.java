@@ -31,7 +31,7 @@ public class BitmapCache<T extends Bitmap>
 
         if ( ret == null )
         {
-            if ( usedKeys.size() == size )
+            if ( full() )
             {
                 String purgedKey = usedKeys.remove();
                 ScaledBitmap<T> removed = cache.remove( purgedKey );
@@ -49,5 +49,10 @@ public class BitmapCache<T extends Bitmap>
         usedKeys.remove( fileName );
         usedKeys.add( fileName );
         return ret;
+    }
+
+    private boolean full()
+    {
+        return ( usedKeys.size() == size );
     }
 }
