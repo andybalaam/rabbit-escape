@@ -10,7 +10,7 @@ public class TestReLruCache
     @Test
     public void Can_get_elements_that_were_added()
     {
-        ReLruCache<Obj> cache = new ReLruCache<Obj>( 10 );
+        ReLruCache<Obj> cache = new ReLruCache<Obj>( 10L );
 
         Obj obj1 = new Obj( 1 );
         Obj obj2 = new Obj( 1 );
@@ -32,11 +32,11 @@ public class TestReLruCache
         cache.put( "obj2", new Obj( 1 ) );
 
         // This is what we are testing: size is the total
-        assertThat( cache.currentSize(), is( 15 ) );
+        assertThat( cache.currentSize(), is( 15L ) );
 
         // Another object adds to the size again
         cache.put( "obj3", new Obj( 3 ) );
-        assertThat( cache.currentSize(), is( 18 ) );
+        assertThat( cache.currentSize(), is( 18L ) );
     }
 
     @Test
@@ -48,15 +48,15 @@ public class TestReLruCache
         cache.put( "obj2", new Obj( 1 ) );
 
         // Sanity
-        assertThat( cache.currentSize(), is( 15 ) );
+        assertThat( cache.currentSize(), is( 15L ) );
 
         // obj2 replaced - the size it takes changes from 1 to 3
         cache.put( "obj2", new Obj( 3 ) );
-        assertThat( cache.currentSize(), is( 17 ) );
+        assertThat( cache.currentSize(), is( 17L ) );
 
         // obj1 replaced - the size it takes changes from 14 to 7
         cache.put( "obj1", new Obj( 7 ) );
-        assertThat( cache.currentSize(), is( 10 ) );
+        assertThat( cache.currentSize(), is( 10L ) );
     }
 
     @Test
@@ -78,7 +78,7 @@ public class TestReLruCache
         assertThat( cache.get( "obj1" ), nullValue() );
         assertThat( obj1.recycled, is( true ) );
 
-        assertThat( cache.currentSize(), is( 10 ) );
+        assertThat( cache.currentSize(), is( 10L ) );
     }
 
     @Test
@@ -105,7 +105,7 @@ public class TestReLruCache
         assertThat( cache.get( "obj2" ), nullValue() );
         assertThat( obj2.recycled, is( true ) );
 
-        assertThat( cache.currentSize(), is( 10 ) );
+        assertThat( cache.currentSize(), is( 10L ) );
     }
 
     @Test
@@ -133,7 +133,7 @@ public class TestReLruCache
         assertThat( cache.get( "obj2" ), nullValue() );
         assertThat( obj2.recycled, is( true ) );
 
-        assertThat( cache.currentSize(), is( 10 ) );
+        assertThat( cache.currentSize(), is( 10L ) );
     }
 
     @Test
@@ -161,7 +161,7 @@ public class TestReLruCache
         assertThat( obj1.recycled, is( true ) );
         assertThat( obj2.recycled, is( true ) );
 
-        assertThat( cache.currentSize(), is( 15 ) );
+        assertThat( cache.currentSize(), is( 15L ) );
     }
 
     // ---

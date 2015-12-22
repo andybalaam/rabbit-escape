@@ -7,12 +7,12 @@ import java.util.Queue;
 
 public class ReLruCache<T extends SizedRecyclable>
 {
-    private final int maxSize;
-    private int curSize;
+    private final long maxSize;
+    private long curSize;
     private final Map<String, T> map;
     private final Queue<String> usedKeys;
 
-    public ReLruCache( int maxSize )
+    public ReLruCache( long maxSize )
     {
         this.maxSize = maxSize;
         this.curSize = 0;
@@ -55,7 +55,7 @@ public class ReLruCache<T extends SizedRecyclable>
         return ret;
     }
 
-    public int currentSize()
+    public long currentSize()
     {
         return curSize;
     }
