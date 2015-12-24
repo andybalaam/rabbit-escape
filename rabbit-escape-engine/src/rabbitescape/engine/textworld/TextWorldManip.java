@@ -233,8 +233,8 @@ public class TextWorldManip
         ret.add( metaLine( description,  world.description ) );
         ret.add( metaLine( author_name,  world.author_name ) );
         ret.add( metaLine( author_url,   world.author_url ) );
+        addMetaKeyArrayLines( ret, hint, world.hints );
         addMetaKeyArrayLines( ret, solution, world.solutions );
-        addMetaKeyArrayLines( ret, hint, world.solutions );
         ret.add( metaLine( num_rabbits,  world.num_rabbits ) );
         ret.add( metaLine( num_to_save,  world.num_to_save ) );
         ret.add( metaLine( rabbit_delay, world.rabbit_delay ) );
