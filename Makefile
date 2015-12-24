@@ -149,7 +149,8 @@ all: compile
 
 # Fails if the Makefile contains any warnings
 no-make-warnings:
-	! make -n $(MAKECMDGOALS) 2>&1 >/dev/null | grep warning
+	@echo ". Checking for warnings in Makefile"
+	@! make -n $(MAKECMDGOALS) 2>&1 >/dev/null | grep warning
 
 dist: no-make-warnings dist-swing dist-android-release-signed
 
@@ -194,13 +195,18 @@ animations: no-make-warnings $(ANIMATIONS_DIR)/ls.txt
 levels: no-make-warnings $(patsubst %, %/ls.txt, $(LEVELS_DIRS))
 
 versioncheck:
-	grep "version = \"${VERSION}\"" rabbit-escape-engine/src/rabbitescape/engine/menu/AboutText.java
-	grep "versionName \"${VERSION}\"" rabbit-escape-ui-android/app/build.gradle
+	@echo ". Checking version number (${VERSION}) is consistent everywhere"
+	@grep "version = \"${VERSION}\"" \
+		rabbit-escape-engine/src/rabbitescape/engine/menu/AboutText.java \
+		> /dev/null
+	@grep "versionName \"${VERSION}\"" \
+		rabbit-escape-ui-android/app/build.gradle > /dev/null
 
 # Fails if we use java.awt in the engine code - this is not available on Android
 no-awt-in-engine:
-	! find rabbit-escape-engine/src -name "*.java" -print0 | xargs -0 grep 'java\.awt'
-	! find rabbit-escape-render/src -name "*.java" -print0 | xargs -0 grep 'java\.awt'
+	@echo ". Checking for use of java.awt in engine code"
+	@! find rabbit-escape-engine/src -name "*.java" -print0 | xargs -0 grep 'java\.awt'
+	@! find rabbit-escape-render/src -name "*.java" -print0 | xargs -0 grep 'java\.awt'
 
 compile-noui: \
 		no-make-warnings \
@@ -208,7 +214,8 @@ compile-noui: \
 		no-awt-in-engine \
 		animations \
 		levels
-	ant compile
+	@echo ". Compiling"
+	@ant -quiet compile
 
 compile: compile-noui images sounds music
 
@@ -264,13 +271,15 @@ runat: compile
 	java -cp $(CLASSPATH) rabbitescape.ui.swing.AnimationTester
 
 test: compile
-	# Work around what looks like an Ant 1.9 bug by including the classpath here
-	CLASSPATH=lib/org.hamcrest.core_1.3.0.jar:lib/junit.jar ant test
+	@echo ". Running unit tests"
+	@# Work around what looks like an Ant 1.9 bug by including the classpath here
+	@CLASSPATH=lib/org.hamcrest.core_1.3.0.jar:lib/junit.jar ant -quiet test
 
 slowtest: test slowtest-run
 
 slowtest-run:
-	./slowtests/slowtests
+	@echo ". Running system tests"
+	@./slowtests/slowtests
 
 # Android
 # -------
