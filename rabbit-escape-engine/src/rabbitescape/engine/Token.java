@@ -31,6 +31,7 @@ public class Token extends Thing
         block,
         climb,
         explode,
+        brolly
     }
 
     public final Type type;
@@ -63,6 +64,9 @@ public class Token extends Thing
             case explode: return moving ?
                 TOKEN_EXPLODE_FALLING : TOKEN_EXPLODE_STILL;
 
+            case brolly: return moving ?
+                TOKEN_BROLLY_FALLING : TOKEN_BROLLY_STILL;
+            
             default: throw new UnknownType( type );
         }
     }
@@ -116,6 +120,7 @@ public class Token extends Thing
             || state == TOKEN_BLOCK_FALLING
             || state == TOKEN_CLIMB_FALLING
             || state == TOKEN_EXPLODE_FALLING
+            || state == TOKEN_BROLLY_FALLING
         )
         {
             ++y;

@@ -524,6 +524,12 @@ public class LineProcessor
                 things.add( ret );
                 break;
             }
+            case 'l':
+            {
+                ret = new Token( x, y, Token.Type.brolly );
+                things.add( ret );
+                break;
+            }
             case '*':
             {
                 starPoints.add( new Point( x, y ) );

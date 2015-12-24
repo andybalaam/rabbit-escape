@@ -148,6 +148,8 @@ public class ChangeDescription
         TOKEN_CLIMB_FALLING,
         TOKEN_EXPLODE_FALLING,
         TOKEN_EXPLODE_STILL,
+        TOKEN_BROLLY_FALLING,
+        TOKEN_BROLLY_STILL,
         ENTRANCE,
         EXIT,
     }
