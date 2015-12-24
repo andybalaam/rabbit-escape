@@ -106,9 +106,7 @@ public class World
     public final String description;
     public final String author_name;
     public final String author_url;
-    public final String hint1;
-    public final String hint2;
-    public final String hint3;
+    public final String[] hints;
     public final String[] solutions;
     public final int num_rabbits;
     public final int num_to_save;
@@ -133,9 +131,7 @@ public class World
         String description,
         String author_name,
         String author_url,
-        String hint1,
-        String hint2,
-        String hint3,
+        String[] hints,
         String[] solutions,
         int num_rabbits,
         int num_to_save,
@@ -156,9 +152,7 @@ public class World
         this.description = description;
         this.author_name = author_name;
         this.author_url = author_url;
-        this.hint1 = hint1;
-        this.hint2 = hint2;
-        this.hint3 = hint3;
+        this.hints = hints;
         this.solutions = solutions;
         this.num_rabbits = num_rabbits;
         this.num_to_save = num_to_save;
