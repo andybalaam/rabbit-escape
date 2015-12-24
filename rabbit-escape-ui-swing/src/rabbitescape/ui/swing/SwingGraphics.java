@@ -32,8 +32,8 @@ public class SwingGraphics implements Graphics
 
         private final java.awt.Canvas canvas;
         private final Renderer<SwingBitmap, SwingPaint> renderer;
-        private final SoundPlayer<SwingBitmap> soundPlayer;
-        private final SpriteAnimator<SwingBitmap> animator;
+        private final SoundPlayer soundPlayer;
+        private final SpriteAnimator animator;
         private final int frameNum;
         private final World world;
 
@@ -41,8 +41,8 @@ public class SwingGraphics implements Graphics
             BufferStrategy strategy,
             java.awt.Canvas canvas,
             Renderer<SwingBitmap, SwingPaint> renderer,
-            SoundPlayer<SwingBitmap> soundPlayer,
-            SpriteAnimator<SwingBitmap> animator,
+            SoundPlayer soundPlayer,
+            SpriteAnimator animator,
             int frameNum,
             World world
         )
@@ -71,7 +71,7 @@ public class SwingGraphics implements Graphics
                 graphPaperMinor
             );
 
-            List<Sprite<SwingBitmap>> sprites = animator.getSprites( frameNum );
+            List<Sprite> sprites = animator.getSprites( frameNum );
 
             renderer.render(
                 swingCanvas,
@@ -87,11 +87,10 @@ public class SwingGraphics implements Graphics
 
     private final GameUi jframe;
     private final BufferStrategy strategy;
-    private final AnimationCache animationCache;
-    private final SpriteAnimator<SwingBitmap> animator;
+    private final SpriteAnimator animator;
 
     public final Renderer<SwingBitmap, SwingPaint> renderer;
-    private final SoundPlayer<SwingBitmap> soundPlayer;
+    private final SoundPlayer soundPlayer;
 
     private int prevScrollX;
     private int prevScrollY;
@@ -107,12 +106,13 @@ public class SwingGraphics implements Graphics
         this.world = world;
         this.jframe = jframe;
         this.strategy = jframe.canvas.getBufferStrategy();
-        this.animationCache = new AnimationCache( new AnimationLoader() );
-        this.animator = new SpriteAnimator<SwingBitmap>(
-            world, bitmapCache, animationCache );
+        this.animator = new SpriteAnimator(
+            world, new AnimationCache( new AnimationLoader() ) );
 
-        this.renderer = new Renderer<SwingBitmap, SwingPaint>( 0, 0, -1 );
-        this.soundPlayer = new SoundPlayer<SwingBitmap>( sound );
+        this.renderer = new Renderer<SwingBitmap, SwingPaint>(
+            0, 0, -1, bitmapCache );
+
+        this.soundPlayer = new SoundPlayer( sound );
 
         this.prevScrollX = -1;
         this.prevScrollY = -1;

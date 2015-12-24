@@ -5,12 +5,10 @@ import java.util.List;
 import java.util.Locale;
 
 import rabbitescape.engine.*;
-import rabbitescape.render.androidlike.Bitmap;
 
-public class SpriteAnimator<T extends Bitmap>
+public class SpriteAnimator
 {
     private final World world;
-    private final BitmapCache<T> bitmapCache;
     private final AnimationCache animationCache;
 
     private static final String[] land_block = new String[]
@@ -42,18 +40,16 @@ public class SpriteAnimator<T extends Bitmap>
 
     public SpriteAnimator(
         World world,
-        BitmapCache<T> bitmapCache,
         AnimationCache animationCache
     )
     {
         this.world = world;
-        this.bitmapCache = bitmapCache;
         this.animationCache = animationCache;
     }
 
-    public List<Sprite<T>> getSprites( int frameNum )
+    public List<Sprite> getSprites( int frameNum )
     {
-        List<Sprite<T>> ret = new ArrayList<>();
+        List<Sprite> ret = new ArrayList<>();
 
         for ( Block block : world.blockTable )
         {
@@ -87,11 +83,11 @@ public class SpriteAnimator<T extends Bitmap>
         return ret;
     }
 
-    private void addBlock( Block block, List<Sprite<T>> ret )
+    private void addBlock( Block block, List<Sprite> ret )
     {
         ret.add(
-            new Sprite<T>(
-                bitmapForBlock( block ),
+            new Sprite(
+                bitmapNameForBlock( block ),
                 null,
                 block.x,
                 block.y,
@@ -105,24 +101,24 @@ public class SpriteAnimator<T extends Bitmap>
         int frameNum,
         Thing thing,
         String soundEffectOverride,
-        List<Sprite<T>> ret
+        List<Sprite> ret
     )
     {
         Frame frame = frameForThing( frameNum, thing );
 
-        ScaledBitmap<T> bitmap = null;
+        String bitmapName = null;
         int offsetX = 0;
         int offsetY = 0;
         if ( frame != null )
         {
-            bitmap = bitmapCache.get( frame.name );
+            bitmapName = frame.name;
             offsetX = frame.offsetX;
             offsetY = frame.offsetY;
         }
 
         ret.add(
-            new Sprite<T>(
-                bitmap,
+            new Sprite(
+                bitmapName,
                 soundEffectForFrame( soundEffectOverride, frame ),
                 thing.x,
                 thing.y,
@@ -165,11 +161,6 @@ public class SpriteAnimator<T extends Bitmap>
         }
 
         return animation.get( frameNum );
-    }
-
-    private ScaledBitmap<T> bitmapForBlock( Block block )
-    {
-        return bitmapCache.get( bitmapNameForBlock( block ) );
     }
 
     private String bitmapNameForBlock( Block block )

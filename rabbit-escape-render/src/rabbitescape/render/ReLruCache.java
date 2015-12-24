@@ -1,11 +1,13 @@
 package rabbitescape.render;
 
+import rabbitescape.render.androidlike.Bitmap;
+
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
 import java.util.Queue;
 
-public class ReLruCache<T extends SizedRecyclable>
+public class ReLruCache<T extends Bitmap>
 {
     private final long maxSize;
     private long curSize;
@@ -34,12 +36,12 @@ public class ReLruCache<T extends SizedRecyclable>
         if ( existing != null )
         {
             usedKeys.remove( key );
-            curSize -= existing.size();
+            curSize -= existing.getByteCount();
         }
 
         usedKeys.add( key );
         map.put( key, value );
-        curSize += value.size();
+        curSize += value.getByteCount();
     }
 
     public T get( String key )
@@ -57,22 +59,24 @@ public class ReLruCache<T extends SizedRecyclable>
 
     public long currentSize()
     {
-        // TODO: when values coming in here are already sized:
-        // return curSize;
+        return curSize;
+    }
 
-        long ret = 0;
-        for ( T value : map.values() )
+    public void recycle()
+    {
+        for ( T bitmap : map.values() )
         {
-            ret += value.size();
+            bitmap.recycle();
         }
-        return ret;
+        map.clear();
+        usedKeys.clear();
     }
 
     // ---
 
     private void makeSpaceFor( T value )
     {
-        long valueSize = value.size();
+        long valueSize = value.getByteCount();
         while ( !isEmpty() && currentSize() + valueSize > maxSize )
         {
             recycleOldest();
@@ -88,7 +92,7 @@ public class ReLruCache<T extends SizedRecyclable>
     {
         String oldestKey = usedKeys.remove();
         T value = map.remove( oldestKey );
-        curSize -= value.size();
+        curSize -= value.getByteCount();
         value.recycle();
     }
 }

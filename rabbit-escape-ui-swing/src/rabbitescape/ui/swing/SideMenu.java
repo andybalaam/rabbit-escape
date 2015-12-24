@@ -145,6 +145,6 @@ class SideMenu
     private ImageIcon getIcon( String name )
     {
         return new ImageIcon(
-            bitmapCache.get( name ).bitmap( ICON_SIZE ).image );
+            bitmapCache.get( name, ICON_SIZE ).image );
     }
 }

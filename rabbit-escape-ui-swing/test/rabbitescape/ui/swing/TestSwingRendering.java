@@ -10,37 +10,56 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 
+import rabbitescape.render.BitmapCache;
 import rabbitescape.render.Renderer;
-import rabbitescape.render.ScaledBitmap;
 import rabbitescape.render.Sprite;
 
 public class TestSwingRendering
 {
+    private SwingBitmapLoader loader;
+    private BitmapCache<SwingBitmap> cache;
+
+    @Before
+    public void setUp()
+    {
+        loader = new SwingBitmapLoader();
+        cache = new BitmapCache<SwingBitmap>(
+            loader,
+            new SwingBitmapScaler(),
+            Runtime.getRuntime().maxMemory() / 8
+        );
+    }
+
+    @After
+    public void tearDown()
+    {
+        cache.recycle();
+    }
+
     @Test
     public void Draw_sprites_on_grid_lines_unscaled()
     {
-        SwingBitmapLoader bitmapLoader = new SwingBitmapLoader();
-        SwingBitmapScaler scaler = new SwingBitmapScaler();
+        List<Sprite> sprites =
+            new ArrayList<Sprite>();
 
-        List<Sprite<SwingBitmap>> sprites =
-            new ArrayList<Sprite<SwingBitmap>>();
-
-        sprites.add( sprite( scaler, bitmapLoader, 0, 0, 0, 0 ) );
-        sprites.add( sprite( scaler, bitmapLoader, 1, 0, 0, 0 ) );
-        sprites.add( sprite( scaler, bitmapLoader, 0, 1, 0, 0 ) );
-        sprites.add( sprite( scaler, bitmapLoader, 1, 1, 0, 0 ) );
-        sprites.add( sprite( scaler, bitmapLoader, 1, 2, 0, 0 ) );
+        sprites.add( sprite( 0, 0, 0, 0 ) );
+        sprites.add( sprite( 1, 0, 0, 0 ) );
+        sprites.add( sprite( 0, 1, 0, 0 ) );
+        sprites.add( sprite( 1, 1, 0, 0 ) );
+        sprites.add( sprite( 1, 2, 0, 0 ) );
 
         SwingBitmapCanvas output = blankCanvas( 64, 96 );
 
         Renderer<SwingBitmap, SwingPaint> renderer =
-            new Renderer<SwingBitmap, SwingPaint>( 0, 0, 32 );
+            new Renderer<SwingBitmap, SwingPaint>( 0, 0, 32, cache );
 
         renderer.render( output, sprites, new SwingPaint( null ) );
 
-        SwingBitmap expected = bitmapLoader.load( "sixx", 32 );
+        SwingBitmap expected = loader.load( "sixx", 32 );
 
         assertThat( output.bitmap, equalTo( expected ) );
     }
@@ -48,22 +67,19 @@ public class TestSwingRendering
     @Test
     public void Renderer_can_be_offset()
     {
-        SwingBitmapLoader bitmapLoader = new SwingBitmapLoader();
-        SwingBitmapScaler scaler = new SwingBitmapScaler();
+        List<Sprite> sprites =
+            new ArrayList<Sprite>();
 
-        List<Sprite<SwingBitmap>> sprites =
-            new ArrayList<Sprite<SwingBitmap>>();
-
-        sprites.add( sprite( scaler, bitmapLoader, 0, 0, 0, 0 ) );
+        sprites.add( sprite( 0, 0, 0, 0 ) );
 
         SwingBitmapCanvas output = blankCanvas( 35, 34 );
 
         Renderer<SwingBitmap, SwingPaint> renderer =
-            new Renderer<SwingBitmap, SwingPaint>( 3, 2, 32 );
+            new Renderer<SwingBitmap, SwingPaint>( 3, 2, 32, cache );
 
         renderer.render( output, sprites, new SwingPaint( null ) );
 
-        SwingBitmap expected = bitmapLoader.load( "x32", 32 );
+        SwingBitmap expected = loader.load( "x32", 32 );
 
         assertThat( output.bitmap, equalTo( expected ) );
     }
@@ -71,24 +87,20 @@ public class TestSwingRendering
     @Test
     public void Renderer_tile_size_can_be_non_32()
     {
-        SwingBitmapLoader bitmapLoader = new SwingBitmapLoader();
-            // The tile size  of this loader is 32, which is larger ...
-        SwingBitmapScaler scaler = new SwingBitmapScaler();
+        List<Sprite> sprites =
+            new ArrayList<Sprite>();
 
-        List<Sprite<SwingBitmap>> sprites =
-            new ArrayList<Sprite<SwingBitmap>>();
-
-        sprites.add( sprite( scaler, bitmapLoader, 1, 1, 0, 0 ) );
+        sprites.add( sprite( 1, 1, 0, 0 ) );
 
         SwingBitmapCanvas output = blankCanvas( 35, 34 );
 
         Renderer<SwingBitmap, SwingPaint> renderer =
-            new Renderer<SwingBitmap, SwingPaint>( 3, 2, 16 );
+            new Renderer<SwingBitmap, SwingPaint>( 3, 2, 16, cache );
             // ... but the renderer gets to say what size it wants (16).
 
         renderer.render( output, sprites, new SwingPaint( null ) );
 
-        SwingBitmap expected = bitmapLoader.load( "x16-32", 32 );
+        SwingBitmap expected = loader.load( "x16-32", 32 );
 
         assertThat( output.bitmap, equalTo( expected ) );
     }
@@ -96,24 +108,21 @@ public class TestSwingRendering
     @Test
     public void Sprites_can_be_offset_individually()
     {
-        SwingBitmapLoader bitmapLoader = new SwingBitmapLoader();
-        SwingBitmapScaler scaler = new SwingBitmapScaler();
+        List<Sprite> sprites =
+            new ArrayList<Sprite>();
 
-        List<Sprite<SwingBitmap>> sprites =
-            new ArrayList<Sprite<SwingBitmap>>();
-
-        sprites.add( sprite( scaler, bitmapLoader, 0, 0, 3, 2 ) );
+        sprites.add( sprite( 0, 0, 3, 2 ) );
         // the Sprite is offset
 
         SwingBitmapCanvas output = blankCanvas( 35, 34 );
 
         Renderer<SwingBitmap, SwingPaint> renderer =
-            new Renderer<SwingBitmap, SwingPaint>( 0, 0, 32 );
+            new Renderer<SwingBitmap, SwingPaint>( 0, 0, 32, cache );
         // the Renderer is not
 
         renderer.render( output, sprites, new SwingPaint( null ) );
 
-        SwingBitmap expected = bitmapLoader.load( "x32", 32 );
+        SwingBitmap expected = loader.load( "x32", 32 );
 
         assertThat( output.bitmap, equalTo( expected ) );
     }
@@ -121,25 +130,22 @@ public class TestSwingRendering
     @Test
     public void Sprites_offset_is_scaled_relative_to_tile_size()
     {
-        SwingBitmapLoader bitmapLoader = new SwingBitmapLoader();
-        SwingBitmapScaler scaler = new SwingBitmapScaler();
+        List<Sprite> sprites =
+            new ArrayList<Sprite>();
 
-        List<Sprite<SwingBitmap>> sprites =
-            new ArrayList<Sprite<SwingBitmap>>();
-
-        sprites.add( sprite( scaler, bitmapLoader, 1, 1, 6, 4 ) );
+        sprites.add( sprite( 1, 1, 6, 4 ) );
 
         SwingBitmapCanvas output = blankCanvas( 35, 34 );
 
         Renderer<SwingBitmap, SwingPaint> renderer =
-            new Renderer<SwingBitmap, SwingPaint>( 0, 0, 16 );
+            new Renderer<SwingBitmap, SwingPaint>( 0, 0, 16, cache );
 
         renderer.render( output, sprites, new SwingPaint( null ) );
 
         assertThat( sprites.get( 0 ).offsetX( 16 ), equalTo( 3 ) );
         assertThat( sprites.get( 0 ).offsetY( 16 ), equalTo( 2 ) );
 
-        SwingBitmap expected = bitmapLoader.load( "x16-32", 32 );
+        SwingBitmap expected = loader.load( "x16-32", 32 );
 
         assertThat( output.bitmap, equalTo( expected ) );
     }
@@ -163,17 +169,15 @@ public class TestSwingRendering
         return new SwingBitmapCanvas( outBitmap );
     }
 
-    private Sprite<SwingBitmap> sprite(
-        SwingBitmapScaler scaler,
-        SwingBitmapLoader bitmapLoader,
+    private Sprite sprite(
         int tileX,
         int tileY,
         int offsetX,
         int offsetY
     )
     {
-        return new Sprite<SwingBitmap>(
-            new ScaledBitmap<SwingBitmap>( scaler, bitmapLoader, "x" ),
+        return new Sprite(
+            "x",
             null,
             tileX,
             tileY,

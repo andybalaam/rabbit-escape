@@ -4,6 +4,7 @@ import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.*;
 
 import org.junit.Test;
+import rabbitescape.render.androidlike.Bitmap;
 
 public class TestReLruCache
 {
@@ -166,7 +167,7 @@ public class TestReLruCache
 
     // ---
 
-    private static class Obj implements SizedRecyclable
+    private static class Obj implements Bitmap
     {
         private final int sz;
         public boolean recycled = false;
@@ -177,7 +178,25 @@ public class TestReLruCache
         }
 
         @Override
-        public long size()
+        public String name()
+        {
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
+        public int width()
+        {
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
+        public int height()
+        {
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
+        public long getByteCount()
         {
             return sz;
         }

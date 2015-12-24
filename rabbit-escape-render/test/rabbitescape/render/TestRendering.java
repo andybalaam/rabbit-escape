@@ -18,16 +18,17 @@ public class TestRendering
     public void Bitmaps_are_not_rescaled_every_render()
     {
         TrackingBitmapScaler scaler = new TrackingBitmapScaler();
+        FakeBitmapLoader loader = new FakeBitmapLoader( 12, 12 );
+        BitmapCache<FakeBitmap> cache = new BitmapCache<FakeBitmap>(
+            loader, scaler, Runtime.getRuntime().maxMemory() / 8 );
 
-        ScaledBitmap<FakeBitmap> bitmap = newBitmap( scaler );
+        List<Sprite> sprites1 = sprites( "x", 1, 1, 6, 4 );
+        List<Sprite> sprites2 = sprites( "x", 1, 1, 6, 4 );
 
-        List<Sprite<FakeBitmap>> sprites1 = sprites( bitmap, 1, 1, 6, 4 );
-        List<Sprite<FakeBitmap>> sprites2 = sprites( bitmap, 1, 1, 6, 4 );
-
-        TrackingCanvas output = new TrackingCanvas( 200, 200 );
+        TrackingCanvas output = new TrackingCanvas( 200, 200, loader, scaler );
 
         Renderer<FakeBitmap, FakePaint> renderer =
-            new Renderer<FakeBitmap, FakePaint>( 0, 0, 16 );
+            new Renderer<FakeBitmap, FakePaint>( 0, 0, 16, cache );
 
         // Sanity: no calls to scale yet
         assertThat( scaler.scaleCalls.size(), equalTo( 0 ) );
@@ -127,6 +128,11 @@ public class TestRendering
             canvasSizeY, bitmapWidth, bitmapHeight, tileSize );
 
         assertThat( output.drawCalls.size(), equalTo( 0 ) );
+
+        // TODO: they are still loaded at the moment, so that
+        // we can measure their size.  We could at least avoid
+        // loading them when they are off the right or bottom.
+        // assertThat( output.loadCalls.size(), equalTo( 0 ) );
     }
 
     private void assertDrawnAt(
@@ -152,6 +158,25 @@ public class TestRendering
         assertThat( output.drawCalls.get( 0 ).left, equalTo( expectedDrawX ) );
         assertThat( output.drawCalls.get( 0 ).top,  equalTo( expectedDrawY ) );
         assertThat( output.drawCalls.size(), equalTo( 1 ) );
+
+        int imgSize = new FakeBitmapLoader( 0, 0 ).sizeFor( tileSize );
+
+        assertThat( output.loadCalls.get( 0 ).fileName, equalTo( "x" ) );
+        assertThat( output.loadCalls.get( 0 ).tileSize, equalTo( imgSize ) );
+        assertThat( output.loadCalls.size(), equalTo( 1 ) );
+
+        if ( tileSize == imgSize )
+        {
+            assertThat( output.scaleCalls.size(), equalTo( 0 ) );
+        }
+        else
+        {
+            assertThat(
+                output.scaleCalls.get( 0 ),
+                equalTo( ( double )tileSize / imgSize )
+            );
+            assertThat( output.scaleCalls.size(), equalTo( 1 ) );
+        }
     }
 
     private TrackingCanvas draw(
@@ -167,14 +192,20 @@ public class TestRendering
         int bitmapHeight,
         int tileSize )
     {
-        TrackingCanvas output = new TrackingCanvas( canvasSizeX, canvasSizeY );
+        TrackingBitmapScaler scaler = new TrackingBitmapScaler();
+        FakeBitmapLoader loader = new FakeBitmapLoader( bitmapWidth, bitmapHeight );
+        BitmapCache<FakeBitmap> cache = new BitmapCache<FakeBitmap>(
+            loader, scaler, Runtime.getRuntime().maxMemory() / 8 );
+
+        TrackingCanvas output = new TrackingCanvas(
+            canvasSizeX, canvasSizeY, loader, scaler );
 
         new Renderer<FakeBitmap, FakePaint>(
-            rendererOffsetX, rendererOffsetY, tileSize
+            rendererOffsetX, rendererOffsetY, tileSize, cache
         ).render(
             output,
             sprites(
-                newBitmap( bitmapWidth, bitmapHeight ),
+                "x",
                 tileX,
                 tileY,
                 spriteOffset32X,
@@ -186,37 +217,18 @@ public class TestRendering
         return output;
     }
 
-    private ScaledBitmap<FakeBitmap> newBitmap( int width, int height )
-    {
-        return newBitmap( new TrackingBitmapScaler(), width, height );
-    }
-
-
-    private ScaledBitmap<FakeBitmap> newBitmap(
-        TrackingBitmapScaler scaler )
-    {
-        return newBitmap( scaler, 32, 32 );
-    }
-
-    private ScaledBitmap<FakeBitmap> newBitmap(
-        TrackingBitmapScaler scaler, int width, int height )
-    {
-        return new ScaledBitmap<FakeBitmap>(
-            scaler, new FakeBitmapLoader( width, height ), "x" );
-    }
-
-    private List<Sprite<FakeBitmap>> sprites(
-        ScaledBitmap<FakeBitmap> bitmap,
+    private List<Sprite> sprites(
+        String bitmapName,
         int tileX,
         int tileY,
         int offset32X,
         int offset32Y
     )
     {
-        List<Sprite<FakeBitmap>> ret = new ArrayList<Sprite<FakeBitmap>>();
+        List<Sprite> ret = new ArrayList<Sprite>();
 
-        ret.add( new Sprite<FakeBitmap>(
-            bitmap, null, tileX, tileY, offset32X, offset32Y ) );
+        ret.add( new Sprite(
+            bitmapName, null, tileX, tileY, offset32X, offset32Y ) );
 
         return ret;
     }
@@ -266,30 +278,6 @@ public class TestRendering
     {
     }
 
-    private static class FakeBitmapLoader implements BitmapLoader<FakeBitmap>
-    {
-        private final int width;
-        private final int height;
-
-        public FakeBitmapLoader( int width, int height )
-        {
-            this.width = width;
-            this.height = height;
-        }
-
-        @Override
-        public FakeBitmap load( String fileName, int tileSize )
-        {
-            return new FakeBitmap( width, height );
-        }
-
-        @Override
-        public int sizeFor( int tileSize )
-        {
-            return 32;
-        }
-    }
-
     private static class TrackingBitmapScaler
     implements BitmapScaler<FakeBitmap>
     {
@@ -317,15 +305,24 @@ public class TestRendering
             }
         }
 
-        public List<DrawCall> drawCalls = new ArrayList<DrawCall>();
+        public final List<DrawCall> drawCalls = new ArrayList<DrawCall>();
+        public final List<FakeBitmapLoader.LoadCall> loadCalls;
+        public final List<Double> scaleCalls;
 
         private final int width;
         private final int height;
 
-        public TrackingCanvas( int width, int height )
+        public TrackingCanvas(
+            int width,
+            int height,
+            FakeBitmapLoader loader,
+            TrackingBitmapScaler scaler
+        )
         {
             this.width = width;
             this.height = height;
+            this.loadCalls = loader.loadCalls;
+            this.scaleCalls = scaler.scaleCalls;
         }
 
         @Override
@@ -365,6 +362,46 @@ public class TestRendering
             FakePaint paint
         )
         {
+        }
+    }
+
+    private static class FakeBitmapLoader implements BitmapLoader<FakeBitmap>
+    {
+        private static class LoadCall
+        {
+            private final String fileName;
+            private final int tileSize;
+
+            public LoadCall( String fileName, int tileSize )
+            {
+                this.fileName = fileName;
+                this.tileSize = tileSize;
+            }
+        }
+
+        public final List<LoadCall> loadCalls;
+
+        private final int width;
+        private final int height;
+
+        public FakeBitmapLoader( int width, int height )
+        {
+            this.loadCalls = new ArrayList<LoadCall>();
+            this.width = width;
+            this.height = height;
+        }
+
+        @Override
+        public FakeBitmap load( String fileName, int tileSize )
+        {
+            loadCalls.add( new LoadCall( fileName, tileSize ) );
+            return new FakeBitmap( width, height );
+        }
+
+        @Override
+        public int sizeFor( int tileSize )
+        {
+            return 32;
         }
     }
 }
