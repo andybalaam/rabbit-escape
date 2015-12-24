@@ -1,9 +1,9 @@
 :name=Re-entry
 :author_name=colonelfazackerley
 :author_url=https://github.com/colonelfazackerley
-:hint1=Bridge out from the rocket.
-:hint2=Put a blocker at the end of the bridge.
-:hint3=Bash out of the moon and dig down the rocket.
+:hint.1=Bridge out from the rocket.
+:hint.2=Put a blocker at the end of the bridge.
+:hint.3=Bash out of the moon and dig down the rocket.
 :solution.1=bash;(10,11);bridge;4;(11,11);dig;(6,11);(7,14);bash;(10,17);4;(15,7);42
 :description=Return from button moon.
 :num_rabbits=6

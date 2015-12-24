@@ -2,9 +2,9 @@
 :description=Bridge the maze.
 :author_name=Andy Balaam
 :author_url=http://artificialworlds.net/rabbit-escape/
-:hint1=There only needs to be one that leaves.
-:hint2=Bridge the first 2 gaps you come to.
-:hint3=After the rabbits have descended on the right-hand side, place a blocker before the trap above the exit.
+:hint.1=There only needs to be one that leaves.
+:hint.2=Bridge the first 2 gaps you come to.
+:hint.3=After the rabbits have descended on the right-hand side, place a blocker before the trap above the exit.
 :solution.1=bridge;(6,1);(10,1);3;block;11;(19,5);25;explode;(19,3);9
 :num_rabbits=3
 :num_to_save=1

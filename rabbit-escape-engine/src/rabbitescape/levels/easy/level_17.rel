@@ -2,9 +2,9 @@
 :description=Send someone ahead to make a way.
 :author_name=Andy Balaam
 :author_url=http://artificialworlds.net/rabbit-escape/
-:hint1=How can you get one rabbit out without the others coming?
-:hint2=Bridge across to find a safe route.
-:hint3=Make one rabbit a climber then use it to bridge across the gap in the middle platform.  When ready, bridge to release the other rabbits.
+:hint.1=How can you get one rabbit out without the others coming?
+:hint.2=Bridge across to find a safe route.
+:hint.3=Make one rabbit a climber then use it to bridge across the gap in the middle platform.  When ready, bridge to release the other rabbits.
 :solution.1=bridge;(10,8);climb;(6,3);13;bridge;5;(6,3);59
 :num_rabbits=5
 :num_to_save=5

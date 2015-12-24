@@ -1,8 +1,8 @@
 :name=Tomb raider
 :description=Reach the burial chamber
-:hint1=Dig.
-:hint2=Use a bridge token to stop excavating.
-:hint3=Careful timing is required to bash the correct direction.
+:hint.1=Dig.
+:hint.2=Use a bridge token to stop excavating.
+:hint.3=Careful timing is required to bash the correct direction.
 :author_name=colonelfazackerley
 :author_url=https://github.com/colonelfazackerley
 :solution.1=dig;(12,3);bridge;5;(12,5);bash;4;(12,5);dig;4;(9,5);until:WON

@@ -2,9 +2,9 @@
 :description=Down then up?
 :author_name=Andy Balaam
 :author_url=http://artificialworlds.net/rabbit-escape/
-:hint1=They don't have to go to the bottom.
-:hint2=A bridge can be used to turn them.
-:hint3=The second platform down can be blocked with a bridge. Two more bridges can be used to climb back up to the platform they land on, and one more to get to the exit.
+:hint.1=They don't have to go to the bottom.
+:hint.2=A bridge can be used to turn them.
+:hint.3=The second platform down can be blocked with a bridge. Two more bridges can be used to climb back up to the platform they land on, and one more to get to the exit.
 :solution.1=bridge;9;(12,7);1;(12,7);7;(10,6);6;(13,4);22;WON
 :num_rabbits=10
 :num_to_save=10

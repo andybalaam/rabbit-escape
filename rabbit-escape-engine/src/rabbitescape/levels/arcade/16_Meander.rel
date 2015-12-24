@@ -2,9 +2,9 @@
 :description=Just go with the flow
 :author_name=tttppp
 :author_url=https://github.com/tttppp
-:hint1=If bridge tokens are dropped on bridges in chimneys the rabbits can climb.
-:hint2=When bridge stacking pay attention to the rabbit direction when placing the tokens.
-:hint3=Climb and dig out the second barrier.
+:hint.1=If bridge tokens are dropped on bridges in chimneys the rabbits can climb.
+:hint.2=When bridge stacking pay attention to the rabbit direction when placing the tokens.
+:hint.3=Climb and dig out the second barrier.
 :solution.1=bridge;(2,5);7;(3,5);3;(3,4);3;(3,3);4;climb;(9,5);dig;(10,1);16;bridge;6;(10,5);6;dig;(12,3);32;WON
 :music=tryad-beat_into_submission
 :num_rabbits=5

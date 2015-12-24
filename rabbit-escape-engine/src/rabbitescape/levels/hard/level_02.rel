@@ -2,9 +2,9 @@
 :description=Too many barriers!
 :author_name=Andy Balaam
 :author_url=http://artificialworlds.net/rabbit-escape/
-:hint1=You do not have enough bash tokens to get through both walls.
-:hint2=Can you bash the whole way in one go?
-:hint3=Dig down exactly one square by converting the digger into a basher almost straight away. Once you are past the walls make the basher into a bridger.
+:hint.1=You do not have enough bash tokens to get through both walls.
+:hint.2=Can you bash the whole way in one go?
+:hint.3=Dig down exactly one square by converting the digger into a basher almost straight away. Once you are past the walls make the basher into a bridger.
 :solution.1=dig;(22,4);bash;3;(22,4);bridge;(9,4);53;WON
 :num_rabbits=5
 :num_to_save=4

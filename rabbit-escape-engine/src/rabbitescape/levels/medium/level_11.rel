@@ -2,9 +2,9 @@
 :description=Break the barriers to freedom.
 :author_name=Andy Balaam
 :author_url=http://artificialworlds.net/rabbit-escape/
-:hint1=The top rabbit must dig.
-:hint2=There is only one safe place to start digging.
-:hint3=The top rabbit must dig down the central wall. Stop digging at the slopes using a bash token. If necessary, the other rabbit can build a bridge to hop over the remnant of the wall.
+:hint.1=The top rabbit must dig.
+:hint.2=There is only one safe place to start digging.
+:hint.3=The top rabbit must dig down the central wall. Stop digging at the slopes using a bash token. If necessary, the other rabbit can build a bridge to hop over the remnant of the wall.
 :solution.1=dig;(8,2);bash;(7,10);23
 :num_rabbits=2
 :num_to_save=2

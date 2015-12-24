@@ -472,16 +472,16 @@ public class TestTextWorldManip
     public void Can_obfuscate_hints()
     {
         String[] lines = {
-            ":hint1.code=_Uf?>3ZH_8>U>{3",
-            ":hint2.code=@XW@W:)e+:+ ",
-            ":hint3.code=X5g..T[6X4["
+            ":hint.1.code=_Uf?>3ZH_8>U>{3",
+            ":hint.2.code=@XW@W:)e+:+ ",
+            ":hint.3.code=X5g..T[6X4["
         };
 
         World world = createWorld( lines );
 
-        assertThat( world.hint1, equalTo( "Select the bash" ) );
-        assertThat( world.hint2, equalTo( "Use the bash" ) );
-        assertThat( world.hint3, equalTo( "Be the bash" ) );
+        assertThat( world.hints[0], equalTo( "Select the bash" ) );
+        assertThat( world.hints[1], equalTo( "Use the bash" ) );
+        assertThat( world.hints[2], equalTo( "Be the bash" ) );
     }
 
     @Test

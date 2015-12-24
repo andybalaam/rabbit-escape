@@ -1,8 +1,8 @@
 :name=Test 1
 :description=Choose life
-:hint1=Choose a job
-:hint2=Choose a career
-:hint3=Choose a family
+:hint.1=Choose a job
+:hint.2=Choose a career
+:hint.3=Choose a family
 :author_name=Andy Balaam
 :author_url=http://artificialworlds.net/rabbit-escape/
 :num_rabbits=2

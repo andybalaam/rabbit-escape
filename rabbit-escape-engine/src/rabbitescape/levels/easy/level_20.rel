@@ -2,9 +2,9 @@
 :description=There's got to be a way up there.
 :author_name=Andy Balaam
 :author_url=http://artificialworlds.net/rabbit-escape/
-:hint1=Can you climb up somewhere?
-:hint2=Climb up the right of the column to the exit.
-:hint3=Bash through the column.  Bridge up to the right-hand side of the column.  Climb up.
+:hint.1=Can you climb up somewhere?
+:hint.2=Climb up the right of the column to the exit.
+:hint.3=Bash through the column.  Bridge up to the right-hand side of the column.  Climb up.
 :solution.1=bash;(8,9);8;bridge;2;(13,9);7;climb;(12,9);(12,9);(12,9);(12,9);(12,9);34
 :num_rabbits=4
 :num_to_save=4

@@ -2,9 +2,9 @@
 :description=Ascend to freedom.
 :author_name=Andy Balaam
 :author_url=http://artificialworlds.net/rabbit-escape/
-:hint1=There aren't enough bridges to use those alone.
-:hint2=There are three rabbits at the bottom and there are three climbing tokens.
-:hint3=Use the upper rabbit to dig down through the spike, and convert to a bridger after three digs. Give the lower three climbing tokens.
+:hint.1=There aren't enough bridges to use those alone.
+:hint.2=There are three rabbits at the bottom and there are three climbing tokens.
+:hint.3=Use the upper rabbit to dig down through the spike, and convert to a bridger after three digs. Give the lower three climbing tokens.
 :solution.1=dig;(12,2);bridge;12;(12,4);climb;(11,9);(11,9);(11,9);25;WON
 :num_rabbits=4
 :num_to_save=4

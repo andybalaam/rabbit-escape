@@ -1,8 +1,8 @@
 :name=Blockers
 :author_name=colonelfazackerley
 :author_url=https://github.com/colonelfazackerley
-:hint1=Drop dig tokens.
-:hint2=The dig tokens can be dropped on the blockers.
+:hint.1=Drop dig tokens.
+:hint.2=The dig tokens can be dropped on the blockers.
 :solution.1=dig;(4,3);(10,3);17;WON
 :description=Free the blockers
 :num_rabbits=10

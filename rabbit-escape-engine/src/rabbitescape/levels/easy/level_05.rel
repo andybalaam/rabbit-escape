@@ -2,9 +2,9 @@
 :description=Place digging tokens in the right places to avoid falling too far.
 :author_name=Andy Balaam
 :author_url=http://artificialworlds.net/rabbit-escape/
-:hint1=Choose the digger token on the left and place them in good places to drop down.
-:hint2=Place a digger near the left at the beginning.
-:hint3=Dig in the middle of the roof over the green exit.
+:hint.1=Choose the digger token on the left and place them in good places to drop down.
+:hint.2=Place a digger near the left at the beginning.
+:hint.3=Dig in the middle of the roof over the green exit.
 :solution.1=dig;(7,2);(9,7);57
 :num_rabbits=10
 :rabbit_delay=5

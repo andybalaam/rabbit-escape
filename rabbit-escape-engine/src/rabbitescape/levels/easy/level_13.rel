@@ -2,9 +2,9 @@
 :description=You'll need to work together to get three of your rabbits to the exit!
 :author_name=Andy Balaam
 :author_url=http://artificialworlds.net/rabbit-escape/
-:hint1=Can the top rabbit clear the way for the others?
-:hint2=Dig from the top to allow the other three to climb up.
-:hint3=Place a dig token on the first square of the slope. Place three climb tokens just before the wall on the right.
+:hint.1=Can the top rabbit clear the way for the others?
+:hint.2=Dig from the top to allow the other three to climb up.
+:hint.3=Place a dig token on the first square of the slope. Place three climb tokens just before the wall on the right.
 :solution.1=dig;(13,3);climb;(10,9);(10,9);(10,9);21
 :num_rabbits=4
 :num_to_save=3
