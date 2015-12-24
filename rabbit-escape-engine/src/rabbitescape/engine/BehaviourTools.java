@@ -65,6 +65,10 @@ public class BehaviourTools
         }
     }
     
+    /**
+     * Checks for the presence of a token. Removes token from the the world and returns 
+     * true if a token is being picked up.
+     */
     public boolean pickUpToken( Token.Type type, boolean evenIfNotOnGround )
     {
         if ( rabbitIsFalling() && rabbit.isFallingToDeath() )

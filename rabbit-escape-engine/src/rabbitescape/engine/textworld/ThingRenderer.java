@@ -63,6 +63,7 @@ public class ThingRenderer
             case block:   return 'k';
             case climb:   return 'c';
             case explode: return 'p';
+            case brolly:  return 'l';
             default: throw new UnknownTokenType( thing.type );
         }
     }
