@@ -110,7 +110,7 @@ public class ChangeRenderer
                 chars.set( change.x - 1, change.y, 'm' );
                 break;
             case RABBIT_BROLLYCHUTING:
-                chars.set( change.x, change.y + 1, '|' );
+                chars.set( change.x, change.y + 1, ':' );
                 break;
             case RABBIT_FALLING:
                 chars.set( change.x, change.y + 1, 'f' );
