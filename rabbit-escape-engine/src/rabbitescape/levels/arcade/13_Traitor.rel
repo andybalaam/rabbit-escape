@@ -2,9 +2,9 @@
 :description=Get your rabbits out before it's too late!
 :author_name=tttppp
 :author_url=https://github.com/tttppp
-:hint1=Bash the block at the top of the first short bridge, and extend the bridge.
-:hint2=Bridge off the next tower. Drop down one square from the next tower and bridge again.
-:hint3=Bridge across to catch the traitor's dig token.
+:hint.1=Bash the block at the top of the first short bridge, and extend the bridge.
+:hint.2=Bridge off the next tower. Drop down one square from the next tower and bridge again.
+:hint.3=Bridge across to catch the traitor's dig token.
 :solution.1=bash;(2,13);bridge;(2,13);(6,9);(10,11);(16,11);(12,10);bash;10;(8,11);3;(7,9);14;(13,10);28;WON
 :music=tryad-beat_into_submission
 :num_rabbits=5

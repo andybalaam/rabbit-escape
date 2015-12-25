@@ -2,9 +2,9 @@
 :description=Journey across the giant folk.
 :author_name=Andy Balaam
 :author_url=http://artificialworlds.net/rabbit-escape/
-:hint1=Send one rabbit ahead.
-:hint2=Place a bash token on the left thigh of the first figure. Climb someone up to it.
-:hint3=Place a bridge token on the right thigh of the first figure. Place another on the right arm of the second.
+:hint.1=Send one rabbit ahead.
+:hint.2=Place a bash token on the left thigh of the first figure. Climb someone up to it.
+:hint.3=Place a bridge token on the right thigh of the first figure. Place another on the right arm of the second.
 :solution.1=climb;(3,8);bash;(4,6);bridge;(6,6);(11,4);climb;14;(3,8);6;(3,8);5;(3,8);5;(3,8);30
 :num_rabbits=5
 :num_to_save=4

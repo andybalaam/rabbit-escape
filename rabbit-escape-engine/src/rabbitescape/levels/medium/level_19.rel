@@ -2,9 +2,9 @@
 :description=Bridge from the bottom of the slope.
 :author_name=Andy Balaam
 :author_url=http://artificialworlds.net/rabbit-escape/
-:hint1=Pause the game to select which token to deploy.
-:hint2=Use a block token under the exit to freeze a rabbit moving right.
-:hint3=Convert the rabbit behind the leader into  a blocker. Extend the bridge, and finally  free the blockers with bash tokens.
+:hint.1=Pause the game to select which token to deploy.
+:hint.2=Use a block token under the exit to freeze a rabbit moving right.
+:hint.3=Convert the rabbit behind the leader into  a blocker. Extend the bridge, and finally  free the blockers with bash tokens.
 :solution.1=bridge;(8,9);block;(3,4);2;(6,7);3;bridge;2;(11,7);;bash;2;(6,7);4;(3,4);12
 :num_rabbits=5
 :num_to_save=5

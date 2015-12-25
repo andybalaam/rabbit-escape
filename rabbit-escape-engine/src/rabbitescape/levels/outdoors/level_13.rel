@@ -1,9 +1,9 @@
 :name=Spare 2 blockers?
 :author_name=Andy Balaam
 :author_url=http://artificialworlds.net/rabbit-escape/
-:hint1=Get the first rabbit to build the bridge.
-:hint2=Turn all the rest into blockers. Bridge up to the top right, then left from the bridge to the platform. Place bridging tokens on each slope above the saw-teeth.
-:hint3=Turn them into blockers as they are still moving right. Free the last one with a dig token, then turn the rabbit into a basher. The rabbit will undermine and free all the blockers.
+:hint.1=Get the first rabbit to build the bridge.
+:hint.2=Turn all the rest into blockers. Bridge up to the top right, then left from the bridge to the platform. Place bridging tokens on each slope above the saw-teeth.
+:hint.3=Turn them into blockers as they are still moving right. Free the last one with a dig token, then turn the rabbit into a basher. The rabbit will undermine and free all the blockers.
 :solution.1=bridge;(17,10);(19,5);(15,5);(11,5);(7,5);5;block;3;(14,9);2;(13,9);2;(12,9);;bridge;(20,8);block;(11,9);(10,9);2;(9,9);;bridge;(23,5);block;(8,9);(7,9);2;(6,9);bridge;(23,5);26;dig;(6,9);bash;(6,10);75
 :description=How to rescue 10?
 :num_rabbits=10

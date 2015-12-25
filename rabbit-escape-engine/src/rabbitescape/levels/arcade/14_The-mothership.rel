@@ -2,9 +2,9 @@
 :description=Enemy unknown.
 :author_name=tttppp
 :author_url=https://github.com/tttppp
-:hint1=Find a way to get the rabbits all hopping clockwise or anticlockwise.
-:hint2=Bridge to the stars.
-:hint3=From the middle of the top bridge left. From the first star bridge left again.
+:hint.1=Find a way to get the rabbits all hopping clockwise or anticlockwise.
+:hint.2=Bridge to the stars.
+:hint.3=From the middle of the top bridge left. From the first star bridge left again.
 :solution.1=bridge;(6,1);28;(13,7);6;(10,5);19;dig;(10,8);until:WON
 :music=tryad-beat_into_submission
 :num_rabbits=20

@@ -28,9 +28,7 @@ public class TextWorldManip
     private static final String description          = "description";
     private static final String author_name          = "author_name";
     private static final String author_url           = "author_url";
-    private static final String hint1                = "hint1";
-    private static final String hint2                = "hint2";
-    private static final String hint3                = "hint3";
+    private static final String hint                 = "hint";
     private static final String solution             = "solution";
     private static final String num_rabbits          = "num_rabbits";
     private static final String num_to_save          = "num_to_save";
@@ -60,14 +58,12 @@ public class TextWorldManip
         description,
         author_name,
         author_url,
-        hint1,
-        hint2,
-        hint3,
         music
     );
 
     public static final List<String> META_STRING_ARRAYS_BY_KEY = Arrays.asList(
-        solution
+        solution,
+        hint
     );
 
     public static final List<String> META_BOOLS = Arrays.asList(
@@ -152,9 +148,7 @@ public class TextWorldManip
             processor.metaString( description, "" ),
             processor.metaString( author_name, "" ),
             processor.metaString( author_url, "" ),
-            processor.metaString( hint1, "" ),
-            processor.metaString( hint2, "" ),
-            processor.metaString( hint3, "" ),
+            processor.metaStringArrayByKey( hint, new String[] {} ),
             processor.metaStringArrayByKey( solution, new String[] {} ),
             num_rabs,
             processor.metaInt( num_to_save,  1 ),
@@ -176,13 +170,11 @@ public class TextWorldManip
             new ArrayList<Rabbit>(),
             new ArrayList<Thing>(),
             new HashMap<Token.Type, Integer>(),
-            "Empty World", //name
-            "",            //description
-            "",            //author_name
-            "",            //author_url
-            "",            //hint1
-            "",            //hint2
-            "",            //hint3
+            "Empty World",   //name
+            "",              //description
+            "",              //author_name
+            "",              //author_url
+            new String[] {}, //hints
             new String[] {}, //solutions
             0,
             1,
@@ -241,10 +233,8 @@ public class TextWorldManip
         ret.add( metaLine( description,  world.description ) );
         ret.add( metaLine( author_name,  world.author_name ) );
         ret.add( metaLine( author_url,   world.author_url ) );
+        addMetaKeyArrayLines( ret, hint, world.hints );
         addMetaKeyArrayLines( ret, solution, world.solutions );
-        ret.add( metaLine( hint1,        world.hint1 ) );
-        ret.add( metaLine( hint2,        world.hint2 ) );
-        ret.add( metaLine( hint3,        world.hint3 ) );
         ret.add( metaLine( num_rabbits,  world.num_rabbits ) );
         ret.add( metaLine( num_to_save,  world.num_to_save ) );
         ret.add( metaLine( rabbit_delay, world.rabbit_delay ) );

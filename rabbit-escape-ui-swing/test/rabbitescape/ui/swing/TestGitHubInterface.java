@@ -212,9 +212,9 @@ public class TestGitHubInterface
                 +
                 ":author_name=GamingInky\\r\\n" +
                 ":author_url=https://github.com/GamingInky\\r\\n" +
-                ":hint1=You have to smash the planet.\\r\\n" +
-                ":hint2=The lower you are the better.\\r\\n" +
-                ":hint3=Bridging would be useful at the end.\\r\\n" +
+                ":hint.1=You have to smash the planet.\\r\\n" +
+                ":hint.2=The lower you are the better.\\r\\n" +
+                ":hint.3=Bridging would be useful at the end.\\r\\n" +
                 ":num_rabbits=1\\r\\n" +
                 ":num_to_save=1\\r\\n" + ":bash=2\\r\\n" +
                 ":bridge=2\\r\\n" +

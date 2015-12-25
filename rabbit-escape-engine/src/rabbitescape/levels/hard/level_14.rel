@@ -2,9 +2,9 @@
 :description=Mind the mine!
 :author_name=Andy Balaam
 :author_url=http://artificialworlds.net/rabbit-escape/
-:hint1=Never mind the mine.
-:hint2=Let the first rabbit take the mine hit, but don't fall down the hole.
-:hint3=Bridge the first bump. Place a climbing token in front of the tower, and a dig token on the first top square reached. Drop a bridge token, so the first rabbit heading back does not fall down the hole. Place another climb and dig token to take out the second column of the tower.
+:hint.1=Never mind the mine.
+:hint.2=Let the first rabbit take the mine hit, but don't fall down the hole.
+:hint.3=Bridge the first bump. Place a climbing token in front of the tower, and a dig token on the first top square reached. Drop a bridge token, so the first rabbit heading back does not fall down the hole. Place another climb and dig token to take out the second column of the tower.
 :solution.1=bridge;(6,5);climb;(18,3);(18,3);dig;(20,1);23;(19,1);bridge;5;(14,5);35;WON
 :num_rabbits=5
 :num_to_save=4

@@ -2,9 +2,9 @@
 :description=But can you save both?
 :author_name=Andy Balaam
 :author_url=http://artificialworlds.net/rabbit-escape/
-:hint1=Each rabbit only needs to look after itself.
-:hint2=Can you climb the left-hand rabbit out?
-:hint3=Ignore the right-hand rabbit. The left-hand rabbit can bridge rightwards to the wall and then climb over it.
+:hint.1=Each rabbit only needs to look after itself.
+:hint.2=Can you climb the left-hand rabbit out?
+:hint.3=Ignore the right-hand rabbit. The left-hand rabbit can bridge rightwards to the wall and then climb over it.
 :solution.1=climb;(4,6);bridge;(5,6);22
 :solution.2=climb;(9,7);dig;(7,2);climb;(1,6);53
 :num_rabbits=2

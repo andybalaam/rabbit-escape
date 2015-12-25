@@ -3,9 +3,9 @@
 :author_name=tttppp
 :author_url=https://github.com/tttppp
 :solution.1=dig;11;(12,2);2;(11,2);2;(10,2);2;(9,2);2;bridge;(9,8);11;(12,6);11;(9,4);until:WON
-:hint1=Let the first rabbit from the top entrance walk straight to the exit.
-:hint2=Dig down from the top, placing the dig token one away from the exit.
-:hint3=Dig 4 columns out. Bridge up, back and forth across the hole. The first bridge  should rise right from the bat.
+:hint.1=Let the first rabbit from the top entrance walk straight to the exit.
+:hint.2=Dig down from the top, placing the dig token one away from the exit.
+:hint.3=Dig 4 columns out. Bridge up, back and forth across the hole. The first bridge  should rise right from the bat.
 :music=tryad-beat_into_submission
 :num_rabbits=10
 :num_to_save=10

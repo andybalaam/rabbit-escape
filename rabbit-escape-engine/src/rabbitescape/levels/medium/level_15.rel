@@ -2,9 +2,9 @@
 :description=...are alive with the sound of music.
 :author_name=Andy Balaam
 :author_url=http://artificialworlds.net/rabbit-escape/
-:hint1=Let one (only one) rabbit drop into the valley.
-:hint2=Make the rabbit climb out towards the exit, but use a bridge to turn around instead of going into the exit.
-:hint3=Block in all but the first rabbit under the entrance. After turning around, make the first rabbit bridge back towards the first hill. Bash through the bridge blocking the exit, and explode the blockers.
+:hint.1=Let one (only one) rabbit drop into the valley.
+:hint.2=Make the rabbit climb out towards the exit, but use a bridge to turn around instead of going into the exit.
+:hint.3=Block in all but the first rabbit under the entrance. After turning around, make the first rabbit bridge back towards the first hill. Bash through the bridge blocking the exit, and explode the blockers.
 :solution.1=block;(3,2);;(5,2);climb;(8,8);bridge;(11,3);8;(9,5);8;bash;(11,3);10;(5,2);7;explode;(3,2);2
 :num_rabbits=6
 :num_to_save=3

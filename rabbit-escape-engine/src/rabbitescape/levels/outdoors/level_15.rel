@@ -1,9 +1,9 @@
 :name=F
 :author_name=colonelfazackerley
 :author_url=https://github.com/colonelfazackerley
-:hint1=The lower rabbits must build a bridge to catch the upper rabbits.
-:hint2=The middle rabbits must build a bridge to catch the upper rabbits.
-:hint3=The middle rabbits' bridge needs a blocker at the end.
+:hint.1=The lower rabbits must build a bridge to catch the upper rabbits.
+:hint.2=The middle rabbits must build a bridge to catch the upper rabbits.
+:hint.3=The middle rabbits' bridge needs a blocker at the end.
 :solution.1=bridge;(13,8);(8,3);7;(2,14);block;(16,6);8;bash;(5,12);(8,8);12;explode;(16,6);30
 :description=There is no emoticon for this letter
 :num_rabbits=9
