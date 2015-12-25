@@ -38,6 +38,33 @@ public class Brollychuting extends Behaviour
         {
             return null;
         }
+        
+        if (
+            t.rabbit.onSlope
+         && !t.blockHereJustRemoved()
+        )
+        {
+            return null;
+        }
+        
+        if ( below != null )
+        {
+            if ( t.isUpSlope( below ) )
+            {
+                return t.rl(
+                    RABBIT_FALLING_1_ONTO_RISE_RIGHT,
+                    RABBIT_FALLING_1_ONTO_RISE_LEFT
+                );
+            }
+            else // Must be a slope in the opposite direction
+            {
+                return t.rl(
+                    RABBIT_FALLING_1_ONTO_LOWER_RIGHT,
+                    RABBIT_FALLING_1_ONTO_LOWER_LEFT
+                );
+            }
+        }
+        
         return RABBIT_BROLLYCHUTING;
     }
 
