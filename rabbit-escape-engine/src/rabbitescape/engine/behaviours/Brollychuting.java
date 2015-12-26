@@ -32,6 +32,11 @@ public class Brollychuting extends Behaviour
             return null;
         }
         
+        if ( climbing.abilityActive )
+        {
+            return null;
+        }
+        
         Block below = t.blockBelow();
         
         if ( t.isFlat( below ) )
