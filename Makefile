@@ -275,6 +275,11 @@ test: compile
 	@# Work around what looks like an Ant 1.9 bug by including the classpath here
 	@CLASSPATH=lib/org.hamcrest.core_1.3.0.jar:lib/junit.jar ant -quiet test
 
+test-verbose: compile
+	@echo ". Running unit tests"
+	@# Work around what looks like an Ant 1.9 bug by including the classpath here
+	@CLASSPATH=lib/org.hamcrest.core_1.3.0.jar:lib/junit.jar ant test
+	
 slowtest: test slowtest-run
 
 slowtest-run:
