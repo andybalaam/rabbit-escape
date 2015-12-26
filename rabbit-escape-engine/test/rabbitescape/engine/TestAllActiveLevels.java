@@ -60,10 +60,8 @@ public class TestAllActiveLevels
 
             if ( !solved )
             {
-                //TODO throw new AssertionError(
-                //    "Level " + lev.fileName + " has no solution!" );
-                System.err.println(
-                    "WARNING: Level " + lev.fileName + " has no solution!" );
+                throw new AssertionError(
+                    "Level " + lev.fileName + " has no solution!" );
             }
 
         } } );
