@@ -75,6 +75,8 @@ public class SwingSingleGameEntryPoint extends SingleGameEntryPoint
         SwingGameInit init = new SwingGameInit(
             bitmapCache, uiConfig, frame, menuUi );
 
+        ConfigTools.storeStatic( uiConfig );
+
         SwingUtilities.invokeLater( init );
 
         return new SwingGameLaunch( init, world, winListener, sound );

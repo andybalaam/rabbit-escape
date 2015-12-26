@@ -93,6 +93,12 @@ public class SwingConfigSetup
             "Default path in the dialog to load a level file for testing."
         );
 
+        definition.set(
+            CFG_DEBUG_PRINT_STATES,
+            String.valueOf( false ),
+            "Rabbit states are printed to System.out."
+        );
+        
         return new Config( definition, new RealFileSystem(), CONFIG_PATH );
     }
 }

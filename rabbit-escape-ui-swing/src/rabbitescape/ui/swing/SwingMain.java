@@ -37,6 +37,7 @@ public class SwingMain
         this.bitmapCache = bitmapCache;
         this.uiConfig = uiConfig;
         this.sound = sound;
+        ConfigTools.storeStatic( uiConfig );
     }
 
     public static void main( String[] args )
