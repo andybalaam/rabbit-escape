@@ -18,7 +18,7 @@ public class TestSolutionRunner
     public void Unexpected_state_is_an_error()
     {
         SolutionRunner.runSolution(
-            expectingSolution( CompletionState.LOST ), neverEndingWorld() );
+            expectingSolution( CompletionState.LOST ), neverEndingWorld(), true );
     }
 
     @Test
@@ -27,7 +27,7 @@ public class TestSolutionRunner
         try
         {
             SolutionRunner.runSolution(
-                expectingSolution( CompletionState.LOST ), neverEndingWorld() );
+                expectingSolution( CompletionState.LOST ), neverEndingWorld(), true );
             fail( "Expected exception!" );
         }
         catch( SolutionExceptions.UnexpectedState e )
@@ -50,7 +50,7 @@ public class TestSolutionRunner
     public void Failing_unexpectedly_is_an_error()
     {
         SolutionRunner.runSolution(
-            expectingSolution( CompletionState.WON ), neverEndingWorld() );
+            expectingSolution( CompletionState.WON ), neverEndingWorld(), true );
     }
 
     @Test
@@ -59,7 +59,7 @@ public class TestSolutionRunner
         try
         {
             SolutionRunner.runSolution(
-                expectingSolution( CompletionState.WON ), neverEndingWorld() );
+                expectingSolution( CompletionState.WON ), neverEndingWorld(), true );
             fail( "Expected exception!" );
         }
         catch( SolutionExceptions.UnexpectedState e )
@@ -81,7 +81,7 @@ public class TestSolutionRunner
     @Test( expected = SolutionExceptions.RanPastEnd.class )
     public void Going_on_beyond_the_end_is_an_error()
     {
-        SolutionRunner.runSolution( waitFourSolution(), threeStepWorld() );
+        SolutionRunner.runSolution( waitFourSolution(), threeStepWorld(), true );
     }
 
     @Test
@@ -89,7 +89,7 @@ public class TestSolutionRunner
     {
         try
         {
-            SolutionRunner.runSolution( waitFourSolution(), threeStepWorld() );
+            SolutionRunner.runSolution( waitFourSolution(), threeStepWorld(), true );
             fail( "Expected exception!" );
         }
         catch( SolutionExceptions.RanPastEnd e )
@@ -112,7 +112,7 @@ public class TestSolutionRunner
     public void Using_missing_ability_is_an_error()
     {
         SolutionRunner.runSolution(
-            useBash30Solution(), neverEndingWorldWithBash() );
+            useBash30Solution(), neverEndingWorldWithBash(), true );
     }
 
     @Test
@@ -121,7 +121,7 @@ public class TestSolutionRunner
         try
         {
             SolutionRunner.runSolution(
-                useBash30Solution(), neverEndingWorldWithBash() );
+                useBash30Solution(), neverEndingWorldWithBash(), true );
 
             fail( "Expected exception!" );
         }
@@ -144,7 +144,7 @@ public class TestSolutionRunner
     @Test( expected = SolutionExceptions.UsedMissingAbility.class )
     public void Using_run_out_ability_is_an_error()
     {
-        SolutionRunner.runSolution( useBash30Solution(), neverEndingWorld() );
+        SolutionRunner.runSolution( useBash30Solution(), neverEndingWorld(), true );
     }
 
     @Test
@@ -153,7 +153,7 @@ public class TestSolutionRunner
         try
         {
             SolutionRunner.runSolution(
-                useBash30Solution(), neverEndingWorld() );
+                useBash30Solution(), neverEndingWorld(), true );
 
             fail( "Expected exception!" );
         }
@@ -178,7 +178,7 @@ public class TestSolutionRunner
     public void Placing_a_token_outside_the_world_is_an_error()
     {
         SolutionRunner.runSolution(
-            useBash100Solution(), neverEndingWorldWithBash() );
+            useBash100Solution(), neverEndingWorldWithBash(), true );
     }
 
     @Test
@@ -187,7 +187,7 @@ public class TestSolutionRunner
         try
         {
             SolutionRunner.runSolution(
-                useBash100Solution(), neverEndingWorldWithBash() );
+                useBash100Solution(), neverEndingWorldWithBash(), true );
 
             fail( "Expected exception!" );
         }
@@ -218,14 +218,15 @@ public class TestSolutionRunner
                 "#####",
                 ":num_rabbits=0",
                 ":num_to_save=1"
-            )
+            ),
+            true
         );
     }
 
     @Test( expected = SolutionExceptions.FailedToPlaceToken.class )
     public void Placing_a_token_on_a_block_is_an_error()
     {
-        SolutionRunner.runSolution( useBash30Solution(), blockAt30World() );
+        SolutionRunner.runSolution( useBash30Solution(), blockAt30World(), true );
     }
 
     @Test
@@ -233,7 +234,7 @@ public class TestSolutionRunner
     {
         try
         {
-            SolutionRunner.runSolution( useBash30Solution(), blockAt30World() );
+            SolutionRunner.runSolution( useBash30Solution(), blockAt30World(), true );
 
             fail( "Expected exception!" );
         }
@@ -265,7 +266,8 @@ public class TestSolutionRunner
                         new UntilAction( CompletionState.WON )
                     )
                 ),
-                neverEndingWorld()
+                neverEndingWorld(),
+                true
             );
 
             fail( "Expected exception!" );
@@ -299,7 +301,7 @@ public class TestSolutionRunner
         );
 
         boolean solved = SolutionRunner.runSolution(
-            SolutionParser.parse( "6;WON" ), world );
+            SolutionParser.parse( "6;WON" ), world, true );
 
         assertThat( solved, is( true ) );
     }
@@ -316,7 +318,7 @@ public class TestSolutionRunner
         );
 
         boolean solved = SolutionRunner.runSolution(
-            SolutionParser.parse( "6" ), world );
+            SolutionParser.parse( "6" ), world, true );
 
         assertThat( solved, is( true ) );
     }
@@ -333,7 +335,7 @@ public class TestSolutionRunner
         );
 
         boolean solved = SolutionRunner.runSolution(
-            SolutionParser.parse( "7;LOST" ), world );
+            SolutionParser.parse( "7;LOST" ), world, true );
 
         assertThat( solved, is( false ) );
     }
@@ -350,7 +352,7 @@ public class TestSolutionRunner
         );
 
         boolean solved = SolutionRunner.runSolution(
-            SolutionParser.parse( "2;RUNNING" ), world );
+            SolutionParser.parse( "2;RUNNING" ), world, true );
 
         assertThat( solved, is( false ) );
     }
@@ -367,7 +369,7 @@ public class TestSolutionRunner
         );
 
         boolean solved = SolutionRunner.runSolution(
-            SolutionParser.parse( "until:WON" ), world );
+            SolutionParser.parse( "until:WON" ), world, true );
 
         assertThat( solved, is( true ) );
     }
@@ -384,7 +386,7 @@ public class TestSolutionRunner
         );
 
         boolean solved = SolutionRunner.runSolution(
-            SolutionParser.parse( "until:LOST" ), world );
+            SolutionParser.parse( "until:LOST" ), world, true );
 
         assertThat( solved, is( false ) );
     }
