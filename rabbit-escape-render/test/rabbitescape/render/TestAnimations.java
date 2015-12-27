@@ -1,6 +1,5 @@
 package rabbitescape.render;
 
-import java.io.File;
 import java.net.URL;
 
 import org.junit.Test;
@@ -24,15 +23,15 @@ public class TestAnimations
             }
             // Exception here if an animation is missing.
             Animation a = AnimationLoader.load( reaName );
-            
+
             checkFramesExist( reaName, a );
         }
     }
-    
+
     private void checkFramesExist( String reaName, Animation a )
     {
-        
-        for ( Frame f: a)
+
+        for ( Frame f: a )
         {
             String resourcePath =
                 "/rabbitescape/ui/swing/images32/" +
@@ -41,9 +40,9 @@ public class TestAnimations
             boolean fileExists = ( url != null );
             if ( !fileExists ) 
             {
-                System.err.println("Working Directory = " 
-                                   + System.getProperty("user.dir"));
-                System.err.println( "Missing frame:" + reaName + ":" + resourcePath);
+                System.err.println( "Working Directory:" 
+                                   + System.getProperty( "user.dir" ) );
+                System.err.println( "Missing frame:" + reaName + ":" + resourcePath );
             }
             assertThat( fileExists, is( true ) );
         }
