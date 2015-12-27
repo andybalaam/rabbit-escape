@@ -68,7 +68,7 @@ public class TestCommandLineOption
     }
     
     @Test ( expected = CommandLineOption.OptionDoesNotTakeParameter.class )
-    public void Options_does_not_take_parameter()
+    public void Option_does_not_take_parameter()
     {
         CommandLineOption begin = new CommandLineOption( "--begin", false );
         
