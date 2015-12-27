@@ -16,7 +16,7 @@ public class TestCommandLineOption
         CommandLineOption withParam = new CommandLineOption( "--with-param", true );
         
         String[] args = "-p -w 0".split( " " );
-        CommandLineParameterSet.parse( args, present, notPresent, withParam );
+        CommandLineOptionSet.parse( args, present, notPresent, withParam );
                 
         assertThat( present.isPresent(), is( true ) );
         assertThat( notPresent.isPresent(), is( false ) );
@@ -32,7 +32,7 @@ public class TestCommandLineOption
         CommandLineOption withParam = new CommandLineOption( "--with-param", true );
         
         String[] args = "--present --with-param 0".split( " " );
-        CommandLineParameterSet.parse( args, present, notPresent, withParam );
+        CommandLineOptionSet.parse( args, present, notPresent, withParam );
                 
         assertThat( present.isPresent(), is( true ) );
         assertThat( notPresent.isPresent(), is( false ) );
@@ -45,6 +45,47 @@ public class TestCommandLineOption
     {
         CommandLineOption present = new CommandLineOption( "--present", false );
         String[] args = "-p --you-what".split( " " );
-        CommandLineParameterSet.parse( args, present);
+        CommandLineOptionSet.parse( args, present);
+    }
+
+    @Test( expected = CommandLineOption.OptionRequiresParameter.class )
+    public void Missing_parameter_throws_exception_last_arg()
+    {
+        CommandLineOption needsParam = new CommandLineOption( "--needs-param", true );
+        
+        String[] args = "-n".split( " " );
+        CommandLineOptionSet.parse( args, needsParam);
+    }
+    
+    @Test( expected = CommandLineOption.OptionRequiresParameter.class )
+    public void Missing_parameter_throws_exception()
+    {
+        CommandLineOption needsParam = new CommandLineOption( "--needs-param", true );
+        CommandLineOption bob = new CommandLineOption( "--bob", false );
+        
+        String[] args = "-n -b".split( " " );
+        CommandLineOptionSet.parse( args, bob, needsParam);
+    }
+    
+    @Test ( expected = CommandLineOption.OptionDoesNotTakeParameter.class )
+    public void Options_does_not_take_parameter()
+    {
+        CommandLineOption begin = new CommandLineOption( "--begin", false );
+        
+        String[] args = "--begin0".split( " " );
+        CommandLineOptionSet.parse( args, begin);
+    }
+    
+    @Test
+    public void Concatenated_parameters()
+    {
+        CommandLineOption begin = new CommandLineOption( "--begin", true );
+        CommandLineOption end = new CommandLineOption( "--end", true );
+        
+        String[] args = "--begin0 -e100".split( " " );
+        CommandLineOptionSet.parse( args, begin, end);
+        
+        assertThat( begin.getValue(), equalTo( "0" ) );
+        assertThat( end.getValue(), equalTo( "100" ) );
     }
 }

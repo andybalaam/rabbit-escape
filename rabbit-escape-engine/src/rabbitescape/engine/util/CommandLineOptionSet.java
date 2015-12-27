@@ -1,6 +1,6 @@
 package rabbitescape.engine.util;
 
-public class CommandLineParameterSet
+public class CommandLineOptionSet
 {
     
     public static void parse( String[] args, CommandLineOption... options )
@@ -12,7 +12,8 @@ public class CommandLineParameterSet
             o.setPresent();
             try 
             {
-                if ( o.takesParam )
+                // If param was not concatenated with option, check along the array.
+                if ( o.takesParam && o.getValue() == null )
                 {
                     o.setValue( args[++i] );
                 }

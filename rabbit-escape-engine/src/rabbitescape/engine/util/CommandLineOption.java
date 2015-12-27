@@ -2,6 +2,16 @@ package rabbitescape.engine.util;
 
 import rabbitescape.engine.err.RabbitEscapeException;
 
+/**
+ * Supply a long form option (eg "--start"). 
+ * The short form is generated automatically (eg "-s").
+ * Parameters may be supplied as the next arg, or
+ * concatenated ( "-s 0", "-s0");
+ * Limitations;
+ * * Options must begin "--".
+ * * Different options cannot begin with the same letter
+ * * Options may not be repeated on the command line.
+ */
 public class CommandLineOption
 {
     class UnkownOption extends RabbitEscapeException
@@ -25,6 +35,17 @@ public class CommandLineOption
             this.arg = arg;
         }
     }
+    
+    class OptionDoesNotTakeParameter extends RabbitEscapeException
+    {
+        private static final long serialVersionUID = 1L;
+        public final String arg;
+        
+        public OptionDoesNotTakeParameter( String arg )
+        {
+            this.arg = arg;
+        }
+    }
 
     public final String longForm;
     public final String shortForm;
@@ -42,6 +63,10 @@ public class CommandLineOption
     
     public void setValue( String value )
     {
+        if ( value.length() > 0 && value.startsWith( "-" ) )
+        {
+            throw new OptionRequiresParameter( longForm );
+        }
         this.value = value;
     }
     
@@ -60,9 +85,34 @@ public class CommandLineOption
         return present;
     }
 
+    /**
+     * Checks if the command line argument is a match for this one.
+     * Also tests for concatenated param.
+     */
     public boolean matches( String arg )
     {
-        return arg.equals( longForm ) || arg.equals( shortForm );
+        String maybeParam = null;
+        if ( arg.startsWith( longForm ) )
+        {
+            maybeParam = arg.substring( longForm.length() );
+        }
+        if ( arg.startsWith( shortForm ) )
+        {
+            maybeParam = arg.substring( shortForm.length() );
+        }
+        if ( maybeParam == null )
+        {
+            return false;
+        }
+        if ( maybeParam.length() > 0 )
+        {
+            if ( !takesParam )
+            {
+                throw new OptionDoesNotTakeParameter(shortForm);
+            }
+            this.setValue( maybeParam );
+        }
+        return true;
     }
 
     public OptionRequiresParameter getOptionRequiresParameter( String arg )
