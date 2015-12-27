@@ -12,19 +12,20 @@ import rabbitescape.engine.World.NoneOfThisAbilityLeft;
 import rabbitescape.engine.solution.SolutionExceptions;
 import rabbitescape.engine.textworld.TextWorldManip;
 import rabbitescape.engine.util.Dimension;
+import rabbitescape.engine.util.Util;
 
 public class SolutionRunner
 {
     /**
      * @return true if the supplied solution solved the level
      */
-    public static boolean runSolution( Solution solution, World world )
+    public static boolean runSolution( Solution solution, World world, boolean quiet )
         throws SolutionExceptions.ProblemRunningSolution
     {
         SandboxGame sandboxGame = new SandboxGame( world );
         SolutionInterpreter interpreter = new SolutionInterpreter( solution );
 
-        return runSolutionInSandbox( interpreter, sandboxGame );
+        return runSolutionInSandbox( interpreter, sandboxGame, quiet );
     }
 
     public static void runPartialSolution(
@@ -33,12 +34,13 @@ public class SolutionRunner
         SolutionInterpreter interpreter = new SolutionInterpreter(
             solution, false );
 
-        runSolutionInSandbox( interpreter, sandboxGame );
+        runSolutionInSandbox( interpreter, sandboxGame, true );
     }
 
     private static boolean runSolutionInSandbox(
         SolutionInterpreter interpreter,
-        SandboxGame sandboxGame
+        SandboxGame sandboxGame,
+        boolean quiet
     )
     {
         SolutionTimeStep step = interpreter.next(
@@ -49,6 +51,17 @@ public class SolutionRunner
             {
                 SolutionTimeStep nextStep = interpreter.next(
                     sandboxGame.getWorld().completionState() );
+                
+                if ( !quiet )
+                {
+                    System.out.println
+                    ( 
+                        Util.join( "\n", 
+                            TextWorldManip.renderWorld( 
+                                sandboxGame.getWorld(), false, true ) 
+                        )
+                    );
+                }
 
                 runTimeStep( sandboxGame, step, nextStep );
 
