@@ -124,6 +124,11 @@ public class CommandLineOption
     {
         return new UnkownOption( arg );
     }
+
+    public int getInt()
+    {
+        return Integer.parseInt( value );
+    }
     
     
 
