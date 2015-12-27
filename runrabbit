@@ -17,6 +17,7 @@ elif [ "$1" == "--help" ] || [ "$1" == "-h" ]
     echo "./runrabbit swing level.rel Play a single level using the swing GUI."
     echo "./runrabbit text            Play using the text UI."
     echo "./runrabbit text level.rel  Play a single level using the text UI."
+    echo "./runrabbit text --level <file> --solution <n> print world steps."
 else
     echo "Option not recognised. You may find"
     echo "./runrabbit --help"
