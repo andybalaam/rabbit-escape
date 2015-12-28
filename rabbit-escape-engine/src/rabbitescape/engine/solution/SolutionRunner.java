@@ -54,13 +54,7 @@ public class SolutionRunner
                 
                 if ( !quiet )
                 {
-                    System.out.println
-                    ( 
-                        Util.join( "\n", 
-                            TextWorldManip.renderWorld( 
-                                sandboxGame.getWorld(), false, true ) 
-                        )
-                    );
+                    printStep( sandboxGame.getWorld() );
                 }
 
                 runTimeStep( sandboxGame, step, nextStep );
@@ -83,6 +77,18 @@ public class SolutionRunner
             CompletionState.WON );
     }
 
+    private static void printStep(World w)
+    {
+        System.out.println( "Saved:"+w.num_saved );
+        System.out.println
+        ( 
+            Util.join( "\n", 
+                TextWorldManip.renderWorld( 
+                    w, false, true ) 
+            )
+        );
+    }
+    
     private static void runTimeStep(
         SandboxGame sandboxGame,
         SolutionTimeStep step,
