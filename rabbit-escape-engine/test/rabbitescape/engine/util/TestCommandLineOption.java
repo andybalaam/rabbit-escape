@@ -88,4 +88,17 @@ public class TestCommandLineOption
         assertThat( begin.getValue(), equalTo( "0" ) );
         assertThat( end.getValue(), equalTo( "100" ) );
     }
+    
+    @Test
+    public void Concatenated_parameters_with_equals()
+    {
+        CommandLineOption begin = new CommandLineOption( "--begin", true );
+        CommandLineOption end = new CommandLineOption( "--end", true );
+        
+        String[] args = "--begin=0 -e=100".split( " " );
+        CommandLineOptionSet.parse( args, begin, end);
+        
+        assertThat( begin.getValue(), equalTo( "0" ) );
+        assertThat( end.getValue(), equalTo( "100" ) );
+    }
 }

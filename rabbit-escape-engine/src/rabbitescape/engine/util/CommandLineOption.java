@@ -6,11 +6,13 @@ import rabbitescape.engine.err.RabbitEscapeException;
  * Supply a long form option (eg "--start"). 
  * The short form is generated automatically (eg "-s").
  * Parameters may be supplied as the next arg, or
- * concatenated ( "-s 0", "-s0");
+ * concatenated ( "-s 0", "-s0"). Also with equals is fine
+ * (eg --start=0).
  * Limitations;
  * * Options must begin "--".
  * * Different options cannot begin with the same letter
  * * Options may not be repeated on the command line.
+ * * parameters cannot start with "=".
  */
 public class CommandLineOption
 {
@@ -109,6 +111,11 @@ public class CommandLineOption
             if ( !takesParam )
             {
                 throw new OptionDoesNotTakeParameter(shortForm);
+            }
+            // Handle things like --start=0
+            if ( maybeParam.substring( 0, 1 ).equals( "=" ))
+            {
+                maybeParam = maybeParam.substring( 1 );
             }
             this.setValue( maybeParam );
         }
