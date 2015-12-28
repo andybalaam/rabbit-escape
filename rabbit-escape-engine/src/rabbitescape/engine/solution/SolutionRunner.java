@@ -79,7 +79,8 @@ public class SolutionRunner
 
     private static void printStep(World w)
     {
-        System.out.println( "Saved:"+w.num_saved );
+        System.out.println( "Waiting:"+w.num_waiting );
+        System.out.println( "  Saved:"+w.num_saved );
         System.out.println
         ( 
             Util.join( "\n", 
