@@ -22,7 +22,7 @@ public class SolutionDemo
 
         Solution solution = SolutionParser.parse( solutionString );
         
-        SolutionRunner.runSolution( solution, world, false );
+        SolutionRunner.runSolution( solution, world, System.out );
     }
 
 }

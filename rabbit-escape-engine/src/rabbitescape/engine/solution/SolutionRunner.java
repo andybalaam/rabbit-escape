@@ -2,6 +2,8 @@ package rabbitescape.engine.solution;
 
 import static rabbitescape.engine.util.Util.*;
 
+import java.io.PrintStream;
+
 import rabbitescape.engine.World;
 import rabbitescape.engine.Token.Type;
 import rabbitescape.engine.World.CantAddTokenOutsideWorld;
@@ -18,14 +20,21 @@ public class SolutionRunner
 {
     /**
      * @return true if the supplied solution solved the level
+     * @param output  A stream (eg System.out) to print to. May be null if no output
+     *                is required.
      */
-    public static boolean runSolution( Solution solution, World world, boolean quiet )
+    public static boolean runSolution( Solution solution, World world, PrintStream output )
         throws SolutionExceptions.ProblemRunningSolution
     {
         SandboxGame sandboxGame = new SandboxGame( world );
         SolutionInterpreter interpreter = new SolutionInterpreter( solution );
 
-        return runSolutionInSandbox( interpreter, sandboxGame, quiet );
+        return runSolutionInSandbox( interpreter, sandboxGame, output );
+    }
+    
+    public static boolean runSolution( Solution solution, World world)
+    {
+        return runSolution( solution, world, null);
     }
 
     public static void runPartialSolution(
@@ -34,13 +43,13 @@ public class SolutionRunner
         SolutionInterpreter interpreter = new SolutionInterpreter(
             solution, false );
 
-        runSolutionInSandbox( interpreter, sandboxGame, true );
+        runSolutionInSandbox( interpreter, sandboxGame, null );
     }
 
     private static boolean runSolutionInSandbox(
         SolutionInterpreter interpreter,
         SandboxGame sandboxGame,
-        boolean quiet
+        PrintStream output
     )
     {
         SolutionTimeStep step = interpreter.next(
@@ -52,9 +61,9 @@ public class SolutionRunner
                 SolutionTimeStep nextStep = interpreter.next(
                     sandboxGame.getWorld().completionState() );
                 
-                if ( !quiet )
+                if ( null == output )
                 {
-                    printStep( sandboxGame.getWorld() );
+                    printStep( System.out,  sandboxGame.getWorld() );
                 }
 
                 runTimeStep( sandboxGame, step, nextStep );
@@ -77,7 +86,7 @@ public class SolutionRunner
             CompletionState.WON );
     }
 
-    private static void printStep(World w)
+    private static void printStep(PrintStream s, World w)
     {
         System.out.println( "Waiting:"+w.num_waiting );
         System.out.println( "  Saved:"+w.num_saved );
