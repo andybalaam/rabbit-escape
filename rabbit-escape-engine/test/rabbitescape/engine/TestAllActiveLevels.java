@@ -100,7 +100,7 @@ public class TestAllActiveLevels
         Solution solution = SolutionParser.parse( solutionString );
         try
         {
-            return SolutionRunner.runSolution( solution, world, true );
+            return SolutionRunner.runSolution( solution, world );
         }
         catch ( SolutionExceptions.ProblemRunningSolution e )
         {

@@ -61,9 +61,9 @@ public class SolutionRunner
                 SolutionTimeStep nextStep = interpreter.next(
                     sandboxGame.getWorld().completionState() );
                 
-                if ( null == output )
+                if ( null != output )
                 {
-                    printStep( System.out,  sandboxGame.getWorld() );
+                    printStep( output,  sandboxGame.getWorld() );
                 }
 
                 runTimeStep( sandboxGame, step, nextStep );

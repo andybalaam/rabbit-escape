@@ -1441,7 +1441,7 @@ public class TestTextWorldManip
             Solution solution = SolutionParser.parse( s.object );
             try
             {
-                SolutionRunner.runSolution( solution, world, true );
+                SolutionRunner.runSolution( solution, world );
             }
             catch ( SolutionExceptions.ProblemRunningSolution e )
             {
