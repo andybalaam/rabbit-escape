@@ -88,9 +88,9 @@ public class SolutionRunner
 
     private static void printStep(PrintStream s, World w)
     {
-        System.out.println( "Waiting:"+w.num_waiting );
-        System.out.println( "  Saved:"+w.num_saved );
-        System.out.println
+        s.println( "Waiting:"+w.num_waiting );
+        s.println( "  Saved:"+w.num_saved );
+        s.println
         ( 
             Util.join( "\n", 
                 TextWorldManip.renderWorld( 
