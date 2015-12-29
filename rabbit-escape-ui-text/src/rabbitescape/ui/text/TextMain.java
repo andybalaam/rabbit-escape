@@ -2,6 +2,8 @@ package rabbitescape.ui.text;
 
 import rabbitescape.engine.config.Config;
 import rabbitescape.engine.i18n.Translation;
+import rabbitescape.engine.util.CommandLineOption;
+import rabbitescape.engine.util.CommandLineOptionSet;
 import rabbitescape.engine.util.FileSystem;
 import rabbitescape.engine.util.RealFileSystem;
 
@@ -18,11 +20,33 @@ public class TextMain
 
     public static void main( String[] args )
     {
-        if ( args.length > 0 )
+        if ( args.length == 1 )
         {
             TextSingleGameEntryPoint.entryPoint( args );
             return;
         }
+        
+        CommandLineOption level =    new CommandLineOption( "--level",    true );
+        CommandLineOption solution = new CommandLineOption( "--solution", true );
+        
+        try 
+        {
+            CommandLineOptionSet.parse( args,
+                                        level, solution );
+            if ( solution.isPresent() )
+            {
+                new SolutionDemo( level.getValue(), solution.getInt() );
+                System.exit( 0 );
+            }
+        }
+        catch( Exception e )
+        {
+            e.printStackTrace();
+            System.exit( 1 );
+        }
+        
+        
+
         
         Locale locale = Locale.getDefault();
         Translation.init( locale );
