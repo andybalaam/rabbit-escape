@@ -11,13 +11,15 @@ elif [ "$1" == "text" ]
     java -cp $CP rabbitescape.ui.text.TextMain $@
 elif [ "$1" == "--help" ] || [ "$1" == "-h" ]
     then
-    echo "./runrabbit [--help|-h]     (This) message and exit."
-    echo "./runrabbit                 Play using the swing GUI menus."
-    echo "./runrabbit swing           Play using the swing GUI menus."
-    echo "./runrabbit swing level.rel Play a single level using the swing GUI."
-    echo "./runrabbit text            Play using the text UI."
-    echo "./runrabbit text level.rel  Play a single level using the text UI."
+    echo "./runrabbit [--help|-h]             (This) message and exit."
+    echo "./runrabbit                         Play using the swing GUI menus."
+    echo "./runrabbit swing                   Play using the swing GUI menus."
+    echo "./runrabbit swing level.rel         Play a single level using the swing GUI."
+    echo "./runrabbit text                    Play using the text UI."
+    echo "./runrabbit text level.rel          Play a single level using the text UI."
     echo "./runrabbit text --level <file> --solution <n> print world steps."
+    echo "./runrabbit text --encode <string>  Obfuscate a string, for hints etc"
+    echo "./runrabbit text --decode <string>  Deobfuscate a string."
 else
     echo "Option not recognised. You may find"
     echo "./runrabbit --help"
