@@ -40,7 +40,7 @@ public class TestCommandLineOption
         assertThat( withParam.getValue(), equalTo( "0" ) );
     }
     
-    @Test( expected = CommandLineOption.UnkownOption.class )
+    @Test( expected = CommandLineOption.UnknownOption.class )
     public void Unknown_option_throws_exception()
     {
         CommandLineOption present = new CommandLineOption( "--present", false );

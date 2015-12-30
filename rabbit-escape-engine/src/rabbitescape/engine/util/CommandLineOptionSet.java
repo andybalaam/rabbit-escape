@@ -34,7 +34,7 @@ public class CommandLineOptionSet
                 return o;
             }
         }
-        throw (new CommandLineOption("--null",false)).getUnkownOption( arg );
+        throw (new CommandLineOption("--null",false)).getUnknownOption( arg );
     }
 
 }

@@ -16,12 +16,12 @@ import rabbitescape.engine.err.RabbitEscapeException;
  */
 public class CommandLineOption
 {
-    class UnkownOption extends RabbitEscapeException
+    class UnknownOption extends RabbitEscapeException
     {
         private static final long serialVersionUID = 1L;
         public final String unknownArg;
         
-        public UnkownOption( String arg )
+        public UnknownOption( String arg )
         {
             this.unknownArg = arg;
         }
@@ -127,9 +127,9 @@ public class CommandLineOption
         return new OptionRequiresParameter( arg );
     }
 
-    public UnkownOption getUnkownOption( String arg )
+    public UnknownOption getUnknownOption( String arg )
     {
-        return new UnkownOption( arg );
+        return new UnknownOption( arg );
     }
 
     public int getInt()
