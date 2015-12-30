@@ -1,14 +1,20 @@
 package rabbitescape.ui.text;
 
+import rabbitescape.engine.IgnoreWorldStatsListener;
+import rabbitescape.engine.LoadWorldFile;
+import rabbitescape.engine.World;
 import rabbitescape.engine.config.Config;
 import static rabbitescape.engine.i18n.Translation.*;
 import rabbitescape.engine.i18n.Translation;
+import rabbitescape.engine.textworld.TextWorldManip;
 import rabbitescape.engine.util.CommandLineOption;
 import rabbitescape.engine.util.CommandLineOptionSet;
 import rabbitescape.engine.util.FileSystem;
 import rabbitescape.engine.util.MegaCoder;
 import rabbitescape.engine.util.RealFileSystem;
+import rabbitescape.engine.util.Util;
 
+import java.io.IOException;
 import java.util.Locale;
 
 public class TextMain
@@ -50,12 +56,12 @@ public class TextMain
             }
             if ( encode.isPresent() )
             {
-                System.out.println( MegaCoder.encode( encode.getValue() ) );
+                MegaCoderCLI.codec( encode );
                 System.exit( 0 );
             }
             if ( decode.isPresent() )
             {
-                System.out.println( MegaCoder.encode( decode.getValue() ) );
+                MegaCoderCLI.codec( decode );
                 System.exit( 0 );
             }
         }
@@ -76,6 +82,8 @@ public class TextMain
 
         m.run( args );
     }
+    
+
 
     private void run( String[] args )
     {
@@ -95,7 +103,13 @@ public class TextMain
             "runrabbit text level.rel                Play a single level using the text UI.\n" +
             "runrabbit text --level <file> --solution <n>   Print world steps.\n" +
             "runrabbit text --encode <string>        Obfuscate a string, for hints etc\n" +
-            "runrabbit text --decode <string>        Deobfuscate a string.\n" 
+            "runrabbit text --decode <string>        Deobfuscate.\n" +
+            "runrabbit text --encode <level.rel>     Obfuscate hints and solutions.\n" +
+            "runrabbit text --decode <level.code.rel>   Deobfuscate.\n" +
+            "When used with rel files the de/encode options will leave the source file\n" +
+            "untouched, but may overwrite another file without further warning\n" +
+            " foo.rel -> foo.code.rel          foo.code.rel -> foo.uncode.rel\n" +
+            " foo.uncode.rel -> foo.code.rel   foo.rel -> foo.uncode.rel"
         ) );
     }
 }

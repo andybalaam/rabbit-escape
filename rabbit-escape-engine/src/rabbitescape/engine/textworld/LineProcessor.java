@@ -96,7 +96,7 @@ public class LineProcessor
     private int height;
     public  int lineNum;
     private int currentStarPoint;
-
+    
     public LineProcessor(
         List<Block> blocks,
         List<Rabbit> rabbits,
