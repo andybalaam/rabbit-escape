@@ -15,7 +15,7 @@ public class CommandLineOptionSet
                 // If param was not concatenated with option, check along the array.
                 if ( o.takesParam && o.getValue() == null )
                 {
-                    o.setValue( args[++i] );
+                    o.setValue( args[++i], arg );
                 }
             }
             catch ( ArrayIndexOutOfBoundsException eAIOOB )
