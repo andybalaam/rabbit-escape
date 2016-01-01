@@ -1,13 +1,20 @@
 package rabbitescape.ui.text;
 
+import rabbitescape.engine.IgnoreWorldStatsListener;
+import rabbitescape.engine.LoadWorldFile;
+import rabbitescape.engine.World;
 import rabbitescape.engine.config.Config;
+import static rabbitescape.engine.i18n.Translation.*;
 import rabbitescape.engine.i18n.Translation;
+import rabbitescape.engine.textworld.TextWorldManip;
 import rabbitescape.engine.util.CommandLineOption;
 import rabbitescape.engine.util.CommandLineOptionSet;
 import rabbitescape.engine.util.FileSystem;
 import rabbitescape.engine.util.MegaCoder;
 import rabbitescape.engine.util.RealFileSystem;
+import rabbitescape.engine.util.Util;
 
+import java.io.IOException;
 import java.util.Locale;
 
 public class TextMain
@@ -21,7 +28,7 @@ public class TextMain
 
     public static void main( String[] args )
     {
-        if ( args.length == 1 )
+        if ( args.length == 1 && args[0].endsWith( ".rel" ) )
         {
             TextSingleGameEntryPoint.entryPoint( args );
             return;
@@ -29,13 +36,19 @@ public class TextMain
         
         CommandLineOption level =    new CommandLineOption( "--level",    true );
         CommandLineOption solution = new CommandLineOption( "--solution", true );
-        CommandLineOption encode =   new CommandLineOption( "--encode", true );
-        CommandLineOption decode =   new CommandLineOption( "--decode", true );
+        CommandLineOption encode =   new CommandLineOption( "--encode",   true );
+        CommandLineOption decode =   new CommandLineOption( "--decode",   true );
+        CommandLineOption help =     new CommandLineOption( "--help",     false );
         
         try 
         {
             CommandLineOptionSet.parse( args,
-                                        level, solution, encode, decode );
+                                        level, solution, encode, decode, help );
+            if ( help.isPresent() )
+            {
+                usageMessage();
+                System.exit( 0 );
+            }
             if ( solution.isPresent() )
             {
                 new SolutionDemo( level.getValue(), solution.getInt() );
@@ -43,12 +56,12 @@ public class TextMain
             }
             if ( encode.isPresent() )
             {
-                System.out.println( MegaCoder.encode( encode.getValue() ) );
+                MegaCoderCLI.codec( encode );
                 System.exit( 0 );
             }
             if ( decode.isPresent() )
             {
-                System.out.println( MegaCoder.encode( decode.getValue() ) );
+                MegaCoderCLI.codec( decode );
                 System.exit( 0 );
             }
         }
@@ -57,9 +70,6 @@ public class TextMain
             e.printStackTrace();
             System.exit( 1 );
         }
-        
-        
-
         
         Locale locale = Locale.getDefault();
         Translation.init( locale );
@@ -72,9 +82,34 @@ public class TextMain
 
         m.run( args );
     }
+    
+
 
     private void run( String[] args )
     {
         textMenu.run();
+    }
+    
+    public static void usageMessage()
+    {
+        //                                                          Eighty character limit >|
+        System.out.println( t(
+            "Any option can be abbreviated: '--help' becomes '-h'.\n" +
+            "runrabbit --help                        (This) message and exit.\n" +
+            "runrabbit                               Play using the swing GUI menus.\n" +
+            "runrabbit swing                         Play using the swing GUI menus.\n" +
+            "runrabbit swing level.rel               Play a single level using the swing GUI.\n" +
+            "runrabbit text                          Play using the text UI.\n" +
+            "runrabbit text level.rel                Play a single level using the text UI.\n" +
+            "runrabbit text --level <file> --solution <n>   Print world steps.\n" +
+            "runrabbit text --encode <string>        Obfuscate a string, for hints etc\n" +
+            "runrabbit text --decode <string>        Deobfuscate.\n" +
+            "runrabbit text --encode <level.rel>     Obfuscate hints and solutions.\n" +
+            "runrabbit text --decode <level.code.rel>   Deobfuscate.\n" +
+            "When used with rel files the de/encode options will leave the source file\n" +
+            "untouched, but may overwrite another file without further warning\n" +
+            " foo.rel -> foo.code.rel          foo.code.rel -> foo.uncode.rel\n" +
+            " foo.uncode.rel -> foo.code.rel   foo.rel -> foo.uncode.rel"
+        ) );
     }
 }

@@ -28,8 +28,8 @@ public class TextWorldManip
     private static final String description          = "description";
     private static final String author_name          = "author_name";
     private static final String author_url           = "author_url";
-    private static final String hint                 = "hint";
-    private static final String solution             = "solution";
+    public  static final String hint                 = "hint";
+    public  static final String solution             = "solution";
     private static final String num_rabbits          = "num_rabbits";
     private static final String num_to_save          = "num_to_save";
     private static final String rabbit_delay         = "rabbit_delay";
@@ -97,6 +97,9 @@ public class TextWorldManip
         return createWorldWithName( "", statsListener, lines );
     }
 
+    /**
+     * @param encode if true, create a world with obfuscated hints and solutions
+     */
     public static World createWorldWithName(
         String nameIfNoneSupplied,
         WorldStatsListener statsListener,

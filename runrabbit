@@ -4,22 +4,14 @@ if [ "$1" == "swing" ] || [ "$1" == "" ] # swing is the defualt
     then
     # shift drops the first arg, "swing". $@ passes the rest on.
     shift
-    java -cp $CP rabbitescape.ui.swing.SwingMain $@
+    java -cp $CP rabbitescape.ui.swing.SwingMain "$@"
 elif [ "$1" == "text" ]
     then
     shift
-    java -cp $CP rabbitescape.ui.text.TextMain $@
+    java -cp $CP rabbitescape.ui.text.TextMain "$@"
 elif [ "$1" == "--help" ] || [ "$1" == "-h" ]
     then
-    echo "./runrabbit [--help|-h]             (This) message and exit."
-    echo "./runrabbit                         Play using the swing GUI menus."
-    echo "./runrabbit swing                   Play using the swing GUI menus."
-    echo "./runrabbit swing level.rel         Play a single level using the swing GUI."
-    echo "./runrabbit text                    Play using the text UI."
-    echo "./runrabbit text level.rel          Play a single level using the text UI."
-    echo "./runrabbit text --level <file> --solution <n> print world steps."
-    echo "./runrabbit text --encode <string>  Obfuscate a string, for hints etc"
-    echo "./runrabbit text --decode <string>  Deobfuscate a string."
+    java -cp $CP rabbitescape.ui.text.TextMain "$@"
 else
     echo "Option not recognised. You may find"
     echo "./runrabbit --help"

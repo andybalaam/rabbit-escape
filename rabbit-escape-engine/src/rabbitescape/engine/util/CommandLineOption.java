@@ -16,18 +16,18 @@ import rabbitescape.engine.err.RabbitEscapeException;
  */
 public class CommandLineOption
 {
-    class UnkownOption extends RabbitEscapeException
+    public class UnknownOption extends RabbitEscapeException
     {
         private static final long serialVersionUID = 1L;
         public final String unknownArg;
         
-        public UnkownOption( String arg )
+        public UnknownOption( String arg )
         {
             this.unknownArg = arg;
         }
     }
     
-    class OptionRequiresParameter extends RabbitEscapeException
+    public class OptionRequiresParameter extends RabbitEscapeException
     {
         private static final long serialVersionUID = 1L;
         public final String arg;
@@ -38,7 +38,7 @@ public class CommandLineOption
         }
     }
     
-    class OptionDoesNotTakeParameter extends RabbitEscapeException
+    public class OptionDoesNotTakeParameter extends RabbitEscapeException
     {
         private static final long serialVersionUID = 1L;
         public final String arg;
@@ -63,11 +63,11 @@ public class CommandLineOption
         this.shortForm = longForm.substring( 1, 3 );
     }
     
-    public void setValue( String value )
+    public void setValue( String value, String parentOption )
     {
         if ( value.length() > 0 && value.startsWith( "-" ) )
         {
-            throw new OptionRequiresParameter( longForm );
+            throw new OptionRequiresParameter( parentOption );
         }
         this.value = value;
     }
@@ -117,7 +117,7 @@ public class CommandLineOption
             {
                 maybeParam = maybeParam.substring( 1 );
             }
-            this.setValue( maybeParam );
+            this.setValue( maybeParam, arg );
         }
         return true;
     }
@@ -127,9 +127,9 @@ public class CommandLineOption
         return new OptionRequiresParameter( arg );
     }
 
-    public UnkownOption getUnkownOption( String arg )
+    public UnknownOption getUnknownOption( String arg )
     {
-        return new UnkownOption( arg );
+        return new UnknownOption( arg );
     }
 
     public int getInt()
