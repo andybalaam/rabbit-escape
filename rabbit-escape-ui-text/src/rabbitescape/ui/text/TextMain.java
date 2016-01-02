@@ -40,12 +40,12 @@ public class TextMain
         CommandLineOption help =         new CommandLineOption( "--help",         false );
         CommandLineOption noinput =      new CommandLineOption( "--noinput",      true );
         CommandLineOption placeholders = new CommandLineOption( "--placeholders", true );
-        
+        CommandLineOption template =     new CommandLineOption( "--template",     true );
         try 
         {
             CommandLineOptionSet.parse( args,
                                         level, solution, encode, decode, help, 
-                                        noinput, placeholders );
+                                        noinput, placeholders, template );
             if ( help.isPresent() )
             {
                 usageMessage();
@@ -80,6 +80,11 @@ public class TextMain
                 placeholders( placeholders.getValue() );
                 System.exit( 0 );
             }
+            if ( template.isPresent() )
+            {
+                template( template.getValue() );
+                System.exit( 0 );
+            }
         }
         catch( Exception e )
         {
@@ -110,6 +115,18 @@ public class TextMain
         fs.write( fileName, Util.join( "\n", lines ) );
     }
     
+    public static void template( String fileName ) throws IOException
+    {
+        RealFileSystem fs = new RealFileSystem();
+        String[] world = {
+            "      ", "      ", "      ",
+            "      ", "      ", "      "
+        };
+        String[] lines = TextWorldManip.renderCompleteWorld( 
+            TextWorldManip.createWorld( world ), true, true );
+        fs.write( fileName, Util.join( "\n", lines ) );
+    }
+    
     private void run( String[] args )
     {
         textMenu.run();
@@ -133,8 +150,9 @@ public class TextMain
             "runrabbit text --decode <string>        Deobfuscate.\n" +
             "runrabbit text --encode <level.rel>     Obfuscate hints and solutions.\n" +
             "runrabbit text --decode <level.code.rel>   Deobfuscate.\n" +
-            "runrabbot text --placeholders <level.rel>  Rewrite file, inserting blank meta\n" +
-            "                                           and re-ordering meta. Decodes.\n\n" +
+            "runrabbit text --placeholders <level.rel>  Rewrite file, inserting blank meta\n" +
+            "                                           and re-ordering meta. Decodes.\n" +
+            "runrabbit text --template <level.rel>   Create blank rel file\n\n" +
             "When used with rel files the de/encode options will leave the source file\n" +
             "untouched, but may overwrite another file without further warning\n" +
             " foo.rel -> foo.code.rel          foo.code.rel -> foo.uncode.rel\n" +
