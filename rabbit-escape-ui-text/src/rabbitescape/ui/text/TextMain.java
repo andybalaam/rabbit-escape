@@ -104,6 +104,8 @@ public class TextMain
             "runrabbit swing level.rel               Play a single level using the swing GUI.\n" +
             "runrabbit text                          Play using the text UI.\n" +
             "runrabbit text level.rel                Play a single level using the text UI.\n" +
+            "runrabbit text --level level.rel        Play a single level using the text UI.\n" +
+            "runrabbit text --noinput level.rel      Level plays out with no token drops.\n" +
             "runrabbit text --level <file> --solution <n>   Print world steps.\n" +
             "runrabbit text --encode <string>        Obfuscate a string, for hints etc\n" +
             "runrabbit text --decode <string>        Deobfuscate.\n" +
