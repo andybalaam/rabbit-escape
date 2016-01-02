@@ -29,7 +29,7 @@ public class TestPhysics
         final int num_threads = 100;
         final int num_iters   = 20;
 
-        final WorldModifier modifier = new WorldModifier( world );
+        final WorldModifier modifier = new WorldModifier( world, null );
 
         class Stepper implements Runnable
         {
