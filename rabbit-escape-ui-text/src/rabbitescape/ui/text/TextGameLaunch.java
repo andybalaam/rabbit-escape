@@ -31,10 +31,10 @@ public class TextGameLaunch implements GameLaunch
     @Override
     public void run( String[] args )
     {
-        boolean useInput = false;
-        if ( args.length > 1 && args[1].equals( "--interactive" ) )
+        boolean useInput = true;
+        if ( args.length > 1 && args[1].equals( "noinput" ) )
         {
-            useInput = true;
+            useInput = false;
         }
 
         InputHandler inputHandler =
