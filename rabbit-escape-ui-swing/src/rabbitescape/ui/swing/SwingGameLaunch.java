@@ -211,7 +211,7 @@ public class SwingGameLaunch implements GameLaunch
                 new Object[] { DialogText.introText( this.frame, world ) },
                 Util.map(
                     insertNewlines,
-                    new String[] { world.hint1, world.hint2, world.hint3 },
+                    world.hints,
                     new String[3]
                 )
             )

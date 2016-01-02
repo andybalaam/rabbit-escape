@@ -92,9 +92,9 @@ public class Dialogs
             switch ( i )
             {
                 case 0:  return introMessage();
-                case 1:  return readyForDialog( world.hint1 );
-                case 2:  return readyForDialog( world.hint2 );
-                default: return readyForDialog( world.hint3 );
+                case 1:  return readyForDialog( world.hints[0] );
+                case 2:  return readyForDialog( world.hints[1] );
+                default: return readyForDialog( world.hints[2] );
             }
         }
 

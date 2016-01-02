@@ -28,7 +28,6 @@ import rabbitescape.engine.err.RabbitEscapeException;
 import rabbitescape.engine.menu.LevelsCompleted;
 import rabbitescape.engine.textworld.TextWorldManip;
 import rabbitescape.engine.util.RealFileSystem;
-import rabbitescape.render.BitmapCache;
 
 import static android.text.TextUtils.split;
 import static rabbitescape.engine.i18n.Translation.t;
@@ -129,7 +128,7 @@ public class AndroidGameActivity extends RabbitEscapeActivity
             this,
             this,
             sound,
-            createBitmapCache( resources ),
+            SingletonBitmapCache.instance( resources ),
             world,
             winListener,
             metrics.density,
@@ -191,18 +190,6 @@ public class AndroidGameActivity extends RabbitEscapeActivity
                 }
             }
         );
-    }
-
-    private BitmapCache<AndroidBitmap> createBitmapCache( Resources resources )
-    {
-        return new BitmapCache<AndroidBitmap>(
-            new AndroidBitmapLoader( resources ), new AndroidBitmapScaler(), cacheSize() );
-    }
-
-    private long cacheSize()
-    {
-        // About half of our memory will go on bitmaps
-        return Runtime.getRuntime().maxMemory() / 2;
     }
 
     @Override

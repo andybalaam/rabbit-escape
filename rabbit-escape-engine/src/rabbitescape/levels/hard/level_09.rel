@@ -3,9 +3,9 @@
 :num_rabbits=10
 :author_name=Andy Balaam
 :author_url=http://artificialworlds.net/rabbit-escape/
-:hint1=With only one bash token, they can't get over the roof.
-:hint2=You have 3 block tokens and 3 expendable rabbits.
-:hint3=Let the first two drop down, then corral the rest on the landing platform with a blocker at each end. Give the two in the hole the ability to climb. Make one a blocker just before the exit. Make the other bridge back across the gap. Explode the rabbits in the correct order to herd them towards freedom.
+:hint.1=With only one bash token, they can't get over the roof.
+:hint.2=You have 3 block tokens and 3 expendable rabbits.
+:hint.3=Let the first two drop down, then corral the rest on the landing platform with a blocker at each end. Give the two in the hole the ability to climb. Make one a blocker just before the exit. Make the other bridge back across the gap. Explode the rabbits in the correct order to herd them towards freedom.
 :solution.1=block;6;(3,3);(5,3);(15,4);climb;(9,6);(9,6);bridge;6;(10,4);bash;2;(15,4);explode;6;(5,2);10;(3,3);7;WON
 :num_to_save=7
 :climb=2

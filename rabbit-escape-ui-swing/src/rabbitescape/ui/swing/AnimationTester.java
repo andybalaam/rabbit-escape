@@ -25,56 +25,6 @@ import static rabbitescape.render.AnimationLoader.*;
 
 public class AnimationTester extends JFrame
 {
-    private static class SwingBitmapAndOffset
-    {
-        public final ScaledBitmap<SwingBitmap> bitmap;
-        public final int offsetX;
-        public final int offsetY;
-        public final String soundEffect;
-        public final String frameName;
-
-        public SwingBitmapAndOffset(
-            ScaledBitmap<SwingBitmap> bitmap,
-            int offsetX,
-            int offsetY,
-            String soundEffect, 
-            String frameName
-        )
-        {
-            this.bitmap = bitmap;
-            this.offsetX = offsetX;
-            this.offsetY = offsetY;
-            this.soundEffect = soundEffect;
-            this.frameName = frameName;
-        }
-    }
-
-    private static class SwingAnimation
-    {
-        private final List<SwingBitmapAndOffset> bitmaps;
-
-        public SwingAnimation(
-            BitmapCache<SwingBitmap> bitmapCache, Animation animation )
-        {
-            this.bitmaps = new ArrayList<>();
-
-            for ( Frame frame : animation )
-            {
-                ScaledBitmap<SwingBitmap> bmp = bitmapCache.get( frame.name );
-
-                this.bitmaps.add(
-                    new SwingBitmapAndOffset(
-                        bmp, frame.offsetX, frame.offsetY, frame.soundEffect, frame.name )
-                );
-            }
-        }
-
-        public SwingBitmapAndOffset get( int frameNum )
-        {
-            return bitmaps.get( frameNum );
-        }
-    }
-
     private static final long serialVersionUID = 1L;
 
     private static final String CONFIG_PATH =
@@ -165,7 +115,6 @@ public class AnimationTester extends JFrame
             blockNames[i] = noneForNull( blocksList.getSelectedValue() );
 
             saveSelectionsToConfig();
-            loadBitmaps();
         }
 
         private void saveSelectionsToConfig()
@@ -270,13 +219,8 @@ public class AnimationTester extends JFrame
 
     private final java.awt.Canvas canvas;
     private final Config atConfig;
-    private SwingBitmapScaler scaler;
     private SwingPaint paint;
-    /** [0-8][0-2] position in 3x3 grid, and triplet of consecutive animations for 
-     * that position.
-     */
-    private SwingAnimation[][] frames;
-    private List<ScaledBitmap<SwingBitmap>> blockBitmaps;
+    private final BitmapCache<SwingBitmap> bitmapCache;
     private final AnimationCache animationCache;
     private final String[] allBlocks = new String[] {
         NONE,
@@ -296,7 +240,14 @@ public class AnimationTester extends JFrame
         "bridge_rising_left",
     };
 
+    /** [0-8][0-2] position in 3x3 grid, and triplet of consecutive animations for
+     * that position.
+     */
     private final String[][] animationNames;
+
+    /**
+     * Blocks don't animate, so just [0-8], one for each position.
+     */
     private final String[] blockNames;
 
     private static class InitUi implements Runnable
@@ -371,7 +322,13 @@ public class AnimationTester extends JFrame
 
         getContentPane().add( canvas, java.awt.BorderLayout.CENTER );
 
-        loadBitmaps();
+        paint = new SwingPaint( null );
+
+        bitmapCache = new BitmapCache<SwingBitmap>(
+            new SwingBitmapLoader(),
+            new SwingBitmapScaler(),
+            SwingMain.cacheSize()
+        );
 
         Listener listener = new Listener();
         canvas.addMouseListener( listener );
@@ -399,81 +356,6 @@ public class AnimationTester extends JFrame
         {
             setLocation( x, y );
         }
-    }
-
-    private void loadBitmaps()
-    {
-        scaler = new SwingBitmapScaler();
-        paint = new SwingPaint( null );
-        SwingBitmapLoader bitmapLoader = new SwingBitmapLoader();
-
-        BitmapCache<SwingBitmap> bitmapCache = new BitmapCache<SwingBitmap>(
-            bitmapLoader, scaler, SwingMain.cacheSize() );
-
-        frames = loadAllFrames( bitmapCache, animationNames );
-        blockBitmaps = loadAllBlockBitmaps( bitmapCache, blockNames );
-    }
-
-    private SwingAnimation[][] loadAllFrames(
-        BitmapCache<SwingBitmap> bitmapCache, String[][] animationNames )
-    {
-        SwingAnimation[][] ret =
-            new SwingAnimation[animationNames.length][];
-
-        int i = 0;
-        for ( String[] animationTriplet : animationNames )
-        {
-            ret[i] = new SwingAnimation[animationTriplet.length];
-            int j = 0;
-            for ( String animationName : animationTriplet )
-            {
-                if ( !animationName.equals( NONE ) )
-                {
-                    Animation animation = animationCache.get( animationName );
-                    if ( animation == null )
-                    {
-                        ++j;
-                        continue;
-                    }
-
-                    ret[i][j] = new SwingAnimation(
-                        bitmapCache,
-                        animation
-                    );
-                }
-                ++j;
-            }
-            ++i;
-        }
-        return ret;
-    }
-
-
-    private List<ScaledBitmap<SwingBitmap>> loadAllBlockBitmaps(
-        BitmapCache<SwingBitmap> bitmapCache, String[] blockNames )
-    {
-        List<ScaledBitmap<SwingBitmap>> ret =
-            new ArrayList<ScaledBitmap<SwingBitmap>>( blockNames.length );
-
-        for ( String blockName : blockNames )
-        {
-            if ( blockName.equals( NONE ) )
-            {
-                ret.add( null );
-            }
-            else
-            {
-                try
-                {
-                    ret.add( bitmapCache.get( blockName ) );
-                }
-                catch ( FailedToLoadImage e )
-                {
-                    e.printStackTrace();
-                }
-            }
-        }
-        return ret;
     }
 
     public static void main( String[] args )
@@ -540,10 +422,10 @@ public class AnimationTester extends JFrame
         BufferStrategy strategy = canvas.getBufferStrategy();
 
         Renderer<SwingBitmap, SwingPaint> renderer =
-            new Renderer<SwingBitmap, SwingPaint>( 0, 0, tileSize );
+            new Renderer<SwingBitmap, SwingPaint>( 0, 0, tileSize, bitmapCache );
 
-        SoundPlayer<SwingBitmap> soundPlayer =
-            new SoundPlayer<SwingBitmap>( new SwingSound( false ) );
+        SoundPlayer soundPlayer =
+            new SoundPlayer( new SwingSound( false ) );
 
         FrameCounter counter = new FrameCounter();
         running = true;
@@ -593,12 +475,12 @@ public class AnimationTester extends JFrame
         private final int frameSetNum;
         private final int frameNum;
         private final Renderer<SwingBitmap, SwingPaint> renderer;
-        private final SoundPlayer<SwingBitmap> soundPlayer;
+        private final SoundPlayer soundPlayer;
 
         public DrawFrame(
             BufferStrategy strategy,
             Renderer<SwingBitmap, SwingPaint> renderer,
-            SoundPlayer<SwingBitmap> soundPlayer,
+            SoundPlayer soundPlayer,
             int frameSetNum,
             int frameNum
         )
@@ -621,11 +503,11 @@ public class AnimationTester extends JFrame
                 canvas.getHeight()
             );
 
-            List<Sprite<SwingBitmap>> sprites = new ArrayList<>();
+            List<Sprite> sprites = new ArrayList<>();
             int i = 0;
-            for ( ScaledBitmap<SwingBitmap> bmp : blockBitmaps )
+            for ( String block : blockNames )
             {
-                if ( bmp == null )
+                if ( block == null || block.equals( NONE ) )
                 {
                     ++i;
                     continue;
@@ -633,8 +515,8 @@ public class AnimationTester extends JFrame
 
                 java.awt.Point loc = int2dim( i );
                 sprites.add(
-                    new Sprite<SwingBitmap>(
-                        bmp,
+                    new Sprite(
+                        block,
                         null,
                         loc.x,
                         loc.y,
@@ -646,30 +528,34 @@ public class AnimationTester extends JFrame
             }
 
             i = 0;
-            for ( SwingAnimation[] bmpSets : frames )
+            for ( String[] animationSet : animationNames )
             {
-                SwingAnimation bmps = bmpSets[frameSetNum];
-                if ( bmps == null )
+                String animationName = animationSet[frameSetNum];
+                if ( animationName != null && !animationName.equals( NONE ) )
                 {
-                    ++i;
-                    continue;
-                }
-                java.awt.Point loc = int2dim( i );
-                SwingBitmapAndOffset bmp = bmps.get( frameNum );
-                Sprite<SwingBitmap> sprite = new Sprite<SwingBitmap>(
-                    bmp.bitmap,
-                    bmp.soundEffect,
-                    loc.x,
-                    loc.y,
-                    bmp.offsetX,
-                    bmp.offsetY
-                );
-                
-                if( frameLogging ){
-                    System.out.println(bmp.frameName);
-                }
+                    Animation animation = animationCache.get( animationName );
+                    if ( animation != null )
+                    {
+                        Frame frame = animation.get( frameNum );
 
-                sprites.add( sprite );
+                        java.awt.Point loc = int2dim( i );
+                        Sprite sprite = new Sprite(
+                            frame.name,
+                            frame.soundEffect,
+                            loc.x,
+                            loc.y,
+                            frame.offsetX,
+                            frame.offsetY
+                        );
+
+                        if( frameLogging )
+                        {
+                            System.out.println( frame.name );
+                        }
+
+                        sprites.add( sprite );
+                    }
+                }
                 ++i;
             }
 

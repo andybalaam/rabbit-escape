@@ -2,9 +2,9 @@
 :description=One of your rabbits must prepare the way while the others wait
 :author_name=Andy Balaam
 :author_url=http://artificialworlds.net/rabbit-escape/
-:hint1=Make your first rabbit a bridger and keep the others back using 2 blockers.
-:hint2=Try placing all the bridging tokens at the beginning, to give you more time.
-:hint3=Place a bridge token at the very right end of the first platform and each floating island. After one rabbit starts bridging, place block tokens at each end of the first platform. When ready, use an explode token to blow up the right-hand blocker.
+:hint.1=Make your first rabbit a bridger and keep the others back using 2 blockers.
+:hint.2=Try placing all the bridging tokens at the beginning, to give you more time.
+:hint.3=Place a bridge token at the very right end of the first platform and each floating island. After one rabbit starts bridging, place block tokens at each end of the first platform. When ready, use an explode token to blow up the right-hand blocker.
 :solution.1=bridge;(10,4);;(5,4);(13,4);(17,4);(20,2);7;(9,4);24;explode;(15,9);28
 :num_rabbits=10
 :num_to_save=8

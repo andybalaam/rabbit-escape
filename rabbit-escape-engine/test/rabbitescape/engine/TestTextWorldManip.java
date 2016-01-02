@@ -472,16 +472,16 @@ public class TestTextWorldManip
     public void Can_obfuscate_hints()
     {
         String[] lines = {
-            ":hint1.code=_Uf?>3ZH_8>U>{3",
-            ":hint2.code=@XW@W:)e+:+ ",
-            ":hint3.code=X5g..T[6X4["
+            ":hint.1.code=_Uf?>3ZH_8>U>{3",
+            ":hint.2.code=@XW@W:)e+:+ ",
+            ":hint.3.code=X5g..T[6X4["
         };
 
         World world = createWorld( lines );
 
-        assertThat( world.hint1, equalTo( "Select the bash" ) );
-        assertThat( world.hint2, equalTo( "Use the bash" ) );
-        assertThat( world.hint3, equalTo( "Be the bash" ) );
+        assertThat( world.hints[0], equalTo( "Select the bash" ) );
+        assertThat( world.hints[1], equalTo( "Use the bash" ) );
+        assertThat( world.hints[2], equalTo( "Be the bash" ) );
     }
 
     @Test
@@ -828,9 +828,9 @@ public class TestTextWorldManip
             ":description=",
             ":author_name=Alice Jones",
             ":author_url=http://example.com",
-            ":hint1=foo\nbar",
-            ":hint2=baz",
-            ":hint3=bash",
+            ":hint.1=foo\nbar",
+            ":hint.2=baz",
+            ":hint.3=bash",
             ":num_rabbits=25",
             ":num_to_save=4",
             ":rabbit_delay=2",
@@ -914,9 +914,9 @@ public class TestTextWorldManip
             ":description=Go around",
             ":author_name=bob",
             ":author_url=",
-            ":hint1=",
-            ":hint2=",
-            ":hint3=",
+            ":hint.1=",
+            ":hint.2=",
+            ":hint.3=",
             ":num_rabbits=25",
             ":num_to_save=4",
             ":rabbit_delay=2",
@@ -985,9 +985,12 @@ public class TestTextWorldManip
             ":description=trippy",
             ":author_name=cyril",
             ":author_url=",
-            ":hint1=",
-            ":hint2=",
-            ":hint3=",
+            ":hint.1=take",
+            ":hint.2=a",
+            ":hint.3=hint",
+            ":solution.1=",
+            ":solution.2=",
+            ":solution.3=",
             ":num_rabbits=20",
             ":num_to_save=18",
             ":rabbit_delay=10,3,2,10",
@@ -1103,16 +1106,16 @@ public class TestTextWorldManip
     public void Round_trip_for_solutions()
     {
         String[] lines = {
-            ":name=var delay round trip",
+            ":name=solution round trip",
             ":description=trippy",
             ":author_name=cyril",
             ":author_url=",
+            ":hint.1=take",
+            ":hint.2=a",
+            ":hint.3=hint",
             ":solution.1=10;6",
             ":solution.2=bash;(3,2)",
             ":solution.3=6;5",
-            ":hint1=",
-            ":hint2=",
-            ":hint3=",
             ":num_rabbits=20",
             ":num_to_save=18",
             ":rabbit_delay=10,3,2,10",
@@ -1384,9 +1387,9 @@ public class TestTextWorldManip
             "% ignore me",
             ":author_name=cyril",
             ":author_url=",
-            ":hint1=",
-            ":hint2=",
-            ":hint3=",
+            ":hint.1=",
+            ":hint.2=",
+            ":hint.3=",
             ":num_rabbits=20",
             ":num_to_save=18",
             ":rabbit_delay=1",
@@ -1405,9 +1408,9 @@ public class TestTextWorldManip
             ":description=trippy",
             ":author_name=cyril",
             ":author_url=",
-            ":hint1=",
-            ":hint2=",
-            ":hint3=",
+            ":hint.1=",
+            ":hint.2=",
+            ":hint.3=",
             ":num_rabbits=20",
             ":num_to_save=18",
             ":rabbit_delay=1",

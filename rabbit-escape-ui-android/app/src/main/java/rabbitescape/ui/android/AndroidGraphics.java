@@ -24,7 +24,7 @@ public class AndroidGraphics implements Graphics
     private static final float MIN_TILE_SIZE = 16f;
 
     private final BitmapCache<AndroidBitmap> bitmapCache;
-    private final SoundPlayer<AndroidBitmap> soundPlayer;
+    private final SoundPlayer soundPlayer;
     private final World world;
     private final SurfaceHolder surfaceHolder;
     private final AnimationCache animationCache;
@@ -65,7 +65,7 @@ public class AndroidGraphics implements Graphics
 
     public AndroidGraphics(
         BitmapCache<AndroidBitmap> bitmapCache,
-        SoundPlayer<AndroidBitmap> soundPlayer,
+        SoundPlayer soundPlayer,
         World world,
         SurfaceHolder surfaceHolder,
         float displayDensity,
@@ -212,15 +212,15 @@ public class AndroidGraphics implements Graphics
     {
         AndroidCanvas androidCanvas = new AndroidCanvas( canvas );
         Renderer<AndroidBitmap, AndroidPaint> renderer =
-            new Renderer<AndroidBitmap, AndroidPaint>( offsetX, offsetY, (int)renderingTileSize );
+            new Renderer<AndroidBitmap, AndroidPaint>(
+                offsetX, offsetY, (int)renderingTileSize, bitmapCache );
 
-        SpriteAnimator<AndroidBitmap> animator = new SpriteAnimator<AndroidBitmap>(
-            world, bitmapCache, animationCache );
+        SpriteAnimator animator = new SpriteAnimator( world, animationCache );
 
         GraphPaperBackground.drawBackground(
             world, renderer, androidCanvas, white, graphPaperMajor, graphPaperMinor );
 
-        List<Sprite<AndroidBitmap>> sprites = animator.getSprites( frameNum );
+        List<Sprite> sprites = animator.getSprites( frameNum );
 
         soundPlayer.play( sprites );
 

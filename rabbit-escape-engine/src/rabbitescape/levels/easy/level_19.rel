@@ -2,9 +2,9 @@
 :description=Bridge, climb, bridge.
 :author_name=Andy Balaam
 :author_url=http://artificialworlds.net/rabbit-escape/
-:hint1=Build a bridge, then climb up a bit, and bridge again from higher up.
-:hint2=You can bridge from that notch in the top-right.
-:hint3=Bridge rightwards 4-5 squares from the right-hand wall. Climb up that wall. Bridge twice in the top hole in the wall.
+:hint.1=Build a bridge, then climb up a bit, and bridge again from higher up.
+:hint.2=You can bridge from that notch in the top-right.
+:hint.3=Bridge rightwards 4-5 squares from the right-hand wall. Climb up that wall. Bridge twice in the top hole in the wall.
 :solution.1=bridge;(10,9);3;(7,9);8;(10,7);11;(5,9);23;(14,3);10
 :num_rabbits=2
 :num_to_save=2

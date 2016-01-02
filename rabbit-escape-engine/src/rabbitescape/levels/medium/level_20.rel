@@ -2,9 +2,9 @@
 :description=...and merges.
 :author_name=Andy Balaam
 :author_url=http://artificialworlds.net/rabbit-escape/
-:hint1=A bridge token on the top of the first low wall and another in front will get one rabbit over.
-:hint2=If a rabbit gets stuck between the first 2 walls it can bridge out.
-:hint3=Make a 2-token bridge that climbs right, dropping the first token under the single floating block. When this bridge reaches the right wall, drop a token there to turn and bridge to the exit.
+:hint.1=A bridge token on the top of the first low wall and another in front will get one rabbit over.
+:hint.2=If a rabbit gets stuck between the first 2 walls it can bridge out.
+:hint.3=Make a 2-token bridge that climbs right, dropping the first token under the single floating block. When this bridge reaches the right wall, drop a token there to turn and bridge to the exit.
 :solution.1=bridge;(5,7);(6,6);(8,5);11;(14,7);10;(17,5);7;(7,7);(19,3);33
 :num_rabbits=2
 :num_to_save=2

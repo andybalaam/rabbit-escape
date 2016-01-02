@@ -139,7 +139,7 @@ $(ANDROIDICONSXXXHDPI_DEST)/%.png: images-src/icons/%.svg
 #$(MUSICOGG_DEST)/%.ogg: music-src/%.flac
 #	mkdir -p $(MUSICOGG_DEST); avconv -i $< -c:a libvorbis -q:a 1 $@
 
-VERSION=0.7
+VERSION=0.7.1
 
 ifndef MAKECMDGOALS
 MAKECMDGOALS = all
@@ -275,6 +275,11 @@ test: compile
 	@# Work around what looks like an Ant 1.9 bug by including the classpath here
 	@CLASSPATH=lib/org.hamcrest.core_1.3.0.jar:lib/junit.jar ant -quiet test
 
+test-verbose: compile
+	@echo ". Running unit tests"
+	@# Work around what looks like an Ant 1.9 bug by including the classpath here
+	@CLASSPATH=lib/org.hamcrest.core_1.3.0.jar:lib/junit.jar ant test
+	
 slowtest: test slowtest-run
 
 slowtest-run:

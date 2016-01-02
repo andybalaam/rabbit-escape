@@ -24,7 +24,7 @@ public class AndroidGameLaunch implements Runnable
     // Transient state
     public final GeneralPhysics physics;
     public final AndroidGraphics graphics;
-    public final SoundPlayer<AndroidBitmap> soundPlayer;
+    public final SoundPlayer soundPlayer;
     public final AndroidInput input;
 
     public final WorldSaver worldSaver;
@@ -40,7 +40,7 @@ public class AndroidGameLaunch implements Runnable
         Bundle savedInstanceState
     )
     {
-        this.soundPlayer = new SoundPlayer<AndroidBitmap>( Globals.sound );
+        this.soundPlayer = new SoundPlayer( Globals.sound );
         this.physics = new GeneralPhysics( world, winListener );
 
         int scrollX;

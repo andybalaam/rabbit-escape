@@ -2,9 +2,9 @@
 :description=Just one bridger?
 :author_name=Andy Balaam
 :author_url=http://artificialworlds.net/rabbit-escape/
-:hint1=You can't escape from the hole.
-:hint2=Are those joists for show?
-:hint3=Drop the bridge token directly above the column next to the exit.
+:hint.1=You can't escape from the hole.
+:hint.2=Are those joists for show?
+:hint.3=Drop the bridge token directly above the column next to the exit.
 :solution.1=bridge;(9,4);43
 :num_rabbits=2
 :rabbit_delay=10

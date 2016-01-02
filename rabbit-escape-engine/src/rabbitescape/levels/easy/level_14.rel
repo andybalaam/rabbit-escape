@@ -2,9 +2,9 @@
 :description=You will need several different abilities to get past each of the towers in your way.
 :author_name=Andy Balaam
 :author_url=http://artificialworlds.net/rabbit-escape/
-:hint1=Use bashers, climbers and bridgers. In what order?
-:hint2=You can't go over the last wall - go through it.
-:hint3=Bridge directly under the entrance, place two climbers by the second wall, and bash through the third wall.
+:hint.1=Use bashers, climbers and bridgers. In what order?
+:hint.2=You can't go over the last wall - go through it.
+:hint.3=Bridge directly under the entrance, place two climbers by the second wall, and bash through the third wall.
 :solution.1=bash;bridge;10;(2,9);8;climb;(9,9);(9,9);bash;(12,9);30
 :num_rabbits=2
 :num_to_save=2

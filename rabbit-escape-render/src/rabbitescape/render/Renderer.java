@@ -11,28 +11,35 @@ public class Renderer<T extends Bitmap, P extends Paint>
     public int offsetX;
     public int offsetY;
     public int tileSize;
+    private final BitmapCache<T> bitmapCache;
 
-    public Renderer( int offsetX, int offsetY, int tileSize )
+    public Renderer(
+        int offsetX,
+        int offsetY,
+        int tileSize,
+        BitmapCache<T> bitmapCache
+    )
     {
         this.offsetX = offsetX;
         this.offsetY = offsetY;
         this.tileSize = tileSize;
+        this.bitmapCache = bitmapCache;
     }
 
-    public void render( Canvas<T, P> canvas, List<Sprite<T>> sprites, P paint )
+    public void render( Canvas<T, P> canvas, List<Sprite> sprites, P paint )
     {
-        for ( Sprite<T> sprite : sprites )
+        for ( Sprite sprite : sprites )
         {
-            if ( sprite.bitmap != null )
+            if ( sprite.bitmapName != null )
             {
                 drawSprite( canvas, sprite, paint );
             }
         }
     }
 
-    private void drawSprite( Canvas<T, P> canvas, Sprite<T> sprite, P paint )
+    private void drawSprite( Canvas<T, P> canvas, Sprite sprite, P paint )
     {
-        T bitmap = sprite.bitmap.bitmap( tileSize );
+        T bitmap = bitmapCache.get( sprite.bitmapName, tileSize );
 
         int left = sprite.offsetX( tileSize )
             + offsetX + ( sprite.tileX * tileSize );

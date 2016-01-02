@@ -2,10 +2,9 @@ package rabbitescape.render;
 
 import java.util.List;
 
-import rabbitescape.render.androidlike.Bitmap;
 import rabbitescape.render.androidlike.Sound;
 
-public class SoundPlayer<T extends Bitmap>
+public class SoundPlayer
 {
     public final Sound sound;
 
@@ -14,9 +13,9 @@ public class SoundPlayer<T extends Bitmap>
         this.sound = sound;
     }
 
-    public void play( List<Sprite<T>> sprites )
+    public void play( List<Sprite> sprites )
     {
-        for ( Sprite<T> sprite : sprites )
+        for ( Sprite sprite : sprites )
         {
             sound.playSound( sprite.soundEffect );
         }

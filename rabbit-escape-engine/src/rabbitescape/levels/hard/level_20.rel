@@ -2,9 +2,9 @@
 :description=Chim chim-in-ey, chim chim-in-ey Chim chim cher-ee!
 :author_name=Andy Balaam
 :author_url=http://artificialworlds.net/rabbit-escape/
-:hint1=One must go ahead and bridge a way.
-:hint2=The others must be held back by bridges (and a useless bash).
-:hint3=Try, try, and try again.
+:hint.1=One must go ahead and bridge a way.
+:hint.2=The others must be held back by bridges (and a useless bash).
+:hint.3=Try, try, and try again.
 :solution.1=bridge;(2,3);(18,4);climb;(9,7);bridge;(8,3);1;bash;(4,3);bridge;4;(10,4);15;bash;10;(18,4);6;(8,3);30;WON
 :num_rabbits=10
 :num_to_save=10

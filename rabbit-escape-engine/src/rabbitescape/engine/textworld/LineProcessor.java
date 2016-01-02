@@ -24,7 +24,7 @@ import rabbitescape.engine.util.VariantGenerator;
 
 public class LineProcessor
 {
-    private static final String CODE_SUFFIX = ".code";
+    public static final String CODE_SUFFIX = ".code";
 
     private static class Point
     {
@@ -96,7 +96,7 @@ public class LineProcessor
     private int height;
     public  int lineNum;
     private int currentStarPoint;
-
+    
     public LineProcessor(
         List<Block> blocks,
         List<Rabbit> rabbits,

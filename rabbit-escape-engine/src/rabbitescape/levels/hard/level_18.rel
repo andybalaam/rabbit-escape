@@ -2,9 +2,9 @@
 :description=One rabbit must rescue the other.
 :author_name=Andy Balaam
 :author_url=http://artificialworlds.net/rabbit-escape/
-:hint1=Only one of them can possibly survive the fall.
-:hint2=Make the left rabbit dig straight above the little wall.
-:hint3=After dropping, build a bridge up to the exit platform from the right side. The right rabbit can bash out on to it.
+:hint.1=Only one of them can possibly survive the fall.
+:hint.2=Make the left rabbit dig straight above the little wall.
+:hint.3=After dropping, build a bridge up to the exit platform from the right side. The right rabbit can bash out on to it.
 :solution.1=dig;(3,2);bridge;18;(15,8);7;(12,6);bash;6;(14,2);11;WON
 :num_rabbits=1
 :num_to_save=2
