@@ -128,8 +128,9 @@ public class Rabbit extends Thing
     @Override
     public void step( World world )
     {
-        if ( ConfigTools.getBool( ConfigTools.retrieveStatic(), 
-            ConfigKeys.CFG_DEBUG_PRINT_STATES ) )
+        if ( ConfigTools.retrieveStatic() != null &&
+             ConfigTools.getBool( ConfigTools.retrieveStatic(), 
+             ConfigKeys.CFG_DEBUG_PRINT_STATES ) )
         {
             System.out.println( " " + this.rabbitIndex + ":" + this.state );
         }

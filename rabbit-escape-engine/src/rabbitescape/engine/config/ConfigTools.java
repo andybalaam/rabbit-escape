@@ -84,6 +84,9 @@ public class ConfigTools
         ConfigTools.iConfig = iConfig;
     }
     
+    /**
+     * The returned IConfig may be null.
+     */
     public static IConfig retrieveStatic()
     {
         return iConfig;
