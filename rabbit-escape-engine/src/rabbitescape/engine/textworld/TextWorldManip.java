@@ -210,6 +210,17 @@ public class TextWorldManip
 
     public static String[] renderCompleteWorld( World world, boolean meta )
     {
+        return renderCompleteWorld( world, meta, false );
+    }
+    
+    /**
+     * @param world           The World to render.
+     * @param meta            If true the metadata is included
+     * @param minimalistMeta  If true only the metadata that is useful in a rel file is added.
+     * @return                The lines as an array.
+     */
+    public static String[] renderCompleteWorld( World world, boolean meta, boolean minimalistMeta )
+    {
         Chars chars = new Chars( world, true );
 
         BlockRenderer.render( chars, world.blockTable );
@@ -220,7 +231,7 @@ public class TextWorldManip
 
         if ( meta )
         {
-            return concat( metaLines( world ), things );
+            return concat( metaLines( world, minimalistMeta ), things );
         }
         else
         {
@@ -228,7 +239,7 @@ public class TextWorldManip
         }
     }
 
-    private static String[] metaLines( World world )
+    private static String[] metaLines( World world, boolean minimalist )
     {
         List<String> ret = new ArrayList<String>();
 
@@ -241,11 +252,13 @@ public class TextWorldManip
         ret.add( metaLine( num_rabbits,  world.num_rabbits ) );
         ret.add( metaLine( num_to_save,  world.num_to_save ) );
         ret.add( metaLine( rabbit_delay, world.rabbit_delay ) );
-        ret.add( metaLine( num_saved,    world.num_saved ) );
-        ret.add( metaLine( num_killed,   world.num_killed ) );
-        ret.add( metaLine( num_waiting,  world.num_waiting ) );
-        ret.add( metaLine( paused,       world.paused ) );
-
+        if ( !minimalist )
+        {
+            ret.add( metaLine( num_saved,    world.num_saved ) );
+            ret.add( metaLine( num_killed,   world.num_killed ) );
+            ret.add( metaLine( num_waiting,  world.num_waiting ) );
+            ret.add( metaLine( paused,       world.paused ) );
+        }
         abilityMetaLines( world, ret );
 
         return ret.toArray( new String[ret.size()] );
