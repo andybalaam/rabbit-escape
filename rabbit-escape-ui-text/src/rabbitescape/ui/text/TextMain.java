@@ -1,20 +1,13 @@
 package rabbitescape.ui.text;
 
-import rabbitescape.engine.IgnoreWorldStatsListener;
-import rabbitescape.engine.LoadWorldFile;
-import rabbitescape.engine.World;
 import rabbitescape.engine.config.Config;
 import static rabbitescape.engine.i18n.Translation.*;
 import rabbitescape.engine.i18n.Translation;
-import rabbitescape.engine.textworld.TextWorldManip;
 import rabbitescape.engine.util.CommandLineOption;
 import rabbitescape.engine.util.CommandLineOptionSet;
 import rabbitescape.engine.util.FileSystem;
-import rabbitescape.engine.util.MegaCoder;
 import rabbitescape.engine.util.RealFileSystem;
-import rabbitescape.engine.util.Util;
 
-import java.io.IOException;
 import java.util.Locale;
 
 public class TextMain
@@ -29,7 +22,7 @@ public class TextMain
     public static void main( String[] args )
     {
         if ( args.length == 1 && args[0].endsWith( ".rel" ) )
-        {
+        { // Default is to play a single game interactively
             TextSingleGameEntryPoint.entryPoint( args );
             return;
         }
@@ -39,19 +32,29 @@ public class TextMain
         CommandLineOption encode =   new CommandLineOption( "--encode",   true );
         CommandLineOption decode =   new CommandLineOption( "--decode",   true );
         CommandLineOption help =     new CommandLineOption( "--help",     false );
+        CommandLineOption noinput =  new CommandLineOption( "--noinput",  true );
         
         try 
         {
             CommandLineOptionSet.parse( args,
-                                        level, solution, encode, decode, help );
+                                        level, solution, encode, decode, help, noinput );
             if ( help.isPresent() )
             {
                 usageMessage();
                 System.exit( 0 );
             }
+            if ( noinput.isPresent() )
+            {
+                TextSingleGameEntryPoint.entryPoint( new String[] {noinput.getValue(), "noinput"} );
+            }
             if ( solution.isPresent() )
             {
                 new SolutionDemo( level.getValue(), solution.getInt() );
+                System.exit( 0 );
+            }
+            if ( level.isPresent() )
+            {
+                TextSingleGameEntryPoint.entryPoint( args );
                 System.exit( 0 );
             }
             if ( encode.isPresent() )
