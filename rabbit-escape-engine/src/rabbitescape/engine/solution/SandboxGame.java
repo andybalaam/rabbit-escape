@@ -12,6 +12,7 @@ import rabbitescape.engine.Rabbit;
 import rabbitescape.engine.Thing;
 import rabbitescape.engine.Token;
 import rabbitescape.engine.World;
+import rabbitescape.engine.textworld.Comment;
 
 /**
  * A completely sandboxed game that can be edited and have solutions run against
@@ -57,6 +58,7 @@ public class SandboxGame
             world.num_killed,
             world.num_waiting,
             world.paused,
+            new Comment[] {},
             new IgnoreWorldStatsListener() );
     }
 

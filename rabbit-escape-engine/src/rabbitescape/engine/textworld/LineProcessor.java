@@ -91,6 +91,7 @@ public class LineProcessor
     private final Map<String, Boolean> m_metaBools;
     private final Map<String, ArrayList<Integer>> m_metaIntArrays;
     private final List<Point> starPoints;
+    private final List<Comment> comments;
 
     private int width;
     private int height;
@@ -117,6 +118,7 @@ public class LineProcessor
         this.m_metaBools             = new HashMap<>();
         this.m_metaIntArrays         = new HashMap<>();
         starPoints = new ArrayList<Point>();
+        this.comments = new ArrayList<Comment>();
 
         width = -1;
         height = 0;
@@ -124,6 +126,16 @@ public class LineProcessor
         currentStarPoint = 0;
 
         process( variantGen );
+    }
+    
+    public Comment[] getComments()
+    {
+        Comment [] ret = new Comment[comments.size()];
+        for ( int i = 0; i < comments.size(); i++ )
+        {
+            ret[i] = comments.get( i );
+        }
+        return ret;
     }
 
     public String metaString( String key, String def )
@@ -219,7 +231,7 @@ public class LineProcessor
             }
             else if ( line.startsWith( "%" ) )
             {
-                // Ignore comment
+                processCommentLine( line );
             }
             else
             {
@@ -242,6 +254,28 @@ public class LineProcessor
         }
     }
 
+    private void processCommentLine( String line )
+    {
+        // Create temporary comment, until we know the line following, 
+        // to create the association.
+        Comment c = Comment.createUnlinkedComment( line );
+        comments.add( c );
+    }
+    
+    private void maybeLinkToLastComment( String key )
+    {
+        if ( comments.size() == 0 )
+        {
+            return; // No comments to link.
+        }
+        int lastIndex = comments.size() - 1 ;
+        Comment lastComment = comments.get( lastIndex ); 
+        if ( lastComment.isUnlinked() )
+        {
+            comments.set( lastIndex, lastComment.link( key ) );
+        }
+    }
+    
     private void processMetaLine( String line, VariantGenerator variantGen )
     {
         String[] splitLine = split( line.substring( 1 ), "=", 1 );
@@ -258,6 +292,8 @@ public class LineProcessor
             key = key.substring( 0, key.length() - CODE_SUFFIX.length() );
             value = MegaCoder.decode( value );
         }
+        
+        maybeLinkToLastComment( key );
 
         if ( TextWorldManip.META_INTS.contains( key ) )
         {
@@ -399,6 +435,7 @@ public class LineProcessor
 
     private void processItemsLine( String line, VariantGenerator variantGen )
     {
+        maybeLinkToLastComment( Comment.WORLD_ASCII_ART );
         // Treat empty lines as blank lines (Github converts blank lines to empty lines, so it seems sensible to reverse the process).
         if ( line.length() != 0 )
         {

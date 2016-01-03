@@ -161,6 +161,7 @@ public class TextWorldManip
             processor.metaInt( num_killed, 0 ),
             processor.metaInt( num_waiting, num_rabs ),
             processor.metaBool( paused, false ),
+            processor.getComments(),
             statsListener
         );
     }
@@ -187,6 +188,7 @@ public class TextWorldManip
             0,
             0,
             false,
+            new Comment[] {},
             new IgnoreWorldStatsListener()
         );
     }
@@ -231,11 +233,26 @@ public class TextWorldManip
 
         if ( meta )
         {
-            return concat( metaLines( world, minimalistMeta ), things );
+            List<String> worldComments = new ArrayList<String>();
+            maybeInsertComment( Comment.WORLD_ASCII_ART, worldComments, world);
+            return concat( metaLines( world, minimalistMeta),
+                           worldComments.toArray( new String[]{} ),
+                           things );
         }
         else
         {
             return things;
+        }
+    }
+    
+    private static void maybeInsertComment( String key, List<String> ret, World w )
+    {
+        for( Comment c: w.comments)
+        {
+            if( c.follows( key ))
+            {
+                ret.add( c.text );
+            }
         }
     }
 
@@ -243,21 +260,43 @@ public class TextWorldManip
     {
         List<String> ret = new ArrayList<String>();
 
-        ret.add( metaLine( name,         world.name ) );
-        ret.add( metaLine( description,  world.description ) );
-        ret.add( metaLine( author_name,  world.author_name ) );
-        ret.add( metaLine( author_url,   world.author_url ) );
-        addMetaKeyArrayLines( ret, hint, world.hints );
-        addMetaKeyArrayLines( ret, solution, world.solutions );
-        ret.add( metaLine( num_rabbits,  world.num_rabbits ) );
-        ret.add( metaLine( num_to_save,  world.num_to_save ) );
-        ret.add( metaLine( rabbit_delay, world.rabbit_delay ) );
+        maybeInsertComment( name, ret,            world );
+        ret.add( metaLine(  name,             world.name ) );
+        
+        maybeInsertComment( description, ret,     world);
+        ret.add( metaLine(  description,      world.description ) );
+        
+        maybeInsertComment( author_name, ret,     world);
+        ret.add( metaLine(  author_name,      world.author_name ) );
+        
+        maybeInsertComment( author_url, ret,      world);
+        ret.add( metaLine(  author_url,       world.author_url ) );
+        
+        addMetaKeyArrayLines( ret, hint, world.hints, world );
+        addMetaKeyArrayLines( ret, solution, world.solutions, world );
+        
+        maybeInsertComment( num_rabbits, ret,     world);
+        ret.add( metaLine(  num_rabbits,      world.num_rabbits ) );
+        
+        maybeInsertComment( num_to_save, ret,     world);
+        ret.add( metaLine(  num_to_save,     world.num_to_save ) );
+        
+        maybeInsertComment( rabbit_delay, ret,    world);
+        ret.add( metaLine(  rabbit_delay, world.rabbit_delay ) );
+        
         if ( !minimalist )
         {
-            ret.add( metaLine( num_saved,    world.num_saved ) );
-            ret.add( metaLine( num_killed,   world.num_killed ) );
-            ret.add( metaLine( num_waiting,  world.num_waiting ) );
-            ret.add( metaLine( paused,       world.paused ) );
+            maybeInsertComment( num_saved, ret,      world);
+            ret.add( metaLine(  num_saved,    world.num_saved ) );
+            
+            maybeInsertComment( num_killed, ret,     world);
+            ret.add( metaLine(  num_killed,   world.num_killed ) );
+            
+            maybeInsertComment( num_waiting, ret,    world);
+            ret.add( metaLine(  num_waiting,  world.num_waiting ) );
+            
+            maybeInsertComment( paused, ret,         world);
+            ret.add( metaLine(  paused,       world.paused ) );
         }
         abilityMetaLines( world, ret );
 
@@ -265,11 +304,13 @@ public class TextWorldManip
     }
 
     private static void addMetaKeyArrayLines(
-        List<String> ret, String name, String[] values )
+        List<String> ret, String name, String[] values, World w )
     {
         for ( IdxObj<String> value : enumerate1( values ) )
         {
-            ret.add( metaLine( name + "." + value.index, value.object ) );
+            String keyWithIndex = name + "." + value.index;
+            maybeInsertComment( keyWithIndex, ret, w );
+            ret.add( metaLine( keyWithIndex, value.object ) );
         }
     }
 
