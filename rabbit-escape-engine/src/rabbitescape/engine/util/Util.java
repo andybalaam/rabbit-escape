@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -436,7 +437,15 @@ public class Util
                     {
                         if( indexA < iL.size() - 1 )
                         {
-                            return true;
+                            if ( iL.get( indexA ).hasNext() )
+                            {
+                                return true;
+                            }
+                            else
+                            {
+                                ++indexA;
+                                return hasNext();
+                            }
                         }
                         if( indexA >= iL.size() )
                         {
@@ -450,7 +459,11 @@ public class Util
                     {
                         return iL.get( indexA ).hasNext() 
                              ? iL.get( indexA ).next() 
-                             : iL.get( ++indexA ).next();
+                             : (
+                                   iL.get( ++indexA ).hasNext() 
+                                 ? iL.get( indexA ).next() 
+                                 : next() 
+                               );
                     }
                     
                     @Override
@@ -650,13 +663,23 @@ public class Util
         return streamLines( name, res );
     }
 
-    public static <T> T[] concat( T[] left, T[] right )
-    {
-        return list(
-            chain(
-                Arrays.asList( left ), Arrays.asList( right )
-            )
-        ).toArray( left );
+    @SafeVarargs
+    public static <T> T[] concat(T[]... arrays) {
+        int totalLen = 0;
+        for (T[] arr: arrays)
+        {
+            totalLen += arr.length;
+        }
+        @SuppressWarnings( "unchecked" )
+        T[] all = (T[])Array.newInstance(
+            arrays.getClass().getComponentType().getComponentType(), totalLen);
+        int copied = 0;
+        for (T[] arr: arrays)
+        {
+            System.arraycopy(arr, 0, all, copied, arr.length);
+            copied += arr.length;
+        }
+        return all;
     }
 
     public static <T> boolean equalsOrBothNull( T left, T right )
