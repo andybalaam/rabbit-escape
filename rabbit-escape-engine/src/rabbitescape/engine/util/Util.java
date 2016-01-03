@@ -410,8 +410,8 @@ public class Util
         };
     }
 
-    public static <T> Iterable<T> chain(
-        final Iterable<? extends T> it1, final Iterable<? extends T> it2 )
+    @SafeVarargs
+    public static <T> Iterable<T> chain( final Iterable<? extends T>... itArray )
     {
         return new Iterable<T>()
         {
@@ -420,36 +420,55 @@ public class Util
             {
                 class MyIt implements Iterator<T>
                 {
-                    private final Iterator<? extends T> i1;
-                    private final Iterator<? extends T> i2;
-
-                    public MyIt(
-                        Iterator<? extends T> i1, Iterator<? extends T> i2 )
+                    /** Iterator List */
+                    ArrayList<Iterator<? extends T>> iL;
+                    
+                    /** The position in the ArrayList that we are on */
+                    int indexA = 0;
+                    
+                    public MyIt( ArrayList<Iterator<? extends T>> iL )
                     {
-                        this.i1 = i1;
-                        this.i2 = i2;
+                        this.iL = iL;
                     }
-
+                    
                     @Override
                     public boolean hasNext()
                     {
-                        return i1.hasNext() || i2.hasNext();
+                        if( indexA < iL.size() - 1 )
+                        {
+                            return true;
+                        }
+                        if( indexA >= iL.size() )
+                        {
+                            return false;
+                        }
+                        return iL.get( indexA ).hasNext() ;
                     }
-
+                    
                     @Override
                     public T next()
                     {
-                        return i1.hasNext() ? i1.next() : i2.next();
+                        return iL.get( indexA ).hasNext() 
+                             ? iL.get( indexA ).next() 
+                             : iL.get( ++indexA ).next();
                     }
-
+                    
                     @Override
                     public void remove()
                     {
                         throw new UnsupportedOperationException();
                     }
+                    
+                    
                 }
-
-                return new MyIt( it1.iterator(), it2.iterator() );
+                
+                ArrayList<Iterator<? extends T>> newIL = new ArrayList<Iterator<? extends T>>();
+                for ( Iterable<? extends T> it: itArray )
+                {
+                    newIL.add( it.iterator() );
+                }
+                
+                return new MyIt(newIL);
             }
         };
     }
