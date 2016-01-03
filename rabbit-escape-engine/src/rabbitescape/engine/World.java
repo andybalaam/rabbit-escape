@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import rabbitescape.engine.err.RabbitEscapeException;
+import rabbitescape.engine.textworld.Comment;
 import rabbitescape.engine.util.Dimension;
 import rabbitescape.engine.util.LookupTable2D;
 
@@ -108,6 +109,7 @@ public class World
     public final String author_url;
     public final String[] hints;
     public final String[] solutions;
+    public final Comment[] comments;
     public final int num_rabbits;
     public final int num_to_save;
     public final int[] rabbit_delay;
@@ -141,6 +143,7 @@ public class World
         int num_killed,
         int num_waiting,
         boolean paused,
+        Comment[] comments,
         WorldStatsListener statsListener
     )
     {
@@ -162,6 +165,7 @@ public class World
         this.num_killed = num_killed;
         this.num_waiting = num_waiting;
         this.paused = paused;
+        this.comments = comments;
         
         if ( -1 == size.width )
         {

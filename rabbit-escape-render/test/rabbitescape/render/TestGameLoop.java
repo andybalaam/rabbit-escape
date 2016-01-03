@@ -8,6 +8,7 @@ import java.io.PrintStream;
 import org.junit.*;
 import rabbitescape.engine.*;
 import rabbitescape.engine.config.IConfig;
+import rabbitescape.engine.textworld.Comment;
 import rabbitescape.engine.textworld.TextWorldManip;
 import rabbitescape.render.gameloop.*;
 
@@ -159,6 +160,7 @@ public class TestGameLoop
                 w.num_killed,
                 1,
                 w.paused,
+                new Comment[] {},
                 w.changes.statsListener
             );
             assertThat( completionState(), equalTo( CompletionState.RUNNING ) );
