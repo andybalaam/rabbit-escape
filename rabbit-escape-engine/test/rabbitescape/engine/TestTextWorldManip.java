@@ -1010,12 +1010,8 @@ public class TestTextWorldManip
         );
     }
 
-    /**
-     * @brief Test an example world with variable rabbit_delay.
-     * Parse it, reserialise it, and test for changes.
-     */
     @Test
-    public void Round_trip_Comments()
+    public void Round_trip_comments()
     {
         String[] lines = {
             ":name=Comments",
@@ -1052,13 +1048,78 @@ public class TestTextWorldManip
             "% pretty ascii art",
             "#######",
             "#Q   Q#",
-            "#     #",
-            "#######"
+            "# *** #",
+            "#######",
+            "% starpoint comment",
+            ":*=rr",
+            ":*=jj",
+            ":*=rj"
         };
 
         assertThat(
             renderCompleteWorld( createWorld( lines ), true ),
             equalTo( lines )
+        );
+    }
+    
+    @Test
+    public void Starpoint_comments_move_to_a_block()
+    {
+        String[] lines = {
+            ":name=Comments",
+            ":description=verbose",
+            ":author_name=bob",
+            ":author_url=",
+            ":hint.1=take",
+            ":hint.2=a",
+            ":hint.3=hint",
+            ":solution.1=",
+            ":solution.2=",
+            ":solution.3=",
+            ":num_rabbits=20",
+            ":num_to_save=18",
+            ":rabbit_delay=10,3,2,10",
+            "#######",
+            "#Q   Q#",
+            "# *** #",
+            "#######",
+            "% starpoint comment 1",
+            ":*=rr",
+            "% starpoint comment 2",
+            ":*=jj",
+            "% starpoint comment 3",
+            ":*=rj"
+        };
+        
+        String[] expectedLines = {
+            ":name=Comments",
+            ":description=verbose",
+            ":author_name=bob",
+            ":author_url=",
+            ":hint.1=take",
+            ":hint.2=a",
+            ":hint.3=hint",
+            ":solution.1=",
+            ":solution.2=",
+            ":solution.3=",
+            ":num_rabbits=20",
+            ":num_to_save=18",
+            ":rabbit_delay=10,3,2,10",
+            "#######",
+            "#Q   Q#",
+            "# *** #",
+            "#######",
+            "% starpoint comment 1",
+            "% starpoint comment 2",
+            "% starpoint comment 3",
+            ":*=rr",
+            ":*=jj",
+            ":*=rj"
+        };
+
+        assertThat(
+            renderCompleteWorld( createWorld( lines ), true, true ),
+            equalTo( expectedLines )
         );
     }
     
