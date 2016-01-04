@@ -33,10 +33,9 @@ public class Comment
         {
             return false;
         }
-        // Compare the starts of the keys only so hint.1 equals hint.1.code etc.
-        int l1 = key.length(), l2 = keyFollowing.length();
-        int shortestLength = l1 > l2 ? l2 : l1;
-        return key.substring( 0, shortestLength ).equals( 
-            keyFollowing.substring( 0, shortestLength ) );
+        return LineProcessor.stripCodeSuffix( key ).equals( 
+            LineProcessor.stripCodeSuffix( keyFollowing ) );
     }
+    
+    
 }
