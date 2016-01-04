@@ -281,6 +281,18 @@ public class LineProcessor
         }
     }
     
+    /**
+     * Strips the code suffix, if it is present, or returns the key unchanged.
+     */
+    public static String stripCodeSuffix( String key )
+    {
+        if ( key.endsWith( CODE_SUFFIX ) )
+        {
+            key = key.substring( 0, key.length() - CODE_SUFFIX.length() );
+        }
+        return key;
+    }
+    
     private void processMetaLine( String line, VariantGenerator variantGen )
     {
         String[] splitLine = split( line.substring( 1 ), "=", 1 );
@@ -292,9 +304,8 @@ public class LineProcessor
         String key   = splitLine[0];
         String value = splitLine[1];
 
-        if ( key.endsWith( CODE_SUFFIX ) )
+        if ( !key.equals( key = stripCodeSuffix( key ) ) )
         {
-            key = key.substring( 0, key.length() - CODE_SUFFIX.length() );
             value = MegaCoder.decode( value );
         }
         

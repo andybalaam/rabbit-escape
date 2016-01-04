@@ -1011,6 +1011,52 @@ public class TestTextWorldManip
     }
 
     @Test
+    public void Comments_for_string_arrays_by_key_associate_correctly()
+    {
+        String[] lines = {
+            ":name=Comments",
+            ":description=verbose",
+            ":author_name=bob",
+            ":author_url=",
+            "% something erudite",
+            ":hint.1=take",
+            "% insight",
+            ":hint.2=a",
+            "% wisdom regarding hint.3",
+            ":hint.3=hint",
+            ":hint.4=hint",
+            ":hint.5=hint",
+            ":hint.6=hint",
+            ":hint.7=hint",
+            ":hint.8=hint",
+            "% some acumen",
+            ":hint.9=hint",
+            "% sagacity personified",
+            ":hint.10=hint",
+            ":hint.11=hint",
+            "% deep understanding",
+            ":hint.12=hint",
+            ":solution.1=",
+            "% a lot of rabbits",
+            ":num_rabbits=20",
+            ":num_to_save=18",
+            ":rabbit_delay=10,3,2,10",
+            ":num_saved=0",
+            ":num_killed=0",
+            ":num_waiting=20",
+            ":paused=false",
+            "#######",
+            "#Q   Q#",
+            "#     #",
+            "#######",
+        };
+
+        assertThat(
+            renderCompleteWorld( createWorld( lines ), true ),
+            equalTo( lines )
+        );
+    }
+    
     public void Round_trip_comments()
     {
         String[] lines = {
