@@ -130,12 +130,7 @@ public class LineProcessor
     
     public Comment[] getComments()
     {
-        Comment [] ret = new Comment[comments.size()];
-        for ( int i = 0; i < comments.size(); i++ )
-        {
-            ret[i] = comments.get( i );
-        }
-        return ret;
+        return comments.toArray( new Comment[comments.size()] );
     }
 
     public String metaString( String key, String def )
