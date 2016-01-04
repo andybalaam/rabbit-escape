@@ -1057,6 +1057,45 @@ public class TestTextWorldManip
         );
     }
     
+    @Test
+    public void Comments_for_abilities_round_trip()
+    {
+        String[] lines = {
+            ":name=Comments",
+            ":description=verbose",
+            ":author_name=bob",
+            ":author_url=",
+            ":num_rabbits=20",
+            ":num_to_save=18",
+            ":rabbit_delay=10,3,2,10",
+            ":num_saved=0",
+            ":num_killed=0",
+            ":num_waiting=20",
+            ":paused=false",
+            "% a",
+            ":bash=1",
+            "% b",
+            "% c",
+            ":block=4",
+            "% d",
+            ":bridge=3",
+            "% e",
+            ":climb=5",
+            ":dig=2",
+            "%f",
+            ":explode=6",
+            "#######",
+            "#Q   Q#",
+            "#     #",
+            "#######",
+        };
+
+        assertThat(
+            renderCompleteWorld( createWorld( lines ), true ),
+            equalTo( lines )
+        );
+    }
+    
     public void Round_trip_comments()
     {
         String[] lines = {
