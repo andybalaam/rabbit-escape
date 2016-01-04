@@ -1147,6 +1147,92 @@ public class TestTextWorldManip
         );
     }
     
+    public void Round_trip_comments_move_with_meta()
+    {
+        String[] lines = {
+            ":hint.2=a",
+            "% wisdom regarding hint.3",
+            ":hint.3=hint",
+            ":solution.1=",
+            "% a lot of rabbits",
+            ":num_rabbits=20",
+            "% save how many?",
+            ":num_to_save=18",
+            "% why are we waiting?",
+            ":rabbit_delay=10,3,2,10",
+            "% something erudite about hint.1",
+            ":hint.1=take",
+            "% some already out: no",
+            ":num_saved=0",
+            "% dead already",
+            ":num_killed=0",
+            "% his website is great",
+            ":author_url=",
+            "% the bunnies are queuing in the pre-life",
+            ":num_waiting=20",
+            "% paused ",
+            ":paused=false",
+            "% pretty ascii art",
+            "#######",
+            ":name=Comments",
+            "#Q   Q#",
+            "% desc 1.",
+            "% desc 2. can have 2 comment line about something ",
+            ":description=verbose",
+            "#     #",
+            "% I love bob's work",
+            ":author_name=bob",
+            "#######",
+            "% s2 looks like cheeating",
+            ":solution.2=",
+            ":solution.3="
+        };
+        
+        String[] expectedLines = {
+            ":name=Comments",
+            "% desc 1.",
+            "% desc 2. can have 2 comment line about something ",
+            ":description=verbose",
+            "% I love bob's work",
+            ":author_name=bob",
+            "% his website is great",
+            ":author_url=",
+            "% something erudite about hint.1",
+            ":hint.1=take",
+            ":hint.2=a",
+            "% wisdom regarding hint.3",
+            ":hint.3=hint",
+            ":solution.1=",
+            "% s2 looks like cheeating",
+            ":solution.2=",
+            ":solution.3=",
+            "% a lot of rabbits",
+            ":num_rabbits=20",
+            "% save how many?",
+            ":num_to_save=18",
+            "% why are we waiting?",
+            ":rabbit_delay=10,3,2,10",
+            "% some already out: no",
+            ":num_saved=0",
+            "% dead already",
+            ":num_killed=0",
+            "% the bunnies are queuing in the pre-life",
+            ":num_waiting=20",
+            "% paused ",
+            ":paused=false",
+            "% pretty ascii art",
+            "#######",
+            "#Q   Q#",
+            "#     #",
+            "#######"
+        };
+
+        assertThat(
+            renderCompleteWorld( createWorld( lines ), true ),
+            equalTo( expectedLines )
+        );
+    }
+    
     @Test
     public void Starpoint_comments_move_to_a_block()
     {
