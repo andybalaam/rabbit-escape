@@ -27,7 +27,7 @@ public class Comment
         return new Comment( this.text, key );
     }
 
-    public boolean follows( String key )
+    public boolean isFollowedBy( String key )
     {
         if ( null == keyFollowing )
         {

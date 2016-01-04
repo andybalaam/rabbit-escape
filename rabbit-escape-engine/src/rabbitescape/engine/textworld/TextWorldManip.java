@@ -234,7 +234,7 @@ public class TextWorldManip
         if ( meta )
         {
             List<String> worldComments = new ArrayList<String>();
-            maybeInsertComment( Comment.WORLD_ASCII_ART, worldComments, world);
+            addMeta( worldComments, Comment.WORLD_ASCII_ART, null, world.comments);
             return concat( metaLines( world, minimalistMeta),
                            worldComments.toArray( new String[]{} ),
                            things );
@@ -244,64 +244,56 @@ public class TextWorldManip
             return things;
         }
     }
-    
-    private static void maybeInsertComment( String key, List<String> ret, Comment[] comments )
+
+    /**
+     * Adds a line of metadata to the supplied List. If there are any comments
+     * for this key comment lines will be added first. value may be null, in which case 
+     * only comments will be considered.
+     */
+    private static void addMeta( List<String> lines, 
+                                 String key, String value, 
+                                 Comment[] comments )
     {
         for( Comment c: comments)
         {
-            if( c.follows( key ))
+            if( c.isFollowedBy( key ))
             {
-                ret.add( c.text );
+                lines.add( c.text );
             }
+        }
+        if ( null == value ) 
+        { // We were only here to consider adding comments.
+            return;
+        }
+        else
+        {
+            lines.add( ":" + key + "=" + value );
         }
     }
     
-    private static void maybeInsertComment( String key, List<String> ret, World w )
-    {
-        maybeInsertComment( key, ret, w.comments );
-    }
-
     private static String[] metaLines( World world, boolean minimalist )
     {
         List<String> ret = new ArrayList<String>();
 
-        maybeInsertComment( name, ret,            world );
-        ret.add( metaLine(  name,             world.name ) );
-        
-        maybeInsertComment( description, ret,     world);
-        ret.add( metaLine(  description,      world.description ) );
-        
-        maybeInsertComment( author_name, ret,     world);
-        ret.add( metaLine(  author_name,      world.author_name ) );
-        
-        maybeInsertComment( author_url, ret,      world);
-        ret.add( metaLine(  author_url,       world.author_url ) );
+        addMeta( ret, name,        world.name,        world.comments );
+        addMeta( ret, description, world.description, world.comments );
+        addMeta( ret, author_name, world.author_name, world.comments );
+        addMeta( ret, author_url,  world.author_url,  world.comments );
         
         addMetaKeyArrayLines( ret, hint, world.hints, world );
         addMetaKeyArrayLines( ret, solution, world.solutions, world );
         
-        maybeInsertComment( num_rabbits, ret,     world);
-        ret.add( metaLine(  num_rabbits,      world.num_rabbits ) );
-        
-        maybeInsertComment( num_to_save, ret,     world);
-        ret.add( metaLine(  num_to_save,     world.num_to_save ) );
-        
-        maybeInsertComment( rabbit_delay, ret,    world);
-        ret.add( metaLine(  rabbit_delay, world.rabbit_delay ) );
+
+        addMeta( ret, num_rabbits,  Integer.toString( world.num_rabbits ), world.comments );
+        addMeta( ret, num_to_save,  Integer.toString( world.num_to_save ), world.comments );
+        addMeta( ret, rabbit_delay, renderIntArray( world.rabbit_delay ), world.comments );
         
         if ( !minimalist )
         {
-            maybeInsertComment( num_saved, ret,      world);
-            ret.add( metaLine(  num_saved,    world.num_saved ) );
-            
-            maybeInsertComment( num_killed, ret,     world);
-            ret.add( metaLine(  num_killed,   world.num_killed ) );
-            
-            maybeInsertComment( num_waiting, ret,    world);
-            ret.add( metaLine(  num_waiting,  world.num_waiting ) );
-            
-            maybeInsertComment( paused, ret,         world);
-            ret.add( metaLine(  paused,       world.paused ) );
+            addMeta( ret, num_saved,   Integer.toString( world.num_saved ),   world.comments );
+            addMeta( ret, num_killed,  Integer.toString( world.num_killed ),  world.comments );
+            addMeta( ret, num_waiting, Integer.toString( world.num_waiting ), world.comments );
+            addMeta( ret, paused,      Boolean.toString( world.paused ),      world.comments );
         }
         abilityMetaLines( world, ret );
 
@@ -314,8 +306,7 @@ public class TextWorldManip
         for ( IdxObj<String> value : enumerate1( values ) )
         {
             String keyWithIndex = name + "." + value.index;
-            maybeInsertComment( keyWithIndex, ret, w );
-            ret.add( metaLine( keyWithIndex, value.object ) );
+            addMeta( ret, keyWithIndex, value.object, w.comments );
         }
     }
 
@@ -336,33 +327,18 @@ public class TextWorldManip
 
         for ( Token.Type t : abilityNames )
         {
-            ret.add( metaLine( t.name(), world.abilities.get( t ) ) );
+            addMeta( ret, t.name(), Integer.toString( world.abilities.get( t ) ), world.comments );
         }
     }
 
-    private static String metaLine( String name, int value )
-    {
-        return metaLine( name, Integer.toString( value ) );
-    }
-
-    private static String metaLine( String name, int[] value )
+    private static String renderIntArray( int[] value )
     {
         String ret = Integer.toString( value[0] );
         for ( int i = 1; i< value.length; i++)
         {
             ret = ret + "," + Integer.toString( value[i] ) ;
         }
-        return metaLine( name, ret );
-    }
-
-    private static String metaLine( String name, String value )
-    {
-        return ":" + name + "=" + value;
-    }
-
-    private static String metaLine( String name, boolean value )
-    {
-        return ":" + name + "=" + Boolean.toString( value );
+        return ret;
     }
 
     public static String[] renderChangeDescription(
@@ -415,7 +391,7 @@ public class TextWorldManip
             ret.add( new String( chars.line( lineNum ) ) );
         }
         
-        maybeInsertComment( "*", ret, comments );
+        addMeta( ret, "*", null, comments );
 
         for ( String starLine : chars.starLines() )
         {
