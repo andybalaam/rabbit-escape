@@ -1122,6 +1122,64 @@ public class TestTextWorldManip
             equalTo( expectedLines )
         );
     }
+
+    @Test
+    public void World_comments_move_to_a_block()
+    {
+        String[] lines = {
+            ":name=Comments",
+            ":description=verbose",
+            ":author_name=bob",
+            ":author_url=",
+            ":hint.1=take",
+            ":hint.2=a",
+            ":hint.3=hint",
+            ":solution.1=",
+            ":solution.2=",
+            ":solution.3=",
+            ":num_rabbits=20",
+            ":num_to_save=18",
+            ":rabbit_delay=10,3,2,10",
+            "% interspersed",
+            "#######",
+            "% comments",
+            "#Q   Q#",
+            "% move to a",
+            "% block",
+            "#     #",
+            "#######"
+        };
+        
+        String[] expectedLines = {
+            ":name=Comments",
+            ":description=verbose",
+            ":author_name=bob",
+            ":author_url=",
+            ":hint.1=take",
+            ":hint.2=a",
+            ":hint.3=hint",
+            ":solution.1=",
+            ":solution.2=",
+            ":solution.3=",
+            ":num_rabbits=20",
+            ":num_to_save=18",
+            ":rabbit_delay=10,3,2,10",
+            "% interspersed",
+            "% comments",
+            "% move to a",
+            "% block",
+            "#######",
+            "#Q   Q#",
+            "#     #",
+            "#######"
+        };
+
+        assertThat(
+            renderCompleteWorld( createWorld( lines ), true, true ),
+            equalTo( expectedLines )
+        );
+    }
+
     
     /**
      * @brief Key meta should be unique. Test that Duplicate name
