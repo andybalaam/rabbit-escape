@@ -235,9 +235,13 @@ public class TextWorldManip
         {
             List<String> worldComments = new ArrayList<String>();
             addMeta( worldComments, Comment.WORLD_ASCII_ART, null, world.comments);
+            List<String> endComments = new ArrayList<String>();
+            // Comments after all substantive meta.
+            addMeta( endComments, null, null, world.comments);
             return concat( metaLines( world, minimalistMeta),
                            worldComments.toArray( new String[]{} ),
-                           things );
+                           things,
+                           endComments.toArray( new String[]{}) );
         }
         else
         {
@@ -247,8 +251,8 @@ public class TextWorldManip
 
     /**
      * Adds a line of metadata to the supplied List. If there are any comments
-     * for this key comment lines will be added first. value may be null, in which case 
-     * only comments will be considered.
+     * for this key comment lines will be added first. 
+     * @param   value may be null, in which case only comments will be considered.
      */
     private static void addMeta( List<String> lines, 
                                  String key, String value, 
@@ -256,7 +260,7 @@ public class TextWorldManip
     {
         for( Comment c: comments)
         {
-            if( c.isFollowedBy( key ))
+            if( c.isFollowedBy( key ) )
             {
                 lines.add( c.text );
             }

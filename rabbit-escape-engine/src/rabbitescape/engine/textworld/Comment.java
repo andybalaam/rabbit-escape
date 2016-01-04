@@ -29,7 +29,12 @@ public class Comment
 
     public boolean isFollowedBy( String key )
     {
-        if ( null == keyFollowing )
+        if ( null == key && null == keyFollowing )
+        { // Both null is a special case for comments at the end,
+          // after all meta.
+            return true;
+        }
+        if( null == keyFollowing || null == key )
         {
             return false;
         }

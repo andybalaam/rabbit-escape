@@ -1096,6 +1096,7 @@ public class TestTextWorldManip
         );
     }
     
+    @Test
     public void Round_trip_comments()
     {
         String[] lines = {
@@ -1138,7 +1139,9 @@ public class TestTextWorldManip
             "% starpoint comment",
             ":*=rr",
             ":*=jj",
-            ":*=rj"
+            ":*=rj",
+            "% comments are also OK after",
+            "% all the substantive metadata"
         };
 
         assertThat(
@@ -1147,6 +1150,7 @@ public class TestTextWorldManip
         );
     }
     
+    @Test
     public void Round_trip_comments_move_with_meta()
     {
         String[] lines = {
