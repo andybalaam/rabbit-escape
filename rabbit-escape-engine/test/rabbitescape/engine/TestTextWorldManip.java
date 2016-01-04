@@ -1016,7 +1016,7 @@ public class TestTextWorldManip
         String[] lines = {
             ":name=Comments",
             "% desc 1.",
-            //"% desc 2. can have 2 comment line about something ",
+            "% desc 2. can have 2 comment line about something ",
             ":description=verbose",
             "% I love bob's work",
             ":author_name=bob",
