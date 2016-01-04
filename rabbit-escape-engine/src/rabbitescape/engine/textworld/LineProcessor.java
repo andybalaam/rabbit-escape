@@ -268,11 +268,21 @@ public class LineProcessor
         {
             return; // No comments to link.
         }
-        int lastIndex = comments.size() - 1 ;
-        Comment lastComment = comments.get( lastIndex ); 
-        if ( lastComment.isUnlinked() )
+        
+        // Iterate backwards linking all comments in a block
+        // until we hit one that it already linked with the
+        // previous non-comment line
+        for ( int i = comments.size() - 1; i >= 0 ; i--)
         {
-            comments.set( lastIndex, lastComment.link( key ) );
+            Comment c = comments.get( i );
+            if( c.isUnlinked() )
+            {
+                comments.set( i, c.link( key) );
+            }
+            else
+            {
+                return;
+            }
         }
     }
     
