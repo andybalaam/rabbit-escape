@@ -229,7 +229,7 @@ public class TextWorldManip
         RabbitRenderer.render( chars, world.rabbits );
         ThingRenderer.render( chars, world.things );
 
-        String[] things = charsToComplete( chars );
+        String[] things = charsToComplete( chars, world.comments );
 
         if ( meta )
         {
@@ -245,15 +245,20 @@ public class TextWorldManip
         }
     }
     
-    private static void maybeInsertComment( String key, List<String> ret, World w )
+    private static void maybeInsertComment( String key, List<String> ret, Comment[] comments )
     {
-        for( Comment c: w.comments)
+        for( Comment c: comments)
         {
             if( c.follows( key ))
             {
                 ret.add( c.text );
             }
         }
+    }
+    
+    private static void maybeInsertComment( String key, List<String> ret, World w )
+    {
+        maybeInsertComment( key, ret, w.comments );
     }
 
     private static String[] metaLines( World world, boolean minimalist )
@@ -401,7 +406,7 @@ public class TextWorldManip
         return ret;
     }
 
-    private static String[] charsToComplete( Chars chars )
+    private static String[] charsToComplete( Chars chars, Comment[] comments )
     {
         List<String> ret = new ArrayList<String>();
 
@@ -409,6 +414,8 @@ public class TextWorldManip
         {
             ret.add( new String( chars.line( lineNum ) ) );
         }
+        
+        maybeInsertComment( "*", ret, comments );
 
         for ( String starLine : chars.starLines() )
         {
