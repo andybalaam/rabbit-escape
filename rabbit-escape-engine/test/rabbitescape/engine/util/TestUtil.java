@@ -15,7 +15,7 @@ import org.junit.Test;
 public class TestUtil
 {
     @Test
-    public void Chain_3a()
+    public void Chaining_3_nonempty_lists()
     {
         String[] ab = new String[] {"a", "b"};
         String[] cd = new String[] {"c", "d"};
@@ -29,7 +29,7 @@ public class TestUtil
     }
 
     @Test
-    public void Chain_3b()
+    public void Chaining_with_some_empty_lists()
     {
         String[] a = new String[] {"a"};
         String[] _bcd = new String[] {};
@@ -43,9 +43,20 @@ public class TestUtil
         assertThat( Util.list( chained ).toArray( new String[] {} ), 
             equalTo( new String[] {"a", "e", "f", "g" } ) );
     }
+    
+    @Test
+    public void Chaining_a_single_empty_list()
+    {
+
+        String[] empty = new String[] {};
+        
+        Iterable<String> chained = Util.chain( Arrays.asList( empty ) );
+        assertThat( Util.list( chained ).toArray( new String[] {} ), 
+            equalTo( empty ) );
+    }
 
     @Test
-    public void  Chain_different_classes()
+    public void Chaining_different_classes_yields_common_superclass()
     {
         Token[] tokens = new Token[] {new Token( 0, 0, Token.Type.bash ),
                                       new Token( 1, 1, Token.Type.bridge )};
@@ -61,9 +72,9 @@ public class TestUtil
         
         assertThat( s, equalTo( "013" ) );
     }
-    
+
     @Test
-    public void Concat_3()
+    public void Concatenating_3_arrays_returns_all_elements_in_order()
     {
         String[] a = new String[] {"a"};
         String[] _bcd = new String[] {};
@@ -73,7 +84,5 @@ public class TestUtil
         
         assertThat( concated, equalTo( new String[] {"a", "e", "f", "g" } ) );
     }
-    
 
-    
 }
