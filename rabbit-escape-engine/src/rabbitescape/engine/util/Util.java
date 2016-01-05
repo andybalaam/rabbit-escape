@@ -4,7 +4,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -663,23 +662,24 @@ public class Util
         return streamLines( name, res );
     }
 
-    @SafeVarargs
-    public static <T> T[] concat(T[]... arrays) {
-        int totalLen = 0;
-        for (T[] arr: arrays)
-        {
-            totalLen += arr.length;
-        }
-        @SuppressWarnings( "unchecked" )
-        T[] all = (T[])Array.newInstance(
-            arrays.getClass().getComponentType().getComponentType(), totalLen);
-        int copied = 0;
-        for (T[] arr: arrays)
-        {
-            System.arraycopy(arr, 0, all, copied, arr.length);
-            copied += arr.length;
-        }
-        return all;
+    public static <T> T[] concat( T[] a, T[] b, T[] c, T[] d) {
+        T[] ab = concat( a, b );
+        T[] cd = concat( c, d );
+        return concat( ab, cd );
+    }
+    
+    public static <T> T[] concat( T[] a, T[] b, T[] c) {
+        T[] ab = concat( a, b );
+        return concat(ab, c);
+    }
+    
+    public static <T> T[] concat( T[] left, T[] right )
+    {
+        return list(
+            chain(
+                Arrays.asList( left ), Arrays.asList( right )
+            )
+        ).toArray( left );
     }
 
     public static <T> boolean equalsOrBothNull( T left, T right )
