@@ -420,49 +420,51 @@ public class Util
             {
                 class MyIt implements Iterator<T>
                 {
-                    /** Iterator List */
-                    ArrayList<Iterator<? extends T>> iL;
+                    /** Iterator of Iterators */
+                    Iterator<Iterator<? extends T>> iI;
                     
-                    /** The position in the ArrayList that we are on */
-                    int indexA = 0;
+                    /** The current sub-Iterator */
+                    Iterator<? extends T> i;
                     
-                    public MyIt( ArrayList<Iterator<? extends T>> iL )
+                    public MyIt( Iterator<Iterator<? extends T>> iI )
                     {
-                        this.iL = iL;
+                        this.iI = iI;
+                        i = iI.next();
                     }
                     
                     @Override
                     public boolean hasNext()
                     {
-                        if( indexA < iL.size() - 1 )
+                        if ( i.hasNext() )
                         {
-                            if ( iL.get( indexA ).hasNext() )
+                            return true;
+                        }
+                        else
+                        {
+                            if ( iI.hasNext() ) 
                             {
-                                return true;
+                                i = iI.next();
+                                return this.hasNext();
                             }
                             else
                             {
-                                ++indexA;
-                                return hasNext();
+                                return false;
                             }
                         }
-                        if( indexA >= iL.size() )
-                        {
-                            return false;
-                        }
-                        return iL.get( indexA ).hasNext() ;
                     }
                     
                     @Override
                     public T next()
                     {
-                        return iL.get( indexA ).hasNext() 
-                             ? iL.get( indexA ).next() 
-                             : (
-                                   iL.get( ++indexA ).hasNext() 
-                                 ? iL.get( indexA ).next() 
-                                 : next() 
-                               );
+                        if ( i.hasNext() )
+                        {
+                            return i.next();
+                        }
+                        else
+                        {
+                            i = iI.next();
+                            return this.next();
+                        }
                     }
                     
                     @Override
@@ -474,13 +476,13 @@ public class Util
                     
                 }
                 
-                ArrayList<Iterator<? extends T>> newIL = new ArrayList<Iterator<? extends T>>();
+                List<Iterator<? extends T>> newIL = new ArrayList<Iterator<? extends T>>();
                 for ( Iterable<? extends T> it: itArray )
                 {
                     newIL.add( it.iterator() );
                 }
                 
-                return new MyIt(newIL);
+                return new MyIt(newIL.iterator());
             }
         };
     }
