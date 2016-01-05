@@ -410,6 +410,10 @@ public class Util
         };
     }
 
+    /**
+     * This can be used to chain objects of different types (unlike concat). The returned
+     * Iterable will be of the first common superclass.
+     */
     @SafeVarargs
     public static <T> Iterable<T> chain( final Iterable<? extends T>... itArray )
     {
@@ -664,17 +668,20 @@ public class Util
         return streamLines( name, res );
     }
 
-    public static <T> T[] concat( T[] a, T[] b, T[] c, T[] d) {
+    public static <T> T[] concat( T[] a, T[] b, T[] c, T[] d ) {
         T[] ab = concat( a, b );
         T[] cd = concat( c, d );
         return concat( ab, cd );
     }
     
-    public static <T> T[] concat( T[] a, T[] b, T[] c) {
+    public static <T> T[] concat( T[] a, T[] b, T[] c ) {
         T[] ab = concat( a, b );
-        return concat(ab, c);
+        return concat( ab, c);
     }
     
+    /**
+     * Use chain instead for arguments of different classes.
+     */
     public static <T> T[] concat( T[] left, T[] right )
     {
         return list(
