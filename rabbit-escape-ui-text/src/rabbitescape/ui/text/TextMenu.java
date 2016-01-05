@@ -115,7 +115,7 @@ public class TextMenu
 
         new TextSingleGameEntryPoint( fs, terminal.out, terminal.locale )
             .launchGame(
-                new String[] { levelItem.fileName, "--interactive" },
+                new String[] { levelItem.fileName },
                 winListeners( levelItem )
             );
     }

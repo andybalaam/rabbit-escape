@@ -253,10 +253,10 @@ clean-music: no-make-warnings
 clean-all: clean clean-images clean-sounds clean-music clean-doxygen
 
 run: compile-noui
-	java -cp $(CLASSPATH) rabbitescape.ui.text.TextMain test/level_01.rel
+	java -cp $(CLASSPATH) rabbitescape.ui.text.TextMain --noinput test/level_01.rel
 
 runinteractive: compile-noui
-	java -cp $(CLASSPATH) rabbitescape.ui.text.TextMain test/level_01.rel --interactive
+	java -cp $(CLASSPATH) rabbitescape.ui.text.TextMain test/level_01.rel
 
 runmenu: compile-noui
 	java -cp $(CLASSPATH) rabbitescape.ui.text.TextMain

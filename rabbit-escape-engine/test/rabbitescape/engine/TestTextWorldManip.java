@@ -1010,6 +1010,352 @@ public class TestTextWorldManip
         );
     }
 
+    @Test
+    public void Comments_for_string_arrays_by_key_associate_correctly()
+    {
+        String[] lines = {
+            ":name=Comments",
+            ":description=verbose",
+            ":author_name=bob",
+            ":author_url=",
+            "% something erudite",
+            ":hint.1=take",
+            "% insight",
+            ":hint.2=a",
+            "% wisdom regarding hint.3",
+            ":hint.3=hint",
+            ":hint.4=hint",
+            ":hint.5=hint",
+            ":hint.6=hint",
+            ":hint.7=hint",
+            ":hint.8=hint",
+            "% some acumen",
+            ":hint.9=hint",
+            "% sagacity personified",
+            ":hint.10=hint",
+            ":hint.11=hint",
+            "% deep understanding",
+            ":hint.12=hint",
+            ":solution.1=",
+            "% a lot of rabbits",
+            ":num_rabbits=20",
+            ":num_to_save=18",
+            ":rabbit_delay=10,3,2,10",
+            ":num_saved=0",
+            ":num_killed=0",
+            ":num_waiting=20",
+            ":paused=false",
+            "#######",
+            "#Q   Q#",
+            "#     #",
+            "#######",
+        };
+
+        assertThat(
+            renderCompleteWorld( createWorld( lines ), true ),
+            equalTo( lines )
+        );
+    }
+    
+    @Test
+    public void Comments_for_abilities_round_trip()
+    {
+        String[] lines = {
+            ":name=Comments",
+            ":description=verbose",
+            ":author_name=bob",
+            ":author_url=",
+            ":num_rabbits=20",
+            ":num_to_save=18",
+            ":rabbit_delay=10,3,2,10",
+            ":num_saved=0",
+            ":num_killed=0",
+            ":num_waiting=20",
+            ":paused=false",
+            "% a",
+            ":bash=1",
+            "% b",
+            "% c",
+            ":block=4",
+            "% d",
+            ":bridge=3",
+            "% e",
+            ":climb=5",
+            ":dig=2",
+            "%f",
+            ":explode=6",
+            "#######",
+            "#Q   Q#",
+            "#     #",
+            "#######",
+        };
+
+        assertThat(
+            renderCompleteWorld( createWorld( lines ), true ),
+            equalTo( lines )
+        );
+    }
+    
+    @Test
+    public void Round_trip_comments()
+    {
+        String[] lines = {
+            ":name=Comments",
+            "% desc 1.",
+            "% desc 2. can have 2 comment line about something ",
+            ":description=verbose",
+            "% I love bob's work",
+            ":author_name=bob",
+            "% his website is great",
+            ":author_url=",
+            "% something erudite about hint.1",
+            ":hint.1=take",
+            ":hint.2=a",
+            "% wisdom regarding hint.3",
+            ":hint.3=hint",
+            ":solution.1=",
+            "% s2 looks like cheeating",
+            ":solution.2=",
+            ":solution.3=",
+            "% a lot of rabbits",
+            ":num_rabbits=20",
+            "% save how many?",
+            ":num_to_save=18",
+            "% why are we waiting?",
+            ":rabbit_delay=10,3,2,10",
+            "% some already out: no",
+            ":num_saved=0",
+            "% dead already",
+            ":num_killed=0",
+            "% the bunnies are queuing in the pre-life",
+            ":num_waiting=20",
+            "% paused ",
+            ":paused=false",
+            "% pretty ascii art",
+            "#######",
+            "#Q   Q#",
+            "# *** #",
+            "#######",
+            "% starpoint comment",
+            ":*=rr",
+            ":*=jj",
+            ":*=rj",
+            "% comments are also OK after",
+            "% all the substantive metadata"
+        };
+
+        assertThat(
+            renderCompleteWorld( createWorld( lines ), true ),
+            equalTo( lines )
+        );
+    }
+    
+    @Test
+    public void Round_trip_comments_move_with_meta()
+    {
+        String[] lines = {
+            ":hint.2=a",
+            "% wisdom regarding hint.3",
+            ":hint.3=hint",
+            ":solution.1=",
+            "% a lot of rabbits",
+            ":num_rabbits=20",
+            "% save how many?",
+            ":num_to_save=18",
+            "% why are we waiting?",
+            ":rabbit_delay=10,3,2,10",
+            "% something erudite about hint.1",
+            ":hint.1=take",
+            "% some already out: no",
+            ":num_saved=0",
+            "% dead already",
+            ":num_killed=0",
+            "% his website is great",
+            ":author_url=",
+            "% the bunnies are queuing in the pre-life",
+            ":num_waiting=20",
+            "% paused ",
+            ":paused=false",
+            "% pretty ascii art",
+            "#######",
+            ":name=Comments",
+            "#Q   Q#",
+            "% desc 1.",
+            "% desc 2. can have 2 comment line about something ",
+            ":description=verbose",
+            "#     #",
+            "% I love bob's work",
+            ":author_name=bob",
+            "#######",
+            "% s2 looks like cheeating",
+            ":solution.2=",
+            ":solution.3="
+        };
+        
+        String[] expectedLines = {
+            ":name=Comments",
+            "% desc 1.",
+            "% desc 2. can have 2 comment line about something ",
+            ":description=verbose",
+            "% I love bob's work",
+            ":author_name=bob",
+            "% his website is great",
+            ":author_url=",
+            "% something erudite about hint.1",
+            ":hint.1=take",
+            ":hint.2=a",
+            "% wisdom regarding hint.3",
+            ":hint.3=hint",
+            ":solution.1=",
+            "% s2 looks like cheeating",
+            ":solution.2=",
+            ":solution.3=",
+            "% a lot of rabbits",
+            ":num_rabbits=20",
+            "% save how many?",
+            ":num_to_save=18",
+            "% why are we waiting?",
+            ":rabbit_delay=10,3,2,10",
+            "% some already out: no",
+            ":num_saved=0",
+            "% dead already",
+            ":num_killed=0",
+            "% the bunnies are queuing in the pre-life",
+            ":num_waiting=20",
+            "% paused ",
+            ":paused=false",
+            "% pretty ascii art",
+            "#######",
+            "#Q   Q#",
+            "#     #",
+            "#######"
+        };
+
+        assertThat(
+            renderCompleteWorld( createWorld( lines ), true ),
+            equalTo( expectedLines )
+        );
+    }
+    
+    @Test
+    public void Starpoint_comments_move_to_a_block()
+    {
+        String[] lines = {
+            ":name=Comments",
+            ":description=verbose",
+            ":author_name=bob",
+            ":author_url=",
+            ":hint.1=take",
+            ":hint.2=a",
+            ":hint.3=hint",
+            ":solution.1=",
+            ":solution.2=",
+            ":solution.3=",
+            ":num_rabbits=20",
+            ":num_to_save=18",
+            ":rabbit_delay=10,3,2,10",
+            "#######",
+            "#Q   Q#",
+            "# *** #",
+            "#######",
+            "% starpoint comment 1",
+            ":*=rr",
+            "% starpoint comment 2",
+            ":*=jj",
+            "% starpoint comment 3",
+            ":*=rj"
+        };
+        
+        String[] expectedLines = {
+            ":name=Comments",
+            ":description=verbose",
+            ":author_name=bob",
+            ":author_url=",
+            ":hint.1=take",
+            ":hint.2=a",
+            ":hint.3=hint",
+            ":solution.1=",
+            ":solution.2=",
+            ":solution.3=",
+            ":num_rabbits=20",
+            ":num_to_save=18",
+            ":rabbit_delay=10,3,2,10",
+            "#######",
+            "#Q   Q#",
+            "# *** #",
+            "#######",
+            "% starpoint comment 1",
+            "% starpoint comment 2",
+            "% starpoint comment 3",
+            ":*=rr",
+            ":*=jj",
+            ":*=rj"
+        };
+
+        assertThat(
+            renderCompleteWorld( createWorld( lines ), true, true ),
+            equalTo( expectedLines )
+        );
+    }
+
+    @Test
+    public void World_comments_move_to_a_block()
+    {
+        String[] lines = {
+            ":name=Comments",
+            ":description=verbose",
+            ":author_name=bob",
+            ":author_url=",
+            ":hint.1=take",
+            ":hint.2=a",
+            ":hint.3=hint",
+            ":solution.1=",
+            ":solution.2=",
+            ":solution.3=",
+            ":num_rabbits=20",
+            ":num_to_save=18",
+            ":rabbit_delay=10,3,2,10",
+            "% interspersed",
+            "#######",
+            "% comments",
+            "#Q   Q#",
+            "% move to a",
+            "% block",
+            "#     #",
+            "#######"
+        };
+        
+        String[] expectedLines = {
+            ":name=Comments",
+            ":description=verbose",
+            ":author_name=bob",
+            ":author_url=",
+            ":hint.1=take",
+            ":hint.2=a",
+            ":hint.3=hint",
+            ":solution.1=",
+            ":solution.2=",
+            ":solution.3=",
+            ":num_rabbits=20",
+            ":num_to_save=18",
+            ":rabbit_delay=10,3,2,10",
+            "% interspersed",
+            "% comments",
+            "% move to a",
+            "% block",
+            "#######",
+            "#Q   Q#",
+            "#     #",
+            "#######"
+        };
+
+        assertThat(
+            renderCompleteWorld( createWorld( lines ), true, true ),
+            equalTo( expectedLines )
+        );
+    }
+
+    
     /**
      * @brief Key meta should be unique. Test that Duplicate name
      * entries cause a DuplicateMetaKey to be thrown.
@@ -1379,12 +1725,11 @@ public class TestTextWorldManip
     }
 
     @Test
-    public void Comments_in_rel_are_ignored_and_comment_char_only_active_at_start_of_line()
+    public void Comments_only_active_at_start_of_line()
     {
         String[] lines = {
             ":name=Commentary % look at me",
             ":description=trippy",
-            "% ignore me",
             ":author_name=cyril",
             ":author_url=",
             ":hint.1=",
@@ -1403,30 +1748,9 @@ public class TestTextWorldManip
             "#######"
         };
 
-        String[] linesNoComment = {
-            ":name=Commentary % look at me",
-            ":description=trippy",
-            ":author_name=cyril",
-            ":author_url=",
-            ":hint.1=",
-            ":hint.2=",
-            ":hint.3=",
-            ":num_rabbits=20",
-            ":num_to_save=18",
-            ":rabbit_delay=1",
-            ":num_saved=0",
-            ":num_killed=0",
-            ":num_waiting=20",
-            ":paused=false",
-            "#######",
-            "#Q   Q#",
-            "#     #",
-            "#######"
-        };
-        
         assertThat(
             renderCompleteWorld( createWorld( lines ), true ),
-            equalTo( linesNoComment )
+            equalTo( lines )
         );
     }
 

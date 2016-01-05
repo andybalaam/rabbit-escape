@@ -410,8 +410,12 @@ public class Util
         };
     }
 
-    public static <T> Iterable<T> chain(
-        final Iterable<? extends T> it1, final Iterable<? extends T> it2 )
+    /**
+     * This can be used to chain objects of different types (unlike concat). The returned
+     * Iterable will be of the first common superclass.
+     */
+    @SafeVarargs
+    public static <T> Iterable<T> chain( final Iterable<? extends T>... itArray )
     {
         return new Iterable<T>()
         {
@@ -420,36 +424,69 @@ public class Util
             {
                 class MyIt implements Iterator<T>
                 {
-                    private final Iterator<? extends T> i1;
-                    private final Iterator<? extends T> i2;
-
-                    public MyIt(
-                        Iterator<? extends T> i1, Iterator<? extends T> i2 )
+                    /** Iterator of Iterators */
+                    Iterator<Iterator<? extends T>> iI;
+                    
+                    /** The current sub-Iterator */
+                    Iterator<? extends T> i;
+                    
+                    public MyIt( Iterator<Iterator<? extends T>> iI )
                     {
-                        this.i1 = i1;
-                        this.i2 = i2;
+                        this.iI = iI;
+                        i = iI.next();
                     }
-
+                    
                     @Override
                     public boolean hasNext()
                     {
-                        return i1.hasNext() || i2.hasNext();
+                        if ( i.hasNext() )
+                        {
+                            return true;
+                        }
+                        else
+                        {
+                            if ( iI.hasNext() ) 
+                            {
+                                i = iI.next();
+                                return this.hasNext();
+                            }
+                            else
+                            {
+                                return false;
+                            }
+                        }
                     }
-
+                    
                     @Override
                     public T next()
                     {
-                        return i1.hasNext() ? i1.next() : i2.next();
+                        if ( i.hasNext() )
+                        {
+                            return i.next();
+                        }
+                        else
+                        {
+                            i = iI.next();
+                            return this.next();
+                        }
                     }
-
+                    
                     @Override
                     public void remove()
                     {
                         throw new UnsupportedOperationException();
                     }
+                    
+                    
                 }
-
-                return new MyIt( it1.iterator(), it2.iterator() );
+                
+                List<Iterator<? extends T>> newIL = new ArrayList<Iterator<? extends T>>();
+                for ( Iterable<? extends T> it: itArray )
+                {
+                    newIL.add( it.iterator() );
+                }
+                
+                return new MyIt(newIL.iterator());
             }
         };
     }
@@ -631,6 +668,20 @@ public class Util
         return streamLines( name, res );
     }
 
+    public static <T> T[] concat( T[] a, T[] b, T[] c, T[] d ) {
+        T[] ab = concat( a, b );
+        T[] cd = concat( c, d );
+        return concat( ab, cd );
+    }
+    
+    public static <T> T[] concat( T[] a, T[] b, T[] c ) {
+        T[] ab = concat( a, b );
+        return concat( ab, c);
+    }
+    
+    /**
+     * Use chain instead for arguments of different classes.
+     */
     public static <T> T[] concat( T[] left, T[] right )
     {
         return list(
