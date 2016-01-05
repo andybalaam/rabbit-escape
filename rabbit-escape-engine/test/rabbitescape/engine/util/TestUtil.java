@@ -1,5 +1,10 @@
 package rabbitescape.engine.util;
 
+import rabbitescape.engine.Direction;
+import rabbitescape.engine.Rabbit;
+import rabbitescape.engine.Thing;
+import rabbitescape.engine.Token;
+
 import static org.hamcrest.MatcherAssert.*;
 import static org.hamcrest.CoreMatchers.*;
 
@@ -38,6 +43,24 @@ public class TestUtil
         assertThat( Util.list( chained ).toArray( new String[] {} ), 
             equalTo( new String[] {"a", "e", "f", "g" } ) );
     }
+
+    @Test
+    public void  Chain_different_classes()
+    {
+        Token[] tokens = new Token[] {new Token( 0, 0, Token.Type.bash ),
+                                      new Token( 1, 1, Token.Type.bridge )};
+        Rabbit[] rabbits = new Rabbit[] {new Rabbit( 3, 3, Direction.LEFT )};
+        
+        Iterable<Thing> chained = Util.chain( Arrays.asList( tokens ), Arrays.asList( rabbits ) );
+        
+        String s = "";
+        
+        for ( Thing t: chained ) {
+            s = s + t.x;
+        }
+        
+        assertThat( s, equalTo( "013" ) );
+    }
     
     @Test
     public void Concat_3()
@@ -50,5 +73,7 @@ public class TestUtil
         
         assertThat( concated, equalTo( new String[] {"a", "e", "f", "g" } ) );
     }
+    
+
     
 }
