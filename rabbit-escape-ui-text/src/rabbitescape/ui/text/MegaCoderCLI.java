@@ -7,7 +7,6 @@ import java.io.IOException;
 import rabbitescape.engine.IgnoreWorldStatsListener;
 import rabbitescape.engine.LoadWorldFile;
 import rabbitescape.engine.World;
-import rabbitescape.engine.textworld.InvalidMetaLine;
 import rabbitescape.engine.textworld.LineProcessor;
 import rabbitescape.engine.textworld.TextWorldManip;
 import rabbitescape.engine.util.CommandLineOption;

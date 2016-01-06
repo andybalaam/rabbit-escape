@@ -23,7 +23,6 @@ import rabbitescape.engine.Direction;
 import rabbitescape.engine.Rabbit;
 import rabbitescape.engine.Thing;
 import rabbitescape.engine.Token;
-import rabbitescape.engine.Token.Type;
 import rabbitescape.engine.util.Util;
 
 public class TestUtil

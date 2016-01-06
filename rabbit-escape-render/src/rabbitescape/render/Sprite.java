@@ -1,7 +1,5 @@
 package rabbitescape.render;
 
-import rabbitescape.render.androidlike.Bitmap;
-
 /**
  * A Bitmap name and a location at which to draw it.
  */

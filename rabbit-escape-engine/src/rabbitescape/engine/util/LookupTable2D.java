@@ -1,7 +1,6 @@
 package rabbitescape.engine.util;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -18,11 +17,13 @@ public class LookupTable2D <T extends LookupItem2D> implements Iterable<T>
             this.cursor = 0;
         }
 
+        @Override
         public boolean hasNext()
         {
             return cursor < list.size();
         }
 
+        @Override
         public T next()
         {
             if( this.hasNext() )
@@ -32,12 +33,14 @@ public class LookupTable2D <T extends LookupItem2D> implements Iterable<T>
             throw new NoSuchElementException();
         }
 
+        @Override
         public void remove()
         {
             throw new UnsupportedOperationException();
         }
     }
 
+    @Override
     public Iterator<T> iterator()
     {
         return new ItemIterator();
@@ -45,7 +48,7 @@ public class LookupTable2D <T extends LookupItem2D> implements Iterable<T>
 
     // Arrays of generics not allowed, use Vector instead
     private final Vector<Vector<LookupItems2D<T>>> table;
-    private List<T> list;
+    private final List<T> list;
 
     public LookupTable2D( List<T> list, Dimension size )
     {

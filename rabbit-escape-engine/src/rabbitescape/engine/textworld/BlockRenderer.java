@@ -1,7 +1,5 @@
 package rabbitescape.engine.textworld;
 
-import java.util.List;
-
 import rabbitescape.engine.Block;
 
 public class BlockRenderer

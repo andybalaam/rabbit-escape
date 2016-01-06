@@ -26,7 +26,6 @@ public class TopBar implements Physics.StatsChangedListener
 
     private final Color backgroundColor;
     private final JPanel panel;
-    private final JLabel name;
     private final JLabel out;
     private final JLabel saved;
     private final JLabel ability;
@@ -38,7 +37,7 @@ public class TopBar implements Physics.StatsChangedListener
         this.backgroundColor = backgroundColor;
         this.panel = createPanel( contentPane );
 
-        this.name = addLabel( worldName, 300 );
+        addLabel( worldName, 300 );
         this.ability = addLabel( "" );
         this.out     = addLabel( outText );
         this.saved   = addLabel( savedText );

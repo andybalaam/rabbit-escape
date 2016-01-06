@@ -1,14 +1,8 @@
 package rabbitescape.engine.logic;
 
-import static org.hamcrest.MatcherAssert.*;
-import static org.hamcrest.CoreMatchers.*;
-import static rabbitescape.engine.Tools.*;
-import static rabbitescape.engine.textworld.TextWorldManip.*;
 import static rabbitescape.engine.util.WorldAssertions.*;
 
 import org.junit.Test;
-
-import rabbitescape.engine.World;
 
 public class TestBrollychuting
 {

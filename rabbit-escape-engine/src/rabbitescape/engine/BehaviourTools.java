@@ -8,8 +8,6 @@ import static rabbitescape.engine.Block.Type.bridge_up_left;
 import static rabbitescape.engine.Direction.RIGHT;
 import static rabbitescape.engine.Direction.opposite;
 
-import rabbitescape.engine.ChangeDescription.State;
-
 public class BehaviourTools
 {
     public final Rabbit rabbit;
