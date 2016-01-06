@@ -15,10 +15,12 @@ public class Falling extends Behaviour
     private int heightFallen = 0;
 
     private final Climbing climbing;
+    private final Brollychuting brollychuting; 
 
-    public Falling( Climbing climbing )
+    public Falling( Climbing climbing, Brollychuting brollychuting )
     {
         this.climbing = climbing;
+        this.brollychuting = brollychuting;
     }
     
     public boolean isFallingToDeath()
@@ -103,7 +105,9 @@ public class Falling extends Behaviour
     @Override
     public boolean checkTriggered( Rabbit rabbit, World world )
     {
-        if ( climbing.abilityActive || rabbit.state == RABBIT_DIGGING )
+        if (   climbing.abilityActive 
+            || rabbit.state == RABBIT_DIGGING 
+            || brollychuting.hasBrolly() )
         {
             return false;
         }

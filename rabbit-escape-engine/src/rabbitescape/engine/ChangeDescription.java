@@ -19,6 +19,7 @@ public class ChangeDescription
         RABBIT_TURNING_RIGHT_TO_LEFT,
         RABBIT_TURNING_RIGHT_TO_LEFT_RISING,
         RABBIT_TURNING_RIGHT_TO_LEFT_LOWERING,
+        RABBIT_BROLLYCHUTING,
         RABBIT_FALLING,
         RABBIT_FALLING_1,
         
@@ -148,6 +149,8 @@ public class ChangeDescription
         TOKEN_CLIMB_FALLING,
         TOKEN_EXPLODE_FALLING,
         TOKEN_EXPLODE_STILL,
+        TOKEN_BROLLY_FALLING,
+        TOKEN_BROLLY_STILL,
         ENTRANCE,
         EXIT,
     }

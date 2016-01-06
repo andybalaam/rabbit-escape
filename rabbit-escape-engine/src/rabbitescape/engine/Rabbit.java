@@ -9,13 +9,18 @@ import java.util.Map;
 
 import rabbitescape.engine.ChangeDescription.State;
 import rabbitescape.engine.behaviours.*;
+import rabbitescape.engine.config.ConfigKeys;
+import rabbitescape.engine.config.ConfigTools;
 
 public class Rabbit extends Thing
 {
+    private static int rabbitCount = 0;
+    
     private final List<Behaviour> behaviours;
     private final List<Behaviour> behavioursTriggerOrder;
     
     private Falling falling;
+    private int rabbitIndex;
 
     public Direction dir;
     public boolean onSlope;
@@ -28,6 +33,7 @@ public class Rabbit extends Thing
         behaviours = new ArrayList<>();
         behavioursTriggerOrder = new ArrayList<>();
         createBehaviours();
+        rabbitIndex = rabbitCount++;
     }
 
     private void createBehaviours()
@@ -37,7 +43,8 @@ public class Rabbit extends Thing
         Exploding exploding = new Exploding();
         OutOfBounds outOfBounds = new OutOfBounds();
         Exiting exiting = new Exiting();
-        falling = new Falling( climbing );
+        Brollychuting brollychuting = new Brollychuting( climbing );
+        falling = new Falling( climbing, brollychuting );
         Bashing bashing = new Bashing();
         Bridging bridging = new Bridging();
         Blocking blocking = new Blocking();
@@ -47,6 +54,7 @@ public class Rabbit extends Thing
         behavioursTriggerOrder.add( outOfBounds );
         behavioursTriggerOrder.add( falling );
         behavioursTriggerOrder.add( exiting );
+        behavioursTriggerOrder.add( brollychuting );
         behavioursTriggerOrder.add( climbing );
         behavioursTriggerOrder.add( bashing );
         behavioursTriggerOrder.add( digging );
@@ -58,6 +66,7 @@ public class Rabbit extends Thing
         behaviours.add( outOfBounds );
         behaviours.add( falling );
         behaviours.add( exiting );
+        behaviours.add( brollychuting );
         behaviours.add( bashing );
         behaviours.add( digging );
         behaviours.add( bridging );
@@ -102,6 +111,7 @@ public class Rabbit extends Thing
                 done = true;
             }
         }
+
     }
 
     private void cancelAllBehavioursExcept( Behaviour exception )
@@ -118,6 +128,12 @@ public class Rabbit extends Thing
     @Override
     public void step( World world )
     {
+        if ( ConfigTools.retrieveStatic() != null &&
+             ConfigTools.getBool( ConfigTools.retrieveStatic(), 
+             ConfigKeys.CFG_DEBUG_PRINT_STATES ) )
+        {
+            System.out.println( " " + this.rabbitIndex + ":" + this.state );
+        }
         for ( Behaviour behaviour : behaviours )
         {
             boolean handled = behaviour.behave( world, this, state );
