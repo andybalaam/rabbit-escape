@@ -242,7 +242,7 @@ compile-noui: \
 	@echo ". Compiling"
 	@ant -quiet compile
 
-compile: compile-noui images sounds music
+compile: images sounds music compile-noui
 
 clean: no-make-warnings
 	@echo ". Cleaning compiled Java, lists and dist dir"
