@@ -44,7 +44,8 @@ public class AnimationTester extends JFrame
 
     private static final String CFG_AT_BLOCKS = "animationtester.blocks";
 
-    private static final String[][] defaultAnimationNames = new String[][] {
+    private static final String[][] defaultAnimationNames = new String[][]
+    {
         new String[] { NONE, NONE, NONE },
         new String[] { NONE, NONE, NONE },
         new String[] { NONE, NONE, NONE },
@@ -58,7 +59,8 @@ public class AnimationTester extends JFrame
         new String[] { NONE, NONE, NONE }
     };
 
-    private static final String[] defaultBlockNames = new String[] {
+    private static final String[] defaultBlockNames = new String[]
+    {
         NONE, NONE, NONE,
         "land_rising_left_1", NONE, "bridge_rising_right",
         "land_block_1", "land_block_2", "land_block_3",
@@ -222,7 +224,8 @@ public class AnimationTester extends JFrame
     private SwingPaint paint;
     private final BitmapCache<SwingBitmap> bitmapCache;
     private final AnimationCache animationCache;
-    private final String[] allBlocks = new String[] {
+    private final String[] allBlocks = new String[]
+    {
         NONE,
         "land_block_1",
         "land_block_2",
@@ -255,7 +258,8 @@ public class AnimationTester extends JFrame
         public AnimationTester animationTester;
 
         @Override
-        public void run() {
+        public void run()
+        {
             try
             {
                 animationTester = new AnimationTester( createConfig() );

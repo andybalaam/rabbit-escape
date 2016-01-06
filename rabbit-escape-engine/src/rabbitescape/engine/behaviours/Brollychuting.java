@@ -84,7 +84,8 @@ public class Brollychuting extends Behaviour
         return false;
     }
     
-    public boolean hasBrolly() {
+    public boolean hasBrolly()
+    {
         return hasAbility;
     }
 
