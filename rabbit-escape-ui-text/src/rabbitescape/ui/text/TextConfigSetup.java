@@ -20,7 +20,7 @@ public class TextConfigSetup
             "{}",
             "Which level you have got to in each level set."
         );
-        
+
         definition.set(
             CFG_DEBUG_PRINT_STATES,
             String.valueOf( false ),

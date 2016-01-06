@@ -1557,7 +1557,7 @@ public class TestBridging
             )
         );
     }
-    
+
     @Test
     public void Bridge_out_of_bounds()
     {
@@ -1576,7 +1576,7 @@ public class TestBridging
             ":*=ir"
         );
 
-        // The test will find out of 
+        // The test will find out of
         // bounds exceptions from rendering
         // bridges outside the world.
         assertWorldEvolvesLike(

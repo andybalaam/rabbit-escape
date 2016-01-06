@@ -69,10 +69,10 @@ public class MainJFrame extends JFrame
         addComponentListener( listener );
 
         setBoundsFromConfig();
-        
+
         setIcon();
     }
-    
+
     private void setIcon()
     {
         SwingBitmapLoader l = new SwingBitmapLoader();

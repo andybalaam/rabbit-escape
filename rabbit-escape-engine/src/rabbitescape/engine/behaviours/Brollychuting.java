@@ -13,7 +13,7 @@ public class Brollychuting extends Behaviour
 {
     boolean hasAbility = false;
     private final Climbing climbing;
-    
+
     public Brollychuting( Climbing climbing)
     {
         this.climbing = climbing;
@@ -26,24 +26,24 @@ public class Brollychuting extends Behaviour
         {
             hasAbility = true;
         }
-        
+
         if( !hasAbility )
         {
             return null;
         }
-        
+
         if ( climbing.abilityActive )
         {
             return null;
         }
-        
+
         Block below = t.blockBelow();
-        
+
         if ( t.isFlat( below ) )
         {
             return null;
         }
-        
+
         if (
             t.rabbit.onSlope
          && !t.blockHereJustRemoved()
@@ -51,7 +51,7 @@ public class Brollychuting extends Behaviour
         {
             return null;
         }
-        
+
         if ( below != null )
         {
             if ( t.isUpSlope( below ) )
@@ -69,7 +69,7 @@ public class Brollychuting extends Behaviour
                 );
             }
         }
-        
+
         return RABBIT_BROLLYCHUTING;
     }
 
@@ -83,7 +83,7 @@ public class Brollychuting extends Behaviour
         }
         return false;
     }
-    
+
     public boolean hasBrolly()
     {
         return hasAbility;
@@ -98,17 +98,17 @@ public class Brollychuting extends Behaviour
         {
             return true;
         }
-        
+
         if( !hasAbility )
         {
             return false;
         }
-        
+
         if ( climbing.abilityActive || rabbit.state == RABBIT_DIGGING )
         {
             return false;
         }
-        
+
         if ( t.isFlat( t.blockBelow() ) )
         {
             return false;
@@ -121,7 +121,7 @@ public class Brollychuting extends Behaviour
         {
             return false;
         }
-        
+
         return true;
     }
 

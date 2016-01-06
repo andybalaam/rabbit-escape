@@ -3,7 +3,7 @@ package rabbitescape.engine.util;
 import rabbitescape.engine.err.RabbitEscapeException;
 
 /**
- * Supply a long form option (eg "--start"). 
+ * Supply a long form option (eg "--start").
  * The short form is generated automatically (eg "-s").
  * Parameters may be supplied as the next arg, or
  * concatenated ( "-s 0", "-s0"). Also with equals is fine
@@ -20,29 +20,29 @@ public class CommandLineOption
     {
         private static final long serialVersionUID = 1L;
         public final String unknownArg;
-        
+
         public UnknownOption( String arg )
         {
             this.unknownArg = arg;
         }
     }
-    
+
     public class OptionRequiresParameter extends RabbitEscapeException
     {
         private static final long serialVersionUID = 1L;
         public final String arg;
-        
+
         public OptionRequiresParameter( String arg )
         {
             this.arg = arg;
         }
     }
-    
+
     public class OptionDoesNotTakeParameter extends RabbitEscapeException
     {
         private static final long serialVersionUID = 1L;
         public final String arg;
-        
+
         public OptionDoesNotTakeParameter( String arg )
         {
             this.arg = arg;
@@ -62,7 +62,7 @@ public class CommandLineOption
         assert( longForm.startsWith( "--" ) );
         this.shortForm = longForm.substring( 1, 3 );
     }
-    
+
     public void setValue( String value, String parentOption )
     {
         if ( value.length() > 0 && value.startsWith( "-" ) )
@@ -71,17 +71,17 @@ public class CommandLineOption
         }
         this.value = value;
     }
-    
+
     public String getValue()
     {
         return value;
     }
-    
+
     public void setPresent()
     {
         present = true;
     }
-    
+
     public boolean isPresent()
     {
         return present;
@@ -136,7 +136,7 @@ public class CommandLineOption
     {
         return Integer.parseInt( value );
     }
-    
-    
+
+
 
 }

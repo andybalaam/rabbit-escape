@@ -66,7 +66,7 @@ public class Token extends Thing
 
             case brolly: return moving ?
                 TOKEN_BROLLY_FALLING : TOKEN_BROLLY_STILL;
-            
+
             default: throw new UnknownType( type );
         }
     }
@@ -148,7 +148,7 @@ public class Token extends Thing
         String n = ability.name();
         return n.substring( 0, 1 ).toUpperCase() + n.substring( 1 );
     }
-    
+
     @Override
     public String toString()
     {

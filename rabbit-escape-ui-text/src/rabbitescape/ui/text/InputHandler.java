@@ -24,7 +24,7 @@ public class InputHandler
     private final SandboxGame sandboxGame;
     private final Terminal terminal;
     private final List<SolutionCommand> solution;
-    
+
     public InputHandler( SandboxGame sandboxGame, Terminal terminal )
     {
         this.sandboxGame = sandboxGame;
@@ -37,7 +37,7 @@ public class InputHandler
         String input = input();
 
         input = expandAbbreviations( input );
-        
+
         if ( input.equals( "help" ) )
         {
             return help();
@@ -112,9 +112,9 @@ public class InputHandler
         // Expand token selection shortcuts
         for ( InputExpansion e : InputExpansion.expansions )
         {
-            input = Util.regexReplace( 
-                input, 
-                "\\b" + e.character + "\\b", 
+            input = Util.regexReplace(
+                input,
+                "\\b" + e.character + "\\b",
                 e.expansion
             );
         }

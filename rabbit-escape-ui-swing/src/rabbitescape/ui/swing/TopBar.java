@@ -66,7 +66,7 @@ public class TopBar implements Physics.StatsChangedListener
         panel.add( ret );
         return ret;
     }
-    
+
     private JLabel addLabel( String text )
     {
         return addLabel( text, 200);

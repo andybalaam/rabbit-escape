@@ -97,7 +97,7 @@ public class LineProcessor
     private int height;
     public  int lineNum;
     private int currentStarPoint;
-    
+
     public LineProcessor(
         List<Block> blocks,
         List<Rabbit> rabbits,
@@ -127,7 +127,7 @@ public class LineProcessor
 
         process( variantGen );
     }
-    
+
     public Comment[] getComments()
     {
         return comments.toArray( new Comment[comments.size()] );
@@ -251,19 +251,19 @@ public class LineProcessor
 
     private void processCommentLine( String line )
     {
-        // Create temporary comment, until we know the line following, 
+        // Create temporary comment, until we know the line following,
         // to create the association.
         Comment c = Comment.createUnlinkedComment( line );
         comments.add( c );
     }
-    
+
     private void maybeLinkToLastComment( String key )
     {
         if ( comments.size() == 0 )
         {
             return; // No comments to link.
         }
-        
+
         // Iterate backwards linking all comments in a block
         // until we hit one that it already linked with the
         // previous non-comment line
@@ -280,7 +280,7 @@ public class LineProcessor
             }
         }
     }
-    
+
     /**
      * Strips the code suffix, if it is present, or returns the key unchanged.
      */
@@ -292,7 +292,7 @@ public class LineProcessor
         }
         return key;
     }
-    
+
     private void processMetaLine( String line, VariantGenerator variantGen )
     {
         String[] splitLine = split( line.substring( 1 ), "=", 1 );
@@ -308,7 +308,7 @@ public class LineProcessor
         {
             value = MegaCoder.decode( value );
         }
-        
+
         maybeLinkToLastComment( key );
 
         if ( TextWorldManip.META_INTS.contains( key ) )

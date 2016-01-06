@@ -214,7 +214,7 @@ public class TextWorldManip
     {
         return renderCompleteWorld( world, meta, true );
     }
-    
+
     /**
      * @param world        The World to render.
      * @param meta         If true the metadata is included.
@@ -252,11 +252,11 @@ public class TextWorldManip
 
     /**
      * Adds a line of metadata to the supplied List. If there are any comments
-     * for this key comment lines will be added first. 
+     * for this key comment lines will be added first.
      * @param   value may be null, in which case only comments will be considered.
      */
-    private static void addMeta( List<String> lines, 
-                                 String key, String value, 
+    private static void addMeta( List<String> lines,
+                                 String key, String value,
                                  Comment[] comments )
     {
         for( Comment c: comments)
@@ -266,7 +266,7 @@ public class TextWorldManip
                 lines.add( c.text );
             }
         }
-        if ( null == value ) 
+        if ( null == value )
         { // We were only here to consider adding comments.
             return;
         }
@@ -275,7 +275,7 @@ public class TextWorldManip
             lines.add( ":" + key + "=" + value );
         }
     }
-    
+
     private static String[] metaLines( World world, boolean runtimeMeta )
     {
         List<String> ret = new ArrayList<String>();
@@ -394,7 +394,7 @@ public class TextWorldManip
         {
             ret.add( new String( chars.line( lineNum ) ) );
         }
-        
+
         addMeta( ret, "*", null, comments );
 
         for ( String starLine : chars.starLines() )

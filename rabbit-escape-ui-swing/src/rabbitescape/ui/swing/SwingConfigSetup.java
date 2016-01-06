@@ -98,7 +98,7 @@ public class SwingConfigSetup
             String.valueOf( false ),
             "Rabbit states are printed to System.out."
         );
-        
+
         return new Config( definition, new RealFileSystem(), CONFIG_PATH );
     }
 }

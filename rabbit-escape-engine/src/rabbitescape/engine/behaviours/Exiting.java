@@ -49,8 +49,8 @@ public class Exiting extends Behaviour
     @Override
     public boolean behave( World world, Rabbit rabbit, State state )
     {
-        if (   
-               state == RABBIT_ENTERING_EXIT 
+        if (
+               state == RABBIT_ENTERING_EXIT
             || state == RABBIT_ENTERING_EXIT_CLIMBING_RIGHT
             || state == RABBIT_ENTERING_EXIT_CLIMBING_LEFT
            )

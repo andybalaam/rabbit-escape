@@ -32,7 +32,7 @@ public class TextMain
             TextSingleGameEntryPoint.entryPoint( args );
             return;
         }
-        
+
         CommandLineOption level =        new CommandLineOption( "--level",        true );
         CommandLineOption solution =     new CommandLineOption( "--solution",     true );
         CommandLineOption encode =       new CommandLineOption( "--encode",       true );
@@ -41,10 +41,10 @@ public class TextMain
         CommandLineOption noinput =      new CommandLineOption( "--noinput",      true );
         CommandLineOption placeholders = new CommandLineOption( "--placeholders", true );
         CommandLineOption template =     new CommandLineOption( "--template",     true );
-        try 
+        try
         {
             CommandLineOptionSet.parse( args,
-                                        level, solution, encode, decode, help, 
+                                        level, solution, encode, decode, help,
                                         noinput, placeholders, template );
             if ( help.isPresent() )
             {
@@ -91,7 +91,7 @@ public class TextMain
             e.printStackTrace();
             System.exit( 1 );
         }
-        
+
         Locale locale = Locale.getDefault();
         Translation.init( locale );
 
@@ -103,18 +103,18 @@ public class TextMain
 
         m.run( args );
     }
-    
+
 
     public static void placeholders( String fileName ) throws IOException
     {
         RealFileSystem fs = new RealFileSystem();
         // Decoded while parsing
-        World world = new LoadWorldFile( fs ).load( 
+        World world = new LoadWorldFile( fs ).load(
             new IgnoreWorldStatsListener(), fileName );
         String[] lines = TextWorldManip.renderCompleteWorld( world, true, false );
         fs.write( fileName, Util.join( "\n", lines ) );
     }
-    
+
     public static void template( String fileName ) throws IOException
     {
         RealFileSystem fs = new RealFileSystem();
@@ -122,16 +122,16 @@ public class TextMain
             "      ", "      ", "      ",
             "      ", "      ", "      "
         };
-        String[] lines = TextWorldManip.renderCompleteWorld( 
+        String[] lines = TextWorldManip.renderCompleteWorld(
             TextWorldManip.createWorld( world ), true, false );
         fs.write( fileName, Util.join( "\n", lines ) );
     }
-    
+
     private void run( String[] args )
     {
         textMenu.run();
     }
-    
+
     public static void usageMessage()
     {
         //                                                          Eighty character limit >|

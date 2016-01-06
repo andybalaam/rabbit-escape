@@ -31,7 +31,7 @@ public class SolutionRunner
 
         return runSolutionInSandbox( interpreter, sandboxGame, output );
     }
-    
+
     public static boolean runSolution( Solution solution, World world)
     {
         return runSolution( solution, world, null);
@@ -60,7 +60,7 @@ public class SolutionRunner
             {
                 SolutionTimeStep nextStep = interpreter.next(
                     sandboxGame.getWorld().completionState() );
-                
+
                 if ( null != output )
                 {
                     printStep( output,  sandboxGame.getWorld() );
@@ -91,14 +91,14 @@ public class SolutionRunner
         s.println( "Waiting:"+w.num_waiting );
         s.println( "  Saved:"+w.num_saved );
         s.println
-        ( 
-            Util.join( "\n", 
-                TextWorldManip.renderWorld( 
-                    w, false, true ) 
+        (
+            Util.join( "\n",
+                TextWorldManip.renderWorld(
+                    w, false, true )
             )
         );
     }
-    
+
     private static void runTimeStep(
         SandboxGame sandboxGame,
         SolutionTimeStep step,

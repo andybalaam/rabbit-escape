@@ -4,7 +4,7 @@ public class InputExpansion
 {
 
     public final String character, expansion;
-    
+
     public final static InputExpansion[] expansions = new InputExpansion[] {
         new InputExpansion( "b", "bash" ),
         new InputExpansion( "d", "dig" ),
@@ -13,13 +13,13 @@ public class InputExpansion
         new InputExpansion( "c", "climb" ),
         new InputExpansion( "p", "explode" )
     };
-    
+
     public InputExpansion( String character, String expansion )
     {
         this.character = character;
         this.expansion = expansion;
     }
-    
+
     @Override
     public String toString()
     {

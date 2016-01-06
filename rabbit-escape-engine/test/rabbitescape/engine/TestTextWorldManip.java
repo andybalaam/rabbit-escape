@@ -1056,7 +1056,7 @@ public class TestTextWorldManip
             equalTo( lines )
         );
     }
-    
+
     @Test
     public void Comments_for_abilities_round_trip()
     {
@@ -1095,7 +1095,7 @@ public class TestTextWorldManip
             equalTo( lines )
         );
     }
-    
+
     @Test
     public void Round_trip_comments()
     {
@@ -1149,7 +1149,7 @@ public class TestTextWorldManip
             equalTo( lines )
         );
     }
-    
+
     @Test
     public void Round_trip_comments_move_with_meta()
     {
@@ -1191,7 +1191,7 @@ public class TestTextWorldManip
             ":solution.2=",
             ":solution.3="
         };
-        
+
         String[] expectedLines = {
             ":name=Comments",
             "% desc 1.",
@@ -1236,7 +1236,7 @@ public class TestTextWorldManip
             equalTo( expectedLines )
         );
     }
-    
+
     @Test
     public void Starpoint_comments_move_to_a_block()
     {
@@ -1265,7 +1265,7 @@ public class TestTextWorldManip
             "% starpoint comment 3",
             ":*=rj"
         };
-        
+
         String[] expectedLines = {
             ":name=Comments",
             ":description=verbose",
@@ -1324,7 +1324,7 @@ public class TestTextWorldManip
             "#     #",
             "#######"
         };
-        
+
         String[] expectedLines = {
             ":name=Comments",
             ":description=verbose",
@@ -1355,7 +1355,7 @@ public class TestTextWorldManip
         );
     }
 
-    
+
     /**
      * @brief Key meta should be unique. Test that Duplicate name
      * entries cause a DuplicateMetaKey to be thrown.

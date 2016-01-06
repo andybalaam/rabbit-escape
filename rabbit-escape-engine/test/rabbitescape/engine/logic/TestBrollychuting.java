@@ -35,7 +35,7 @@ public class TestBrollychuting
             "     " + "\n" +
             "    #" + "\n" +
             "#####",
-            
+
             "     " + "\n" +
             " r   " + "\n" +
             "#: r " + "\n" +
@@ -45,7 +45,7 @@ public class TestBrollychuting
             "     " + "\n" +
             "    #" + "\n" +
             "#####",
-            
+
             "     " + "\n" +
             "     " + "\n" +
             "#r   " + "\n" +
@@ -55,7 +55,7 @@ public class TestBrollychuting
             "     " + "\n" +
             "    #" + "\n" +
             "#####",
-            
+
             "     " + "\n" +
             "     " + "\n" +
             "#    " + "\n" +
@@ -65,7 +65,7 @@ public class TestBrollychuting
             "     " + "\n" +
             "    #" + "\n" +
             "#####",
-            
+
             "     " + "\n" +
             "     " + "\n" +
             "#    " + "\n" +
@@ -75,7 +75,7 @@ public class TestBrollychuting
             "   : " + "\n" +
             "    #" + "\n" +
             "#####",
-            
+
             "     " + "\n" +
             "     " + "\n" +
             "#    " + "\n" +
@@ -85,7 +85,7 @@ public class TestBrollychuting
             " : r " + "\n" +
             "   :#" + "\n" +
             "#####",
-            
+
             "     " + "\n" +
             "     " + "\n" +
             "#    " + "\n" +
@@ -95,7 +95,7 @@ public class TestBrollychuting
             " r   " + "\n" +
             " : ?#" + "\n" +
             "#####",
-            
+
             "     " + "\n" +
             "     " + "\n" +
             "#    " + "\n" +
@@ -105,7 +105,7 @@ public class TestBrollychuting
             "     " + "\n" +
             " r<j#" + "\n" +
             "#####",
-            
+
             "     " + "\n" +
             "     " + "\n" +
             "#    " + "\n" +
@@ -117,7 +117,7 @@ public class TestBrollychuting
             "#####"
         );
     }
-    
+
     @Test
     public void Brollychute_on_slope()
     {
@@ -128,7 +128,7 @@ public class TestBrollychuting
             "   ( \\   " + "\n" +
             " /     )#" + "\n" +
             "#########",
-            
+
             "         " + "\n" +
             "r>r>r>r> " + "\n" +
             "# # # #  " + "\n" +
@@ -142,28 +142,28 @@ public class TestBrollychuting
             "   ( \\   " + "\n" +
             " /     )#" + "\n" +
             "#########",
-    
+
             "         " + "\n" +
             "         " + "\n" +
             "#r#r#r#r " + "\n" +
             " : h e : " + "\n" +
             " /     )#" + "\n" +
             "#########",
-           
+
             "         " + "\n" +
             "         " + "\n" +
             "# # # #  " + "\n" +
             " r ? r_r " + "\n" +
             " h     e#" + "\n" +
             "#########",
-            
+
             "         " + "\n" +
             "         " + "\n" +
             "# # # #  " + "\n" +
             "  +j \\r  " + "\n" +
             " r    :]#" + "\n" +
             "#########",
-            
+
             "         " + "\n" +
             "         " + "\n" +
             "# # # #  " + "\n" +
@@ -179,5 +179,5 @@ public class TestBrollychuting
             "#########"
             );
     }
-    
+
 }

@@ -19,7 +19,7 @@ public class MegaCoderCLI
 {
     public static void codec( CommandLineOption o ) throws IOException
     {
-        
+
         if ( o.getValue().endsWith( ".rel" ) )
         {
             String val = o.getValue();
@@ -34,11 +34,11 @@ public class MegaCoderCLI
            codecString( o );
         }
     }
-    
+
     private static void codecFile( CommandLineOption o, String fileName, RealFileSystem fs ) throws IOException
     {
         // Decoded while parsing
-        World world = new LoadWorldFile( fs ).load( 
+        World world = new LoadWorldFile( fs ).load(
             new IgnoreWorldStatsListener(), fileName );
         String[] lines = TextWorldManip.renderCompleteWorld( world, true, false );
         String newName;
@@ -54,20 +54,20 @@ public class MegaCoderCLI
         System.out.println( "Writing " + newName );
         fs.write( newName, Util.join( "\n", lines ) );
     }
-    
+
     private static void encodeLines( String[] lines )
     {
         for ( int i = 0; i < lines.length; i++ )
         {
             String line = lines[i];
-            if(    line.startsWith( ":" + TextWorldManip.hint ) 
+            if(    line.startsWith( ":" + TextWorldManip.hint )
                 || line.startsWith( ":" + TextWorldManip.solution ) )
             {
                 String[] splitLine = split( line.substring( 1 ), "=", 1 );
 
                 String key   = splitLine[0];
                 String value = splitLine[1];
-                
+
                 lines[i] = ":"+key + LineProcessor.CODE_SUFFIX + "=" +MegaCoder.encode( value );
             }
         }
@@ -83,7 +83,7 @@ public class MegaCoderCLI
             System.out.println( MegaCoder.decode( o.getValue() ) );
         }
     }
-    
+
     private static String uncodeName( String codeName )
     {
         if ( codeName.endsWith( ".code.rel" ) )
@@ -95,7 +95,7 @@ public class MegaCoderCLI
             return codeName.replace( ".rel", ".uncode.rel" );
         }
     }
-    
+
     private static String codeName( String uncodeName )
     {
         if ( uncodeName.endsWith( ".uncode.rel" ) )

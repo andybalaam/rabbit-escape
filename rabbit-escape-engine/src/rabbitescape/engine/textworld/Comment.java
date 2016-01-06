@@ -19,7 +19,7 @@ public class Comment
 
     public boolean isUnlinked()
     {
-        return null == keyFollowing; 
+        return null == keyFollowing;
     }
 
     public Comment link( String key )
@@ -38,9 +38,9 @@ public class Comment
         {
             return false;
         }
-        return LineProcessor.stripCodeSuffix( key ).equals( 
+        return LineProcessor.stripCodeSuffix( key ).equals(
             LineProcessor.stripCodeSuffix( keyFollowing ) );
     }
-    
-    
+
+
 }

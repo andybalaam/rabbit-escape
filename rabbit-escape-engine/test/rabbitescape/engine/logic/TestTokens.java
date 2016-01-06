@@ -262,7 +262,7 @@ public class TestTokens
             "#D#"
         );
     }
-    
+
     @Test
     public void Rabbits_falling_to_death_do_not_consume_tokens()
     {
@@ -285,7 +285,7 @@ public class TestTokens
             ":*=\\"
         );
 
-        assertWorldEvolvesLike( 
+        assertWorldEvolvesLike(
             world,
             8,
             new String[] {
@@ -309,7 +309,7 @@ public class TestTokens
                 ":*=/db"
             });
     }
-    
+
     @Test
     public void Rabbits_falling_and_living_do_consume_tokens()
     {
@@ -322,7 +322,7 @@ public class TestTokens
             "#########"
         );
 
-        assertWorldEvolvesLike( 
+        assertWorldEvolvesLike(
             world,
             8,
             new String[] {

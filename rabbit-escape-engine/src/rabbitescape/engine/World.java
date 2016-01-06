@@ -166,12 +166,12 @@ public class World
         this.num_waiting = num_waiting;
         this.paused = paused;
         this.comments = comments;
-        
+
         if ( -1 == size.width )
         {
             this.blockTable = null; // make allowance for tests with no world
         }
-        else 
+        else
         {
             this.blockTable = new LookupTable2D<Block>( blocks, size );
         }
@@ -236,7 +236,7 @@ public class World
     public Block getBlockAt( int x, int y)
     {
         if ( x <  0          || y <  0           ||
-             x >= size.width || y >= size.height  ) 
+             x >= size.width || y >= size.height  )
         {
             return null;
         }

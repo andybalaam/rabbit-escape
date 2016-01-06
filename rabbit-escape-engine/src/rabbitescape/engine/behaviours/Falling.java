@@ -15,14 +15,14 @@ public class Falling extends Behaviour
     private int heightFallen = 0;
 
     private final Climbing climbing;
-    private final Brollychuting brollychuting; 
+    private final Brollychuting brollychuting;
 
     public Falling( Climbing climbing, Brollychuting brollychuting )
     {
         this.climbing = climbing;
         this.brollychuting = brollychuting;
     }
-    
+
     public boolean isFallingToDeath()
     {
         return heightFallen > fatalHeight ;
@@ -105,8 +105,8 @@ public class Falling extends Behaviour
     @Override
     public boolean checkTriggered( Rabbit rabbit, World world )
     {
-        if (   climbing.abilityActive 
-            || rabbit.state == RABBIT_DIGGING 
+        if (   climbing.abilityActive
+            || rabbit.state == RABBIT_DIGGING
             || brollychuting.hasBrolly() )
         {
             return false;
@@ -143,17 +143,17 @@ public class Falling extends Behaviour
         { // part 2 of animation always comes next
             return RABBIT_DYING_OF_FALLING_2_SLOPE_RISE_LEFT_2;
         }
-        
+
         if ( RABBIT_DYING_OF_FALLING_SLOPE_RISE_RIGHT == t.rabbit.state )
         { // part 2 of animation always comes next
             return RABBIT_DYING_OF_FALLING_SLOPE_RISE_RIGHT_2;
         }
-        
+
         if ( RABBIT_DYING_OF_FALLING_2_SLOPE_RISE_RIGHT == t.rabbit.state )
         {
             return RABBIT_DYING_OF_FALLING_2_SLOPE_RISE_RIGHT_2;
         }
-        
+
         if ( !triggered )
         {
             if ( heightFallen > fatalHeight )
@@ -216,12 +216,12 @@ public class Falling extends Behaviour
             Block twoBelow = t.block2Below();
             if ( twoBelow != null )
             {
-                if (   heightFallen + 1 > fatalHeight 
+                if (   heightFallen + 1 > fatalHeight
                     && t.isRightRiseSlope( twoBelow ) )
                 {
                     return RABBIT_DYING_OF_FALLING_2_SLOPE_RISE_RIGHT;
                 }
-                if (   heightFallen + 1 > fatalHeight 
+                if (   heightFallen + 1 > fatalHeight
                     && t.isLeftRiseSlope( twoBelow ) )
                 {
                     return RABBIT_DYING_OF_FALLING_2_SLOPE_RISE_LEFT;

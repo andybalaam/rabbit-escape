@@ -287,7 +287,7 @@ public class Util
         al.add( line ); // Don't forget the last line
         return al.toArray( new String[al.size()] );
     }
-    
+
     /**
      * As wrap(), but returns a single string with newlines.
      */
@@ -295,7 +295,7 @@ public class Util
     {
         return Util.join( "\n", wrap( s, maxChar ) );
     }
-    
+
     public static String join( String glue, String[] items )
     {
         return join( glue, Arrays.asList( items ) );
@@ -426,16 +426,16 @@ public class Util
                 {
                     /** Iterator of Iterators */
                     Iterator<Iterator<? extends T>> iI;
-                    
+
                     /** The current sub-Iterator */
                     Iterator<? extends T> i;
-                    
+
                     public MyIt( Iterator<Iterator<? extends T>> iI )
                     {
                         this.iI = iI;
                         i = iI.next();
                     }
-                    
+
                     @Override
                     public boolean hasNext()
                     {
@@ -445,7 +445,7 @@ public class Util
                         }
                         else
                         {
-                            if ( iI.hasNext() ) 
+                            if ( iI.hasNext() )
                             {
                                 i = iI.next();
                                 return this.hasNext();
@@ -456,7 +456,7 @@ public class Util
                             }
                         }
                     }
-                    
+
                     @Override
                     public T next()
                     {
@@ -470,22 +470,22 @@ public class Util
                             return this.next();
                         }
                     }
-                    
+
                     @Override
                     public void remove()
                     {
                         throw new UnsupportedOperationException();
                     }
-                    
-                    
+
+
                 }
-                
+
                 List<Iterator<? extends T>> newIL = new ArrayList<Iterator<? extends T>>();
                 for ( Iterable<? extends T> it: itArray )
                 {
                     newIL.add( it.iterator() );
                 }
-                
+
                 return new MyIt(newIL.iterator());
             }
         };
@@ -847,7 +847,7 @@ public class Util
             }
         };
     }
-    
+
     /**
      * @brief Replace all matches, but preserves the first capturing group.
      *        Compare to String.replaceAll, which replaces the whole match.
@@ -871,7 +871,7 @@ public class Util
     {
         return regexRemovePreserveGroup( s, regex, 0 );
     }
-    
+
     public static String regexReplace( String s, String regex, String replacement )
     {
         Pattern p = Pattern.compile( regex );
@@ -885,5 +885,5 @@ public class Util
 
         return sb.toString();
     }
-    
+
 }

@@ -9,44 +9,44 @@ import java.util.Vector;
 
 public class LookupTable2D <T extends LookupItem2D> implements Iterable<T>
 {
-    private final class ItemIterator implements Iterator<T> 
+    private final class ItemIterator implements Iterator<T>
     {
         private int cursor;
-        
+
         public ItemIterator()
         {
             this.cursor = 0;
         }
-        
-        public boolean hasNext() 
+
+        public boolean hasNext()
         {
             return cursor < list.size();
         }
-        
-        public T next() 
+
+        public T next()
         {
-            if( this.hasNext() ) 
+            if( this.hasNext() )
             {
                 return list.get( cursor++ );
             }
             throw new NoSuchElementException();
         }
-        
-        public void remove() 
+
+        public void remove()
         {
             throw new UnsupportedOperationException();
         }
     }
-    
+
     public Iterator<T> iterator()
     {
         return new ItemIterator();
     }
-    
+
     // Arrays of generics not allowed, use Vector instead
     private final Vector<Vector<LookupItems2D<T>>> table;
     private List<T> list;
-    
+
     public LookupTable2D( List<T> list, Dimension size )
     {
         // The table can store items +/-1 outside the nominal size.
@@ -66,7 +66,7 @@ public class LookupTable2D <T extends LookupItem2D> implements Iterable<T>
         }
         this.list = list;
     }
-    
+
     /**
      * @return The oldest item at this position.
      */
@@ -74,7 +74,7 @@ public class LookupTable2D <T extends LookupItem2D> implements Iterable<T>
     {
         return table.get( i( x ) ).get( i( y ) ).getItem( 0 );
     }
-    
+
     public void addAll( List<T> newItems )
     {
         list.addAll( newItems );
@@ -84,7 +84,7 @@ public class LookupTable2D <T extends LookupItem2D> implements Iterable<T>
             table.get( i( position.x ) ).get( i( position.y ) ).add( item );
         }
     }
-    
+
     public void removeAll( List<T> itemsGoing )
     {
         list.removeAll( itemsGoing );
@@ -94,14 +94,14 @@ public class LookupTable2D <T extends LookupItem2D> implements Iterable<T>
             table.get( i ( position.x ) ).get( i( position.y ) ).remove( item );
         }
     }
-    
+
     public List<T> getListCopy()
     {
         return new ArrayList<T>( list );
     }
-    
+
     /**
-     * Convert coordinate to index. This allows the table to 
+     * Convert coordinate to index. This allows the table to
      * store items 1 place outside the nominal size.
      */
     private int i( int c )

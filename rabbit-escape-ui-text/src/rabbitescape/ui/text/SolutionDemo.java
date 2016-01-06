@@ -11,17 +11,17 @@ import rabbitescape.engine.util.RealFileSystem;
 
 public class SolutionDemo
 {
-    
+
     public SolutionDemo( String path, int solutionNumber )
     {
         World world = new LoadWorldFile(
             new RealFileSystem() ).load(
                 new IgnoreWorldStatsListener(), path );
-        
+
         String solutionString = world.solutions[ solutionNumber - 1 ];
 
         Solution solution = SolutionParser.parse( solutionString );
-        
+
         SolutionRunner.runSolution( solution, world, System.out );
     }
 

@@ -205,7 +205,7 @@ public class AnimationTester extends JFrame
             default:
                 // Ignore fat fingers
             }
-            
+
         }
 
     }
@@ -340,7 +340,7 @@ public class AnimationTester extends JFrame
         addComponentListener( listener );
 
         setBoundsFromConfig();
-        
+
         setIcon();
 
         setTitle( t( "Animation Tester" ) );
@@ -376,12 +376,12 @@ public class AnimationTester extends JFrame
             System.exit( 2 );
         }
     }
-    
+
     private class FrameCounter
     {
         private int frameNum = 0;
         private int frameSetNum = 0;
-        
+
         public void inc()
         {
             ++frameNum;
@@ -395,7 +395,7 @@ public class AnimationTester extends JFrame
                 }
             }
         }
-        
+
         public void dec()
         {
             --frameNum;
@@ -409,12 +409,12 @@ public class AnimationTester extends JFrame
                 }
             }
         }
-        
+
         public int getFrameNum()
         {
             return frameNum;
         }
-        
+
         public int getFrameSetNum()
         {
             return frameSetNum;
@@ -436,7 +436,7 @@ public class AnimationTester extends JFrame
         while( running && this.isVisible() )
         {
             new DrawFrame(
-                strategy, renderer, soundPlayer, counter.getFrameSetNum(), 
+                strategy, renderer, soundPlayer, counter.getFrameSetNum(),
                 counter.getFrameNum() ).run();
 
             if( stepMode )
@@ -463,7 +463,7 @@ public class AnimationTester extends JFrame
                         counter.dec();
                         break;
                     }
-                    
+
                 }
             }
             else
@@ -690,7 +690,7 @@ public class AnimationTester extends JFrame
 
         return cfgEntry.split( " " );
     }
-    
+
     private void setIcon()
     {
         SwingBitmapLoader l = new SwingBitmapLoader();

@@ -14,7 +14,7 @@ public class Rabbit extends Thing
 {
     private final List<Behaviour> behaviours;
     private final List<Behaviour> behavioursTriggerOrder;
-    
+
     private Falling falling;
 
     public Direction dir;

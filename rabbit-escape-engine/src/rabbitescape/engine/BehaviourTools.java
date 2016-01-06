@@ -64,9 +64,9 @@ public class BehaviourTools
             return false;
         }
     }
-    
+
     /**
-     * Checks for the presence of a token. Removes token from the the world and returns 
+     * Checks for the presence of a token. Removes token from the the world and returns
      * true if a token is being picked up.
      */
     public boolean pickUpToken( Token.Type type, boolean evenIfNotOnGround )
@@ -141,14 +141,14 @@ public class BehaviourTools
             )
         );
     }
-    
+
     public boolean isRightRiseSlope( Block b )
     {
         if( b == null )
         {
             return false;
         }
-        return b.type == solid_up_right 
+        return b.type == solid_up_right
             || b.type == bridge_up_right;
     }
 
@@ -158,10 +158,10 @@ public class BehaviourTools
         {
             return false;
         }
-        return b.type == solid_up_left 
+        return b.type == solid_up_left
             || b.type == bridge_up_left;
     }
-    
+
     private boolean isSolid( Block block )
     {
         return (

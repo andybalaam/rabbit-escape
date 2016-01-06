@@ -38,9 +38,9 @@ public class TestAnimations
                 f.name + ".png";
             URL url = getClass().getResource( resourcePath );
             boolean fileExists = ( url != null );
-            if ( !fileExists ) 
+            if ( !fileExists )
             {
-                System.err.println( "Working Directory:" 
+                System.err.println( "Working Directory:"
                                    + System.getProperty( "user.dir" ) );
                 System.err.println( "Missing frame:" + reaName + ":" + resourcePath );
             }

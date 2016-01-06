@@ -12,7 +12,7 @@ public class TestRegexUtil
     public void Regex_remove_preserve_group()
     {
         String before, regex, after;
-        
+
         before = "Level: \\\"Tetris\\\"";
         regex  = "\\\\(\")";
         after  = "Level: \"Tetris\"";
@@ -20,7 +20,7 @@ public class TestRegexUtil
             Util.regexRemovePreserveGroup( before, regex ),
             equalTo( after )
         );
-        
+
         before = "\\\"Thing in escaped quotes\\\" \"Thing in quotes\"";
         regex  = "\\\\(\")";
         after  = "\"Thing in escaped quotes\" \"Thing in quotes\"";
@@ -29,12 +29,12 @@ public class TestRegexUtil
             equalTo( after )
         );
     }
-    
+
     @Test
     public void Regex_replace()
     {
         String before, regex, replacement, after;
-        
+
         before = "The brown fox.";
         regex  = "brown";
         replacement = "red";
@@ -44,5 +44,5 @@ public class TestRegexUtil
             equalTo( after )
         );
     }
-    
+
 }
