@@ -23,8 +23,22 @@ public class SolutionRecorder
     {
         CommandAction[] aA = new CommandAction[commandInProgress.size()];
         aA = commandInProgress.toArray( aA );
-        solutionInProgress.add( new SolutionCommand( aA ) );
-
+        SolutionCommand newCmd = new SolutionCommand( aA );
+        int prevCmdIndex = solutionInProgress.size() - 1;
+        SolutionCommand prevCmd =   prevCmdIndex >= 0 
+                                  ? solutionInProgress.get( prevCmdIndex )
+                                  : null ;
+        SolutionCommand combCmd = SolutionCommand.tryToSimplify( prevCmd, newCmd );
+        if( null == combCmd)
+        {
+            solutionInProgress.add( newCmd );
+        }
+        else
+        { // Replace previous with combined
+            solutionInProgress.set( prevCmdIndex, combCmd );
+        }
+        
+        // Prepare to collect actions in the next step.
         commandInProgress = new ArrayList<CommandAction>();
     }
 
