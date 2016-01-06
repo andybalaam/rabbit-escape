@@ -1061,14 +1061,41 @@ public class TestUtil
     }
 
     @Test
+    public void Concatenating_2_arrays_returns_all_elements_in_order()
+    {
+        String[] a = new String[] {"a"};
+        String[] efg = new String[] {"e", "f", "g"};
+
+        assertThat(
+            Util.concat( a, efg ),
+            equalTo( new String[] {"a", "e", "f", "g" } )
+        );
+    }
+
+    @Test
     public void Concatenating_3_arrays_returns_all_elements_in_order()
     {
         String[] a = new String[] {"a"};
         String[] _bcd = new String[] {};
         String[] efg = new String[] {"e", "f", "g"};
 
-        String[] concated = Util.concat( a, _bcd, efg );
+        assertThat(
+            Util.concat( a, _bcd, efg ),
+            equalTo( new String[] {"a", "e", "f", "g" } )
+        );
+    }
 
-        assertThat( concated, equalTo( new String[] {"a", "e", "f", "g" } ) );
+    @Test
+    public void Concatenating_4_arrays_returns_all_elements_in_order()
+    {
+        String[] a = new String[] {"a"};
+        String[] _bcd = new String[] {};
+        String[] efg = new String[] {"e", "f", "g"};
+        String[] hij = new String[] {"h", "i", "j"};
+
+        assertThat(
+            Util.concat( a, _bcd, efg, hij ),
+            equalTo( new String[] {"a", "e", "f", "g", "h", "i", "j" } )
+        );
     }
 }

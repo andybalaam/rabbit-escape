@@ -668,27 +668,42 @@ public class Util
         return streamLines( name, res );
     }
 
-    public static <T> T[] concat( T[] a, T[] b, T[] c, T[] d ) {
-        T[] ab = concat( a, b );
-        T[] cd = concat( c, d );
-        return concat( ab, cd );
+    public static <T> T[] concat( T[] a, T[] b, T[] c, T[] d )
+    {
+        // Someone tell us how to make this better.
+
+        return list(
+            chain(
+                  list( a )
+                , list( b )
+                , list( c )
+                , list( d )
+            )
+        ).toArray( a );
     }
-    
-    public static <T> T[] concat( T[] a, T[] b, T[] c ) {
-        T[] ab = concat( a, b );
-        return concat( ab, c);
-    }
-    
-    /**
-     * Use chain instead for arguments of different classes.
-     */
-    public static <T> T[] concat( T[] left, T[] right )
+
+    public static <T> T[] concat( T[] a, T[] b, T[] c )
     {
         return list(
             chain(
-                Arrays.asList( left ), Arrays.asList( right )
+                  list( a )
+                , list( b )
+                , list( c )
             )
-        ).toArray( left );
+        ).toArray( a );
+    }
+
+    /**
+     * Use chain instead for arguments of different classes.
+     */
+    public static <T> T[] concat( T[] a, T[] b )
+    {
+        return list(
+            chain(
+                  list( a )
+                , list( b )
+            )
+        ).toArray( a );
     }
 
     public static <T> boolean equalsOrBothNull( T left, T right )
