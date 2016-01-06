@@ -1,4 +1,4 @@
-package rabbitescape.engine;
+package rabbitescape.engine.util;
 
 import static org.hamcrest.MatcherAssert.*;
 import static org.hamcrest.CoreMatchers.equalTo;
@@ -19,6 +19,11 @@ import java.util.TreeMap;
 
 import org.junit.Test;
 
+import rabbitescape.engine.Direction;
+import rabbitescape.engine.Rabbit;
+import rabbitescape.engine.Thing;
+import rabbitescape.engine.Token;
+import rabbitescape.engine.Token.Type;
 import rabbitescape.engine.util.Util;
 
 public class TestUtil
