@@ -17,7 +17,7 @@ import rabbitescape.engine.util.Util;
 
 public class MegaCoderCLI
 {
-    public static void codec(CommandLineOption o) throws IOException
+    public static void codec( CommandLineOption o ) throws IOException
     {
         
         if ( o.getValue().endsWith( ".rel" ) )
@@ -26,7 +26,7 @@ public class MegaCoderCLI
             RealFileSystem fs = new RealFileSystem();
             if ( fs.exists( val ))
             {
-                codecFile( o, val, fs);
+                codecFile( o, val, fs );
             }
         }
         else
@@ -35,7 +35,7 @@ public class MegaCoderCLI
         }
     }
     
-    private static void codecFile( CommandLineOption o, String fileName, RealFileSystem fs) throws IOException
+    private static void codecFile( CommandLineOption o, String fileName, RealFileSystem fs ) throws IOException
     {
         // Decoded while parsing
         World world = new LoadWorldFile( fs ).load( 

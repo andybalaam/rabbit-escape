@@ -19,7 +19,7 @@ public class LookupItems2D <T extends LookupItem2D>
         items.add( item );
     }
     
-    public void remove( T item)
+    public void remove( T item )
     {
         items.remove( item );
     }

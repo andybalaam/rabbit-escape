@@ -409,7 +409,7 @@ public class TestSolutionRunner
         Solution solution = SolutionParser.parse( world.solutions[0] );
 
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        PrintStream ps = new PrintStream(baos);
+        PrintStream ps = new PrintStream( baos );
         
         SolutionRunner.runSolution( solution, world, ps );
         

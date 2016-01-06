@@ -45,7 +45,7 @@ public class TestCommandLineOption
     {
         CommandLineOption present = new CommandLineOption( "--present", false );
         String[] args = "-p --you-what".split( " " );
-        CommandLineOptionSet.parse( args, present);
+        CommandLineOptionSet.parse( args, present );
     }
 
     @Test( expected = CommandLineOption.OptionRequiresParameter.class )
@@ -54,7 +54,7 @@ public class TestCommandLineOption
         CommandLineOption needsParam = new CommandLineOption( "--needs-param", true );
         
         String[] args = "-n".split( " " );
-        CommandLineOptionSet.parse( args, needsParam);
+        CommandLineOptionSet.parse( args, needsParam );
     }
     
     @Test( expected = CommandLineOption.OptionRequiresParameter.class )
@@ -64,7 +64,7 @@ public class TestCommandLineOption
         CommandLineOption bob = new CommandLineOption( "--bob", false );
         
         String[] args = "-n -b".split( " " );
-        CommandLineOptionSet.parse( args, bob, needsParam);
+        CommandLineOptionSet.parse( args, bob, needsParam );
     }
     
     @Test ( expected = CommandLineOption.OptionDoesNotTakeParameter.class )
@@ -73,7 +73,7 @@ public class TestCommandLineOption
         CommandLineOption begin = new CommandLineOption( "--begin", false );
         
         String[] args = "--begin0".split( " " );
-        CommandLineOptionSet.parse( args, begin);
+        CommandLineOptionSet.parse( args, begin );
     }
     
     @Test
@@ -83,7 +83,7 @@ public class TestCommandLineOption
         CommandLineOption end = new CommandLineOption( "--end", true );
         
         String[] args = "--begin0 -e100".split( " " );
-        CommandLineOptionSet.parse( args, begin, end);
+        CommandLineOptionSet.parse( args, begin, end );
         
         assertThat( begin.getValue(), equalTo( "0" ) );
         assertThat( end.getValue(), equalTo( "100" ) );
@@ -96,7 +96,7 @@ public class TestCommandLineOption
         CommandLineOption end = new CommandLineOption( "--end", true );
         
         String[] args = "--begin=0 -e=100".split( " " );
-        CommandLineOptionSet.parse( args, begin, end);
+        CommandLineOptionSet.parse( args, begin, end );
         
         assertThat( begin.getValue(), equalTo( "0" ) );
         assertThat( end.getValue(), equalTo( "100" ) );

@@ -16,12 +16,18 @@ public class TestRegexUtil
         before = "Level: \\\"Tetris\\\"";
         regex  = "\\\\(\")";
         after  = "Level: \"Tetris\"";
-        assertThat(Util.regexRemovePreserveGroup( before , regex ), equalTo(after));
+        assertThat(
+            Util.regexRemovePreserveGroup( before, regex ),
+            equalTo( after )
+        );
         
         before = "\\\"Thing in escaped quotes\\\" \"Thing in quotes\"";
         regex  = "\\\\(\")";
         after  = "\"Thing in escaped quotes\" \"Thing in quotes\"";
-        assertThat(Util.regexRemovePreserveGroup( before , regex ), equalTo(after));
+        assertThat(
+            Util.regexRemovePreserveGroup( before, regex ),
+            equalTo( after )
+        );
     }
     
     @Test
@@ -33,7 +39,10 @@ public class TestRegexUtil
         regex  = "brown";
         replacement = "red";
         after  = "The red fox.";
-        assertThat(Util.regexReplace( before, regex, replacement ), equalTo(after));
+        assertThat(
+            Util.regexReplace( before, regex, replacement ),
+            equalTo( after )
+        );
     }
     
 }
