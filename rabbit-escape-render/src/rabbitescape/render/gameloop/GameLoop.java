@@ -1,5 +1,12 @@
 package rabbitescape.render.gameloop;
 
+import java.io.PrintStream;
+
+import rabbitescape.engine.Rabbit;
+import rabbitescape.engine.config.ConfigKeys;
+import rabbitescape.engine.config.ConfigTools;
+import rabbitescape.engine.config.IConfig;
+
 public class GameLoop
 {
     private static final long frame_time_ms = 70;
@@ -11,11 +18,22 @@ public class GameLoop
     private long simulation_time;
     private long frame_start_time;
 
-    public GameLoop( Input input, Physics physics, Graphics graphics )
+    private final IConfig config;
+    private final PrintStream debugout;
+
+    public GameLoop(
+        Input input,
+        Physics physics,
+        Graphics graphics,
+        IConfig config,
+        PrintStream debugout
+    )
     {
         this.input = input;
         this.physics = physics;
         this.graphics = graphics;
+        this.config = config;
+        this.debugout = debugout;
         this.running = true;
         simulation_time = -1;
         frame_start_time = -1;
@@ -28,6 +46,7 @@ public class GameLoop
         while( running )
         {
             running = step();
+            printDebugOutput();
         }
 
         input.dispose();
@@ -87,5 +106,18 @@ public class GameLoop
         input.waitMs( wait_time );
 
         return input.timeNow();
+    }
+
+    private void printDebugOutput()
+    {
+        if ( ConfigTools.getBool( config, ConfigKeys.CFG_DEBUG_PRINT_STATES ) )
+        {
+            int i = 0;
+            for ( Rabbit rabbit : physics.world().rabbits )
+            {
+                debugout.println( " " + i + ":" + rabbit.state.name() );
+                ++i;
+            }
+        }
     }
 }

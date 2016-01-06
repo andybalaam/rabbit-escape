@@ -152,4 +152,10 @@ public class GeneralPhysics implements Physics
     public void dispose()
     {
     }
+
+    @Override
+    public World world()
+    {
+        return world;
+    }
 }

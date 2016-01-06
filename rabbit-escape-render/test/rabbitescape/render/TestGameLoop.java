@@ -3,8 +3,11 @@ package rabbitescape.render;
 import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.*;
 
+import java.io.PrintStream;
+
 import org.junit.*;
 import rabbitescape.engine.*;
+import rabbitescape.engine.config.IConfig;
 import rabbitescape.engine.textworld.TextWorldManip;
 import rabbitescape.render.gameloop.*;
 
@@ -121,7 +124,12 @@ public class TestGameLoop
             null
         );
 
-        ret.gameLoop = new GameLoop( ret.input, physics, ret.graphics );
+        IConfig config = new FakeConfig();
+        PrintStream debugout = null;
+
+        ret.gameLoop = new GameLoop(
+            ret.input, physics, ret.graphics, config, debugout );
+
         ret.gameLoop.resetClock();
 
         return ret;
@@ -230,6 +238,25 @@ public class TestGameLoop
 
         @Override
         public void dispose()
+        {
+        }
+    }
+
+    private static class FakeConfig implements IConfig
+    {
+        @Override
+        public void set( String key, String value )
+        {
+        }
+
+        @Override
+        public String get( String key )
+        {
+            return null;
+        }
+
+        @Override
+        public void save()
         {
         }
     }

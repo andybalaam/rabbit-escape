@@ -12,9 +12,6 @@ import rabbitescape.engine.err.RabbitEscapeException;
 
 public class ConfigTools
 {
-    /** Store an IConfig for static access. */
-    private static IConfig iConfig = null;
-    
     public static class ConfigParsingError extends RabbitEscapeException
     {
         private static final long serialVersionUID = 1L;
@@ -77,19 +74,6 @@ public class ConfigTools
         {
             this.clazz = clazz;
         }
-    }
-    
-    public static void storeStatic(IConfig iConfig)
-    {
-        ConfigTools.iConfig = iConfig;
-    }
-    
-    /**
-     * The returned IConfig may be null.
-     */
-    public static IConfig retrieveStatic()
-    {
-        return iConfig;
     }
 
     public static void setInt( IConfig config, String key, int value )

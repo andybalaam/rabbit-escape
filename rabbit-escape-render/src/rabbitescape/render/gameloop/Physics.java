@@ -1,5 +1,7 @@
 package rabbitescape.render.gameloop;
 
+import rabbitescape.engine.World;
+
 public interface Physics
 {
     public static interface StatsChangedListener
@@ -11,4 +13,5 @@ public interface Physics
     int frameNumber();
     boolean gameRunning();
     void dispose();
+    World world();
 }

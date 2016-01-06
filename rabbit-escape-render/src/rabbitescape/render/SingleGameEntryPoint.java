@@ -22,7 +22,7 @@ public abstract class SingleGameEntryPoint
     private static final int UNKNOWN_ERROR       = 42;
 
     private final FileSystem fs;
-    private final PrintStream out;
+    public final PrintStream out;
     private final Locale locale;
 
     public SingleGameEntryPoint( FileSystem fs, PrintStream out, Locale locale )

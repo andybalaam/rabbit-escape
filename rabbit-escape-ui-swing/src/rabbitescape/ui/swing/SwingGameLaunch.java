@@ -1,5 +1,6 @@
 package rabbitescape.ui.swing;
 
+import java.io.PrintStream;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Map;
 
@@ -11,6 +12,7 @@ import static rabbitescape.engine.i18n.Translation.t;
 import rabbitescape.engine.LevelWinListener;
 import rabbitescape.engine.Token;
 import rabbitescape.engine.World;
+import rabbitescape.engine.config.IConfig;
 import rabbitescape.engine.util.Util;
 import rabbitescape.render.GameLaunch;
 import rabbitescape.render.gameloop.GameLoop;
@@ -58,7 +60,9 @@ public class SwingGameLaunch implements GameLaunch
         SwingGameInit init,
         World world,
         LevelWinListener winListener,
-        SwingSound sound
+        SwingSound sound,
+        IConfig config,
+        PrintStream debugout
     )
     {
         this.world = world;
@@ -80,7 +84,8 @@ public class SwingGameLaunch implements GameLaunch
 
         sound.setMusic( world.music );
 
-        loop = new GameLoop( new SwingInput(), physics, graphics );
+        loop = new GameLoop(
+            new SwingInput(), physics, graphics, config, debugout );
     }
 
     public void stop()

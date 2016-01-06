@@ -70,15 +70,15 @@ public class SwingSingleGameEntryPoint extends SingleGameEntryPoint
     }
 
     @Override
-    public GameLaunch createGameLaunch( World world, LevelWinListener winListener )
+    public GameLaunch createGameLaunch(
+        World world, LevelWinListener winListener )
     {
         SwingGameInit init = new SwingGameInit(
             bitmapCache, uiConfig, frame, menuUi );
 
-        ConfigTools.storeStatic( uiConfig );
-
         SwingUtilities.invokeLater( init );
 
-        return new SwingGameLaunch( init, world, winListener, sound );
+        return new SwingGameLaunch(
+            init, world, winListener, sound, uiConfig, out );
     }
 }

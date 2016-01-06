@@ -9,18 +9,13 @@ import java.util.Map;
 
 import rabbitescape.engine.ChangeDescription.State;
 import rabbitescape.engine.behaviours.*;
-import rabbitescape.engine.config.ConfigKeys;
-import rabbitescape.engine.config.ConfigTools;
 
 public class Rabbit extends Thing
 {
-    private static int rabbitCount = 0;
-    
     private final List<Behaviour> behaviours;
     private final List<Behaviour> behavioursTriggerOrder;
     
     private Falling falling;
-    private int rabbitIndex;
 
     public Direction dir;
     public boolean onSlope;
@@ -33,7 +28,6 @@ public class Rabbit extends Thing
         behaviours = new ArrayList<>();
         behavioursTriggerOrder = new ArrayList<>();
         createBehaviours();
-        rabbitIndex = rabbitCount++;
     }
 
     private void createBehaviours()
@@ -128,12 +122,6 @@ public class Rabbit extends Thing
     @Override
     public void step( World world )
     {
-        if ( ConfigTools.retrieveStatic() != null &&
-             ConfigTools.getBool( ConfigTools.retrieveStatic(), 
-             ConfigKeys.CFG_DEBUG_PRINT_STATES ) )
-        {
-            System.out.println( " " + this.rabbitIndex + ":" + this.state );
-        }
         for ( Behaviour behaviour : behaviours )
         {
             boolean handled = behaviour.behave( world, this, state );
