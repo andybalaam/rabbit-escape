@@ -222,13 +222,13 @@ compile-noui: \
 compile: compile-noui images sounds music
 
 clean: no-make-warnings
-	- rm -r \
-		rabbit-escape-engine/bin/* \
-		rabbit-escape-render/bin/* \
-		rabbit-escape-ui-text/bin/* \
-		rabbit-escape-ui-swing/bin/*
-	find ./ -name "ls.txt" -delete
-	- rm -r dist
+	@echo ". Cleaning compiled Java, lists and dist dir"
+	@touch rabbit-escape-engine/bin/touchfile && rm -r rabbit-escape-engine/bin/*
+	@touch rabbit-escape-render/bin/touchfile && rm -r rabbit-escape-render/bin/*
+	@touch rabbit-escape-ui-text/bin/touchfile && rm -r rabbit-escape-ui-text/bin/*
+	@touch rabbit-escape-ui-swing/bin/touchfile && rm -r rabbit-escape-ui-swing/bin/*
+	@find ./ -name "ls.txt" -delete
+	@mkdir -p dist && rm -r dist
 
 clean-images: no-make-warnings
 	- rm \
@@ -358,5 +358,6 @@ doxygen-upload: doxygen
 	rsync --delete -r doc/doxygen/html/ dreamhost:artificialworlds.net/rabbit-escape/doxygen/
 
 clean-doxygen:
-	- rm -r doc/doxygen
+	@echo ". Cleaning doxygen files"
+	@mkdir -p doc/doxygen && rm -r doc/doxygen
 
