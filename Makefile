@@ -188,11 +188,13 @@ sounds: no-make-warnings $(SOUNDSWAV)
 music: no-make-warnings $(MUSICWAV)
 
 %/ls.txt: %/*.re*
-	ls $(@D) --hide=ls.txt > $(@D)/ls.txt
+	@ls $(@D) --hide=ls.txt > $(@D)/ls.txt
 
 animations: no-make-warnings $(ANIMATIONS_DIR)/ls.txt
+	@echo ". Generating animation lists"
 
 levels: no-make-warnings $(patsubst %, %/ls.txt, $(LEVELS_DIRS))
+	@echo ". Generating level lists"
 
 versioncheck:
 	@echo ". Checking version number (${VERSION}) is consistent everywhere"
