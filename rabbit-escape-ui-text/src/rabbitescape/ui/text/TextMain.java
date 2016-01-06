@@ -111,7 +111,7 @@ public class TextMain
         // Decoded while parsing
         World world = new LoadWorldFile( fs ).load( 
             new IgnoreWorldStatsListener(), fileName );
-        String[] lines = TextWorldManip.renderCompleteWorld( world, true, true );
+        String[] lines = TextWorldManip.renderCompleteWorld( world, true, false );
         fs.write( fileName, Util.join( "\n", lines ) );
     }
     
@@ -123,7 +123,7 @@ public class TextMain
             "      ", "      ", "      "
         };
         String[] lines = TextWorldManip.renderCompleteWorld( 
-            TextWorldManip.createWorld( world ), true, true );
+            TextWorldManip.createWorld( world ), true, false );
         fs.write( fileName, Util.join( "\n", lines ) );
     }
     

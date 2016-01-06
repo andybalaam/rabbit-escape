@@ -212,16 +212,17 @@ public class TextWorldManip
 
     public static String[] renderCompleteWorld( World world, boolean meta )
     {
-        return renderCompleteWorld( world, meta, false );
+        return renderCompleteWorld( world, meta, true );
     }
     
     /**
-     * @param world           The World to render.
-     * @param meta            If true the metadata is included
-     * @param minimalistMeta  If true only the metadata that is useful in a rel file is added.
-     * @return                The lines as an array.
+     * @param world        The World to render.
+     * @param meta         If true the metadata is included.
+     * @param runtimeMeta  If true the runtime metadata is included.
+     * @return             The lines as an array.
      */
-    public static String[] renderCompleteWorld( World world, boolean meta, boolean minimalistMeta )
+    public static String[] renderCompleteWorld(
+        World world, boolean meta, boolean runtimeMeta )
     {
         Chars chars = new Chars( world, true );
 
@@ -238,7 +239,7 @@ public class TextWorldManip
             List<String> endComments = new ArrayList<String>();
             // Comments after all substantive meta.
             addMeta( endComments, null, null, world.comments);
-            return concat( metaLines( world, minimalistMeta),
+            return concat( metaLines( world, runtimeMeta ),
                            worldComments.toArray( new String[]{} ),
                            things,
                            endComments.toArray( new String[]{}) );
@@ -275,7 +276,7 @@ public class TextWorldManip
         }
     }
     
-    private static String[] metaLines( World world, boolean minimalist )
+    private static String[] metaLines( World world, boolean runtimeMeta )
     {
         List<String> ret = new ArrayList<String>();
 
@@ -283,16 +284,15 @@ public class TextWorldManip
         addMeta( ret, description, world.description, world.comments );
         addMeta( ret, author_name, world.author_name, world.comments );
         addMeta( ret, author_url,  world.author_url,  world.comments );
-        
+
         addMetaKeyArrayLines( ret, hint, world.hints, world );
         addMetaKeyArrayLines( ret, solution, world.solutions, world );
-        
 
         addMeta( ret, num_rabbits,  Integer.toString( world.num_rabbits ), world.comments );
         addMeta( ret, num_to_save,  Integer.toString( world.num_to_save ), world.comments );
         addMeta( ret, rabbit_delay, renderIntArray( world.rabbit_delay ), world.comments );
-        
-        if ( !minimalist )
+
+        if ( runtimeMeta )
         {
             addMeta( ret, num_saved,   Integer.toString( world.num_saved ),   world.comments );
             addMeta( ret, num_killed,  Integer.toString( world.num_killed ),  world.comments );

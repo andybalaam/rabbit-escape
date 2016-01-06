@@ -40,7 +40,7 @@ public class MegaCoderCLI
         // Decoded while parsing
         World world = new LoadWorldFile( fs ).load( 
             new IgnoreWorldStatsListener(), fileName );
-        String[] lines = TextWorldManip.renderCompleteWorld( world, true, true );
+        String[] lines = TextWorldManip.renderCompleteWorld( world, true, false );
         String newName;
         if ( o.longForm.equals( "--encode" ))
         {

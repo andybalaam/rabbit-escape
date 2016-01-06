@@ -1293,7 +1293,7 @@ public class TestTextWorldManip
         };
 
         assertThat(
-            renderCompleteWorld( createWorld( lines ), true, true ),
+            renderCompleteWorld( createWorld( lines ), true, false ),
             equalTo( expectedLines )
         );
     }
@@ -1350,7 +1350,7 @@ public class TestTextWorldManip
         };
 
         assertThat(
-            renderCompleteWorld( createWorld( lines ), true, true ),
+            renderCompleteWorld( createWorld( lines ), true, false ),
             equalTo( expectedLines )
         );
     }
