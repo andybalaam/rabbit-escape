@@ -7,6 +7,7 @@ import android.view.SurfaceHolder;
 import rabbitescape.engine.LevelWinListener;
 import rabbitescape.engine.Token;
 import rabbitescape.engine.World;
+import rabbitescape.engine.config.IConfig;
 import rabbitescape.render.BitmapCache;
 import rabbitescape.render.SoundPlayer;
 import rabbitescape.render.gameloop.GameLoop;
@@ -64,7 +65,7 @@ public class AndroidGameLaunch implements Runnable
 
         this.input = new AndroidInput( worldSaver );
 
-        loop = new GameLoop( input, physics, graphics );
+        loop = new GameLoop( input, physics, graphics, new NoKeysConfig(), null );
     }
 
     @Override
@@ -114,5 +115,28 @@ public class AndroidGameLaunch implements Runnable
     public void scrollBy( float x, float y )
     {
         graphics.scrollBy( x, y );
+    }
+
+    /**
+     * A Config with no keys set - this will disable debug output
+     * from the GameLoop.
+     */
+    private static class NoKeysConfig implements IConfig
+    {
+        @Override
+        public void set( String s, String s2 )
+        {
+        }
+
+        @Override
+        public String get( String s )
+        {
+            return null;
+        }
+
+        @Override
+        public void save()
+        {
+        }
     }
 }
