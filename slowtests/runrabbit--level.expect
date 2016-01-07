@@ -4,13 +4,13 @@ set timeout 2
 
 spawn ./runrabbit --level ./rabbit-escape-engine/src/rabbitescape/levels/easy/level_01.rel
 
+# No menu navigation: a single level was chosen in the command line options
+
 # Play a solution move by move
 
 send "dig\r"
 send "(7,2)\r"
 send "15\r"
-
-# Exit by choosing "back" each time
 
 demand "You won!"
 
