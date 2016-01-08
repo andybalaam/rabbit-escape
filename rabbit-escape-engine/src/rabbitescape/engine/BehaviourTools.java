@@ -63,6 +63,11 @@ public class BehaviourTools
         }
     }
 
+    public boolean rabbitIsClimbing()
+    {
+        return rabbit.state.toString().contains( "CLIMB" );
+    }
+    
     /**
      * Checks for the presence of a token. Removes token from the the world and returns
      * true if a token is being picked up.
