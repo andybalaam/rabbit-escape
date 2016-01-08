@@ -1,19 +1,10 @@
 #!/bin/bash
 CP=rabbit-escape-engine/bin/:rabbit-escape-render/bin/:rabbit-escape-ui-text/bin/:rabbit-escape-ui-swing/bin/
-if [ "$1" == "swing" ] || [ "$1" == "" ] # swing is the defualt
+if [ "$1" == "swing" ]
     then
     # shift drops the first arg, "swing". $@ passes the rest on.
     shift
     java -cp $CP rabbitescape.ui.swing.SwingMain "$@"
-elif [ "$1" == "text" ]
-    then
-    shift
-    java -cp $CP rabbitescape.ui.text.TextMain "$@"
-elif [ "$1" == "--help" ] || [ "$1" == "-h" ]
-    then
-    java -cp $CP rabbitescape.ui.text.TextMain "$@"
 else
-    echo "Option not recognised. You may find"
-    echo "./runrabbit --help"
-    echo "useful."
+    java -cp $CP rabbitescape.ui.text.TextMain "$@"
 fi

@@ -1,0 +1,10 @@
+# see slowtests file
+
+set timeout 2
+
+spawn ./runrabbit -h
+
+demand " --help                         (This) message and exit."
+
+# java exits and closes stream
+demand eof

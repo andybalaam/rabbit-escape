@@ -62,7 +62,7 @@ public class TextMain
             }
             if ( level.isPresent() )
             {
-                TextSingleGameEntryPoint.entryPoint( args );
+                TextSingleGameEntryPoint.entryPoint( new String[] {level.getValue()} );
                 System.exit( 0 );
             }
             if ( encode.isPresent() )
@@ -136,23 +136,22 @@ public class TextMain
     {
         //                                                          Eighty character limit >|
         System.out.println( t(
+            "runrabbit [options]\n" +
+            "If no options are given, the game starts the text UI with menus.\n" +
             "Any option can be abbreviated: '--help' becomes '-h'.\n" +
-            "runrabbit --help                        (This) message and exit.\n" +
-            "runrabbit                               Play using the swing GUI menus.\n" +
-            "runrabbit swing                         Play using the swing GUI menus.\n" +
-            "runrabbit swing level.rel               Play a single level using the swing GUI.\n" +
-            "runrabbit text                          Play using the text UI.\n" +
-            "runrabbit text level.rel                Play a single level using the text UI.\n" +
-            "runrabbit text --level level.rel        Play a single level using the text UI.\n" +
-            "runrabbit text --noinput level.rel      Level plays out with no token drops.\n" +
-            "runrabbit text --level <file> --solution <n>   Print world steps.\n" +
-            "runrabbit text --encode <string>        Obfuscate a string, for hints etc\n" +
-            "runrabbit text --decode <string>        Deobfuscate.\n" +
-            "runrabbit text --encode <level.rel>     Obfuscate hints and solutions.\n" +
-            "runrabbit text --decode <level.code.rel>   Deobfuscate.\n" +
-            "runrabbit text --placeholders <level.rel>  Rewrite file, inserting blank meta\n" +
-            "                                           and re-ordering meta. Decodes.\n" +
-            "runrabbit text --template <level.rel>   Create blank rel file\n\n" +
+            " --help                         (This) message and exit.\n" +
+            " swing                          Play using the swing GUI menus.\n" +
+            " swing level.rel                Play a single level using the swing GUI.\n" +
+            " [--level] level.rel            Play a single level using the text UI.\n" +
+            " --level <file> --solution <n>  Print world steps.\n" +
+            " --encode <string>              Obfuscate a string, for hints etc\n" +
+            " --decode <string>              Deobfuscate.\n" +
+            " --encode <level.rel>           Obfuscate hints and solutions.\n" +
+            " --decode <level.code.rel>      Deobfuscate.\n" +
+            " --placeholders <level.rel>     Rewrite file, inserting blank meta\n" +
+            "                                and re-ordering meta. Decodes.\n" +
+            " --template <level.rel>         Create blank rel file\n" +
+            "\n" +
             "When used with rel files the de/encode options will leave the source file\n" +
             "untouched, but may overwrite another file without further warning\n" +
             " foo.rel -> foo.code.rel          foo.code.rel -> foo.uncode.rel\n" +
