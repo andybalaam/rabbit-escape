@@ -185,6 +185,7 @@ public class Walking extends Behaviour
     }
 
     @Override
+    @SuppressWarnings("fallthrough")
     public boolean behave( World world, Rabbit rabbit, State state )
     {
         switch ( state )
