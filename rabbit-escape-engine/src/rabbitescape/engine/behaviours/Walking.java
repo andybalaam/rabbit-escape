@@ -274,6 +274,7 @@ public class Walking extends Behaviour
                 return true;
             }
             case RABBIT_TURNING_LEFT_TO_RIGHT:
+                rabbit.onSlope = false; // Intentional fall-through
             case RABBIT_TURNING_LEFT_TO_RIGHT_RISING:
             case RABBIT_TURNING_LEFT_TO_RIGHT_LOWERING:
             {
@@ -282,6 +283,7 @@ public class Walking extends Behaviour
                 return true;
             }
             case RABBIT_TURNING_RIGHT_TO_LEFT:
+                rabbit.onSlope = false; // Intentional fall-through
             case RABBIT_TURNING_RIGHT_TO_LEFT_RISING:
             case RABBIT_TURNING_RIGHT_TO_LEFT_LOWERING:
             {
