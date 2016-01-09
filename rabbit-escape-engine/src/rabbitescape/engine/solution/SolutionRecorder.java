@@ -6,7 +6,7 @@ import java.util.List;
 public class SolutionRecorder
 {
     private List<CommandAction> commandInProgress;
-    private List<SolutionCommand> solutionInProgress;
+    private final List<SolutionCommand> solutionInProgress;
     
     public SolutionRecorder()
     {
@@ -19,11 +19,8 @@ public class SolutionRecorder
         commandInProgress.add( a );
     }
     
-    public void appendStepEnd()
+    public void append( SolutionCommand newCmd )
     {
-        CommandAction[] aA = new CommandAction[commandInProgress.size()];
-        aA = commandInProgress.toArray( aA );
-        SolutionCommand newCmd = new SolutionCommand( aA );
         int prevCmdIndex = solutionInProgress.size() - 1;
         SolutionCommand prevCmd =   prevCmdIndex >= 0 
                                   ? solutionInProgress.get( prevCmdIndex )
@@ -37,7 +34,21 @@ public class SolutionRecorder
         { // Replace previous with combined
             solutionInProgress.set( prevCmdIndex, combCmd );
         }
-        
+    }
+    
+    public void append( Solution solution )
+    {
+        for ( SolutionCommand command : solution.commands )
+        {
+            append( command );
+        }
+    }
+    
+    public void appendStepEnd()
+    {
+        CommandAction[] aA = new CommandAction[commandInProgress.size()];
+        aA = commandInProgress.toArray( aA );
+        append( new SolutionCommand( aA ) );
         // Prepare to collect actions in the next step.
         commandInProgress = new ArrayList<CommandAction>();
     }
