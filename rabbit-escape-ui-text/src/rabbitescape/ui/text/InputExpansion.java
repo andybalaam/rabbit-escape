@@ -11,7 +11,8 @@ public class InputExpansion
         new InputExpansion( "i", "bridge" ),
         new InputExpansion( "k", "block" ),
         new InputExpansion( "c", "climb" ),
-        new InputExpansion( "p", "explode" )
+        new InputExpansion( "p", "explode" ),
+        new InputExpansion( "l", "brolly" )
     };
 
     public InputExpansion( String character, String expansion )

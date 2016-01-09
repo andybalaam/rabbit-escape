@@ -1,21 +1,18 @@
 package rabbitescape.ui.text;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 import static rabbitescape.engine.i18n.Translation.*;
 import rabbitescape.engine.err.ExceptionTranslation;
 import rabbitescape.engine.err.RabbitEscapeException;
 import rabbitescape.engine.solution.AssertStateAction;
-import rabbitescape.engine.solution.CommandAction;
 import rabbitescape.engine.solution.SandboxGame;
 import rabbitescape.engine.solution.Solution;
 import rabbitescape.engine.solution.SolutionExceptions;
 import rabbitescape.engine.solution.SolutionParser;
+import rabbitescape.engine.solution.SolutionRecorder;
 import rabbitescape.engine.solution.SolutionRunner;
 import rabbitescape.engine.solution.UntilAction;
-import rabbitescape.engine.solution.WaitAction;
 import rabbitescape.engine.solution.SolutionCommand;
 import rabbitescape.engine.util.Util;
 
@@ -23,13 +20,13 @@ public class InputHandler
 {
     private final SandboxGame sandboxGame;
     private final Terminal terminal;
-    private final List<SolutionCommand> solution;
+    private final SolutionRecorder recorder;
 
     public InputHandler( SandboxGame sandboxGame, Terminal terminal )
     {
         this.sandboxGame = sandboxGame;
         this.terminal = terminal;
-        this.solution = new ArrayList<>();
+        this.recorder = new SolutionRecorder();
     }
 
     public boolean handle( int commandIndex )
@@ -123,56 +120,7 @@ public class InputHandler
 
     private void appendAll( Solution solution )
     {
-        for ( SolutionCommand command : solution.commands )
-        {
-            append( command );
-        }
-    }
-
-    private void append( SolutionCommand newStep )
-    {
-        if ( !solution.isEmpty() )
-        {
-            SolutionCommand lastExistingStep = solution.get( solution.size() - 1 );
-
-            SolutionCommand combinedStep = tryToSimplify(
-                lastExistingStep, newStep );
-
-            if ( combinedStep != null )
-            {
-                solution.set( solution.size() - 1, combinedStep );
-            }
-            else
-            {
-                solution.add( newStep );
-            }
-        }
-        else
-        {
-            solution.add( newStep );
-        }
-    }
-
-    /**
-     * Try to combine two commands. If this is not possible then return null.
-     */
-    private SolutionCommand tryToSimplify(
-        SolutionCommand existingCmd, SolutionCommand newCmd )
-    {
-        CommandAction action1 = existingCmd.actions[0];
-        CommandAction action2 = newCmd.actions[0];
-
-        if (
-               action1 instanceof WaitAction
-            && action2 instanceof WaitAction
-        )
-        {
-            WaitAction wait1 = (WaitAction)action1;
-            WaitAction wait2 = (WaitAction)action2;
-            return new SolutionCommand(
-                new WaitAction( wait1.steps + wait2.steps ) );
-        }
-        return null;
+        recorder.append( solution );
     }
 
     private boolean help()
@@ -223,10 +171,6 @@ public class InputHandler
 
     public String solution()
     {
-        return SolutionParser.serialise(
-            new Solution(
-                solution.toArray( new SolutionCommand[ solution.size() ] )
-            )
-        );
+        return recorder.getRecord();
     }
 }

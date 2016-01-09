@@ -13,6 +13,10 @@ import rabbitescape.engine.LevelWinListener;
 import rabbitescape.engine.Token;
 import rabbitescape.engine.World;
 import rabbitescape.engine.config.IConfig;
+import rabbitescape.engine.solution.PlaceTokenAction;
+import rabbitescape.engine.solution.SolutionRecorder;
+import rabbitescape.engine.solution.SolutionRecorderTemplate;
+
 import rabbitescape.engine.util.Util;
 import rabbitescape.render.GameLaunch;
 import rabbitescape.render.gameloop.GameLoop;
@@ -55,6 +59,7 @@ public class SwingGameLaunch implements GameLaunch
 
     private final GameLoop loop;
     private final MainJFrame frame;
+    public final SolutionRecorderTemplate solutionRecorder;
 
     public SwingGameLaunch(
         SwingGameInit init,
@@ -67,7 +72,8 @@ public class SwingGameLaunch implements GameLaunch
     {
         this.world = world;
         this.frame = init.frame;
-        this.physics = new GeneralPhysics( world, winListener );
+        this.solutionRecorder = new SolutionRecorder();
+        this.physics = new GeneralPhysics( world, winListener, solutionRecorder );
 
         // This blocks until the UI is ready:
         WhenUiReady uiPieces = init.waitForUi.waitForUi();
@@ -101,6 +107,7 @@ public class SwingGameLaunch implements GameLaunch
         // focus so keystrokes are not lost.
         frame.getRootPane().grabFocus();
         loop.run();
+        System.out.println( solutionRecorder.getRecord() );
     }
 
     private static class AnswerHolder
@@ -381,6 +388,7 @@ public class SwingGameLaunch implements GameLaunch
         {
             graphics.playSound( "place_token" );
         }
+        solutionRecorder.append( new PlaceTokenAction( tileX, tileY ) );
         return now;
     }
 

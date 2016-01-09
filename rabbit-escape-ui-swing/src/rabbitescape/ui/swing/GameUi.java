@@ -27,6 +27,7 @@ import javax.swing.KeyStroke;
 import rabbitescape.engine.Token;
 import rabbitescape.engine.config.Config;
 import rabbitescape.engine.config.ConfigTools;
+import rabbitescape.engine.solution.SelectAction;
 import rabbitescape.render.BitmapCache;
 import rabbitescape.render.gameloop.Physics.StatsChangedListener;
 
@@ -336,6 +337,7 @@ public class GameUi implements StatsChangedListener
             public void abilityChosen( Token.Type ability )
             {
                 chooseAbility( ability );
+                gameLaunch.solutionRecorder.append( new SelectAction( ability ) );
             }
         } );
 
