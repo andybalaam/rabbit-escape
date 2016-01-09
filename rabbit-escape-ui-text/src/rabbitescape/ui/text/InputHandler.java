@@ -8,14 +8,12 @@ import static rabbitescape.engine.i18n.Translation.*;
 import rabbitescape.engine.err.ExceptionTranslation;
 import rabbitescape.engine.err.RabbitEscapeException;
 import rabbitescape.engine.solution.AssertStateAction;
-import rabbitescape.engine.solution.CommandAction;
 import rabbitescape.engine.solution.SandboxGame;
 import rabbitescape.engine.solution.Solution;
 import rabbitescape.engine.solution.SolutionExceptions;
 import rabbitescape.engine.solution.SolutionParser;
 import rabbitescape.engine.solution.SolutionRunner;
 import rabbitescape.engine.solution.UntilAction;
-import rabbitescape.engine.solution.WaitAction;
 import rabbitescape.engine.solution.SolutionCommand;
 import rabbitescape.engine.util.Util;
 
