@@ -115,7 +115,7 @@ public class GameLoop
             int i = 0;
             for ( Rabbit rabbit : physics.world().rabbits )
             {
-                debugout.println( " " + i + ":" + rabbit.state.name() );
+                debugout.println( " " + i + ":" + rabbit.state.name() + " onSlope:" + rabbit.onSlope );
                 ++i;
             }
         }

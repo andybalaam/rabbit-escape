@@ -2226,4 +2226,42 @@ public class TestWalking
 
         assertThat( resultLines, equalTo( lines ) );
     }
+    
+    @Test
+    public void No_levitation_after_slope_dug_out()
+    {
+        assertWorldEvolvesLike(
+            "#d#" + "\n" +
+            "#*#" + "\n" +
+            "###" + "\n" +
+            "###" + "\n" +
+            ":*=(rr",
+
+            "# #" + "\n" +
+            "#[#" + "\n" +
+            "###" + "\n" +
+            "###",
+
+            "# #" + "\n" +
+            "#?#" + "\n" +
+            "#D#" + "\n" +
+            "###",
+
+            "# #" + "\n" +
+            "#j#" + "\n" +
+            "#f#" + "\n" +
+            "###",
+
+            "# #" + "\n" +
+            "# #" + "\n" +
+            "#|#" + "\n" +
+            "#D#",
+
+            "# #" + "\n" +
+            "# #" + "\n" +
+            "#r#" + "\n" +
+            "#f#"
+        );
+
+    }
 }
