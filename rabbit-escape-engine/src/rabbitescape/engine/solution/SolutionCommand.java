@@ -10,6 +10,11 @@ public class SolutionCommand
 {
     public final CommandAction[] actions;
 
+    /**
+     * If the supplied array (vararg) of CommandActions is empty
+     * a default WaitAction of 1 step will be created. The solution fragment 
+     * ";;" has implied ones, "1;1;".
+     */
     public SolutionCommand( CommandAction... actions )
     {
         if ( 0 == actions.length )
