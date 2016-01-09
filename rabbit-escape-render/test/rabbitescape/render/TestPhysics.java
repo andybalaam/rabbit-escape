@@ -8,6 +8,7 @@ import rabbitescape.engine.ChangeDescription;
 import rabbitescape.engine.LevelWinListener;
 import rabbitescape.engine.Token;
 import rabbitescape.engine.World;
+import rabbitescape.engine.solution.SolutionIgnorer;
 import rabbitescape.engine.textworld.TextWorldManip;
 import rabbitescape.render.gameloop.GeneralPhysics;
 import rabbitescape.render.gameloop.Physics.StatsChangedListener;
@@ -29,7 +30,7 @@ public class TestPhysics
         final int num_threads = 100;
         final int num_iters   = 20;
 
-        final WorldModifier modifier = new WorldModifier( world, null );
+        final WorldModifier modifier = new WorldModifier( world, new SolutionIgnorer() );
 
         class Stepper implements Runnable
         {

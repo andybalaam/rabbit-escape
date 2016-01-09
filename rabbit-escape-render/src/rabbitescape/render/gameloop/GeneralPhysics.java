@@ -3,7 +3,8 @@ package rabbitescape.render.gameloop;
 import java.util.ArrayList;
 import java.util.List;
 
-import rabbitescape.engine.solution.SolutionRecorder;
+import rabbitescape.engine.solution.SolutionIgnorer;
+import rabbitescape.engine.solution.SolutionRecorderTemplate;
 import rabbitescape.engine.LevelWinListener;
 import rabbitescape.engine.Token;
 import rabbitescape.engine.World;
@@ -19,9 +20,9 @@ public class GeneralPhysics implements Physics
     public static class WorldModifier
     {
         private final World world;
-        public final SolutionRecorder solutionRecorder;
+        public final SolutionRecorderTemplate solutionRecorder;
 
-        public WorldModifier( World world, SolutionRecorder solutionRecorder )
+        public WorldModifier( World world, SolutionRecorderTemplate solutionRecorder )
         {
             this.world = world;
             this.solutionRecorder = solutionRecorder;
@@ -30,10 +31,7 @@ public class GeneralPhysics implements Physics
         public synchronized void step()
         {
             world.step();
-            if ( null != solutionRecorder )
-            {
-                solutionRecorder.appendStepEnd( );
-            }
+            solutionRecorder.appendStepEnd( );
         }
 
         public synchronized void addToken(
@@ -54,11 +52,11 @@ public class GeneralPhysics implements Physics
     
     public GeneralPhysics( World world, LevelWinListener winListener )
     {
-        this( world, winListener, null);
+        this( world, winListener, new SolutionIgnorer() );
     }
     
 
-    public GeneralPhysics( World world, LevelWinListener winListener, SolutionRecorder solutionRecorder )
+    public GeneralPhysics( World world, LevelWinListener winListener, SolutionRecorderTemplate solutionRecorder )
     {
         this.frame = 0;
         this.world = world;

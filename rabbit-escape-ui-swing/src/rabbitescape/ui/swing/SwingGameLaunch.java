@@ -15,6 +15,7 @@ import rabbitescape.engine.World;
 import rabbitescape.engine.config.IConfig;
 import rabbitescape.engine.solution.PlaceTokenAction;
 import rabbitescape.engine.solution.SolutionRecorder;
+import rabbitescape.engine.solution.SolutionRecorderTemplate;
 
 import rabbitescape.engine.util.Util;
 import rabbitescape.render.GameLaunch;
@@ -58,7 +59,7 @@ public class SwingGameLaunch implements GameLaunch
 
     private final GameLoop loop;
     private final MainJFrame frame;
-    public final SolutionRecorder solutionRecorder;
+    public final SolutionRecorderTemplate solutionRecorder;
 
     public SwingGameLaunch(
         SwingGameInit init,
