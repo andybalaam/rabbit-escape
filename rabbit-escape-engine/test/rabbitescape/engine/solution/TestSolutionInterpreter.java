@@ -51,33 +51,6 @@ public class TestSolutionInterpreter
     }
 
     @Test
-    public void Multiple_waits_wait_for_the_total()
-    {
-        Solution solution = new Solution(
-              new SolutionCommand(
-                  new WaitAction( 1 ), new WaitAction( 2 ) )
-            , new SolutionCommand( new WaitAction( 3 ) )
-        );
-
-        SolutionInterpreter interpreter =
-            new SolutionInterpreter( solution, false );
-
-        assertThat(
-            interpreterList( interpreter ),
-            equalTo(
-                Arrays.asList(
-                      new SolutionTimeStep( 1 )
-                    , new SolutionTimeStep( 1 )
-                    , new SolutionTimeStep( 1 )
-                    , new SolutionTimeStep( 2 )
-                    , new SolutionTimeStep( 2 )
-                    , new SolutionTimeStep( 2 )
-                )
-            )
-        );
-    }
-
-    @Test
     public void Single_nonwait_action_makes_single_time_step()
     {
         Solution solution = new Solution(
@@ -190,53 +163,6 @@ public class TestSolutionInterpreter
                     new SolutionTimeStep( 4 ),
                     new SolutionTimeStep( 4 ),
                     new SolutionTimeStep( 5 )
-                )
-            )
-        );
-    }
-
-    @Test
-    public void Waits_mixed_with_dos_wait_after_doing_no_matter_the_order()
-    {
-        Solution solution = new Solution(
-            new SolutionCommand(
-                new WaitAction( 3 ),
-                new SelectAction( Token.Type.explode ),
-                new PlaceTokenAction( 2, 2 )
-            ),
-            new SolutionCommand( new WaitAction( 2 ) ),
-            new SolutionCommand(
-                new SelectAction( Token.Type.dig ),
-                new PlaceTokenAction( 1, 1 ),
-                new WaitAction( 3 )
-            )
-        );
-
-        SolutionInterpreter interpreter =
-            new SolutionInterpreter( solution, false );
-
-        assertThat(
-            interpreterList( interpreter ),
-            equalTo(
-                Arrays.asList(
-                    new SolutionTimeStep(
-                        1
-                        , new SelectAction( Token.Type.explode )
-                        , new PlaceTokenAction( 2, 2 )
-                    ),
-                    new SolutionTimeStep( 1 ),
-                    new SolutionTimeStep( 1 ),
-
-                    new SolutionTimeStep( 2 ),
-                    new SolutionTimeStep( 2 ),
-
-                    new SolutionTimeStep(
-                        3,
-                        new SelectAction( Token.Type.dig ),
-                        new PlaceTokenAction( 1, 1 )
-                    ),
-                    new SolutionTimeStep( 3 ),
-                    new SolutionTimeStep( 3 )
                 )
             )
         );
@@ -356,8 +282,7 @@ public class TestSolutionInterpreter
         Solution solution = new Solution(
             new SolutionCommand(
                 new SelectAction( Token.Type.dig ),
-                new PlaceTokenAction( 1, 1 ),
-                new WaitAction( 3 )
+                new PlaceTokenAction( 1, 1 )
             ),
             new SolutionCommand( new PlaceTokenAction( 1, 1 ) ),
             new SolutionCommand()
@@ -374,8 +299,6 @@ public class TestSolutionInterpreter
                         new SelectAction( Token.Type.dig ),
                         new PlaceTokenAction( 1, 1 )
                     ),
-                    new SolutionTimeStep( 1 ),
-                    new SolutionTimeStep( 1 ),
                     new SolutionTimeStep( 2, new PlaceTokenAction( 1, 1 ) ),
                     new SolutionTimeStep( 3 ),
                     new SolutionTimeStep(
