@@ -51,6 +51,12 @@ public class SwingSingleGameEntryPoint extends SingleGameEntryPoint
 
     public static void entryPoint( String[] args )
     {
+        if ( 1 == args.length )
+        {
+            go( args, SwingGameLaunch.NOT_DEMO_MODE );
+            System.exit( 0 );
+        }
+        
         CommandLineOption level =        new CommandLineOption( "--level",        true );
         CommandLineOption solution =     new CommandLineOption( "--solution",     true );
         
