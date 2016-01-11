@@ -13,7 +13,7 @@ public class SolutionInterpreter
     private static final int maxUntils = 1000;
 
     private final Iterator<SolutionCommand> commandIt;
-    private int commandIndex;
+    int commandIndex;
 
     private final WonAssertCreator wonAssert;
     private WaitNextable wait;
@@ -44,6 +44,11 @@ public class SolutionInterpreter
         this.untilState = null;
         this.command = null;
         this.untilCount = -1;
+    }
+    
+    public static SolutionInterpreter getNothingPlaying()
+    {
+        return new NothingPlaying();
     }
 
     public SolutionTimeStep next( CompletionState worldState )

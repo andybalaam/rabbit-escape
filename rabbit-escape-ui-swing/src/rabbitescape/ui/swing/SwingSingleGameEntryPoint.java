@@ -11,6 +11,8 @@ import rabbitescape.engine.LevelWinListener;
 import rabbitescape.engine.World;
 import rabbitescape.engine.config.Config;
 import rabbitescape.engine.config.ConfigTools;
+import rabbitescape.engine.util.CommandLineOption;
+import rabbitescape.engine.util.CommandLineOptionSet;
 import rabbitescape.engine.util.FileSystem;
 import rabbitescape.engine.util.RealFileSystem;
 import rabbitescape.render.BitmapCache;
@@ -24,6 +26,7 @@ public class SwingSingleGameEntryPoint extends SingleGameEntryPoint
     private final MainJFrame frame;
     private final SwingSound sound;
     private final MenuUi menuUi;
+    private final int solutionIndex;
 
     public SwingSingleGameEntryPoint(
         FileSystem fs,
@@ -33,7 +36,8 @@ public class SwingSingleGameEntryPoint extends SingleGameEntryPoint
         Config uiConfig,
         MainJFrame frame,
         SwingSound sound,
-        MenuUi menuUi
+        MenuUi menuUi,
+        int solutionIndex
     )
     {
         super( fs, out, locale );
@@ -42,10 +46,43 @@ public class SwingSingleGameEntryPoint extends SingleGameEntryPoint
         this.frame = frame;
         this.sound = sound;
         this.menuUi = menuUi;
+        this.solutionIndex = solutionIndex;
     }
 
+    /**
+     * Enters the game without being in demo mode 
+     */
     public static void entryPoint( String[] args )
     {
+        entryPoint( args, 0);
+    }
+    
+    public static void entryPoint( String[] args, int solutionIndex )
+    {
+        CommandLineOption level =        new CommandLineOption( "--level",        true );
+        CommandLineOption solution =     new CommandLineOption( "--solution",     true );
+        
+        CommandLineOptionSet.parse( args,
+                                    level, solution);
+        try
+        {
+            if ( solution.isPresent() )
+            {
+                SwingSingleGameEntryPoint.entryPoint( new String[] {level.getValue()}, solution.getInt() );
+                System.exit( 0 );
+            }
+            if ( level.isPresent() )
+            {
+                SwingSingleGameEntryPoint.entryPoint( new String[] {level.getValue()} );
+                System.exit( 0 );
+            }
+        }
+        catch( Exception e )
+        {
+            e.printStackTrace();
+            System.exit( 1 );
+        }
+        
         Config cfg = SwingConfigSetup.createConfig();
 
         SwingSound sound = new SwingSound(
@@ -63,7 +100,8 @@ public class SwingSingleGameEntryPoint extends SingleGameEntryPoint
             cfg,
             new MainJFrame( cfg, sound ),
             sound,
-            null
+            null,
+            solutionIndex
         );
 
         m.run( args );
@@ -79,6 +117,6 @@ public class SwingSingleGameEntryPoint extends SingleGameEntryPoint
         SwingUtilities.invokeLater( init );
 
         return new SwingGameLaunch(
-            init, world, winListener, sound, uiConfig, out );
+            init, world, winListener, sound, uiConfig, out, SwingGameLaunch.NOT_DEMO_MODE );
     }
 }

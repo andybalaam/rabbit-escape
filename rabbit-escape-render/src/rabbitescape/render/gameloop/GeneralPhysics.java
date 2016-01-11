@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import rabbitescape.engine.solution.SolutionIgnorer;
+import rabbitescape.engine.solution.SolutionInterpreter;
 import rabbitescape.engine.solution.SolutionRecorderTemplate;
 import rabbitescape.engine.LevelWinListener;
 import rabbitescape.engine.Token;
@@ -49,20 +50,28 @@ public class GeneralPhysics implements Physics
     private final WorldModifier worldModifier;
     private final LevelWinListener winListener;
     private final List<StatsChangedListener> statsListeners;
+    private final SolutionInterpreter solutionInterpreter;
     
     public GeneralPhysics( World world, LevelWinListener winListener )
     {
-        this( world, winListener, new SolutionIgnorer() );
+        this( world, 
+              winListener, 
+              new SolutionIgnorer(), 
+              SolutionInterpreter.getNothingPlaying() );
     }
     
 
-    public GeneralPhysics( World world, LevelWinListener winListener, SolutionRecorderTemplate solutionRecorder )
+    public GeneralPhysics( World world, 
+                           LevelWinListener winListener, 
+                           SolutionRecorderTemplate solutionRecorder,
+                           SolutionInterpreter solutionInterpreter)
     {
         this.frame = 0;
         this.world = world;
         this.worldModifier = new WorldModifier( world, solutionRecorder );
         this.winListener = winListener;
         this.statsListeners = new ArrayList<>();
+        this.solutionInterpreter = solutionInterpreter;
     }
 
     @Override
@@ -81,6 +90,7 @@ public class GeneralPhysics implements Physics
             {
                 frame = 0;
 
+                doInterpreterActions();
                 worldModifier.step();
                 checkWon();
                 notifyStatsListeners();
@@ -104,6 +114,14 @@ public class GeneralPhysics implements Physics
         return ( world.completionState() == World.CompletionState.RUNNING );
     }
 
+    /**
+     * Take actions for demo mode, eg drop tokens.
+     */
+    private void doInterpreterActions()
+    {
+        // TODO calls to action
+    }
+    
     private void notifyStatsListeners()
     {
         for ( StatsChangedListener listener : statsListeners )

@@ -375,7 +375,8 @@ public class MenuUi
                     uiConfig,
                     frame,
                     sound,
-                    MenuUi.this
+                    MenuUi.this,
+                    SwingGameLaunch.NOT_DEMO_MODE
                 ).launchGame(
                     new String[] { filename },
                     levelWinListener
