@@ -3,12 +3,18 @@ package rabbitescape.render.gameloop;
 import java.util.ArrayList;
 import java.util.List;
 
+import rabbitescape.engine.solution.PlaceTokenAction;
+import rabbitescape.engine.solution.SelectAction;
 import rabbitescape.engine.solution.SolutionIgnorer;
 import rabbitescape.engine.solution.SolutionInterpreter;
 import rabbitescape.engine.solution.SolutionRecorderTemplate;
+import rabbitescape.engine.solution.SolutionTimeStep;
+import rabbitescape.engine.solution.TimeStepAction;
+import rabbitescape.engine.solution.TimeStepActionTypeSwitch;
 import rabbitescape.engine.LevelWinListener;
 import rabbitescape.engine.Token;
 import rabbitescape.engine.World;
+import rabbitescape.engine.World.CompletionState;
 
 public class GeneralPhysics implements Physics
 {
@@ -51,20 +57,23 @@ public class GeneralPhysics implements Physics
     private final LevelWinListener winListener;
     private final List<StatsChangedListener> statsListeners;
     private final SolutionInterpreter solutionInterpreter;
+    private final TimeStepActionTypeSwitch actionTypeSwitch;
     
     public GeneralPhysics( World world, LevelWinListener winListener )
     {
         this( world, 
               winListener, 
               new SolutionIgnorer(), 
-              SolutionInterpreter.getNothingPlaying() );
+              SolutionInterpreter.getNothingPlaying(),
+              null);
     }
     
 
     public GeneralPhysics( World world, 
                            LevelWinListener winListener, 
                            SolutionRecorderTemplate solutionRecorder,
-                           SolutionInterpreter solutionInterpreter)
+                           SolutionInterpreter solutionInterpreter,
+                           TimeStepActionTypeSwitch actionTypeSwitch)
     {
         this.frame = 0;
         this.world = world;
@@ -72,6 +81,7 @@ public class GeneralPhysics implements Physics
         this.winListener = winListener;
         this.statsListeners = new ArrayList<>();
         this.solutionInterpreter = solutionInterpreter;
+        this.actionTypeSwitch = actionTypeSwitch; 
     }
 
     @Override
@@ -119,7 +129,18 @@ public class GeneralPhysics implements Physics
      */
     private void doInterpreterActions()
     {
-        // TODO calls to action
+        SolutionTimeStep stp = solutionInterpreter.next( CompletionState.RUNNING );
+        for ( TimeStepAction action: stp.actions )
+        {
+            if ( action instanceof SelectAction )
+            {
+                actionTypeSwitch.caseSelectAction( (SelectAction)action );
+            }
+            else if ( action instanceof PlaceTokenAction )
+            {
+                actionTypeSwitch.casePlaceTokenAction( (PlaceTokenAction)action );
+            }
+        }
     }
     
     private void notifyStatsListeners()

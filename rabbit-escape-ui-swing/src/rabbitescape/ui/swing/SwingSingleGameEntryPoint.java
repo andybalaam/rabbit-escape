@@ -49,15 +49,7 @@ public class SwingSingleGameEntryPoint extends SingleGameEntryPoint
         this.solutionIndex = solutionIndex;
     }
 
-    /**
-     * Enters the game without being in demo mode 
-     */
     public static void entryPoint( String[] args )
-    {
-        entryPoint( args, 0);
-    }
-    
-    public static void entryPoint( String[] args, int solutionIndex )
     {
         CommandLineOption level =        new CommandLineOption( "--level",        true );
         CommandLineOption solution =     new CommandLineOption( "--solution",     true );
@@ -68,12 +60,12 @@ public class SwingSingleGameEntryPoint extends SingleGameEntryPoint
         {
             if ( solution.isPresent() )
             {
-                SwingSingleGameEntryPoint.entryPoint( new String[] {level.getValue()}, solution.getInt() );
+                go( new String[] {level.getValue()}, solution.getInt() );
                 System.exit( 0 );
             }
             if ( level.isPresent() )
             {
-                SwingSingleGameEntryPoint.entryPoint( new String[] {level.getValue()} );
+                go( new String[] {level.getValue()}, SwingGameLaunch.NOT_DEMO_MODE );
                 System.exit( 0 );
             }
         }
@@ -83,6 +75,11 @@ public class SwingSingleGameEntryPoint extends SingleGameEntryPoint
             System.exit( 1 );
         }
         
+    }
+    
+    private static void go( String[] fileName, int solutionIndex )
+    {
+
         Config cfg = SwingConfigSetup.createConfig();
 
         SwingSound sound = new SwingSound(
@@ -104,7 +101,7 @@ public class SwingSingleGameEntryPoint extends SingleGameEntryPoint
             solutionIndex
         );
 
-        m.run( args );
+        m.run( fileName );
     }
 
     @Override
@@ -117,6 +114,6 @@ public class SwingSingleGameEntryPoint extends SingleGameEntryPoint
         SwingUtilities.invokeLater( init );
 
         return new SwingGameLaunch(
-            init, world, winListener, sound, uiConfig, out, SwingGameLaunch.NOT_DEMO_MODE );
+            init, world, winListener, sound, uiConfig, out, solutionIndex );
     }
 }
