@@ -9,12 +9,12 @@ import rabbitescape.engine.util.Util;
 
 public class SolutionCommand
 {
-    public final class WaitActionIllegalInMultiActionCommand extends RabbitEscapeException
+    public final class WaitActionInMultiActionCommand extends RabbitEscapeException
     {
         private static final long serialVersionUID = 1L;
         final public String command;
         
-        public WaitActionIllegalInMultiActionCommand( String command )
+        public WaitActionInMultiActionCommand( String command )
         {
             this.command = command;
         }
@@ -48,7 +48,7 @@ public class SolutionCommand
             {
                 if ( a instanceof WaitAction )
                 {
-                    throw new WaitActionIllegalInMultiActionCommand( this.toString() );
+                    throw new WaitActionInMultiActionCommand( this.toString() );
                 }
             }
         }
