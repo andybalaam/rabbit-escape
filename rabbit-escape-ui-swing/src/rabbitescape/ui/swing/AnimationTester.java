@@ -117,6 +117,8 @@ public class AnimationTester extends JFrame
             blockNames[i] = noneForNull( blocksList.getSelectedValue() );
 
             saveSelectionsToConfig();
+            
+            canvas.requestFocus();
         }
 
         private void saveSelectionsToConfig()
@@ -351,7 +353,7 @@ public class AnimationTester extends JFrame
 
         Listener listener = new Listener();
         canvas.addMouseListener( listener );
-        addKeyListener( listener );
+        canvas.addKeyListener( listener );
         addComponentListener( listener );
 
         setBoundsFromConfig();
