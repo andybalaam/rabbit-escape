@@ -19,7 +19,25 @@ public class TestSolutionCommand
         assertThat( solution1, equalTo( solution2 ) );
         assertThat( solution1.hashCode(), equalTo( solution2.hashCode() ) );
     }
+    
+    @Test 
+    public void Equality_in_wait_commands()
+    {
+        SolutionCommand waitA = new SolutionCommand( new WaitAction( 4 ));
+        SolutionCommand waitB = new SolutionCommand( new WaitAction( 4 ));
+        
+        assertThat( waitA, equalTo( waitB ) );
+    }
 
+    @Test 
+    public void Inequality_in_wait_commands()
+    {
+        SolutionCommand waitA = new SolutionCommand( new WaitAction( 4 ));
+        SolutionCommand waitB = new SolutionCommand( new WaitAction( 5 ));
+        
+        assertThat( waitA, not( equalTo( waitB ) ) );
+    }
+    
     @Test
     public void Different_action_lists_make_them_unequal()
     {
