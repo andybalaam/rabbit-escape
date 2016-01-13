@@ -109,13 +109,12 @@ public class TestSolutionParser
     public void Simultaneous_actions_are_noted()
     {
         assertThat(
-            SolutionParser.parse( "bash&(1,1)&3;WON" ),
+            SolutionParser.parse( "bash&(1,1);WON" ),
             equalTo(
                 new Solution(
                     new SolutionCommand(
                         new SelectAction( Token.Type.bash ),
-                        new PlaceTokenAction( 1, 1 ),
-                        new WaitAction( 3 ) ),
+                        new PlaceTokenAction( 1, 1 ) ),
                     new SolutionCommand(
                         new AssertStateAction( World.CompletionState.WON ) )
                 )
@@ -370,6 +369,12 @@ public class TestSolutionParser
     public void Until_LOST_round_trips()
     {
         assertThat( "dig&(7,4);until:LOST", roundTrips() );
+    }
+    
+    @Test( expected=SolutionCommand.WaitActionInMultiActionCommand.class )
+    public void Multi_action_commands_must_not_include_a_wait()
+    {
+        Solution s = SolutionParser.parse( "2&bash");
     }
 
     // ---

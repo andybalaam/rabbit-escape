@@ -4,10 +4,22 @@ import static rabbitescape.engine.util.Util.*;
 
 import java.util.Arrays;
 
+import rabbitescape.engine.err.RabbitEscapeException;
 import rabbitescape.engine.util.Util;
 
 public class SolutionCommand
 {
+    public final class WaitActionInMultiActionCommand extends RabbitEscapeException
+    {
+        private static final long serialVersionUID = 1L;
+        final public String command;
+        
+        public WaitActionInMultiActionCommand( String command )
+        {
+            this.command = command;
+        }
+    }
+    
     public final CommandAction[] actions;
 
     /**
@@ -24,6 +36,21 @@ public class SolutionCommand
         else
         {
             this.actions = actions;
+        }
+        checkWaitInMultiAction();
+    }
+    
+    private void checkWaitInMultiAction()
+    {
+        if ( actions.length > 1 )
+        {
+            for ( CommandAction a: actions )
+            {
+                if ( a instanceof WaitAction )
+                {
+                    throw new WaitActionInMultiActionCommand( this.toString() );
+                }
+            }
         }
     }
 
