@@ -3,11 +3,18 @@ package rabbitescape.render.gameloop;
 import java.util.ArrayList;
 import java.util.List;
 
+import rabbitescape.engine.solution.PlaceTokenAction;
+import rabbitescape.engine.solution.SelectAction;
 import rabbitescape.engine.solution.SolutionIgnorer;
+import rabbitescape.engine.solution.SolutionInterpreter;
 import rabbitescape.engine.solution.SolutionRecorderTemplate;
+import rabbitescape.engine.solution.SolutionTimeStep;
+import rabbitescape.engine.solution.TimeStepAction;
+import rabbitescape.engine.solution.UiPlayback;
 import rabbitescape.engine.LevelWinListener;
 import rabbitescape.engine.Token;
 import rabbitescape.engine.World;
+import rabbitescape.engine.World.CompletionState;
 
 public class GeneralPhysics implements Physics
 {
@@ -49,20 +56,32 @@ public class GeneralPhysics implements Physics
     private final WorldModifier worldModifier;
     private final LevelWinListener winListener;
     private final List<StatsChangedListener> statsListeners;
+    private final SolutionInterpreter solutionInterpreter;
+    private final UiPlayback uiPlayback;
     
     public GeneralPhysics( World world, LevelWinListener winListener )
     {
-        this( world, winListener, new SolutionIgnorer() );
+        this( world, 
+              winListener, 
+              new SolutionIgnorer(), 
+              SolutionInterpreter.getNothingPlaying(),
+              null);
     }
     
 
-    public GeneralPhysics( World world, LevelWinListener winListener, SolutionRecorderTemplate solutionRecorder )
+    public GeneralPhysics( World world, 
+                           LevelWinListener winListener, 
+                           SolutionRecorderTemplate solutionRecorder,
+                           SolutionInterpreter solutionInterpreter,
+                           UiPlayback uiPlayback)
     {
         this.frame = 0;
         this.world = world;
         this.worldModifier = new WorldModifier( world, solutionRecorder );
         this.winListener = winListener;
         this.statsListeners = new ArrayList<>();
+        this.solutionInterpreter = solutionInterpreter;
+        this.uiPlayback = uiPlayback; 
     }
 
     @Override
@@ -81,6 +100,7 @@ public class GeneralPhysics implements Physics
             {
                 frame = 0;
 
+                doInterpreterActions();
                 worldModifier.step();
                 checkWon();
                 notifyStatsListeners();
@@ -104,6 +124,25 @@ public class GeneralPhysics implements Physics
         return ( world.completionState() == World.CompletionState.RUNNING );
     }
 
+    /**
+     * Take actions for demo mode, eg drop tokens.
+     */
+    private void doInterpreterActions()
+    {
+        SolutionTimeStep stp = solutionInterpreter.next( CompletionState.RUNNING );
+        for ( TimeStepAction action: stp.actions )
+        {
+            if ( action instanceof SelectAction )
+            {
+                uiPlayback.selectToken( (SelectAction)action );
+            }
+            else if ( action instanceof PlaceTokenAction )
+            {
+                uiPlayback.placeToken( (PlaceTokenAction)action );
+            }
+        }
+    }
+    
     private void notifyStatsListeners()
     {
         for ( StatsChangedListener listener : statsListeners )

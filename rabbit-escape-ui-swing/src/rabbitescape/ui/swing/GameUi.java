@@ -607,16 +607,21 @@ public class GameUi implements StatsChangedListener
 
     private void click( Point pixelPosition )
     {
-        if ( chosenAbility == null )
-        {
-            return;
-        }
-
         int tileX = ( pixelPosition.x - gameLaunch.graphics.renderer.offsetX )
             / worldTileSizeInPixels;
 
         int tileY = ( pixelPosition.y - gameLaunch.graphics.renderer.offsetY )
             / worldTileSizeInPixels;
+
+        addToken( tileX, tileY );
+    }
+    
+    protected void addToken(int tileX, int tileY )
+    {
+        if ( chosenAbility == null )
+        {
+            return;
+        }
 
         int numLeft = gameLaunch.addToken( tileX, tileY, chosenAbility );
 
