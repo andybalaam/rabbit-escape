@@ -10,7 +10,7 @@ import rabbitescape.engine.solution.SolutionInterpreter;
 import rabbitescape.engine.solution.SolutionRecorderTemplate;
 import rabbitescape.engine.solution.SolutionTimeStep;
 import rabbitescape.engine.solution.TimeStepAction;
-import rabbitescape.engine.solution.TimeStepActionTypeSwitch;
+import rabbitescape.engine.solution.UiPlayback;
 import rabbitescape.engine.LevelWinListener;
 import rabbitescape.engine.Token;
 import rabbitescape.engine.World;
@@ -57,7 +57,7 @@ public class GeneralPhysics implements Physics
     private final LevelWinListener winListener;
     private final List<StatsChangedListener> statsListeners;
     private final SolutionInterpreter solutionInterpreter;
-    private final TimeStepActionTypeSwitch actionTypeSwitch;
+    private final UiPlayback uiPlayback;
     
     public GeneralPhysics( World world, LevelWinListener winListener )
     {
@@ -73,7 +73,7 @@ public class GeneralPhysics implements Physics
                            LevelWinListener winListener, 
                            SolutionRecorderTemplate solutionRecorder,
                            SolutionInterpreter solutionInterpreter,
-                           TimeStepActionTypeSwitch actionTypeSwitch)
+                           UiPlayback uiPlayback)
     {
         this.frame = 0;
         this.world = world;
@@ -81,7 +81,7 @@ public class GeneralPhysics implements Physics
         this.winListener = winListener;
         this.statsListeners = new ArrayList<>();
         this.solutionInterpreter = solutionInterpreter;
-        this.actionTypeSwitch = actionTypeSwitch; 
+        this.uiPlayback = uiPlayback; 
     }
 
     @Override
@@ -134,11 +134,11 @@ public class GeneralPhysics implements Physics
         {
             if ( action instanceof SelectAction )
             {
-                actionTypeSwitch.caseSelectAction( (SelectAction)action );
+                uiPlayback.selectToken( (SelectAction)action );
             }
             else if ( action instanceof PlaceTokenAction )
             {
-                actionTypeSwitch.casePlaceTokenAction( (PlaceTokenAction)action );
+                uiPlayback.placeToken( (PlaceTokenAction)action );
             }
         }
     }

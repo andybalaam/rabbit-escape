@@ -64,7 +64,7 @@ public class SwingGameLaunch implements GameLaunch
     private final GameLoop loop;
     private final MainJFrame frame;
     public final SolutionRecorderTemplate solutionRecorder;
-    private final SwingTimeStepActionTypeSwitch actionTypeSwitch;
+    private final SwingPlayback swingPlayback;
 
     /**
      * @param solutionIndex natural number values indicate demo mode. It is the index of the
@@ -84,8 +84,8 @@ public class SwingGameLaunch implements GameLaunch
         SolutionInterpreter solutionInterpreter = createSolutionInterpreter( solutionIndex, world );
         this.frame = init.frame;
         this.solutionRecorder = new SolutionRecorder();
-        this.actionTypeSwitch = new SwingTimeStepActionTypeSwitch( this );
-        this.physics = new GeneralPhysics( world, winListener, solutionRecorder, solutionInterpreter, actionTypeSwitch );
+        this.swingPlayback = new SwingPlayback( this );
+        this.physics = new GeneralPhysics( world, winListener, solutionRecorder, solutionInterpreter, swingPlayback );
 
         // This blocks until the UI is ready:
         WhenUiReady uiPieces = init.waitForUi.waitForUi();
