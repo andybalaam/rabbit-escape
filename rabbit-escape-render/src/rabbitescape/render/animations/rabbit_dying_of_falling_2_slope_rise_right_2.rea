@@ -4,8 +4,8 @@ rabbit_dying_of_falling_slope_rise_right_07 0 4
 rabbit_dying_of_falling_slope_rise_right_08 0 4
 rabbit_dying_of_falling_slope_rise_right_09 0 4
 rabbit_dying_of_falling_slope_rise_right_10 0 4
-rabbit_dying_of_falling_slope_rise_right_11 0 4
-rabbit_dying_of_falling_slope_rise_right_12 0 5
-rabbit_dying_of_falling_slope_rise_right_13_fade 0 5
-rabbit_dying_of_falling_slope_rise_right_14_fade 0 5
+rabbit_dying_of_falling_slope_rise_right_11 -8 4
+rabbit_dying_of_falling_slope_rise_right_12 -10 5
+rabbit_dying_of_falling_slope_rise_right_13_fade -12 5
+rabbit_dying_of_falling_slope_rise_right_14_fade -14 5
 

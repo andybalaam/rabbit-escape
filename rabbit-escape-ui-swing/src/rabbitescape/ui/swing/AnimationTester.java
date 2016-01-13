@@ -117,6 +117,8 @@ public class AnimationTester extends JFrame
             blockNames[i] = noneForNull( blocksList.getSelectedValue() );
 
             saveSelectionsToConfig();
+            
+            canvas.requestFocus();
         }
 
         private void saveSelectionsToConfig()
@@ -188,6 +190,7 @@ public class AnimationTester extends JFrame
                 System.out.println("Left arrow   Slow down");
                 System.out.println("A            In step mode, back one frame");
                 System.out.println("D            In step mode, forward one frame");
+                System.out.println("[CTRL]+X     Clear all animations");
                 System.out.println("H            Print this help");
                 System.out.println("L            Toggle printing log of frames");
                 System.out.println("S            Toggle step mode");
@@ -198,6 +201,20 @@ public class AnimationTester extends JFrame
                 return;
             case KeyEvent.VK_S:
                 stepMode = !stepMode;
+                return;
+            case KeyEvent.VK_X:
+                if ( e.isControlDown() )
+                {
+                    for ( int i = 0 ; i < 9 ; i++ )
+                    {
+                        for ( int j = 0 ; j < 3 ; j++ )
+                        {
+                            animationNames[i][j] = NONE;
+                        }
+                    }
+
+                    saveSelectionsToConfig();
+                }
                 return;
             case KeyEvent.VK_Q:
                 System.exit( 0 );
@@ -336,7 +353,7 @@ public class AnimationTester extends JFrame
 
         Listener listener = new Listener();
         canvas.addMouseListener( listener );
-        addKeyListener( listener );
+        canvas.addKeyListener( listener );
         addComponentListener( listener );
 
         setBoundsFromConfig();
