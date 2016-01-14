@@ -110,12 +110,16 @@ public class GameLoop
 
     private void printDebugOutput()
     {
+        if ( physics.frameNumber() != 0 )
+        { // only want this once per world step, not once per anim frame
+            return;
+        }
         if ( ConfigTools.getBool( config, ConfigKeys.CFG_DEBUG_PRINT_STATES ) )
         {
             int i = 0;
             for ( Rabbit rabbit : physics.world().rabbits )
             {
-                debugout.println( " " + i + ":" + rabbit.state.name() + " onSlope:" + rabbit.onSlope );
+                debugout.println( " " + rabbit.toString() + ":" + rabbit.state.name() + " onSlope:" + rabbit.onSlope );
                 ++i;
             }
         }
