@@ -10,6 +10,7 @@ import rabbitescape.render.*;
 import rabbitescape.render.Frame;
 import rabbitescape.render.Renderer;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 
 import java.awt.*;
@@ -17,6 +18,9 @@ import java.awt.event.ComponentEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferStrategy;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.*;
 import java.util.List;
 
@@ -25,6 +29,12 @@ import static rabbitescape.render.AnimationLoader.*;
 
 public class AnimationTester extends JFrame
 {
+    public enum Mode {
+        RUN,
+        STEP,
+        FRAME_DUMP
+    }
+    
     private static final long serialVersionUID = 1L;
 
     private static final String CONFIG_PATH =
@@ -106,6 +116,8 @@ public class AnimationTester extends JFrame
                 null
             );
 
+            canvas.requestFocus();
+
             if ( retVal == JOptionPane.CANCEL_OPTION )
             {
                 return;
@@ -185,23 +197,33 @@ public class AnimationTester extends JFrame
                 forwardStep = true;
                 return;
             case KeyEvent.VK_H:
-                System.out.println("");
-                System.out.println("Right arrow  Speed up");
-                System.out.println("Left arrow   Slow down");
-                System.out.println("A            In step mode, back one frame");
-                System.out.println("D            In step mode, forward one frame");
-                System.out.println("[CTRL]+X     Clear all animations");
-                System.out.println("H            Print this help");
-                System.out.println("L            Toggle printing log of frames");
-                System.out.println("S            Toggle step mode");
-                System.out.println("Q            Quit");
+                System.out.println( "" );
+                System.out.println( "Right arrow  Speed up" );
+                System.out.println( "Left arrow   Slow down" );
+                System.out.println( "A            In step mode, back one frame" );
+                System.out.println( "D            In step mode, forward one frame" );
+                System.out.println( "[CTRL]+X     Clear all animations" );
+                System.out.println( "H            Print this help" );
+                System.out.println( "L            Toggle printing log of frames" );
+                System.out.println( "S            Toggle step mode" );
+                System.out.println( "Q            Quit" );
+                System.out.println( "F5           Dump 30 frames to png" );
                 return;
             case KeyEvent.VK_L:
                 frameLogging = !frameLogging;
                 return;
             case KeyEvent.VK_S:
-                stepMode = !stepMode;
-                return;
+                switch ( runMode )
+                {
+                case RUN:
+                    runMode = Mode.STEP;
+                    return;
+                case STEP:
+                    runMode = Mode.RUN;
+                    return;
+                default:
+                    return;
+                }
             case KeyEvent.VK_X:
                 if ( e.isControlDown() )
                 {
@@ -216,6 +238,9 @@ public class AnimationTester extends JFrame
                     saveSelectionsToConfig();
                 }
                 return;
+            case KeyEvent.VK_F5:
+                runMode = Mode.FRAME_DUMP;
+                return;
             case KeyEvent.VK_Q:
                 System.exit( 0 );
                 return; // Should not be necessary. Gets rid of intermittent compiler warning
@@ -227,7 +252,8 @@ public class AnimationTester extends JFrame
 
     }
 
-    private boolean stepMode = false;
+    private Mode runMode = Mode.RUN;
+    private FrameCounter firstFrameDumped = null;
     private boolean forwardStep = false;
     private boolean backwardStep = false;
     private boolean frameLogging = false;
@@ -366,6 +392,7 @@ public class AnimationTester extends JFrame
 
         // Must do this after frame is made visible
         canvas.createBufferStrategy( 2 );
+        canvas.requestFocus();
     }
 
     private void setBoundsFromConfig()
@@ -396,9 +423,36 @@ public class AnimationTester extends JFrame
 
     private class FrameCounter
     {
-        private int frameNum = 0;
-        private int frameSetNum = 0;
+        private int frameSetNum ;
+        private int frameNum ;
 
+        public FrameCounter( FrameCounter f )
+        {
+            this.frameSetNum = f.frameSetNum;
+            this.frameNum = f.frameNum;
+        }
+        
+        public FrameCounter()
+        {
+            frameSetNum = 0;
+            frameNum = 0;
+        }
+        
+        @Override
+        public boolean equals( Object o )
+        {
+            if ( null == o )
+            {
+                return false;
+            }
+            if ( !(o instanceof FrameCounter ) )
+            {
+                return false;
+            }
+            FrameCounter f = (FrameCounter)o;
+            return this.frameSetNum == f.frameSetNum && this.frameNum == f.frameNum ;
+        }
+        
         public void inc()
         {
             ++frameNum;
@@ -452,45 +506,94 @@ public class AnimationTester extends JFrame
         running = true;
         while( running && this.isVisible() )
         {
-            new DrawFrame(
+            DrawFrame drawFrame = new DrawFrame(
                 strategy, renderer, soundPlayer, counter.getFrameSetNum(),
-                counter.getFrameNum() ).run();
-
-            if( stepMode )
+                counter.getFrameNum() );
+            drawFrame.run();
+            
+            switch ( runMode )
             {
-                while( true )
-                {
-                    try
-                    {
-                        Thread.sleep( 50 );
-                    }
-                    catch ( InterruptedException e )
-                    {
-                        // Ignore
-                    }
-                    if( forwardStep )
-                    {
-                        forwardStep = false;
-                        counter.inc();
-                        break;
-                    }
-                    if( backwardStep )
-                    {
-                        backwardStep = false;
-                        counter.dec();
-                        break;
-                    }
-
-                }
-            }
-            else
-            {
-                pause();
-                counter.inc();
+            case STEP:
+                counter = keyStep(counter);
+                continue;
+            case RUN:
+                counter = runStep( counter );
+                continue;
+            case FRAME_DUMP:
+                counter = frameDumpStep( counter, drawFrame );
+                continue;
             }
         }
     }
-
+    
+    private FrameCounter keyStep( FrameCounter counter )
+    {
+        while( true )
+        {
+            try
+            {
+                Thread.sleep( 50 );
+            }
+            catch ( InterruptedException e )
+            {
+                // Ignore
+            }
+            if( forwardStep )
+            {
+                forwardStep = false;
+                counter.inc();
+                return counter;
+            }
+            if( backwardStep )
+            {
+                backwardStep = false;
+                counter.dec();
+                return counter;
+            }
+        }
+    }
+    
+    private FrameCounter runStep( FrameCounter counter )
+    {
+        pause();
+        counter.inc();
+        return counter;
+    }
+    
+    private FrameCounter frameDumpStep( FrameCounter counter, DrawFrame drawFrame )
+    {
+        try
+        {
+            if ( counter.equals( firstFrameDumped ) ) 
+            { // A whole set has been dumped. Revert to normal
+                runMode = Mode.RUN;
+                firstFrameDumped = null;
+                System.out.println();
+                counter.inc();
+                return counter;
+            }
+            if ( null == firstFrameDumped )
+            {
+                System.out.print( "Dumping anim_test_frame_<set>_<frame>.png:" );
+                firstFrameDumped = new FrameCounter( counter );
+            }
+            BufferedImage im = new BufferedImage( canvas.getWidth(), canvas.getHeight(), BufferedImage.TYPE_INT_ARGB );
+            drawFrame.draw( (Graphics2D)im.getGraphics() );
+            String fileName = String.format("anim_test_frame_%02d_%02d.png", counter.getFrameSetNum(), counter.getFrameNum() );
+            System.out.printf(" %02d_%02d", counter.getFrameSetNum(), counter.getFrameNum() );
+            ImageIO.write( im, "PNG", new File( fileName ) );
+            // convert -delay 10 -loop 0 *.png animation.gif
+            counter.inc();
+            return counter;
+        }
+        catch ( Exception e )
+        {
+            e.printStackTrace();
+            System.exit( 1 );
+            return null; // The compiler can be dumb.
+        }
+    }
+    
     private class DrawFrame extends BufferedDraw
     {
         private final int frameSetNum;
@@ -569,7 +672,7 @@ public class AnimationTester extends JFrame
                             frame.offsetY
                         );
 
-                        if( frameLogging )
+                        if( frameLogging && Mode.FRAME_DUMP != runMode  )
                         {
                             System.out.println( frame.name );
                         }
