@@ -208,6 +208,8 @@ public class AnimationTester extends JFrame
                 System.out.println( "S            Toggle step mode" );
                 System.out.println( "Q            Quit" );
                 System.out.println( "F5           Dump 30 frames to png" );
+                System.out.println( "F6           After creating pngs, animate them" );
+                System.out.println( "             Requires ImageMagick" );
                 return;
             case KeyEvent.VK_L:
                 frameLogging = !frameLogging;
@@ -427,7 +429,18 @@ public class AnimationTester extends JFrame
     
     private void framesToGif()
     {
-        //System.
+        String cmd = String.format( "convert -delay 10 -loop 0 %s*.png %sanimation.gif", 
+                recordingDir, recordingDir );
+        try
+        {
+            Runtime.getRuntime().exec( cmd );
+            System.out.printf( "Wrote:  %sanimation.gif\n", recordingDir );
+        }
+        catch ( IOException e )
+        {
+            System.err.println( "convert from ImageMagick is required to make animated gifs" );
+            e.printStackTrace();
+        }
     }
 
     private class FrameCounter
@@ -589,7 +602,7 @@ public class AnimationTester extends JFrame
                 do
                 {
                     recordingDir = String.format( ".%srecordings%s%04d%s", 
-                             File.separator, File.separator, dirCount, File.separator );
+                             File.separator, File.separator, dirCount++, File.separator );
                 }
                 while ( fs.exists( recordingDir ) );
                 
@@ -604,7 +617,6 @@ public class AnimationTester extends JFrame
                 recordingDir, counter.getFrameSetNum(), counter.getFrameNum() );
             System.out.printf(" %02d_%02d", counter.getFrameSetNum(), counter.getFrameNum() );
             ImageIO.write( im, "PNG", new File( fileName ) );
-            // convert -delay 10 -loop 0 *.png animation.gif
             counter.inc();
             return counter;
         }
