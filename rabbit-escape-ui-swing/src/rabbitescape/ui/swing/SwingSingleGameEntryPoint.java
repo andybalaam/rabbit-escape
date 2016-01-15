@@ -59,11 +59,23 @@ public class SwingSingleGameEntryPoint extends SingleGameEntryPoint
 
         CommandLineOption level =        new CommandLineOption( "--level",        true );
         CommandLineOption solution =     new CommandLineOption( "--solution",     true );
+        CommandLineOption anim =         new CommandLineOption( "--animation",    false );
 
         CommandLineOptionSet.parse( args,
-                                    level, solution);
+                                    level, solution, anim);
         try
         {
+            if ( anim.isPresent() )
+            {
+                AnimationTester.main( new String[] {} );
+                System.exit( 0 );
+            }
+
+            if ( 1 == args.length )
+            { // Single arg must be level file
+                go( args, SwingGameLaunch.NOT_DEMO_MODE );
+                System.exit( 0 );
+            }
             if ( solution.isPresent() )
             {
                 go( new String[] {level.getValue()}, solution.getInt() );

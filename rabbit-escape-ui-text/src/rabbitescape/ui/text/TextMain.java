@@ -142,6 +142,7 @@ public class TextMain
             " --help                         (This) message and exit.\n" +
             " swing                          Play using the swing GUI menus.\n" +
             " swing level.rel                Play a single level using the swing GUI.\n" +
+            " swing --animation              Animation tester.\n" +
             " [--level] level.rel            Play a single level using the text UI.\n" +
             " --level <file> --solution <n>  Print world steps.\n" +
             " --encode <string>              Obfuscate a string, for hints etc\n" +
