@@ -8,6 +8,7 @@ rabbit-escape-ui-swing/src/rabbitescape/ui/swing/music/*.wav
 .idea/workspace.xml
 ls.txt
 doc/doxygen
+recordings/
 
 # Android
 rabbit-escape-ui-android/app/libs/rabbit-escape-generic.jar
