@@ -241,6 +241,9 @@ public class AnimationTester extends JFrame
             case KeyEvent.VK_F5:
                 runMode = Mode.FRAME_DUMP;
                 return;
+            case KeyEvent.VK_F6:
+                framesToGif();
+                return;
             case KeyEvent.VK_Q:
                 System.exit( 0 );
                 return; // Should not be necessary. Gets rid of intermittent compiler warning
@@ -254,6 +257,7 @@ public class AnimationTester extends JFrame
 
     private Mode runMode = Mode.RUN;
     private FrameCounter firstFrameDumped = null;
+    private String recordingDir = null;
     private boolean forwardStep = false;
     private boolean backwardStep = false;
     private boolean frameLogging = false;
@@ -420,6 +424,11 @@ public class AnimationTester extends JFrame
             System.exit( 2 );
         }
     }
+    
+    private void framesToGif()
+    {
+        //System.
+    }
 
     private class FrameCounter
     {
@@ -574,12 +583,25 @@ public class AnimationTester extends JFrame
             }
             if ( null == firstFrameDumped )
             {
-                System.out.print( "Dumping anim_test_frame_<set>_<frame>.png:" );
+                RealFileSystem fs = new RealFileSystem();
+                
+                int dirCount = 0;
+                do
+                {
+                    recordingDir = String.format( ".%srecordings%s%04d%s", 
+                             File.separator, File.separator, dirCount, File.separator );
+                }
+                while ( fs.exists( recordingDir ) );
+                
+                fs.mkdirs( recordingDir );
+                System.out.printf( "Dumping %sanim_test_frame_<set>_<frame>.png:", recordingDir );
                 firstFrameDumped = new FrameCounter( counter );
             }
-            BufferedImage im = new BufferedImage( canvas.getWidth(), canvas.getHeight(), BufferedImage.TYPE_INT_ARGB );
+            BufferedImage im = new BufferedImage( canvas.getWidth(), canvas.getHeight(), 
+                BufferedImage.TYPE_INT_ARGB );
             drawFrame.draw( (Graphics2D)im.getGraphics() );
-            String fileName = String.format("anim_test_frame_%02d_%02d.png", counter.getFrameSetNum(), counter.getFrameNum() );
+            String fileName = String.format("%sanim_test_frame_%02d_%02d.png", 
+                recordingDir, counter.getFrameSetNum(), counter.getFrameNum() );
             System.out.printf(" %02d_%02d", counter.getFrameSetNum(), counter.getFrameNum() );
             ImageIO.write( im, "PNG", new File( fileName ) );
             // convert -delay 10 -loop 0 *.png animation.gif
