@@ -13,10 +13,23 @@
    height="32"
    id="svg2"
    version="1.1"
-   inkscape:version="0.48.4 r9939"
-   sodipodi:docname="menu-unpause.svg">
+   inkscape:version="0.48.5 r10040"
+   sodipodi:docname="menu_unpause.svg">
   <defs
-     id="defs4" />
+     id="defs4">
+    <filter
+       inkscape:collect="always"
+       id="filter4414"
+       x="-0.2904"
+       width="1.5808"
+       y="-0.242"
+       height="1.484">
+      <feGaussianBlur
+         inkscape:collect="always"
+         stdDeviation="2.42"
+         id="feGaussianBlur4416" />
+    </filter>
+  </defs>
   <sodipodi:namedview
      id="base"
      pagecolor="#ffffff"
@@ -24,16 +37,16 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="26.59375"
-     inkscape:cx="16"
-     inkscape:cy="16"
+     inkscape:zoom="16"
+     inkscape:cx="16.499769"
+     inkscape:cy="19.069915"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
      inkscape:window-width="1920"
-     inkscape:window-height="1031"
+     inkscape:window-height="1014"
      inkscape:window-x="0"
-     inkscape:window-y="26"
+     inkscape:window-y="27"
      inkscape:window-maximized="1" />
   <metadata
      id="metadata7">
@@ -52,10 +65,41 @@
      inkscape:groupmode="layer"
      id="layer1"
      transform="translate(0,-1020.3622)">
-    <path
-       style="fill:#000000;fill-opacity:1;stroke:none"
-       d="m 6,1024.3622 20,12.6985 -19.8742138,11.3015 z"
-       id="path3908"
-       inkscape:connector-curvature="0" />
+    <g
+       id="g3878">
+      <rect
+         y="1024.3622"
+         x="19"
+         height="24"
+         width="7"
+         id="rect2985"
+         style="fill:#000000;fill-opacity:1;stroke:none" />
+      <rect
+         y="1024.3622"
+         x="6"
+         height="24"
+         width="7"
+         id="rect2985-7"
+         style="fill:#000000;fill-opacity:1;stroke:none" />
+    </g>
+    <g
+       transform="translate(-0.06249993,-0.06248294)"
+       id="g3878-1"
+       style="fill:#00ff00;fill-opacity:1;filter:url(#filter4414)">
+      <rect
+         y="1024.3622"
+         x="19"
+         height="24"
+         width="7"
+         id="rect2985-2"
+         style="fill:#00ff00;fill-opacity:1;stroke:none" />
+      <rect
+         y="1024.3622"
+         x="6"
+         height="24"
+         width="7"
+         id="rect2985-7-3"
+         style="fill:#00ff00;fill-opacity:1;stroke:none" />
+    </g>
   </g>
 </svg>
