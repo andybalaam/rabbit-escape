@@ -51,8 +51,8 @@ public class SwingSingleGameEntryPoint extends SingleGameEntryPoint
 
     public static void entryPoint( String[] args )
     {
-        if ( 1 == args.length )
-        {
+        if ( 1 == args.length && args[0].endsWith( ".rel" ) )
+        { // Single arg must level file
             go( args, SwingGameLaunch.NOT_DEMO_MODE );
             System.exit( 0 );
         }
@@ -68,12 +68,6 @@ public class SwingSingleGameEntryPoint extends SingleGameEntryPoint
             if ( anim.isPresent() )
             {
                 AnimationTester.main( new String[] {} );
-                System.exit( 0 );
-            }
-
-            if ( 1 == args.length )
-            { // Single arg must be level file
-                go( args, SwingGameLaunch.NOT_DEMO_MODE );
                 System.exit( 0 );
             }
             if ( solution.isPresent() )
