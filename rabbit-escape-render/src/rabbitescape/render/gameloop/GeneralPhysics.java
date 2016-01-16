@@ -3,6 +3,7 @@ package rabbitescape.render.gameloop;
 import java.util.ArrayList;
 import java.util.List;
 
+import rabbitescape.engine.err.RabbitEscapeException;
 import rabbitescape.engine.solution.PlaceTokenAction;
 import rabbitescape.engine.solution.SelectAction;
 import rabbitescape.engine.solution.SolutionIgnorer;
@@ -12,6 +13,7 @@ import rabbitescape.engine.solution.SolutionTimeStep;
 import rabbitescape.engine.solution.TimeStepAction;
 import rabbitescape.engine.solution.UiPlayback;
 import rabbitescape.engine.LevelWinListener;
+import rabbitescape.engine.SpeedOutOfRange;
 import rabbitescape.engine.Token;
 import rabbitescape.engine.World;
 import rabbitescape.engine.World.CompletionState;
@@ -89,9 +91,9 @@ public class GeneralPhysics implements Physics
     
     public void setSpeed( int speed )
     {
-        if ( speed > 10 )
+        if ( speed > 10 || speed < 1 )
         {
-            //TODO exception: hyperspeed may miss world steps.
+            throw new SpeedOutOfRange( speed );
         }
         this.speed = speed;
     }
