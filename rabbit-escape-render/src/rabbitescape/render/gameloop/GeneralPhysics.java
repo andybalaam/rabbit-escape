@@ -89,6 +89,10 @@ public class GeneralPhysics implements Physics
     
     public void setSpeed( int speed )
     {
+        if ( speed > 10 )
+        {
+            //TODO exception: hyperspeed may miss world steps.
+        }
         this.speed = speed;
     }
 
