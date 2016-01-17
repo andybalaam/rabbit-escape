@@ -7,22 +7,22 @@ public class SolutionRecorder implements SolutionRecorderTemplate
 {
     private List<CommandAction> commandInProgress;
     private final List<SolutionCommand> solutionInProgress;
-    
+
     public SolutionRecorder()
     {
         commandInProgress = new ArrayList<CommandAction>();
         solutionInProgress = new ArrayList<SolutionCommand>();
     }
 
-    public void append( CommandAction a ) 
+    public void append( CommandAction a )
     {
         commandInProgress.add( a );
     }
-    
+
     public void append( SolutionCommand newCmd )
     {
         int prevCmdIndex = solutionInProgress.size() - 1;
-        SolutionCommand prevCmd =   prevCmdIndex >= 0 
+        SolutionCommand prevCmd =   prevCmdIndex >= 0
                                   ? solutionInProgress.get( prevCmdIndex )
                                   : null ;
         SolutionCommand combCmd = SolutionCommand.tryToSimplify( prevCmd, newCmd );
@@ -35,7 +35,7 @@ public class SolutionRecorder implements SolutionRecorderTemplate
             solutionInProgress.set( prevCmdIndex, combCmd );
         }
     }
-    
+
     public void append( Solution solution )
     {
         for ( SolutionCommand command : solution.commands )
@@ -43,7 +43,7 @@ public class SolutionRecorder implements SolutionRecorderTemplate
             append( command );
         }
     }
-    
+
     public void appendStepEnd()
     {
         CommandAction[] aA = new CommandAction[commandInProgress.size()];

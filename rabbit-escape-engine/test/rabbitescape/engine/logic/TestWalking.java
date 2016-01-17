@@ -2226,7 +2226,7 @@ public class TestWalking
 
         assertThat( resultLines, equalTo( lines ) );
     }
-    
+
     @Test
     public void No_levitation_after_slope_dug_out()
     {

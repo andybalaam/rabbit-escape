@@ -105,17 +105,17 @@ public class SwingGameLaunch implements GameLaunch
         loop = new GameLoop(
             new SwingInput(), physics, graphics, config, debugout );
     }
-    
+
     public GameUi getUi()
     {
         return jframe;
     }
-    
+
     public void setSpeed( int speed )
     {
         physics.setSpeed( speed );
     }
-    
+
     private static SolutionInterpreter createSolutionInterpreter( int solutionIndex, World world )
     {
         if ( NOT_DEMO_MODE == solutionIndex )

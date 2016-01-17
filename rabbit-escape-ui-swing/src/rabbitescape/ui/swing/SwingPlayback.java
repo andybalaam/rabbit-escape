@@ -7,7 +7,7 @@ import rabbitescape.engine.solution.UiPlayback;
 public class SwingPlayback implements UiPlayback
 {
     final private SwingGameLaunch launch;
-    
+
     public SwingPlayback( SwingGameLaunch launch )
     {
         this.launch = launch;
@@ -25,6 +25,6 @@ public class SwingPlayback implements UiPlayback
         launch.getUi().addToken( placeTokenAction.x, placeTokenAction.y );
     }
 
-    
+
 
 }

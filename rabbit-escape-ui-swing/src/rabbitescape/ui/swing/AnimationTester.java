@@ -117,7 +117,7 @@ public class AnimationTester extends JFrame
             blockNames[i] = noneForNull( blocksList.getSelectedValue() );
 
             saveSelectionsToConfig();
-            
+
             canvas.requestFocus();
         }
 

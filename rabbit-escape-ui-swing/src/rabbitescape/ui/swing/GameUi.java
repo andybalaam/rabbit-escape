@@ -629,7 +629,7 @@ public class GameUi implements StatsChangedListener
 
         addToken( tileX, tileY );
     }
-    
+
     protected void addToken(int tileX, int tileY )
     {
         if ( chosenAbility == null )

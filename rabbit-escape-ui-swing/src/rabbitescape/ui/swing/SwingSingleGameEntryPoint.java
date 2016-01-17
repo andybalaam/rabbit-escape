@@ -56,10 +56,10 @@ public class SwingSingleGameEntryPoint extends SingleGameEntryPoint
             go( args, SwingGameLaunch.NOT_DEMO_MODE );
             System.exit( 0 );
         }
-        
+
         CommandLineOption level =        new CommandLineOption( "--level",        true );
         CommandLineOption solution =     new CommandLineOption( "--solution",     true );
-        
+
         CommandLineOptionSet.parse( args,
                                     level, solution);
         try
@@ -80,9 +80,9 @@ public class SwingSingleGameEntryPoint extends SingleGameEntryPoint
             e.printStackTrace();
             System.exit( 1 );
         }
-        
+
     }
-    
+
     private static void go( String[] fileName, int solutionIndex )
     {
 

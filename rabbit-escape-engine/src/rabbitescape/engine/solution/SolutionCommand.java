@@ -13,18 +13,18 @@ public class SolutionCommand
     {
         private static final long serialVersionUID = 1L;
         final public String command;
-        
+
         public WaitActionInMultiActionCommand( String command )
         {
             this.command = command;
         }
     }
-    
+
     public final CommandAction[] actions;
 
     /**
      * If the supplied array (vararg) of CommandActions is empty
-     * a default WaitAction of 1 step will be created. The solution fragment 
+     * a default WaitAction of 1 step will be created. The solution fragment
      * ";;" has implied ones, "1;1;".
      */
     public SolutionCommand( CommandAction... actions )
@@ -39,7 +39,7 @@ public class SolutionCommand
         }
         checkWaitInMultiAction();
     }
-    
+
     private void checkWaitInMultiAction()
     {
         if ( actions.length > 1 )
@@ -73,7 +73,7 @@ public class SolutionCommand
 
         return Arrays.deepEquals( actions, otherSolution.actions );
     }
-    
+
     /**
      * Try to combine two commands. If this is not possible then return null.
      */

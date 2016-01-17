@@ -46,7 +46,7 @@ public class SolutionInterpreter
         this.command = null;
         this.untilCount = -1;
     }
-    
+
     public static SolutionInterpreter getNothingPlaying()
     {
         SolutionInterpreter nothingPlaying = new SolutionInterpreter( SolutionParser.parse( "1" ) );

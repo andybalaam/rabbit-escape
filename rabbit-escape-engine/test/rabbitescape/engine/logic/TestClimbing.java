@@ -675,7 +675,7 @@ public class TestClimbing
             "#####"
         );
     }
-    
+
     @Test
     public void Dont_revert_to_climber_after_digging_and_having_been_on_a_slope()
     {
