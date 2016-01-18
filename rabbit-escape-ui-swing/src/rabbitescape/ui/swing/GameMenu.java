@@ -39,6 +39,7 @@ class GameMenu
 
     public JToggleButton mute;
     public JToggleButton pause;
+    public JToggleButton speed;
     public final JButton explodeAll;
     public final JButton zoomIn;
     public final JButton zoomOut;
@@ -73,6 +74,9 @@ class GameMenu
 
         this.pause = addToggleButton(
             "menu_pause", "menu_unpause", false, t( "Pause" ) );
+        
+        this.speed = addToggleButton(
+            "menu_speedup_inactive", "menu_speedup_active", false, t( "speed up" ) );
 
         addSpacer();
 

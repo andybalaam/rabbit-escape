@@ -182,6 +182,8 @@ public class GameUi implements StatsChangedListener
 
     private static final Color backgroundColor = Color.WHITE;
     private static int[] zoomValues = { 16, 24, 32, 48, 64, 96, 128 };
+    private static final int[] speeds = { 1, 3 };
+    private int speedIndex = 0;
 
         // 32x32 is the lowest "reasonable" zoom size
     private static int MIN_AUTO_ZOOM_INDEX = 2;
@@ -425,6 +427,18 @@ public class GameUi implements StatsChangedListener
         } );
 
         MenuTools.clickOnKey( menu.pause, "pause", KeyEvent.VK_P );
+        
+        menu.speed.addActionListener( new ActionListener() 
+        {
+            @Override
+            public void actionPerformed( ActionEvent evt )
+            {
+                speedIndex = -1 * ( speedIndex -1 ); // Toggles 0 <-> 1
+                gameLaunch.setSpeed( speeds[speedIndex] );
+            }
+        } );
+        
+        MenuTools.clickOnKey( menu.speed, "speed up", KeyEvent.VK_S );
 
         canvasScrollBarX.addAdjustmentListener(
             new AdjustmentListener()

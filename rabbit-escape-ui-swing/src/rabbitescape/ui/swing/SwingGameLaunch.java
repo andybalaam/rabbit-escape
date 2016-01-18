@@ -111,6 +111,11 @@ public class SwingGameLaunch implements GameLaunch
         return jframe;
     }
     
+    public void setSpeed( int speed )
+    {
+        physics.setSpeed( speed );
+    }
+    
     private static SolutionInterpreter createSolutionInterpreter( int solutionIndex, World world )
     {
         if ( NOT_DEMO_MODE == solutionIndex )

@@ -14,20 +14,20 @@
    id="svg2"
    version="1.1"
    inkscape:version="0.48.5 r10040"
-   sodipodi:docname="menu_unpause.svg">
+   sodipodi:docname="menu_speedup_active.svg">
   <defs
      id="defs4">
     <filter
        inkscape:collect="always"
-       id="filter4414"
-       x="-0.2904"
-       width="1.5808"
-       y="-0.242"
-       height="1.484">
+       id="filter5710"
+       x="-0.231"
+       width="1.462"
+       y="-0.308"
+       height="1.616">
       <feGaussianBlur
          inkscape:collect="always"
-         stdDeviation="2.42"
-         id="feGaussianBlur4416" />
+         stdDeviation="2.31"
+         id="feGaussianBlur5712" />
     </filter>
   </defs>
   <sodipodi:namedview
@@ -37,17 +37,21 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="16"
-     inkscape:cx="16.499769"
-     inkscape:cy="19.069915"
+     inkscape:zoom="18.804621"
+     inkscape:cx="19.072616"
+     inkscape:cy="16"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
-     showgrid="false"
+     showgrid="true"
      inkscape:window-width="1920"
      inkscape:window-height="1014"
      inkscape:window-x="0"
      inkscape:window-y="27"
-     inkscape:window-maximized="1" />
+     inkscape:window-maximized="1">
+    <inkscape:grid
+       type="xygrid"
+       id="grid8811" />
+  </sodipodi:namedview>
   <metadata
      id="metadata7">
     <rdf:RDF>
@@ -66,39 +70,35 @@
      id="layer1"
      transform="translate(0,-1020.3622)">
     <g
-       id="g3878">
-      <rect
-         y="1024.3622"
-         x="19"
-         height="24"
-         width="7"
-         id="rect2985"
+       id="g3889"
+       style="fill:#000000;fill-opacity:1">
+      <path
+         sodipodi:nodetypes="cccc"
+         inkscape:connector-curvature="0"
+         id="path3908"
+         d="m 6,1027.3622 14,9 -13.9119496,9 z"
          style="fill:#000000;fill-opacity:1;stroke:none" />
-      <rect
-         y="1024.3622"
-         x="6"
-         height="24"
-         width="7"
-         id="rect2985-7"
+      <path
+         sodipodi:nodetypes="cccc"
+         inkscape:connector-curvature="0"
+         id="path3908-0"
+         d="m 16,1027.3622 14,9 -13.91195,9 z"
          style="fill:#000000;fill-opacity:1;stroke:none" />
     </g>
     <g
-       transform="translate(-0.06249993,-0.06248294)"
-       id="g3878-1"
-       style="fill:#00ff00;fill-opacity:1;filter:url(#filter4414)">
-      <rect
-         y="1024.3622"
-         x="19"
-         height="24"
-         width="7"
-         id="rect2985-2"
+       id="g3889-8"
+       style="fill:#00ff00;fill-opacity:1;filter:url(#filter5710)">
+      <path
+         sodipodi:nodetypes="cccc"
+         inkscape:connector-curvature="0"
+         id="path3908-2"
+         d="m 6,1027.3622 14,9 -13.9119496,9 z"
          style="fill:#00ff00;fill-opacity:1;stroke:none" />
-      <rect
-         y="1024.3622"
-         x="6"
-         height="24"
-         width="7"
-         id="rect2985-7-3"
+      <path
+         sodipodi:nodetypes="cccc"
+         inkscape:connector-curvature="0"
+         id="path3908-0-9"
+         d="m 16,1027.3622 14,9 -13.91195,9 z"
          style="fill:#00ff00;fill-opacity:1;stroke:none" />
     </g>
   </g>

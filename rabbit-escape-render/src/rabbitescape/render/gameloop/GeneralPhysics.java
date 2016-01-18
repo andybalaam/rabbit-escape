@@ -3,6 +3,7 @@ package rabbitescape.render.gameloop;
 import java.util.ArrayList;
 import java.util.List;
 
+import rabbitescape.engine.err.RabbitEscapeException;
 import rabbitescape.engine.solution.PlaceTokenAction;
 import rabbitescape.engine.solution.SelectAction;
 import rabbitescape.engine.solution.SolutionIgnorer;
@@ -12,6 +13,7 @@ import rabbitescape.engine.solution.SolutionTimeStep;
 import rabbitescape.engine.solution.TimeStepAction;
 import rabbitescape.engine.solution.UiPlayback;
 import rabbitescape.engine.LevelWinListener;
+import rabbitescape.engine.SpeedOutOfRange;
 import rabbitescape.engine.Token;
 import rabbitescape.engine.World;
 import rabbitescape.engine.World.CompletionState;
@@ -59,6 +61,9 @@ public class GeneralPhysics implements Physics
     private final SolutionInterpreter solutionInterpreter;
     private final UiPlayback uiPlayback;
     
+    /** Speed factor. 1 is normal, 2 is twice as fast, and so on. */
+    private int speed = 1;
+    
     public GeneralPhysics( World world, LevelWinListener winListener )
     {
         this( world, 
@@ -83,6 +88,15 @@ public class GeneralPhysics implements Physics
         this.solutionInterpreter = solutionInterpreter;
         this.uiPlayback = uiPlayback; 
     }
+    
+    public void setSpeed( int speed )
+    {
+        if ( speed > 10 || speed < 1 )
+        {
+            throw new SpeedOutOfRange( speed );
+        }
+        this.speed = speed;
+    }
 
     @Override
     public long step( long simulation_time, long frame_start_time )
@@ -94,11 +108,11 @@ public class GeneralPhysics implements Physics
                 break;
             }
 
-            ++frame;
+            frame += speed;
 
-            if ( frame == 10 )
+            if ( frame >= 10 )
             {
-                frame = 0;
+                frame -= 10;
 
                 doInterpreterActions();
                 worldModifier.step();
