@@ -51,19 +51,25 @@ public class SwingSingleGameEntryPoint extends SingleGameEntryPoint
 
     public static void entryPoint( String[] args )
     {
-        if ( 1 == args.length )
-        {
+        if ( 1 == args.length && args[0].endsWith( ".rel" ) )
+        { // Single arg must level file
             go( args, SwingGameLaunch.NOT_DEMO_MODE );
             System.exit( 0 );
         }
 
         CommandLineOption level =        new CommandLineOption( "--level",        true );
         CommandLineOption solution =     new CommandLineOption( "--solution",     true );
+        CommandLineOption anim =         new CommandLineOption( "--animation",    false );
 
         CommandLineOptionSet.parse( args,
-                                    level, solution);
+                                    level, solution, anim);
         try
         {
+            if ( anim.isPresent() )
+            {
+                AnimationTester.main( new String[] {} );
+                System.exit( 0 );
+            }
             if ( solution.isPresent() )
             {
                 go( new String[] {level.getValue()}, solution.getInt() );
