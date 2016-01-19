@@ -277,6 +277,9 @@ clean-music: no-make-warnings
 
 clean-all: clean clean-images clean-sounds clean-music clean-doxygen
 
+remove-trailing:
+	find ./ -name '*.java' -print0 | xargs -0 perl -p -i -e 's/[ \t]+$$//'
+
 run: compile-noui
 	java -cp $(CLASSPATH) rabbitescape.ui.text.TextMain --noinput test/level_01.rel
 

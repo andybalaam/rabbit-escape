@@ -370,7 +370,7 @@ public class TestSolutionParser
     {
         assertThat( "dig&(7,4);until:LOST", roundTrips() );
     }
-    
+
     @Test( expected=SolutionCommand.WaitActionInMultiActionCommand.class )
     public void Multi_action_commands_must_not_include_a_wait()
     {

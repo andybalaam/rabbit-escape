@@ -138,7 +138,7 @@ public class Climbing extends Behaviour
     public boolean behave( World world, Rabbit rabbit, State state )
     {
         BehaviourTools t = new BehaviourTools( rabbit, world );
-        
+
         if( t.rabbitIsClimbing() )
         { // Can't be both on a wall and on a slope.
             rabbit.onSlope = false;

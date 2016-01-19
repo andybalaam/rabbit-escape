@@ -60,22 +60,22 @@ public class GeneralPhysics implements Physics
     private final List<StatsChangedListener> statsListeners;
     private final SolutionInterpreter solutionInterpreter;
     private final UiPlayback uiPlayback;
-    
+
     /** Speed factor. 1 is normal, 2 is twice as fast, and so on. */
     private int speed = 1;
-    
+
     public GeneralPhysics( World world, LevelWinListener winListener )
     {
-        this( world, 
-              winListener, 
-              new SolutionIgnorer(), 
+        this( world,
+              winListener,
+              new SolutionIgnorer(),
               SolutionInterpreter.getNothingPlaying(),
               null);
     }
-    
 
-    public GeneralPhysics( World world, 
-                           LevelWinListener winListener, 
+
+    public GeneralPhysics( World world,
+                           LevelWinListener winListener,
                            SolutionRecorderTemplate solutionRecorder,
                            SolutionInterpreter solutionInterpreter,
                            UiPlayback uiPlayback)
@@ -86,7 +86,7 @@ public class GeneralPhysics implements Physics
         this.winListener = winListener;
         this.statsListeners = new ArrayList<>();
         this.solutionInterpreter = solutionInterpreter;
-        this.uiPlayback = uiPlayback; 
+        this.uiPlayback = uiPlayback;
     }
     
     public void setSpeed( int speed )
@@ -156,7 +156,7 @@ public class GeneralPhysics implements Physics
             }
         }
     }
-    
+
     private void notifyStatsListeners()
     {
         for ( StatsChangedListener listener : statsListeners )
