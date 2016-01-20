@@ -10,4 +10,9 @@ public class Position
         this.x = x;
         this.y = y;
     }
+
+    public Position plus( Position p )
+    {
+        return new Position( this.x + p.x, this.y + p.y );
+    }
 }
