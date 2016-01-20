@@ -459,7 +459,13 @@ public class AnimationTester extends JFrame
             frameSetNum = 0;
             frameNum = 0;
         }
-        
+
+        @Override
+        public int hashCode()
+        {
+            return 31 * frameSetNum + frameNum;
+        }
+
         @Override
         public boolean equals( Object o )
         {
