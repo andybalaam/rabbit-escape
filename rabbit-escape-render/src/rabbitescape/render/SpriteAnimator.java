@@ -80,6 +80,8 @@ public class SpriteAnimator
             }
         }
 
+        VoidBringer.mark( world, ret );
+
         return ret;
     }
 
