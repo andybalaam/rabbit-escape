@@ -32,6 +32,32 @@ public class VoidBringer
         "void_highlighter_corner_dash_4"
     };
 
+    private final static String[] top_torn = {
+        "void_torn_top_1",
+        "void_torn_top_2",
+    };
+
+    private final static String[] left_torn = {
+        "void_torn_left_1",
+        "void_torn_left_2",
+    };
+
+    private final static String[] right_torn = {
+        "void_torn_right_1",
+        "void_torn_right_2",
+    };
+
+    private final static String[] corner_torn = {
+        "void_torn_top_left",
+        "void_torn_top_right",
+        "void_torn_bottom_right",
+        "void_torn_bottom_left"
+    };
+
+    private final static String[] bottom_torn = {
+        "void_torn_bottom_1",
+    };
+
     private final static String[] horz_lead_diag_hatching = {
         "void_hatching_horz_lead_diag_1",
         "void_hatching_horz_lead_diag_2",
@@ -65,7 +91,7 @@ public class VoidBringer
      */
     public static void mark( World world, List<Sprite> sprites, Style style )
     {
-        hatching( world, sprites );
+        torn( world, sprites );
         return;
 //        switch( style )
 //        {
@@ -110,6 +136,32 @@ public class VoidBringer
             vert_highlighter, sprites
            );
         corners( world.size, new Position( 16, 16 ), corner_highlighter, sprites );
+    }
+
+    private static void torn( World world, List<Sprite> sprites )
+    {
+        // Top
+        row( new Position( 0, -2 ), new Position( 1, 0 ), world.size.width,
+             new Position( 0, 0 ),
+             top_torn, sprites
+             );
+       // Bottom
+        row( new Position( 0, world.size.height ), new Position( 1, 0 ), world.size.width,
+             new Position( 0, 0 ),
+             bottom_torn, sprites
+             );
+        // Left
+        row( new Position( -2, 0 ), new Position( 0, 1 ), world.size.height,
+            new Position( 0, 0 ),
+            left_torn, sprites
+            );
+        // Right
+        row( new Position( world.size.width, 0 ), new Position( 0, 1 ), world.size.height,
+            new Position( 0, 0 ),
+            right_torn, sprites
+            );
+        corners( world.size, new Position( 64, 64 ), corner_torn, sprites );
+
     }
 
     private static void hatching( World world, List<Sprite> sprites )
@@ -175,10 +227,10 @@ public class VoidBringer
     {
         int bmpIndex = 0;
         final Position[] positions = new Position[] {
-            new Position( 0,               0 ),
-            new Position( worldSize.width, 0 ),
-            new Position( worldSize.width, worldSize.height ),
-            new Position( 0,               worldSize.height )
+            new Position( 0,               0 ), // Top left
+            new Position( worldSize.width, 0 ), // Top right
+            new Position( worldSize.width, worldSize.height ), // Bottom right
+            new Position( 0,               worldSize.height ) // Bottom Left
         };
         final Position[] offsets = new Position[] {
             new Position( -offset.x, -offset.y ),
