@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="64"
+   height="32"
+   id="svg2"
+   version="1.1"
+   inkscape:version="0.48.5 r10040"
+   sodipodi:docname="void_torn_left_3.svg">
+  <defs
+     id="defs4" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="22.627418"
+     inkscape:cx="39.231338"
+     inkscape:cy="16.664747"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="true"
+     inkscape:window-width="1920"
+     inkscape:window-height="1014"
+     inkscape:window-x="0"
+     inkscape:window-y="27"
+     inkscape:window-maximized="1"
+     inkscape:snap-grids="false">
+    <inkscape:grid
+       type="xygrid"
+       id="grid3001"
+       empspacing="8"
+       visible="true"
+       enabled="true"
+       snapvisiblegridlinesonly="true" />
+  </sodipodi:namedview>
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(0,-1020.3622)">
+    <path
+       style="fill:#646464;fill-opacity:1;stroke:none"
+       d="m 48.270235,1052.8188 0.254344,-1.8925 -0.682506,-1.6577 0.741686,-1.0383 -0.495721,-1.8548 0.418059,-1.3937 1.105432,-0.3343 1.694036,2.4372 -0.688693,-2.5447 c -0.192328,-0.7107 1.061934,-0.5501 1.372471,-0.7072 0.693552,-0.3508 1.358308,-0.7941 1.900515,-1.351 0.76661,-0.7874 1.414921,-1.7228 1.837613,-2.7372 0.485605,-1.1654 0.729075,-2.4508 0.746481,-3.7132 0.0094,-0.6798 -0.176272,-1.3517 -0.346674,-2.0098 -0.132944,-0.5134 -0.300165,-1.0216 -0.52448,-1.5022 -0.232145,-0.4974 -0.50547,-0.9817 -0.843015,-1.4145 -0.385045,-0.4938 -0.836532,-0.9413 -1.330634,-1.3258 -0.622297,-0.4844 -1.297188,-0.9237 -2.030079,-1.2148 -0.637048,-0.253 -1.347308,-0.2607 -2.008175,-0.4426 -0.540889,-0.1489 -1.31123,-0.048 -1.597395,-0.5301 -0.736641,-1.2422 0.774883,-4.2626 0.774883,-4.2626 l 0.340782,-1.1957 -0.734419,-0.2209 -0.117608,-1.5745 -0.04119,-0.3073 0,-0.1387 0,-0.069 0,-0.035 0,0.035 0,-0.104 0,-0.035 0,-0.035 -0.03466,0 -50.052069,-1.2651 -0.03466,36.1698 49.99141,0.6846"
+       id="path3186"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="ccccccccssaaaaaaaaaacccccccccccccccc" />
+    <path
+       style="fill:#ffffff;fill-opacity:1;stroke:none"
+       d="m 47.03332,1052.4387 0.495005,-0.8727 0.171018,-1.7453 -0.302192,-0.6178 0.619598,-0.8182 -0.549028,-1.9434 0.572139,-1.6141 c 0,0 -0.968087,0.1931 -0.970672,-0.1335 -0.0046,-0.5798 1.479336,0.014 1.719186,-0.2642 l 0.609609,-0.7085 0.988397,1.3992 0.04563,-1.3484 c 0.03877,-1.1457 0.712441,-0.195 0.828047,-0.2483 1.221038,-0.5628 2.379632,-1.4077 3.167444,-2.4972 0.900195,-1.2449 1.528717,-2.7955 1.575829,-4.331 0.04994,-1.6277 -0.523156,-3.3035 -1.38579,-4.6847 -0.705119,-1.129 -1.76949,-2.0715 -2.943936,-2.698 -1.176416,-0.6276 -4.017368,-1.311 -3.887013,-0.9439 l -0.358439,-1.0095 -0.502361,-0.9323 0.732883,-1.1606 -0.343763,-1.6918 0.480404,-0.8447 -0.437693,-2.5116 0.668294,-1.6641 -0.627913,0.674 0.276214,0.5464 0,-0.069 0,-0.035 0,0.035 0,-0.104 0,-0.035 0,-0.035 -0.035,0 -50.0519509,-1.2652 -0.042,36.1699 49.9913509,0.6846"
+       id="path3186-7"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cccccccasccssaaaasccccccccccccccccccc" />
+  </g>
+</svg>

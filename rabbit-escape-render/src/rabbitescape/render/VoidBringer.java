@@ -35,16 +35,22 @@ public class VoidBringer
     private final static String[] top_torn = {
         "void_torn_top_1",
         "void_torn_top_2",
+        "void_torn_top_3",
+        "void_torn_top_4",
     };
 
     private final static String[] left_torn = {
         "void_torn_left_1",
         "void_torn_left_2",
+        "void_torn_left_3",
+        "void_torn_left_4",
     };
 
     private final static String[] right_torn = {
         "void_torn_right_1",
         "void_torn_right_2",
+        "void_torn_right_3",
+        "void_torn_right_4",
     };
 
     private final static String[] corner_torn = {
@@ -56,6 +62,9 @@ public class VoidBringer
 
     private final static String[] bottom_torn = {
         "void_torn_bottom_1",
+        "void_torn_bottom_2",
+        "void_torn_bottom_3",
+        "void_torn_bottom_4",
     };
 
     private final static String[] horz_lead_diag_hatching = {
