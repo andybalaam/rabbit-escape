@@ -9,7 +9,7 @@ import rabbitescape.engine.util.Position;
 /**
  * Draws things to mark the void beyond the world's edge.
  */
-public class VoidBringer
+public class VoidMarker
 {
     private final static String[] vert_highlighter = {
         "void_highlighter_vert_dash_1",
