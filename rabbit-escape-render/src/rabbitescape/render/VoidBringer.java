@@ -67,31 +67,10 @@ public class VoidBringer
         "void_torn_bottom_4",
     };
 
-    private final static String[] horz_lead_diag_hatching = {
-        "void_hatching_horz_lead_diag_1",
-        "void_hatching_horz_lead_diag_2",
-    };
-
-    private final static String[] horz_trail_diag_hatching = {
-        "void_hatching_horz_trail_diag_1",
-        "void_hatching_horz_trail_diag_2",
-    };
-
-    private final static String[] vert_lead_diag_hatching = {
-        "void_hatching_vert_lead_diag_1",
-        "void_hatching_vert_lead_diag_2",
-    };
-
-    private final static String[] vert_trail_diag_hatching = {
-        "void_hatching_vert_trail_diag_1",
-        "void_hatching_vert_trail_diag_2",
-    };
-
     public enum Style
     {
         HIGHLIGHTER,
-        TORN_PAPER,
-        HATCHING
+        TORN_PAPER
     }
 
     /**
@@ -100,26 +79,25 @@ public class VoidBringer
      */
     public static void mark( World world, List<Sprite> sprites, Style style )
     {
-        torn( world, sprites );
-        return;
-//        switch( style )
-//        {
-//        case HIGHLIGHTER:
-//            highlighter( world, sprites );
-//            return;
-//        case HATCHING:
-//            hatching( world, sprites );
-//        default:
-//            mark( world, sprites, Style.HATCHING );
-//            return;
-//        }
+        switch( style )
+        {
+        case HIGHLIGHTER:
+            highlighter( world, sprites );
+            return ;
+        case TORN_PAPER:
+            torn( world, sprites );
+            return ;
+        default:
+            mark( world, sprites, Style.HIGHLIGHTER );
+            return;
+        }
     }
 
-    public static void mark( World world, List<Sprite> sprites )
+    public static Style randomStyle( )
     {
         int n = Style.values().length;
         int i = (int)Math.floor( ( Math.random() * n ) );
-        mark( world, sprites, Style.values()[i] );
+        return Style.values()[i];
     }
 
     private static void highlighter( World world, List<Sprite> sprites )
@@ -170,51 +148,6 @@ public class VoidBringer
             right_torn, sprites
             );
         corners( world.size, new Position( 64, 64 ), corner_torn, sprites );
-
-    }
-
-    private static void hatching( World world, List<Sprite> sprites )
-    {
-        // Top leading
-        row( new Position( -2, -2 ), new Position( 1, 0 ), world.size.width,
-             new Position( 0, 0 ),
-             horz_lead_diag_hatching, sprites
-             );
-        // Top trailing
-        row( new Position( 0, -2 ), new Position( 1, 0 ), world.size.width,
-             new Position( 0, 0 ),
-             horz_trail_diag_hatching, sprites
-             );
-        // Left leading
-        row( new Position( -2, -2 ), new Position( 0, 1 ), world.size.height,
-             new Position( 0, 16 ),
-             vert_lead_diag_hatching, sprites
-             );
-        // Left trailing
-        row( new Position( -2, 0 ), new Position( 0, 1 ), world.size.height,
-             new Position( 0, 0 ),
-             vert_trail_diag_hatching, sprites
-             );
-        // Right leading
-        row( new Position( world.size.width, 0 ), new Position( 0, 1 ), world.size.height,
-             new Position( 0, 0 ),
-             vert_lead_diag_hatching, sprites
-             );
-        // Right trailing
-        row( new Position( world.size.width, -2 ), new Position( 0, 1 ), world.size.height,
-             new Position( 0, 0 ),
-             vert_trail_diag_hatching, sprites
-             );
-        // Bottom leading
-        row( new Position( 0, world.size.height ), new Position( 1, 0 ), world.size.width,
-             new Position( 0, 0 ),
-             horz_lead_diag_hatching, sprites
-             );
-        // Bottom trailing
-        row( new Position( -2, world.size.height ), new Position( 1, 0 ), world.size.width,
-             new Position( 0, 0 ),
-             horz_trail_diag_hatching, sprites
-             );
     }
 
     private static void row( Position start, Position step, int n,

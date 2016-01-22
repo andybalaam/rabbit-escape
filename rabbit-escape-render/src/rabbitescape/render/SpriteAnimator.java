@@ -9,6 +9,7 @@ import rabbitescape.engine.*;
 public class SpriteAnimator
 {
     private final World world;
+    private final VoidBringer.Style voidStyle;
     private final AnimationCache animationCache;
 
     private static final String[] land_block = new String[]
@@ -45,6 +46,7 @@ public class SpriteAnimator
     {
         this.world = world;
         this.animationCache = animationCache;
+        this.voidStyle = VoidBringer.randomStyle();
     }
 
     public List<Sprite> getSprites( int frameNum )
@@ -80,7 +82,7 @@ public class SpriteAnimator
             }
         }
 
-        VoidBringer.mark( world, ret );
+        VoidBringer.mark( world, ret, voidStyle );
 
         return ret;
     }
