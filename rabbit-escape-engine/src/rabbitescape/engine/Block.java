@@ -13,6 +13,7 @@ public class Block implements LookupItem2D
         solid_up_left,
         bridge_up_right,
         bridge_up_left,
+        metal_flat,
     }
 
     public final int x;

@@ -21,6 +21,7 @@ public class BlockRenderer
             case solid_up_left:   return '\\';
             case bridge_up_right: return '(';
             case bridge_up_left:  return ')';
+            case metal_flat:      return 'M';
             default:
                 throw new AssertionError(
                     "Unknown Block type: " + block.type );

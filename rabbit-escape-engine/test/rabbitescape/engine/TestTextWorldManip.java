@@ -33,7 +33,7 @@ public class TestTextWorldManip
         String[] lines = {
             "###########",
             "#  Q  A c #",
-            "#\\      i/#",
+            "#\\  M   i/#",
             "#  O     d#",
             "#r j )(  b#",
             "###########"
