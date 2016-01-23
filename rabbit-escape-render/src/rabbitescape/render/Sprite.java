@@ -1,5 +1,7 @@
 package rabbitescape.render;
 
+import rabbitescape.engine.util.Position;
+
 /**
  * A Bitmap name and a location at which to draw it.
  */
@@ -13,6 +15,23 @@ public class Sprite
     private final int offset32X; // X offset relative to a 32x32 image
     private final int offset32Y; // X offset relative to a 32x32 image
 
+    public Sprite(
+        String bitmapName,
+        String soundEffect,
+        Position tilePos,
+        Position offset
+    )
+    {
+        this(
+            bitmapName,
+            soundEffect,
+            tilePos.x,
+            tilePos.y,
+            offset.x,
+            offset.y
+        );
+    }
+    
     /**
      * @param bitmapName
      * @param tileX
