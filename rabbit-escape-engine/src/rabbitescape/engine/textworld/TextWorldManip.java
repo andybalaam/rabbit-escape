@@ -16,6 +16,7 @@ import rabbitescape.engine.IgnoreWorldStatsListener;
 import rabbitescape.engine.Rabbit;
 import rabbitescape.engine.Thing;
 import rabbitescape.engine.Token;
+import rabbitescape.engine.VoidMarkerStyle;
 import rabbitescape.engine.World;
 import rabbitescape.engine.WorldStatsListener;
 import rabbitescape.engine.util.Dimension;
@@ -24,7 +25,7 @@ import rabbitescape.engine.util.Util.IdxObj;
 
 public class TextWorldManip
 {
-    private static final String name                 = "name";
+    public  static final String name                 = "name";
     private static final String description          = "description";
     private static final String author_name          = "author_name";
     private static final String author_url           = "author_url";
@@ -34,6 +35,7 @@ public class TextWorldManip
     private static final String num_to_save          = "num_to_save";
     private static final String rabbit_delay         = "rabbit_delay";
     private static final String music                = "music";
+    public  static final String void_marker_style    = "void_marker_style";
     private static final String num_saved            = "num_saved";
     private static final String num_killed           = "num_killed";
     private static final String num_waiting          = "num_waiting";
@@ -58,7 +60,8 @@ public class TextWorldManip
         description,
         author_name,
         author_url,
-        music
+        music,
+        void_marker_style
     );
 
     public static final List<String> META_STRING_ARRAYS_BY_KEY = Arrays.asList(
@@ -162,7 +165,8 @@ public class TextWorldManip
             processor.metaInt( num_waiting, num_rabs ),
             processor.metaBool( paused, false ),
             processor.getComments(),
-            statsListener
+            statsListener,
+            processor.generateVoidMarkerStyle()
         );
     }
 
@@ -189,7 +193,8 @@ public class TextWorldManip
             0,
             false,
             new Comment[] {},
-            new IgnoreWorldStatsListener()
+            new IgnoreWorldStatsListener(),
+            VoidMarkerStyle.Style.HIGHLIGHTER
         );
     }
 

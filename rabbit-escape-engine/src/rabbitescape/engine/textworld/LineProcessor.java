@@ -18,6 +18,7 @@ import rabbitescape.engine.Exit;
 import rabbitescape.engine.Rabbit;
 import rabbitescape.engine.Thing;
 import rabbitescape.engine.Token;
+import rabbitescape.engine.VoidMarkerStyle;
 import rabbitescape.engine.util.Dimension;
 import rabbitescape.engine.util.MegaCoder;
 import rabbitescape.engine.util.VariantGenerator;
@@ -595,4 +596,30 @@ public class LineProcessor
         }
         return ret;
     }
+
+    public VoidMarkerStyle.Style generateVoidMarkerStyle()
+    {
+        String marker = m_metaStrings.get( TextWorldManip.void_marker_style );
+        if ( marker == null )
+        {
+            String name = m_metaStrings.get( TextWorldManip.name );
+            if ( name == null )
+            { // It is not a proper level, so this does not matter
+                return VoidMarkerStyle.Style.HIGHLIGHTER;
+            }
+            // Generate a reproducible style from the level name
+            int hash = 0;
+            for ( char c: name.toCharArray() )
+            {
+                hash += (int)c;
+            }
+            int n = VoidMarkerStyle.Style.values().length;
+            int i = hash % n;
+            return VoidMarkerStyle.Style.values()[i];
+        }
+        // TODO handle exception from incorrect style string
+        VoidMarkerStyle.Style s = VoidMarkerStyle.Style.valueOf( marker );
+        return s;
+    }
+
 }

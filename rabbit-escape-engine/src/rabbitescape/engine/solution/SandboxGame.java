@@ -11,6 +11,7 @@ import rabbitescape.engine.IgnoreWorldStatsListener;
 import rabbitescape.engine.Rabbit;
 import rabbitescape.engine.Thing;
 import rabbitescape.engine.Token;
+import rabbitescape.engine.VoidMarkerStyle;
 import rabbitescape.engine.World;
 import rabbitescape.engine.textworld.Comment;
 
@@ -59,7 +60,9 @@ public class SandboxGame
             world.num_waiting,
             world.paused,
             new Comment[] {},
-            new IgnoreWorldStatsListener() );
+            new IgnoreWorldStatsListener(),
+            VoidMarkerStyle.Style.HIGHLIGHTER
+        );
     }
 
     /**

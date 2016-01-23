@@ -161,7 +161,8 @@ public class TestGameLoop
                 1,
                 w.paused,
                 new Comment[] {},
-                w.changes.statsListener
+                w.changes.statsListener,
+                VoidMarkerStyle.Style.HIGHLIGHTER
             );
             assertThat( completionState(), equalTo( CompletionState.RUNNING ) );
         }
