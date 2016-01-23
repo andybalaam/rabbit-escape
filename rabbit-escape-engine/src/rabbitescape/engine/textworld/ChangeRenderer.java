@@ -260,6 +260,9 @@ public class ChangeRenderer
             case RABBIT_DIGGING:
                 chars.set( change.x, change.y + 1, 'D' );
                 break;
+            case RABBIT_DIGGING_USELESSLY:
+                chars.set( change.x, change.y + 1, 'D' );
+                break;
             case RABBIT_DIGGING_ON_SLOPE:
                 chars.set( change.x, change.y, 'D' );
                 break;

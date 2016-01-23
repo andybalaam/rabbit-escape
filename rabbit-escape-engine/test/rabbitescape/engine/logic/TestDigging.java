@@ -767,4 +767,97 @@ public class TestDigging
             " ## "
         );
     }
+
+    @Test
+    public void Bashing_fails_if_first_block_is_unbreakable()
+    {
+        assertWorldEvolvesLike(
+            "rd " + "\n" +
+            "#M#",
+
+            " r " + "\n" +
+            "#D#",
+
+            " r>" + "\n" +
+            "#M#"
+        );
+    }
+
+    @Test
+    public void Digging_fails_if_later_block_is_unbreakable()
+    {
+        assertWorldEvolvesLike(
+            "rd " + "\n" +
+            "###" + "\n" +
+            "#M#",
+
+            " r " + "\n" +
+            "#D#" + "\n" +
+            "#M#",
+
+            "   " + "\n" +
+            "#D#" + "\n" +
+            "#M#",
+
+            "   " + "\n" +
+            "#r#" + "\n" +
+            "#D#",
+
+            "   " + "\n" +
+            "#?#" + "\n" +
+            "#M#"
+        );
+    }
+
+    @Test
+    public void Digging_fails_if_later_block_is_unbreakable_on_slope()
+    {
+        assertWorldEvolvesLike(
+            "rd " + "\n" +
+            "#/ " + "\n" +
+            "#M#",
+
+            " r " + "\n" +
+            "#h " + "\n" +
+            "#M#",
+
+            "   " + "\n" +
+            "#D " + "\n" +
+            "#M#",
+
+            "   " + "\n" +
+            "#r " + "\n" +
+            "#D#",
+
+            "   " + "\n" +
+            "#r>" + "\n" +
+            "#M#"
+        );
+    }
+
+    @Test
+    public void Digging_fails_if_later_block_is_unbreakable_on_bridge()
+    {
+        assertWorldEvolvesLike(
+            "rd " + "\n" +
+            "#( " + "\n" +
+            "#M#",
+
+            " r " + "\n" +
+            "#h " + "\n" +
+            "#M#",
+
+            "   " + "\n" +
+            "#D " + "\n" +
+            "#M#",
+
+            "   " + "\n" +
+            "#r " + "\n" +
+            "#D#",
+
+            "   " + "\n" +
+            "#r>" + "\n" +
+            "#M#"
+        );
+    }
 }
