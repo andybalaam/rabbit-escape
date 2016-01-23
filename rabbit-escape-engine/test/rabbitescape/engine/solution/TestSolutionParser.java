@@ -374,7 +374,7 @@ public class TestSolutionParser
     @Test( expected=SolutionCommand.WaitActionInMultiActionCommand.class )
     public void Multi_action_commands_must_not_include_a_wait()
     {
-        Solution s = SolutionParser.parse( "2&bash");
+        SolutionParser.parse( "2&bash");
     }
 
     // ---

@@ -6,22 +6,27 @@ public class SolutionIgnorer implements SolutionRecorderTemplate
     {
     }
 
+    @Override
     public void append( CommandAction a )
     {
     }
 
+    @Override
     public void append( SolutionCommand newCmd )
     {
     }
 
+    @Override
     public void appendStepEnd()
     {
     }
 
+    @Override
     public void append( Solution solution )
     {
     }
 
+    @Override
     public String getRecord()
     {
         return "";

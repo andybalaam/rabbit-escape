@@ -31,7 +31,7 @@ public class Sprite
             offset.y
         );
     }
-    
+
     /**
      * @param bitmapName
      * @param tileX

@@ -14,11 +14,13 @@ public class SolutionRecorder implements SolutionRecorderTemplate
         solutionInProgress = new ArrayList<SolutionCommand>();
     }
 
+    @Override
     public void append( CommandAction a )
     {
         commandInProgress.add( a );
     }
 
+    @Override
     public void append( SolutionCommand newCmd )
     {
         int prevCmdIndex = solutionInProgress.size() - 1;
@@ -36,6 +38,7 @@ public class SolutionRecorder implements SolutionRecorderTemplate
         }
     }
 
+    @Override
     public void append( Solution solution )
     {
         for ( SolutionCommand command : solution.commands )
@@ -44,6 +47,7 @@ public class SolutionRecorder implements SolutionRecorderTemplate
         }
     }
 
+    @Override
     public void appendStepEnd()
     {
         CommandAction[] aA = new CommandAction[commandInProgress.size()];
@@ -53,6 +57,7 @@ public class SolutionRecorder implements SolutionRecorderTemplate
         commandInProgress = new ArrayList<CommandAction>();
     }
 
+    @Override
     public String getRecord()
     {
         SolutionCommand[] cA = new SolutionCommand[solutionInProgress.size()];

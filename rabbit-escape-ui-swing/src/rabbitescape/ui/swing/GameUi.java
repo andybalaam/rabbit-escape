@@ -427,8 +427,8 @@ public class GameUi implements StatsChangedListener
         } );
 
         MenuTools.clickOnKey( menu.pause, "pause", KeyEvent.VK_P );
-        
-        menu.speed.addActionListener( new ActionListener() 
+
+        menu.speed.addActionListener( new ActionListener()
         {
             @Override
             public void actionPerformed( ActionEvent evt )
@@ -437,7 +437,7 @@ public class GameUi implements StatsChangedListener
                 gameLaunch.setSpeed( speeds[speedIndex] );
             }
         } );
-        
+
         MenuTools.clickOnKey( menu.speed, "speed up", KeyEvent.VK_S );
 
         canvasScrollBarX.addAdjustmentListener(

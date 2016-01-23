@@ -34,7 +34,7 @@ public class AnimationTester extends JFrame
         STEP,
         FRAME_DUMP
     }
-    
+
     private static final long serialVersionUID = 1L;
 
     private static final String CONFIG_PATH =
@@ -426,10 +426,10 @@ public class AnimationTester extends JFrame
             System.exit( 2 );
         }
     }
-    
+
     private void framesToGif()
     {
-        String cmd = String.format( "convert -delay 10 -loop 0 %s*.png %sanimation.gif", 
+        String cmd = String.format( "convert -delay 10 -loop 0 %s*.png %sanimation.gif",
                 recordingDir, recordingDir );
         try
         {
@@ -453,7 +453,7 @@ public class AnimationTester extends JFrame
             this.frameSetNum = f.frameSetNum;
             this.frameNum = f.frameNum;
         }
-        
+
         public FrameCounter()
         {
             frameSetNum = 0;
@@ -480,7 +480,7 @@ public class AnimationTester extends JFrame
             FrameCounter f = (FrameCounter)o;
             return this.frameSetNum == f.frameSetNum && this.frameNum == f.frameNum ;
         }
-        
+
         public void inc()
         {
             ++frameNum;
@@ -538,7 +538,7 @@ public class AnimationTester extends JFrame
                 strategy, renderer, soundPlayer, counter.getFrameSetNum(),
                 counter.getFrameNum() );
             drawFrame.run();
-            
+
             switch ( runMode )
             {
             case STEP:
@@ -553,7 +553,7 @@ public class AnimationTester extends JFrame
             }
         }
     }
-    
+
     private FrameCounter keyStep( FrameCounter counter )
     {
         while( true )
@@ -580,19 +580,19 @@ public class AnimationTester extends JFrame
             }
         }
     }
-    
+
     private FrameCounter runStep( FrameCounter counter )
     {
         pause();
         counter.inc();
         return counter;
     }
-    
+
     private FrameCounter frameDumpStep( FrameCounter counter, DrawFrame drawFrame )
     {
         try
         {
-            if ( counter.equals( firstFrameDumped ) ) 
+            if ( counter.equals( firstFrameDumped ) )
             { // A whole set has been dumped. Revert to normal
                 runMode = Mode.RUN;
                 firstFrameDumped = null;
@@ -603,23 +603,23 @@ public class AnimationTester extends JFrame
             if ( null == firstFrameDumped )
             {
                 RealFileSystem fs = new RealFileSystem();
-                
+
                 int dirCount = 0;
                 do
                 {
-                    recordingDir = String.format( ".%srecordings%s%04d%s", 
+                    recordingDir = String.format( ".%srecordings%s%04d%s",
                              File.separator, File.separator, dirCount++, File.separator );
                 }
                 while ( fs.exists( recordingDir ) );
-                
+
                 fs.mkdirs( recordingDir );
                 System.out.printf( "Dumping %sanim_test_frame_<set>_<frame>.png:", recordingDir );
                 firstFrameDumped = new FrameCounter( counter );
             }
-            BufferedImage im = new BufferedImage( canvas.getWidth(), canvas.getHeight(), 
+            BufferedImage im = new BufferedImage( canvas.getWidth(), canvas.getHeight(),
                 BufferedImage.TYPE_INT_ARGB );
             drawFrame.draw( (Graphics2D)im.getGraphics() );
-            String fileName = String.format("%sanim_test_frame_%02d_%02d.png", 
+            String fileName = String.format("%sanim_test_frame_%02d_%02d.png",
                 recordingDir, counter.getFrameSetNum(), counter.getFrameNum() );
             System.out.printf(" %02d_%02d", counter.getFrameSetNum(), counter.getFrameNum() );
             ImageIO.write( im, "PNG", new File( fileName ) );
@@ -633,7 +633,7 @@ public class AnimationTester extends JFrame
             return null; // The compiler can be dumb.
         }
     }
-    
+
     private class DrawFrame extends BufferedDraw
     {
         private final int frameSetNum;

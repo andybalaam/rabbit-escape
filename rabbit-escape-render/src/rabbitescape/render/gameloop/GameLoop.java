@@ -116,11 +116,9 @@ public class GameLoop
         }
         if ( ConfigTools.getBool( config, ConfigKeys.CFG_DEBUG_PRINT_STATES ) )
         {
-            int i = 0;
             for ( Rabbit rabbit : physics.world().rabbits )
             {
                 debugout.println( " " + rabbit.toString() + ":" + rabbit.state.name() + " onSlope:" + rabbit.onSlope );
-                ++i;
             }
         }
     }

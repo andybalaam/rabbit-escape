@@ -10,7 +10,7 @@ public final class SpeedOutOfRange extends RabbitEscapeException
 {
     private static final long serialVersionUID = 1L;
     public int speedRequested;
-    
+
     public SpeedOutOfRange( int speedRequested)
     {
         this.speedRequested = speedRequested;
