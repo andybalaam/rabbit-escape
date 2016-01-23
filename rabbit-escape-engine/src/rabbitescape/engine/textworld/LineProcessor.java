@@ -618,8 +618,15 @@ public class LineProcessor
             return VoidMarkerStyle.Style.values()[i];
         }
         // TODO handle exception from incorrect style string
-        VoidMarkerStyle.Style s = VoidMarkerStyle.Style.valueOf( marker.toUpperCase() );
-        return s;
+        try
+        {
+            VoidMarkerStyle.Style s = VoidMarkerStyle.Style.valueOf( marker.toUpperCase() );
+            return s;
+        }
+        catch ( IllegalArgumentException e )
+        {
+            throw new UnknownVoidMarkerStyle( marker );
+        }
     }
 
 }
