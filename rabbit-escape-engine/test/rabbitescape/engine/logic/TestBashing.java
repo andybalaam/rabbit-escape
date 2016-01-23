@@ -445,4 +445,46 @@ public class TestBashing
             "#\\#"
         );
     }
+    
+    @Test
+    public void Bashing_fails_if_first_block_is_unbreakable()
+    {
+        assertWorldEvolvesLike(
+            "rbM" + "\n" +
+            "###",
+
+            " rI" + "\n" +
+            "###",
+
+            " ?M" + "\n" +
+            "###",
+
+            "<jM" + "\n" +
+            "###"
+        );
+    }
+
+    @Test
+    public void Bashing_fails_if_later_block_is_unbreakable()
+    {
+        assertWorldEvolvesLike(
+            "rb#M" + "\n" +
+            "####",
+
+            " rKM" + "\n" +
+            "####",
+
+            " r>M" + "\n" +
+            "####",
+
+            "  rI" + "\n" +
+            "####",
+
+            "  ?M" + "\n" +
+            "####",
+
+            " <jM" + "\n" +
+            "####"
+        );
+    }
 }
