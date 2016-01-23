@@ -87,7 +87,7 @@ public class GeneralPhysics implements Physics
         this.solutionInterpreter = solutionInterpreter;
         this.uiPlayback = uiPlayback;
     }
-    
+
     public void setSpeed( int speed )
     {
         if ( speed > 10 || speed < 1 )
