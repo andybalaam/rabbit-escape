@@ -3,7 +3,6 @@ package rabbitescape.render.gameloop;
 import java.util.ArrayList;
 import java.util.List;
 
-import rabbitescape.engine.err.RabbitEscapeException;
 import rabbitescape.engine.solution.PlaceTokenAction;
 import rabbitescape.engine.solution.SelectAction;
 import rabbitescape.engine.solution.SolutionIgnorer;
