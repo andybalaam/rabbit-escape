@@ -49,7 +49,7 @@ public class GeneralPhysics implements Physics
         }
     }
 
-    private static final long max_allowed_skips = 10;
+    private final long max_allowed_skips;
     public static final long simulation_time_step_ms = 70;
 
     public int frame;
@@ -69,7 +69,8 @@ public class GeneralPhysics implements Physics
               winListener,
               new SolutionIgnorer(),
               SolutionInterpreter.getNothingPlaying(),
-              null);
+              null,
+              false);
     }
 
 
@@ -77,7 +78,8 @@ public class GeneralPhysics implements Physics
                            LevelWinListener winListener,
                            SolutionRecorderTemplate solutionRecorder,
                            SolutionInterpreter solutionInterpreter,
-                           UiPlayback uiPlayback)
+                           UiPlayback uiPlayback,
+                           boolean noFrameSkipping)
     {
         this.frame = 0;
         this.world = world;
@@ -86,6 +88,7 @@ public class GeneralPhysics implements Physics
         this.statsListeners = new ArrayList<>();
         this.solutionInterpreter = solutionInterpreter;
         this.uiPlayback = uiPlayback;
+        this.max_allowed_skips = noFrameSkipping ? 1 : 10 ;
     }
 
     public void setSpeed( int speed )

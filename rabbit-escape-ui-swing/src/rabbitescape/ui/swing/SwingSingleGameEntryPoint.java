@@ -27,6 +27,7 @@ public class SwingSingleGameEntryPoint extends SingleGameEntryPoint
     private final SwingSound sound;
     private final MenuUi menuUi;
     private final int solutionIndex;
+    private final boolean frameDumping;
 
     public SwingSingleGameEntryPoint(
         FileSystem fs,
@@ -37,7 +38,8 @@ public class SwingSingleGameEntryPoint extends SingleGameEntryPoint
         MainJFrame frame,
         SwingSound sound,
         MenuUi menuUi,
-        int solutionIndex
+        int solutionIndex,
+        boolean frameDumping
     )
     {
         super( fs, out, locale );
@@ -47,22 +49,24 @@ public class SwingSingleGameEntryPoint extends SingleGameEntryPoint
         this.sound = sound;
         this.menuUi = menuUi;
         this.solutionIndex = solutionIndex;
+        this.frameDumping = frameDumping;
     }
 
     public static void entryPoint( String[] args )
     {
         if ( 1 == args.length && args[0].endsWith( ".rel" ) )
         { // Single arg must level file
-            go( args, SwingGameLaunch.NOT_DEMO_MODE );
+            go( args, SwingGameLaunch.NOT_DEMO_MODE, false );
             System.exit( 0 );
         }
 
         CommandLineOption level =        new CommandLineOption( "--level",        true );
         CommandLineOption solution =     new CommandLineOption( "--solution",     true );
         CommandLineOption anim =         new CommandLineOption( "--animation",    false );
+        CommandLineOption dump =         new CommandLineOption( "--dump",         false );
 
         CommandLineOptionSet.parse( args,
-                                    level, solution, anim);
+                                    level, solution, anim, dump);
         try
         {
             if ( anim.isPresent() )
@@ -72,12 +76,12 @@ public class SwingSingleGameEntryPoint extends SingleGameEntryPoint
             }
             if ( solution.isPresent() )
             {
-                go( new String[] {level.getValue()}, solution.getInt() );
+                go( new String[] {level.getValue()}, solution.getInt(), dump.isPresent() );
                 System.exit( 0 );
             }
             if ( level.isPresent() )
             {
-                go( new String[] {level.getValue()}, SwingGameLaunch.NOT_DEMO_MODE );
+                go( new String[] {level.getValue()}, SwingGameLaunch.NOT_DEMO_MODE, false );
                 System.exit( 0 );
             }
         }
@@ -89,7 +93,7 @@ public class SwingSingleGameEntryPoint extends SingleGameEntryPoint
 
     }
 
-    private static void go( String[] fileName, int solutionIndex )
+    private static void go( String[] fileName, int solutionIndex, boolean frameDumping )
     {
 
         Config cfg = SwingConfigSetup.createConfig();
@@ -110,7 +114,8 @@ public class SwingSingleGameEntryPoint extends SingleGameEntryPoint
             new MainJFrame( cfg, sound ),
             sound,
             null,
-            solutionIndex
+            solutionIndex,
+            frameDumping
         );
 
         m.run( fileName );
@@ -126,6 +131,6 @@ public class SwingSingleGameEntryPoint extends SingleGameEntryPoint
         SwingUtilities.invokeLater( init );
 
         return new SwingGameLaunch(
-            init, world, winListener, sound, uiConfig, out, solutionIndex );
+            init, world, winListener, sound, uiConfig, out, solutionIndex, frameDumping );
     }
 }
