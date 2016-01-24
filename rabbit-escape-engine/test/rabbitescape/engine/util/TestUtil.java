@@ -76,6 +76,15 @@ public class TestUtil
     }
 
     @Test
+    public void Join_array_version_works()
+    {
+        assertThat(
+            join( "<>", new Boolean[] { true, true, false } ),
+            equalTo( "true<>true<>false" )
+        );
+    }
+
+    @Test
     public void Split_an_empty_string_gives_single_item_list()
     {
         assertThat( split( "", "x" ), equalTo( new String[] { "" } ) );
