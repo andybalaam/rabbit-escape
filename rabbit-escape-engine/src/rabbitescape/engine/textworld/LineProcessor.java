@@ -617,7 +617,6 @@ public class LineProcessor
             int i = hash % n;
             return VoidMarkerStyle.Style.values()[i];
         }
-        // TODO handle exception from incorrect style string
         try
         {
             VoidMarkerStyle.Style s = VoidMarkerStyle.Style.valueOf( marker.toUpperCase() );
