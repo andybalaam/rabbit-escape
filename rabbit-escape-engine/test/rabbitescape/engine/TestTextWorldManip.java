@@ -1754,6 +1754,24 @@ public class TestTextWorldManip
         );
     }
 
+    @Test
+    public void String_hash_is_reproducible()
+    {
+        String[] sa = new String[]{
+            "Dig for victory", "Tomb raider", "Slot machine", "Space invaders", "UFO" };
+        int[] h = new int[]{
+             1451,              1065,          1175,           1384,             234
+        };
+        for ( int i = 0; i < sa.length ; i++ )
+        {
+            assertThat(
+                LineProcessor.stringHash( sa[i] ),
+                equalTo( h[i] ) );
+        }
+
+
+    }
+
     // ---
 
     private void runSolutions( String[] lines )
