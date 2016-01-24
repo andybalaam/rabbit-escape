@@ -22,7 +22,7 @@ public class ConfigBasedLevelsCompleted implements LevelsCompleted
         Map<String, Integer> completed = ConfigTools.getMap(
             config, CFG_LEVELS_COMPLETED, Integer.class );
 
-        Integer ret = completed.get( levelsDir );
+        Integer ret = completed.get( stripNumber_( levelsDir ) );
 
         if ( ret == null )
         {
@@ -40,9 +40,17 @@ public class ConfigBasedLevelsCompleted implements LevelsCompleted
         Map<String, Integer> completed = ConfigTools.getMap(
             config, CFG_LEVELS_COMPLETED, Integer.class );
 
-        completed.put( levelsDir, levelNum );
+        completed.put( stripNumber_( levelsDir ), levelNum );
 
         ConfigTools.setMap( config, CFG_LEVELS_COMPLETED, completed );
         config.save();
+    }
+
+    /**
+     * Strips digits and underscores.
+     */
+    public static String stripNumber_( String levelsDir )
+    {
+        return levelsDir.replaceAll( "[0-9_]", "" );
     }
 }
