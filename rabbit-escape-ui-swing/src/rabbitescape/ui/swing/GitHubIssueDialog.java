@@ -65,6 +65,7 @@ public class GitHubIssueDialog extends JDialog implements ChangeListener
         /**
          * @brief
          */
+        @Override
         public void notifyAndFetch( String url,
             String requestProperty,
             String notification,
@@ -381,6 +382,7 @@ public class GitHubIssueDialog extends JDialog implements ChangeListener
 
         levelFilterButton.addActionListener( new ActionListener()
         {
+            @Override
             public void actionPerformed( ActionEvent e )
             {
                 issueModel.setFilter( Label.LEVEL );
@@ -388,6 +390,7 @@ public class GitHubIssueDialog extends JDialog implements ChangeListener
         } );
         bugFilterButton.addActionListener( new ActionListener()
         {
+            @Override
             public void actionPerformed( ActionEvent e )
             {
                 issueModel.setFilter( Label.BUG );
@@ -395,6 +398,7 @@ public class GitHubIssueDialog extends JDialog implements ChangeListener
         } );
         allFilterButton.addActionListener( new ActionListener()
         {
+            @Override
             public void actionPerformed( ActionEvent e )
             {
                 issueModel.setFilter( Label.ALL );
@@ -402,6 +406,7 @@ public class GitHubIssueDialog extends JDialog implements ChangeListener
         } );
         fetchFollowButton.addActionListener( new ActionListener()
         {
+            @Override
             public void actionPerformed( ActionEvent e )
             {
                 fetchFollowupComments();
@@ -409,6 +414,7 @@ public class GitHubIssueDialog extends JDialog implements ChangeListener
         } );
         okButton.addActionListener( new ActionListener()
         {
+            @Override
             public void actionPerformed( ActionEvent e )
             {
                 choseWorld = true;
@@ -417,6 +423,7 @@ public class GitHubIssueDialog extends JDialog implements ChangeListener
         } );
         cancelButton.addActionListener( new ActionListener()
         {
+            @Override
             public void actionPerformed( ActionEvent e )
             {
                 setVisible( false );
@@ -529,6 +536,7 @@ public class GitHubIssueDialog extends JDialog implements ChangeListener
             timer.start();
         }
 
+        @Override
         public void actionPerformed( ActionEvent event )
         {
             statusBox.setText( statusBox.getText() + "." );
