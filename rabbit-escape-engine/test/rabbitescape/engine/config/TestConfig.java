@@ -5,6 +5,7 @@ import static org.hamcrest.CoreMatchers.*;
 
 import org.junit.Test;
 
+import rabbitescape.engine.menu.ConfigBasedLevelsCompleted;
 import rabbitescape.engine.util.FakeFileSystem;
 
 public class TestConfig
@@ -105,6 +106,13 @@ public class TestConfig
                 }
             )
         );
+    }
+
+    @Test
+    public void Characters_stripped_from_set_names()
+    {
+        assertThat( ConfigBasedLevelsCompleted.stripNumber_( "01_easy" ),
+            equalTo( "easy" ) );
     }
 
     // --
