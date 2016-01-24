@@ -2,6 +2,7 @@ package rabbitescape.render;
 
 import java.util.List;
 
+import static rabbitescape.engine.VoidMarkerStyle.Style;
 import rabbitescape.engine.World;
 import rabbitescape.engine.util.Dimension;
 import rabbitescape.engine.util.Position;
@@ -67,11 +68,7 @@ public class VoidMarker
         "void_torn_bottom_4",
     };
 
-    public enum Style
-    {
-        HIGHLIGHTER,
-        TORN_PAPER
-    }
+
 
     /**
      * Adds sprites to mark the void.
@@ -91,13 +88,6 @@ public class VoidMarker
             mark( world, sprites, Style.HIGHLIGHTER );
             return;
         }
-    }
-
-    public static Style randomStyle( )
-    {
-        int n = Style.values().length;
-        int i = (int)Math.floor( ( Math.random() * n ) );
-        return Style.values()[i];
     }
 
     private static void highlighter( World world, List<Sprite> sprites )

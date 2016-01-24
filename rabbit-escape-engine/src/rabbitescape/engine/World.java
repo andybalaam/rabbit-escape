@@ -122,6 +122,7 @@ public class World
 
     public final WorldChanges changes;
     public final String music;
+    public final VoidMarkerStyle.Style voidStyle;
 
     public World(
         Dimension size,
@@ -144,7 +145,8 @@ public class World
         int num_waiting,
         boolean paused,
         Comment[] comments,
-        WorldStatsListener statsListener
+        WorldStatsListener statsListener,
+        VoidMarkerStyle.Style voidStyle
     )
     {
         this.size = size;
@@ -166,6 +168,7 @@ public class World
         this.num_waiting = num_waiting;
         this.paused = paused;
         this.comments = comments;
+        this.voidStyle = voidStyle;
 
         if ( -1 == size.width )
         {
