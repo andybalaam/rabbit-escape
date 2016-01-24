@@ -296,6 +296,10 @@ public class Util
         return Util.join( "\n", wrap( s, maxChar ) );
     }
 
+    public static String join( String glue, Object[] items )
+    {
+        return join( glue, Arrays.asList(items ));
+    }
     public static String join( String glue, String[] items )
     {
         return join( glue, Arrays.asList( items ) );

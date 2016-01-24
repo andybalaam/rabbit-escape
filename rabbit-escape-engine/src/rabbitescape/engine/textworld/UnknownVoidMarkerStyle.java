@@ -2,6 +2,7 @@ package rabbitescape.engine.textworld;
 
 import rabbitescape.engine.VoidMarkerStyle;
 import rabbitescape.engine.err.RabbitEscapeException;
+import rabbitescape.engine.util.Util;
 
 public class UnknownVoidMarkerStyle extends RabbitEscapeException
 {
@@ -12,12 +13,7 @@ public class UnknownVoidMarkerStyle extends RabbitEscapeException
     {
         this.wrongStyle = wrongStyle;
         VoidMarkerStyle.Style[] styles = VoidMarkerStyle.Style.values();
-        String ks = "";
-        for ( VoidMarkerStyle.Style s: styles )
-        {
-            ks += " " + s.toString().toLowerCase();
-        }
-        knownStyles = ks;
+        knownStyles = Util.join( " ", styles );
     }
 
 }
