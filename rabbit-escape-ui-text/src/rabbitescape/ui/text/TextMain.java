@@ -141,7 +141,9 @@ public class TextMain
             "Any option can be abbreviated: '--help' becomes '-h'.\n" +
             " --help                         (This) message and exit.\n" +
             " swing                          Play using the swing GUI menus.\n" +
-            " swing level.rel                Play a single level using the swing GUI.\n" +
+            " swing [--level] <level.rel>    Play a single level using the swing GUI.\n" +
+            " swing --level <l.rel> --solution <n> [--dump] Show a recorded solution.\n" +
+            "                                Optionally dump frames to png.\n" +
             " swing --animation              Animation tester.\n" +
             " [--level] level.rel            Play a single level using the text UI.\n" +
             " --level <file> --solution <n>  Print world steps.\n" +
