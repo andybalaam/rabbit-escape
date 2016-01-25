@@ -125,6 +125,20 @@ public class GameSurfaceView extends SurfaceView
             return false;
         }
     }
+    
+    public boolean toggleSpeed()
+    {
+        if ( game != null )
+        {
+            AndroidGameLaunch gameLaunch = game.gameLaunch;
+            gameLaunch.setPaused( !gameLaunch.paused() );
+            return gameLaunch.paused();
+        }
+        else
+        {
+            return false;
+        }
+    }
 
     @Override
     public void onClick( View view )

@@ -51,6 +51,7 @@ public class AndroidGameActivity extends RabbitEscapeActivity
 
     private Button muteButton;
     private Button pauseButton;
+    private Button speedButton;
     private LinearLayout topLayout;
 
     public GameSurfaceView gameSurface;
@@ -146,6 +147,7 @@ public class AndroidGameActivity extends RabbitEscapeActivity
 
         muteButton = (Button)findViewById( R.id.muteButton );
         pauseButton = (Button)findViewById( R.id.pauseButton );
+        speedButton = (Button)findViewById( R.id.speedButton );
         topLayout = (LinearLayout)findViewById( R.id.topLayout );
         abilitiesGroup = (RadioGroup)findViewById( R.id.abilitiesGroup );
         worldStatsTextView = (TextView)findViewById( R.id.worldStats );
@@ -220,6 +222,22 @@ public class AndroidGameActivity extends RabbitEscapeActivity
         pauseButton.invalidate();
     }
 
+    public void onSpeedClicked( View view )
+    {
+	updateSpeedButton( gameSurface.toggleSpeed() );
+    }
+    
+    private void updateSpeedButton( boolean fast )
+    {
+	speedButton.setCompoundDrawablesWithIntrinsicBounds(
+	    getResources().getDrawable( fast ? R.drawable.menu_speedup_inactive : menu_speedup_active ),
+	    null,
+	    null,
+	    null
+	);
+	speedButton,invalidate();
+    }
+    
     public void onExplodeAllClicked( View view )
     {
         World world = gameSurface.game.gameLaunch.physics.world;
