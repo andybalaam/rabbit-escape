@@ -65,6 +65,7 @@ public class SwingGameLaunch implements GameLaunch
     private final MainJFrame frame;
     public final SolutionRecorderTemplate solutionRecorder;
     private final SwingPlayback swingPlayback;
+    private final FrameDumper frameDumper;
 
     /**
      * @param solutionIndex natural number values indicate demo mode. It is the index of the
@@ -77,15 +78,25 @@ public class SwingGameLaunch implements GameLaunch
         SwingSound sound,
         IConfig config,
         PrintStream debugout,
-        int solutionIndex
+        int solutionIndex,
+        boolean frameDumping
     )
     {
         this.world = world;
         SolutionInterpreter solutionInterpreter = createSolutionInterpreter( solutionIndex, world );
         this.frame = init.frame;
         this.solutionRecorder = new SolutionRecorder();
+        if ( frameDumping )
+        {
+            this.frameDumper = new FrameDumper();
+        }
+        else
+        {
+            this.frameDumper = FrameDumper.createInactiveDumper();
+        }
         this.swingPlayback = new SwingPlayback( this );
-        this.physics = new GeneralPhysics( world, winListener, solutionRecorder, solutionInterpreter, swingPlayback );
+        this.physics = new GeneralPhysics( world, winListener, 
+            solutionRecorder, solutionInterpreter, swingPlayback, frameDumping );
 
         // This blocks until the UI is ready:
         WhenUiReady uiPieces = init.waitForUi.waitForUi();
@@ -95,7 +106,8 @@ public class SwingGameLaunch implements GameLaunch
             world,
             uiPieces.jframe,
             uiPieces.bitmapCache,
-            sound
+            sound,
+            frameDumper
         );
 
         jframe.setGameLaunch( this );
