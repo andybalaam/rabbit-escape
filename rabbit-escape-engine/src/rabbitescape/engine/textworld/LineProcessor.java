@@ -608,13 +608,7 @@ public class LineProcessor
                 return VoidMarkerStyle.Style.HIGHLIGHTER;
             }
             // Generate a reproducible style from the level name
-            int hash = 0;
-            for ( char c: name.toCharArray() )
-            {
-                hash += (int)c;
-            }
-            int n = VoidMarkerStyle.Style.values().length;
-            int i = hash % n;
+            int i = stringHash( name ) % VoidMarkerStyle.Style.values().length;
             return VoidMarkerStyle.Style.values()[i];
         }
         try
@@ -626,6 +620,22 @@ public class LineProcessor
         {
             throw new UnknownVoidMarkerStyle( marker );
         }
+    }
+
+    /**
+     * Not a fancy hash, but the same string will always yield the
+     * same number. Note that Object.hashCode results may vary each
+     * time the JVM is started.
+     */
+
+    public static int stringHash( String s )
+    {
+        int hash = 0;
+        for ( char c: s.toCharArray() )
+        {
+            hash += (int)c;
+        }
+        return hash;
     }
 
 }

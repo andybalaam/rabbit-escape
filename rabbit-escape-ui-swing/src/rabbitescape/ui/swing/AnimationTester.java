@@ -10,7 +10,6 @@ import rabbitescape.render.*;
 import rabbitescape.render.Frame;
 import rabbitescape.render.Renderer;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 
 import java.awt.*;
@@ -18,9 +17,6 @@ import java.awt.event.ComponentEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferStrategy;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 import java.util.*;
 import java.util.List;
 
@@ -244,7 +240,7 @@ public class AnimationTester extends JFrame
                 runMode = Mode.FRAME_DUMP;
                 return;
             case KeyEvent.VK_F6:
-                framesToGif();
+                frameDumper.framesToGif();
                 return;
             case KeyEvent.VK_Q:
                 System.exit( 0 );
@@ -259,7 +255,7 @@ public class AnimationTester extends JFrame
 
     private Mode runMode = Mode.RUN;
     private FrameCounter firstFrameDumped = null;
-    private String recordingDir = null;
+    private FrameDumper frameDumper = null ;
     private boolean forwardStep = false;
     private boolean backwardStep = false;
     private boolean frameLogging = false;
@@ -427,22 +423,6 @@ public class AnimationTester extends JFrame
         }
     }
 
-    private void framesToGif()
-    {
-        String cmd = String.format( "convert -delay 10 -loop 0 %s*.png %sanimation.gif",
-                recordingDir, recordingDir );
-        try
-        {
-            Runtime.getRuntime().exec( cmd );
-            System.out.printf( "Wrote:  %sanimation.gif\n", recordingDir );
-        }
-        catch ( IOException e )
-        {
-            System.err.println( "convert from ImageMagick is required to make animated gifs" );
-            e.printStackTrace();
-        }
-    }
-
     private class FrameCounter
     {
         private int frameSetNum ;
@@ -602,27 +582,12 @@ public class AnimationTester extends JFrame
             }
             if ( null == firstFrameDumped )
             {
-                RealFileSystem fs = new RealFileSystem();
-
-                int dirCount = 0;
-                do
-                {
-                    recordingDir = String.format( ".%srecordings%s%04d%s",
-                             File.separator, File.separator, dirCount++, File.separator );
-                }
-                while ( fs.exists( recordingDir ) );
-
-                fs.mkdirs( recordingDir );
-                System.out.printf( "Dumping %sanim_test_frame_<set>_<frame>.png:", recordingDir );
+                frameDumper = new FrameDumper();
                 firstFrameDumped = new FrameCounter( counter );
             }
-            BufferedImage im = new BufferedImage( canvas.getWidth(), canvas.getHeight(),
-                BufferedImage.TYPE_INT_ARGB );
-            drawFrame.draw( (Graphics2D)im.getGraphics() );
-            String fileName = String.format("%sanim_test_frame_%02d_%02d.png",
-                recordingDir, counter.getFrameSetNum(), counter.getFrameNum() );
-            System.out.printf(" %02d_%02d", counter.getFrameSetNum(), counter.getFrameNum() );
-            ImageIO.write( im, "PNG", new File( fileName ) );
+            String frameID = String.format("%02d_%02d", counter.getFrameSetNum(), counter.getFrameNum() );
+            frameDumper.dump( canvas, drawFrame, frameID );
+
             counter.inc();
             return counter;
         }

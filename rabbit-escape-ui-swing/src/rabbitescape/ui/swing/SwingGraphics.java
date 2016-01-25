@@ -88,6 +88,7 @@ public class SwingGraphics implements Graphics
     private final GameUi jframe;
     private final BufferStrategy strategy;
     private final SpriteAnimator animator;
+    private final FrameDumper frameDumper;
 
     public final Renderer<SwingBitmap, SwingPaint> renderer;
     private final SoundPlayer soundPlayer;
@@ -100,7 +101,8 @@ public class SwingGraphics implements Graphics
         World world,
         GameUi jframe,
         BitmapCache<SwingBitmap> bitmapCache,
-        SwingSound sound
+        SwingSound sound,
+        FrameDumper frameDumper
     )
     {
         this.world = world;
@@ -117,6 +119,7 @@ public class SwingGraphics implements Graphics
         this.prevScrollX = -1;
         this.prevScrollY = -1;
         this.lastWorldState = null;
+        this.frameDumper = frameDumper;
     }
 
     @Override
@@ -124,7 +127,7 @@ public class SwingGraphics implements Graphics
     {
         setRendererOffset( renderer );
 
-        new DrawFrame(
+        DrawFrame df = new DrawFrame(
             strategy,
             jframe.canvas,
             renderer,
@@ -132,7 +135,11 @@ public class SwingGraphics implements Graphics
             animator,
             frame,
             world
-        ).run();
+        );
+
+        df.run();
+
+        frameDumper.dump( jframe.canvas, df );
     }
 
     public void setTileSize( int timeSize )
