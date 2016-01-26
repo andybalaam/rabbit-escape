@@ -230,12 +230,12 @@ public class AndroidGameActivity extends RabbitEscapeActivity
     private void updateSpeedButton( boolean fast )
     {
 	speedButton.setCompoundDrawablesWithIntrinsicBounds(
-	    getResources().getDrawable( fast ? R.drawable.menu_speedup_inactive : menu_speedup_active ),
+	    getResources().getDrawable( fast ? R.drawable.menu_speedup_inactive : R.drawable.menu_speedup_active ),
 	    null,
 	    null,
 	    null
 	);
-	speedButton,invalidate();
+	speedButton.invalidate();
     }
     
     public void onExplodeAllClicked( View view )

@@ -131,8 +131,8 @@ public class GameSurfaceView extends SurfaceView
         if ( game != null )
         {
             AndroidGameLaunch gameLaunch = game.gameLaunch;
-            gameLaunch.setPaused( !gameLaunch.paused() );
-            return gameLaunch.paused();
+            boolean fast = gameLaunch.toggleSpeed();
+            return fast;
         }
         else
         {
