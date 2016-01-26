@@ -37,11 +37,22 @@ public class Bashing extends Behaviour
                 && t.blockAboveNext() != null
             )
             {
-                stepsOfBashing = 2;
-                return t.rl(
-                    RABBIT_BASHING_UP_RIGHT,
-                    RABBIT_BASHING_UP_LEFT
-                );
+                if (t.blockAboveNext().type == Block.Type.metal_flat)
+                {
+                    stepsOfBashing = 0;
+                    return t.rl(
+                        RABBIT_BASHING_USELESSLY_RIGHT_UP,
+                        RABBIT_BASHING_USELESSLY_LEFT_UP
+                        );
+                }
+                else
+                {
+                    stepsOfBashing = 2;
+                    return t.rl(
+                        RABBIT_BASHING_UP_RIGHT,
+                        RABBIT_BASHING_UP_LEFT
+                    );
+                }
             }
             else if (
                 t.isOnUpSlope()
