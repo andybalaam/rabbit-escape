@@ -123,9 +123,9 @@ public class SwingGameLaunch implements GameLaunch
         return jframe;
     }
 
-    public void setSpeed( int speed )
+    public void toggleSpeed()
     {
-        physics.setSpeed( speed );
+        physics.toggleSpeed();
     }
 
     private static SolutionInterpreter createSolutionInterpreter( int solutionIndex, World world )

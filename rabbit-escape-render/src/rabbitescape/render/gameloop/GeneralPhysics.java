@@ -60,6 +60,8 @@ public class GeneralPhysics implements Physics
     private final SolutionInterpreter solutionInterpreter;
     private final UiPlayback uiPlayback;
 
+    private static final int[] speeds = { 1, 3 };
+    private int speedIndex = 0;
     /** Speed factor. 1 is normal, 2 is twice as fast, and so on. */
     private int speed = 1;
 
@@ -91,6 +93,13 @@ public class GeneralPhysics implements Physics
         this.max_allowed_skips = noFrameSkipping ? 1 : 10 ;
     }
 
+    public boolean toggleSpeed()
+    {
+        speedIndex = -1 * ( speedIndex - 1 );
+        setSpeed( speeds[speedIndex] );
+        return 1 == speedIndex ;
+    }
+    
     public void setSpeed( int speed )
     {
         if ( speed > 10 || speed < 1 )
