@@ -73,6 +73,16 @@ public class AndroidGameLaunch implements Runnable
     {
         loop.run();
     }
+    
+    public void setSpeed( int speed )
+    {
+	physics.setSpeed( speed );
+    }
+
+    public boolean toggleSpeed()
+    {
+	    return physics.toggleSpeed();
+    }
 
     public void stopAndDispose()
     {
