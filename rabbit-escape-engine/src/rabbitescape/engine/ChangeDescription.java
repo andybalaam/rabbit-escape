@@ -11,6 +11,14 @@ public class ChangeDescription
     public enum State
     {
         NOTHING,
+        FIRE_A,
+        FIRE_A_FALLING,
+        FIRE_B,
+        FIRE_B_FALLING,
+        FIRE_C,
+        FIRE_C_FALLING,
+        FIRE_D,
+        FIRE_D_FALLING,
         RABBIT_WALKING_LEFT,
         RABBIT_TURNING_LEFT_TO_RIGHT,
         RABBIT_TURNING_LEFT_TO_RIGHT_RISING,

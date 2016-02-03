@@ -15,6 +15,7 @@ import java.util.regex.Pattern;
 import rabbitescape.engine.Block;
 import rabbitescape.engine.Entrance;
 import rabbitescape.engine.Exit;
+import rabbitescape.engine.Fire;
 import rabbitescape.engine.Rabbit;
 import rabbitescape.engine.Thing;
 import rabbitescape.engine.Token;
@@ -539,6 +540,12 @@ public class LineProcessor
             case 'O':
             {
                 ret = new Exit( x, y );
+                things.add( ret );
+                break;
+            }
+            case 'A':
+            {
+                ret = new Fire( x, y );
                 things.add( ret );
                 break;
             }

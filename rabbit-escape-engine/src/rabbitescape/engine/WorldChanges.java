@@ -32,6 +32,7 @@ public class WorldChanges
     private final List<Rabbit> rabbitsToSave  = new ArrayList<Rabbit>();
     private final List<Token>  tokensToAdd    = new ArrayList<Token>();
     public  final List<Token>  tokensToRemove = new ArrayList<Token>();
+    private final List<Fire>   fireToRemove   = new ArrayList<Fire>();
     private final List<Block>  blocksToAdd    = new ArrayList<Block>();
     private final List<Block>  blocksToRemove = new ArrayList<Block>();
     public final List<Point>   blocksJustRemoved = new ArrayList<Point>();
@@ -62,6 +63,7 @@ public class WorldChanges
         world.rabbits.removeAll( rabbitsToKill );
         world.rabbits.removeAll( rabbitsToSave );
         world.things.removeAll(  tokensToRemove );
+        world.things.removeAll( fireToRemove );
         world.blockTable.removeAll(  blocksToRemove );
 
         if ( rabbitsToSave.size() > 0 )
@@ -74,6 +76,7 @@ public class WorldChanges
         rabbitsToSave.clear();
         tokensToAdd.clear();
         tokensToRemove.clear();
+        fireToRemove.clear();
         blocksToAdd.clear();
         blocksToRemove.clear();
 
@@ -186,6 +189,11 @@ public class WorldChanges
     public synchronized void removeToken( Token thing )
     {
         tokensToRemove.add( thing );
+    }
+
+    public synchronized void removeFire( Fire thing )
+    {
+        fireToRemove.add( thing );
     }
 
     public synchronized void addBlock( Block block )
