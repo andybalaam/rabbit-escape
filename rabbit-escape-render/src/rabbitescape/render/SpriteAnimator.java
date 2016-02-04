@@ -58,12 +58,23 @@ public class SpriteAnimator
 
         for ( Thing thing : world.things )
         {
-            addThing( frameNum, thing, null, ret );
+            if ( !( thing instanceof Fire ) )
+            {
+                addThing( frameNum, thing, null, ret );
+            }
         }
 
         for ( Rabbit rabbit : world.rabbits )
         {
             addThing( frameNum, rabbit, null, ret );
+        }
+        
+        for ( Thing thing : world.things )
+        {
+            if ( thing instanceof Fire )
+            {
+                addThing( frameNum, thing, null, ret );
+            }
         }
 
         for ( Thing thing : world.changes.tokensAboutToAppear() )
