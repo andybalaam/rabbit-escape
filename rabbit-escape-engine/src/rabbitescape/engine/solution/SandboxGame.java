@@ -7,6 +7,7 @@ import java.util.List;
 
 import rabbitescape.engine.Entrance;
 import rabbitescape.engine.Exit;
+import rabbitescape.engine.Fire;
 import rabbitescape.engine.IgnoreWorldStatsListener;
 import rabbitescape.engine.Rabbit;
 import rabbitescape.engine.Thing;
@@ -94,6 +95,11 @@ public class SandboxGame
             {
                 Token token = (Token)thing;
                 clonedThings.add( new Token( token.x, token.y, token.type ) );
+            }
+            else if ( thing instanceof Fire )
+            {
+                Fire fire = (Fire)thing;
+                clonedThings.add( new Fire( fire.x, fire.y ) );
             }
             else
             {
