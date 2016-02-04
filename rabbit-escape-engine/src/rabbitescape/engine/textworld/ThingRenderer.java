@@ -4,6 +4,7 @@ import java.util.List;
 
 import rabbitescape.engine.Entrance;
 import rabbitescape.engine.Exit;
+import rabbitescape.engine.Fire;
 import rabbitescape.engine.Thing;
 import rabbitescape.engine.Token;
 import rabbitescape.engine.Token.Type;
@@ -45,6 +46,10 @@ public class ThingRenderer
         else if ( thing instanceof Token )
         {
             return charForToken( (Token)thing );
+        }
+        else if ( thing instanceof Fire )
+        {
+            return 'A';
         }
         else
         {
