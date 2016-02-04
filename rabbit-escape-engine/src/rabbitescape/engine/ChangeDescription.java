@@ -19,6 +19,7 @@ public class ChangeDescription
         FIRE_C_FALLING,
         FIRE_D,
         FIRE_D_FALLING,
+        RABBIT_BURNING,
         RABBIT_WALKING_LEFT,
         RABBIT_TURNING_LEFT_TO_RIGHT,
         RABBIT_TURNING_LEFT_TO_RIGHT_RISING,

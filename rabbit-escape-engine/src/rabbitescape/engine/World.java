@@ -285,6 +285,22 @@ public class World
         return null;
     }
 
+    public boolean fireAt( int x, int y )
+    {
+        // TODO: faster with LookupTable2D. can do getTokenAt at the same time.
+        for ( Thing thing : things )
+        {
+            if ( thing.x == x && thing.y == y && thing instanceof Fire )
+            {
+                if ( !changes.fireToRemove.contains( thing ) )
+                {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+    
     public Rabbit[] getRabbitsAt( int x, int y )
     {
         List<Rabbit> ret = new ArrayList<Rabbit>();

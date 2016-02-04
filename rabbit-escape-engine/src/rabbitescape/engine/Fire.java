@@ -63,7 +63,7 @@ public class Fire extends Thing
             state = still ? FIRE_D : FIRE_D_FALLING;
             return;
         default:
-            throw new RuntimeException( "Fire not in fire state" );
+            throw new RuntimeException( "Fire not in fire state:" + state );
         }
     }
 

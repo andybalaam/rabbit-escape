@@ -32,7 +32,7 @@ public class WorldChanges
     private final List<Rabbit> rabbitsToSave  = new ArrayList<Rabbit>();
     private final List<Token>  tokensToAdd    = new ArrayList<Token>();
     public  final List<Token>  tokensToRemove = new ArrayList<Token>();
-    private final List<Fire>   fireToRemove   = new ArrayList<Fire>();
+    public  final List<Fire>   fireToRemove   = new ArrayList<Fire>();
     private final List<Block>  blocksToAdd    = new ArrayList<Block>();
     private final List<Block>  blocksToRemove = new ArrayList<Block>();
     public final List<Point>   blocksJustRemoved = new ArrayList<Point>();
