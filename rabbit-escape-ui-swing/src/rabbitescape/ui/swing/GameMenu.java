@@ -75,9 +75,6 @@ class GameMenu
         this.pause = addToggleButton(
             "menu_pause", "menu_unpause", false, t( "Pause" ) );
 
-        this.speed = addToggleButton(
-            "menu_speedup_inactive", "menu_speedup_active", false, t( "speed up" ) );
-
         addSpacer();
 
         this.abilities = addAbilitiesButtons( abilityTypes );
@@ -85,6 +82,10 @@ class GameMenu
         addSpacer();
 
         this.explodeAll = addButton( "menu_explode_all", t( "Explode all" ) );
+
+        this.speed = addToggleButton(
+            "menu_speedup_inactive", "menu_speedup_active", false, t( "speed up" ) );
+
         this.zoomIn     = addButton( "menu_zoom_in",     t( "Zoom in" ) );
         this.zoomOut    = addButton( "menu_zoom_out",    t( "Zoom out" ) );
         this.back       = addButton( "menu_back",        t( "Back" ) );
