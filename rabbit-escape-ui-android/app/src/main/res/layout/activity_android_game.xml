@@ -38,17 +38,6 @@
                 android:onClick="onPauseClicked"
                 tools:ignore="HardcodedText"/>
 
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/speedButton"
-                android:drawableLeft="@drawable/menu_speedup_inactive"
-                android:text="  "
-                android:layout_marginBottom="10dp"
-                android:contentDescription="@string/pause"
-                android:onClick="onSpeedClicked"
-                tools:ignore="HardcodedText"/>
-
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -66,9 +55,19 @@
                 android:id="@+id/explodeAllButton"
                 android:drawableLeft="@drawable/menu_explode_all"
                 android:text="  "
-                android:layout_marginBottom="20dp"
                 android:contentDescription="@string/pause"
                 android:onClick="onExplodeAllClicked"
+                tools:ignore="HardcodedText"/>
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/speedButton"
+                android:drawableLeft="@drawable/menu_speedup_inactive"
+                android:text="  "
+                android:layout_marginBottom="20dp"
+                android:contentDescription="@string/pause"
+                android:onClick="onSpeedClicked"
                 tools:ignore="HardcodedText"/>
 
         </LinearLayout>
