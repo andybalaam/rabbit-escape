@@ -42,7 +42,7 @@ public class AndroidGameLaunch implements Runnable
     )
     {
         this.soundPlayer = new SoundPlayer( Globals.sound );
-        this.physics = new GeneralPhysics( world, winListener );
+        this.physics = new GeneralPhysics( world, winListener, false );
 
         int scrollX;
         int scrollY;
@@ -73,15 +73,11 @@ public class AndroidGameLaunch implements Runnable
     {
         loop.run();
     }
-    
-    public void setSpeed( int speed )
-    {
-	physics.setSpeed( speed );
-    }
 
     public boolean toggleSpeed()
     {
-	    return physics.toggleSpeed();
+        physics.fast = !physics.fast;
+        return physics.fast;
     }
 
     public void stopAndDispose()

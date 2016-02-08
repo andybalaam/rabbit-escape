@@ -125,14 +125,13 @@ public class GameSurfaceView extends SurfaceView
             return false;
         }
     }
-    
+
     public boolean toggleSpeed()
     {
         if ( game != null )
         {
             AndroidGameLaunch gameLaunch = game.gameLaunch;
-            boolean fast = gameLaunch.toggleSpeed();
-            return fast;
+            return gameLaunch.toggleSpeed();
         }
         else
         {

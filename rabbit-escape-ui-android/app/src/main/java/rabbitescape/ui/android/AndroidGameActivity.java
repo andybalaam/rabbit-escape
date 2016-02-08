@@ -224,18 +224,17 @@ public class AndroidGameActivity extends RabbitEscapeActivity
 
     public void onSpeedClicked( View view )
     {
-	updateSpeedButton( gameSurface.toggleSpeed() );
+        updateSpeedButton( gameSurface.toggleSpeed() );
     }
     
     private void updateSpeedButton( boolean fast )
     {
-	speedButton.setCompoundDrawablesWithIntrinsicBounds(
-	    getResources().getDrawable( fast ? R.drawable.menu_speedup_active : R.drawable.menu_speedup_inactive ),
-	    null,
-	    null,
-	    null
-	);
-	speedButton.invalidate();
+        int speedRes = fast ? R.drawable.menu_speedup_active : R.drawable.menu_speedup_inactive;
+
+        speedButton.setCompoundDrawablesWithIntrinsicBounds(
+            getResources().getDrawable( speedRes ), null, null, null );
+
+        speedButton.invalidate();
     }
     
     public void onExplodeAllClicked( View view )

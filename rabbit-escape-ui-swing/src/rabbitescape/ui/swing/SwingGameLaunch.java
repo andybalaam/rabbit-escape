@@ -95,8 +95,15 @@ public class SwingGameLaunch implements GameLaunch
             this.frameDumper = FrameDumper.createInactiveDumper();
         }
         this.swingPlayback = new SwingPlayback( this );
-        this.physics = new GeneralPhysics( world, winListener, 
-            solutionRecorder, solutionInterpreter, swingPlayback, frameDumping );
+        this.physics = new GeneralPhysics(
+            world,
+            winListener,
+            false,
+            solutionRecorder,
+            solutionInterpreter,
+            swingPlayback,
+            frameDumping
+        );
 
         // This blocks until the UI is ready:
         WhenUiReady uiPieces = init.waitForUi.waitForUi();
@@ -125,7 +132,7 @@ public class SwingGameLaunch implements GameLaunch
 
     public void toggleSpeed()
     {
-        physics.toggleSpeed();
+        physics.fast = !physics.fast;
     }
 
     private static SolutionInterpreter createSolutionInterpreter( int solutionIndex, World world )

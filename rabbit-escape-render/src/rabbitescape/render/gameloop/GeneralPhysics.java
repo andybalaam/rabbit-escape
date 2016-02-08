@@ -12,7 +12,6 @@ import rabbitescape.engine.solution.SolutionTimeStep;
 import rabbitescape.engine.solution.TimeStepAction;
 import rabbitescape.engine.solution.UiPlayback;
 import rabbitescape.engine.LevelWinListener;
-import rabbitescape.engine.SpeedOutOfRange;
 import rabbitescape.engine.Token;
 import rabbitescape.engine.World;
 import rabbitescape.engine.World.CompletionState;
@@ -53,6 +52,7 @@ public class GeneralPhysics implements Physics
     public static final long simulation_time_step_ms = 70;
 
     public int frame;
+    public boolean fast;
     public final World world;
     private final WorldModifier worldModifier;
     private final LevelWinListener winListener;
@@ -60,53 +60,41 @@ public class GeneralPhysics implements Physics
     private final SolutionInterpreter solutionInterpreter;
     private final UiPlayback uiPlayback;
 
-    private static final int[] speeds = { 1, 3 };
-    private int speedIndex = 0;
-    /** Speed factor. 1 is normal, 2 is twice as fast, and so on. */
-    private int speed = 1;
+    private static final int FAST_FRAME_SKIP = 3;
 
-    public GeneralPhysics( World world, LevelWinListener winListener )
+    public GeneralPhysics( World world, LevelWinListener winListener, boolean fast )
     {
-        this( world,
-              winListener,
-              new SolutionIgnorer(),
-              SolutionInterpreter.getNothingPlaying(),
-              null,
-              false);
+        this(
+            world,
+            winListener,
+            fast,
+            new SolutionIgnorer(),
+            SolutionInterpreter.getNothingPlaying(),
+            null,
+            false
+        );
     }
 
 
-    public GeneralPhysics( World world,
-                           LevelWinListener winListener,
-                           SolutionRecorderTemplate solutionRecorder,
-                           SolutionInterpreter solutionInterpreter,
-                           UiPlayback uiPlayback,
-                           boolean noFrameSkipping)
+    public GeneralPhysics(
+        World world,
+        LevelWinListener winListener,
+        boolean fast,
+        SolutionRecorderTemplate solutionRecorder,
+        SolutionInterpreter solutionInterpreter,
+        UiPlayback uiPlayback,
+        boolean noFrameSkipping
+    )
     {
         this.frame = 0;
         this.world = world;
         this.worldModifier = new WorldModifier( world, solutionRecorder );
         this.winListener = winListener;
+        this.fast = fast;
         this.statsListeners = new ArrayList<>();
         this.solutionInterpreter = solutionInterpreter;
         this.uiPlayback = uiPlayback;
         this.max_allowed_skips = noFrameSkipping ? 1 : 10 ;
-    }
-
-    public boolean toggleSpeed()
-    {
-        speedIndex = -1 * ( speedIndex - 1 );
-        setSpeed( speeds[speedIndex] );
-        return 1 == speedIndex ;
-    }
-    
-    public void setSpeed( int speed )
-    {
-        if ( speed > 10 || speed < 1 )
-        {
-            throw new SpeedOutOfRange( speed );
-        }
-        this.speed = speed;
     }
 
     @Override
@@ -119,7 +107,7 @@ public class GeneralPhysics implements Physics
                 break;
             }
 
-            frame += speed;
+            frame += fast ? FAST_FRAME_SKIP : 1;
 
             if ( frame >= 10 )
             {
