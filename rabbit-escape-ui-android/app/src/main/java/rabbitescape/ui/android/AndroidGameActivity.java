@@ -136,6 +136,17 @@ public class AndroidGameActivity extends RabbitEscapeActivity
             savedInstanceState
         );
 
+        if ( savedInstanceState != null )
+        {
+            // Get the "fast" state from savedInstanceState because we have no
+            // game yet - that won't be created until we have a surface.
+            // TODO: maybe instead we should actually create a game at this moment?
+            // Maybe we shouldn't hold on to savedInstanceState inside GameSurfaceView.
+
+            updateSpeedButton(
+                savedInstanceState.getBoolean( AndroidGameLaunch.STATE_FAST_PRESSED, false ) );
+        }
+
         topLayout.addView( gameSurface );
     }
 
