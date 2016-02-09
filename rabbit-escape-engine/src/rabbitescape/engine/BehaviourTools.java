@@ -162,7 +162,7 @@ public class BehaviourTools
         );
     }
 
-    public boolean isRightRiseSlope( Block b )
+    public static boolean isRightRiseSlope( Block b )
     {
         if( b == null )
         {
@@ -172,7 +172,7 @@ public class BehaviourTools
             || b.type == bridge_up_right;
     }
 
-    public boolean isLeftRiseSlope( Block b )
+    public static boolean isLeftRiseSlope( Block b )
     {
         if( b == null )
         {

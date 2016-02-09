@@ -178,11 +178,11 @@ public class Falling extends Behaviour
             )
         )
         {
-            if( t.isRightRiseSlope( t.blockBelow() ) )
+            if( BehaviourTools.isRightRiseSlope( t.blockBelow() ) )
             {
                 return RABBIT_DYING_OF_FALLING_SLOPE_RISE_RIGHT;
             }
-            else if( t.isLeftRiseSlope( t.blockBelow() ) )
+            else if( BehaviourTools.isLeftRiseSlope( t.blockBelow() ) )
             {
                 return RABBIT_DYING_OF_FALLING_SLOPE_RISE_LEFT;
             }
@@ -217,12 +217,12 @@ public class Falling extends Behaviour
             if ( twoBelow != null )
             {
                 if (   heightFallen + 1 > fatalHeight
-                    && t.isRightRiseSlope( twoBelow ) )
+                    && BehaviourTools.isRightRiseSlope( twoBelow ) )
                 {
                     return RABBIT_DYING_OF_FALLING_2_SLOPE_RISE_RIGHT;
                 }
                 if (   heightFallen + 1 > fatalHeight
-                    && t.isLeftRiseSlope( twoBelow ) )
+                    && BehaviourTools.isLeftRiseSlope( twoBelow ) )
                 {
                     return RABBIT_DYING_OF_FALLING_2_SLOPE_RISE_LEFT;
                 }

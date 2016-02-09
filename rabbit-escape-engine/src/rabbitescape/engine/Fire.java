@@ -11,10 +11,12 @@ import rabbitescape.engine.util.Position;
 
 public class Fire extends Thing
 {
+    private final State baseVariant;
 
     public Fire( int x, int y )
     {
         super( x, y, chooseVariant() );
+        baseVariant = state;
     }
 
     private static State chooseVariant()
@@ -38,29 +40,79 @@ public class Fire extends Thing
     @Override
     public void calcNewState( World world )
     {
+        boolean onFlat = BehaviourTools.s_isFlat( world.getBlockAt( x, y + 1 ) ); 
         boolean still = (
-            BehaviourTools.s_isFlat( world.getBlockAt( x, y + 1 ) )
+                   onFlat
                 || ( world.getBlockAt( x, y ) != null )
                 || someoneIsBridgingAt( world, x, y )
             );
+        
+        if ( still )
+        {
+            Block onBlock = world.getBlockAt( x, y );
+            if ( BehaviourTools.isLeftRiseSlope( onBlock ) )
+            {
+                switch ( baseVariant )
+                {
+                case FIRE_A:
+                    state = FIRE_A_RISE_LEFT;
+                    return;
+                case FIRE_B:
+                    state = FIRE_B_RISE_LEFT;
+                    return;
+                case FIRE_C:
+                    state = FIRE_C_RISE_LEFT;
+                    return;
+                case FIRE_D:
+                    state = FIRE_D_RISE_LEFT;
+                    return;
+                default:
+                    throw new RuntimeException( "Fire not in fire state:" + state );
+                }
+            }
+            if ( BehaviourTools.isRightRiseSlope( onBlock ) )
+            {
+                switch ( baseVariant )
+                {
+                case FIRE_A:
+                    state = FIRE_A_RISE_RIGHT;
+                    return;
+                case FIRE_B:
+                    state = FIRE_B_RISE_RIGHT;
+                    return;
+                case FIRE_C:
+                    state = FIRE_C_RISE_RIGHT;
+                    return;
+                case FIRE_D:
+                    state = FIRE_D_RISE_RIGHT;
+                    return;
+                default:
+                    throw new RuntimeException( "Fire not in fire state:" + state );
+                }
+            }
+            // TODO: check here for fire falling on a bridger. Fire going to a falling state may be OK
+            // as bridger is burnt
+            if ( onFlat )
+            {
+                state = baseVariant;
+                return;
+            }
+        }
 
-        switch ( state )
+        // Fire is falling, but may not have been last step
+        switch ( baseVariant )
         {
         case FIRE_A:
-        case FIRE_A_FALLING:
-            state = still ? FIRE_A : FIRE_A_FALLING;
+            state = FIRE_A_FALLING;
             return;
         case FIRE_B:
-        case FIRE_B_FALLING:
-            state = still ? FIRE_B : FIRE_B_FALLING;
+            state = FIRE_B_FALLING;
             return;
         case FIRE_C:
-        case FIRE_C_FALLING:
-            state = still ? FIRE_C : FIRE_C_FALLING;
+            state = FIRE_C_FALLING;
             return;
         case FIRE_D:
-        case FIRE_D_FALLING:
-            state = still ? FIRE_D : FIRE_D_FALLING;
+            state = FIRE_D_FALLING;
             return;
         default:
             throw new RuntimeException( "Fire not in fire state:" + state );
