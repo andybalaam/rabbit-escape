@@ -1,11 +1,11 @@
-fire_a_01 -4 -1
-fire_a_02 -4 02
-fire_a_03 -4 06
-fire_a_04 -4 09
-fire_a_05 -4 12
-fire_a_06 -4 16
-fire_a_07 -4 19
-fire_a_08 -4 22
-fire_a_09 -4 25
-fire_a_10 -4 28
+fire_falling_a_01 -4 -1
+fire_falling_a_02 -4 02
+fire_falling_a_03 -4 06
+fire_falling_a_04 -4 09
+fire_falling_a_05 -4 12
+fire_falling_a_06 -4 16
+fire_falling_a_07 -4 19
+fire_falling_a_08 -4 22
+fire_falling_a_09 -4 25
+fire_falling_a_10 -4 28
 
