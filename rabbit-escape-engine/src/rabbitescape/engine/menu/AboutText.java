@@ -9,7 +9,7 @@ public class AboutText
 
     public static final String text =
           "Rabbit Escape\n"
-        + "Copyright(c) 2014-2015 by Andy Balaam and the "
+        + "Copyright(c) 2014-2016 by Andy Balaam and the "
             + "Rabbit Escape developers\n"
         + "Version " + version + "\n"
         + "\n"
