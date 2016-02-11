@@ -7,7 +7,6 @@ import java.util.Map;
 import java.util.concurrent.ThreadLocalRandom;
 
 import rabbitescape.engine.ChangeDescription.State;
-import rabbitescape.engine.util.Position;
 
 public class Fire extends Thing
 {
@@ -44,7 +43,7 @@ public class Fire extends Thing
         boolean still = (
                    onFlat
                 || ( world.getBlockAt( x, y ) != null )
-                || someoneIsBridgingAt( world, x, y )
+                || BridgeTools.someoneIsBridgingAt( world, x, y )
             );
         
         if ( still )
@@ -116,33 +115,6 @@ public class Fire extends Thing
             return;
         default:
             throw new RuntimeException( "Fire not in fire state:" + state );
-        }
-    }
-
-    private static boolean someoneIsBridgingAt( World world, int x, int y )
-    {
-        for ( Rabbit rabbit : world.rabbits )
-        {
-            if ( rabbitIsBridgingAt( rabbit, x, y ) )
-            {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    private static boolean rabbitIsBridgingAt( Rabbit rabbit, int x, int y )
-    {
-        Position bridging = RabbitStates.whereBridging(
-            new StateAndPosition( rabbit.state, rabbit.x, rabbit.y ) );
-
-        if ( bridging == null )
-        {
-            return false;
-        }
-        else
-        {
-            return ( bridging.x == x && bridging.y == y );
         }
     }
 

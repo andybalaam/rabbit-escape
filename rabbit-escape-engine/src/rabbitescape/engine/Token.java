@@ -7,7 +7,6 @@ import java.util.Map;
 
 import rabbitescape.engine.ChangeDescription.State;
 import rabbitescape.engine.err.RabbitEscapeException;
-import rabbitescape.engine.util.Position;
 
 public class Token extends Thing
 {
@@ -77,37 +76,10 @@ public class Token extends Thing
         boolean still = (
                BehaviourTools.s_isFlat( world.getBlockAt( x, y + 1 ) )
             || ( world.getBlockAt( x, y ) != null )
-            || someoneIsBridgingAt( world, x, y )
+            || BridgeTools.someoneIsBridgingAt( world, x, y )
         );
 
         state = state( type, !still );
-    }
-
-    private static boolean someoneIsBridgingAt( World world, int x, int y )
-    {
-        for( Rabbit rabbit: world.rabbits )
-        {
-            if ( rabbitIsBridgingAt( rabbit, x, y ) )
-            {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    private static boolean rabbitIsBridgingAt( Rabbit rabbit, int x, int y )
-    {
-        Position bridging = RabbitStates.whereBridging(
-            new StateAndPosition( rabbit.state, rabbit.x, rabbit.y ) );
-
-        if ( bridging == null )
-        {
-            return false;
-        }
-        else
-        {
-            return ( bridging.x == x && bridging.y == y );
-        }
     }
 
     @Override
