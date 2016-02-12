@@ -122,7 +122,8 @@ public class TestGameLoop
 
         GeneralPhysics physics = new GeneralPhysics(
             new NeverWonWorld( TextWorldManip.createEmptyWorld( 5, 5 ) ),
-            null
+            null,
+            false
         );
 
         IConfig config = new FakeConfig();

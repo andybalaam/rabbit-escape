@@ -21,6 +21,7 @@ public class AndroidGameLaunch implements Runnable
     public  static final String STATE_WORLD    = "rabbitescape.world";
     private static final String STATE_SCROLL_X = "rabbitescape.scrollx";
     private static final String STATE_SCROLL_Y = "rabbitescape.scrolly";
+    public static final String STATE_FAST_PRESSED = "rabbitescape.fast_pressed";
 
     // Transient state
     public final GeneralPhysics physics;
@@ -42,21 +43,24 @@ public class AndroidGameLaunch implements Runnable
     )
     {
         this.soundPlayer = new SoundPlayer( Globals.sound );
-        this.physics = new GeneralPhysics( world, winListener );
 
         int scrollX;
         int scrollY;
+        boolean fast;
         if ( savedInstanceState != null )
         {
             scrollX = savedInstanceState.getInt( STATE_SCROLL_X, 0 );
             scrollY = savedInstanceState.getInt( STATE_SCROLL_Y, 0 );
-
+            fast = savedInstanceState.getBoolean( STATE_FAST_PRESSED, false );
         }
         else
         {
             scrollX = 0;
             scrollY = 0;
+            fast = false;
         }
+
+        this.physics = new GeneralPhysics( world, winListener, fast );
 
         this.graphics = new AndroidGraphics(
             bitmapCache, soundPlayer, world, surfaceHolder, displayDensity, scrollX, scrollY );
@@ -74,14 +78,10 @@ public class AndroidGameLaunch implements Runnable
         loop.run();
     }
 
-    public void setSpeed( int speed )
-    {
-	physics.setSpeed( speed );
-    }
-
     public boolean toggleSpeed()
     {
-	    return physics.toggleSpeed();
+        physics.fast = !physics.fast;
+        return physics.fast;
     }
 
     public void stopAndDispose()
@@ -115,6 +115,7 @@ public class AndroidGameLaunch implements Runnable
         outState.putString( STATE_WORLD, join( "\n", worldSaver.waitUntilSaved() ) );
         outState.putInt( STATE_SCROLL_X, graphics.scrollX );
         outState.putInt( STATE_SCROLL_Y, graphics.scrollY );
+        outState.putBoolean( STATE_FAST_PRESSED, physics.fast );
     }
 
     public boolean isRunning()

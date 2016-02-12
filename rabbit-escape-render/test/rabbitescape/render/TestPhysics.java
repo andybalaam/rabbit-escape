@@ -1,6 +1,10 @@
 package rabbitescape.render;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertEquals;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.CoreMatchers.*;
 
 import org.junit.Test;
 
@@ -113,7 +117,8 @@ public class TestPhysics
         );
 
         LevelWinListener winListener = null;
-        GeneralPhysics physics = new GeneralPhysics( world, winListener );
+        GeneralPhysics physics = new GeneralPhysics(
+            world, winListener, false );
 
         // This is what we are testing - step once
         for ( int i = 0; i < 10; ++i )
@@ -156,7 +161,8 @@ public class TestPhysics
         );
 
         TracingWinListener winListener = new TracingWinListener();
-        GeneralPhysics physics = new GeneralPhysics( world, winListener );
+        GeneralPhysics physics = new GeneralPhysics(
+            world, winListener, false );
 
         // This is what we are testing - 2 time steps - winlistener should hear
         for ( int i = 0; i < 20; ++i )
@@ -180,7 +186,8 @@ public class TestPhysics
         );
 
         TracingWinListener winListener = new TracingWinListener();
-        GeneralPhysics physics = new GeneralPhysics( world, winListener );
+        GeneralPhysics physics = new GeneralPhysics(
+            world, winListener, false );
 
         // This is what we are testing - step twice - winlistener should hear
         for ( int i = 0; i < 20; ++i )
@@ -204,7 +211,8 @@ public class TestPhysics
         );
 
         LevelWinListener winListener = null;
-        GeneralPhysics physics = new GeneralPhysics( world, winListener );
+        GeneralPhysics physics = new GeneralPhysics(
+            world, winListener, false );
 
         // Sanity: no things at the moment
         assertEquals( 0, world.things.size() );
@@ -235,7 +243,8 @@ public class TestPhysics
         );
 
         LevelWinListener winListener = null;
-        GeneralPhysics physics = new GeneralPhysics( world, winListener );
+        GeneralPhysics physics = new GeneralPhysics(
+            world, winListener, false );
 
         // Add 1 - should work
         physics.addToken( 1, 1, Token.Type.bash );
@@ -261,7 +270,8 @@ public class TestPhysics
         );
 
         LevelWinListener winListener = null;
-        GeneralPhysics physics = new GeneralPhysics( world, winListener );
+        GeneralPhysics physics = new GeneralPhysics(
+            world, winListener, false );
 
         // Add 1 - 1 left
         assertEquals( 1, physics.addToken( 1, 1, Token.Type.bash ) );
@@ -287,7 +297,8 @@ public class TestPhysics
         );
 
         LevelWinListener winListener = null;
-        GeneralPhysics physics = new GeneralPhysics( world, winListener );
+        GeneralPhysics physics = new GeneralPhysics(
+            world, winListener, false );
 
         // Off the left does not add
         physics.addToken( -1, 1, Token.Type.bash );
@@ -321,7 +332,8 @@ public class TestPhysics
         );
 
         LevelWinListener winListener = null;
-        GeneralPhysics physics = new GeneralPhysics( world, winListener );
+        GeneralPhysics physics = new GeneralPhysics(
+            world, winListener, false );
 
         // Paused does not add
         world.setPaused( true );
@@ -349,7 +361,8 @@ public class TestPhysics
         );
 
         LevelWinListener winListener = null;
-        GeneralPhysics physics = new GeneralPhysics( world, winListener );
+        GeneralPhysics physics = new GeneralPhysics(
+            world, winListener, false );
 
         assertTrue( physics.gameRunning() );
 
@@ -380,7 +393,8 @@ public class TestPhysics
         );
 
         LevelWinListener winListener = null;
-        GeneralPhysics physics = new GeneralPhysics( world, winListener );
+        GeneralPhysics physics = new GeneralPhysics(
+            world, winListener, false );
 
         // Ask to track stats
         TrackingStatsListener myListener = new TrackingStatsListener();
@@ -403,4 +417,54 @@ public class TestPhysics
     }
 
     // TODO: Stats_listeners_are_not_notified_when_stats_do_not_change
+
+    @Test
+    public void Fast_is_set_by_constructor()
+    {
+        GeneralPhysics physicsSlow = new GeneralPhysics( null, null, false );
+        assertThat( physicsSlow.fast, is( false ) );
+
+        GeneralPhysics physicsFast = new GeneralPhysics( null, null, true );
+        assertThat( physicsFast.fast, is( true ) );
+    }
+
+    @Test
+    public void Step_one_frame_if_fast_is_false()
+    {
+        final World world = TextWorldManip.createWorld( "#" );
+        LevelWinListener winListener = null;
+
+        // Make a physics that is not fast
+        GeneralPhysics physics = new GeneralPhysics(
+            world, winListener, false );
+
+        // Sanity: we start at frame 0
+        assertThat( physics.frame, is( 0 ) );
+
+        // This is what we are testing: step forward once
+        physics.step( 0, 1 );
+
+        // We only moved one frame
+        assertThat( physics.frame, is( 1 ) );
+    }
+
+    @Test
+    public void Step_three_frames_if_fast_is_true()
+    {
+        final World world = TextWorldManip.createWorld( "#" );
+        LevelWinListener winListener = null;
+
+        // Make a physics that IS fast
+        GeneralPhysics physics = new GeneralPhysics(
+            world, winListener, true );
+
+        // Sanity: we start at frame 0
+        assertThat( physics.frame, is( 0 ) );
+
+        // This is what we are testing: step forward once
+        physics.step( 0, 1 );
+
+        // We moved 3 frames
+        assertThat( physics.frame, is( 3 ) );
+    }
 }

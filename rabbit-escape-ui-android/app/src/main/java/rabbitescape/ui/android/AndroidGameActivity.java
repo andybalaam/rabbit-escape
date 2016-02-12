@@ -136,6 +136,17 @@ public class AndroidGameActivity extends RabbitEscapeActivity
             savedInstanceState
         );
 
+        if ( savedInstanceState != null )
+        {
+            // Get the "fast" state from savedInstanceState because we have no
+            // game yet - that won't be created until we have a surface.
+            // TODO: maybe instead we should actually create a game at this moment?
+            // Maybe we shouldn't hold on to savedInstanceState inside GameSurfaceView.
+
+            updateSpeedButton(
+                savedInstanceState.getBoolean( AndroidGameLaunch.STATE_FAST_PRESSED, false ) );
+        }
+
         topLayout.addView( gameSurface );
     }
 
@@ -224,18 +235,17 @@ public class AndroidGameActivity extends RabbitEscapeActivity
 
     public void onSpeedClicked( View view )
     {
-	updateSpeedButton( gameSurface.toggleSpeed() );
+        updateSpeedButton( gameSurface.toggleSpeed() );
     }
 
     private void updateSpeedButton( boolean fast )
     {
-	speedButton.setCompoundDrawablesWithIntrinsicBounds(
-	    getResources().getDrawable( fast ? R.drawable.menu_speedup_active : R.drawable.menu_speedup_inactive ),
-	    null,
-	    null,
-	    null
-	);
-	speedButton.invalidate();
+        int speedRes = fast ? R.drawable.menu_speedup_active : R.drawable.menu_speedup_inactive;
+
+        speedButton.setCompoundDrawablesWithIntrinsicBounds(
+            getResources().getDrawable( speedRes ), null, null, null );
+
+        speedButton.invalidate();
     }
 
     public void onExplodeAllClicked( View view )
