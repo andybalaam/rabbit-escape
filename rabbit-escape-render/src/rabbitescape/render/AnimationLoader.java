@@ -130,7 +130,7 @@ public class AnimationLoader
 
     private static Frame frameFromLine( String animLine )
     {
-        String[] parts = animLine.split( " " );
+        String[] parts = animLine.split( " +" );
 
         try
         {
