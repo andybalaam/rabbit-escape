@@ -62,7 +62,7 @@ public class ChangeRenderer
             case FIRE_B_FALL_TO_RISE_LEFT:
             case FIRE_C_FALL_TO_RISE_LEFT:
             case FIRE_D_FALL_TO_RISE_LEFT:
-                chars.set(  change.x, change.y + 1, 'a' );
+                chars.set(  change.x, change.y + 1, 'g' );
                 break;
             case RABBIT_BURNING:
             case RABBIT_BURNING_ON_SLOPE:
