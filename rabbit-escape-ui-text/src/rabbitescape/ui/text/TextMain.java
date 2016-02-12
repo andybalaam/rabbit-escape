@@ -41,11 +41,12 @@ public class TextMain
         CommandLineOption noinput =      new CommandLineOption( "--noinput",      true );
         CommandLineOption placeholders = new CommandLineOption( "--placeholders", true );
         CommandLineOption template =     new CommandLineOption( "--template",     true );
+        CommandLineOption gentest =      new CommandLineOption( "--gentest",      false );
         try
         {
             CommandLineOptionSet.parse( args,
                                         level, solution, encode, decode, help,
-                                        noinput, placeholders, template );
+                                        noinput, placeholders, template, gentest );
             if ( help.isPresent() )
             {
                 usageMessage();
@@ -55,9 +56,14 @@ public class TextMain
             {
                 TextSingleGameEntryPoint.entryPoint( new String[] {noinput.getValue(), "noinput"} );
             }
+            if ( gentest.isPresent() )
+            {
+                new SolutionDemo( level.getValue(), solution.getInt(), true );
+                System.exit( 0 );
+            }
             if ( solution.isPresent() )
             {
-                new SolutionDemo( level.getValue(), solution.getInt() );
+                new SolutionDemo( level.getValue(), solution.getInt(), false );
                 System.exit( 0 );
             }
             if ( level.isPresent() )
@@ -147,6 +153,8 @@ public class TextMain
             " swing --animation              Animation tester.\n" +
             " [--level] level.rel            Play a single level using the text UI.\n" +
             " --level <file> --solution <n>  Print world steps.\n" +
+            " --level <file> --solution <n> --gentest  Print world steps using a format for\n" +
+            "                                creating unit tests.\n" +
             " --encode <string>              Obfuscate a string, for hints etc\n" +
             " --decode <string>              Deobfuscate.\n" +
             " --encode <level.rel>           Obfuscate hints and solutions.\n" +

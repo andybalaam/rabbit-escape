@@ -12,7 +12,7 @@ import rabbitescape.engine.util.RealFileSystem;
 public class SolutionDemo
 {
 
-    public SolutionDemo( String path, int solutionNumber )
+    public SolutionDemo( String path, int solutionNumber, boolean genTest )
     {
         World world = new LoadWorldFile(
             new RealFileSystem() ).load(
@@ -22,7 +22,7 @@ public class SolutionDemo
 
         Solution solution = SolutionParser.parse( solutionString );
 
-        SolutionRunner.runSolution( solution, world, System.out );
+        SolutionRunner.runSolution( solution, world, System.out, genTest );
     }
 
 }

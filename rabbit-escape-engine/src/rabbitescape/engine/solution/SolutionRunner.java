@@ -23,18 +23,19 @@ public class SolutionRunner
      * @param output  A stream (eg System.out) to print to. May be null if no output
      *                is required.
      */
-    public static boolean runSolution( Solution solution, World world, PrintStream output )
+    public static boolean runSolution( Solution solution, World world, 
+        PrintStream output, boolean genTest )
         throws SolutionExceptions.ProblemRunningSolution
     {
         SandboxGame sandboxGame = new SandboxGame( world );
         SolutionInterpreter interpreter = new SolutionInterpreter( solution );
 
-        return runSolutionInSandbox( interpreter, sandboxGame, output );
+        return runSolutionInSandbox( interpreter, sandboxGame, output, genTest );
     }
 
     public static boolean runSolution( Solution solution, World world)
     {
-        return runSolution( solution, world, null);
+        return runSolution( solution, world, null, false);
     }
 
     public static void runPartialSolution(
@@ -43,13 +44,14 @@ public class SolutionRunner
         SolutionInterpreter interpreter = new SolutionInterpreter(
             solution, false );
 
-        runSolutionInSandbox( interpreter, sandboxGame, null );
+        runSolutionInSandbox( interpreter, sandboxGame, null, false );
     }
 
     private static boolean runSolutionInSandbox(
         SolutionInterpreter interpreter,
         SandboxGame sandboxGame,
-        PrintStream output
+        PrintStream output,
+        boolean genTest
     )
     {
         SolutionTimeStep step = interpreter.next(
@@ -63,7 +65,7 @@ public class SolutionRunner
 
                 if ( null != output )
                 {
-                    printStep( output,  sandboxGame.getWorld() );
+                    printStep( output,  sandboxGame.getWorld(), genTest );
                 }
 
                 runTimeStep( sandboxGame, step, nextStep );
@@ -86,17 +88,24 @@ public class SolutionRunner
             CompletionState.WON );
     }
 
-    private static void printStep(PrintStream s, World w)
+    private static void printStep(PrintStream s, World w, boolean genTest )
     {
-        s.println( "Waiting:"+w.num_waiting );
-        s.println( "  Saved:"+w.num_saved );
-        s.println
-        (
-            Util.join( "\n",
-                TextWorldManip.renderWorld(
-                    w, false, true )
-            )
-        );
+        if ( genTest )
+        {
+            s.println( TextWorldManip.renderWorldForTest( w ) );
+        }
+        else
+        {
+            s.println( "Waiting:"+w.num_waiting );
+            s.println( "  Saved:"+w.num_saved );
+            s.println
+            (
+                Util.join( "\n",
+                    TextWorldManip.renderWorld(
+                        w, false, true )
+                )
+            );
+        }
     }
 
     private static void runTimeStep(
