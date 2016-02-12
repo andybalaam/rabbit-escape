@@ -37,6 +37,37 @@ public class ChangeRenderer
         {
             case NOTHING:
                 break;
+            case FIRE_A:
+            case FIRE_B:
+            case FIRE_C:
+            case FIRE_D:
+            case FIRE_A_RISE_RIGHT:
+            case FIRE_B_RISE_RIGHT:
+            case FIRE_C_RISE_RIGHT:
+            case FIRE_D_RISE_RIGHT:
+            case FIRE_A_RISE_LEFT:
+            case FIRE_B_RISE_LEFT:
+            case FIRE_C_RISE_LEFT:
+            case FIRE_D_RISE_LEFT:
+                break;
+            case FIRE_A_FALLING:
+            case FIRE_B_FALLING:
+            case FIRE_C_FALLING:
+            case FIRE_D_FALLING:
+            case FIRE_A_FALL_TO_RISE_RIGHT:
+            case FIRE_B_FALL_TO_RISE_RIGHT:
+            case FIRE_C_FALL_TO_RISE_RIGHT:
+            case FIRE_D_FALL_TO_RISE_RIGHT:
+            case FIRE_A_FALL_TO_RISE_LEFT:
+            case FIRE_B_FALL_TO_RISE_LEFT:
+            case FIRE_C_FALL_TO_RISE_LEFT:
+            case FIRE_D_FALL_TO_RISE_LEFT:
+                chars.set(  change.x, change.y + 1, 'a' );
+                break;
+            case RABBIT_BURNING:
+            case RABBIT_BURNING_ON_SLOPE:
+                chars.set(  change.x, change.y, 'X' );
+                break;
             case RABBIT_WALKING_LEFT:
                 chars.set( change.x-1, change.y, '<' );
                 break;
