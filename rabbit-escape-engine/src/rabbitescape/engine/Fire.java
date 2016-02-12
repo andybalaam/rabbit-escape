@@ -39,85 +39,75 @@ public class Fire extends Thing
     @Override
     public void calcNewState( World world )
     {
-        boolean onFlat = BehaviourTools.s_isFlat( world.getBlockAt( x, y + 1 ) ); 
+        Block blockBelow = world.getBlockAt( x, y + 1 );
+        // Note: when flatBelow is true may be on a slope with a flat below,
+        // or sitting on the flat
+        boolean flatBelow = BehaviourTools.s_isFlat( blockBelow ); 
         boolean still = (
-                   onFlat
+                   flatBelow
                 || ( world.getBlockAt( x, y ) != null )
                 || BridgeTools.someoneIsBridgingAt( world, x, y )
             );
-        
         if ( still )
         {
             Block onBlock = world.getBlockAt( x, y );
             if ( BehaviourTools.isLeftRiseSlope( onBlock ) )
             {
-                switch ( baseVariant )
-                {
-                case FIRE_A:
-                    state = FIRE_A_RISE_LEFT;
-                    return;
-                case FIRE_B:
-                    state = FIRE_B_RISE_LEFT;
-                    return;
-                case FIRE_C:
-                    state = FIRE_C_RISE_LEFT;
-                    return;
-                case FIRE_D:
-                    state = FIRE_D_RISE_LEFT;
-                    return;
-                default:
-                    throw new RuntimeException( "Fire not in fire state:" + state );
-                }
+                state = baseVariantSwitch( FIRE_A_RISE_LEFT, FIRE_B_RISE_LEFT, 
+                                           FIRE_C_RISE_LEFT, FIRE_D_RISE_LEFT );
+                return;
             }
             if ( BehaviourTools.isRightRiseSlope( onBlock ) )
             {
-                switch ( baseVariant )
-                {
-                case FIRE_A:
-                    state = FIRE_A_RISE_RIGHT;
-                    return;
-                case FIRE_B:
-                    state = FIRE_B_RISE_RIGHT;
-                    return;
-                case FIRE_C:
-                    state = FIRE_C_RISE_RIGHT;
-                    return;
-                case FIRE_D:
-                    state = FIRE_D_RISE_RIGHT;
-                    return;
-                default:
-                    throw new RuntimeException( "Fire not in fire state:" + state );
-                }
+                state = baseVariantSwitch( FIRE_A_RISE_RIGHT, FIRE_B_RISE_RIGHT,
+                                           FIRE_C_RISE_RIGHT, FIRE_D_RISE_RIGHT );
+                return;
             }
             // TODO: check here for fire falling on a bridger. Fire going to a falling state may be OK
             // as bridger is burnt
-            if ( onFlat )
-            {
+            if ( flatBelow )
+            { 
                 state = baseVariant;
                 return;
             }
         }
+        else // Falling
+        {
+            if ( BehaviourTools.isLeftRiseSlope( blockBelow ) )
+            {
+                state = baseVariantSwitch( FIRE_A_FALL_TO_RISE_LEFT, FIRE_B_FALL_TO_RISE_LEFT,
+                                           FIRE_C_FALL_TO_RISE_LEFT, FIRE_D_FALL_TO_RISE_LEFT );
+                return;
+            }
+            if ( BehaviourTools.isRightRiseSlope( blockBelow ) )
+            {
+                state = baseVariantSwitch( FIRE_A_FALL_TO_RISE_RIGHT, FIRE_B_FALL_TO_RISE_RIGHT,
+                                           FIRE_C_FALL_TO_RISE_RIGHT, FIRE_D_FALL_TO_RISE_RIGHT );
+                return;
+            }
+            state = baseVariantSwitch( FIRE_A_FALLING, FIRE_B_FALLING, 
+                                       FIRE_C_FALLING, FIRE_D_FALLING );
+            return;
+        }
+    }
 
-        // Fire is falling, but may not have been last step
+    private State baseVariantSwitch( State a, State b, State c, State d )
+    {
         switch ( baseVariant )
         {
         case FIRE_A:
-            state = FIRE_A_FALLING;
-            return;
+            return a;
         case FIRE_B:
-            state = FIRE_B_FALLING;
-            return;
+            return b;
         case FIRE_C:
-            state = FIRE_C_FALLING;
-            return;
+            return c;
         case FIRE_D:
-            state = FIRE_D_FALLING;
-            return;
+            return d;
         default:
             throw new RuntimeException( "Fire not in fire state:" + state );
         }
     }
-
+    
     @Override
     public void step( World world )
     {
@@ -127,6 +117,14 @@ public class Fire extends Thing
         case FIRE_B_FALLING:
         case FIRE_C_FALLING:
         case FIRE_D_FALLING:
+        case FIRE_A_FALL_TO_RISE_RIGHT:
+        case FIRE_B_FALL_TO_RISE_RIGHT:
+        case FIRE_C_FALL_TO_RISE_RIGHT:
+        case FIRE_D_FALL_TO_RISE_RIGHT:
+        case FIRE_A_FALL_TO_RISE_LEFT:
+        case FIRE_B_FALL_TO_RISE_LEFT:
+        case FIRE_C_FALL_TO_RISE_LEFT:
+        case FIRE_D_FALL_TO_RISE_LEFT:
             ++y;
 
             if ( y >= world.size.height )
