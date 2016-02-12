@@ -28,7 +28,14 @@ public class Burning extends Behaviour
     {
         if ( triggered )
         {
-            return RABBIT_BURNING;
+            if ( t.rabbit.onSlope )
+            {
+                return RABBIT_BURNING_ON_SLOPE;
+            }
+            else
+            {
+                return RABBIT_BURNING;
+            }
         }
 
         return null;
@@ -40,6 +47,7 @@ public class Burning extends Behaviour
         switch ( state )
         {
         case RABBIT_BURNING:
+        case RABBIT_BURNING_ON_SLOPE:
         {
             world.changes.killRabbit( rabbit );
             return true;
