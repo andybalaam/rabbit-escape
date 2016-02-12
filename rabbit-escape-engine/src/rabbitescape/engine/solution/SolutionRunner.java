@@ -23,7 +23,7 @@ public class SolutionRunner
      * @param output  A stream (eg System.out) to print to. May be null if no output
      *                is required.
      */
-    public static boolean runSolution( Solution solution, World world, 
+    public static boolean runSolution( Solution solution, World world,
         PrintStream output, boolean genTest )
         throws SolutionExceptions.ProblemRunningSolution
     {

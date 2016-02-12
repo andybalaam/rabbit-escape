@@ -125,7 +125,7 @@ public class GameSurfaceView extends SurfaceView
             return false;
         }
     }
-    
+
     public boolean toggleSpeed()
     {
         if ( game != null )

@@ -42,7 +42,7 @@ public class Fire extends Thing
         Block blockBelow = world.getBlockAt( x, y + 1 );
         // Note: when flatBelow is true may be on a slope with a flat below,
         // or sitting on the flat
-        boolean flatBelow = BehaviourTools.s_isFlat( blockBelow ); 
+        boolean flatBelow = BehaviourTools.s_isFlat( blockBelow );
         boolean still = (
                    flatBelow
                 || ( world.getBlockAt( x, y ) != null )
@@ -53,7 +53,7 @@ public class Fire extends Thing
             Block onBlock = world.getBlockAt( x, y );
             if ( BehaviourTools.isLeftRiseSlope( onBlock ) )
             {
-                state = baseVariantSwitch( FIRE_A_RISE_LEFT, FIRE_B_RISE_LEFT, 
+                state = baseVariantSwitch( FIRE_A_RISE_LEFT, FIRE_B_RISE_LEFT,
                                            FIRE_C_RISE_LEFT, FIRE_D_RISE_LEFT );
                 return;
             }
@@ -66,7 +66,7 @@ public class Fire extends Thing
             // TODO: check here for fire falling on a bridger. Fire going to a falling state may be OK
             // as bridger is burnt
             if ( flatBelow )
-            { 
+            {
                 state = baseVariant;
                 return;
             }
@@ -85,7 +85,7 @@ public class Fire extends Thing
                                            FIRE_C_FALL_TO_RISE_RIGHT, FIRE_D_FALL_TO_RISE_RIGHT );
                 return;
             }
-            state = baseVariantSwitch( FIRE_A_FALLING, FIRE_B_FALLING, 
+            state = baseVariantSwitch( FIRE_A_FALLING, FIRE_B_FALLING,
                                        FIRE_C_FALLING, FIRE_D_FALLING );
             return;
         }
@@ -107,7 +107,7 @@ public class Fire extends Thing
             throw new RuntimeException( "Fire not in fire state:" + state );
         }
     }
-    
+
     @Override
     public void step( World world )
     {

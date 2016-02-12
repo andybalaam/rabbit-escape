@@ -99,7 +99,7 @@ public class GeneralPhysics implements Physics
         setSpeed( speeds[speedIndex] );
         return 1 == speedIndex ;
     }
-    
+
     public void setSpeed( int speed )
     {
         if ( speed > 10 || speed < 1 )

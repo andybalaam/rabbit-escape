@@ -95,7 +95,7 @@ public class SwingGameLaunch implements GameLaunch
             this.frameDumper = FrameDumper.createInactiveDumper();
         }
         this.swingPlayback = new SwingPlayback( this );
-        this.physics = new GeneralPhysics( world, winListener, 
+        this.physics = new GeneralPhysics( world, winListener,
             solutionRecorder, solutionInterpreter, swingPlayback, frameDumping );
 
         // This blocks until the UI is ready:

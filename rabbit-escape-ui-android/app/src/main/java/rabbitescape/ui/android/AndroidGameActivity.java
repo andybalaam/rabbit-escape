@@ -226,7 +226,7 @@ public class AndroidGameActivity extends RabbitEscapeActivity
     {
 	updateSpeedButton( gameSurface.toggleSpeed() );
     }
-    
+
     private void updateSpeedButton( boolean fast )
     {
 	speedButton.setCompoundDrawablesWithIntrinsicBounds(
@@ -237,7 +237,7 @@ public class AndroidGameActivity extends RabbitEscapeActivity
 	);
 	speedButton.invalidate();
     }
-    
+
     public void onExplodeAllClicked( View view )
     {
         World world = gameSurface.game.gameLaunch.physics.world;

@@ -107,7 +107,7 @@ public class AnimationLoader
             throw new AnimationNotFound( name );
         }
     }
-    
+
 
     private static int xOffset = 0, yOffset = 0;
 

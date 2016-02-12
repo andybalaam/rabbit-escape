@@ -68,7 +68,7 @@ public class SpriteAnimator
         {
             addThing( frameNum, rabbit, null, ret );
         }
-        
+
         for ( Thing thing : world.things )
         {
             if ( thing instanceof Fire )

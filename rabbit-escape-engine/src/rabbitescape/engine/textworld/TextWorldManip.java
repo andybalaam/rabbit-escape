@@ -255,7 +255,7 @@ public class TextWorldManip
             return things;
         }
     }
-    
+
     public static String renderWorldForTest( World world )
     {
         String[] lines = renderWorld( world, true, false );

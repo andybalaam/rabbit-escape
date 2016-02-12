@@ -300,7 +300,7 @@ public class World
         }
         return false;
     }
-    
+
     public Rabbit[] getRabbitsAt( int x, int y )
     {
         List<Rabbit> ret = new ArrayList<Rabbit>();
