@@ -145,12 +145,12 @@ public class AnimationLoader
             {
                 case 1:
                 {
-                    return new Frame( parts[0] );
+                    return new Frame( parts[0], xOffset, yOffset, null );
                 }
                 case 2:
                 {
                     return new Frame(
-                        parts[0], Integer.valueOf( parts[1] ) );
+                        parts[0], Integer.valueOf( parts[1] ) + xOffset, yOffset, null );
                 }
                 case 3:
                 {
