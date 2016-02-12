@@ -107,6 +107,9 @@ public class AnimationLoader
             throw new AnimationNotFound( name );
         }
     }
+    
+
+    private static int xOffset = 0, yOffset = 0;
 
     public static Animation readAnimation( InputStream stream )
         throws IOException
@@ -116,12 +119,16 @@ public class AnimationLoader
 
         List<Frame> ret = new ArrayList<>();
         String ln;
+        xOffset = 0; yOffset = 0;
         while ( ( ln = reader.readLine() ) != null )
         {
             String trimmedLn = ln.trim();
             if ( !Util.isEmpty( trimmedLn ) )
             {
-                ret.add( frameFromLine( trimmedLn ) );
+                Frame lineFrame = frameFromLine( trimmedLn );
+                if ( null != lineFrame ) {
+                    ret.add( lineFrame );
+                }
             }
         }
 
@@ -147,10 +154,16 @@ public class AnimationLoader
                 }
                 case 3:
                 {
+                    if ( parts[0].equals( "offset" ) )
+                    {
+                        xOffset = Integer.valueOf( parts[1] ) + xOffset;
+                        yOffset = Integer.valueOf( parts[2] ) + yOffset;
+                        return null;
+                    }
                     return new Frame(
                         parts[0],
-                        Integer.valueOf( parts[1] ),
-                        Integer.valueOf( parts[2] ),
+                        Integer.valueOf( parts[1] ) + xOffset,
+                        Integer.valueOf( parts[2] ) + yOffset,
                         null
                     );
                 }
@@ -158,8 +171,8 @@ public class AnimationLoader
                 {
                     return new Frame(
                         parts[0],
-                        Integer.valueOf( parts[1] ),
-                        Integer.valueOf( parts[2] ),
+                        Integer.valueOf( parts[1] ) + xOffset,
+                        Integer.valueOf( parts[2] ) + yOffset,
                         parts[3]
                     );
                 }
