@@ -101,4 +101,15 @@ public class TestCommandLineOption
         assertThat( begin.getValue(), equalTo( "0" ) );
         assertThat( end.getValue(), equalTo( "100" ) );
     }
+
+    @Test( expected = java.lang.AssertionError.class )
+    public void Assertion_for_duplicate_short_form()
+    {
+        CommandLineOption test = new CommandLineOption( "--test", false );
+        CommandLineOption template = new CommandLineOption( "--template", true );
+
+        String[] args = "-t --template foo.rel".split( " " );
+        // AssertionError here as both --test and --template can be -t.
+        CommandLineOptionSet.parse( args, test, template );
+    }
 }
