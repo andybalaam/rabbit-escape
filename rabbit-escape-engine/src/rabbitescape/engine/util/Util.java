@@ -63,6 +63,17 @@ public class Util
         }
     }
 
+    /**
+     * As reAssert( boolean assertion ), but with an explanation.
+     */
+    public static void reAssert( boolean assertion, String message )
+    {
+        if ( !assertion )
+        {
+            throw new AssertionError( message );
+        }
+    }
+
     public static <T> T getNth( Iterable<T> input, int n )
     {
         int i = 0;
