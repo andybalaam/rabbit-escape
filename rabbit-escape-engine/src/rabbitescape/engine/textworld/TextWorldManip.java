@@ -256,9 +256,21 @@ public class TextWorldManip
         }
     }
 
+    private static Function<String, String> escapeBackslashes =
+        new Function<String, String>()
+    {
+        @Override
+        public String apply( String t )
+        {
+            return t.replaceAll( "\\\\", "\\\\\\\\" );
+        }
+    };
+
     public static String renderWorldForTest( World world )
     {
-        String[] lines = renderWorld( world, true, false );
+        String[] lines = Util.stringArray( Util.map(
+            escapeBackslashes, renderWorld( world, true, false ) ) );
+
         String glue = "\" + \"\\n\" +\n            \"";
         return "            \"" + Util.join( glue, lines ) + "\",\n";
     }

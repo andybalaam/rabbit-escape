@@ -32,7 +32,7 @@ public class TestTextWorldManip
     {
         String[] lines = {
             "###########",
-            "#  Q    c #",
+            "#  Q  A c #",
             "#\\      i/#",
             "#  O     d#",
             "#r j )(  b#",
@@ -1770,6 +1770,69 @@ public class TestTextWorldManip
         }
 
 
+    }
+
+    @Test
+    public void Gentest_contains_extra_quotes_and_line_breaks()
+    {
+        String[] lines = {
+            "#####",
+            "# r #",
+            "#####"
+        };
+
+        assertThat(
+            renderWorldForTest( createWorld( lines ) ),
+            equalTo(
+                  "            \"#####\" + \"\\n\" +\n"
+                + "            \"# r>#\" + \"\\n\" +\n"
+                + "            \"#####\",\n"
+            )
+        );
+    }
+
+    @Test
+    public void Gentest_escapes_backslashes()
+    {
+        String[] lines = {
+            "#####",
+            "#\\  #",
+            "#####"
+        };
+
+        assertThat(
+            renderWorldForTest( createWorld( lines ) ),
+            equalTo(
+                  "            \"#####\" + \"\\n\" +\n"
+                + "            \"#\\\\  #\" + \"\\n\" +\n"
+                + "            \"#####\",\n"
+            )
+        );
+    }
+
+    @Test
+    public void Gentest_contains_extra_quotes_and_line_breaks_lots_of_types()
+    {
+        String[] lines = {
+            "###########",
+            "#  Q A  c #",
+            "#\\      i/#",
+            "#  O     d#",
+            "#r j )(  b#",
+            "###########"
+        };
+
+        assertThat(
+            renderWorldForTest( createWorld( lines ) ),
+            equalTo(
+                  "            \"###########\" + \"\\n\" +\n"
+                + "            \"#  Q A  c #\" + \"\\n\" +\n"
+                + "            \"#\\\\   g  f/#\" + \"\\n\" +\n"
+                + "            \"#  O    fd#\" + \"\\n\" +\n"
+                + "            \"#r<j )(  f#\" + \"\\n\" +\n"
+                + "            \"###########\",\n"
+            )
+        );
     }
 
     // ---
