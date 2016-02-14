@@ -62,7 +62,9 @@ public class AndroidGameLaunch implements Runnable
         this.physics = new GeneralPhysics( world, winListener, fast );
 
         this.graphics = new AndroidGraphics(
-            bitmapCache, soundPlayer, world, surfaceHolder, scrollX, scrollY );
+            bitmapCache, soundPlayer, world, scrollX, scrollY );
+
+        this.graphics.surfaceHolder = surfaceHolder;
 
         this.worldSaver = new WorldSaver( world, this );
 

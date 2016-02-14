@@ -26,9 +26,14 @@ public class AndroidGraphics implements Graphics
     private final BitmapCache<AndroidBitmap> bitmapCache;
     private final SoundPlayer soundPlayer;
     private final World world;
-    private final SurfaceHolder surfaceHolder;
     private final AnimationCache animationCache;
     private final AndroidPaint paint;
+
+    /**
+     * Set when the surface becomes available.
+     */
+    public SurfaceHolder surfaceHolder;
+
     public float renderingTileSize;
     public int levelWidthPixels;
     public int levelHeightPixels;
@@ -67,7 +72,6 @@ public class AndroidGraphics implements Graphics
         BitmapCache<AndroidBitmap> bitmapCache,
         SoundPlayer soundPlayer,
         World world,
-        SurfaceHolder surfaceHolder,
         int scrollX,
         int scrollY
     )
@@ -75,9 +79,10 @@ public class AndroidGraphics implements Graphics
         this.bitmapCache = bitmapCache;
         this.soundPlayer = soundPlayer;
         this.world = world;
-        this.surfaceHolder = surfaceHolder;
         this.scrollX = scrollX;
         this.scrollY = scrollY;
+
+        this.surfaceHolder = null;
 
         this.animationCache = new AnimationCache( new AnimationLoader() );
         this.paint = new AndroidPaint( new Paint() );
@@ -109,6 +114,12 @@ public class AndroidGraphics implements Graphics
     @Override
     public void draw( int frame )
     {
+        if ( surfaceHolder == null )
+        {
+            System.err.println( "Error: AndroidGraphics - drawing without a surfaceHolder!" );
+            return;
+        }
+
         Canvas canvas = surfaceHolder.lockCanvas();
 
         if ( canvas == null )
