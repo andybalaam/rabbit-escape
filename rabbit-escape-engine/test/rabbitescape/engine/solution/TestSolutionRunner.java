@@ -411,7 +411,7 @@ public class TestSolutionRunner
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         PrintStream ps = new PrintStream( baos );
 
-        SolutionRunner.runSolution( solution, world, ps );
+        SolutionRunner.runSolution( solution, world, ps, false );
 
         String out = baos.toString("UTF8");
 

@@ -35,6 +35,7 @@ public class Rabbit extends Thing
         Climbing climbing = new Climbing();
         Digging digging = new Digging();
         Exploding exploding = new Exploding();
+        Burning burning = new Burning();
         OutOfBounds outOfBounds = new OutOfBounds();
         Exiting exiting = new Exiting();
         Brollychuting brollychuting = new Brollychuting( climbing );
@@ -46,6 +47,7 @@ public class Rabbit extends Thing
 
         behavioursTriggerOrder.add( exploding );
         behavioursTriggerOrder.add( outOfBounds );
+        behavioursTriggerOrder.add( burning );
         behavioursTriggerOrder.add( falling );
         behavioursTriggerOrder.add( exiting );
         behavioursTriggerOrder.add( brollychuting );
@@ -58,6 +60,7 @@ public class Rabbit extends Thing
 
         behaviours.add( exploding );
         behaviours.add( outOfBounds );
+        behaviours.add( burning );
         behaviours.add( falling );
         behaviours.add( exiting );
         behaviours.add( brollychuting );

@@ -104,7 +104,6 @@ public class SwingGameLaunch implements GameLaunch
             swingPlayback,
             frameDumping
         );
-
         // This blocks until the UI is ready:
         WhenUiReady uiPieces = init.waitForUi.waitForUi();
 

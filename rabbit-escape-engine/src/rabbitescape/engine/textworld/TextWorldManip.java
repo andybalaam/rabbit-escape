@@ -20,6 +20,7 @@ import rabbitescape.engine.VoidMarkerStyle;
 import rabbitescape.engine.World;
 import rabbitescape.engine.WorldStatsListener;
 import rabbitescape.engine.util.Dimension;
+import rabbitescape.engine.util.Util;
 import rabbitescape.engine.util.VariantGenerator;
 import rabbitescape.engine.util.Util.IdxObj;
 
@@ -253,6 +254,13 @@ public class TextWorldManip
         {
             return things;
         }
+    }
+
+    public static String renderWorldForTest( World world )
+    {
+        String[] lines = renderWorld( world, true, false );
+        String glue = "\" + \"\\n\" +\n            \"";
+        return "            \"" + Util.join( glue, lines ) + "\",\n";
     }
 
     /**

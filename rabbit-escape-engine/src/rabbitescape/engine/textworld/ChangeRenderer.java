@@ -37,6 +37,37 @@ public class ChangeRenderer
         {
             case NOTHING:
                 break;
+            case FIRE_A:
+            case FIRE_B:
+            case FIRE_C:
+            case FIRE_D:
+            case FIRE_A_RISE_RIGHT:
+            case FIRE_B_RISE_RIGHT:
+            case FIRE_C_RISE_RIGHT:
+            case FIRE_D_RISE_RIGHT:
+            case FIRE_A_RISE_LEFT:
+            case FIRE_B_RISE_LEFT:
+            case FIRE_C_RISE_LEFT:
+            case FIRE_D_RISE_LEFT:
+                break;
+            case FIRE_A_FALLING:
+            case FIRE_B_FALLING:
+            case FIRE_C_FALLING:
+            case FIRE_D_FALLING:
+            case FIRE_A_FALL_TO_RISE_RIGHT:
+            case FIRE_B_FALL_TO_RISE_RIGHT:
+            case FIRE_C_FALL_TO_RISE_RIGHT:
+            case FIRE_D_FALL_TO_RISE_RIGHT:
+            case FIRE_A_FALL_TO_RISE_LEFT:
+            case FIRE_B_FALL_TO_RISE_LEFT:
+            case FIRE_C_FALL_TO_RISE_LEFT:
+            case FIRE_D_FALL_TO_RISE_LEFT:
+                chars.set(  change.x, change.y + 1, 'g' );
+                break;
+            case RABBIT_BURNING:
+            case RABBIT_BURNING_ON_SLOPE:
+                chars.set(  change.x, change.y, 'X' );
+                break;
             case RABBIT_WALKING_LEFT:
                 chars.set( change.x-1, change.y, '<' );
                 break;
@@ -242,20 +273,34 @@ public class ChangeRenderer
                 chars.set( change.x, change.y, 'P' );
                 break;
             case TOKEN_BASH_STILL:
+            case TOKEN_BASH_ON_SLOPE:
             case TOKEN_DIG_STILL:
+            case TOKEN_DIG_ON_SLOPE:
             case TOKEN_BRIDGE_STILL:
+            case TOKEN_BRIDGE_ON_SLOPE:
             case TOKEN_BLOCK_STILL:
+            case TOKEN_BLOCK_ON_SLOPE:
             case TOKEN_CLIMB_STILL:
+            case TOKEN_CLIMB_ON_SLOPE:
             case TOKEN_EXPLODE_STILL:
+            case TOKEN_EXPLODE_ON_SLOPE:
             case TOKEN_BROLLY_STILL:
+            case TOKEN_BROLLY_ON_SLOPE:
                 break;
             case TOKEN_BASH_FALLING:
+            case TOKEN_BASH_FALL_TO_SLOPE:
             case TOKEN_DIG_FALLING:
+            case TOKEN_DIG_FALL_TO_SLOPE:
             case TOKEN_BRIDGE_FALLING:
+            case TOKEN_BRIDGE_FALL_TO_SLOPE:
             case TOKEN_BLOCK_FALLING:
+            case TOKEN_BLOCK_FALL_TO_SLOPE:
             case TOKEN_CLIMB_FALLING:
+            case TOKEN_CLIMB_FALL_TO_SLOPE:
             case TOKEN_EXPLODE_FALLING:
+            case TOKEN_EXPLODE_FALL_TO_SLOPE:
             case TOKEN_BROLLY_FALLING:
+            case TOKEN_BROLLY_FALL_TO_SLOPE:
                 chars.set( change.x, change.y + 1, 'f' );
                 break;
             case ENTRANCE:

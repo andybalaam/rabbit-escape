@@ -237,7 +237,7 @@ public class AndroidGameActivity extends RabbitEscapeActivity
     {
         updateSpeedButton( gameSurface.toggleSpeed() );
     }
-    
+
     private void updateSpeedButton( boolean fast )
     {
         int speedRes = fast ? R.drawable.menu_speedup_active : R.drawable.menu_speedup_inactive;
@@ -247,7 +247,7 @@ public class AndroidGameActivity extends RabbitEscapeActivity
 
         speedButton.invalidate();
     }
-    
+
     public void onExplodeAllClicked( View view )
     {
         World world = gameSurface.game.gameLaunch.physics.world;
