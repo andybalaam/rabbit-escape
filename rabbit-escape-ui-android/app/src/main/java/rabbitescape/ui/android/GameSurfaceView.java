@@ -36,7 +36,6 @@ public class GameSurfaceView extends SurfaceView
     private final AndroidSound sound;
     private final BitmapCache<AndroidBitmap> bitmapCache;
     private final LevelWinListener winListener;
-    private final float displayDensity;
     private final Bundle savedInstanceState;
     private final Scrolling scrolling;
 
@@ -48,7 +47,6 @@ public class GameSurfaceView extends SurfaceView
         BitmapCache<AndroidBitmap> bitmapCache,
         World world,
         LevelWinListener winListener,
-        float displayDensity,
         Bundle savedInstanceState
     )
     {
@@ -58,7 +56,6 @@ public class GameSurfaceView extends SurfaceView
         this.bitmapCache = bitmapCache;
         this.world = world;
         this.winListener = winListener;
-        this.displayDensity = displayDensity;
         this.savedInstanceState = savedInstanceState;
 
         game = null;
@@ -80,7 +77,6 @@ public class GameSurfaceView extends SurfaceView
             getResources(),
             world,
             winListener,
-            displayDensity,
             savedInstanceState
         );
 

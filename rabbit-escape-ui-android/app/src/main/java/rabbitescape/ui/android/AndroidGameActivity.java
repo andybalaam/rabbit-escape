@@ -4,7 +4,6 @@ import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
-import android.util.DisplayMetrics;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -114,9 +113,6 @@ public class AndroidGameActivity extends RabbitEscapeActivity
         Bundle savedInstanceState
     )
     {
-        DisplayMetrics metrics = new DisplayMetrics();
-        getWindowManager().getDefaultDisplay().getMetrics( metrics );
-
         createAbilities( world, resources );
         updatePauseButton( world.paused );
 
@@ -132,7 +128,6 @@ public class AndroidGameActivity extends RabbitEscapeActivity
             SingletonBitmapCache.instance( resources ),
             world,
             winListener,
-            metrics.density,
             savedInstanceState
         );
 

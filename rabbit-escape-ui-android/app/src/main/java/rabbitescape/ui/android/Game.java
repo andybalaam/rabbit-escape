@@ -22,7 +22,6 @@ public class Game
         Resources resources,
         World world,
         LevelWinListener winListener,
-        float displayDensity,
         Bundle savedInstanceState
     )
     {
@@ -32,7 +31,6 @@ public class Game
             resources,
             world,
             winListener,
-            displayDensity,
             savedInstanceState
         );
 

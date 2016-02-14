@@ -38,7 +38,6 @@ public class AndroidGameLaunch implements Runnable
         Resources resources,
         World world,
         LevelWinListener winListener,
-        float displayDensity,
         Bundle savedInstanceState
     )
     {
@@ -63,7 +62,7 @@ public class AndroidGameLaunch implements Runnable
         this.physics = new GeneralPhysics( world, winListener, fast );
 
         this.graphics = new AndroidGraphics(
-            bitmapCache, soundPlayer, world, surfaceHolder, displayDensity, scrollX, scrollY );
+            bitmapCache, soundPlayer, world, surfaceHolder, scrollX, scrollY );
 
         this.worldSaver = new WorldSaver( world, this );
 

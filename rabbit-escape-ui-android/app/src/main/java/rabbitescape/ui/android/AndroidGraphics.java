@@ -68,7 +68,6 @@ public class AndroidGraphics implements Graphics
         SoundPlayer soundPlayer,
         World world,
         SurfaceHolder surfaceHolder,
-        float displayDensity,
         int scrollX,
         int scrollY
     )
