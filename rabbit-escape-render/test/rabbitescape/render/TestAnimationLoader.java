@@ -62,6 +62,84 @@ public class TestAnimationLoader
     }
 
     @Test
+    public void Multiple_spaces_allowed_between_offsets() throws Exception
+    {
+        ByteArrayInputStream anim = animationAsStream(
+            new String[] {
+                "framez1  1  2",
+                "framey2",
+                "framex3 55      66",
+            }
+        );
+
+        Animation animation = AnimationLoader.readAnimation( anim );
+
+        assertThat(
+            animationToString( animation ),
+            equalTo(
+                new String[] {
+                    "framez1 1 2",
+                    "framey2 0 0",
+                    "framex3 55 66"
+                }
+            )
+        );
+    }
+
+    @Test
+    public void Offset_line_sets_all_offsets() throws Exception
+    {
+        ByteArrayInputStream anim = animationAsStream(
+            new String[] {
+                "offset 3 5",
+                "framez1  1  2",
+                "framey2",
+                "framex3 55      66",
+            }
+        );
+
+        Animation animation = AnimationLoader.readAnimation( anim );
+
+        assertThat(
+            animationToString( animation ),
+            equalTo(
+                new String[] {
+                    "framez1 4 7",
+                    "framey2 3 5",
+                    "framex3 58 71"
+                }
+            )
+        );
+    }
+
+    @Test
+    public void Later_offset_line_accumulates() throws Exception
+    {
+        ByteArrayInputStream anim = animationAsStream(
+            new String[] {
+                "framez1  1  2",
+                "offset 3 5",
+                "framey2",
+                "offset 0 10",
+                "framex3 55      66",
+            }
+        );
+
+        Animation animation = AnimationLoader.readAnimation( anim );
+
+        assertThat(
+            animationToString( animation ),
+            equalTo(
+                new String[] {
+                    "framez1 1 2",
+                    "framey2 3 5",
+                    "framex3 58 81"
+                }
+            )
+        );
+    }
+
+    @Test
     public void Filter_contents_of_ls_file_and_add_none()
     {
         assertThat(
