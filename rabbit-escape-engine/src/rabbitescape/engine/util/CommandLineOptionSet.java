@@ -1,5 +1,8 @@
 package rabbitescape.engine.util;
 
+import static rabbitescape.engine.util.Util.*;
+import static rabbitescape.engine.i18n.Translation.*;
+
 public class CommandLineOptionSet
 {
 
@@ -21,6 +24,17 @@ public class CommandLineOptionSet
             catch ( ArrayIndexOutOfBoundsException eAIOOB )
             {
                 throw o.getOptionRequiresParameter( arg );
+            }
+        }
+        // If we had --test and --template they would both be -t.
+        // Ensure that kind of thing does not happen.
+        for ( int i = 0; i < options.length ; i++ )
+        {
+            for ( int j = 0 ; j < i ; j++ )
+            {
+                reAssert( !options[i].shortForm.equals( options[j].shortForm ),
+                    t( options[i].longForm + " and " + options[j].longForm +
+                    " have the same short form: " + options[i].shortForm ) );
             }
         }
     }
