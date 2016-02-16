@@ -270,6 +270,8 @@ public class ChangeRenderer
                 chars.set( change.x, change.y, 'D' );
                 break;
             case RABBIT_BLOCKING:
+            case RABBIT_BLOCKING_RISE_RIGHT:
+            case RABBIT_BLOCKING_RISE_LEFT:
                 chars.set( change.x, change.y, 'H' );
                 break;
             case RABBIT_EXPLODING:
