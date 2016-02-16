@@ -177,7 +177,7 @@ public class WorldChanges
         }
 
         Block block = world.getBlockAt( x, y );
-        if ( block != null && block.type == Block.Type.solid_flat )
+        if ( BehaviourTools.s_isFlat( block ) )
         {
             return;
         }

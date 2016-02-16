@@ -493,6 +493,12 @@ public class LineProcessor
                     new Block( x, y, solid_flat, variantGen.next( 4 ) ) );
                 break;
             }
+            case 'M':
+            {
+                blocks.add(
+                    new Block( x, y, metal_flat, variantGen.next( 4 ) ) );
+                break;
+            }
             case '/':
             {
                 blocks.add(

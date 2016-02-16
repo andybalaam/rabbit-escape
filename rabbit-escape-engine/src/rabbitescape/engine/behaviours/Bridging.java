@@ -7,7 +7,6 @@ import static rabbitescape.engine.Block.Type.*;
 import java.util.Map;
 
 import rabbitescape.engine.*;
-import rabbitescape.engine.Block.Type;
 import rabbitescape.engine.ChangeDescription.State;
 
 public class Bridging extends Behaviour
@@ -116,12 +115,11 @@ public class Bridging extends Behaviour
             ) || (
                     // Bang head next
                     aboveNextBlock != null
-                 && isSolid( aboveNextBlock )
+                 && BehaviourTools.isSolid( aboveNextBlock )
             ) || (
                     // Bang head here, mid-build
                     bs < 3
-                 && twoAboveHereBlock != null
-                 && twoAboveHereBlock.type == Block.Type.solid_flat
+                 && BehaviourTools.s_isFlat( twoAboveHereBlock )
             )
         )
         {
@@ -326,6 +324,7 @@ public class Bridging extends Behaviour
             (
                    nextBlock.riseDir() != rabbit.dir
                 || nextBlock.type == solid_flat
+                || nextBlock.type == metal_flat
             )
          );
     }
@@ -369,16 +368,11 @@ public class Bridging extends Behaviour
 
     private static boolean isSlope( Block thisBlock )
     {
-        return ( thisBlock != null && thisBlock.type != solid_flat );
-    }
-
-    private static boolean isSolid( Block block )
-    {
-        return (
-               block.type == Type.solid_flat
-            || block.type == Type.solid_up_left
-            || block.type == Type.solid_up_right
-        );
+        return
+            (  thisBlock != null
+            && thisBlock.type != solid_flat
+            && thisBlock.type != metal_flat
+            );
     }
 
     @Override

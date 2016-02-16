@@ -42,7 +42,10 @@ public class Falling extends Behaviour
         {
             // Whenever we fall onto a slope, we are on top of it
             Block thisBlock = world.getBlockAt( rabbit.x, rabbit.y );
-            if ( thisBlock != null && thisBlock.type != solid_flat )
+            if ( thisBlock != null 
+                && thisBlock.type != solid_flat 
+                && thisBlock.type != metal_flat
+            )
             {
                 rabbit.onSlope = true;
             }

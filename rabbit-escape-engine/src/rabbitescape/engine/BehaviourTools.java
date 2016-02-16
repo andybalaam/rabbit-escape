@@ -1,10 +1,6 @@
 package rabbitescape.engine;
 
-import static rabbitescape.engine.Block.Type.solid_flat;
-import static rabbitescape.engine.Block.Type.solid_up_left;
-import static rabbitescape.engine.Block.Type.solid_up_right;
-import static rabbitescape.engine.Block.Type.bridge_up_right;
-import static rabbitescape.engine.Block.Type.bridge_up_left;
+import static rabbitescape.engine.Block.Type.*;
 import static rabbitescape.engine.Direction.RIGHT;
 import static rabbitescape.engine.Direction.opposite;
 
@@ -154,6 +150,7 @@ public class BehaviourTools
                block != null
             && (
                    block.type == solid_flat
+                || block.type == metal_flat
                 || (
                     block.riseDir() == opposite( rabbit.dir )
                     && isSolid( block )
@@ -187,10 +184,11 @@ public class BehaviourTools
         return isRightRiseSlope( b ) || isLeftRiseSlope( b );
     }
 
-    private boolean isSolid( Block block )
+    public static boolean isSolid( Block block )
     {
         return (
                block.type == solid_flat
+            || block.type == metal_flat
             || block.type == solid_up_left
             || block.type == solid_up_right
         );
@@ -203,6 +201,7 @@ public class BehaviourTools
                 block != null
                 && (
                        block.type == solid_flat
+                    || block.type == metal_flat
                     || block.type == solid_up_left
                     || block.type == solid_up_right
                 )
@@ -229,7 +228,14 @@ public class BehaviourTools
 
     public static boolean s_isFlat( Block block )
     {
-        return ( block != null && block.type == solid_flat );
+        return
+            (
+                block != null && 
+                ( 
+                   block.type == solid_flat 
+                || block.type == metal_flat 
+            ) 
+        );
     }
 
     private boolean goingUpSlope()

@@ -11,6 +11,14 @@ public class SpriteAnimator
     private final World world;
     private final AnimationCache animationCache;
 
+    private static final String[] metal_block = new String[]
+        {
+            "metal_block_1",
+            "metal_block_2",
+            "metal_block_3",
+            "metal_block_4",
+        };
+
     private static final String[] land_block = new String[]
     {
         "land_block_1",
@@ -180,6 +188,7 @@ public class SpriteAnimator
     {
         switch( block.type )
         {
+            case metal_flat:      return metal_block[block.variant];
             case solid_flat:      return land_block[block.variant];
             case solid_up_right:  return land_rising_right[block.variant];
             case solid_up_left:   return land_rising_left[block.variant];
