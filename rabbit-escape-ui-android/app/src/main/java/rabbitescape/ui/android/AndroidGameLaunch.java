@@ -31,6 +31,7 @@ public class AndroidGameLaunch implements Runnable
 
     public final WorldSaver worldSaver;
     private final GameLoop loop;
+    public Token.Type chosenAbility;
 
     public AndroidGameLaunch(
         BitmapCache<AndroidBitmap> bitmapCache,
@@ -67,7 +68,10 @@ public class AndroidGameLaunch implements Runnable
 
         this.input = new AndroidInput( worldSaver );
 
-        loop = new GameLoop( input, physics, graphics, new NoKeysConfig(), null );
+        this.loop = new GameLoop(
+            input, physics, graphics, new NoKeysConfig(), null );
+
+        this.chosenAbility = null;
     }
 
     @Override

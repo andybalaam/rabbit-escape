@@ -214,7 +214,7 @@ public class Dialogs
         };
 
         activity.currentDialog = new AlertDialog.Builder( activity )
-            .setMessage( finishedMessage( activity.gameSurface.world, message ) )
+            .setMessage( finishedMessage( activity.world, message ) )
             .setPositiveButton( ok, onOk )
             .create();
 

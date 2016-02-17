@@ -56,7 +56,8 @@ public class AndroidGameActivity extends RabbitEscapeActivity
     public GameSurfaceView gameSurface;
     private Token.Type[] abilities;
     private TextView worldStatsTextView;
-    private World world;
+    public World world;
+    public Game game;
 
     @Override
     protected void onCreate( Bundle savedInstanceState )
@@ -68,9 +69,10 @@ public class AndroidGameActivity extends RabbitEscapeActivity
         String levelFileName = intent.getStringExtra( INTENT_LEVEL );
         int    levelNum      = intent.getIntExtra( INTENT_LEVEL_NUMBER, 0 );
 
+        Resources resources = getResources();
+
         staticInit();
         world = loadWorld( levelFileName, savedInstanceState );
-        buildDynamicUi( getResources(), world, levelsDir, levelNum, savedInstanceState );
 
         if ( savedInstanceState == null )
         {
@@ -82,6 +84,21 @@ public class AndroidGameActivity extends RabbitEscapeActivity
         }
 
         sound.setMusic( world.music );
+
+        LevelWinListener winListener = new MultiLevelWinListener(
+            new CompletedLevelWinListener( levelsDir, levelNum, levelsCompleted ),
+            new AndroidAlertWinListener( this )
+        );
+
+        game = new Game(
+            SingletonBitmapCache.instance( resources ),
+            resources,
+            world,
+            winListener,
+            savedInstanceState
+        );
+
+        buildDynamicUi( resources, game, world, savedInstanceState );
     }
 
     @Override
@@ -107,36 +124,20 @@ public class AndroidGameActivity extends RabbitEscapeActivity
 
     private void buildDynamicUi(
         Resources resources,
+        Game game,
         World world,
-        String levelsDir,
-        int levelNum,
         Bundle savedInstanceState
     )
     {
         createAbilities( world, resources );
         updatePauseButton( world.paused );
 
-        LevelWinListener winListener = new MultiLevelWinListener(
-            new CompletedLevelWinListener( levelsDir, levelNum, levelsCompleted ),
-            new AndroidAlertWinListener( this )
-        );
-
-        gameSurface = new GameSurfaceView(
-            this,
-            this,
-            sound,
-            SingletonBitmapCache.instance( resources ),
-            world,
-            winListener,
-            savedInstanceState
-        );
+        gameSurface = new GameSurfaceView( this, this, sound, game, world );
 
         if ( savedInstanceState != null )
         {
             // Get the "fast" state from savedInstanceState because we have no
             // game yet - that won't be created until we have a surface.
-            // TODO: maybe instead we should actually create a game at this moment?
-            // Maybe we shouldn't hold on to savedInstanceState inside GameSurfaceView.
 
             updateSpeedButton(
                 savedInstanceState.getBoolean( AndroidGameLaunch.STATE_FAST_PRESSED, false ) );
@@ -187,7 +188,7 @@ public class AndroidGameActivity extends RabbitEscapeActivity
                 @Override
                 public void onCheckedChanged( RadioGroup radioGroup, int buttonIndex )
                 {
-                    gameSurface.chooseAbility( abilities[buttonIndex] );
+                    game.gameLaunch.chosenAbility = abilities[buttonIndex];
 
                     for ( int i = 0; i < radioGroup.getChildCount(); i++ )
                     {
@@ -245,7 +246,7 @@ public class AndroidGameActivity extends RabbitEscapeActivity
 
     public void onExplodeAllClicked( View view )
     {
-        World world = gameSurface.game.gameLaunch.physics.world;
+        World world = game.gameLaunch.physics.world;
 
         switch ( world.completionState() )
         {
@@ -279,10 +280,7 @@ public class AndroidGameActivity extends RabbitEscapeActivity
 
         outState.putInt( STATE_CHECKED_ABILITY_INDEX, checkedAbilityIndex() );
 
-        if ( gameSurface != null )
-        {
-            gameSurface.onSaveInstanceState( outState );
-        }
+        game.gameLaunch.onSaveInstanceState( outState );
 
         // Mute state is stored in a preference, so no need to store it here.
     }

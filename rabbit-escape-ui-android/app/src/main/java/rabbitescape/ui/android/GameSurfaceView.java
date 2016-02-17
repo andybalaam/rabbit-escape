@@ -1,7 +1,6 @@
 package rabbitescape.ui.android;
 
 import android.content.Context;
-import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
 import android.view.SurfaceHolder;
@@ -11,10 +10,8 @@ import android.view.ViewConfiguration;
 
 import java.util.Map;
 
-import rabbitescape.engine.LevelWinListener;
 import rabbitescape.engine.Token;
 import rabbitescape.engine.World;
-import rabbitescape.render.BitmapCache;
 import rabbitescape.ui.android.sound.AndroidSound;
 
 public class GameSurfaceView extends SurfaceView
@@ -23,47 +20,35 @@ public class GameSurfaceView extends SurfaceView
         View.OnClickListener
 {
     // Saved state (saved by AndroidGameActivity)
-    public final World world;
     private OnScaleListener scaleGestureListener;
     private ScaleGestureDetector scaleGestureDetector;
-    private Token.Type chosenAbility;
-
-    // Saved state
-    public Game game;
 
     // Transient state
     private final NumLeftListener numLeftListener;
     private final AndroidSound sound;
-    private final BitmapCache<AndroidBitmap> bitmapCache;
-    private final LevelWinListener winListener;
-    private final Bundle savedInstanceState;
     private final Scrolling scrolling;
 
+    public final Game game;
+    private final World world;
 
     public GameSurfaceView(
         Context context,
         NumLeftListener numLeftListener,
         AndroidSound sound,
-        BitmapCache<AndroidBitmap> bitmapCache,
-        World world,
-        LevelWinListener winListener,
-        Bundle savedInstanceState
+        Game game,
+        World world
     )
     {
         super( context );
         this.numLeftListener = numLeftListener;
         this.sound = sound;
-        this.bitmapCache = bitmapCache;
+        this.game = game;
         this.world = world;
-        this.winListener = winListener;
-        this.savedInstanceState = savedInstanceState;
 
-        game = null;
-        scaleGestureListener = null;
-        scaleGestureDetector = null;
+        this.scaleGestureListener = null;
+        this.scaleGestureDetector = null;
 
-        scrolling = new Scrolling( this, ViewConfiguration.get( context ).getScaledTouchSlop() );
-        chosenAbility = null;
+        this.scrolling = new Scrolling( this, ViewConfiguration.get( context ).getScaledTouchSlop() );
 
         getHolder().addCallback( this );
     }
@@ -71,14 +56,6 @@ public class GameSurfaceView extends SurfaceView
     @Override
     public void surfaceCreated( SurfaceHolder surfaceHolder )
     {
-        game = new Game(
-            bitmapCache,
-            getResources(),
-            world,
-            winListener,
-            savedInstanceState
-        );
-
         game.start( surfaceHolder );
 
         setOnClickListener( this );
@@ -100,57 +77,41 @@ public class GameSurfaceView extends SurfaceView
     @Override
     public void surfaceDestroyed( SurfaceHolder surfaceHolder )
     {
-        if ( game != null )
-        {
-            game.stop();
-        }
-        game = null;
+        game.stop();
     }
 
     public boolean togglePaused()
     {
-        if ( game != null )
-        {
-            AndroidGameLaunch gameLaunch = game.gameLaunch;
-            gameLaunch.setPaused( !gameLaunch.paused() );
-            return gameLaunch.paused();
-        }
-        else
-        {
-            return false;
-        }
+        AndroidGameLaunch gameLaunch = game.gameLaunch;
+        gameLaunch.setPaused( !gameLaunch.paused() );
+        return gameLaunch.paused();
     }
 
     public boolean toggleSpeed()
     {
-        if ( game != null )
-        {
-            AndroidGameLaunch gameLaunch = game.gameLaunch;
-            return gameLaunch.toggleSpeed();
-        }
-        else
-        {
-            return false;
-        }
+        AndroidGameLaunch gameLaunch = game.gameLaunch;
+        return gameLaunch.toggleSpeed();
     }
 
     @Override
     public void onClick( View view )
     {
-        if ( game == null || chosenAbility == null )
+        if ( game.gameLaunch.chosenAbility == null )
         {
             return;
         }
 
-        int prev = world.abilities.get( chosenAbility );
-        int numLeft = game.gameLaunch.addToken( chosenAbility, scrolling.curX, scrolling.curY );
+        int prev = world.abilities.get( game.gameLaunch.chosenAbility );
+
+        int numLeft = game.gameLaunch.addToken(
+            game.gameLaunch.chosenAbility, scrolling.curX, scrolling.curY );
 
         if ( numLeft != prev )
         {
             sound.playSound( "place_token" );
         }
 
-        numLeftListener.numLeft( chosenAbility, numLeft );
+        numLeftListener.numLeft( game.gameLaunch.chosenAbility, numLeft );
     }
 
     @Override
@@ -161,18 +122,5 @@ public class GameSurfaceView extends SurfaceView
         ret = scrolling.onTouchEvent( event ) || ret;
 
         return ret || super.onTouchEvent( event );
-    }
-
-    public void chooseAbility( Token.Type ability )
-    {
-        chosenAbility = ability;
-    }
-
-    public void onSaveInstanceState( Bundle outState )
-    {
-        if ( game != null )
-        {
-            game.gameLaunch.onSaveInstanceState( outState );
-        }
     }
 }
