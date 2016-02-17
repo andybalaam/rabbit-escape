@@ -72,7 +72,6 @@ public class GameSurfaceView extends SurfaceView
     public void surfaceCreated( SurfaceHolder surfaceHolder )
     {
         game = new Game(
-            surfaceHolder,
             bitmapCache,
             getResources(),
             world,
@@ -80,7 +79,7 @@ public class GameSurfaceView extends SurfaceView
             savedInstanceState
         );
 
-        game.start();
+        game.start( surfaceHolder );
 
         setOnClickListener( this );
         this.scaleGestureListener = new OnScaleListener( game.gameLaunch.graphics );

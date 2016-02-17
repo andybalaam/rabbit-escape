@@ -17,7 +17,6 @@ public class Game
     private final Thread thread;
 
     public Game(
-        SurfaceHolder surfaceHolder,
         BitmapCache<AndroidBitmap> bitmapCache,
         Resources resources,
         World world,
@@ -26,7 +25,6 @@ public class Game
     )
     {
         gameLaunch = new AndroidGameLaunch(
-            surfaceHolder,
             bitmapCache,
             resources,
             world,
@@ -37,8 +35,9 @@ public class Game
         thread = new Thread( gameLaunch, "GameLaunch" );
     }
 
-    public void start()
+    public void start( SurfaceHolder surfaceHolder )
     {
+        gameLaunch.graphics.surfaceHolder = surfaceHolder;
         thread.start();
     }
 
@@ -54,5 +53,6 @@ public class Game
             // Should never happen
             e.printStackTrace();
         }
+        gameLaunch.graphics.surfaceHolder = null;
     }
 }

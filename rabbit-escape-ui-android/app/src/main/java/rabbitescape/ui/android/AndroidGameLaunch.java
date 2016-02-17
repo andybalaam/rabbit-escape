@@ -33,7 +33,6 @@ public class AndroidGameLaunch implements Runnable
     private final GameLoop loop;
 
     public AndroidGameLaunch(
-        SurfaceHolder surfaceHolder,
         BitmapCache<AndroidBitmap> bitmapCache,
         Resources resources,
         World world,
@@ -63,8 +62,6 @@ public class AndroidGameLaunch implements Runnable
 
         this.graphics = new AndroidGraphics(
             bitmapCache, soundPlayer, world, scrollX, scrollY );
-
-        this.graphics.surfaceHolder = surfaceHolder;
 
         this.worldSaver = new WorldSaver( world, this );
 
