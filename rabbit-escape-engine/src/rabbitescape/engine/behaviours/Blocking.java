@@ -32,7 +32,19 @@ public class Blocking extends Behaviour
         if ( abilityActive || triggered )
         {
             abilityActive = true;
-            return RABBIT_BLOCKING;
+            Block here = t.blockHere();
+            if( BehaviourTools.isRightRiseSlope( here ) )
+            {
+                return RABBIT_BLOCKING_RISE_RIGHT;
+            }
+            else if ( BehaviourTools.isLeftRiseSlope( here ) )
+            {
+                return RABBIT_BLOCKING_RISE_LEFT;
+            }
+            else
+            {
+                return RABBIT_BLOCKING;
+            }
         }
 
         return null;
@@ -41,7 +53,7 @@ public class Blocking extends Behaviour
     @Override
     public boolean behave( World world, Rabbit rabbit, State state )
     {
-        return ( state == RABBIT_BLOCKING );
+        return isBlocking( state );
     }
 
     @Override
@@ -65,11 +77,23 @@ public class Blocking extends Behaviour
         Rabbit[] rabbits = world.getRabbitsAt( nextX, nextY );
         for ( Rabbit r : rabbits )
         {
-            if ( r.state == RABBIT_BLOCKING )
+            if ( isBlocking( r.state ) )
             {
                 return true;
             }
         }
         return false;
+    }
+
+    private static boolean isBlocking( State s )
+    {
+        switch ( s ) {
+        case RABBIT_BLOCKING:
+        case RABBIT_BLOCKING_RISE_RIGHT:
+        case RABBIT_BLOCKING_RISE_LEFT:
+            return true;
+        default:
+            return false;
+        }
     }
 }
