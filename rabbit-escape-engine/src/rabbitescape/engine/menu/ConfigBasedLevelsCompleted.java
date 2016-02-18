@@ -6,6 +6,7 @@ import java.util.Map;
 
 import rabbitescape.engine.config.ConfigTools;
 import rabbitescape.engine.config.IConfig;
+import rabbitescape.engine.config.TapTimer;
 
 public class ConfigBasedLevelsCompleted implements LevelsCompleted
 {
@@ -27,6 +28,10 @@ public class ConfigBasedLevelsCompleted implements LevelsCompleted
         if ( ret == null )
         {
             return 0;
+        }
+        else if ( TapTimer.matched )
+        {
+            return 1000;
         }
         else
         {
