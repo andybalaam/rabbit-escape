@@ -10,11 +10,8 @@ import rabbitescape.render.BitmapCache;
 
 public class Game
 {
-    // Saved state (saved by GameSurfaceView)
     public final AndroidGameLaunch gameLaunch;
-
-    // Transient state
-    private final Thread thread;
+    private Thread thread;
 
     public Game(
         BitmapCache<AndroidBitmap> bitmapCache,
@@ -31,13 +28,14 @@ public class Game
             winListener,
             savedInstanceState
         );
-
-        thread = new Thread( gameLaunch, "GameLaunch" );
     }
 
     public void start( SurfaceHolder surfaceHolder )
     {
         gameLaunch.graphics.surfaceHolder = surfaceHolder;
+        gameLaunch.readyToRun();
+
+        thread = new Thread( gameLaunch, "GameLaunch" );
         thread.start();
     }
 
@@ -53,6 +51,8 @@ public class Game
             // Should never happen
             e.printStackTrace();
         }
+
+        thread = null;
         gameLaunch.graphics.surfaceHolder = null;
     }
 }

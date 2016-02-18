@@ -2,7 +2,6 @@ package rabbitescape.ui.android;
 
 import android.content.res.Resources;
 import android.os.Bundle;
-import android.view.SurfaceHolder;
 
 import rabbitescape.engine.LevelWinListener;
 import rabbitescape.engine.Token;
@@ -30,7 +29,7 @@ public class AndroidGameLaunch implements Runnable
     public final AndroidInput input;
 
     public final WorldSaver worldSaver;
-    private final GameLoop loop;
+    private GameLoop loop;
     public Token.Type chosenAbility;
 
     public AndroidGameLaunch(
@@ -68,8 +67,7 @@ public class AndroidGameLaunch implements Runnable
 
         this.input = new AndroidInput( worldSaver );
 
-        this.loop = new GameLoop(
-            input, physics, graphics, new NoKeysConfig(), null );
+        this.loop = null;
 
         this.chosenAbility = null;
     }
@@ -123,6 +121,12 @@ public class AndroidGameLaunch implements Runnable
     public boolean isRunning()
     {
         return loop.isRunning();
+    }
+
+    public void readyToRun()
+    {
+        this.loop = new GameLoop(
+            input, physics, graphics, new NoKeysConfig(), null );
     }
 
     public void scrollBy( float x, float y )

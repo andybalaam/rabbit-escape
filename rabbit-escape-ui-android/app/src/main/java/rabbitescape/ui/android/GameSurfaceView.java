@@ -51,12 +51,6 @@ public class GameSurfaceView extends SurfaceView
         this.scrolling = new Scrolling( this, ViewConfiguration.get( context ).getScaledTouchSlop() );
 
         getHolder().addCallback( this );
-    }
-
-    @Override
-    public void surfaceCreated( SurfaceHolder surfaceHolder )
-    {
-        game.start( surfaceHolder );
 
         setOnClickListener( this );
         this.scaleGestureListener = new OnScaleListener( game.gameLaunch.graphics );
@@ -70,7 +64,13 @@ public class GameSurfaceView extends SurfaceView
     }
 
     @Override
-    public void surfaceChanged( SurfaceHolder surfaceHolder, int i, int i2, int i3 )
+    public void surfaceCreated( SurfaceHolder surfaceHolder )
+    {
+        game.start( surfaceHolder );
+    }
+
+    @Override
+    public void surfaceChanged( SurfaceHolder surfaceHolder, int format, int width, int height )
     {
     }
 
