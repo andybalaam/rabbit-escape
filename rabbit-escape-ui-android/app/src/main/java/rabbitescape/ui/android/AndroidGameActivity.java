@@ -74,15 +74,6 @@ public class AndroidGameActivity extends RabbitEscapeActivity
         staticInit();
         world = loadWorld( levelFileName, savedInstanceState );
 
-        if ( savedInstanceState == null )
-        {
-            Dialogs.intro( this, world );
-        }
-        else
-        {
-            restoreFromState( savedInstanceState );
-        }
-
         sound.setMusic( world.music );
 
         LevelWinListener winListener = new MultiLevelWinListener(
@@ -99,6 +90,15 @@ public class AndroidGameActivity extends RabbitEscapeActivity
         );
 
         buildDynamicUi( resources, game, world, savedInstanceState );
+
+        if ( savedInstanceState == null )
+        {
+            Dialogs.intro( this, world );
+        }
+        else
+        {
+            restoreFromState( savedInstanceState );
+        }
     }
 
     @Override
