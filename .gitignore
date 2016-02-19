@@ -29,4 +29,8 @@ local.properties
 proguard/
 *.log
 
-
+# Android Studio
+rabbit-escape-ui-android/.idea/**
+rabbit-escape-ui-android/app/app.iml
+rabbit-escape-ui-android/build.gradle
+rabbit-escape-ui-android/rabbit-escape-ui-android.iml
