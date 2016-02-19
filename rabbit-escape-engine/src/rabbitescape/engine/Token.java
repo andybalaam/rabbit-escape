@@ -41,6 +41,12 @@ public class Token extends Thing
         this.type = type;
     }
 
+    public Token( int x, int y, Type type, World world )
+    {
+        this( x, y, type );
+        calcNewState( world );
+    }
+
     private static State switchType( Type type, boolean moving, boolean slopeBelow, boolean onSlope )
     {
         switch( type )
