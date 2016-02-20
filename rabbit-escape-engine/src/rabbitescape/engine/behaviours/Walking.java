@@ -2,7 +2,7 @@ package rabbitescape.engine.behaviours;
 
 import static rabbitescape.engine.ChangeDescription.State.*;
 import static rabbitescape.engine.Direction.*;
-import static rabbitescape.engine.Block.Type.*;
+import static rabbitescape.engine.Block.Shape.*;
 
 import rabbitescape.engine.*;
 import rabbitescape.engine.ChangeDescription.State;
@@ -327,8 +327,8 @@ public class Walking extends Behaviour
         return (
                block != null
             && (
-                   block.type == bridge_up_left
-                || block.type == bridge_up_right
+                   block.shape == BRIDGE_UP_LEFT
+                || block.shape == BRIDGE_UP_RIGHT
             )
         );
     }

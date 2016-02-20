@@ -1,7 +1,8 @@
 package rabbitescape.engine.textworld;
 
 import static rabbitescape.engine.Direction.*;
-import static rabbitescape.engine.Block.Type.*;
+import static rabbitescape.engine.Block.Material.*;
+import static rabbitescape.engine.Block.Shape.*;
 import static rabbitescape.engine.util.Util.*;
 
 import java.util.ArrayList;
@@ -490,37 +491,37 @@ public class LineProcessor
             case '#':
             {
                 blocks.add(
-                    new Block( x, y, solid_flat, variantGen.next( 4 ) ) );
+                    new Block( x, y, EARTH, FLAT, variantGen.next( 4 ) ) );
                 break;
             }
             case 'M':
             {
                 blocks.add(
-                    new Block( x, y, metal_flat, variantGen.next( 4 ) ) );
+                    new Block( x, y, METAL, FLAT, variantGen.next( 4 ) ) );
                 break;
             }
             case '/':
             {
                 blocks.add(
-                    new Block( x, y, solid_up_right, variantGen.next( 4 ) ) );
+                    new Block( x, y, EARTH, UP_RIGHT, variantGen.next( 4 ) ) );
                 break;
             }
             case '\\':
             {
                 blocks.add(
-                    new Block( x, y, solid_up_left, variantGen.next( 4 ) ) );
+                    new Block( x, y, EARTH, UP_LEFT, variantGen.next( 4 ) ) );
                 break;
             }
             case '(':
             {
                 blocks.add(
-                    new Block( x, y, bridge_up_right, 0 ) );
+                    new Block( x, y, EARTH, BRIDGE_UP_RIGHT, 0 ) );
                 break;
             }
             case ')':
             {
                 blocks.add(
-                    new Block( x, y, bridge_up_left, 0 ) );
+                    new Block( x, y, EARTH, BRIDGE_UP_LEFT, 0 ) );
                 break;
             }
             case 'r':

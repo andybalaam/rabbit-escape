@@ -14,17 +14,28 @@ public class BlockRenderer
 
     private static char charForBlock( Block block )
     {
-        switch ( block.type )
+        switch ( block.material )
         {
-            case solid_flat:      return '#';
-            case solid_up_right:  return '/';
-            case solid_up_left:   return '\\';
-            case bridge_up_right: return '(';
-            case bridge_up_left:  return ')';
-            case metal_flat:      return 'M';
-            default:
-                throw new AssertionError(
-                    "Unknown Block type: " + block.type );
+            case EARTH:
+                switch ( block.shape )
+                {
+                    case FLAT:            return '#';
+                    case UP_RIGHT:        return '/';
+                    case UP_LEFT:         return '\\';
+                    case BRIDGE_UP_RIGHT: return '(';
+                    case BRIDGE_UP_LEFT:  return ')';
+                }
+                break;
+            case METAL:
+                switch ( block.shape )
+                {
+                    case FLAT:            return 'M';
+                    default:
+                        break;
+                }
+                break;
         }
+        throw new AssertionError(
+            "Unknown Block type: " + block.material + " " + block.shape );
     }
 }

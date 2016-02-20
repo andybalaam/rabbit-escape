@@ -51,7 +51,7 @@ public class Digging extends Behaviour
             }
             else if ( t.blockBelow() != null )
             {
-                if ( t.blockBelow().type == Block.Type.metal_flat )
+                if ( t.blockBelow().material == Block.Material.METAL )
                 {
                     stepsOfDigging = 0;
                     return RABBIT_DIGGING_USELESSLY;
