@@ -3,6 +3,7 @@ package rabbitescape.engine;
 import static rabbitescape.engine.Direction.*;
 import rabbitescape.engine.util.LookupItem2D;
 import rabbitescape.engine.util.Position;
+import rabbitescape.engine.util.WaterUtil;
 
 public class Block implements LookupItem2D
 {
@@ -14,11 +15,18 @@ public class Block implements LookupItem2D
 
     public enum Shape
     {
-        FLAT,
-        UP_RIGHT,
-        UP_LEFT,
-        BRIDGE_UP_RIGHT,
-        BRIDGE_UP_LEFT
+        FLAT( 0 ),
+        UP_RIGHT( WaterUtil.HALF_CAPACITY ),
+        UP_LEFT( WaterUtil.HALF_CAPACITY ),
+        BRIDGE_UP_RIGHT( WaterUtil.MAX_CAPACITY ),
+        BRIDGE_UP_LEFT( WaterUtil.MAX_CAPACITY );
+
+        public final int capacity;
+
+        private Shape( int capacity )
+        {
+            this.capacity = capacity;
+        }
     }
 
     public final int x;
