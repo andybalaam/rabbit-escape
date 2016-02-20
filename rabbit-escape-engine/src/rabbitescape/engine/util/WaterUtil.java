@@ -6,4 +6,6 @@ public class WaterUtil
     public static final int HALF_CAPACITY = 50;
     /** The maximum capacity of water that can be held in an empty tile without it overflowing. */
     public static final int MAX_CAPACITY = HALF_CAPACITY * 2;
+    /** The default rate at which pipes produce water. */
+    public static final int SOURCE_RATE = 50;
 }
