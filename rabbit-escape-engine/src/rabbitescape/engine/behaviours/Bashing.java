@@ -37,7 +37,7 @@ public class Bashing extends Behaviour
                 && t.blockAboveNext() != null
             )
             {
-                if (t.blockAboveNext().type == Block.Type.metal_flat)
+                if (t.blockAboveNext().material == Block.Material.METAL)
                 {
                     stepsOfBashing = 0;
                     return t.rl(
@@ -67,7 +67,7 @@ public class Bashing extends Behaviour
             }
             else if ( t.blockNext() != null )
             {
-                if ( t.blockNext().type == Block.Type.metal_flat )
+                if ( t.blockNext().material == Block.Material.METAL )
                 {
                     stepsOfBashing = 0;
                     return t.rl(

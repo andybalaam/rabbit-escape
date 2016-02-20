@@ -186,17 +186,27 @@ public class SpriteAnimator
 
     private String bitmapNameForBlock( Block block )
     {
-        switch( block.type )
+        switch ( block.material )
         {
-            case metal_flat:      return metal_block[block.variant];
-            case solid_flat:      return land_block[block.variant];
-            case solid_up_right:  return land_rising_right[block.variant];
-            case solid_up_left:   return land_rising_left[block.variant];
-            case bridge_up_right: return bridge_rising_right;
-            case bridge_up_left:  return bridge_rising_left;
-            default:
-                throw new RuntimeException(
-                    "Unknown block type " + block.type );
+            case EARTH:
+                switch ( block.shape )
+                {
+                    case FLAT:            return land_block[block.variant];
+                    case UP_RIGHT:        return land_rising_right[block.variant];
+                    case UP_LEFT:         return land_rising_left[block.variant];
+                    case BRIDGE_UP_RIGHT: return bridge_rising_right;
+                    case BRIDGE_UP_LEFT:  return bridge_rising_left;
+                }
+                break;
+            case METAL:
+                switch ( block.shape )
+                {
+                    case FLAT:            return metal_block[block.variant];
+                    default:
+                        break;
+                }
+                break;
         }
+		throw new RuntimeException("Unknown Block type: " + block.material + " " + block.shape);
     }
 }

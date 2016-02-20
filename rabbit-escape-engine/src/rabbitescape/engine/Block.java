@@ -6,47 +6,53 @@ import rabbitescape.engine.util.Position;
 
 public class Block implements LookupItem2D
 {
-    public enum Type
+    public enum Material
     {
-        solid_flat,
-        solid_up_right,
-        solid_up_left,
-        bridge_up_right,
-        bridge_up_left,
-        metal_flat,
+        EARTH,
+        METAL
+    }
+
+    public enum Shape
+    {
+        FLAT,
+        UP_RIGHT,
+        UP_LEFT,
+        BRIDGE_UP_RIGHT,
+        BRIDGE_UP_LEFT
     }
 
     public final int x;
     public final int y;
-    public final Type type;
+    public final Material material;
+    public final Shape shape;
     public final int variant;
 
-    public Block( int x, int y, Type type, int variant )
+    public Block( int x, int y, Material material, Shape shape, int variant )
     {
         this.x = x;
         this.y = y;
-        this.type = type;
+        this.material = material;
+        this.shape = shape;
         this.variant = variant;
     }
 
     public Direction riseDir()
     {
-        switch ( type )
+        switch ( shape )
         {
-            case solid_flat:
-            case metal_flat:
-                return DOWN;
+        case FLAT:
+            return DOWN;
 
-            case solid_up_right:
-            case bridge_up_right:
-                return RIGHT;
+        case UP_RIGHT:
+        case BRIDGE_UP_RIGHT:
+            return RIGHT;
 
-            case solid_up_left:
-            case bridge_up_left:
-                return LEFT;
+        case UP_LEFT:
+        case BRIDGE_UP_LEFT:
+            return LEFT;
 
-            default:
-                throw new RuntimeException( "Unknown block type " + type );
+        default:
+            throw new RuntimeException( "Unknown block shape " + shape );
         }
     }
 

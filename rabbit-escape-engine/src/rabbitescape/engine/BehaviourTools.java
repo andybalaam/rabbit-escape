@@ -1,6 +1,6 @@
 package rabbitescape.engine;
 
-import static rabbitescape.engine.Block.Type.*;
+import static rabbitescape.engine.Block.Shape.*;
 import static rabbitescape.engine.Direction.RIGHT;
 import static rabbitescape.engine.Direction.opposite;
 
@@ -149,8 +149,7 @@ public class BehaviourTools
         return (
                block != null
             && (
-                   block.type == solid_flat
-                || block.type == metal_flat
+                   block.shape == FLAT
                 || (
                     block.riseDir() == opposite( rabbit.dir )
                     && isSolid( block )
@@ -165,8 +164,8 @@ public class BehaviourTools
         {
             return false;
         }
-        return b.type == solid_up_right
-            || b.type == bridge_up_right;
+        return b.shape == UP_RIGHT
+            || b.shape == BRIDGE_UP_RIGHT;
     }
 
     public static boolean isLeftRiseSlope( Block b )
@@ -175,8 +174,8 @@ public class BehaviourTools
         {
             return false;
         }
-        return b.type == solid_up_left
-            || b.type == bridge_up_left;
+        return b.shape == UP_LEFT
+            || b.shape == BRIDGE_UP_LEFT;
     }
 
     public static boolean isSlope( Block b )
@@ -187,10 +186,9 @@ public class BehaviourTools
     public static boolean isSolid( Block block )
     {
         return (
-               block.type == solid_flat
-            || block.type == metal_flat
-            || block.type == solid_up_left
-            || block.type == solid_up_right
+               block.shape == FLAT
+            || block.shape == UP_LEFT
+            || block.shape == UP_RIGHT
         );
     }
 
@@ -200,10 +198,9 @@ public class BehaviourTools
             (
                 block != null
                 && (
-                       block.type == solid_flat
-                    || block.type == metal_flat
-                    || block.type == solid_up_left
-                    || block.type == solid_up_right
+                       block.shape == FLAT
+                    || block.shape == UP_LEFT
+                    || block.shape == UP_RIGHT
                 )
             );
     }
@@ -214,10 +211,10 @@ public class BehaviourTools
         return
             null != block &&
             (
-                   solid_up_left == block.type
-                || solid_up_right == block.type
-                || Block.Type.bridge_up_left == block.type
-                || Block.Type.bridge_up_right == block.type
+                   block.shape == UP_LEFT
+                || block.shape == UP_RIGHT
+                || block.shape == BRIDGE_UP_LEFT
+                || block.shape == BRIDGE_UP_RIGHT
             );
     }
 
@@ -228,14 +225,7 @@ public class BehaviourTools
 
     public static boolean s_isFlat( Block block )
     {
-        return
-            (
-                block != null && 
-                ( 
-                   block.type == solid_flat 
-                || block.type == metal_flat 
-            ) 
-        );
+        return ( block != null && block.shape == FLAT );
     }
 
     private boolean goingUpSlope()
