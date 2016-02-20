@@ -183,7 +183,7 @@ public class World
         else
         {
             this.blockTable = new LookupTable2D<Block>( blocks, size );
-            this.waterTable = new LookupTable2D<>( waterRegions, size );
+            this.waterTable = WaterRegionFactory.generateWaterTable( blockTable );
         }
 
         this.changes = new WorldChanges( this, statsListener );

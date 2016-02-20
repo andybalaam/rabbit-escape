@@ -49,6 +49,11 @@ public class LookupTable2D <T extends LookupItem2D> implements Iterable<T>
     // Arrays of generics not allowed, use Vector instead
     private final Vector<Vector<LookupItems2D<T>>> table;
     private final List<T> list;
+    /**
+     * The size this table was created with. Note that changing the dimensions
+     * will not change the size of an existing table.
+     */
+    public final Dimension size;
 
     public LookupTable2D( List<T> list, Dimension size )
     {
@@ -68,6 +73,17 @@ public class LookupTable2D <T extends LookupItem2D> implements Iterable<T>
             table.get( i( position.x ) ).get( i( position.y ) ).add( item );
         }
         this.list = list;
+        this.size = size;
+    }
+
+    /**
+     * Create an empty lookup table.
+     *
+     * @param size The dimensions of the table.
+     */
+    public LookupTable2D( Dimension size )
+    {
+        this( new ArrayList<T>(), size );
     }
 
     /**
@@ -78,6 +94,11 @@ public class LookupTable2D <T extends LookupItem2D> implements Iterable<T>
         return table.get( i( x ) ).get( i( y ) ).getItem( 0 );
     }
 
+    public List<T> getItemsAt( int x, int y )
+    {
+        return table.get( i( x ) ).get( i( y ) ).getItems();
+    }
+
     public void addAll( List<T> newItems )
     {
         list.addAll( newItems );
@@ -86,6 +107,13 @@ public class LookupTable2D <T extends LookupItem2D> implements Iterable<T>
             Position position = item.getPosition();
             table.get( i( position.x ) ).get( i( position.y ) ).add( item );
         }
+    }
+
+    public void add( T newItem )
+    {
+        list.add( newItem );
+        Position position = newItem.getPosition();
+        table.get( i( position.x ) ).get( i( position.y ) ).add( newItem );
     }
 
     public void removeAll( List<T> itemsGoing )
