@@ -16,7 +16,7 @@ import rabbitescape.engine.util.Util;
 public class TestWaterRegion
 {
     @Test
-    public void roundTripPersistance()
+    public void round_trip_persistance()
     {
         WaterRegion start = new WaterRegion( 0, 0, Util.newSet( UP, LEFT, RIGHT, DOWN ), 25 );
         start.contents += 10;

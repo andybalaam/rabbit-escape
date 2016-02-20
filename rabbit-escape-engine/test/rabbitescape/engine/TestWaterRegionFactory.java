@@ -28,16 +28,16 @@ public class TestWaterRegionFactory
      * Create a table containing a block and two ramps. Check the generated water table.
      */
     @Test
-    public void generateWaterTable()
+    public void generate_water_table()
     {
         Block block = new Block( 0, 0, Material.EARTH, Shape.FLAT, 0 );
         Block leftRamp = new Block( 0, 1, Material.EARTH, Shape.UP_LEFT, 0 );
         Block rightRamp = new Block( 1, 0, Material.EARTH, Shape.UP_RIGHT, 0 );
         List<Block> blocks = Arrays.asList( block , leftRamp, rightRamp );
         LookupTable2D<Block> blockTable = new LookupTable2D<>( blocks , new Dimension( 2, 2 ) );
-        
+
         LookupTable2D<WaterRegion> waterTable = WaterRegionFactory.generateWaterTable( blockTable );
-        
+
         assertThat( waterTable.size, equalTo( blockTable.size ) );
         assertNull( waterTable.getItemAt( 0, 0 ) );
         assertThat( waterTable.getItemAt( 0, 1 ), equalTo( new WaterRegion( 0, 1, Util.newSet( UP, RIGHT ), HALF_CAPACITY ) ) );
@@ -53,46 +53,46 @@ public class TestWaterRegionFactory
             assertThat( waterTable.getItemAt( 2, i ), equalTo( new WaterRegion( 2, i, Util.newSet( UP, LEFT, RIGHT, DOWN ), MAX_CAPACITY ) ) );
         }
     }
-    
+
     /**
      * Test creating regions for a cell with both types of bridges in it.
      */
     @Test
-    public void makeWaterRegion_twoBridges()
+    public void make_water_region_two_bridges()
     {
         List<WaterRegion> waterRegions = WaterRegionFactory.makeWaterRegion( 0, 0, new Shape[]{ Shape.BRIDGE_UP_RIGHT, Shape.BRIDGE_UP_LEFT } );
-        
+
         List<WaterRegion> expected = Arrays.asList( new WaterRegion( 0, 0, Util.newSet( UP, LEFT, RIGHT, DOWN ), MAX_CAPACITY ) );
         assertThat( waterRegions, equalTo( expected ) );
     }
-    
+
     /**
      * Test creating regions for a cell with both types of ramps in it.
      */
     @Test
-    public void makeWaterRegion_twoRamps()
+    public void make_water_region_two_ramps()
     {
         List<WaterRegion> waterRegions = WaterRegionFactory.makeWaterRegion( 0, 0, new Shape[]{ Shape.UP_RIGHT, Shape.UP_LEFT } );
-        
+
         List<WaterRegion> expected = Arrays.asList( new WaterRegion( 0, 0, Util.newSet( UP ), QUARTER_CAPACITY ) );
         assertThat( waterRegions, equalTo( expected ) );
     }
-    
+
     /**
      * Test creating regions for a cell with a ramp and a block in it.
      */
     @Test
-    public void makeWaterRegion_blockAndRamp()
+    public void make_water_region_block_and_ramp()
     {
         List<WaterRegion> waterRegions = WaterRegionFactory.makeWaterRegion( 0, 0, new Shape[]{ Shape.UP_LEFT, Shape.FLAT } );
         assertThat( waterRegions.size(), equalTo( 0 ) );
     }
-    
+
     /**
      * Test creating regions for a cell with a bridge and a ramp in it.
      */
     @Test
-    public void makeWaterRegion_bridgeAndRamp()
+    public void make_water_region_bridge_and_ramp()
     {
         List<WaterRegion> waterRegions = WaterRegionFactory.makeWaterRegion( 0, 0, new Shape[]{ Shape.BRIDGE_UP_LEFT, Shape.UP_LEFT } );
 
