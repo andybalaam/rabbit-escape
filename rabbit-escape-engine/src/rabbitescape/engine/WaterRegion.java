@@ -17,6 +17,7 @@ public class WaterRegion implements LookupItem2D
      * in that direction may have no water region, or it may have a region that
      * is not connected to here (e.g. two adjacent left ramps).
      */
+    // TODO Replace this with a Set.
     private final List<Direction> connections;
     /** The amount of water that can stay here without being under pressure. */
     public int capacity;
@@ -71,5 +72,51 @@ public class WaterRegion implements LookupItem2D
             return flow.get( direction );
         }
         return 0;
+    }
+    
+    @Override
+    public int hashCode()
+    {
+        int hash = x;
+        hash = 31 * hash + y;
+        hash = 31 * hash + connections.hashCode();
+        hash = 31 * hash + capacity;
+        hash = 31 * hash + contents;
+        hash = 31 * hash + flow.hashCode();
+        return hash;
+    }
+    
+    @Override
+    public boolean equals( Object obj )
+    {
+        if ( !( obj instanceof WaterRegion ) )
+        {
+            return false;
+        }
+        if ( obj == this )
+        {
+            return true;
+        }
+        WaterRegion other = ( WaterRegion ) obj;
+        return x == other.x
+            && y == other.y
+            && connections.equals( other.connections )
+            && capacity == other.capacity
+            && contents == other.contents
+            && flow.equals( other.flow );
+    }
+
+    @Override
+    public String toString()
+    {
+        StringBuilder sb = new StringBuilder();
+        sb.append( "WaterRegion: " )
+            .append( x ).append( ", " )
+            .append( y ).append( ", " )
+            .append( connections ).append( ", " )
+            .append( capacity ).append( ", " )
+            .append( contents ).append( ", " )
+            .append( flow );
+        return sb.toString();
     }
 }
