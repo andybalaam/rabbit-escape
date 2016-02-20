@@ -20,6 +20,7 @@ import rabbitescape.engine.Block.Material;
 import rabbitescape.engine.Block.Shape;
 import rabbitescape.engine.util.Dimension;
 import rabbitescape.engine.util.LookupTable2D;
+import rabbitescape.engine.util.Util;
 
 public class TestWaterRegionFactory
 {
@@ -39,9 +40,9 @@ public class TestWaterRegionFactory
         
         assertThat( waterTable.size, equalTo( blockTable.size ) );
         assertNull( waterTable.getItemAt( 0, 0 ) );
-        assertThat( waterTable.getItemAt( 0, 1 ), equalTo( new WaterRegion( 0, 1, Arrays.asList( UP, RIGHT ), HALF_CAPACITY ) ) );
-        assertThat( waterTable.getItemAt( 1, 0 ), equalTo( new WaterRegion( 1, 0, Arrays.asList( UP, LEFT ), HALF_CAPACITY ) ) );
-        assertThat( waterTable.getItemAt( 1, 1 ), equalTo( new WaterRegion( 1, 1, Arrays.asList( UP, LEFT, RIGHT, DOWN ), MAX_CAPACITY ) ) );
+        assertThat( waterTable.getItemAt( 0, 1 ), equalTo( new WaterRegion( 0, 1, Util.newSet( UP, RIGHT ), HALF_CAPACITY ) ) );
+        assertThat( waterTable.getItemAt( 1, 0 ), equalTo( new WaterRegion( 1, 0, Util.newSet( UP, LEFT ), HALF_CAPACITY ) ) );
+        assertThat( waterTable.getItemAt( 1, 1 ), equalTo( new WaterRegion( 1, 1, Util.newSet( UP, LEFT, RIGHT, DOWN ), MAX_CAPACITY ) ) );
     }
     
     /**
@@ -52,7 +53,7 @@ public class TestWaterRegionFactory
     {
         List<WaterRegion> waterRegions = WaterRegionFactory.makeWaterRegion( 0, 0, new Shape[]{ Shape.BRIDGE_UP_RIGHT, Shape.BRIDGE_UP_LEFT } );
         
-        List<WaterRegion> expected = Arrays.asList( new WaterRegion( 0, 0, Arrays.asList( UP, LEFT, RIGHT, DOWN ), MAX_CAPACITY ) );
+        List<WaterRegion> expected = Arrays.asList( new WaterRegion( 0, 0, Util.newSet( UP, LEFT, RIGHT, DOWN ), MAX_CAPACITY ) );
         assertThat( waterRegions, equalTo( expected ) );
     }
     
@@ -64,7 +65,7 @@ public class TestWaterRegionFactory
     {
         List<WaterRegion> waterRegions = WaterRegionFactory.makeWaterRegion( 0, 0, new Shape[]{ Shape.UP_RIGHT, Shape.UP_LEFT } );
         
-        List<WaterRegion> expected = Arrays.asList( new WaterRegion( 0, 0, Arrays.asList( UP ), QUARTER_CAPACITY ) );
+        List<WaterRegion> expected = Arrays.asList( new WaterRegion( 0, 0, Util.newSet( UP ), QUARTER_CAPACITY ) );
         assertThat( waterRegions, equalTo( expected ) );
     }
     
@@ -86,7 +87,7 @@ public class TestWaterRegionFactory
     {
         List<WaterRegion> waterRegions = WaterRegionFactory.makeWaterRegion( 0, 0, new Shape[]{ Shape.BRIDGE_UP_LEFT, Shape.UP_LEFT } );
 
-        List<WaterRegion> expected = Arrays.asList( new WaterRegion( 0, 0, Arrays.asList( UP, RIGHT ), HALF_CAPACITY ) );
+        List<WaterRegion> expected = Arrays.asList( new WaterRegion( 0, 0, Util.newSet( UP, RIGHT ), HALF_CAPACITY ) );
         assertThat( waterRegions, equalTo( expected ) );
     }
 }

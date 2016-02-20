@@ -1,8 +1,8 @@
 package rabbitescape.engine;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import rabbitescape.engine.util.LookupItem2D;
 import rabbitescape.engine.util.Position;
@@ -17,8 +17,7 @@ public class WaterRegion implements LookupItem2D
      * in that direction may have no water region, or it may have a region that
      * is not connected to here (e.g. two adjacent left ramps).
      */
-    // TODO Replace this with a Set.
-    private final List<Direction> connections;
+    private final Set<Direction> connections;
     /** The amount of water that can stay here without being under pressure. */
     public int capacity;
     /** The amount of water stored here. */
@@ -26,12 +25,12 @@ public class WaterRegion implements LookupItem2D
     /** The water being transferred from here this tick. */
     private Map<Direction, Integer> flow = new HashMap<>();
 
-    public WaterRegion( int x, int y, List<Direction> connections, int capacity )
+    public WaterRegion( int x, int y, Set<Direction> connections, int capacity )
     {
         this( x, y, connections, capacity, 0 );
     }
 
-    public WaterRegion( int x, int y, List<Direction> connections, int capacity, int contents )
+    public WaterRegion( int x, int y, Set<Direction> connections, int capacity, int contents )
     {
         this.x = x;
         this.y = y;

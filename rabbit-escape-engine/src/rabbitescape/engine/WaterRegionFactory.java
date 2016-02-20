@@ -5,10 +5,11 @@ import static rabbitescape.engine.Direction.LEFT;
 import static rabbitescape.engine.Direction.RIGHT;
 import static rabbitescape.engine.Direction.UP;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import rabbitescape.engine.Block.Shape;
 import rabbitescape.engine.util.LookupTable2D;
@@ -42,7 +43,7 @@ public class WaterRegionFactory
     /** Create a set of water regions from the given shaped blocks. */
     public static List<WaterRegion> makeWaterRegion( int x, int y, Shape[] shapes )
     {
-        List<Direction> connections = new ArrayList<>(
+        Set<Direction> connections = new HashSet<>(
             Arrays.asList( UP, LEFT, RIGHT, DOWN ) );
         for ( Shape shape : shapes )
         {
@@ -76,7 +77,7 @@ public class WaterRegionFactory
                 capacity ) );
     }
 
-    private static int findCapacity( List<Direction> connections )
+    private static int findCapacity( Set<Direction> connections )
     {
         if ( connections.size() == 4 )
         {
