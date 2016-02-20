@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import rabbitescape.engine.WaterRegion;
 import rabbitescape.engine.err.RabbitEscapeException;
 import rabbitescape.engine.textworld.Comment;
 import rabbitescape.engine.util.Dimension;
@@ -100,6 +101,8 @@ public class World
     public final Dimension size;
 //    public final List<Block> blocks;
     public final LookupTable2D<Block> blockTable;
+    /** A grid of water. Only one water object should be stored in each location. */
+    public final LookupTable2D<WaterRegion> waterTable;
     public final List<Rabbit> rabbits;
     public final List<Thing> things;
     public final Map<Token.Type, Integer> abilities;
@@ -129,6 +132,7 @@ public class World
         List<Block> blocks,
         List<Rabbit> rabbits,
         List<Thing> things,
+        List<WaterRegion> waterRegions,
         Map<Token.Type, Integer> abilities,
         String name,
         String description,
@@ -172,11 +176,14 @@ public class World
 
         if ( -1 == size.width )
         {
-            this.blockTable = null; // make allowance for tests with no world
+            // make allowance for tests with no world
+            this.blockTable = null;
+            this.waterTable = null;
         }
         else
         {
             this.blockTable = new LookupTable2D<Block>( blocks, size );
+            this.waterTable = new LookupTable2D<>( waterRegions, size );
         }
 
         this.changes = new WorldChanges( this, statsListener );

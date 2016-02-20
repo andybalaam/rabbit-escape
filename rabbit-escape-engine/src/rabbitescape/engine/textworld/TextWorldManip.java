@@ -17,6 +17,7 @@ import rabbitescape.engine.Rabbit;
 import rabbitescape.engine.Thing;
 import rabbitescape.engine.Token;
 import rabbitescape.engine.VoidMarkerStyle;
+import rabbitescape.engine.WaterRegion;
 import rabbitescape.engine.World;
 import rabbitescape.engine.WorldStatsListener;
 import rabbitescape.engine.util.Dimension;
@@ -113,6 +114,7 @@ public class TextWorldManip
         List<Block> blocks = new ArrayList<>();
         List<Rabbit> rabbits = new ArrayList<>();
         List<Thing> things = new ArrayList<>();
+        List<WaterRegion> waterRegions = new ArrayList<>();
         Map<Token.Type, Integer> abilities = new HashMap<>();
 
         int variantSeed = 0; // TODO: world property for the seed?
@@ -129,7 +131,7 @@ public class TextWorldManip
         int num_rabs = processor.metaInt( num_rabbits, 10 );
 
         World world = createWorldFromLineProcessor(
-            nameIfNoneSupplied, statsListener, blocks, rabbits, things,
+            nameIfNoneSupplied, statsListener, blocks, rabbits, things, waterRegions,
             abilities, processor, num_rabs );
 
         return world;
@@ -141,6 +143,7 @@ public class TextWorldManip
         List<Block> blocks,
         List<Rabbit> rabbits,
         List<Thing> things,
+        List<WaterRegion> waterRegions,
         Map<Token.Type, Integer> abilities,
         LineProcessor processor,
         int num_rabs )
@@ -150,6 +153,7 @@ public class TextWorldManip
             blocks,
             rabbits,
             things,
+            waterRegions,
             abilities,
             processor.metaString( name, nameIfNoneSupplied ),
             processor.metaString( description, "" ),
@@ -178,6 +182,7 @@ public class TextWorldManip
             new ArrayList<Block>(),
             new ArrayList<Rabbit>(),
             new ArrayList<Thing>(),
+            new ArrayList<WaterRegion>(),
             new HashMap<Token.Type, Integer>(),
             "Empty World",   //name
             "",              //description
