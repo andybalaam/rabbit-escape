@@ -139,4 +139,9 @@ public class LookupTable2D <T extends LookupItem2D> implements Iterable<T>
     {
         return c + 1;
     }
+
+    public Iterable<T> getItems()
+    {
+        return list;
+    }
 }

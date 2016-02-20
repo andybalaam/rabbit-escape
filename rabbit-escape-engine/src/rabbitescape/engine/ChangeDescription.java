@@ -202,6 +202,8 @@ public class ChangeDescription
         TOKEN_BROLLY_FALL_TO_SLOPE,
         TOKEN_BROLLY_ON_SLOPE,
 
+        WATER_REGION,
+
         ENTRANCE,
         EXIT,
     }

@@ -178,7 +178,7 @@ public class World
         {
             // make allowance for tests with no world
             this.blockTable = null;
-            this.waterTable = null;
+            this.waterTable = new LookupTable2D<WaterRegion>( size );
         }
         else
         {
@@ -240,7 +240,7 @@ public class World
 
     private Iterable<Thing> allThings()
     {
-        return chain( rabbits, things );
+        return chain( rabbits, things, waterTable.getItems() );
     }
 
     public Block getBlockAt( int x, int y)

@@ -308,6 +308,8 @@ public class ChangeRenderer
             case TOKEN_BROLLY_FALL_TO_SLOPE:
                 chars.set( change.x, change.y + 1, 'f' );
                 break;
+            case WATER_REGION:
+                break;
             case ENTRANCE:
                 break;
             case EXIT:

@@ -1,23 +1,27 @@
 package rabbitescape.engine;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 
+import rabbitescape.engine.ChangeDescription.State;
 import rabbitescape.engine.util.LookupItem2D;
 import rabbitescape.engine.util.Position;
+import rabbitescape.engine.util.Util;
 
-public class WaterRegion implements LookupItem2D
+public class WaterRegion extends Thing implements LookupItem2D
 {
-    public final int x;
-    public final int y;
     /**
      * The list of directions that this region is connected in. Note that this
      * does not mean that water can necessarily flow that way, because the cell
      * in that direction may have no water region, or it may have a region that
      * is not connected to here (e.g. two adjacent left ramps).
      */
-    private final Set<Direction> connections;
+    private Set<Direction> connections;
     /** The amount of water that can stay here without being under pressure. */
     public int capacity;
     /** The amount of water stored here. */
@@ -32,8 +36,7 @@ public class WaterRegion implements LookupItem2D
 
     public WaterRegion( int x, int y, Set<Direction> connections, int capacity, int contents )
     {
-        this.x = x;
-        this.y = y;
+        super( x, y, State.WATER_REGION );
         this.connections = connections;
         this.capacity = capacity;
         this.contents = contents;
@@ -55,7 +58,7 @@ public class WaterRegion implements LookupItem2D
     {
         return connections.contains( direction );
     }
-    
+
     /**
      * Get the amount of water being transferred from here in a given direction
      * this tick.
@@ -72,7 +75,56 @@ public class WaterRegion implements LookupItem2D
         }
         return 0;
     }
-    
+
+    @Override
+    public void calcNewState( World world )
+    {
+        // TODO
+    }
+
+    @Override
+    public void step( World world )
+    {
+        // TODO
+    }
+
+    @Override
+    public Map<String, String> saveState()
+    {
+        Map<String, String> ret = new HashMap<String, String>();
+        ret.put( "WaterRegion.connections", Util.join( ",", connections ) );
+        BehaviourState.addToStateIfNotDefault( ret, "WaterRegion.capacity", String.valueOf( capacity ), "0" );
+        BehaviourState.addToStateIfNotDefault( ret, "WaterRegion.contents", String.valueOf( contents ), "0" );
+        List<String> flowBits = new ArrayList<>();
+        for ( Entry<Direction, Integer> entry : flow.entrySet() )
+        {
+            flowBits.add( entry.getKey().toString() );
+            flowBits.add( entry.getValue().toString() );
+        }
+        ret.put( "WaterRegion.flow", Util.join( ",", flowBits ) );
+        return ret;
+    }
+
+    @Override
+    public void restoreFromState( Map<String, String> state )
+    {
+        connections = new HashSet<>();
+        for ( String connection : Util.split( state.get( "WaterRegion.connections" ), "," ) )
+        {
+            connections.add( Direction.valueOf( connection ) );
+        }
+        capacity = BehaviourState.restoreFromState( state, "WaterRegion.capacity", 0 );
+        contents = BehaviourState.restoreFromState( state, "WaterRegion.contents", 0 );
+        flow = new HashMap<>();
+        String[] flowBits = Util.split( state.get( "WaterRegion.flow" ), "," );
+        for ( int i : Util.range( flowBits.length / 2 ))
+        {
+            Direction direction = Direction.valueOf( flowBits[i * 2] );
+            Integer amount = Integer.valueOf( flowBits[i * 2 + 1] );
+            flow.put( direction, amount );
+        }
+    }
+
     @Override
     public int hashCode()
     {
@@ -84,7 +136,7 @@ public class WaterRegion implements LookupItem2D
         hash = 31 * hash + flow.hashCode();
         return hash;
     }
-    
+
     @Override
     public boolean equals( Object obj )
     {

@@ -43,6 +43,15 @@ public class TestWaterRegionFactory
         assertThat( waterTable.getItemAt( 0, 1 ), equalTo( new WaterRegion( 0, 1, Util.newSet( UP, RIGHT ), HALF_CAPACITY ) ) );
         assertThat( waterTable.getItemAt( 1, 0 ), equalTo( new WaterRegion( 1, 0, Util.newSet( UP, LEFT ), HALF_CAPACITY ) ) );
         assertThat( waterTable.getItemAt( 1, 1 ), equalTo( new WaterRegion( 1, 1, Util.newSet( UP, LEFT, RIGHT, DOWN ), MAX_CAPACITY ) ) );
+
+        // Also check the perimeter.
+        for ( int i = -1; i <= 2; i++ )
+        {
+            assertThat( waterTable.getItemAt( -1, i ), equalTo( new WaterRegion( -1, i, Util.newSet( UP, LEFT, RIGHT, DOWN ), MAX_CAPACITY ) ) );
+            assertThat( waterTable.getItemAt( i, -1 ), equalTo( new WaterRegion( i, -1, Util.newSet( UP, LEFT, RIGHT, DOWN ), MAX_CAPACITY ) ) );
+            assertThat( waterTable.getItemAt( i, 2 ), equalTo( new WaterRegion( i, 2, Util.newSet( UP, LEFT, RIGHT, DOWN ), MAX_CAPACITY ) ) );
+            assertThat( waterTable.getItemAt( 2, i ), equalTo( new WaterRegion( 2, i, Util.newSet( UP, LEFT, RIGHT, DOWN ), MAX_CAPACITY ) ) );
+        }
     }
     
     /**
