@@ -60,7 +60,7 @@ public class TestWaterRegionFactory
     @Test
     public void make_water_region_two_bridges()
     {
-        List<WaterRegion> waterRegions = WaterRegionFactory.makeWaterRegion( 0, 0, new Shape[]{ Shape.BRIDGE_UP_RIGHT, Shape.BRIDGE_UP_LEFT } );
+        List<WaterRegion> waterRegions = WaterRegionFactory.makeWaterRegion( 0, 0, new Shape[]{ Shape.BRIDGE_UP_RIGHT, Shape.BRIDGE_UP_LEFT }, false );
 
         List<WaterRegion> expected = Arrays.asList( new WaterRegion( 0, 0, Util.newSet( UP, LEFT, RIGHT, DOWN ), MAX_CAPACITY ) );
         assertThat( waterRegions, equalTo( expected ) );
@@ -72,7 +72,7 @@ public class TestWaterRegionFactory
     @Test
     public void make_water_region_two_ramps()
     {
-        List<WaterRegion> waterRegions = WaterRegionFactory.makeWaterRegion( 0, 0, new Shape[]{ Shape.UP_RIGHT, Shape.UP_LEFT } );
+        List<WaterRegion> waterRegions = WaterRegionFactory.makeWaterRegion( 0, 0, new Shape[]{ Shape.UP_RIGHT, Shape.UP_LEFT }, false );
 
         List<WaterRegion> expected = Arrays.asList( new WaterRegion( 0, 0, Util.newSet( UP ), QUARTER_CAPACITY ) );
         assertThat( waterRegions, equalTo( expected ) );
@@ -84,7 +84,7 @@ public class TestWaterRegionFactory
     @Test
     public void make_water_region_block_and_ramp()
     {
-        List<WaterRegion> waterRegions = WaterRegionFactory.makeWaterRegion( 0, 0, new Shape[]{ Shape.UP_LEFT, Shape.FLAT } );
+        List<WaterRegion> waterRegions = WaterRegionFactory.makeWaterRegion( 0, 0, new Shape[]{ Shape.UP_LEFT, Shape.FLAT }, false );
         assertThat( waterRegions.size(), equalTo( 0 ) );
     }
 
@@ -94,7 +94,7 @@ public class TestWaterRegionFactory
     @Test
     public void make_water_region_bridge_and_ramp()
     {
-        List<WaterRegion> waterRegions = WaterRegionFactory.makeWaterRegion( 0, 0, new Shape[]{ Shape.BRIDGE_UP_LEFT, Shape.UP_LEFT } );
+        List<WaterRegion> waterRegions = WaterRegionFactory.makeWaterRegion( 0, 0, new Shape[]{ Shape.BRIDGE_UP_LEFT, Shape.UP_LEFT }, false );
 
         List<WaterRegion> expected = Arrays.asList( new WaterRegion( 0, 0, Util.newSet( UP, RIGHT ), HALF_CAPACITY ) );
         assertThat( waterRegions, equalTo( expected ) );

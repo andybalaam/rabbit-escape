@@ -32,8 +32,11 @@ public class WaterRegionFactory
                 {
                     shapes[i] = blocks.get( i ).shape;
                 }
-                
-                List<WaterRegion> waterRegions = makeWaterRegion( x, y, shapes );
+
+                boolean outsideWorld = ( x == -1 || x == blockTable.size.width
+                    || y == -1 || y == blockTable.size.height );
+
+                List<WaterRegion> waterRegions = makeWaterRegion( x, y, shapes, outsideWorld );
                 waterTable.addAll( waterRegions );
             }
         }
@@ -41,7 +44,7 @@ public class WaterRegionFactory
     }
     
     /** Create a set of water regions from the given shaped blocks. */
-    public static List<WaterRegion> makeWaterRegion( int x, int y, Shape[] shapes )
+    public static List<WaterRegion> makeWaterRegion( int x, int y, Shape[] shapes, boolean outsideWorld )
     {
         Set<Direction> connections = new HashSet<>(
             Arrays.asList( UP, LEFT, RIGHT, DOWN ) );
@@ -74,7 +77,7 @@ public class WaterRegionFactory
         return Arrays.asList(
             new WaterRegion( x, y,
                 connections,
-                capacity ) );
+                capacity, outsideWorld ) );
     }
 
     private static int findCapacity( Set<Direction> connections )

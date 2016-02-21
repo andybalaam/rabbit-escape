@@ -3,6 +3,7 @@ package rabbitescape.engine;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -12,6 +13,7 @@ import rabbitescape.engine.ChangeDescription.State;
 import rabbitescape.engine.util.LookupItem2D;
 import rabbitescape.engine.util.Position;
 import rabbitescape.engine.util.Util;
+import rabbitescape.engine.util.WaterUtil;
 
 public class WaterRegion extends Thing implements LookupItem2D
 {
@@ -28,18 +30,26 @@ public class WaterRegion extends Thing implements LookupItem2D
     public int contents;
     /** The water being transferred from here this tick. */
     private Map<Direction, Integer> flow = new HashMap<>();
+    /** Does this region need updating? */
+    public final boolean outsideWorld;
 
     public WaterRegion( int x, int y, Set<Direction> connections, int capacity )
     {
-        this( x, y, connections, capacity, 0 );
+        this( x, y, connections, capacity, false );
     }
 
-    public WaterRegion( int x, int y, Set<Direction> connections, int capacity, int contents )
+    public WaterRegion( int x, int y, Set<Direction> connections, int capacity, boolean outsideWorld )
+    {
+        this( x, y, connections, capacity, 0, outsideWorld );
+    }
+
+    public WaterRegion( int x, int y, Set<Direction> connections, int capacity, int contents, boolean outsideWorld )
     {
         super( x, y, State.WATER_REGION );
         this.connections = connections;
         this.capacity = capacity;
         this.contents = contents;
+        this.outsideWorld = outsideWorld;
     }
 
     @Override
@@ -57,6 +67,11 @@ public class WaterRegion extends Thing implements LookupItem2D
     public boolean isConnected( Direction direction )
     {
         return connections.contains( direction );
+    }
+
+    public Iterator<Direction> getConnectionsIterator()
+    {
+        return connections.iterator();
     }
 
     /**
@@ -79,7 +94,12 @@ public class WaterRegion extends Thing implements LookupItem2D
     @Override
     public void calcNewState( World world )
     {
-        // TODO
+        if ( outsideWorld )
+        {
+            return;
+        }
+        Map<Direction, WaterRegion> neighbourhood = WaterUtil
+            .findNeighbourhood( this, world.waterTable );
     }
 
     @Override
