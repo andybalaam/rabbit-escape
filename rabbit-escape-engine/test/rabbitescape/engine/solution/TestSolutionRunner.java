@@ -45,6 +45,7 @@ public class TestSolutionRunner
                 equalTo(
                     "Solution failed: state was RUNNING but we expected LOST"
                     + " at command 1 of solution 3 in baz:\nz."
+                    + "\nTo see: ./runrabbit swing -l baz -s3"
                 )
             );
         }
@@ -77,6 +78,7 @@ public class TestSolutionRunner
                 equalTo(
                     "Solution failed: We expected to win, but the state was"
                     + " RUNNING at command 1 of solution 4 in X:\n."
+                    + "\nTo see: ./runrabbit swing -l X -s4"
                 )
             );
         }
@@ -107,6 +109,7 @@ public class TestSolutionRunner
                     "Solution failed: world has stopped (state: WON) but"
                     + " there are more solution commands"
                     + " at command 3 of solution 5 in <>:\n."
+                    + "\nTo see: ./runrabbit swing -l <> -s5"
                 )
             );
         }
@@ -140,6 +143,7 @@ public class TestSolutionRunner
                 equalTo(
                     "Solution failed: ability 'bash' was used when there"
                     + " were none left at command 4 of solution 6 in foo:\n."
+                    + "\nTo see: ./runrabbit swing -l foo -s6"
                 )
             );
         }
@@ -173,6 +177,7 @@ public class TestSolutionRunner
                     "Solution failed: ability 'bash' was used but this level"
                     + " does not provide it at command 2 of solution 7 in"
                     + " foo:\n."
+                    + "\nTo see: ./runrabbit swing -l foo -s7"
                 )
             );
         }
@@ -207,6 +212,7 @@ public class TestSolutionRunner
                     "Solution failed: placed a token at (10, 0) but the"
                     + " world is only 5x2 in size"
                     + " at command 2 of solution 8 in bar:\n."
+                    + "\nTo see: ./runrabbit swing -l bar -s8"
                 )
             );
         }
@@ -253,6 +259,7 @@ public class TestSolutionRunner
                     "Solution failed: tried to place a bash token at (3, 0) but"
                     + " a block was already there so it did not place"
                     + " at command 4 of solution 9 in bar:\ny\nx."
+                    + "\nTo see: ./runrabbit swing -l bar -s9"
                 )
             );
         }
@@ -286,6 +293,7 @@ public class TestSolutionRunner
                     "Solution failed: the level never finished, but"
                     + " there was an until:WON"
                     + " action at command 1 of solution 10 in qux:\nx\ny."
+                    + "\nTo see: ./runrabbit swing -l qux -s10"
                 )
             );
         }
