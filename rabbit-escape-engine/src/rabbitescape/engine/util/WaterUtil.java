@@ -1,5 +1,6 @@
 package rabbitescape.engine.util;
 
+import static rabbitescape.engine.Direction.*;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -47,5 +48,56 @@ public class WaterUtil
             }
         }
         return neighbourhood;
+    }
+
+    private static int constrain(int n, int minN, int maxN)
+    {
+        if ( n < minN )
+        {
+            return minN;
+        }
+        else if ( n > maxN )
+        {
+            return maxN;
+        }
+        return n;
+    }
+
+    private static int updateFlowDown(
+        Map<Direction, Integer> flow,
+        int contentsHere,
+        Map<Direction, WaterRegion> neighbourhood )
+    {
+        WaterRegion down = neighbourhood.get( DOWN );
+        int flowDown = constrain(down.capacity - down.contents, 0, down.contents);
+        flow.put( DOWN, flow.get( DOWN ) + flowDown );
+        return contentsHere - flowDown;
+    }
+
+    public static Map<Direction, Integer> calculateFlow(
+        Map<Direction, WaterRegion> neighbourhood )
+    {
+        Map<Direction, Integer> flow = new HashMap<>();
+        for ( Direction direction : neighbourhood.keySet() )
+        {
+            flow.put( direction, 0 );
+        }
+        int contentsHere = neighbourhood.get( HERE ).contents;
+
+        contentsHere = updateFlowDown( flow, contentsHere, neighbourhood );
+        if ( contentsHere > 0 )
+        {
+            /*contentsHere = updateFlowAcross( flow, contentsHere, neighbourhood );
+            if ( contentsHere > 0 )
+            {
+                contentsHere = updateFlowHere( flow, contentsHere, neighbourhood );
+                if ( contentsHere > 0 )
+                {
+                    contentsHere = updateFlowUp( flow, contentsHere, neighbourhood );
+                }
+            }*/
+        }
+
+        return flow;
     }
 }

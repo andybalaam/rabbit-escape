@@ -77,7 +77,7 @@ public class WaterRegion extends Thing implements LookupItem2D
     /**
      * Get the amount of water being transferred from here in a given direction
      * this tick.
-     * 
+     *
      * @param direction
      *            The direction of interest.
      * @return The amount of water.
@@ -94,18 +94,38 @@ public class WaterRegion extends Thing implements LookupItem2D
     @Override
     public void calcNewState( World world )
     {
-        if ( outsideWorld )
+        if ( outsideWorld || contents <= 0 )
         {
             return;
         }
         Map<Direction, WaterRegion> neighbourhood = WaterUtil
             .findNeighbourhood( this, world.waterTable );
+        flow = WaterUtil.calculateFlow( neighbourhood );
     }
 
     @Override
     public void step( World world )
     {
-        // TODO
+        if ( flow.size() > 0 )
+        {
+            Map<Direction, WaterRegion> neighbourhood = WaterUtil
+                .findNeighbourhood( this, world.waterTable );
+            for ( Entry<Direction, Integer> entry : flow.entrySet() )
+            {
+                Direction direction = entry.getKey();
+                if ( neighbourhood.keySet().contains( direction ) )
+                {
+                    neighbourhood.get( direction ).contents += entry.getValue();
+                }
+                else
+                {
+                    System.out.println(
+                        "Something went wrong when calculating water moving "
+                            + direction + " from " + this );
+                }
+            }
+            flow = new HashMap<>();
+        }
     }
 
     @Override
