@@ -2,10 +2,10 @@ package rabbitescape.engine;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static rabbitescape.engine.Direction.DOWN;
-import static rabbitescape.engine.Direction.LEFT;
-import static rabbitescape.engine.Direction.RIGHT;
-import static rabbitescape.engine.Direction.UP;
+import static rabbitescape.engine.CellularDirection.DOWN;
+import static rabbitescape.engine.CellularDirection.LEFT;
+import static rabbitescape.engine.CellularDirection.RIGHT;
+import static rabbitescape.engine.CellularDirection.UP;
 
 import java.util.Map;
 

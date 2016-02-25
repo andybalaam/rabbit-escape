@@ -2,11 +2,11 @@ package rabbitescape.engine.util;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static rabbitescape.engine.Direction.DOWN;
-import static rabbitescape.engine.Direction.HERE;
-import static rabbitescape.engine.Direction.LEFT;
-import static rabbitescape.engine.Direction.RIGHT;
-import static rabbitescape.engine.Direction.UP;
+import static rabbitescape.engine.CellularDirection.DOWN;
+import static rabbitescape.engine.CellularDirection.HERE;
+import static rabbitescape.engine.CellularDirection.LEFT;
+import static rabbitescape.engine.CellularDirection.RIGHT;
+import static rabbitescape.engine.CellularDirection.UP;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -15,7 +15,7 @@ import java.util.Map;
 
 import org.junit.Test;
 
-import rabbitescape.engine.Direction;
+import rabbitescape.engine.CellularDirection;
 import rabbitescape.engine.WaterRegion;
 
 public class TestWaterUtil
@@ -27,7 +27,7 @@ public class TestWaterUtil
         WaterRegion region = new WaterRegion( 0, 0, Util.newSet( UP, LEFT, RIGHT, DOWN ), 100 );
         LookupTable2D<WaterRegion> waterTable = new LookupTable2D<>( Arrays.asList( region ), new Dimension( 1, 1 ) );
 
-        Map<Direction, WaterRegion> neighbourhood = WaterUtil.findNeighbourhood( region , waterTable );
+        Map<CellularDirection, WaterRegion> neighbourhood = WaterUtil.findNeighbourhood( region , waterTable );
 
         assertThat( neighbourhood.keySet(), equalTo( Util.newSet( HERE ) ) );
         assertThat( neighbourhood.get( HERE ), equalTo( region ) );
@@ -48,7 +48,7 @@ public class TestWaterUtil
         LookupTable2D<WaterRegion> waterTable = new LookupTable2D<>( allRegions, new Dimension( 1, 1 ) );
         WaterRegion region = waterTable.getItemAt( 0, 0 );
 
-        Map<Direction, WaterRegion> neighbourhood = WaterUtil.findNeighbourhood( region , waterTable );
+        Map<CellularDirection, WaterRegion> neighbourhood = WaterUtil.findNeighbourhood( region , waterTable );
 
         assertThat( neighbourhood.keySet(), equalTo( Util.newSet( UP, LEFT, RIGHT, DOWN, HERE ) ) );
     }
@@ -73,7 +73,7 @@ public class TestWaterUtil
         LookupTable2D<WaterRegion> waterTable = new LookupTable2D<>(
             Arrays.asList( middle, top, left, bottom ), new Dimension( 3, 3 ) );
 
-        Map<Direction, WaterRegion> neighbourhood = WaterUtil.findNeighbourhood( middle , waterTable );
+        Map<CellularDirection, WaterRegion> neighbourhood = WaterUtil.findNeighbourhood( middle , waterTable );
 
         assertThat( neighbourhood.keySet(), equalTo( Util.newSet( LEFT, HERE ) ) );
         assertThat( neighbourhood.get( LEFT ), equalTo( left ) );
@@ -101,7 +101,7 @@ public class TestWaterUtil
         LookupTable2D<WaterRegion> waterTable = new LookupTable2D<>(
             Arrays.asList( region, bottomA, bottomB ), new Dimension( 2, 2 ) );
 
-        Map<Direction, WaterRegion> neighbourhood = WaterUtil.findNeighbourhood( region , waterTable );
+        Map<CellularDirection, WaterRegion> neighbourhood = WaterUtil.findNeighbourhood( region , waterTable );
         assertThat( neighbourhood.keySet(), equalTo( Util.newSet( DOWN, HERE ) ) );
         assertThat( neighbourhood.get( DOWN ), equalTo( bottomA ) );
         assertThat( neighbourhood.get( HERE ), equalTo( region ) );

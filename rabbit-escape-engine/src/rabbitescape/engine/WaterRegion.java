@@ -23,27 +23,27 @@ public class WaterRegion extends Thing implements LookupItem2D
      * in that direction may have no water region, or it may have a region that
      * is not connected to here (e.g. two adjacent left ramps).
      */
-    private Set<Direction> connections;
+    private Set<CellularDirection> connections;
     /** The amount of water that can stay here without being under pressure. */
     public int capacity;
     /** The amount of water stored here. */
     public int contents;
     /** The water being transferred from here this tick. */
-    private Map<Direction, Integer> flow = new HashMap<>();
+    private Map<CellularDirection, Integer> flow = new HashMap<>();
     /** Does this region need updating? */
     public final boolean outsideWorld;
 
-    public WaterRegion( int x, int y, Set<Direction> connections, int capacity )
+    public WaterRegion( int x, int y, Set<CellularDirection> connections, int capacity )
     {
         this( x, y, connections, capacity, false );
     }
 
-    public WaterRegion( int x, int y, Set<Direction> connections, int capacity, boolean outsideWorld )
+    public WaterRegion( int x, int y, Set<CellularDirection> connections, int capacity, boolean outsideWorld )
     {
         this( x, y, connections, capacity, 0, outsideWorld );
     }
 
-    public WaterRegion( int x, int y, Set<Direction> connections, int capacity, int contents, boolean outsideWorld )
+    public WaterRegion( int x, int y, Set<CellularDirection> connections, int capacity, int contents, boolean outsideWorld )
     {
         super( x, y, State.WATER_REGION );
         this.connections = connections;
@@ -64,12 +64,12 @@ public class WaterRegion extends Thing implements LookupItem2D
      * that direction may have no water region, or it may have a region that is
      * not connected to here (e.g. two adjacent left ramps).
      */
-    public boolean isConnected( Direction direction )
+    public boolean isConnected( CellularDirection direction )
     {
         return connections.contains( direction );
     }
 
-    public Iterator<Direction> getConnectionsIterator()
+    public Iterator<CellularDirection> getConnectionsIterator()
     {
         return connections.iterator();
     }
@@ -82,7 +82,7 @@ public class WaterRegion extends Thing implements LookupItem2D
      *            The direction of interest.
      * @return The amount of water.
      */
-    public int getFlow( Direction direction )
+    public int getFlow( CellularDirection direction )
     {
         if ( flow.containsKey( direction ) )
         {
@@ -98,7 +98,7 @@ public class WaterRegion extends Thing implements LookupItem2D
         {
             return;
         }
-        Map<Direction, WaterRegion> neighbourhood = WaterUtil
+        Map<CellularDirection, WaterRegion> neighbourhood = WaterUtil
             .findNeighbourhood( this, world.waterTable );
         flow = WaterUtil.calculateFlow( neighbourhood );
     }
@@ -108,11 +108,11 @@ public class WaterRegion extends Thing implements LookupItem2D
     {
         if ( flow.size() > 0 )
         {
-            Map<Direction, WaterRegion> neighbourhood = WaterUtil
+            Map<CellularDirection, WaterRegion> neighbourhood = WaterUtil
                 .findNeighbourhood( this, world.waterTable );
-            for ( Entry<Direction, Integer> entry : flow.entrySet() )
+            for ( Entry<CellularDirection, Integer> entry : flow.entrySet() )
             {
-                Direction direction = entry.getKey();
+                CellularDirection direction = entry.getKey();
                 if ( neighbourhood.keySet().contains( direction ) )
                 {
                     neighbourhood.get( direction ).contents += entry.getValue();
@@ -136,7 +136,7 @@ public class WaterRegion extends Thing implements LookupItem2D
         BehaviourState.addToStateIfNotDefault( ret, "WaterRegion.capacity", String.valueOf( capacity ), "0" );
         BehaviourState.addToStateIfNotDefault( ret, "WaterRegion.contents", String.valueOf( contents ), "0" );
         List<String> flowBits = new ArrayList<>();
-        for ( Entry<Direction, Integer> entry : flow.entrySet() )
+        for ( Entry<CellularDirection, Integer> entry : flow.entrySet() )
         {
             flowBits.add( entry.getKey().toString() );
             flowBits.add( entry.getValue().toString() );
@@ -151,7 +151,7 @@ public class WaterRegion extends Thing implements LookupItem2D
         connections = new HashSet<>();
         for ( String connection : Util.split( state.get( "WaterRegion.connections" ), "," ) )
         {
-            connections.add( Direction.valueOf( connection ) );
+            connections.add( CellularDirection.valueOf( connection ) );
         }
         capacity = BehaviourState.restoreFromState( state, "WaterRegion.capacity", 0 );
         contents = BehaviourState.restoreFromState( state, "WaterRegion.contents", 0 );
@@ -159,7 +159,7 @@ public class WaterRegion extends Thing implements LookupItem2D
         String[] flowBits = Util.split( state.get( "WaterRegion.flow" ), "," );
         for ( int i : Util.range( flowBits.length / 2 ))
         {
-            Direction direction = Direction.valueOf( flowBits[i * 2] );
+            CellularDirection direction = CellularDirection.valueOf( flowBits[i * 2] );
             Integer amount = Integer.valueOf( flowBits[i * 2 + 1] );
             flow.put( direction, amount );
         }

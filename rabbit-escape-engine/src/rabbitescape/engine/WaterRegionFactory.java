@@ -1,9 +1,9 @@
 package rabbitescape.engine;
 
-import static rabbitescape.engine.Direction.DOWN;
-import static rabbitescape.engine.Direction.LEFT;
-import static rabbitescape.engine.Direction.RIGHT;
-import static rabbitescape.engine.Direction.UP;
+import static rabbitescape.engine.CellularDirection.DOWN;
+import static rabbitescape.engine.CellularDirection.LEFT;
+import static rabbitescape.engine.CellularDirection.RIGHT;
+import static rabbitescape.engine.CellularDirection.UP;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -46,7 +46,7 @@ public class WaterRegionFactory
     /** Create a set of water regions from the given shaped blocks. */
     public static List<WaterRegion> makeWaterRegion( int x, int y, Shape[] shapes, boolean outsideWorld )
     {
-        Set<Direction> connections = new HashSet<>(
+        Set<CellularDirection> connections = new HashSet<>(
             Arrays.asList( UP, LEFT, RIGHT, DOWN ) );
         for ( Shape shape : shapes )
         {
@@ -80,7 +80,7 @@ public class WaterRegionFactory
                 capacity, outsideWorld ) );
     }
 
-    private static int findCapacity( Set<Direction> connections )
+    private static int findCapacity( Set<CellularDirection> connections )
     {
         if ( connections.size() == 4 )
         {

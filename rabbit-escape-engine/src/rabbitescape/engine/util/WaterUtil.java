@@ -1,11 +1,11 @@
 package rabbitescape.engine.util;
 
-import static rabbitescape.engine.Direction.*;
+import static rabbitescape.engine.CellularDirection.*;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
-import rabbitescape.engine.Direction;
+import rabbitescape.engine.CellularDirection;
 import rabbitescape.engine.WaterRegion;
 
 public class WaterUtil
@@ -20,24 +20,24 @@ public class WaterUtil
     public static final int SOURCE_RATE = 50;
 
     /** Find all WaterRegions connected to the current region. */
-    public static Map<Direction, WaterRegion> findNeighbourhood(
+    public static Map<CellularDirection, WaterRegion> findNeighbourhood(
         WaterRegion region,
         LookupTable2D<WaterRegion> waterTable )
     {
         Position position = region.getPosition();
-        Map<Direction, WaterRegion> neighbourhood = new HashMap<>();
-        neighbourhood.put( Direction.HERE, region );
-        Iterator<Direction> connectionsIterator = region
+        Map<CellularDirection, WaterRegion> neighbourhood = new HashMap<>();
+        neighbourhood.put( CellularDirection.HERE, region );
+        Iterator<CellularDirection> connectionsIterator = region
             .getConnectionsIterator();
         while ( connectionsIterator.hasNext() )
         {
-            Direction connection = connectionsIterator.next();
+            CellularDirection connection = connectionsIterator.next();
             Position otherPosition = connection.offset( position );
             for ( WaterRegion otherRegion : waterTable
                 .getItemsAt( otherPosition.x, otherPosition.y ) )
             {
                 if ( otherRegion
-                    .isConnected( Direction.opposite( connection ) ) )
+                    .isConnected( CellularDirection.opposite( connection ) ) )
                 {
                     if ( neighbourhood.containsKey( connection ) )
                     {
@@ -64,9 +64,9 @@ public class WaterUtil
     }
 
     private static int updateFlowDown(
-        Map<Direction, Integer> flow,
+        Map<CellularDirection, Integer> flow,
         int contentsHere,
-        Map<Direction, WaterRegion> neighbourhood )
+        Map<CellularDirection, WaterRegion> neighbourhood )
     {
         WaterRegion down = neighbourhood.get( DOWN );
         int flowDown = constrain(down.capacity - down.contents, 0, down.contents);
@@ -74,11 +74,11 @@ public class WaterUtil
         return contentsHere - flowDown;
     }
 
-    public static Map<Direction, Integer> calculateFlow(
-        Map<Direction, WaterRegion> neighbourhood )
+    public static Map<CellularDirection, Integer> calculateFlow(
+        Map<CellularDirection, WaterRegion> neighbourhood )
     {
-        Map<Direction, Integer> flow = new HashMap<>();
-        for ( Direction direction : neighbourhood.keySet() )
+        Map<CellularDirection, Integer> flow = new HashMap<>();
+        for ( CellularDirection direction : neighbourhood.keySet() )
         {
             flow.put( direction, 0 );
         }
