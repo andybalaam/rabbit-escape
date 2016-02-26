@@ -166,7 +166,7 @@ ifndef MAKECMDGOALS
 MAKECMDGOALS = all
 endif
 
-all: compile
+all: compile android-compile
 
 # Fails if the Makefile contains any warnings
 no-make-warnings:
@@ -319,7 +319,7 @@ test-verbose: compile
 	@# Work around what looks like an Ant 1.9 bug by including the classpath here
 	@CLASSPATH=lib/org.hamcrest.core_1.3.0.jar:lib/junit.jar ant test
 
-slowtest: test slowtest-run
+slowtest: test android-compile slowtest-run
 
 slowtest-run:
 	@echo ". Running system tests"
@@ -366,6 +366,10 @@ android-pre: \
 	android-music \
 	rabbit-escape-ui-android/app/libs/rabbit-escape-generic.jar
 
+android-compile:
+	@echo ". Compiling Android code"
+	@cd rabbit-escape-ui-android && \
+	./gradlew --daemon -q compileDebugSources
 
 android-debug: app/build/outputs/apk/app-debug.apk
 
@@ -386,7 +390,7 @@ dist/rabbit-escape-${VERSION}.apk: android-pre
 	cd rabbit-escape-ui-android && \
 	KEY_STORE_PASSWORD=`cat $(KEY_STORE_PASSWORD_FILE)` \
 	KEY_PASSWORD=`cat $(KEY_PASSWORD_FILE)` \
-	./gradlew assembleRelease && \
+	./gradlew -q assembleRelease && \
 	mv app/build/outputs/apk/app-release.apk ../dist/rabbit-escape-${VERSION}.apk
 
 # Requires sudo apt-get install doxygen graphviz
