@@ -9,7 +9,7 @@ import javax.swing.SwingUtilities;
 
 import rabbitescape.engine.LevelWinListener;
 import rabbitescape.engine.World;
-import rabbitescape.engine.config.Config;
+import rabbitescape.engine.config.ConfigFile;
 import rabbitescape.engine.config.ConfigTools;
 import rabbitescape.engine.util.CommandLineOption;
 import rabbitescape.engine.util.CommandLineOptionSet;
@@ -22,7 +22,7 @@ import rabbitescape.render.SingleGameEntryPoint;
 public class SwingSingleGameEntryPoint extends SingleGameEntryPoint
 {
     private final BitmapCache<SwingBitmap> bitmapCache;
-    private final Config uiConfig;
+    private final ConfigFile uiConfig;
     private final MainJFrame frame;
     private final SwingSound sound;
     private final MenuUi menuUi;
@@ -34,7 +34,7 @@ public class SwingSingleGameEntryPoint extends SingleGameEntryPoint
         PrintStream out,
         Locale locale,
         BitmapCache<SwingBitmap> bitmapCache,
-        Config uiConfig,
+        ConfigFile uiConfig,
         MainJFrame frame,
         SwingSound sound,
         MenuUi menuUi,
@@ -96,7 +96,7 @@ public class SwingSingleGameEntryPoint extends SingleGameEntryPoint
     private static void go( String[] fileName, int solutionIndex, boolean frameDumping )
     {
 
-        Config cfg = SwingConfigSetup.createConfig();
+        ConfigFile cfg = SwingConfigSetup.createConfig();
 
         SwingSound sound = new SwingSound(
             ConfigTools.getBool( cfg, CFG_MUTED ) );

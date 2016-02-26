@@ -76,39 +76,39 @@ public class ConfigTools
         }
     }
 
-    public static void setInt( IConfig config, String key, int value )
+    public static void setInt( IConfigStorage config, String key, int value )
     {
         config.set( key, String.valueOf( value ) );
     }
 
-    public static int getInt( IConfig config, String key )
+    public static int getInt( IConfigStorage config, String key )
     {
         return Integer.parseInt( config.get( key ) );
     }
 
-    public static void setBool( IConfig config, String key, boolean value )
+    public static void setBool( IConfigStorage config, String key, boolean value )
     {
         config.set( key, String.valueOf( value ) );
     }
 
-    public static boolean getBool( IConfig config, String key )
+    public static boolean getBool( IConfigStorage config, String key )
     {
         return Boolean.parseBoolean( config.get( key ) );
     }
 
-    public static void setString( IConfig config, String key, String value )
+    public static void setString( IConfigStorage config, String key, String value )
     {
         config.set( key, value );
     }
 
-    public static String getString( IConfig config, String key )
+    public static String getString( IConfigStorage config, String key )
     {
         return config.get(  key );
     }
 
     // TODO: break into separate class file
     public static <T> Map<String, T> getMap(
-        IConfig cfg, String configKey, Class<T> clazz )
+        IConfigStorage cfg, String configKey, Class<T> clazz )
     {
         final int open_bracket = 0;
         final int comma_or_close_bracket = 1;
@@ -296,7 +296,7 @@ public class ConfigTools
     }
 
     public static <T> void setMap(
-        IConfig cfg, String key, Map<String, T> value )
+        IConfigStorage cfg, String key, Map<String, T> value )
     {
         StringBuilder val = new StringBuilder();
         val.append( '{' );

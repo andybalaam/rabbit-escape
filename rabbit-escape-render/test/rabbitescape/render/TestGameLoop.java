@@ -7,7 +7,7 @@ import java.io.PrintStream;
 
 import org.junit.*;
 import rabbitescape.engine.*;
-import rabbitescape.engine.config.IConfig;
+import rabbitescape.engine.config.IConfigStorage;
 import rabbitescape.engine.textworld.Comment;
 import rabbitescape.engine.textworld.TextWorldManip;
 import rabbitescape.render.gameloop.*;
@@ -126,7 +126,7 @@ public class TestGameLoop
             false
         );
 
-        IConfig config = new FakeConfig();
+        IConfigStorage config = new FakeConfig();
         PrintStream debugout = null;
 
         ret.gameLoop = new GameLoop(
@@ -246,7 +246,7 @@ public class TestGameLoop
         }
     }
 
-    private static class FakeConfig implements IConfig
+    private static class FakeConfig implements IConfigStorage
     {
         @Override
         public void set( String key, String value )

@@ -7,7 +7,7 @@ import java.util.Locale;
 
 import javax.swing.SwingUtilities;
 
-import rabbitescape.engine.config.Config;
+import rabbitescape.engine.config.ConfigFile;
 import rabbitescape.engine.config.ConfigTools;
 import rabbitescape.engine.i18n.Translation;
 import rabbitescape.engine.util.RealFileSystem;
@@ -19,7 +19,7 @@ public class SwingMain
     private final PrintStream out;
     private final Locale locale;
     private final BitmapCache<SwingBitmap> bitmapCache;
-    private final Config uiConfig;
+    private final ConfigFile uiConfig;
     private final SwingSound sound;
 
     public SwingMain(
@@ -27,7 +27,7 @@ public class SwingMain
         PrintStream out,
         Locale locale,
         BitmapCache<SwingBitmap> bitmapCache,
-        Config uiConfig,
+        ConfigFile uiConfig,
         SwingSound sound
     )
     {
@@ -49,7 +49,7 @@ public class SwingMain
 
         Locale locale = Locale.getDefault();
         Translation.init( locale );
-        Config config = SwingConfigSetup.createConfig();
+        ConfigFile config = SwingConfigSetup.createConfig();
 
         SwingSound sound = new SwingSound(
             ConfigTools.getBool( config, CFG_MUTED ) );

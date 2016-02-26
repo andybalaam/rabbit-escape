@@ -10,14 +10,14 @@ import static rabbitescape.engine.util.Util.*;
 
 import org.junit.Test;
 
-import rabbitescape.engine.config.Config.Definition;
+import rabbitescape.engine.config.ConfigFile.Definition;
 
 public class TestConfigTools
 {
     @Test
     public void Can_get_and_set_ints()
     {
-        Config cfg = new Config( TestConfig.simpleDefinition(), null, null );
+        ConfigFile cfg = new ConfigFile( TestConfigFile.simpleDefinition(), null, null );
 
         ConfigTools.setInt( cfg, "key1", 3 );
 
@@ -27,9 +27,9 @@ public class TestConfigTools
     @Test
     public void Default_that_looks_like_an_int_can_be_treated_as_one()
     {
-        Definition definition = new Config.Definition();
+        Definition definition = new ConfigFile.Definition();
         definition.set( "num", "45", "" );
-        Config cfg = new Config( definition, null, null );
+        ConfigFile cfg = new ConfigFile( definition, null, null );
 
         assertThat( ConfigTools.getInt( cfg, "num" ), is( 45 ) );
     }
@@ -37,11 +37,11 @@ public class TestConfigTools
     @Test
     public void Can_get_and_set_bools()
     {
-        Config.Definition def = new Config.Definition();
+        ConfigFile.Definition def = new ConfigFile.Definition();
         def.set( "key1", "true", "desc1" );
         def.set( "key2", "false", "desc2" );
 
-        Config cfg = new Config( def, null, null );
+        ConfigFile cfg = new ConfigFile( def, null, null );
 
         assertThat( ConfigTools.getBool( cfg, "key1" ), is( true ) );
         assertThat( ConfigTools.getBool( cfg, "key2" ), is( false ) );
@@ -55,9 +55,9 @@ public class TestConfigTools
     public void Can_get_and_set_maps_of_string()
     {
         // Make a config with default map with 1 key
-        Config.Definition def = new Config.Definition();
+        ConfigFile.Definition def = new ConfigFile.Definition();
         def.set( "key1", "{\"a\":\"b\"}", "desc1" );
-        Config cfg = new Config( def, null, null );
+        ConfigFile cfg = new ConfigFile( def, null, null );
 
         // Get the map value out
         assertThat(
@@ -89,9 +89,9 @@ public class TestConfigTools
     public void Can_get_empty_map()
     {
         // Make a config with default map with 1 key
-        Config.Definition def = new Config.Definition();
+        ConfigFile.Definition def = new ConfigFile.Definition();
         def.set( "key1", "{}", "desc1" );
-        Config cfg = new Config( def, null, null );
+        ConfigFile cfg = new ConfigFile( def, null, null );
 
         // We get an empty map of the type we ask for
         assertThat(
@@ -110,9 +110,9 @@ public class TestConfigTools
     public void Can_get_and_set_maps_of_int()
     {
         // Make a config with default map with 1 key
-        Config.Definition def = new Config.Definition();
+        ConfigFile.Definition def = new ConfigFile.Definition();
         def.set( "key1", "{\"a\":3}", "desc1" );
-        Config cfg = new Config( def, null, null );
+        ConfigFile cfg = new ConfigFile( def, null, null );
 
         // Get the map value out
         assertThat(

@@ -1,6 +1,6 @@
 package rabbitescape.ui.swing;
 
-import rabbitescape.engine.config.Config;
+import rabbitescape.engine.config.ConfigFile;
 import rabbitescape.render.BitmapCache;
 
 public class SwingGameInit implements Runnable
@@ -54,13 +54,13 @@ public class SwingGameInit implements Runnable
     private WhenUiReady whenUiReady = null;
 
     private final BitmapCache<SwingBitmap> bitmapCache;
-    private final Config uiConfig;
+    private final ConfigFile uiConfig;
     public final MainJFrame frame;
     private final MenuUi menuUi;
 
     public SwingGameInit(
         BitmapCache<SwingBitmap> bitmapCache,
-        Config uiConfig,
+        ConfigFile uiConfig,
         MainJFrame frame,
         MenuUi menuUi
     )

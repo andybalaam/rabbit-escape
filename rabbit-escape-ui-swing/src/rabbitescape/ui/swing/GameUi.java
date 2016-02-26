@@ -25,7 +25,7 @@ import javax.swing.JScrollBar;
 import javax.swing.KeyStroke;
 
 import rabbitescape.engine.Token;
-import rabbitescape.engine.config.Config;
+import rabbitescape.engine.config.ConfigFile;
 import rabbitescape.engine.config.ConfigTools;
 import rabbitescape.engine.config.TapTimer;
 import rabbitescape.engine.solution.SelectAction;
@@ -193,7 +193,7 @@ public class GameUi implements StatsChangedListener
     private final Dimension buttonSizeInPixels;
     public Dimension worldSizeInPixels;
     private int worldTileSizeInPixels;
-    private final Config uiConfig;
+    private final ConfigFile uiConfig;
     private final BitmapCache<SwingBitmap> bitmapCache;
     private final MainJFrame frame;
     private final MenuUi menuUi;
@@ -215,7 +215,7 @@ public class GameUi implements StatsChangedListener
     public int zoomIndex;
 
     public GameUi(
-        Config uiConfig,
+        ConfigFile uiConfig,
         BitmapCache<SwingBitmap> bitmapCache,
         MainJFrame frame,
         MenuUi menuUi

@@ -8,7 +8,7 @@ import java.util.List;
 
 import org.junit.*;
 
-import rabbitescape.engine.config.IConfig;
+import rabbitescape.engine.config.IConfigStorage;
 
 public class TestConfigBasedLevelsCompleted
 {
@@ -78,7 +78,7 @@ public class TestConfigBasedLevelsCompleted
 
     // ---
 
-    private static class FakeConfig implements IConfig
+    private static class FakeConfig implements IConfigStorage
     {
         private final String getAnswer;
         public final List<String> log;

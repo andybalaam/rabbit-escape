@@ -11,7 +11,7 @@ import java.util.TreeSet;
 import rabbitescape.engine.err.RabbitEscapeException;
 import rabbitescape.engine.util.FileSystem;
 
-public class Config implements IConfig
+public class ConfigFile implements IConfigStorage
 {
     public static class UnknownKey extends RabbitEscapeException
     {
@@ -94,7 +94,7 @@ public class Config implements IConfig
     private final FileSystem fs;
     private final String filePath;
 
-    public Config( Definition definition, FileSystem fs, String filePath )
+    public ConfigFile( Definition definition, FileSystem fs, String filePath )
     {
         this.definition = definition;
         this.fs = fs;

@@ -37,7 +37,7 @@ import rabbitescape.engine.CompletedLevelWinListener;
 import rabbitescape.engine.IgnoreLevelWinListener;
 import rabbitescape.engine.LevelWinListener;
 import rabbitescape.engine.MultiLevelWinListener;
-import rabbitescape.engine.config.Config;
+import rabbitescape.engine.config.ConfigFile;
 import rabbitescape.engine.config.ConfigKeys;
 import rabbitescape.engine.config.ConfigTools;
 import rabbitescape.engine.err.RabbitEscapeException;
@@ -141,7 +141,7 @@ public class MenuUi
     private final BitmapCache<SwingBitmap> bitmapCache;
 
     private final Stack<Menu> stack;
-    private final Config uiConfig;
+    private final ConfigFile uiConfig;
     private final MainJFrame frame;
     private final SwingSound sound;
 
@@ -154,7 +154,7 @@ public class MenuUi
         PrintStream out,
         Locale locale,
         BitmapCache<SwingBitmap> bitmapCache,
-        Config uiConfig,
+        ConfigFile uiConfig,
         MainJFrame frame,
         SwingSound sound
     )

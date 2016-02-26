@@ -12,7 +12,7 @@ import static rabbitescape.engine.i18n.Translation.t;
 import rabbitescape.engine.LevelWinListener;
 import rabbitescape.engine.Token;
 import rabbitescape.engine.World;
-import rabbitescape.engine.config.IConfig;
+import rabbitescape.engine.config.IConfigStorage;
 import rabbitescape.engine.solution.PlaceTokenAction;
 import rabbitescape.engine.solution.Solution;
 import rabbitescape.engine.solution.SolutionInterpreter;
@@ -76,7 +76,7 @@ public class SwingGameLaunch implements GameLaunch
         World world,
         LevelWinListener winListener,
         SwingSound sound,
-        IConfig config,
+        IConfigStorage config,
         PrintStream debugout,
         int solutionIndex,
         boolean frameDumping

@@ -4,7 +4,7 @@ import static rabbitescape.engine.config.ConfigKeys.*;
 
 import javax.swing.JFileChooser;
 
-import rabbitescape.engine.config.Config;
+import rabbitescape.engine.config.ConfigFile;
 import rabbitescape.engine.util.RealFileSystem;
 
 public class SwingConfigSetup
@@ -24,9 +24,9 @@ public class SwingConfigSetup
     public static final String DEPRECATED_CFG_MENU_WINDOW_HEIGHT = "menu.window.height";
     public static final String CFG_MUTED = "muted";
 
-    public static Config createConfig()
+    public static ConfigFile createConfig()
     {
-        Config.Definition definition = new Config.Definition();
+        ConfigFile.Definition definition = new ConfigFile.Definition();
 
         definition.set(
             DEPRECATED_CFG_MENU_WINDOW_LEFT,
@@ -99,6 +99,6 @@ public class SwingConfigSetup
             "Rabbit states are printed to System.out."
         );
 
-        return new Config( definition, new RealFileSystem(), CONFIG_PATH );
+        return new ConfigFile( definition, new RealFileSystem(), CONFIG_PATH );
     }
 }

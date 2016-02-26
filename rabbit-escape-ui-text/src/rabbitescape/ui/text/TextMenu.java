@@ -9,7 +9,7 @@ import static rabbitescape.engine.i18n.Translation.*;
 import rabbitescape.engine.CompletedLevelWinListener;
 import rabbitescape.engine.LevelWinListener;
 import rabbitescape.engine.MultiLevelWinListener;
-import rabbitescape.engine.config.Config;
+import rabbitescape.engine.config.ConfigFile;
 import rabbitescape.engine.err.RabbitEscapeException;
 import rabbitescape.engine.menu.AboutText;
 import rabbitescape.engine.menu.ConfigBasedLevelsCompleted;
@@ -52,7 +52,7 @@ public class TextMenu
     private final LevelsCompleted levelsCompleted;
     private final Stack<Menu> stack = new Stack<Menu>();
 
-    public TextMenu( FileSystem fs, Terminal terminal, Config config )
+    public TextMenu( FileSystem fs, Terminal terminal, ConfigFile config )
     {
         this.fs = fs;
         this.terminal = terminal;
