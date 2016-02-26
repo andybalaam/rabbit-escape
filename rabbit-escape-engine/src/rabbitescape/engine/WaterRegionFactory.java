@@ -26,23 +26,33 @@ public class WaterRegionFactory
         {
             for ( int y = -1; y <= blockTable.size.height; y++ )
             {
-                List<Block> blocks = blockTable.getItemsAt( x, y );
-                Shape[] shapes = new Shape[blocks.size()];
-                for ( int i = 0; i < blocks.size(); i++ )
-                {
-                    shapes[i] = blocks.get( i ).shape;
-                }
-
-                boolean outsideWorld = ( x == -1 || x == blockTable.size.width
-                    || y == -1 || y == blockTable.size.height );
-
-                List<WaterRegion> waterRegions = makeWaterRegion( x, y, shapes, outsideWorld );
-                waterTable.addAll( waterRegions );
+                createWaterRegionsAtPoint( blockTable, waterTable, x, y );
             }
         }
         return waterTable;
     }
-    
+
+    /** Create water regions at a given point based on a 2D table of blocks. */
+    public static void createWaterRegionsAtPoint(
+        LookupTable2D<Block> blockTable,
+        LookupTable2D<WaterRegion> waterTable,
+        int x,
+        int y )
+    {
+        List<Block> blocks = blockTable.getItemsAt( x, y );
+        Shape[] shapes = new Shape[blocks.size()];
+        for ( int i = 0; i < blocks.size(); i++ )
+        {
+            shapes[i] = blocks.get( i ).shape;
+        }
+
+        boolean outsideWorld = ( x == -1 || x == blockTable.size.width
+            || y == -1 || y == blockTable.size.height );
+
+        List<WaterRegion> waterRegions = makeWaterRegion( x, y, shapes, outsideWorld );
+        waterTable.addAll( waterRegions );
+    }
+
     /** Create a set of water regions from the given shaped blocks. */
     public static List<WaterRegion> makeWaterRegion( int x, int y, Shape[] shapes, boolean outsideWorld )
     {

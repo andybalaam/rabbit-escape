@@ -126,6 +126,11 @@ public class LookupTable2D <T extends LookupItem2D> implements Iterable<T>
         }
     }
 
+    public void removeItemsAt( int x, int y )
+    {
+        removeAll( getItemsAt( x, y ) );
+    }
+
     public List<T> getListCopy()
     {
         return new ArrayList<T>( list );
