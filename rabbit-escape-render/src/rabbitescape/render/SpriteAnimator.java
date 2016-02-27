@@ -72,6 +72,11 @@ public class SpriteAnimator
             }
         }
 
+        for ( WaterRegion waterRegion : world.waterTable )
+        {
+            addThing( frameNum, waterRegion, null, ret );
+        }
+
         for ( Rabbit rabbit : world.rabbits )
         {
             addThing( frameNum, rabbit, null, ret );

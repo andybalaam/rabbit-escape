@@ -2,7 +2,6 @@ package rabbitescape.render;
 
 import java.net.URL;
 
-import org.junit.Ignore;
 import org.junit.Test;
 
 import static org.hamcrest.CoreMatchers.*;
@@ -12,9 +11,7 @@ import rabbitescape.render.AnimationLoader;
 
 public class TestAnimations
 {
-    // TODO Re-enable this test once there are animations.
     @Test
-    @Ignore
     public void States_must_have_animations_and_frames_must_have_images()
     {
         for ( State s: State.values() )

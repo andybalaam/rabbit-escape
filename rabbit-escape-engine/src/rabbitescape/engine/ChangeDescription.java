@@ -35,6 +35,9 @@ public class ChangeDescription
         FIRE_D_FALLING,
         FIRE_D_FALL_TO_RISE_LEFT,
         FIRE_D_FALL_TO_RISE_RIGHT,
+
+        PIPE,
+
         RABBIT_BURNING,
         RABBIT_BURNING_ON_SLOPE,
         RABBIT_WALKING_LEFT,
