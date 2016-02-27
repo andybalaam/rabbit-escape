@@ -206,6 +206,9 @@ public class ChangeDescription
         TOKEN_BROLLY_ON_SLOPE,
 
         WATER_REGION,
+        WATER_REGION_HALF,
+        WATER_REGION_EMPTY,
+        WATER_REGION_FALLING,
 
         ENTRANCE,
         EXIT,

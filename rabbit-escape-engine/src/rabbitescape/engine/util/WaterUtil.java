@@ -69,7 +69,12 @@ public class WaterUtil
         Map<CellularDirection, WaterRegion> neighbourhood )
     {
         WaterRegion down = neighbourhood.get( DOWN );
-        int flowDown = constrain(down.capacity - down.contents, 0, down.contents);
+        // TODO Refactor this later
+        if ( down == null )
+        {
+            return 0;
+        }
+        int flowDown = constrain( down.capacity - down.getContents(), 0, contentsHere );
         flow.put( DOWN, flow.get( DOWN ) + flowDown );
         return contentsHere - flowDown;
     }
@@ -82,7 +87,7 @@ public class WaterUtil
         {
             flow.put( direction, 0 );
         }
-        int contentsHere = neighbourhood.get( HERE ).contents;
+        int contentsHere = neighbourhood.get( HERE ).getContents();
 
         contentsHere = updateFlowDown( flow, contentsHere, neighbourhood );
         if ( contentsHere > 0 )

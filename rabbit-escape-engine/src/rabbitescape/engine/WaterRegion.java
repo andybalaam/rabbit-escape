@@ -27,7 +27,7 @@ public class WaterRegion extends Thing implements LookupItem2D
     /** The amount of water that can stay here without being under pressure. */
     public int capacity;
     /** The amount of water stored here. */
-    public int contents;
+    private int contents;
     /** The water being transferred from here this tick. */
     private Map<CellularDirection, Integer> flow = new HashMap<>();
     /** Does this region need updating? */
@@ -45,7 +45,7 @@ public class WaterRegion extends Thing implements LookupItem2D
 
     public WaterRegion( int x, int y, Set<CellularDirection> connections, int capacity, int contents, boolean outsideWorld )
     {
-        super( x, y, State.WATER_REGION );
+        super( x, y, State.WATER_REGION_EMPTY );
         this.connections = connections;
         this.capacity = capacity;
         this.contents = contents;
@@ -56,6 +56,33 @@ public class WaterRegion extends Thing implements LookupItem2D
     public Position getPosition()
     {
         return new Position( x, y );
+    }
+
+    public int getContents()
+    {
+        return contents;
+    }
+
+    public void setContents( int contents )
+    {
+        this.contents = contents;
+        if (contents == 0)
+        {
+            state = State.WATER_REGION_EMPTY;
+        }
+        else if (contents < capacity)
+        {
+            state = State.WATER_REGION_HALF;
+        }
+        else
+        {
+            state = State.WATER_REGION;
+        }
+    }
+
+    public void addContents( int delta )
+    {
+        setContents( contents + delta );
     }
 
     /**
@@ -115,7 +142,8 @@ public class WaterRegion extends Thing implements LookupItem2D
                 CellularDirection direction = entry.getKey();
                 if ( neighbourhood.keySet().contains( direction ) )
                 {
-                    neighbourhood.get( direction ).contents += entry.getValue();
+                    neighbourhood.get( direction ).addContents( entry.getValue() );
+                    setContents( contents - entry.getValue() );
                 }
                 else
                 {

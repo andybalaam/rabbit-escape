@@ -19,7 +19,7 @@ public class TestWaterRegion
     public void round_trip_persistance()
     {
         WaterRegion start = new WaterRegion( 0, 0, Util.newSet( UP, LEFT, RIGHT, DOWN ), 25 );
-        start.contents += 10;
+        start.addContents( 10 );
 
         Map<String, String> persisted = start.saveState();
         WaterRegion end = new WaterRegion( 0, 0, null, 0 );

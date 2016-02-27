@@ -29,7 +29,7 @@ public class Pipe extends Thing
         WaterRegion waterRegion = world.waterTable.getItemAt( x, y );
         if ( waterRegion != null )
         {
-            waterRegion.contents += rate;
+            waterRegion.addContents( rate );
         }
     }
 
