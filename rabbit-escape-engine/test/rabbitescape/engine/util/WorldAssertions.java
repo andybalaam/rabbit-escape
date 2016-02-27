@@ -75,6 +75,7 @@ public class WorldAssertions
             switch ( c )
             {
                 case 'r': return 'j';    case 'j': return 'r';
+                case 't': return 'y';    case 'y': return 't';
                 case '/': return '\\';   case '\\': return '/';
                 case '(': return ')';    case ')': return '(';
                 case '<': return '>';    case '>': return '<';

@@ -173,7 +173,7 @@ public class ChangeDescription
         RABBIT_BLOCKING_RISE_LEFT,
         RABBIT_OUT_OF_BOUNDS,
         RABBIT_EXPLODING,
-
+        RABBIT_CRASHING,
         TOKEN_BASH_STILL,
         TOKEN_BASH_FALLING,
         TOKEN_BASH_FALL_TO_SLOPE,

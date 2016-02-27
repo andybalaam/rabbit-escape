@@ -285,6 +285,9 @@ public class ChangeRenderer
             case RABBIT_DROWNING:
                 chars.set( change.x, change.y, 'R' );
                 break;
+            case RABBIT_CRASHING:
+                chars.set( change.x, change.y, 'Z' );
+                break;
             case RABBIT_OUT_OF_BOUNDS:
                 break;
             case TOKEN_BASH_STILL:
