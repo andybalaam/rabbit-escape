@@ -366,7 +366,7 @@ android-pre: \
 	android-music \
 	rabbit-escape-ui-android/app/libs/rabbit-escape-generic.jar
 
-android-compile:
+android-compile: android-pre
 	@echo ". Compiling Android code"
 	@cd rabbit-escape-ui-android && \
 	./gradlew --daemon -q compileDebugSources
