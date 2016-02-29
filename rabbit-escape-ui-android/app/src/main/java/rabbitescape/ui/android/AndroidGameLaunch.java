@@ -6,7 +6,7 @@ import android.os.Bundle;
 import rabbitescape.engine.LevelWinListener;
 import rabbitescape.engine.Token;
 import rabbitescape.engine.World;
-import rabbitescape.engine.config.IConfigStorage;
+import rabbitescape.engine.config.Config;
 import rabbitescape.render.BitmapCache;
 import rabbitescape.render.SoundPlayer;
 import rabbitescape.render.gameloop.GameLoop;
@@ -137,9 +137,19 @@ public class AndroidGameLaunch implements Runnable
     /**
      * A Config with no keys set - this will disable debug output
      * from the GameLoop.
+     *
+     * TODO: overrides a concrete class - instead we should make a
+     *       real Config instance, based on a ConfigSchema that allows
+     *       what GameLoop needs, and an IConfigStorage that returns
+     *       hard-coded values.
      */
-    private static class NoKeysConfig implements IConfigStorage
+    private static class NoKeysConfig extends Config
     {
+        public NoKeysConfig()
+        {
+            super( null, null );
+        }
+
         @Override
         public void set( String s, String s2 )
         {

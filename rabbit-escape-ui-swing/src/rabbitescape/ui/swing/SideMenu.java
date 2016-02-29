@@ -16,7 +16,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JToggleButton;
 
-import rabbitescape.engine.config.ConfigFile;
+import rabbitescape.engine.config.Config;
 import rabbitescape.engine.config.ConfigTools;
 import rabbitescape.render.BitmapCache;
 
@@ -38,7 +38,7 @@ class SideMenu
         Container contentPane,
         BitmapCache<SwingBitmap> bitmapCache,
         Dimension buttonSizeInPixels,
-        ConfigFile uiConfig,
+        Config uiConfig,
         Color backgroundColor
     )
     {

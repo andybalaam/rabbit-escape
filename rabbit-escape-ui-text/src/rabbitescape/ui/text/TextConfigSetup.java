@@ -2,6 +2,7 @@ package rabbitescape.ui.text;
 
 import static rabbitescape.engine.config.ConfigKeys.*;
 
+import rabbitescape.engine.config.Config;
 import rabbitescape.engine.config.ConfigFile;
 import rabbitescape.engine.config.ConfigSchema;
 import rabbitescape.engine.util.RealFileSystem;
@@ -12,7 +13,7 @@ public class TextConfigSetup
         "~/.rabbitescape/config/text.properties"
             .replace( "~", System.getProperty( "user.home" ) );
 
-    public static ConfigFile createConfig()
+    public static Config createConfig()
     {
         ConfigSchema definition = new ConfigSchema();
 
@@ -28,6 +29,7 @@ public class TextConfigSetup
             "Rabbit states are printed to System.out."
         );
 
-        return new ConfigFile( definition, new RealFileSystem(), CONFIG_PATH );
+        return new Config(
+            definition, new ConfigFile( new RealFileSystem(), CONFIG_PATH ) );
     }
 }

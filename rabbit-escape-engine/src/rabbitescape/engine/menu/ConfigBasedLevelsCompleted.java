@@ -4,15 +4,15 @@ import static rabbitescape.engine.config.ConfigKeys.*;
 
 import java.util.Map;
 
+import rabbitescape.engine.config.Config;
 import rabbitescape.engine.config.ConfigTools;
-import rabbitescape.engine.config.IConfigStorage;
 import rabbitescape.engine.config.TapTimer;
 
 public class ConfigBasedLevelsCompleted implements LevelsCompleted
 {
-    private final IConfigStorage config;
+    private final Config config;
 
-    public ConfigBasedLevelsCompleted( IConfigStorage config )
+    public ConfigBasedLevelsCompleted( Config config )
     {
         this.config = config;
     }

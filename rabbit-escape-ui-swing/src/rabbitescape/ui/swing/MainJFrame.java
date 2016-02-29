@@ -8,7 +8,7 @@ import java.awt.event.WindowEvent;
 
 import javax.swing.JFrame;
 
-import rabbitescape.engine.config.ConfigFile;
+import rabbitescape.engine.config.Config;
 import rabbitescape.engine.config.ConfigTools;
 
 public class MainJFrame extends JFrame
@@ -56,10 +56,10 @@ public class MainJFrame extends JFrame
         }
     }
 
-    private final ConfigFile uiConfig;
+    private final Config uiConfig;
     private final SwingSound sound;
 
-    public MainJFrame( ConfigFile uiConfig, SwingSound sound )
+    public MainJFrame( Config uiConfig, SwingSound sound )
     {
         this.uiConfig = uiConfig;
         this.sound = sound;

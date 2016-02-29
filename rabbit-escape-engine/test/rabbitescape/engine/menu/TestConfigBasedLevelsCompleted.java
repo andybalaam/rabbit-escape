@@ -8,7 +8,7 @@ import java.util.List;
 
 import org.junit.*;
 
-import rabbitescape.engine.config.IConfigStorage;
+import rabbitescape.engine.config.Config;
 
 public class TestConfigBasedLevelsCompleted
 {
@@ -76,17 +76,26 @@ public class TestConfigBasedLevelsCompleted
         assertThat( fakeConfig.log.size(), equalTo( 3 ) );
     }
 
+    @Test
+    public void Characters_stripped_from_set_names()
+    {
+        assertThat( ConfigBasedLevelsCompleted.stripNumber_( "01_easy" ),
+            equalTo( "easy" ) );
+    }
+
     // ---
 
-    private static class FakeConfig implements IConfigStorage
+    private static class FakeConfig extends Config
     {
         private final String getAnswer;
         public final List<String> log;
 
         public FakeConfig( String getAnswer )
         {
+            super( null, null );
+
             this.getAnswer = getAnswer;
-            log = new ArrayList<String>();
+            this.log = new ArrayList<String>();
         }
 
         @Override

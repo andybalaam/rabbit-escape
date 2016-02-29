@@ -2,6 +2,7 @@ package rabbitescape.ui.swing;
 
 import static rabbitescape.engine.util.Util.*;
 
+import rabbitescape.engine.config.Config;
 import rabbitescape.engine.config.ConfigFile;
 import rabbitescape.engine.config.ConfigTools;
 import rabbitescape.engine.config.ConfigSchema;
@@ -266,8 +267,8 @@ public class AnimationTester extends JFrame
     boolean running;
 
     private final java.awt.Canvas canvas;
-    private final ConfigFile atConfig;
-    private SwingPaint paint;
+    private final Config atConfig;
+    private final SwingPaint paint;
     private final BitmapCache<SwingBitmap> bitmapCache;
     private final AnimationCache animationCache;
     private final String[] allBlocks = new String[]
@@ -343,7 +344,7 @@ public class AnimationTester extends JFrame
         }
     }
 
-    public AnimationTester( ConfigFile atConfig )
+    public AnimationTester( Config atConfig )
     {
         this.atConfig = atConfig;
         this.tileSize = ConfigTools.getInt( atConfig, CFG_AT_TILE_SIZE );
@@ -721,7 +722,7 @@ public class AnimationTester extends JFrame
         }
     }
 
-    private static ConfigFile createConfig()
+    private static Config createConfig()
     {
         ConfigSchema definition = new ConfigSchema();
 
@@ -756,7 +757,8 @@ public class AnimationTester extends JFrame
             "The blocks selected to play in the animation tester"
         );
 
-        return new ConfigFile( definition, new RealFileSystem(), CONFIG_PATH );
+        return new Config(
+            definition, new ConfigFile( new RealFileSystem(), CONFIG_PATH ) );
     }
 
     private static String animationsToConfigString( String[][] animations )

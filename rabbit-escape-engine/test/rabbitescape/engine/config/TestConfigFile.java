@@ -5,49 +5,23 @@ import static org.hamcrest.CoreMatchers.*;
 
 import org.junit.Test;
 
-import rabbitescape.engine.menu.ConfigBasedLevelsCompleted;
 import rabbitescape.engine.util.FakeFileSystem;
 
 public class TestConfigFile
 {
     @Test
-    public void Loading_from_nonexistent_file_provides_default_values()
-    {
-        ConfigFile cfg = new ConfigFile( simpleDefinition(), null, null );
-
-        assertThat( cfg.get( "key1" ), equalTo( "defaultValue1" ) );
-        assertThat( cfg.get( "key2" ), equalTo( "defaultValue2" ) );
-    }
-
-    @Test
     public void You_get_back_the_value_you_set()
     {
-        ConfigFile cfg = new ConfigFile( simpleDefinition(), null, null );
+        ConfigFile cfg = new ConfigFile( null, null );
 
         // Sanity
-        assertThat( cfg.get( "key1" ), equalTo( "defaultValue1" ) );
+        assertThat( cfg.get( "key1" ), is( nullValue() ) );
 
         // This is what we are testing
         cfg.set( "key1", "setValue1" );
 
         // What you set stuck
         assertThat( cfg.get( "key1" ), equalTo( "setValue1" ) );
-    }
-
-    @Test( expected = ConfigFile.UnknownKey.class )
-    public void Getting_unknown_config_key_is_an_error()
-    {
-        ConfigFile cfg = new ConfigFile( simpleDefinition(), null, null );
-
-        cfg.get( "unknownkey" );
-    }
-
-    @Test( expected = ConfigFile.UnknownKey.class )
-    public void Setting_unknown_config_key_is_an_error()
-    {
-        ConfigFile cfg = new ConfigFile( simpleDefinition(), null, null );
-
-        cfg.set( "unknownkey", "val" );
     }
 
     @Test
@@ -63,29 +37,30 @@ public class TestConfigFile
             }
         );
 
-        ConfigFile cfg = new ConfigFile( simpleDefinition(), fs, fileName );
+        ConfigFile cfg = new ConfigFile( fs, fileName );
 
         assertThat( cfg.get( "key1" ), equalTo( "my value 1" ) );
-        assertThat( cfg.get( "key2" ), equalTo( "defaultValue2" ) );
+        assertThat( cfg.get( "key2" ), is( nullValue() ) );
         assertThat( cfg.get( "key3" ), equalTo( "my value 3" ) );
     }
 
 
     @Test
-    public void Saving_saves_values_and_adds_comments() throws Exception
+    public void Saving_saves_values_and_defaults_and_adds_comments()
+        throws Exception
     {
         String fileName = "~/.rabbitescape/config/ui.properties";
 
         FakeFileSystem fs = new FakeFileSystem();
 
-        ConfigFile cfg = new ConfigFile( simpleDefinition(), fs, fileName );
+        ConfigFile cfg = new ConfigFile( fs, fileName );
         cfg.set( "key2", "my value 2" );
 
         // Sanity
         assertThat( fs.exists( "~/.rabbitescape/config" ), is( false ) );
         assertThat( fs.exists( fileName ), is( false ) );
 
-        cfg.save();
+        cfg.save( new Config( TestConfig.simpleSchema(), cfg ) );
 
         assertThat( fs.exists( "~" ), is( true ) );
         assertThat( fs.exists( "~/.rabbitescape" ), is( true ) );
@@ -106,23 +81,5 @@ public class TestConfigFile
                 }
             )
         );
-    }
-
-    @Test
-    public void Characters_stripped_from_set_names()
-    {
-        assertThat( ConfigBasedLevelsCompleted.stripNumber_( "01_easy" ),
-            equalTo( "easy" ) );
-    }
-
-    // --
-
-    public static ConfigSchema simpleDefinition()
-    {
-        ConfigSchema def = new ConfigSchema();
-        def.set( "key1", "defaultValue1", "desc1" );
-        def.set( "key2", "defaultValue2", "desc2" );
-        def.set( "key3", "defaultValue3", "desc3" );
-        return def;
     }
 }

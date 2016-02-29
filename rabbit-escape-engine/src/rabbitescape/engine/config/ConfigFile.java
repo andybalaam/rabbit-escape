@@ -6,25 +6,18 @@ import java.io.StringWriter;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
-import java.util.TreeSet;
+import java.util.SortedSet;
 
 import rabbitescape.engine.err.RabbitEscapeException;
 import rabbitescape.engine.util.FileSystem;
 
+/**
+ * Don't use this directly - wrap it in a Config object.
+ *
+ * Stores and retrieves config values to/from a file.
+ */
 public class ConfigFile implements IConfigStorage
 {
-    public static class UnknownKey extends RabbitEscapeException
-    {
-        private static final long serialVersionUID = 1L;
-
-        public final String key;
-
-        public UnknownKey( String key )
-        {
-            this.key = key;
-        }
-    }
-
     public static class UnableToLoad extends RabbitEscapeException
     {
         private static final long serialVersionUID = 1L;
@@ -51,14 +44,12 @@ public class ConfigFile implements IConfigStorage
         }
     }
 
-    private final ConfigSchema definition;
     private final Map<String, String> values;
     private final FileSystem fs;
     private final String filePath;
 
-    public ConfigFile( ConfigSchema definition, FileSystem fs, String filePath )
+    public ConfigFile( FileSystem fs, String filePath )
     {
-        this.definition = definition;
         this.fs = fs;
         this.filePath = filePath;
         this.values = new HashMap<>();
@@ -92,35 +83,22 @@ public class ConfigFile implements IConfigStorage
     @Override
     public void set( String key, String value )
     {
-        definition.checkKeyExists( key ); // Check the key exists
-        if ( ! get( key ).equals( value ) )
-        {
-            values.put( key, value );
-        }
+        values.put( key, value );
     }
 
     @Override
     public String get( String key )
     {
-        String ret = values.get( key );
-
-        if ( ret == null )
-        {
-            return definition.getDefault( key );
-        }
-        else
-        {
-            return ret;
-        }
+        return values.get( key );
     }
 
     @Override
-    public void save()
+    public void save( Config config )
     {
         try
         {
             fs.mkdirs( fs.parent( filePath ) );
-            fs.write( filePath, toString() );
+            fs.write( filePath, saveToString( config ) );
         }
         catch ( IOException e )
         {
@@ -128,17 +106,15 @@ public class ConfigFile implements IConfigStorage
         }
     }
 
-    @Override
-    public String toString()
+    private String saveToString( Config config )
     {
         StringBuilder ret = new StringBuilder();
 
         // Tree set for sorting
-        TreeSet<String> keys = new TreeSet<>(
-            definition.defaults.keySet() );
+        SortedSet<String> keys = config.keys();
 
         boolean first = true;
-        for ( String key: keys )
+        for ( String key : keys )
         {
             if ( first )
             {
@@ -150,23 +126,23 @@ public class ConfigFile implements IConfigStorage
             }
 
             ret.append( "# " );
-            ret.append( definition.getDescription( key ) );
+            ret.append( config.schema.getDescription( key ) );
             ret.append( "\n" );
             if ( ! values.containsKey( key ) )
             {
                 ret.append( '#' );
             }
-            ret.append( propertyLine( key ) );
+            ret.append( propertyLine( config, key ) );
             ret.append( "\n" );
         }
 
         return ret.toString();
     }
 
-    private String propertyLine( String key )
+    private String propertyLine(  Config config, String key )
     {
         Properties props = new Properties();
-        props.setProperty( key, get( key ) );
+        props.setProperty( key, config.get( key ) );
         StringWriter writer = new StringWriter();
         try
         {

@@ -3,9 +3,9 @@ package rabbitescape.render.gameloop;
 import java.io.PrintStream;
 
 import rabbitescape.engine.Rabbit;
+import rabbitescape.engine.config.Config;
 import rabbitescape.engine.config.ConfigKeys;
 import rabbitescape.engine.config.ConfigTools;
-import rabbitescape.engine.config.IConfigStorage;
 
 public class GameLoop
 {
@@ -18,14 +18,14 @@ public class GameLoop
     private long simulation_time;
     private long frame_start_time;
 
-    private final IConfigStorage config;
+    private final Config config;
     private final PrintStream debugout;
 
     public GameLoop(
         Input input,
         Physics physics,
         Graphics graphics,
-        IConfigStorage config,
+        Config config,
         PrintStream debugout
     )
     {

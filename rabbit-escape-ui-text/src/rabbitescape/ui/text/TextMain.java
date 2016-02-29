@@ -3,7 +3,7 @@ package rabbitescape.ui.text;
 import rabbitescape.engine.IgnoreWorldStatsListener;
 import rabbitescape.engine.LoadWorldFile;
 import rabbitescape.engine.World;
-import rabbitescape.engine.config.ConfigFile;
+import rabbitescape.engine.config.Config;
 import static rabbitescape.engine.i18n.Translation.*;
 import rabbitescape.engine.i18n.Translation;
 import rabbitescape.engine.textworld.TextWorldManip;
@@ -20,7 +20,7 @@ public class TextMain
 {
     private final TextMenu textMenu;
 
-    public TextMain( FileSystem fs, Terminal terminal, ConfigFile config )
+    public TextMain( FileSystem fs, Terminal terminal, Config config )
     {
         this.textMenu = new TextMenu( fs, terminal, config );
     }

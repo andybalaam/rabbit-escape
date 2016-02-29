@@ -3,8 +3,6 @@ package rabbitescape.engine.config;
 import java.util.HashMap;
 import java.util.Map;
 
-import rabbitescape.engine.config.ConfigFile.UnknownKey;
-
 public class ConfigSchema
 {
     public final Map<String, String> defaults = new HashMap<>();
@@ -22,7 +20,7 @@ public class ConfigSchema
         String ret = defaults.get( key );
         if ( ret == null )
         {
-            throw new UnknownKey( key );
+            throw new Config.UnknownKey( key );
         }
         return ret;
     }
@@ -37,7 +35,7 @@ public class ConfigSchema
         String ret = descriptions.get( key );
         if ( ret == null )
         {
-            throw new UnknownKey( key );
+            throw new Config.UnknownKey( key );
         }
         return ret;
     }
