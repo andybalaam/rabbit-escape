@@ -1,11 +1,11 @@
 package rabbitescape.ui.android;
 
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.SurfaceHolder;
 
 import rabbitescape.engine.LevelWinListener;
 import rabbitescape.engine.World;
+import rabbitescape.engine.config.Config;
 import rabbitescape.render.BitmapCache;
 
 public class Game
@@ -15,7 +15,7 @@ public class Game
 
     public Game(
         BitmapCache<AndroidBitmap> bitmapCache,
-        Resources resources,
+        Config config,
         World world,
         LevelWinListener winListener,
         Bundle savedInstanceState
@@ -23,7 +23,7 @@ public class Game
     {
         gameLaunch = new AndroidGameLaunch(
             bitmapCache,
-            resources,
+            config,
             world,
             winListener,
             savedInstanceState

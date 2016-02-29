@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.View;
 
+import rabbitescape.engine.config.Config;
 import rabbitescape.render.androidutil.Lifecycle2SoundEvents;
 import rabbitescape.ui.android.sound.AndroidSound;
 
@@ -21,6 +22,7 @@ public abstract class RabbitEscapeActivity extends ActionBarActivity
     public static final String PREFS_MUTED = "rabbitescape.muted";
 
     private SharedPreferences prefs;
+    private Config config;
     private boolean muted;
     private NoisyReceiver noisyReceiver;
 
@@ -44,6 +46,7 @@ public abstract class RabbitEscapeActivity extends ActionBarActivity
         super.onCreate( savedInstanceState );
         soundEvents.onCreate( this );
 
+        config = AndroidConfigSetup.createConfig( this );
         prefs = getSharedPreferences( "rabbitescape", MODE_PRIVATE );
     }
 
@@ -93,6 +96,11 @@ public abstract class RabbitEscapeActivity extends ActionBarActivity
     public SharedPreferences getPrefs()
     {
         return prefs;
+    }
+
+    public Config getConfig()
+    {
+        return config;
     }
 
     public void onMuteClicked( View view )

@@ -83,7 +83,7 @@ public class AndroidGameActivity extends RabbitEscapeActivity
 
         game = new Game(
             SingletonBitmapCache.instance( resources ),
-            resources,
+            getConfig(),
             world,
             winListener,
             savedInstanceState

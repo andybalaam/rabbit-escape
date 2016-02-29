@@ -1,6 +1,5 @@
 package rabbitescape.ui.android;
 
-import android.content.res.Resources;
 import android.os.Bundle;
 
 import rabbitescape.engine.LevelWinListener;
@@ -22,7 +21,7 @@ public class AndroidGameLaunch implements Runnable
     private static final String STATE_SCROLL_Y = "rabbitescape.scrolly";
     public static final String STATE_FAST_PRESSED = "rabbitescape.fast_pressed";
 
-    // Transient state
+    private final Config config;
     public final GeneralPhysics physics;
     public final AndroidGraphics graphics;
     public final SoundPlayer soundPlayer;
@@ -34,13 +33,14 @@ public class AndroidGameLaunch implements Runnable
 
     public AndroidGameLaunch(
         BitmapCache<AndroidBitmap> bitmapCache,
-        Resources resources,
+        Config config,
         World world,
         LevelWinListener winListener,
         Bundle savedInstanceState
     )
     {
         this.soundPlayer = new SoundPlayer( Globals.sound );
+        this.config = config;
 
         int scrollX;
         int scrollY;
@@ -125,45 +125,11 @@ public class AndroidGameLaunch implements Runnable
 
     public void readyToRun()
     {
-        this.loop = new GameLoop(
-            input, physics, graphics, new NoKeysConfig(), null );
+        this.loop = new GameLoop( input, physics, graphics, config, null );
     }
 
     public void scrollBy( float x, float y )
     {
         graphics.scrollBy( x, y );
-    }
-
-    /**
-     * A Config with no keys set - this will disable debug output
-     * from the GameLoop.
-     *
-     * TODO: overrides a concrete class - instead we should make a
-     *       real Config instance, based on a ConfigSchema that allows
-     *       what GameLoop needs, and an IConfigStorage that returns
-     *       hard-coded values.
-     */
-    private static class NoKeysConfig extends Config
-    {
-        public NoKeysConfig()
-        {
-            super( null, null );
-        }
-
-        @Override
-        public void set( String s, String s2 )
-        {
-        }
-
-        @Override
-        public String get( String s )
-        {
-            return null;
-        }
-
-        @Override
-        public void save()
-        {
-        }
     }
 }
