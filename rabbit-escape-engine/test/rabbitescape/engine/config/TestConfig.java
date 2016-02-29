@@ -3,6 +3,9 @@ package rabbitescape.engine.config;
 import static org.hamcrest.MatcherAssert.*;
 import static org.hamcrest.CoreMatchers.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.Test;
 
 import rabbitescape.engine.util.Util;
@@ -65,12 +68,82 @@ public class TestConfig
     @Test
     public void Iterating_through_keys_lists_all()
     {
-        Config cfg = new Config( simpleSchema(), null );
+        Config cfg = new Config( simpleSchema(), new EmptyConfigStorage() );
 
         assertThat(
             Util.join( ", ", cfg.keys() ),
             equalTo( "key1, key2, key3" )
         );
+    }
+
+    @Test
+    public void No_version_info_means_version_0()
+    {
+        Config cfg = new Config( simpleSchema(), new EmptyConfigStorage() );
+
+        assertThat( cfg.version(), equalTo( 0 ) );
+    }
+
+    @Test
+    public void Stored_version_info_gets_read()
+    {
+        MemoryConfigStorage storage = new MemoryConfigStorage();
+        storage.set( "config.version", "12" );
+        Config cfg = new Config( simpleSchema(), storage );
+
+        assertThat( cfg.version(), equalTo( 12 ) );
+    }
+
+    @Test
+    public void When_no_existing_version_all_supplied_upgrades_are_run()
+    {
+        List<String> log = new ArrayList<String>();
+        FakeConfigUpgrade to1 = new FakeConfigUpgrade( "1", log );
+        FakeConfigUpgrade to2 = new FakeConfigUpgrade( "2", log );
+        FakeConfigUpgrade to3 = new FakeConfigUpgrade( "3", log );
+
+        new Config( simpleSchema(), new MemoryConfigStorage(), to1, to2, to3 );
+
+        assertThat( Util.join( "", log ), equalTo( "123" ) );
+    }
+
+    @Test
+    public void When_no_existing_version_and_no_upgrades_everything_is_ok()
+    {
+        new Config( simpleSchema(), new MemoryConfigStorage() );
+    }
+
+    @Test
+    public void When_existing_version_set_all_subsequent_upgrades_are_run()
+    {
+        List<String> log = new ArrayList<String>();
+        FakeConfigUpgrade to1 = new FakeConfigUpgrade( "1", log );
+        FakeConfigUpgrade to2 = new FakeConfigUpgrade( "2", log );
+        FakeConfigUpgrade to3 = new FakeConfigUpgrade( "3", log );
+        FakeConfigUpgrade to4 = new FakeConfigUpgrade( "4", log );
+
+        MemoryConfigStorage storage = new MemoryConfigStorage();
+        storage.set( "config.version", "2" );
+
+        new Config( simpleSchema(), storage, to1, to2, to3, to4 );
+
+        assertThat( Util.join( "", log ), equalTo( "34" ) );
+    }
+
+    @Test
+    public void When_version_is_up_to_date_no_upgrades_are_run()
+    {
+        List<String> log = new ArrayList<String>();
+        FakeConfigUpgrade to1 = new FakeConfigUpgrade( "1", log );
+        FakeConfigUpgrade to2 = new FakeConfigUpgrade( "2", log );
+        FakeConfigUpgrade to3 = new FakeConfigUpgrade( "3", log );
+
+        MemoryConfigStorage storage = new MemoryConfigStorage();
+        storage.set( "config.version", "3" );
+
+        new Config( simpleSchema(), storage, to1, to2, to3 );
+
+        assertThat( Util.join( "", log ), equalTo( "" ) );
     }
 
     // --
@@ -84,7 +157,7 @@ public class TestConfig
         return def;
     }
 
-    private static class EmptyConfigStorage implements IConfigStorage
+    public static class EmptyConfigStorage implements IConfigStorage
     {
         @Override
         public void set( String key, String value )
@@ -118,13 +191,32 @@ public class TestConfig
         @Override
         public String get( String key )
         {
-            throw new UnsupportedOperationException();
+            return null;
         }
 
         @Override
         public void save( Config config )
         {
             savedConfig = config;
+        }
+    }
+
+    private static class FakeConfigUpgrade implements IConfigUpgrade
+    {
+        private final String newVersion;
+        private final List<String> log;
+
+        public FakeConfigUpgrade( String newVersion, List<String> log )
+        {
+            this.newVersion = newVersion;
+            this.log = log;
+        }
+
+        @Override
+        public void run( IConfigStorage storage )
+        {
+            storage.set( "config.version", newVersion );
+            log.add( newVersion );
         }
     }
 }

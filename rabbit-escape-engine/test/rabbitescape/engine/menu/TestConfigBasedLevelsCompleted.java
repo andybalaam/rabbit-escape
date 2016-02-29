@@ -9,6 +9,7 @@ import java.util.List;
 import org.junit.*;
 
 import rabbitescape.engine.config.Config;
+import rabbitescape.engine.config.TestConfig;
 
 public class TestConfigBasedLevelsCompleted
 {
@@ -92,7 +93,7 @@ public class TestConfigBasedLevelsCompleted
 
         public FakeConfig( String getAnswer )
         {
-            super( null, null );
+            super( null, new TestConfig.EmptyConfigStorage() );
 
             this.getAnswer = getAnswer;
             this.log = new ArrayList<String>();

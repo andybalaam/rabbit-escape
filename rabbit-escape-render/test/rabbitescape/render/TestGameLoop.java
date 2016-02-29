@@ -8,6 +8,7 @@ import java.io.PrintStream;
 import org.junit.*;
 import rabbitescape.engine.*;
 import rabbitescape.engine.config.Config;
+import rabbitescape.engine.config.MemoryConfigStorage;
 import rabbitescape.engine.textworld.Comment;
 import rabbitescape.engine.textworld.TextWorldManip;
 import rabbitescape.render.gameloop.*;
@@ -126,7 +127,7 @@ public class TestGameLoop
             false
         );
 
-        Config config = new Config( null, null );
+        Config config = new Config( null, new MemoryConfigStorage() );
         PrintStream debugout = null;
 
         ret.gameLoop = new GameLoop(
