@@ -5,6 +5,7 @@ import static rabbitescape.engine.config.ConfigKeys.*;
 import javax.swing.JFileChooser;
 
 import rabbitescape.engine.config.ConfigFile;
+import rabbitescape.engine.config.ConfigSchema;
 import rabbitescape.engine.util.RealFileSystem;
 
 public class SwingConfigSetup
@@ -26,7 +27,7 @@ public class SwingConfigSetup
 
     public static ConfigFile createConfig()
     {
-        ConfigFile.Definition definition = new ConfigFile.Definition();
+        ConfigSchema definition = new ConfigSchema();
 
         definition.set(
             DEPRECATED_CFG_MENU_WINDOW_LEFT,

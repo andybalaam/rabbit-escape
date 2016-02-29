@@ -10,7 +10,6 @@ import static rabbitescape.engine.util.Util.*;
 
 import org.junit.Test;
 
-import rabbitescape.engine.config.ConfigFile.Definition;
 
 public class TestConfigTools
 {
@@ -27,7 +26,7 @@ public class TestConfigTools
     @Test
     public void Default_that_looks_like_an_int_can_be_treated_as_one()
     {
-        Definition definition = new ConfigFile.Definition();
+        ConfigSchema definition = new ConfigSchema();
         definition.set( "num", "45", "" );
         ConfigFile cfg = new ConfigFile( definition, null, null );
 
@@ -37,7 +36,7 @@ public class TestConfigTools
     @Test
     public void Can_get_and_set_bools()
     {
-        ConfigFile.Definition def = new ConfigFile.Definition();
+        ConfigSchema def = new ConfigSchema();
         def.set( "key1", "true", "desc1" );
         def.set( "key2", "false", "desc2" );
 
@@ -55,7 +54,7 @@ public class TestConfigTools
     public void Can_get_and_set_maps_of_string()
     {
         // Make a config with default map with 1 key
-        ConfigFile.Definition def = new ConfigFile.Definition();
+        ConfigSchema def = new ConfigSchema();
         def.set( "key1", "{\"a\":\"b\"}", "desc1" );
         ConfigFile cfg = new ConfigFile( def, null, null );
 
@@ -89,7 +88,7 @@ public class TestConfigTools
     public void Can_get_empty_map()
     {
         // Make a config with default map with 1 key
-        ConfigFile.Definition def = new ConfigFile.Definition();
+        ConfigSchema def = new ConfigSchema();
         def.set( "key1", "{}", "desc1" );
         ConfigFile cfg = new ConfigFile( def, null, null );
 
@@ -110,7 +109,7 @@ public class TestConfigTools
     public void Can_get_and_set_maps_of_int()
     {
         // Make a config with default map with 1 key
-        ConfigFile.Definition def = new ConfigFile.Definition();
+        ConfigSchema def = new ConfigSchema();
         def.set( "key1", "{\"a\":3}", "desc1" );
         ConfigFile cfg = new ConfigFile( def, null, null );
 

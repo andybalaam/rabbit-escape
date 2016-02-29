@@ -51,50 +51,12 @@ public class ConfigFile implements IConfigStorage
         }
     }
 
-    public static class Definition
-    {
-        private final Map<String, String> defaults = new HashMap<>();
-
-        private final Map<String, String> descriptions = new HashMap<>();
-
-        public void set( String key, String defaultValue, String description )
-        {
-            defaults.put( key, defaultValue );
-            descriptions.put( key, description );
-        }
-
-        public String getDefault( String key )
-        {
-            String ret = defaults.get( key );
-            if ( ret == null )
-            {
-                throw new UnknownKey( key );
-            }
-            return ret;
-        }
-
-        public void checkKeyExists( String key )
-        {
-            getDefault( key );
-        }
-
-        public String getDescription( String key )
-        {
-            String ret = descriptions.get( key );
-            if ( ret == null )
-            {
-                throw new UnknownKey( key );
-            }
-            return ret;
-        }
-    }
-
-    private final Definition definition;
+    private final ConfigSchema definition;
     private final Map<String, String> values;
     private final FileSystem fs;
     private final String filePath;
 
-    public ConfigFile( Definition definition, FileSystem fs, String filePath )
+    public ConfigFile( ConfigSchema definition, FileSystem fs, String filePath )
     {
         this.definition = definition;
         this.fs = fs;

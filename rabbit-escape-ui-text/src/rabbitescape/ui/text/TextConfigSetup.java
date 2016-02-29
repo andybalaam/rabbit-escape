@@ -3,6 +3,7 @@ package rabbitescape.ui.text;
 import static rabbitescape.engine.config.ConfigKeys.*;
 
 import rabbitescape.engine.config.ConfigFile;
+import rabbitescape.engine.config.ConfigSchema;
 import rabbitescape.engine.util.RealFileSystem;
 
 public class TextConfigSetup
@@ -13,7 +14,7 @@ public class TextConfigSetup
 
     public static ConfigFile createConfig()
     {
-        ConfigFile.Definition definition = new ConfigFile.Definition();
+        ConfigSchema definition = new ConfigSchema();
 
         definition.set(
             CFG_LEVELS_COMPLETED,

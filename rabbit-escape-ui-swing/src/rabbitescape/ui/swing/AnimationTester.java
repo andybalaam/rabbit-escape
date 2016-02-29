@@ -4,6 +4,7 @@ import static rabbitescape.engine.util.Util.*;
 
 import rabbitescape.engine.config.ConfigFile;
 import rabbitescape.engine.config.ConfigTools;
+import rabbitescape.engine.config.ConfigSchema;
 import rabbitescape.engine.util.RealFileSystem;
 import rabbitescape.engine.util.Util;
 import rabbitescape.render.*;
@@ -722,7 +723,7 @@ public class AnimationTester extends JFrame
 
     private static ConfigFile createConfig()
     {
-        ConfigFile.Definition definition = new ConfigFile.Definition();
+        ConfigSchema definition = new ConfigSchema();
 
         definition.set(
             CFG_AT_WINDOW_LEFT,

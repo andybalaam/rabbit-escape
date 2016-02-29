@@ -117,9 +117,9 @@ public class TestConfigFile
 
     // --
 
-    public static ConfigFile.Definition simpleDefinition()
+    public static ConfigSchema simpleDefinition()
     {
-        ConfigFile.Definition def = new ConfigFile.Definition();
+        ConfigSchema def = new ConfigSchema();
         def.set( "key1", "defaultValue1", "desc1" );
         def.set( "key2", "defaultValue2", "desc2" );
         def.set( "key3", "defaultValue3", "desc3" );
