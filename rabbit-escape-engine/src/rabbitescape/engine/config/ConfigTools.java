@@ -298,6 +298,11 @@ public class ConfigTools
     public static <T> void setMap(
         Config cfg, String key, Map<String, T> value )
     {
+        cfg.set( key, mapToString( value ) );
+    }
+
+    public static <T> String mapToString( Map<String, T> value )
+    {
         StringBuilder val = new StringBuilder();
         val.append( '{' );
 
@@ -329,6 +334,6 @@ public class ConfigTools
 
         val.append( '}' );
 
-        cfg.set( key, val.toString() );
+        return val.toString();
     }
 }
