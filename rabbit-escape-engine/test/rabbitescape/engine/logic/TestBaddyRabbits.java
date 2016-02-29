@@ -23,4 +23,21 @@ public class TestBaddyRabbits
             "#####"
         );
     }
+    @Test
+    public void If_a_baddy_rabbit_gets_a_bridging_token_it_still_explodes()
+    {
+        assertWorldEvolvesLike(
+            "ti j" + "\n" +
+            "####",
+
+            " <B " + "\n" +
+            "####",
+
+            " Z  " + "\n" +
+            "####",
+
+            "    " + "\n" +
+            "####"
+        );
+    }
 }
