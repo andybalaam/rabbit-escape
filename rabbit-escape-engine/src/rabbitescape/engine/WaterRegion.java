@@ -140,16 +140,23 @@ public class WaterRegion extends Thing implements LookupItem2D
             for ( Entry<CellularDirection, Integer> entry : flow.entrySet() )
             {
                 CellularDirection direction = entry.getKey();
-                if ( neighbourhood.keySet().contains( direction ) )
+                if ( entry.getValue() > 0 )
                 {
-                    neighbourhood.get( direction ).addContents( entry.getValue() );
-                    setContents( contents - entry.getValue() );
-                }
-                else
-                {
-                    System.out.println(
-                        "Something went wrong when calculating water moving "
-                            + direction + " from " + this );
+                    if ( neighbourhood.keySet().contains( direction ) )
+                    {
+                        WaterRegion neighbour = neighbourhood.get( direction );
+                        if ( !neighbour.outsideWorld )
+                        {
+                            neighbour.addContents( entry.getValue() );
+                        }
+                        setContents( contents - entry.getValue() );
+                    }
+                    else
+                    {
+                        System.out.println(
+                            "Something went wrong when calculating water moving "
+                                + direction + " from " + this );
+                    }
                 }
             }
             flow = new HashMap<>();
