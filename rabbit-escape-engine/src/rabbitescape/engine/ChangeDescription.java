@@ -35,6 +35,7 @@ public class ChangeDescription
         FIRE_D_FALLING,
         FIRE_D_FALL_TO_RISE_LEFT,
         FIRE_D_FALL_TO_RISE_RIGHT,
+        FIRE_EXTINGUISHING,
 
         PIPE,
 
