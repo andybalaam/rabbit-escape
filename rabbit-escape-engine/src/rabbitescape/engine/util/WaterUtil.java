@@ -19,13 +19,13 @@ import rabbitescape.engine.WaterRegion;
 public class WaterUtil
 {
     /** The maximum capacity of water that can be held in a quarter empty tile without it overflowing. */
-    public static final int QUARTER_CAPACITY = 25;
+    public static final int QUARTER_CAPACITY = 256;
     /** The maximum capacity of water that can be held in a half empty tile without it overflowing. */
     public static final int HALF_CAPACITY = QUARTER_CAPACITY * 2;
     /** The maximum capacity of water that can be held in an empty tile without it overflowing. */
     public static final int MAX_CAPACITY = HALF_CAPACITY * 2;
     /** The default rate at which pipes produce water. */
-    public static final int SOURCE_RATE = 50;
+    public static final int SOURCE_RATE = 512;
     /** A cell can hold 1/COMPRESSION_FACTOR extra if the cell above is full (assuming both have same capacity). */
     private static final int COMPRESSION_FACTOR = 4;
     /** A magic constant for encouraging water to flow upwards. */
