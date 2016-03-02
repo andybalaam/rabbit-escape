@@ -5,8 +5,11 @@ import static rabbitescape.engine.CellularDirection.HERE;
 import static rabbitescape.engine.CellularDirection.LEFT;
 import static rabbitescape.engine.CellularDirection.RIGHT;
 import static rabbitescape.engine.CellularDirection.UP;
+import static rabbitescape.engine.util.MathUtil.constrain;
+import static rabbitescape.engine.util.MathUtil.max;
+import static rabbitescape.engine.util.MathUtil.min;
+import static rabbitescape.engine.util.MathUtil.sum;
 
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -63,39 +66,6 @@ public class WaterUtil
             }
         }
         return neighbourhood;
-    }
-
-    private static int sum( Collection<Integer> values )
-    {
-        int total = 0;
-        for ( int value : values )
-        {
-            total += value;
-        }
-        return total;
-    }
-
-    private static int min( int a, int b )
-    {
-        return ( a < b ? a : b );
-    }
-
-    private static int max( int a, int b )
-    {
-        return ( a > b ? a : b );
-    }
-
-    private static int constrain( int n, int minN, int maxN )
-    {
-        if ( n < minN )
-        {
-            return minN;
-        }
-        else if ( n > maxN )
-        {
-            return maxN;
-        }
-        return n;
     }
 
     /** Update the flow given some contents to split between some directions in ratio with the capacities. */
