@@ -190,13 +190,10 @@ public class WaterUtil
         if ( contentsHere > 0 )
         {
             contentsHere = updateFlowAcross( flow, contentsHere, neighbourhood );
+            contentsHere = updateFlowHere( flow, contentsHere, neighbourhood );
             if ( contentsHere > 0 )
             {
-                contentsHere = updateFlowHere( flow, contentsHere, neighbourhood );
-                if ( contentsHere > 0 )
-                {
-                    contentsHere = updateFlowUp( flow, contentsHere, neighbourhood );
-                }
+                contentsHere = updateFlowUp( flow, contentsHere, neighbourhood );
             }
         }
 

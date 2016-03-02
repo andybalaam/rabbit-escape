@@ -10,6 +10,7 @@ import static rabbitescape.engine.CellularDirection.UP;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -105,5 +106,108 @@ public class TestWaterUtil
         assertThat( neighbourhood.keySet(), equalTo( Util.newSet( DOWN, HERE ) ) );
         assertThat( neighbourhood.get( DOWN ), equalTo( bottomA ) );
         assertThat( neighbourhood.get( HERE ), equalTo( region ) );
+    }
+
+    @Test
+    public void water_falls_down_if_space_below()
+    {
+        Map<CellularDirection, WaterRegion> neighbourhood = new HashMap<>();
+        neighbourhood.put( HERE, new WaterRegion( 0, 0, null, 100, 100, false ) );
+        neighbourhood.put( DOWN, new WaterRegion( 0, 0, null, 100, 0, false ) );
+
+        Map<CellularDirection, Integer> flow = WaterUtil.calculateFlow( neighbourhood  );
+
+        assertThat( flow.get( DOWN ), equalTo( 100 ) );
+    }
+
+    @Test
+    public void water_stays_if_no_space_below()
+    {
+        Map<CellularDirection, WaterRegion> neighbourhood = new HashMap<>();
+        neighbourhood.put( HERE, new WaterRegion( 0, 0, null, 100, 100, false ) );
+        neighbourhood.put( DOWN, new WaterRegion( 0, 0, null, 100, 100, false ) );
+
+        Map<CellularDirection, Integer> flow = WaterUtil.calculateFlow( neighbourhood  );
+
+        assertThat( "A small amount of water should fall due to compression.",
+            flow.get( DOWN ), equalTo( 20 ) );
+    }
+
+    @Test
+    public void water_spreads_on_a_surface()
+    {
+        Map<CellularDirection, WaterRegion> neighbourhood = new HashMap<>();
+        neighbourhood.put( HERE, new WaterRegion( 0, 0, null, 100, 100, false ) );
+        neighbourhood.put( LEFT, new WaterRegion( 0, 0, null, 100, 0, false ) );
+        neighbourhood.put( RIGHT, new WaterRegion( 0, 0, null, 100, 0, false ) );
+
+        Map<CellularDirection, Integer> flow = WaterUtil.calculateFlow( neighbourhood  );
+
+        assertThat( "No water should fall as there's no region there.",
+            flow.get( DOWN ), equalTo( 0 ) );
+        assertThat( flow.get( LEFT ), equalTo( 33 ) );
+        assertThat( flow.get( RIGHT ), equalTo( 33 ) );
+    }
+
+    @Test
+    public void water_spreads_according_to_existing_contents()
+    {
+        Map<CellularDirection, WaterRegion> neighbourhood = new HashMap<>();
+        neighbourhood.put( HERE, new WaterRegion( 0, 0, null, 100, 6, false ) );
+        neighbourhood.put( LEFT, new WaterRegion( 0, 0, null, 100, 2, false ) );
+        neighbourhood.put( RIGHT, new WaterRegion( 0, 0, null, 100, 1, false ) );
+
+        Map<CellularDirection, Integer> flow = WaterUtil.calculateFlow( neighbourhood  );
+
+        // To balance the three cells we need to end up with 3 units in each cell.
+        assertThat( flow.get( LEFT ), equalTo( 1 ) );
+        assertThat( flow.get( RIGHT ), equalTo( 2 ) );
+    }
+
+    @Test
+    public void water_doesnt_spread_if_neighbours_are_fuller()
+    {
+        Map<CellularDirection, WaterRegion> neighbourhood = new HashMap<>();
+        neighbourhood.put( HERE, new WaterRegion( 0, 0, null, 100, 99, false ) );
+        neighbourhood.put( LEFT, new WaterRegion( 0, 0, null, 100, 101, false ) );
+        neighbourhood.put( RIGHT, new WaterRegion( 0, 0, null, 100, 100, false ) );
+
+        Map<CellularDirection, Integer> flow = WaterUtil.calculateFlow( neighbourhood  );
+
+        // To balance the three cells we need to end up with 3 units in each cell.
+        assertThat( flow.get( LEFT ), equalTo( 0 ) );
+        assertThat( flow.get( RIGHT ), equalTo( 0 ) );
+    }
+
+    @Test
+    public void pressurised_water_flows_upwards()
+    {
+        Map<CellularDirection, WaterRegion> neighbourhood = new HashMap<>();
+        neighbourhood.put( HERE, new WaterRegion( 0, 0, null, 100, 200, false ) );
+        neighbourhood.put( UP, new WaterRegion( 0, 0, null, 100, 0, false ) );
+
+        Map<CellularDirection, Integer> flow = WaterUtil.calculateFlow( neighbourhood  );
+
+        // 68 seems a fairly arbitrary number. It's calculated using the MAGIC_UP_NUMERATOR and MAGIC_UP_DENOMINATOR.
+        assertThat( flow.get( UP ), equalTo( 68 ) );
+    }
+
+    @Test
+    public void pressurised_water_can_flow_all_ways_at_once()
+    {
+        Map<CellularDirection, WaterRegion> neighbourhood = new HashMap<>();
+        neighbourhood.put( HERE, new WaterRegion( 0, 0, null, 10, 200, false ) );
+        neighbourhood.put( UP, new WaterRegion( 0, 0, null, 10, 0, false ) );
+        neighbourhood.put( LEFT, new WaterRegion( 0, 0, null, 10, 0, false ) );
+        neighbourhood.put( RIGHT, new WaterRegion( 0, 0, null, 10, 0, false ) );
+        neighbourhood.put( DOWN, new WaterRegion( 0, 0, null, 10, 0, false ) );
+
+        Map<CellularDirection, Integer> flow = WaterUtil.calculateFlow( neighbourhood  );
+
+        assertThat( flow.get( UP ), equalTo( 62 ) );
+        assertThat( flow.get( LEFT ), equalTo( 27 ) );
+        assertThat( flow.get( RIGHT ), equalTo( 27 ) );
+        assertThat( flow.get( DOWN ), equalTo( 47 ) );
+        // This will leaving 37 units unmoved.
     }
 }

@@ -9,6 +9,7 @@ import rabbitescape.engine.Entrance;
 import rabbitescape.engine.Exit;
 import rabbitescape.engine.Fire;
 import rabbitescape.engine.IgnoreWorldStatsListener;
+import rabbitescape.engine.Pipe;
 import rabbitescape.engine.Rabbit;
 import rabbitescape.engine.Thing;
 import rabbitescape.engine.Token;
@@ -101,6 +102,11 @@ public class SandboxGame
             {
                 Fire fire = (Fire)thing;
                 clonedThings.add( new Fire( fire.x, fire.y ) );
+            }
+            else if ( thing instanceof Pipe )
+            {
+                Pipe pipe = (Pipe)thing;
+                clonedThings.add( new Pipe( pipe.x, pipe.y ) );
             }
             else
             {
