@@ -29,6 +29,11 @@ public class Drowning extends Behaviour
             yCoordinate = rabbit.y - 1;
             directionToCheck = DOWN;
         }
+        // TODO Find out why the rabbit's y coordinate is allowed to be larger than the size of the world (see solution for easy-12).
+        if ( yCoordinate < 0 || yCoordinate >= world.size.height )
+        {
+            return false;
+        }
         for ( WaterRegion waterRegion : world.waterTable.getItemsAt( rabbit.x, yCoordinate ) )
         {
             if ( waterRegion.isConnected( directionToCheck ) )

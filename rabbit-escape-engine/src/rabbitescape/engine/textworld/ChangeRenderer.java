@@ -309,6 +309,9 @@ public class ChangeRenderer
                 chars.set( change.x, change.y + 1, 'f' );
                 break;
             case WATER_REGION:
+            case WATER_REGION_HALF:
+            case WATER_REGION_FALLING:
+            case WATER_REGION_EMPTY:
                 break;
             case ENTRANCE:
                 break;
