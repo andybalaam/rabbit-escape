@@ -11,15 +11,15 @@ import org.junit.*;
 import rabbitescape.engine.config.Config;
 import rabbitescape.engine.config.TestConfig;
 
-public class TestConfigBasedLevelsCompleted
+public class TestByNumberConfigBasedLevelsCompleted
 {
     @Test
     public void Report_highest_level_from_config()
     {
         FakeConfig fakeConfig = new FakeConfig( "{\"bar\":2,\"foo\":3}" );
 
-        ConfigBasedLevelsCompleted lc =
-            new ConfigBasedLevelsCompleted( fakeConfig );
+        ByNumberConfigBasedLevelsCompleted lc =
+            new ByNumberConfigBasedLevelsCompleted( fakeConfig );
 
         int ans = lc.highestLevelCompleted( "foo" );
 
@@ -38,8 +38,8 @@ public class TestConfigBasedLevelsCompleted
     {
         FakeConfig fakeConfig = new FakeConfig( "{\"bar\":2,\"foo\":3}" );
 
-        ConfigBasedLevelsCompleted lc =
-            new ConfigBasedLevelsCompleted( fakeConfig );
+        ByNumberConfigBasedLevelsCompleted lc =
+            new ByNumberConfigBasedLevelsCompleted( fakeConfig );
 
         lc.setCompletedLevel( "baz", 1 );
 
@@ -60,8 +60,8 @@ public class TestConfigBasedLevelsCompleted
     {
         FakeConfig fakeConfig = new FakeConfig( "{\"bar\":2,\"foo\":3}" );
 
-        ConfigBasedLevelsCompleted lc =
-            new ConfigBasedLevelsCompleted( fakeConfig );
+        ByNumberConfigBasedLevelsCompleted lc =
+            new ByNumberConfigBasedLevelsCompleted( fakeConfig );
 
         lc.setCompletedLevel( "foo", 4 );
 
@@ -80,7 +80,7 @@ public class TestConfigBasedLevelsCompleted
     @Test
     public void Characters_stripped_from_set_names()
     {
-        assertThat( ConfigBasedLevelsCompleted.stripNumber_( "01_easy" ),
+        assertThat( ByNumberConfigBasedLevelsCompleted.stripNumber_( "01_easy" ),
             equalTo( "easy" ) );
     }
 

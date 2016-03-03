@@ -8,11 +8,11 @@ import rabbitescape.engine.config.Config;
 import rabbitescape.engine.config.ConfigTools;
 import rabbitescape.engine.config.TapTimer;
 
-public class ConfigBasedLevelsCompleted implements LevelsCompleted
+public class ByNumberConfigBasedLevelsCompleted implements LevelsCompleted
 {
     private final Config config;
 
-    public ConfigBasedLevelsCompleted( Config config )
+    public ByNumberConfigBasedLevelsCompleted( Config config )
     {
         this.config = config;
     }

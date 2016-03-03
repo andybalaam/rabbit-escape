@@ -9,7 +9,7 @@ import rabbitescape.engine.config.ConfigKeys;
 import rabbitescape.engine.config.ConfigTools;
 import rabbitescape.engine.config.IConfigStorage;
 import rabbitescape.engine.config.IConfigUpgrade;
-import rabbitescape.engine.menu.ConfigBasedLevelsCompleted;
+import rabbitescape.engine.menu.ByNumberConfigBasedLevelsCompleted;
 
 public class AndroidConfigUpgradeTo1 implements IConfigUpgrade
 {
@@ -36,7 +36,7 @@ public class AndroidConfigUpgradeTo1 implements IConfigUpgrade
             levels.completed.02_medium = 3
 
             and we must transform that to something like what
-            ConfigBasedLevelsCompleted does:
+            ByNumberConfigBasedLevelsCompleted does:
             levels.completed = '{"easy":13,"medium":3}'
 
             Note also that in Android we never properly dealt with the
@@ -56,7 +56,7 @@ public class AndroidConfigUpgradeTo1 implements IConfigUpgrade
             if ( entry.getKey().startsWith( LEVELS_COMPLETED ) )
             {
                 newMap.put(
-                    ConfigBasedLevelsCompleted.stripNumber_(
+                    ByNumberConfigBasedLevelsCompleted.stripNumber_(
                         entry.getKey().substring( LEVELS_COMPLETED.length() )
                     ),
                     (Integer)entry.getValue()

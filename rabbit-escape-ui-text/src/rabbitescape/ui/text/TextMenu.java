@@ -12,7 +12,7 @@ import rabbitescape.engine.MultiLevelWinListener;
 import rabbitescape.engine.config.Config;
 import rabbitescape.engine.err.RabbitEscapeException;
 import rabbitescape.engine.menu.AboutText;
-import rabbitescape.engine.menu.ConfigBasedLevelsCompleted;
+import rabbitescape.engine.menu.ByNumberConfigBasedLevelsCompleted;
 import rabbitescape.engine.menu.LevelMenuItem;
 import rabbitescape.engine.menu.LevelsCompleted;
 import rabbitescape.engine.menu.Menu;
@@ -56,7 +56,7 @@ public class TextMenu
     {
         this.fs = fs;
         this.terminal = terminal;
-        this.levelsCompleted = new ConfigBasedLevelsCompleted( config );
+        this.levelsCompleted = new ByNumberConfigBasedLevelsCompleted( config );
     }
 
     public void run()

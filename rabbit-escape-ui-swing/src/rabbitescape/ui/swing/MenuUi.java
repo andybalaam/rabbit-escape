@@ -42,7 +42,7 @@ import rabbitescape.engine.config.ConfigKeys;
 import rabbitescape.engine.config.ConfigTools;
 import rabbitescape.engine.err.RabbitEscapeException;
 import rabbitescape.engine.menu.AboutText;
-import rabbitescape.engine.menu.ConfigBasedLevelsCompleted;
+import rabbitescape.engine.menu.ByNumberConfigBasedLevelsCompleted;
 import rabbitescape.engine.menu.LevelMenuItem;
 import rabbitescape.engine.menu.LevelsCompleted;
 import rabbitescape.engine.menu.Menu;
@@ -168,11 +168,11 @@ public class MenuUi
         this.frame = frame;
         this.sound = sound;
         this.menuPanel = new JPanel( new GridBagLayout() );
-        this.levelsCompleted = new ConfigBasedLevelsCompleted( uiConfig );
+        this.levelsCompleted = new ByNumberConfigBasedLevelsCompleted( uiConfig );
 
         stack.push(
             MenuDefinition.mainMenu(
-                new ConfigBasedLevelsCompleted( uiConfig )
+                new ByNumberConfigBasedLevelsCompleted( uiConfig )
             )
         );
 
