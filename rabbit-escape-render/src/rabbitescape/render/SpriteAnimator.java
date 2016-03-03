@@ -1,5 +1,7 @@
 package rabbitescape.render;
 
+import static rabbitescape.engine.ChangeDescription.State.WATER_REGION_EMPTY;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -69,6 +71,14 @@ public class SpriteAnimator
             if ( !( thing instanceof Fire ) )
             {
                 addThing( frameNum, thing, null, ret );
+            }
+        }
+
+        for ( WaterRegion waterRegion : world.waterTable )
+        {
+            if ( waterRegion.state != WATER_REGION_EMPTY )
+            {
+                addThing( frameNum, waterRegion, null, ret );
             }
         }
 
