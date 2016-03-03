@@ -1,14 +1,18 @@
 package rabbitescape.engine;
 
 import static org.hamcrest.MatcherAssert.*;
+import static org.hamcrest.CoreMatchers.*;
 import static rabbitescape.engine.Tools.*;
 import static rabbitescape.engine.textworld.TextWorldManip.*;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.junit.Test;
 
+import rabbitescape.engine.menu.ByNameConfigBasedLevelsCompleted;
 import rabbitescape.engine.menu.LevelMenuItem;
 import rabbitescape.engine.menu.LevelsCompleted;
 import rabbitescape.engine.menu.Menu;
@@ -65,6 +69,24 @@ public class TestAllActiveLevels
             }
 
         } } );
+    }
+
+    @Test
+    public void All_levels_have_unique_names()
+    {
+        final Set<String> names = new HashSet<String>();
+
+        forEachOfficialLevel( new T() {
+            @Override public void run( World world, LevelMenuItem lev )
+            {
+                String name = ByNameConfigBasedLevelsCompleted.canonicalName(
+                    world.name );
+
+                assertThat( names, not( hasItem( name ) ) );
+
+                names.add( name );
+            }
+        } );
     }
 
     // --
