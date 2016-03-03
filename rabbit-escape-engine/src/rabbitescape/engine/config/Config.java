@@ -50,6 +50,7 @@ public class Config
                 + "did not update the version correctly - version is: "
                 + version()
             );
+            storage.save( this );
         }
     }
 

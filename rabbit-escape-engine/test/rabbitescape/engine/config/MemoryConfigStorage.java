@@ -1,11 +1,14 @@
 package rabbitescape.engine.config;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class MemoryConfigStorage implements IConfigStorage
 {
     private final Map<String, String> values = new HashMap<String, String>();
+    public List<String> saves = new ArrayList<String>();
 
     @Override
     public void set( String key, String value )
@@ -22,7 +25,7 @@ public class MemoryConfigStorage implements IConfigStorage
     @Override
     public void save( Config config )
     {
-        throw new UnsupportedOperationException();
+        saves.add( values.get( "config.version" ) );
     }
 
 }

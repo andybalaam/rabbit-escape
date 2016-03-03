@@ -4,6 +4,8 @@ import static org.hamcrest.MatcherAssert.*;
 import static org.hamcrest.CoreMatchers.*;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import org.junit.Test;
@@ -144,6 +146,39 @@ public class TestConfig
         new Config( simpleSchema(), storage, to1, to2, to3 );
 
         assertThat( Util.join( "", log ), equalTo( "" ) );
+    }
+
+    @Test
+    public void Storage_is_saved_after_upgrade()
+    {
+        List<String> log = new ArrayList<String>();
+        FakeConfigUpgrade to1 = new FakeConfigUpgrade( "1", log );
+        FakeConfigUpgrade to2 = new FakeConfigUpgrade( "2", log );
+        FakeConfigUpgrade to3 = new FakeConfigUpgrade( "3", log );
+
+        MemoryConfigStorage storage = new MemoryConfigStorage();
+
+        // This is what we are testing - upgrade to version 3
+        new Config( simpleSchema(), storage, to1, to2, to3 );
+
+        assertThat( storage.saves, equalTo( Arrays.asList( "1", "2", "3" ) ) );
+    }
+
+    @Test
+    public void Storage_is_not_saved_when_no_upgrade()
+    {
+        List<String> log = new ArrayList<String>();
+        FakeConfigUpgrade to1 = new FakeConfigUpgrade( "1", log );
+        FakeConfigUpgrade to2 = new FakeConfigUpgrade( "2", log );
+        FakeConfigUpgrade to3 = new FakeConfigUpgrade( "3", log );
+
+        MemoryConfigStorage storage = new MemoryConfigStorage();
+        storage.set( "config.version", "3" );
+
+        // This is what we are testing - already at 3 so ne need to upgrade
+        new Config( simpleSchema(), storage, to1, to2, to3 );
+
+        assertThat( storage.saves, equalTo( Collections.<String>emptyList() ) );
     }
 
     // --
