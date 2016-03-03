@@ -1,21 +1,16 @@
 package rabbitescape.ui.android;
 
-import android.app.Activity;
 import android.content.SharedPreferences;
 
-import java.util.Map;
-import java.util.Set;
-
 import rabbitescape.engine.config.Config;
-import rabbitescape.engine.config.IConfigStorage;
 
 public class AndroidConfigStorage implements IAndroidConfigStorage
 {
     private final SharedPreferences prefs;
 
-    public AndroidConfigStorage( Activity activity )
+    public AndroidConfigStorage( SharedPreferences prefs )
     {
-        prefs = activity.getSharedPreferences( "rabbitescape", activity.MODE_PRIVATE );
+        this.prefs = prefs;
     }
 
     @Override

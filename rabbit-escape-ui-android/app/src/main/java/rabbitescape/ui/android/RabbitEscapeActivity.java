@@ -46,7 +46,9 @@ public abstract class RabbitEscapeActivity extends ActionBarActivity
         super.onCreate( savedInstanceState );
         soundEvents.onCreate( this );
 
-        config = AndroidConfigSetup.createConfig( this );
+        config = AndroidConfigSetup.createConfig(
+            getSharedPreferences( "rabbitescape", MODE_PRIVATE )  );
+
         prefs = getSharedPreferences( "rabbitescape", MODE_PRIVATE );
     }
 

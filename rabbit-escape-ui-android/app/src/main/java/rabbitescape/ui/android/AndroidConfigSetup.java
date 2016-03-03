@@ -1,6 +1,6 @@
 package rabbitescape.ui.android;
 
-import android.app.Activity;
+import android.content.SharedPreferences;
 
 import static rabbitescape.engine.config.ConfigKeys.*;
 
@@ -9,7 +9,7 @@ import rabbitescape.engine.config.ConfigSchema;
 
 public class AndroidConfigSetup
 {
-    public static Config createConfig( Activity activity )
+    public static Config createConfig( SharedPreferences prefs )
     {
         ConfigSchema definition = new ConfigSchema();
 
@@ -25,6 +25,6 @@ public class AndroidConfigSetup
             ""
         );
 
-        return new Config( definition, new AndroidConfigStorage( activity ) );
+        return new Config( definition, new AndroidConfigStorage( prefs ) );
     }
 }
