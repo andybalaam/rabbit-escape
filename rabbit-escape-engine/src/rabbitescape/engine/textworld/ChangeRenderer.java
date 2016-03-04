@@ -64,6 +64,8 @@ public class ChangeRenderer
             case FIRE_D_FALL_TO_RISE_LEFT:
                 chars.set(  change.x, change.y + 1, 'g' );
                 break;
+            case FIRE_EXTINGUISHING:
+                break;
             case PIPE:
                 chars.set( change.x, change.y, 'P' );
                 break;

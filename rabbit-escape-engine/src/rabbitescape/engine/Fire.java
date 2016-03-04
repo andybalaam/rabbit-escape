@@ -42,7 +42,7 @@ public class Fire extends Thing
         // Check if being extinguished.
         for ( WaterRegion waterRegion : world.waterTable.getItemsAt( x, y ) )
         {
-            if ( waterRegion.capacity <= waterRegion.getContents() )
+            if ( waterRegion.getContents() > 0 )
             {
                 state = FIRE_EXTINGUISHING;
                 return;
