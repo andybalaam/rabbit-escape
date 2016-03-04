@@ -6,10 +6,21 @@ import static rabbitescape.engine.config.ConfigKeys.*;
 
 import rabbitescape.engine.config.Config;
 import rabbitescape.engine.config.ConfigSchema;
+import rabbitescape.engine.config.IConfigUpgrade;
 
 public class AndroidConfigSetup
 {
     public static Config createConfig( SharedPreferences prefs )
+    {
+        return createConfig( prefs, realUpgrades() );
+    }
+
+    private static IConfigUpgrade[] realUpgrades()
+    {
+        return new IConfigUpgrade[0];
+    }
+
+    public static Config createConfig( SharedPreferences prefs, IConfigUpgrade... upgrades )
     {
         ConfigSchema definition = new ConfigSchema();
 
@@ -25,6 +36,6 @@ public class AndroidConfigSetup
             ""
         );
 
-        return new Config( definition, new AndroidConfigStorage( prefs ) );
+        return new Config( definition, new AndroidConfigStorage( prefs ), upgrades );
     }
 }

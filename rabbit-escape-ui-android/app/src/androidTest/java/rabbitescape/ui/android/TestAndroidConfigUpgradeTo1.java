@@ -4,7 +4,6 @@ import android.content.SharedPreferences;
 
 import junit.framework.TestCase;
 
-import java.util.AbstractCollection;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -12,6 +11,7 @@ import java.util.Map;
 import java.util.Set;
 
 import rabbitescape.engine.config.Config;
+import rabbitescape.engine.menu.ByNumberConfigBasedLevelsCompleted;
 
 public class TestAndroidConfigUpgradeTo1 extends TestCase
 {
@@ -82,6 +82,39 @@ public class TestAndroidConfigUpgradeTo1 extends TestCase
             "{\"easy\":8,\"hard\":13,\"medium\":8}",
             prefs.getString( "levels.completed", null )
         );
+    }
+
+    public void test_Levels_completed_upgrades_from_0_to_1()
+    {
+        SharedPreferences prefs = new FakeSharedPreferences();
+
+        AndroidPreferencesBasedLevelsCompleted oldCompleted =
+            new AndroidPreferencesBasedLevelsCompleted( prefs );
+
+        // Set some levels completed in different dirs
+        oldCompleted.setCompletedLevel( "abc", 12 );
+        oldCompleted.setCompletedLevel( "02_def", 14 );
+        oldCompleted.setCompletedLevel( "ghi", 2 );
+
+        // Sanity: we get what we put in
+        assertEquals( 12, oldCompleted.highestLevelCompleted( "abc" ) );
+        assertEquals( 14, oldCompleted.highestLevelCompleted( "02_def" ) );
+        assertEquals( 2, oldCompleted.highestLevelCompleted( "ghi" ) );
+
+        // Sanity: unmentioned dir
+        assertEquals( 0, oldCompleted.highestLevelCompleted( "jkl" ) );
+
+        // This is what we are testing - run the upgrade
+        Config upgraded = AndroidConfigSetup.createConfig( prefs, new AndroidConfigUpgradeTo1() );
+
+        // The new levelscompleted should agree with the old
+        ByNumberConfigBasedLevelsCompleted newCompleted =
+            new ByNumberConfigBasedLevelsCompleted( upgraded );
+
+        assertEquals( 12, newCompleted.highestLevelCompleted( "abc" ) );
+        assertEquals( 14, newCompleted.highestLevelCompleted( "def" ) );
+        assertEquals( 2, newCompleted.highestLevelCompleted( "ghi" ) );
+        assertEquals( 0, newCompleted.highestLevelCompleted( "jkl" ) );
     }
 
     // ---
