@@ -8,6 +8,6 @@ public class TestConfigSchema
     public void Config_version_is_not_allowed_as_a_key()
     {
         ConfigSchema schema = new ConfigSchema();
-        schema.set( "config.version", "", "" );
+        schema.set( Config.CFG_VERSION, "", "" );
     }
 }

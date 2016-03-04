@@ -90,7 +90,7 @@ public class TestConfig
     public void Stored_version_info_gets_read()
     {
         MemoryConfigStorage storage = new MemoryConfigStorage();
-        storage.set( "config.version", "12" );
+        storage.set( Config.CFG_VERSION, "12" );
         Config cfg = new Config( simpleSchema(), storage );
 
         assertThat( cfg.version(), equalTo( 12 ) );
@@ -125,7 +125,7 @@ public class TestConfig
         FakeConfigUpgrade to4 = new FakeConfigUpgrade( "4", log );
 
         MemoryConfigStorage storage = new MemoryConfigStorage();
-        storage.set( "config.version", "2" );
+        storage.set( Config.CFG_VERSION, "2" );
 
         new Config( simpleSchema(), storage, to1, to2, to3, to4 );
 
@@ -141,7 +141,7 @@ public class TestConfig
         FakeConfigUpgrade to3 = new FakeConfigUpgrade( "3", log );
 
         MemoryConfigStorage storage = new MemoryConfigStorage();
-        storage.set( "config.version", "3" );
+        storage.set( Config.CFG_VERSION, "3" );
 
         new Config( simpleSchema(), storage, to1, to2, to3 );
 
@@ -173,7 +173,7 @@ public class TestConfig
         FakeConfigUpgrade to3 = new FakeConfigUpgrade( "3", log );
 
         MemoryConfigStorage storage = new MemoryConfigStorage();
-        storage.set( "config.version", "3" );
+        storage.set( Config.CFG_VERSION, "3" );
 
         // This is what we are testing - already at 3 so ne need to upgrade
         new Config( simpleSchema(), storage, to1, to2, to3 );
@@ -250,7 +250,7 @@ public class TestConfig
         @Override
         public void run( IConfigStorage storage )
         {
-            storage.set( "config.version", newVersion );
+            storage.set( Config.CFG_VERSION, newVersion );
             log.add( newVersion );
         }
     }

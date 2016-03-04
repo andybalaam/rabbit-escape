@@ -12,6 +12,7 @@ import static rabbitescape.engine.util.Util.*;
 
 import org.junit.Test;
 
+import rabbitescape.engine.config.Config;
 import rabbitescape.engine.config.ConfigTools;
 import rabbitescape.engine.config.IConfigUpgrade;
 
@@ -24,7 +25,7 @@ public class TestUpgradeTo02LevelsCompletedByName
         IConfigUpgrade upgrade = new UpgradeTo02LevelsCompletedByName();
 
         TrackingConfigStorage storage = new TrackingConfigStorage(
-            "config.version", "1" );
+            Config.CFG_VERSION, "1" );
 
         // This is what we are testing - run the upgrade
         upgrade.run( storage );
@@ -46,7 +47,7 @@ public class TestUpgradeTo02LevelsCompletedByName
         IConfigUpgrade upgrade = new UpgradeTo02LevelsCompletedByName();
 
         TrackingConfigStorage storage = new TrackingConfigStorage(
-            "config.version", "1" );
+            Config.CFG_VERSION, "1" );
 
         upgrade.run( storage );
 
@@ -72,7 +73,7 @@ public class TestUpgradeTo02LevelsCompletedByName
         IConfigUpgrade upgrade = new UpgradeTo02LevelsCompletedByName();
 
         TrackingConfigStorage storage = new TrackingConfigStorage(
-            "config.version", "1",
+            Config.CFG_VERSION, "1",
             "levels.completed", ConfigTools.mapToString( easy5Done )
         );
 
@@ -107,7 +108,7 @@ public class TestUpgradeTo02LevelsCompletedByName
         IConfigUpgrade upgrade = new UpgradeTo02LevelsCompletedByName();
 
         TrackingConfigStorage storage = new TrackingConfigStorage(
-            "config.version", "1",
+            Config.CFG_VERSION, "1",
             "levels.completed", ConfigTools.mapToString( easy5Done )
         );
 

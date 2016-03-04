@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import java.util.HashMap;
 import java.util.Map;
 
+import rabbitescape.engine.config.Config;
 import rabbitescape.engine.config.ConfigKeys;
 import rabbitescape.engine.config.ConfigTools;
 import rabbitescape.engine.config.IConfigStorage;
@@ -19,7 +20,7 @@ public class AndroidConfigUpgradeTo1 implements IConfigUpgrade
         if ( storage instanceof IAndroidConfigStorage )
         {
             upgradeAndroid( (IAndroidConfigStorage)storage );
-            storage.set( "config.version", "1" );
+            storage.set( Config.CFG_VERSION, "1" );
         }
         else
         {

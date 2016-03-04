@@ -25,7 +25,7 @@ public class MemoryConfigStorage implements IConfigStorage
     @Override
     public void save( Config config )
     {
-        saves.add( values.get( "config.version" ) );
+        saves.add( values.get( Config.CFG_VERSION ) );
     }
 
 }

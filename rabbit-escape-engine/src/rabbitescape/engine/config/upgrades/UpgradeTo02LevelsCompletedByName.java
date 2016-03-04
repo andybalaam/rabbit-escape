@@ -11,6 +11,7 @@ import java.util.Map;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
+import rabbitescape.engine.config.Config;
 import rabbitescape.engine.config.ConfigTools;
 import rabbitescape.engine.config.IConfigStorage;
 import rabbitescape.engine.config.IConfigUpgrade;
@@ -21,7 +22,7 @@ public class UpgradeTo02LevelsCompletedByName implements IConfigUpgrade
     @Override
     public void run( IConfigStorage storage )
     {
-        Util.reAssert( storage.get( "config.version" ).equals( "1" ) );
+        Util.reAssert( storage.get( Config.CFG_VERSION ).equals( "1" ) );
 
         String levelsCompletedV1 = storage.get( CFG_LEVELS_COMPLETED );
 
@@ -33,7 +34,7 @@ public class UpgradeTo02LevelsCompletedByName implements IConfigUpgrade
             );
         }
 
-        storage.set( "config.version", "2" );
+        storage.set( Config.CFG_VERSION, "2" );
     }
 
     private static Map<String, List<String>> levelNames =

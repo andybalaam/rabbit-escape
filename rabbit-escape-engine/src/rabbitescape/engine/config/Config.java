@@ -91,7 +91,7 @@ public class Config
 
     public int version()
     {
-        String ret = storage.get( "config.version" );
+        String ret = storage.get( Config.CFG_VERSION );
 
         if ( ret == null )
         {

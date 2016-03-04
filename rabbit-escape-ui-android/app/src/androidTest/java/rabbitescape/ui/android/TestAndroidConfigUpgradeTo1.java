@@ -31,7 +31,7 @@ public class TestAndroidConfigUpgradeTo1 extends TestCase
 
         // The content version was changed, and nothing was done
         assertEquals( 1, prefs.getAll().size() );
-        assertEquals( "1", prefs.getString( "config.version", null ) );
+        assertEquals( "1", prefs.getString( Config.CFG_VERSION, null ) );
     }
 
     public void test_Unnumbered_level_dirs_are_upgraded()
@@ -52,7 +52,7 @@ public class TestAndroidConfigUpgradeTo1 extends TestCase
 
         // The content and version were upgraded
         assertEquals( 2, prefs.getAll().size() );
-        assertEquals( "1", prefs.getString( "config.version", null ) );
+        assertEquals( "1", prefs.getString( Config.CFG_VERSION, null ) );
         assertEquals(
             "{\"hard\":12,\"medium\":7}",
             prefs.getString( "levels.completed", null )
@@ -78,7 +78,7 @@ public class TestAndroidConfigUpgradeTo1 extends TestCase
 
         // The content and version were upgraded
         assertEquals( 2, prefs.getAll().size() );
-        assertEquals( "1", prefs.getString( "config.version", null ) );
+        assertEquals( "1", prefs.getString( Config.CFG_VERSION, null ) );
         assertEquals(
             "{\"easy\":8,\"hard\":13,\"medium\":8}",
             prefs.getString( "levels.completed", null )
@@ -137,7 +137,7 @@ public class TestAndroidConfigUpgradeTo1 extends TestCase
 
         // The content and version were upgraded
         assertEquals( 3, prefs.getAll().size() );
-        assertEquals( "1", prefs.getString( "config.version", null ) );
+        assertEquals( "1", prefs.getString( Config.CFG_VERSION, null ) );
         assertEquals( "{\"hard\":13}", prefs.getString( "levels.completed", null ) );
         assertEquals( "true", prefs.getString( "muted", null ) );
     }
