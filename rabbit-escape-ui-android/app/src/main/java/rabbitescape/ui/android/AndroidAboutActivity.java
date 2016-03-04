@@ -36,11 +36,6 @@ public class AndroidAboutActivity extends RabbitEscapeActivity
     public void onResume()
     {
         super.onResume();
-
-        boolean muted = getSharedPreferences( "rabbitescape", MODE_PRIVATE ).getBoolean(
-            AndroidGameActivity.PREFS_MUTED, false );
-
-        sound.mute( muted );
         sound.setMusic( "tryad-let_them_run" );
     }
 

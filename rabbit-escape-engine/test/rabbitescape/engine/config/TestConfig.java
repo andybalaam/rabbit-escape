@@ -74,7 +74,7 @@ public class TestConfig
 
         assertThat(
             Util.join( ", ", cfg.keys() ),
-            equalTo( "key1, key2, key3" )
+            equalTo( "config.version, key1, key2, key3" )
         );
     }
 

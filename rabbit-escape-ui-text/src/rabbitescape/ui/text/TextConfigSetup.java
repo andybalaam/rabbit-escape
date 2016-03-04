@@ -5,6 +5,7 @@ import static rabbitescape.engine.config.ConfigKeys.*;
 import rabbitescape.engine.config.Config;
 import rabbitescape.engine.config.ConfigFile;
 import rabbitescape.engine.config.ConfigSchema;
+import rabbitescape.engine.config.RealConfigUpgrades;
 import rabbitescape.engine.util.RealFileSystem;
 
 public class TextConfigSetup
@@ -30,6 +31,9 @@ public class TextConfigSetup
         );
 
         return new Config(
-            definition, new ConfigFile( new RealFileSystem(), CONFIG_PATH ) );
+            definition,
+            new ConfigFile( new RealFileSystem(), CONFIG_PATH ),
+            RealConfigUpgrades.realConfigUpgrades()
+        );
     }
 }

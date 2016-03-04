@@ -24,6 +24,7 @@ import rabbitescape.engine.Token;
 import rabbitescape.engine.World;
 import rabbitescape.engine.WorldStatsListener;
 import rabbitescape.engine.err.RabbitEscapeException;
+import rabbitescape.engine.menu.ByNumberConfigBasedLevelsCompleted;
 import rabbitescape.engine.menu.LevelsCompleted;
 import rabbitescape.engine.textworld.TextWorldManip;
 import rabbitescape.engine.util.RealFileSystem;
@@ -148,7 +149,7 @@ public class AndroidGameActivity extends RabbitEscapeActivity
 
     private void staticInit()
     {
-        levelsCompleted = new AndroidPreferencesBasedLevelsCompleted( getPrefs() );
+        levelsCompleted = new ByNumberConfigBasedLevelsCompleted( getConfig() );
 
         setContentView( R.layout.activity_android_game );
 

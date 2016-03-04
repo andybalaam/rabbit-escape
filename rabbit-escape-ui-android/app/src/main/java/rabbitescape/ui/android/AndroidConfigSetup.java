@@ -7,6 +7,7 @@ import static rabbitescape.engine.config.ConfigKeys.*;
 import rabbitescape.engine.config.Config;
 import rabbitescape.engine.config.ConfigSchema;
 import rabbitescape.engine.config.IConfigUpgrade;
+import rabbitescape.engine.config.RealConfigUpgrades;
 
 public class AndroidConfigSetup
 {
@@ -19,10 +20,7 @@ public class AndroidConfigSetup
 
     private static IConfigUpgrade[] realUpgrades()
     {
-        return new IConfigUpgrade[]
-        {
-            new AndroidConfigUpgradeTo1()
-        };
+        return RealConfigUpgrades.realConfigUpgrades( new AndroidConfigUpgradeTo1() );
     }
 
     public static Config createConfig( SharedPreferences prefs, IConfigUpgrade... upgrades )

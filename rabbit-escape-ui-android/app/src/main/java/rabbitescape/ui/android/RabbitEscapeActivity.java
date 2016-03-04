@@ -5,12 +5,12 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.View;
 
 import rabbitescape.engine.config.Config;
+import rabbitescape.engine.config.ConfigTools;
 import rabbitescape.render.androidutil.Lifecycle2SoundEvents;
 import rabbitescape.ui.android.sound.AndroidSound;
 
@@ -19,9 +19,6 @@ public abstract class RabbitEscapeActivity extends ActionBarActivity
     protected static final AndroidSound sound = Globals.sound;
     private static final Lifecycle2SoundEvents<Activity> soundEvents = Globals.soundEvents;
 
-    public static final String PREFS_MUTED = "rabbitescape.muted";
-
-    private SharedPreferences prefs;
     private Config config;
     private boolean muted;
     private NoisyReceiver noisyReceiver;
@@ -48,8 +45,6 @@ public abstract class RabbitEscapeActivity extends ActionBarActivity
 
         config = AndroidConfigSetup.createConfig(
             getSharedPreferences( "rabbitescape", MODE_PRIVATE )  );
-
-        prefs = getSharedPreferences( "rabbitescape", MODE_PRIVATE );
     }
 
     @Override
@@ -58,7 +53,7 @@ public abstract class RabbitEscapeActivity extends ActionBarActivity
         super.onResume();
         soundEvents.onResume( this );
 
-        muted = prefs.getBoolean( PREFS_MUTED, false );
+        muted = ConfigTools.getBool( config, AndroidConfigSetup.CFG_MUTED );
         sound.mute( muted );
         updateMuteButton( muted );
 
@@ -95,11 +90,6 @@ public abstract class RabbitEscapeActivity extends ActionBarActivity
         soundEvents.onDestroy( this );
     }
 
-    public SharedPreferences getPrefs()
-    {
-        return prefs;
-    }
-
     public Config getConfig()
     {
         return config;
@@ -116,7 +106,7 @@ public abstract class RabbitEscapeActivity extends ActionBarActivity
 
         sound.mute( muted );
 
-        prefs.edit().putBoolean( PREFS_MUTED, muted ).commit();
+        ConfigTools.setBool( config, AndroidConfigSetup.CFG_MUTED, muted );
 
         updateMuteButton( muted );
     }

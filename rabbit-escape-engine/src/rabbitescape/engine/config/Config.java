@@ -15,6 +15,8 @@ import rabbitescape.engine.util.Util;
  */
 public class Config
 {
+    public static String CFG_VERSION = "config.version";
+
     public static class UnknownKey extends RabbitEscapeException
     {
         private static final long serialVersionUID = 1L;

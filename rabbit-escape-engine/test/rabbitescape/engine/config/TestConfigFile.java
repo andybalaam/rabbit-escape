@@ -70,6 +70,9 @@ public class TestConfigFile
             fs.readLines( fileName ),
             equalTo(
                 new String[] {
+                    "# The version of this config file.",
+                    "#config.version=0",
+                    "",
                     "# desc1",
                     "#key1=defaultValue1",
                     "",

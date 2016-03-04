@@ -25,11 +25,19 @@ public class ConfigSchema
 
     private final Map<String, String> descriptions = new HashMap<>();
 
+    public ConfigSchema()
+    {
+        defaults.put( Config.CFG_VERSION, "0" );
+
+        descriptions.put(
+            Config.CFG_VERSION, "The version of this config file." );
+    }
+
     public void set( String key, String defaultValue, String description )
     {
-        if ( key.equals( "config.version" ) )
+        if ( key.equals( Config.CFG_VERSION ) )
         {
-            throw new KeyNotAllowed( "config.version" );
+            throw new KeyNotAllowed( Config.CFG_VERSION );
         }
 
         defaults.put( key, defaultValue );

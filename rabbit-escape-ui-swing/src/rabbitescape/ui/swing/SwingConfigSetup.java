@@ -7,6 +7,7 @@ import javax.swing.JFileChooser;
 import rabbitescape.engine.config.Config;
 import rabbitescape.engine.config.ConfigFile;
 import rabbitescape.engine.config.ConfigSchema;
+import rabbitescape.engine.config.RealConfigUpgrades;
 import rabbitescape.engine.util.RealFileSystem;
 
 public class SwingConfigSetup
@@ -102,6 +103,9 @@ public class SwingConfigSetup
         );
 
         return new Config(
-            definition, new ConfigFile( new RealFileSystem(), CONFIG_PATH ) );
+            definition,
+            new ConfigFile( new RealFileSystem(), CONFIG_PATH ),
+            RealConfigUpgrades.realConfigUpgrades()
+        );
     }
 }
