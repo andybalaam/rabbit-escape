@@ -18,6 +18,7 @@ public class TestByNameConfigBasedLevelsCompleted
         assertThat( "abcxyz", isEqualToItsCanonicalVersion() );
         assertThat( "c",      isEqualToItsCanonicalVersion() );
         assertThat( "zya",    isEqualToItsCanonicalVersion() );
+        assertThat( "1z2a3",  isEqualToItsCanonicalVersion() );
     }
 
     @Test( expected = ByNameConfigBasedLevelsCompleted.EmptyLevelName.class )

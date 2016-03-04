@@ -23,7 +23,7 @@ public class ByNameConfigBasedLevelsCompleted
         }
         else
         {
-            return name.toLowerCase( en_UK ).replaceAll( "[^a-z]", "_" );
+            return name.toLowerCase( en_UK ).replaceAll( "[^a-z0-9]", "_" );
         }
     }
 }
