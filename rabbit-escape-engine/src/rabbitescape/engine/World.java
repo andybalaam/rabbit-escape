@@ -241,7 +241,7 @@ public class World
 
     private Iterable<Thing> allThings()
     {
-        return chain( rabbits, things, waterTable.getItems() );
+        return chain( waterTable.getItems(), rabbits, things );
     }
 
     public Block getBlockAt( int x, int y)
