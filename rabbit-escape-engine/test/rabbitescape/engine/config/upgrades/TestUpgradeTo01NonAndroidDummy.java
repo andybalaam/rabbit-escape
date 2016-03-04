@@ -5,14 +5,10 @@ import static org.hamcrest.CoreMatchers.*;
 
 import static rabbitescape.engine.util.Util.*;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 import org.junit.Test;
 
-import rabbitescape.engine.config.Config;
-import rabbitescape.engine.config.IConfigStorage;
 import rabbitescape.engine.config.IConfigUpgrade;
 
 public class TestUpgradeTo01NonAndroidDummy
@@ -32,31 +28,5 @@ public class TestUpgradeTo01NonAndroidDummy
             list( storage.log ),
             equalTo( Arrays.asList( "set( config.version, 1 )" ) )
         );
-    }
-
-    // ---
-
-    private static class TrackingConfigStorage implements IConfigStorage
-    {
-        public List<String> log = new ArrayList<String>();
-
-        @Override
-        public void set( String key, String value )
-        {
-            log.add( String.format( "set( %s, %s )", key, value ) );
-        }
-
-        @Override
-        public String get( String key )
-        {
-            log.add( String.format( "get( %s )", key ) );
-            return null;
-        }
-
-        @Override
-        public void save( Config config )
-        {
-            log.add( "save" );
-        }
     }
 }
