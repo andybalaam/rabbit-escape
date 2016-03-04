@@ -10,6 +10,8 @@ import rabbitescape.engine.config.IConfigUpgrade;
 
 public class AndroidConfigSetup
 {
+    public static final String CFG_MUTED = "muted";
+
     public static Config createConfig( SharedPreferences prefs )
     {
         return createConfig( prefs, realUpgrades() );
@@ -17,7 +19,10 @@ public class AndroidConfigSetup
 
     private static IConfigUpgrade[] realUpgrades()
     {
-        return new IConfigUpgrade[0];
+        return new IConfigUpgrade[]
+        {
+            new AndroidConfigUpgradeTo1()
+        };
     }
 
     public static Config createConfig( SharedPreferences prefs, IConfigUpgrade... upgrades )
@@ -35,6 +40,8 @@ public class AndroidConfigSetup
             String.valueOf( false ),
             ""
         );
+
+        definition.set( CFG_MUTED, String.valueOf( false ), "" );
 
         return new Config( definition, new AndroidConfigStorage( prefs ), upgrades );
     }

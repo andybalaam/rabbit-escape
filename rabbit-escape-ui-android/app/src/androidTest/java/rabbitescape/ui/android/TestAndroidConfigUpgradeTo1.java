@@ -11,6 +11,7 @@ import java.util.Map;
 import java.util.Set;
 
 import rabbitescape.engine.config.Config;
+import rabbitescape.engine.config.ConfigTools;
 import rabbitescape.engine.menu.ByNumberConfigBasedLevelsCompleted;
 
 public class TestAndroidConfigUpgradeTo1 extends TestCase
@@ -33,7 +34,7 @@ public class TestAndroidConfigUpgradeTo1 extends TestCase
         assertEquals( "1", prefs.getString( "config.version", null ) );
     }
 
-    public void test_Unnumbered_dirs_are_upgraded()
+    public void test_Unnumbered_level_dirs_are_upgraded()
     {
         // Make a config based on preferences, with no version
         FakeSharedPreferences prefs = new FakeSharedPreferences();
@@ -58,7 +59,7 @@ public class TestAndroidConfigUpgradeTo1 extends TestCase
         );
     }
 
-    public void test_Numbered_dirs_are_upgraded()
+    public void test_Numbered_level_dirs_are_upgraded()
     {
         // Make a config based on preferences, with no version
         FakeSharedPreferences prefs = new FakeSharedPreferences();
@@ -82,6 +83,63 @@ public class TestAndroidConfigUpgradeTo1 extends TestCase
             "{\"easy\":8,\"hard\":13,\"medium\":8}",
             prefs.getString( "levels.completed", null )
         );
+    }
+
+    public void test_muted_true_is_upgraded()
+    {
+        // Make a config based on preferences, with no version
+        FakeSharedPreferences prefs = new FakeSharedPreferences();
+
+        // Make some old-style unnumbered-directory prefs
+        prefs.edit()
+            .putBoolean( "rabbitescape.muted", true )
+            .commit();
+
+        // This is what we are testing: run the upgrade
+        Config upgraded = AndroidConfigSetup.createConfig( prefs, new AndroidConfigUpgradeTo1() );
+
+        // Muted was upgraded
+        assertEquals( true, ConfigTools.getBool( upgraded, "muted" ) );
+    }
+
+    public void test_muted_false_is_upgraded()
+    {
+        // Make a config based on preferences, with no version
+        FakeSharedPreferences prefs = new FakeSharedPreferences();
+
+        // Make some old-style unnumbered-directory prefs
+        prefs.edit()
+            .putBoolean( "rabbitescape.muted", false )
+            .commit();
+
+        // This is what we are testing: run the upgrade
+        Config upgraded = AndroidConfigSetup.createConfig( prefs, new AndroidConfigUpgradeTo1() );
+
+        // Muted was upgraded
+        assertEquals( false, ConfigTools.getBool( upgraded, "muted" ) );
+    }
+
+    public void test_Level_dirs_and_muted_both_upgraded()
+    {
+        // Make a config based on preferences, with no version
+        FakeSharedPreferences prefs = new FakeSharedPreferences();
+        AndroidConfigUpgradeTo1 to1 = new AndroidConfigUpgradeTo1();
+        FakeAndroidConfigStorage storage = new FakeAndroidConfigStorage( prefs );
+
+        // Make some old-style unnumbered-directory prefs
+        prefs.edit()
+            .putInt( "levels.completed.03_hard", 13 )
+            .putBoolean( "rabbitescape.muted", true )
+            .commit();
+
+        // This is what we are testing: run the upgrade
+        to1.run( storage );
+
+        // The content and version were upgraded
+        assertEquals( 3, prefs.getAll().size() );
+        assertEquals( "1", prefs.getString( "config.version", null ) );
+        assertEquals( "{\"hard\":13}", prefs.getString( "levels.completed", null ) );
+        assertEquals( "true", prefs.getString( "muted", null ) );
     }
 
     public void test_Levels_completed_upgrades_from_0_to_1()
@@ -218,9 +276,17 @@ public class TestAndroidConfigUpgradeTo1 extends TestCase
         }
 
         @Override
-        public boolean getBoolean( String s, boolean b )
+        public boolean getBoolean( String key, boolean def )
         {
-            throw new UnsupportedOperationException();
+            Boolean ret = (Boolean)contents.get( key );
+            if ( ret == null )
+            {
+                return def;
+            }
+            else
+            {
+                return ret;
+            }
         }
 
         @Override
@@ -303,7 +369,8 @@ public class TestAndroidConfigUpgradeTo1 extends TestCase
         @Override
         public SharedPreferences.Editor putBoolean( String s, boolean b )
         {
-            throw new UnsupportedOperationException();
+            newContents.put( s, b );
+            return this;
         }
 
         @Override

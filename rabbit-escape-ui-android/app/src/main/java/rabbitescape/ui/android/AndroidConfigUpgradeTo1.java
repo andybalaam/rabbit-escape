@@ -18,7 +18,7 @@ public class AndroidConfigUpgradeTo1 implements IConfigUpgrade
     {
         if ( storage instanceof IAndroidConfigStorage )
         {
-            runAndroid( (IAndroidConfigStorage)storage );
+            upgradeAndroid( (IAndroidConfigStorage)storage );
             storage.set( "config.version", "1" );
         }
         else
@@ -28,7 +28,7 @@ public class AndroidConfigUpgradeTo1 implements IConfigUpgrade
         }
     }
 
-    private void runAndroid( IAndroidConfigStorage storage )
+    private void upgradeAndroid( IAndroidConfigStorage storage )
     {
         /*
             AndroidPreferencesBasedLevelsCompleted held your progress like this:
@@ -44,12 +44,28 @@ public class AndroidConfigUpgradeTo1 implements IConfigUpgrade
             up here too.
         */
 
-        final String LEVELS_COMPLETED = "levels.completed.";
-
         SharedPreferences prefs = storage.getPrefs();
-        Map<String, Integer> newMap = new HashMap<String, Integer>();
         SharedPreferences.Editor editor = prefs.edit();
+
         boolean doneSomething = false;
+
+        doneSomething = upgradeLevelsCompleted( prefs, editor ) || doneSomething;
+        doneSomething = upgradeMuted( prefs, editor ) || doneSomething;
+
+        if ( doneSomething )
+        {
+            editor.commit();
+        }
+    }
+
+    private static boolean upgradeLevelsCompleted(
+        SharedPreferences prefs, SharedPreferences.Editor editor )
+    {
+        boolean doneSomething = false;
+
+        Map<String, Integer> newMap = new HashMap<String, Integer>();
+
+        final String LEVELS_COMPLETED = "levels.completed.";
 
         for ( Map.Entry<String, ?> entry : prefs.getAll().entrySet() )
         {
@@ -71,7 +87,26 @@ public class AndroidConfigUpgradeTo1 implements IConfigUpgrade
         if ( doneSomething )
         {
             editor.putString( ConfigKeys.CFG_LEVELS_COMPLETED, ConfigTools.mapToString( newMap ) );
-            editor.commit();
         }
+
+        return doneSomething;
+    }
+
+    private static boolean upgradeMuted( SharedPreferences prefs, SharedPreferences.Editor editor )
+    {
+        boolean doneSomething = false;
+
+        final String RABBITESCAPE_MUTED = "rabbitescape.muted";
+        final String MUTED = "muted";
+
+        if ( prefs.contains( RABBITESCAPE_MUTED ) )
+        {
+            boolean muted = prefs.getBoolean( RABBITESCAPE_MUTED, false );
+            editor.remove( RABBITESCAPE_MUTED );
+            editor.putString( MUTED, String.valueOf( muted ) );
+            doneSomething = true;
+        }
+
+        return doneSomething;
     }
 }
