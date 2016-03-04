@@ -5,6 +5,8 @@ import static org.hamcrest.CoreMatchers.*;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 import static rabbitescape.engine.util.Util.*;
 
@@ -137,6 +139,20 @@ public class TestConfigTools
         assertThat(
             cfg.get( "key1" ),
             equalTo( "{\"aaa\":45,\"bbb\":56}" )
+        );
+    }
+
+    @Test
+    public void Convert_a_set_to_a_string()
+    {
+        SortedSet<String> set = new TreeSet<String>();
+        set.add( "a" );
+        set.add( "bc" );
+        set.add( "def" );
+
+        assertThat(
+            ConfigTools.setToString( set ),
+            equalTo( "[\"a\",\"bc\",\"def\"]" )
         );
     }
 

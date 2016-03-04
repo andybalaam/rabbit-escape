@@ -6,9 +6,11 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.SortedSet;
 import java.util.TreeMap;
 
 import rabbitescape.engine.err.RabbitEscapeException;
+import rabbitescape.engine.util.Util.Function;
 
 public class ConfigTools
 {
@@ -110,6 +112,12 @@ public class ConfigTools
     public static <T> Map<String, T> getMap(
         Config cfg, String configKey, Class<T> clazz )
     {
+        return stringToMap( cfg.get( configKey ), clazz );
+    }
+
+    public static <T> Map<String, T> stringToMap(
+        String jsonish, Class<T> clazz )
+    {
         final int open_bracket = 0;
         final int comma_or_close_bracket = 1;
         final int end = 2;
@@ -122,8 +130,6 @@ public class ConfigTools
         final int key_open_quote = 9;
 
         int mode = open_bracket;
-
-        String jsonish = cfg.get( configKey );
 
         StringBuilder key = new StringBuilder();
         StringBuilder value = new StringBuilder();
@@ -335,5 +341,22 @@ public class ConfigTools
         val.append( '}' );
 
         return val.toString();
+    }
+
+    public static String setToString( SortedSet<String> ret )
+    {
+        return "[" + join( ",", map( quoteString(), ret ) ) + "]";
+    }
+
+    private static Function<String, String> quoteString()
+    {
+        return new Function<String, String>()
+        {
+            @Override
+            public String apply( String t )
+            {
+                return "\"" + t + "\"";
+            }
+        };
     }
 }
