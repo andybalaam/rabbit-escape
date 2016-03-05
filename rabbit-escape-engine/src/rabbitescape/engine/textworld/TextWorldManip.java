@@ -238,6 +238,7 @@ public class TextWorldManip
         Chars chars = new Chars( world, true );
 
         BlockRenderer.render( chars, world.blockTable );
+        WaterRenderer.render( chars, world.waterTable );
         RabbitRenderer.render( chars, world.rabbits );
         ThingRenderer.render( chars, world.things );
 
