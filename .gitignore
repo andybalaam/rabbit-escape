@@ -19,6 +19,9 @@ rabbit-escape-ui-android/app/src/main/res/drawable-hdpi/*.png
 rabbit-escape-ui-android/app/src/main/res/drawable-xhdpi/*.png
 rabbit-escape-ui-android/app/src/main/res/drawable-xxhdpi/*.png
 rabbit-escape-ui-android/app/src/main/res/drawable-xxxhdpi/*.png
+rabbit-escape-ui-android/.idea
+rabbit-escape-ui-android/rabbit-escape-ui-android.iml
+rabbit-escape-ui-android/app/app.iml
 *.apk
 *.ap_
 *.dex
