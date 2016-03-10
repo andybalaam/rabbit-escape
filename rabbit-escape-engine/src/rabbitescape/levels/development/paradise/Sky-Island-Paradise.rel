@@ -1,0 +1,28 @@
+:name=Sky Island Paradise
+:description=Don't be tistracted by the paradise just get to the otherside of the island.
+:author_name=GamingInky
+:author_url=https://github.com/GamingInky
+:hint.1=Get past the tree.
+:hint.2=You will need to bridge.
+:hint.3=At the end you need to dig the bridge's over the hole.
+:num_rabbits=1
+:num_to_save=1
+:dig=1
+:bridge=1
+:climb=1
+:music=
+         #                                           
+      /  #  \                                        
+       # # #                                         
+       b###                                          
+Q    /#######\      # # # # #                        
+         #       (# # # # # # #                      
+         #      (  ###########   ()                ##
+         #     (  #           # (  )                #
+###################           ### ###################
+ ##################           ###    O##########     
+  #################          ############            
+   ##################                                
+    ###########                                      
+     #######                                         
+      ###                                            

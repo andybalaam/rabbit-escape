@@ -1,0 +1,18 @@
+:name=Heavy metal
+:description=
+:author_name=colonelfazackerley
+:author_url=
+:num_rabbits=5
+:num_to_save=5
+:rabbit_delay=5
+:bash=1
+:bridge=3
+:climb=1
+:dig=1
+
+ Q  M   O
+#   #   #
+#   M   #
+#####  /#
+##### /##
+#########

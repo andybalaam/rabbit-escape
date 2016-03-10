@@ -1,0 +1,26 @@
+:name=Flagging
+:description=Are we nearly there yet?
+:author_name=tttppp
+:author_url=https://github.com/tttppp
+:hint.1.code=
+:hint.2.code=
+:hint.3.code=
+:solution.1.code=MhHM{E*O{ShE )vME<<hvv)vw(MH@:$)v4HmvME\vv[<|{vC|Erw)vn)8v$-
+:num_rabbits=5
+:num_to_save=5
+:rabbit_delay=10
+:num_saved=0
+:num_killed=0
+:num_waiting=5
+:paused=false
+:bridge=4
+:dig=1
+##############
+#            #
+#            #
+#   ######   #
+#   ######   #
+# Q ######   #
+#   ######   #
+#   #      O #
+##############

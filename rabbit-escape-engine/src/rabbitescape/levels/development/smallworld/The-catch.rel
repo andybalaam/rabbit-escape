@@ -1,0 +1,21 @@
+:name=The catch
+:description=
+:author_name=
+:author_url=
+:solution.1.code=v@vnvv<v6m"vEp_m)cnbb)E"Fx@Fx
+:num_rabbits=0
+:num_to_save=2
+:rabbit_delay=4
+:num_saved=0
+:num_killed=0
+:num_waiting=0
+:paused=false
+:block=1
+:bridge=1
+:dig=1
+ #r  #
+O ####
+#     
+
+    j#
+  //##

@@ -1,0 +1,16 @@
+:name=Brollychuting 101
+:brolly=1
+:bridge=1
+:climb=1
+:rabbit_delay=23,1
+:num_rabbits=5
+:num_to_save=5
+Q##########
+          O
+####   ####
+####   ####
+###    ####
+####   ####
+####   ####
+####   ####
+###########

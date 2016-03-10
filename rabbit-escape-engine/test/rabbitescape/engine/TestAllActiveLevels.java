@@ -5,6 +5,7 @@ import static org.hamcrest.CoreMatchers.*;
 import static rabbitescape.engine.Tools.*;
 import static rabbitescape.engine.textworld.TextWorldManip.*;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.HashSet;
@@ -15,6 +16,8 @@ import org.junit.Test;
 import rabbitescape.engine.menu.ByNameConfigBasedLevelsCompleted;
 import rabbitescape.engine.menu.LevelMenuItem;
 import rabbitescape.engine.menu.LevelsCompleted;
+import rabbitescape.engine.menu.LevelsMenu;
+import rabbitescape.engine.menu.LevelsMenu.ErrorLoadingLevelList;
 import rabbitescape.engine.menu.Menu;
 import rabbitescape.engine.menu.MenuDefinition;
 import rabbitescape.engine.menu.MenuItem;
@@ -89,6 +92,51 @@ public class TestAllActiveLevels
         } );
     }
 
+    @Test
+    public void All_staging_solutions_are_correct()
+    {
+        forEachStagingLevel( new T() {
+            @Override public void run( World world, LevelMenuItem lev )
+        {
+
+            boolean solved = false;
+            int i = 1;
+            for ( String s : world.solutions )
+            {
+                boolean thisS = runSolutionString( world, lev.fileName, i, s );
+                if ( thisS )
+                {
+                    solved = true;
+                }
+                ++i;
+            }
+
+            if ( !solved )
+            {
+                throw new AssertionError(
+                    "Level " + lev.fileName + " has no solution!" );
+            }
+
+        } } );
+    }
+
+    @Test
+    public void All_development_solutions_are_correct()
+    {
+        forEachDevelopmentLevel( new T() {
+            @Override public void run( World world, LevelMenuItem lev )
+        {
+
+            int i = 1;
+            for ( String s : world.solutions )
+            {
+                runSolutionString( world, lev.fileName, i, s );
+                ++i;
+            }
+
+        } } );
+    }
+
     // --
 
     private void forEachOfficialLevel( T test )
@@ -106,6 +154,43 @@ public class TestAllActiveLevels
                         new IgnoreWorldStatsListener(), lev.fileName );
 
                 test.run( world, lev );
+            }
+        }
+    }
+
+    private void forEachStagingLevel( T test )
+    {
+        forEachUnofficialLevel( test, "staging" );
+    }
+
+    private void forEachDevelopmentLevel( T test )
+    {
+        forEachUnofficialLevel( test, "development" );
+    }
+
+    private void forEachUnofficialLevel( T test, String developmentStage )
+    {
+        String[] levelSets = new String[]{ "dejavu", "paradise", "smallworld", "unsorted" };
+        for ( String levelSet : levelSets )
+        {
+            String levelsDir = developmentStage + File.separator + levelSet;
+            try
+            {
+                LevelsMenu lm = new LevelsMenu( levelsDir, new IgnoreLevelsCompleted() );
+                for (MenuItem levelItem : lm.items)
+                {
+                    LevelMenuItem lev = (LevelMenuItem)levelItem;
+
+                    World world = new LoadWorldFile(
+                        new NothingExistsFileSystem() ).load(
+                            new IgnoreWorldStatsListener(), lev.fileName );
+
+                    test.run( world, lev );
+                }
+            }
+            catch ( ErrorLoadingLevelList e )
+            {
+                System.out.println( "Warning: No level list found for " + levelsDir );
             }
         }
     }

@@ -1,0 +1,27 @@
+:name=Flagellate
+:description=I assume you like punishment.
+:author_name=tttppp
+:author_url=https://github.com/tttppp
+:hint.1.code=
+:hint.2.code=
+:hint.3.code=
+:solution.1.code=-;-;-;-;I:fxZH[-:MDx.e:I:~M:h:M:M:j:M*j4$Ch4bx;Hv:hx-QvDeMv:v$-xxv:xMMb;/Hxhh:<QI:eh-Pj|
+:num_rabbits=5
+:num_to_save=5
+:rabbit_delay=10
+:num_saved=0
+:num_killed=0
+:num_waiting=5
+:paused=false
+:bridge=1
+:climb=5
+:dig=2
+##############
+#            #
+#            #
+#   ######   #
+#   ######   #
+# Q ######   #
+#   ######   #
+#   #      O #
+##############

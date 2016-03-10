@@ -1,0 +1,25 @@
+:name=Planet Paradise
+:description=Don't lose your gravity and fall off the planet just get to the core.
+:author_name=GamingInky
+:author_url=https://github.com/GamingInky
+:hint.1=You have to smash the planet.
+:hint.2=The lower you are the better.
+:hint.3=Bridging would be useful at the end.
+:num_rabbits=1
+:num_to_save=1
+:bash=2
+:bridge=2
+:music=
+                 Q         
+                          #
+                          #
+               # #         
+                ###        
+               #####    #  
+           #  #######   ## 
+          #################
+         # #  ## O###   ## 
+        #        ###    #  
+       #        ###        
+     #           #         
+     ########## # #        

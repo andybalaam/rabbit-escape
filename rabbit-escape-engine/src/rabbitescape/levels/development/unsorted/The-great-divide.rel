@@ -1,0 +1,15 @@
+:name=The great divide
+:num_rabbits=3
+:num_to_save=3
+:climb=1
+:brolly=1
+:bridge=2
+:bash=2
+ O         
+##   #   ##
+#Q   #    #
+#    #    #
+#    #    #
+#    #    #
+#    #    #
+###########

@@ -1,0 +1,25 @@
+:name=Cliff Hanger 2
+:description= 
+:hint.1.code=`JF?&)28&2ie:9eF2i1pJJ7)28w?QQJmQJ&edS88i:Je22?&`ee:J9:`pJ?JJewJ9:QA?m:J:J0
+:hint.2.code=--$[--~6_)f-&IYc$I7$-~I#BY~(Y-}fC--#6YI(c~ff~Vg$&
+:hint.3.code=v:/dd7D7up:v6IRD57d6xV:6RzdpDD16dd1/*Dpvg7/Dodz17vpD7d<5d56D1dVu|71vpdpz15dpd1dm
+:num_rabbits=4
+:num_to_save=4
+:block=2
+:climb=1
+:dig=4
+:bridge=2
+:bash=3
+:explode=2
+:rabbit_delay=10,10,4
+:music=tryad-witness
+###########
+#        O#
+#         #
+#         #
+#         #
+#        Q#
+# *       #
+###     ###
+###########
+:*=c

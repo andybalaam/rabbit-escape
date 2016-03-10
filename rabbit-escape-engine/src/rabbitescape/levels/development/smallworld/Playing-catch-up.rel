@@ -1,0 +1,22 @@
+:name=Playing catch up
+:description=
+:author_name=
+:author_url=
+:solution.1.code=UhDu@_NuAt:AbD:{{je}:YMuSL:t:]:t_O+MM{H
+:num_rabbits=3
+:num_to_save=3
+:rabbit_delay=10,4
+:num_saved=0
+:num_killed=0
+:num_waiting=3
+:paused=false
+:bridge=5
+:climb=2
+:dig=2
+
+#(####
+#)####
+#(####
+Q)####
+ (# O 
+### # 
