@@ -1,0 +1,31 @@
+:name=Alice in Painland
+:description=
+:num_rabbits=4
+:num_to_save=4
+:rabbit_delay=25
+:bridge=5
+:dig=4
+:bash=4
+:block=1
+:music=tryad-witness
+###################
+
+
+  Q                
+
+#######   #########
+#######   #########
+     ##   ##       
+     ##   ##       
+     ##   ##       
+     ##   ##       
+     ##   ##       
+     ##   ##       
+     ##   ##       
+     ##   ##       
+     ##   ##       
+     ##   ##       
+     ##   O#       
+#######   #########
+#######   #########
+

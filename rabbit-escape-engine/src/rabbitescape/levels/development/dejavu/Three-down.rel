@@ -1,0 +1,27 @@
+:name=Three Down
+:description=Can the two climbers pull their friend to safety?
+:hint.1.code=h{VllV)aV{W.]WaQVWhVcZ{7(ZZhV"x"Ve.]&WZWV.{,%.
+:hint.2.code=h'z*zd)9hzBoMByEdnh_y-nS*zzVUDzb9';zzz'bUD
+:hint.3.code=s$@DkO]D=]@@Wa]D3Oj]D[D@seajkW@[j@XaXO@FD>W@@3>[H|
+% Colonel Fazackerley's solution
+:solution.1.code=52wh&5&Fh5*}&/y&*}&"{zhw/&BPDKF*}%5*}&@Kvh>`&Xvy/FIy&`h&D2&ZhAF/&%Vy}:*@00h!&8&VO*}&v*/}`P@&BhZF&I&/Z*>b55I}y`@`Oh2F&&>/*5ksVG}
+:num_rabbits=4
+:num_to_save=4
+:climb=2
+:bridge=3
+:bash=3
+:dig=3
+:explode=3
+:block=3
+:music=tryad-the_final_rewind
+#################
+#  Q           O#
+#           / /##
+#          /#/###
+########### #####
+#           #####
+#           #####
+#  Q Q Q    #####
+#           #####
+#           #####
+#################

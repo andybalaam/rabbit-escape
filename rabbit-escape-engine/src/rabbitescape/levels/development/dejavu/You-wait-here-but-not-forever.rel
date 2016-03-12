@@ -1,0 +1,22 @@
+:name=You wait here, but not forever
+:description=
+:author_name=GamingInky
+:author_url=https://github.com/GamingInky
+:solution.1.code=guw{:g/w90wg5ggg7+,>gb5grwK0r5g;w:5gw5gr:ugg:+r{Ku5Y5rL:rPg9Gg9g+:ruw{Y{/Lc5Pg:Grwg0
+:num_rabbits=10
+:num_to_save=10
+:rabbit_delay=4
+:block=2
+:bridge=6
+:explode=2
+##############################
+#                            #
+#    Q                      O#
+#                   # ########
+#           #\  #\   (#/#/\  #
+#  ########        /#\/###/  #
+#                    /#####/ #
+#                     \####/ #
+#                    /###/ \ #
+#                      \     #
+##############################

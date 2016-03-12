@@ -1,0 +1,23 @@
+:name=Tomb of Doom
+:description=Reach the burial chamber
+:hint.1.code=?@1J&&@y,r@)&?@Iz7,a@&?@rr&@z29)/@[?)29?@@z?&h2@?a12 7Va)?&*y7?@[&[y@J9&Ir[z&r@?2&@&r@1z7 J9@@79)@71))[z2I1&*
+:hint.2.code=7HSxS*HK*/HkH7HS@W*s@*SH@0S sSH7s1HSD5:x*801+7s1xD1xrS5:!@@@JKH: S@SHsHsSDS7JHSSD@:JJJSS/5S7JHK5S0S0SSDx
+:hint.3.code=Z4T q4^*^k77.oZtuo .Zoy!7Lu47oto}kTo?7t,Zuoto+Tko6Z.y^kyt^4T!o,oukyty!Zk}roTo.ko!.k4o@y^yZToy@}47dsoZ46o kuy74oZokyo^okypoo^yky4^uoTtJ7L>tT>o^ 7L6uoZ.^q.ooTotkZ7o^ZTyZL@ookuTyo4o.o6uk7L^y^y>ook*,T
+% This is colonelfazackerley's solution, not the "official" solution.
+:solution.1.code=<x}:~-f`|:f`ZQPb~:H.x}f::3.3`|:f`Q{.Dfm.DUhJJ.hhm++e::DxxHb.}ffx}}e:{}``/::<$vC:::eexFQ[
+:num_to_save=3
+:num_rabbits=3
+:dig=5
+:bash=5
+:block=2
+:rabbit_delay=10
+          Q          
+
+          /\         
+         /##\        
+        /####\       
+       /######\      
+      /########\     
+     /##########\    
+    /####O#######\   
+  ################## 

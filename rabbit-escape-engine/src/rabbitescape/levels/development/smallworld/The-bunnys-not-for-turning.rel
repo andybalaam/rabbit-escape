@@ -1,0 +1,21 @@
+:name=The bunny's not for turning
+:description=
+:author_name=
+:author_url=
+:solution.1.code=3rK~Kj8e3(+Kh7Z+2O3tZ+yQrKKy&72n&K(~79(&[W~
+:num_rabbits=3
+:num_to_save=3
+:rabbit_delay=4
+:num_saved=0
+:num_killed=0
+:num_waiting=3
+:paused=false
+:bash=2
+:block=1
+ Q   
+ *   
+ # ##
+O  ##
+#####
+:*=ccc
+

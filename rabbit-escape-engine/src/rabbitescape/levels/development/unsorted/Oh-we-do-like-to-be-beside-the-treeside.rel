@@ -1,0 +1,26 @@
+:name=Oh we do like to be beside the tree-side
+:description=Wait, can rabbits climb trees?
+:author_name=tttppp
+:author_url=https://github.com/tttppp
+:num_rabbits=4
+:num_to_save=4
+:rabbit_delay=15
+:bash=20
+:bridge=20
+:dig=20
+:block=20
+:explode=20
+:music=tryad-empty
+
+            O  /#  
+            #####  
+              ##   
+              ##   
+              #####
+      #       ###  
+     /#####\  ###  
+     #    #######  
+             ####  
+ Q           ####  
+#           /####\ 
+#################  

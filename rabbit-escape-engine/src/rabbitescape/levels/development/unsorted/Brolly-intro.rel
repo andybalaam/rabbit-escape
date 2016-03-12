@@ -1,0 +1,18 @@
+:name=Brolly intro
+:brolly=2
+:bridge=1
+:dig=1
+:block=1
+:explode=1
+:climb=1
+:rabbit_delay=13,13,5
+:num_rabbits=5
+:num_to_save=5
+Q        
+
+#####    
+#####    
+#####    
+#####    
+#####   O
+#########
