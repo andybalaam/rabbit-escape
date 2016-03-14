@@ -17,7 +17,7 @@ public class TestAnimations
         for ( State s: State.values() )
         {
             String reaName = s.toString().toLowerCase();
-            if ( reaName.equals( "nothing" ) )
+            if ( reaName.equals( "nothing" ) || reaName.equals( "water_region_empty" ) )
             { // Special case: no rea required.
                 continue;
             }
