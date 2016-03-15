@@ -1,8 +1,10 @@
 package rabbitescape.engine;
 
-public enum Direction
-{
-    UP, RIGHT, DOWN, LEFT;
+public enum Direction {
+    UP,
+    RIGHT,
+    DOWN,
+    LEFT;
 
     public static Direction opposite( Direction input )
     {

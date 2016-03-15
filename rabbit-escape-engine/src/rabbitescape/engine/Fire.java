@@ -39,6 +39,16 @@ public class Fire extends Thing
     @Override
     public void calcNewState( World world )
     {
+        // Check if being extinguished.
+        for ( WaterRegion waterRegion : world.waterTable.getItemsAt( x, y ) )
+        {
+            if ( waterRegion.getContents() > 0 )
+            {
+                state = FIRE_EXTINGUISHING;
+                return;
+            }
+        }
+
         Block blockBelow = world.getBlockAt( x, y + 1 );
         // Note: when flatBelow is true may be on a slope with a flat below,
         // or sitting on the flat
@@ -131,6 +141,9 @@ public class Fire extends Thing
             {
                 world.changes.removeFire( this );
             }
+            return;
+        case FIRE_EXTINGUISHING:
+            world.changes.removeFire( this );
             return;
         default:
             return;

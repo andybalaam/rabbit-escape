@@ -147,6 +147,7 @@ public class TestGameLoop
                 w.blockTable.getListCopy(),
                 w.rabbits,
                 w.things,
+                w.waterTable.getListCopy(),
                 w.abilities,
                 w.name,
                 w.description,

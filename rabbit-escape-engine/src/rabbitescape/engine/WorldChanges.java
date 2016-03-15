@@ -36,6 +36,7 @@ public class WorldChanges
     private final List<Block>  blocksToAdd    = new ArrayList<Block>();
     private final List<Block>  blocksToRemove = new ArrayList<Block>();
     public final List<Point>   blocksJustRemoved = new ArrayList<Point>();
+    private final List<Point>  waterPointsToRecalculate = new ArrayList<>();
 
     private boolean explodeAll = false;
 
@@ -66,6 +67,11 @@ public class WorldChanges
         world.things.removeAll( fireToRemove );
         world.blockTable.removeAll(  blocksToRemove );
 
+        for ( Point point : waterPointsToRecalculate )
+        {
+            world.recalculateWaterRegions( point );
+        }
+
         if ( rabbitsToSave.size() > 0 )
         {
             updateStats();
@@ -79,6 +85,7 @@ public class WorldChanges
         fireToRemove.clear();
         blocksToAdd.clear();
         blocksToRemove.clear();
+        waterPointsToRecalculate.clear();
 
         if ( explodeAll )
         {
@@ -109,6 +116,7 @@ public class WorldChanges
         tokensToRemove.clear();
         blocksToAdd.clear();
         blocksToRemove.clear();
+        waterPointsToRecalculate.clear();
     }
 
     private synchronized void revertEnterRabbits()
@@ -199,6 +207,7 @@ public class WorldChanges
     public synchronized void addBlock( Block block )
     {
         blocksToAdd.add( block );
+        waterPointsToRecalculate.add( new Point( block.x, block.y ) );
     }
 
     public synchronized void removeBlockAt( int x, int y )
@@ -210,6 +219,7 @@ public class WorldChanges
         }
         blocksJustRemoved.add( new Point( x, y ) );
         blocksToRemove.add( block );
+        waterPointsToRecalculate.add( new Point( x, y ) );
     }
 
     public synchronized List<Thing> tokensAboutToAppear()

@@ -64,6 +64,11 @@ public class ChangeRenderer
             case FIRE_D_FALL_TO_RISE_LEFT:
                 chars.set(  change.x, change.y + 1, 'g' );
                 break;
+            case FIRE_EXTINGUISHING:
+                break;
+            case PIPE:
+                chars.set( change.x, change.y, 'P' );
+                break;
             case RABBIT_BURNING:
             case RABBIT_BURNING_ON_SLOPE:
                 chars.set(  change.x, change.y, 'X' );
@@ -277,6 +282,8 @@ public class ChangeRenderer
             case RABBIT_EXPLODING:
                 chars.set( change.x, change.y, 'P' );
                 break;
+            case RABBIT_OUT_OF_BOUNDS:
+                break;
             case TOKEN_BASH_STILL:
             case TOKEN_BASH_ON_SLOPE:
             case TOKEN_DIG_STILL:
@@ -307,6 +314,17 @@ public class ChangeRenderer
             case TOKEN_BROLLY_FALLING:
             case TOKEN_BROLLY_FALL_TO_SLOPE:
                 chars.set( change.x, change.y + 1, 'f' );
+                break;
+            case WATER_REGION:
+                chars.set( change.x, change.y, 'N' );
+                break;
+            case WATER_REGION_HALF:
+                chars.set( change.x, change.y, 'n' );
+                break;
+            case WATER_REGION_FALLING:
+                chars.set( change.x, change.y, 'n' );
+                break;
+            case WATER_REGION_EMPTY:
                 break;
             case ENTRANCE:
                 break;

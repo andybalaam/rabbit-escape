@@ -230,4 +230,108 @@ public class TestFire
             "#######"
         );
     }
+
+    /**
+     * A slightly complicated scenario where a fire is extinguished by water. In
+     * order to check the fire has gone, a rabbit is used (sacrificed) to
+     * redirect the water away from the spot where the fire was, in order to
+     * prove that it is now empty.
+     */
+    @Test
+    public void Fire_extinguished_by_water()
+    {
+        assertWorldEvolvesLike(
+            "   j#" + "\n" +
+            "# ###" + "\n" +
+            "# #P " + "\n" +
+            "#\\b# " + "\n" +
+            "### A" + "\n" +
+            "    #",
+
+            " <j #" + "\n" +
+            "# ###" + "\n" +
+            "# #P " + "\n" +
+            "#\\b# " + "\n" +
+            "### A" + "\n" +
+            "    #",
+
+            " j  #" + "\n" +
+            "#f###" + "\n" +
+            "#f#Pn" + "\n" +
+            "#\\b# " + "\n" +
+            "### A" + "\n" +
+            "    #",
+
+            "    #" + "\n" +
+            "# ###" + "\n" +
+            "#j#Pn" + "\n" +
+            "#ab#n" + "\n" +
+            "### A" + "\n" +
+            "    #",
+
+            "    #" + "\n" +
+            "# ###" + "\n" +
+            "# #Pn" + "\n" +
+            "#|b#n" + "\n" +
+            "### n" + "\n" +
+            "    #",
+
+            "    #" + "\n" +
+            "# ###" + "\n" +
+            "# #Pn" + "\n" +
+            "#r_#n" + "\n" +
+            "###nn" + "\n" +
+            "    #",
+
+            "    #" + "\n" +
+            "# ###" + "\n" +
+            "# #Pn" + "\n" +
+            "#\\rKn" + "\n" +
+            "###nn" + "\n" +
+            "   n#",
+
+            "    #" + "\n" +
+            "# ###" + "\n" +
+            "# #Pn" + "\n" +
+            "#\\r>n" + "\n" +
+            "###nn" + "\n" +
+            "   n#",
+
+            "    #" + "\n" +
+            "# ###" + "\n" +
+            "# #Pn" + "\n" +
+            "#\\ Nn" + "\n" + // The rabbit drowns here.
+            "###nn" + "\n" +
+            "   n#",
+
+            "    #" + "\n" +
+            "# ###" + "\n" +
+            "# #Pn" + "\n" +
+            "#\\nnn" + "\n" +
+            "###Nn" + "\n" +
+            "   n#",
+
+            "    #" + "\n" +
+            "# ###" + "\n" +
+            "# #P " + "\n" +
+            "#nnNn" + "\n" +
+            "###nn" + "\n" +
+            "   N#",
+
+            "    #" + "\n" +
+            "# ###" + "\n" +
+            "# #Pn" + "\n" +
+            "#nnn " + "\n" +
+            "###Nn" + "\n" +
+            "  nn#",
+
+            // The fire has been extinguished by the water.
+            "    #" + "\n" +
+            "# ###" + "\n" +
+            "# #P " + "\n" +
+            "#nnnn" + "\n" +
+            "###  " + "\n" +
+            "   N#"
+        );
+    }
 }

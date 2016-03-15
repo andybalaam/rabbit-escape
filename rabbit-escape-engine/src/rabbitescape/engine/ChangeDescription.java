@@ -35,6 +35,10 @@ public class ChangeDescription
         FIRE_D_FALLING,
         FIRE_D_FALL_TO_RISE_LEFT,
         FIRE_D_FALL_TO_RISE_RIGHT,
+        FIRE_EXTINGUISHING,
+
+        PIPE,
+
         RABBIT_BURNING,
         RABBIT_BURNING_ON_SLOPE,
         RABBIT_WALKING_LEFT,
@@ -201,6 +205,11 @@ public class ChangeDescription
         TOKEN_BROLLY_STILL,
         TOKEN_BROLLY_FALL_TO_SLOPE,
         TOKEN_BROLLY_ON_SLOPE,
+
+        WATER_REGION,
+        WATER_REGION_HALF,
+        WATER_REGION_EMPTY,
+        WATER_REGION_FALLING,
 
         ENTRANCE,
         EXIT,

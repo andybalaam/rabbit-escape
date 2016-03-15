@@ -1,9 +1,16 @@
 package rabbitescape.engine.textworld;
 
-import static rabbitescape.engine.Direction.*;
-import static rabbitescape.engine.Block.Material.*;
-import static rabbitescape.engine.Block.Shape.*;
-import static rabbitescape.engine.util.Util.*;
+import static rabbitescape.engine.Block.Material.EARTH;
+import static rabbitescape.engine.Block.Material.METAL;
+import static rabbitescape.engine.Block.Shape.BRIDGE_UP_LEFT;
+import static rabbitescape.engine.Block.Shape.BRIDGE_UP_RIGHT;
+import static rabbitescape.engine.Block.Shape.FLAT;
+import static rabbitescape.engine.Block.Shape.UP_LEFT;
+import static rabbitescape.engine.Block.Shape.UP_RIGHT;
+import static rabbitescape.engine.Direction.LEFT;
+import static rabbitescape.engine.Direction.RIGHT;
+import static rabbitescape.engine.util.Util.asChars;
+import static rabbitescape.engine.util.Util.split;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -17,6 +24,7 @@ import rabbitescape.engine.Block;
 import rabbitescape.engine.Entrance;
 import rabbitescape.engine.Exit;
 import rabbitescape.engine.Fire;
+import rabbitescape.engine.Pipe;
 import rabbitescape.engine.Rabbit;
 import rabbitescape.engine.Thing;
 import rabbitescape.engine.Token;
@@ -553,6 +561,12 @@ public class LineProcessor
             case 'A':
             {
                 ret = new Fire( x, y );
+                things.add( ret );
+                break;
+            }
+            case 'P':
+            {
+                ret = new Pipe( x, y );
                 things.add( ret );
                 break;
             }
