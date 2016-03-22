@@ -6,8 +6,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeMap;
+import java.util.TreeSet;
 
 import rabbitescape.engine.err.RabbitEscapeException;
 import rabbitescape.engine.util.Util.Function;
@@ -343,20 +345,179 @@ public class ConfigTools
         return val.toString();
     }
 
-    public static String setToString( SortedSet<String> ret )
+    /**
+     * Note: does not support negative numbers.
+     */
+    public static <T> Set<T> getSet(
+        Config cfg, String configKey, Class<T> clazz )
     {
-        return "[" + join( ",", map( quoteString(), ret ) ) + "]";
+        return stringToSet( cfg.get( configKey ), clazz );
     }
 
-    private static Function<String, String> quoteString()
+    /**
+     * Note: does not support negative numbers.
+     */
+    public static <T> void setSet( Config cfg, String configKey, Set<T> value )
     {
-        return new Function<String, String>()
+        cfg.set( configKey, setToString( new TreeSet<T>( value ) ) );
+    }
+
+    public static <T> String setToString( SortedSet<T> ret )
+    {
+        return "[" + join( ",", map( quoteString( ret ), ret ) ) + "]";
+    }
+
+    private static <T> Function<T, String> quoteString( SortedSet<T> set )
+    {
+        return new Function<T, String>()
         {
             @Override
-            public String apply( String t )
+            public String apply( T t )
             {
-                return "\"" + t + "\"";
+                if ( t instanceof String )
+                {
+                    return "\"" + t.toString() + "\"";
+                }
+                else
+                {
+                    return t.toString();
+                }
             }
         };
+    }
+
+    private static <T> Set<T> stringToSet( String jsonish, Class<T> clazz )
+    {
+        final int open_square_bracket = 0;
+        final int open_quote_or_digit_or_close_square_bracket = 1;
+        final int char_or_close_quote = 2;
+        final int end = 3;
+        final int digit_or_comma_or_close_square_bracket = 4;
+        final int comma_or_close_square_bracket = 5;
+        final int digit_or_open_quote = 6;
+
+        int mode = open_square_bracket;
+
+        boolean foundValue = false;
+        StringBuilder value = new StringBuilder();
+        Set<T> ret = new TreeSet<T>();
+
+        int i = 0;
+        for ( char ch : asChars( jsonish ) )
+        {
+            try
+            {
+                switch ( mode )
+                {
+                    case open_square_bracket:
+                        expect( "[", ch );
+                        mode = open_quote_or_digit_or_close_square_bracket;
+                        break;
+                    case open_quote_or_digit_or_close_square_bracket:
+                        expect( "\"0123456789]", ch );
+                        if ( ch == '"' )
+                        {
+                            expectValueTypeIs( clazz, String.class );
+                            foundValue = true;
+                            value.setLength( 0 );
+                            mode = char_or_close_quote;
+                        }
+                        else if ( ch == ']' )
+                        {
+                            maybeFoundValue( clazz, value, foundValue, ret );
+                            mode = end;
+                        }
+                        else
+                        {
+                            expectValueTypeIs( clazz, Integer.class );
+                            foundValue = true;
+                            value.setLength( 0 );
+                            value.append( ch );
+                            mode = digit_or_comma_or_close_square_bracket;
+                        }
+                        break;
+                    case char_or_close_quote:
+                        if ( ch == '"' )
+                        {
+                            maybeFoundValue( clazz, value, foundValue, ret );
+                            mode = comma_or_close_square_bracket;
+                        }
+                        else
+                        {
+                            value.append( ch );
+                        }
+                        break;
+                    case comma_or_close_square_bracket:
+                        expect( ",]", ch );
+                        if ( ch == ',' )
+                        {
+                            maybeFoundValue( clazz, value, foundValue, ret );
+                            mode = digit_or_open_quote;
+                        }
+                        else
+                        {
+                            mode = end;
+                        }
+                        break;
+                    case digit_or_comma_or_close_square_bracket:
+                        expect( "0123456789,]", ch );
+                        if ( ch == ',' )
+                        {
+                            maybeFoundValue( clazz, value, foundValue, ret );
+                            mode = digit_or_open_quote;
+                        }
+                        else if ( ch == ']' )
+                        {
+                            maybeFoundValue( clazz, value, foundValue, ret );
+                            mode = end;
+                        }
+                        else
+                        {
+                            value.append( ch );
+                        }
+                        break;
+                    case digit_or_open_quote:
+                        expect( "0123456789\"", ch );
+                        if ( ch == '"' )
+                        {
+                            expectValueTypeIs( clazz, String.class );
+                            foundValue = true;
+                            value.setLength( 0 );
+                            mode = char_or_close_quote;
+                        }
+                        else
+                        {
+                            expectValueTypeIs( clazz, Integer.class );
+                            foundValue = true;
+                            value.setLength( 0 );
+                            value.append( ch );
+                            mode = digit_or_comma_or_close_square_bracket;
+                        }
+                        break;
+                    case end:
+                        expect( "", ch ); // Throw - should have ended!
+                        break;
+                }
+
+                ++i;
+            }
+            catch( ConfigParsingError e )
+            {
+                e.charNumber = i;
+                e.configValue = jsonish;
+                throw e;
+            }
+        }
+        return ret;
+    }
+
+    @SuppressWarnings( "unchecked" )
+    private static <T> void maybeFoundValue(
+        Class<T> clazz, StringBuilder value, boolean foundValue, Set<T> ret )
+    {
+        if ( foundValue )
+        {
+            ret.add( makeValue( value, clazz ) );
+        }
     }
 }

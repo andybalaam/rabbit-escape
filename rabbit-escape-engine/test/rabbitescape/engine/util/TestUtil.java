@@ -13,9 +13,12 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.TreeMap;
+import java.util.TreeSet;
 
 import org.junit.Test;
 
@@ -658,6 +661,28 @@ public class TestUtil
 
         assertThat(
             newMap( "x", "y", "z", "a" ),
+            equalTo( expected )
+        );
+    }
+
+    @Test
+    public void Create_empty_set_with_newSet()
+    {
+        assertThat(
+            newSet(),
+            equalTo( (Set<Object>)new HashSet<Object>() )
+        );
+    }
+
+    @Test
+    public void Create_full_set_with_newSet()
+    {
+        Set<String> expected = new TreeSet<>();
+        expected.add( "x" );
+        expected.add( "z" );
+
+        assertThat(
+            newSet( "x", "z" ),
             equalTo( expected )
         );
     }

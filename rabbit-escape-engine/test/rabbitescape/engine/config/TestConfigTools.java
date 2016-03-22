@@ -4,7 +4,9 @@ import static org.hamcrest.MatcherAssert.*;
 import static org.hamcrest.CoreMatchers.*;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
@@ -153,6 +155,89 @@ public class TestConfigTools
         assertThat(
             ConfigTools.setToString( set ),
             equalTo( "[\"a\",\"bc\",\"def\"]" )
+        );
+    }
+
+    @Test
+    public void Can_get_and_set_sets_of_string()
+    {
+        // Make a config with default map with 1 key
+        ConfigSchema def = new ConfigSchema();
+        def.set( "key1", "[\"a\",\"bb\",\"\"]", "desc1" );
+        Config cfg = new Config( def, new MemoryConfigStorage() );
+
+        // Get the map value out
+        assertThat(
+            ConfigTools.getSet( cfg, "key1", String.class ),
+            equalTo( newSet( "a", "bb", "" ) )
+        );
+
+        // Set a different value
+        Set<String> st = newSet( "aaa", "DFG", "xyz" );
+        ConfigTools.setSet( cfg, "key1", st );
+
+        // Check it comes out unchanged
+        assertThat(
+            ConfigTools.getSet( cfg, "key1", String.class ),
+            equalTo( st )
+        );
+
+        // Perhaps overkill: assert storage format
+        assertThat(
+            cfg.get( "key1" ),
+            equalTo( "[\"DFG\",\"aaa\",\"xyz\"]" )
+        );
+    }
+
+    @Test
+    public void Can_get_empty_set()
+    {
+        // Make a config with default map with 1 key
+        ConfigSchema def = new ConfigSchema();
+        def.set( "key1", "[]", "desc1" );
+        Config cfg = new Config( def, new MemoryConfigStorage() );
+
+        // We get an empty map of the type we ask for
+        assertThat(
+            ConfigTools.getSet( cfg, "key1", String.class ),
+            equalTo( (Set<String>)new HashSet<String>() )
+        );
+
+        // We get an empty map of the type we ask for
+        assertThat(
+            ConfigTools.getSet( cfg, "key1", Integer.class ),
+            equalTo( (Set<Integer>)new HashSet<Integer>() )
+        );
+    }
+
+    @Test
+    public void Can_get_and_set_sets_of_int()
+    {
+        // Make a config with default map with 1 key
+        ConfigSchema def = new ConfigSchema();
+        def.set( "key1", "[1,5,7]", "desc1" );
+        Config cfg = new Config( def, new MemoryConfigStorage() );
+
+        // Get the map value out
+        assertThat(
+            ConfigTools.getSet( cfg, "key1", Integer.class ),
+            equalTo( newSet( 1, 5, 7 ) )
+        );
+
+        // Set a different value
+        Set<Integer> st = newSet( 45, 56, 0 );
+        ConfigTools.setSet( cfg, "key1", st );
+
+        // Check it comes out unchanged
+        assertThat(
+            ConfigTools.getSet( cfg, "key1", Integer.class ),
+            equalTo( st )
+        );
+
+        // Perhaps overkill: assert storage format
+        assertThat(
+            cfg.get( "key1" ),
+            equalTo( "[0,45,56]" )
         );
     }
 
