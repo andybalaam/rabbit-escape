@@ -221,13 +221,16 @@ sounds: no-make-warnings $(SOUNDSWAV)
 
 music: no-make-warnings $(MUSICWAV)
 
-%/ls.txt: %/*.re*
+%/ls.txt: %/*.rea
 	@ls $(@D) --hide=ls.txt > $(@D)/ls.txt
+
+%/levels.txt: %/*.rel
+	@./build-scripts/levelnames $(@D) > $(@D)/levels.txt
 
 animations: no-make-warnings $(ANIMATIONS_DIR)/ls.txt
 	@echo ". Generating animations list"
 
-levels: no-make-warnings $(patsubst %, %/ls.txt, $(LEVELS_DIRS))
+levels: no-make-warnings $(patsubst %, %/levels.txt, $(LEVELS_DIRS))
 	@echo ". Generating level lists"
 
 versioncheck:
@@ -262,6 +265,7 @@ clean: no-make-warnings
 	@touch rabbit-escape-ui-text/bin/touchfile && rm -r rabbit-escape-ui-text/bin/*
 	@touch rabbit-escape-ui-swing/bin/touchfile && rm -r rabbit-escape-ui-swing/bin/*
 	@find ./ -name "ls.txt" -delete
+	@find ./ -name "levels.txt" -delete
 	@mkdir -p dist && rm -r dist
 
 clean-images: no-make-warnings

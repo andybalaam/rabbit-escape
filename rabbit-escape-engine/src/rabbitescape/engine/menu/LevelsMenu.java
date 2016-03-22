@@ -44,7 +44,7 @@ public class LevelsMenu extends Menu
         String levelsDir, LevelsCompleted levelsCompleted )
     {
         String[] levelFileNames = levelsInResource(
-            "/rabbitescape/levels/" + levelsDir + "/ls.txt" );
+            "/rabbitescape/levels/" + levelsDir + "/levels.txt" );
 
         MenuItem[] ret = new MenuItem[ levelFileNames.length ];
 

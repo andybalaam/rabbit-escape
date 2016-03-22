@@ -1,0 +1,4 @@
+#!/bin/bash
+
+ls --hide=ls.txt --hide=levels.txt "$@"
+
