@@ -22,7 +22,17 @@ public class LevelsMenu extends Menu
 
     public LevelsMenu( String levelsDir, LevelsCompleted levelsCompleted )
     {
-        super( "Choose a level:", menuItems( levelsDir, levelsCompleted ) );
+        this(
+            levelsDir,
+            levelsCompleted,
+            menuItems( levelsDir, levelsCompleted )
+        );
+    }
+
+    public LevelsMenu(
+        String levelsDir, LevelsCompleted levelsCompleted, MenuItem[] items )
+    {
+        super( "Choose a level:", items );
 
         this.levelsDir = levelsDir;
         this.levelsCompleted = levelsCompleted;
