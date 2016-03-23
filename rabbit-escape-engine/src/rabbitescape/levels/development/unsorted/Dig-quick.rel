@@ -1,0 +1,16 @@
+:name=Dig quick
+:description=Find a way to the exit before all the rabbits drown.
+:author_name=tttppp
+:num_rabbits=6
+:num_to_save=5
+:dig=5
+:solution.1.code=%HfCH\}l`h%%^EC%|h}jX
+:music=tryad-witness
+###########
+# P Q # P #
+#  \ /#  /#
+#\  ##  /##
+# #\   /  #
+#  ####   #
+#\       O#
+###########

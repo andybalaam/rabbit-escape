@@ -1,0 +1,17 @@
+:name=Waterfalls
+:description=Bridge across the waterfalls, but don't spend too long looking at the view.
+:author_name=tttppp
+:author_url=http://artificialworlds.net/rabbit-escape/
+:solution.1.code=%w]%&@]&T$uwo%&Tx&T$uw$uw%]9w$wuo%]9w$wT$u&&%&&%u&w$uw%%w"%&T$u&o%&o%&T]TT&C%&dw@^$$E&@|u]au$wTwwuo$wo]@"uw&[$%%&"wTw@uowT&$$uow$u9%]wu%$ww&[$wwou@uT%
+:num_rabbits=5
+:num_to_save=3
+:bridge=20
+:music=tryad-witness
+#####################
+#        P P   P    #
+#                  O#
+#              #    #
+#                   #
+#  Q       #  #  #  #
+#\     ##       #####
+######### # ## ######
