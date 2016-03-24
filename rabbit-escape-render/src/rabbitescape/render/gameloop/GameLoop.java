@@ -14,6 +14,7 @@ public class GameLoop
     private final Input input;
     private final Physics physics;
     private final Graphics graphics;
+    private final WaterDynamics water;
     private boolean running;
     private long simulation_time;
     private long frame_start_time;
@@ -24,6 +25,7 @@ public class GameLoop
     public GameLoop(
         Input input,
         Physics physics,
+        WaterDynamics water,
         Graphics graphics,
         Config config,
         PrintStream debugout
@@ -31,6 +33,7 @@ public class GameLoop
     {
         this.input = input;
         this.physics = physics;
+        this.water = water;
         this.graphics = graphics;
         this.config = config;
         this.debugout = debugout;
@@ -64,6 +67,7 @@ public class GameLoop
     {
         input.waitMs( 0 ); // Check for interruptions or input
         simulation_time = physics.step( simulation_time, frame_start_time );
+        water.update( physics.frameNumber() );
         graphics.draw( physics.frameNumber() );
         frame_start_time = waitForNextFrame( frame_start_time );
 

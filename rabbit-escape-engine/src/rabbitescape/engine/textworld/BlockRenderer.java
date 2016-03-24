@@ -12,7 +12,7 @@ public class BlockRenderer
         }
     }
 
-    private static char charForBlock( Block block )
+    public static char charForBlock( Block block )
     {
         switch ( block.material )
         {

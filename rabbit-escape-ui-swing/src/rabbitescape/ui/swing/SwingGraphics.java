@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.image.BufferStrategy;
 import java.util.List;
+import java.util.Vector;
 
 import rabbitescape.engine.World;
 import rabbitescape.engine.World.CompletionState;
@@ -11,11 +12,13 @@ import rabbitescape.render.AnimationCache;
 import rabbitescape.render.AnimationLoader;
 import rabbitescape.render.BitmapCache;
 import rabbitescape.render.GraphPaperBackground;
+import rabbitescape.render.Polygon;
 import rabbitescape.render.Renderer;
 import rabbitescape.render.SoundPlayer;
 import rabbitescape.render.Sprite;
 import rabbitescape.render.SpriteAnimator;
 import rabbitescape.render.gameloop.Graphics;
+import rabbitescape.render.gameloop.WaterDynamics;
 
 public class SwingGraphics implements Graphics
 {
@@ -30,12 +33,16 @@ public class SwingGraphics implements Graphics
         private static final SwingPaint graphPaperMinor =
             new SwingPaint( new Color( 235, 243, 255 ) );
 
+        private static final SwingPaint waterColor =
+            new SwingPaint( new Color( 10, 100, 220, 100 ) );
+
         private final java.awt.Canvas canvas;
         private final Renderer<SwingBitmap, SwingPaint> renderer;
         private final SoundPlayer soundPlayer;
         private final SpriteAnimator animator;
         private final int frameNum;
         private final World world;
+        private final WaterDynamics waterDynamics;
 
         public DrawFrame(
             BufferStrategy strategy,
@@ -44,7 +51,8 @@ public class SwingGraphics implements Graphics
             SoundPlayer soundPlayer,
             SpriteAnimator animator,
             int frameNum,
-            World world
+            World world,
+            WaterDynamics waterDynamics
         )
         {
             super( strategy );
@@ -54,6 +62,7 @@ public class SwingGraphics implements Graphics
             this.animator = animator;
             this.frameNum = frameNum;
             this.world = world;
+            this.waterDynamics = waterDynamics;
         }
 
         @Override
@@ -71,7 +80,9 @@ public class SwingGraphics implements Graphics
                 graphPaperMinor
             );
 
-            List<Sprite> sprites = animator.getSprites( frameNum );
+            drawPolygons( waterDynamics.polygons, swingCanvas );
+
+            List<Sprite> sprites = animator.getSprites( frameNum, waterDynamics );
 
             renderer.render(
                 swingCanvas,
@@ -81,6 +92,17 @@ public class SwingGraphics implements Graphics
 
             soundPlayer.play( sprites );
         }
+
+        void drawPolygons( Vector<Polygon> polygons, SwingCanvas swingCanvas )
+        {
+            double f = renderer.tileSize / 32.0;
+            for ( Polygon p: polygons )
+            {
+                int[] x = p.getX( f, renderer.offsetX );
+                int[] y = p.getY( f, renderer.offsetY );
+                swingCanvas.drawFilledPoly( x, y, waterColor );
+            }
+        }
     }
 
     private final World world;
@@ -89,6 +111,7 @@ public class SwingGraphics implements Graphics
     private final BufferStrategy strategy;
     private final SpriteAnimator animator;
     private final FrameDumper frameDumper;
+    private final WaterDynamics waterDynamics;
 
     public final Renderer<SwingBitmap, SwingPaint> renderer;
     private final SoundPlayer soundPlayer;
@@ -102,7 +125,8 @@ public class SwingGraphics implements Graphics
         GameUi jframe,
         BitmapCache<SwingBitmap> bitmapCache,
         SwingSound sound,
-        FrameDumper frameDumper
+        FrameDumper frameDumper,
+        WaterDynamics waterDynamics
     )
     {
         this.world = world;
@@ -120,6 +144,7 @@ public class SwingGraphics implements Graphics
         this.prevScrollY = -1;
         this.lastWorldState = null;
         this.frameDumper = frameDumper;
+        this.waterDynamics = waterDynamics;
     }
 
     @Override
@@ -134,7 +159,8 @@ public class SwingGraphics implements Graphics
             soundPlayer,
             animator,
             frame,
-            world
+            world,
+            waterDynamics
         );
 
         df.run();

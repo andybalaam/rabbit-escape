@@ -363,6 +363,11 @@ public class TestRendering
         )
         {
         }
+
+        @Override
+        public void drawFilledPoly( int[] xs, int[] ys, FakePaint paint )
+        {
+        }
     }
 
     private static class FakeBitmapLoader implements BitmapLoader<FakeBitmap>

@@ -6,17 +6,20 @@ import android.graphics.Paint;
 import android.view.SurfaceHolder;
 
 import java.util.List;
+import java.util.Vector;
 
 import rabbitescape.engine.World;
 import rabbitescape.render.AnimationCache;
 import rabbitescape.render.AnimationLoader;
 import rabbitescape.render.BitmapCache;
 import rabbitescape.render.GraphPaperBackground;
+import rabbitescape.render.Polygon;
 import rabbitescape.render.Renderer;
 import rabbitescape.render.SoundPlayer;
 import rabbitescape.render.Sprite;
 import rabbitescape.render.SpriteAnimator;
 import rabbitescape.render.gameloop.Graphics;
+import rabbitescape.render.gameloop.WaterDynamics;
 
 public class AndroidGraphics implements Graphics
 {
@@ -26,6 +29,7 @@ public class AndroidGraphics implements Graphics
     private final BitmapCache<AndroidBitmap> bitmapCache;
     private final SoundPlayer soundPlayer;
     private final World world;
+    private final WaterDynamics waterDynamics;
     private final AnimationCache animationCache;
     private final AndroidPaint paint;
 
@@ -54,6 +58,10 @@ public class AndroidGraphics implements Graphics
     private static final AndroidPaint graphPaperMinor =
         makePaint( Color.rgb( 235, 243, 255 ), Paint.ANTI_ALIAS_FLAG );
 
+
+    private static final AndroidPaint waterColor =
+            makePaint( Color.argb( 100, 10, 100, 220 ), Paint.ANTI_ALIAS_FLAG );
+
     private static AndroidPaint makePaint( int color )
     {
         Paint p = new Paint();
@@ -72,6 +80,7 @@ public class AndroidGraphics implements Graphics
         BitmapCache<AndroidBitmap> bitmapCache,
         SoundPlayer soundPlayer,
         World world,
+        WaterDynamics waterDynamics,
         int scrollX,
         int scrollY
     )
@@ -79,6 +88,7 @@ public class AndroidGraphics implements Graphics
         this.bitmapCache = bitmapCache;
         this.soundPlayer = soundPlayer;
         this.world = world;
+        this.waterDynamics = waterDynamics;
         this.scrollX = scrollX;
         this.scrollY = scrollY;
 
@@ -186,7 +196,7 @@ public class AndroidGraphics implements Graphics
 
         levelWidthPixels  = (int)( renderingTileSize * world.size.width );
         levelHeightPixels = (int)( renderingTileSize * world.size.height );
-        scrollBy( 0, 0 );
+        scrollBy(0, 0);
     }
 
     private float chooseRenderingTileSize( float suggestedSize )
@@ -230,11 +240,24 @@ public class AndroidGraphics implements Graphics
         GraphPaperBackground.drawBackground(
             world, renderer, androidCanvas, white, graphPaperMajor, graphPaperMinor );
 
-        List<Sprite> sprites = animator.getSprites( frameNum );
+        drawPolygons(waterDynamics.polygons, androidCanvas, renderer );
+
+        List<Sprite> sprites = animator.getSprites( frameNum, waterDynamics );
 
         soundPlayer.play( sprites );
 
         renderer.render( androidCanvas, sprites, paint );
+    }
+
+    void drawPolygons( Vector<Polygon> polygons, AndroidCanvas androidCanvas, Renderer<AndroidBitmap, AndroidPaint> renderer )
+    {
+        double f = renderer.tileSize / 32.0;
+        for ( Polygon p: polygons )
+        {
+            int[] x = p.getX( f, renderer.offsetX );
+            int[] y = p.getY( f, renderer.offsetY );
+            androidCanvas.drawFilledPoly( x, y, waterColor );
+        }
     }
 
     public void scrollBy( float x, float y )

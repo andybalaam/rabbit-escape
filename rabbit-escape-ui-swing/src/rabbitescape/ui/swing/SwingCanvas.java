@@ -56,4 +56,11 @@ public class SwingCanvas implements Canvas<SwingBitmap, SwingPaint>
         this.gfx.setPaint( paint.color );
         this.gfx.drawLine( (int)startX, (int)startY, (int)stopX, (int)stopY );
     }
+
+    @Override
+    public void drawFilledPoly( int[] xs, int[] ys, SwingPaint paint )
+    {
+        this.gfx.setPaint( paint.color );
+        this.gfx.fillPolygon( xs, ys, xs.length );
+    }
 }

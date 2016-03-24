@@ -12,4 +12,5 @@ public interface Canvas<T extends Bitmap, P extends Paint>
     public void drawColor( P paint );
     public void drawLine(
         float startX, float startY, float stopX, float stopY, P paint );
+    public void drawFilledPoly( int[] xs, int[] ys, P paint );
 }

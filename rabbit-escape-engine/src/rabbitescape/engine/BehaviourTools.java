@@ -270,6 +270,22 @@ public class BehaviourTools
         return ( block != null && block.riseDir() == opposite( rabbit.dir ) );
     }
 
+    public static boolean isSlopeNotBridge( Block b )
+    {
+        if ( null == b )
+        {
+            return false;
+        }
+        switch( b.shape )
+        {
+        case UP_LEFT:
+        case UP_RIGHT:
+            return true;
+        default:
+            return false;
+        }
+    }
+
     public int nextX()
     {
         return

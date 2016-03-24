@@ -1,5 +1,8 @@
 package rabbitescape.ui.android;
 
+import android.graphics.Paint;
+import android.graphics.Path;
+
 import rabbitescape.render.androidlike.Canvas;
 
 public class AndroidCanvas implements Canvas<AndroidBitmap, AndroidPaint>
@@ -40,6 +43,24 @@ public class AndroidCanvas implements Canvas<AndroidBitmap, AndroidPaint>
         float startX, float startY, float stopX, float stopY, AndroidPaint paint
     )
     {
-        this.canvas.drawLine( startX, startY, stopX, stopY, paint.paint );
+        this.canvas.drawLine(startX, startY, stopX, stopY, paint.paint);
+    }
+
+    @Override
+    public void drawFilledPoly( int[] xs, int[] ys, AndroidPaint paint )
+    {
+        if ( xs.length == 0 )
+        {
+            return;
+        }
+        paint.paint.setStyle( Paint.Style.FILL );
+        Path p = new Path();
+        p.moveTo( (float)xs[0], (float)ys[0]);
+        for ( int i = 1; i < xs.length ; i++ )
+        {
+            p.lineTo( (float)xs[i], (float)ys[i] );
+        }
+        p.close();
+        canvas.drawPath( p, paint.paint );
     }
 }

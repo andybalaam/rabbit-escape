@@ -54,6 +54,7 @@ public class GeneralPhysics implements Physics
     public int frame;
     public boolean fast;
     public final World world;
+    private final WaterDynamics water;
     private final WorldModifier worldModifier;
     private final LevelWinListener winListener;
     private final List<StatsChangedListener> statsListeners;
@@ -66,6 +67,21 @@ public class GeneralPhysics implements Physics
     {
         this(
             world,
+            WaterDynamics.getDummyWaterDynamics(),
+            winListener,
+            fast,
+            new SolutionIgnorer(),
+            SolutionInterpreter.getNothingPlaying(),
+            null,
+            false
+        );
+    }
+
+    public GeneralPhysics( World world, WaterDynamics waterDynamics, LevelWinListener winListener, boolean fast )
+    {
+        this(
+            world,
+            waterDynamics,
             winListener,
             fast,
             new SolutionIgnorer(),
@@ -78,6 +94,7 @@ public class GeneralPhysics implements Physics
 
     public GeneralPhysics(
         World world,
+        WaterDynamics water,
         LevelWinListener winListener,
         boolean fast,
         SolutionRecorderTemplate solutionRecorder,
@@ -88,6 +105,7 @@ public class GeneralPhysics implements Physics
     {
         this.frame = 0;
         this.world = world;
+        this.water = water;
         this.worldModifier = new WorldModifier( world, solutionRecorder );
         this.winListener = winListener;
         this.fast = fast;
@@ -115,6 +133,7 @@ public class GeneralPhysics implements Physics
 
                 doInterpreterActions();
                 worldModifier.step();
+                water.step( world );
                 checkWon();
                 notifyStatsListeners();
             }

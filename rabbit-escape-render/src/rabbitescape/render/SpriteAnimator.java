@@ -1,12 +1,11 @@
 package rabbitescape.render;
 
-import static rabbitescape.engine.ChangeDescription.State.WATER_REGION_EMPTY;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
 import rabbitescape.engine.*;
+import rabbitescape.render.gameloop.WaterDynamics;
 
 public class SpriteAnimator
 {
@@ -57,7 +56,7 @@ public class SpriteAnimator
         this.animationCache = animationCache;
     }
 
-    public List<Sprite> getSprites( int frameNum )
+    public List<Sprite> getSprites( int frameNum, WaterDynamics waterDynamics )
     {
         List<Sprite> ret = new ArrayList<>();
 
@@ -71,14 +70,6 @@ public class SpriteAnimator
             if ( !( thing instanceof Fire ) )
             {
                 addThing( frameNum, thing, null, ret );
-            }
-        }
-
-        for ( WaterRegion waterRegion : world.waterTable )
-        {
-            if ( waterRegion.state != WATER_REGION_EMPTY )
-            {
-                addThing( frameNum, waterRegion, null, ret );
             }
         }
 
