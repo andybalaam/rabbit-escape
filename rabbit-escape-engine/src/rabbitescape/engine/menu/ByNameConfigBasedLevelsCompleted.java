@@ -19,15 +19,16 @@ public class ByNameConfigBasedLevelsCompleted implements LevelsCompleted
     private static final Locale en_UK = Locale.UK;
 
     private final Config config;
-    private final LevelNames levelNames;
+    private final LevelsList levelsList;
 
     // ---
 
     public ByNameConfigBasedLevelsCompleted(
-        Config config, LevelNames levelNames )
+        Config config, LevelsList levelsList
+    )
     {
         this.config = config;
-        this.levelNames = levelNames;
+        this.levelsList = levelsList;
     }
 
     @Override
@@ -37,7 +38,7 @@ public class ByNameConfigBasedLevelsCompleted implements LevelsCompleted
             config, CFG_LEVELS_COMPLETED, String.class );
 
         int i = 0;
-        for ( String name : levelNames.namesInDir( stripNumber_( levelsDir ) ) )
+        for ( String name : levelsList.namesInDir( stripNumber_( levelsDir ) ) )
         {
             if ( !completed.contains( name ) )
             {
@@ -56,7 +57,7 @@ public class ByNameConfigBasedLevelsCompleted implements LevelsCompleted
             config, CFG_LEVELS_COMPLETED, String.class );
 
         String newlyCompleted =
-            levelNames.namesInDir( levelsDir ).get( levelNum - 1 );
+            levelsList.namesInDir( levelsDir ).get( levelNum - 1 );
 
         if ( !completed.contains( newlyCompleted ) )
         {

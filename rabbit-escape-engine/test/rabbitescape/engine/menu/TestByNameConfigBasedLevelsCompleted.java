@@ -78,13 +78,13 @@ public class TestByNameConfigBasedLevelsCompleted
             "level foo 3"
         );
 
-        LevelNames levelNames = new FakeLevelNames(
+        LevelsList levelsList = new FakeLevelsList(
             levelSet( "foo" ),
             levelSet( "bar" )
         );
 
         ByNameConfigBasedLevelsCompleted lc =
-            new ByNameConfigBasedLevelsCompleted( fakeConfig, levelNames );
+            new ByNameConfigBasedLevelsCompleted( fakeConfig, levelsList );
 
         assertThat( lc.highestLevelCompleted( "01_foo" ), equalTo( 3 ) );
     }
@@ -98,13 +98,13 @@ public class TestByNameConfigBasedLevelsCompleted
             "level foo 3"
         );
 
-        LevelNames levelNames = new FakeLevelNames(
+        LevelsList levelsList = new FakeLevelsList(
             levelSet( "foo" ),
             levelSet( "bar" )
         );
 
         ByNameConfigBasedLevelsCompleted lc =
-            new ByNameConfigBasedLevelsCompleted( fakeConfig, levelNames );
+            new ByNameConfigBasedLevelsCompleted( fakeConfig, levelsList );
 
         assertThat( lc.highestLevelCompleted( "02_bar" ), equalTo( 0 ) );
     }
@@ -125,13 +125,13 @@ public class TestByNameConfigBasedLevelsCompleted
             "level foo 10"
         );
 
-        LevelNames levelNames = new FakeLevelNames(
+        LevelsList levelsList = new FakeLevelsList(
             levelSet( "foo" ),
             levelSet( "bar" )
         );
 
         ByNameConfigBasedLevelsCompleted lc =
-            new ByNameConfigBasedLevelsCompleted( fakeConfig, levelNames );
+            new ByNameConfigBasedLevelsCompleted( fakeConfig, levelsList );
 
         assertThat( lc.highestLevelCompleted( "01_foo" ), equalTo( 10 ) );
     }
@@ -145,13 +145,13 @@ public class TestByNameConfigBasedLevelsCompleted
             "level foo 3"
         );
 
-        LevelNames levelNames = new FakeLevelNames(
+        LevelsList levelsList = new FakeLevelsList(
             levelSet( "foo" ),
             levelSet( "bar" )
         );
 
         ByNameConfigBasedLevelsCompleted lc =
-            new ByNameConfigBasedLevelsCompleted( fakeConfig, levelNames );
+            new ByNameConfigBasedLevelsCompleted( fakeConfig, levelsList );
 
         lc.setCompletedLevel( "bar", 1 );
 
@@ -183,13 +183,13 @@ public class TestByNameConfigBasedLevelsCompleted
             "level foo 3"
         );
 
-        LevelNames levelNames = new FakeLevelNames(
+        LevelsList levelsList = new FakeLevelsList(
             levelSet( "foo" ),
             levelSet( "bar" )
         );
 
         ByNameConfigBasedLevelsCompleted lc =
-            new ByNameConfigBasedLevelsCompleted( fakeConfig, levelNames );
+            new ByNameConfigBasedLevelsCompleted( fakeConfig, levelsList );
 
         lc.setCompletedLevel( "foo", 4 );
 
@@ -220,13 +220,13 @@ public class TestByNameConfigBasedLevelsCompleted
             "level foo 3"
         );
 
-        LevelNames levelNames = new FakeLevelNames(
+        LevelsList levelsList = new FakeLevelsList(
             levelSet( "foo" ),
             levelSet( "bar" )
         );
 
         ByNameConfigBasedLevelsCompleted lc =
-            new ByNameConfigBasedLevelsCompleted( fakeConfig, levelNames );
+            new ByNameConfigBasedLevelsCompleted( fakeConfig, levelsList );
 
         // Two useless calls
         lc.setCompletedLevel( "foo", 3 );
@@ -363,11 +363,11 @@ public class TestByNameConfigBasedLevelsCompleted
         return ret;
     }
 
-    private static class FakeLevelNames implements LevelNames
+    private static class FakeLevelsList implements LevelsList
     {
         private final HashMap<String, List<String>> levelSets;
 
-        public FakeLevelNames( LevelSet... provided )
+        public FakeLevelsList( LevelSet... provided )
         {
             levelSets = new HashMap<String, List<String>>();
 
