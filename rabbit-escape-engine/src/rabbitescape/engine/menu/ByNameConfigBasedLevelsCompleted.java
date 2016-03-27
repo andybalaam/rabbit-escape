@@ -38,7 +38,7 @@ public class ByNameConfigBasedLevelsCompleted implements LevelsCompleted
             config, CFG_LEVELS_COMPLETED, String.class );
 
         int i = 0;
-        for ( String name : levelsList.namesInDir( stripNumber_( levelsDir ) ) )
+        for ( String name : levelsList.inDir( stripNumber_( levelsDir ) ) )
         {
             if ( !completed.contains( name ) )
             {
@@ -57,7 +57,7 @@ public class ByNameConfigBasedLevelsCompleted implements LevelsCompleted
             config, CFG_LEVELS_COMPLETED, String.class );
 
         String newlyCompleted =
-            levelsList.namesInDir( levelsDir ).get( levelNum - 1 );
+            levelsList.inDir( levelsDir ).get( levelNum - 1 );
 
         if ( !completed.contains( newlyCompleted ) )
         {

@@ -378,7 +378,7 @@ public class TestByNameConfigBasedLevelsCompleted
         }
 
         @Override
-        public List<String> namesInDir( String levelsDir )
+        public List<String> inDir( String levelsDir )
         {
             return levelSets.get( levelsDir );
         }

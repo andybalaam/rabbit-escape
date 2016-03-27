@@ -4,5 +4,5 @@ import java.util.List;
 
 public interface LevelsList
 {
-    List<String> namesInDir( String levelsDir );
+    List<String> inDir( String levelsDir );
 }
