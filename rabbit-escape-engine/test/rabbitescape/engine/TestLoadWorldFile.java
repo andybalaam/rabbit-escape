@@ -12,7 +12,7 @@ public class TestLoadWorldFile
     {
         assertThat(
             LoadWorldFile.readLinesFromResource( "test1/fortest.rel" ),
-            equalTo( new String[] { "a", "b", "c" } )
+            equalTo( new String[] { "a", "b", "c", ":name=For Test!" } )
         );
     }
 

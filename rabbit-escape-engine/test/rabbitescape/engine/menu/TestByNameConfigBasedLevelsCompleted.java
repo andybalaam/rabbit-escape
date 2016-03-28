@@ -1,12 +1,12 @@
 package rabbitescape.engine.menu;
 
+import static rabbitescape.engine.menu.FakeLevelsList.*;
 import static rabbitescape.engine.util.Util.*;
 
 import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.*;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import org.hamcrest.BaseMatcher;
@@ -79,8 +79,8 @@ public class TestByNameConfigBasedLevelsCompleted
         );
 
         LevelsList levelsList = new FakeLevelsList(
-            levelSet( "foo" ),
-            levelSet( "bar" )
+            levelSet( "foo", 10 ),
+            levelSet( "bar", 10 )
         );
 
         ByNameConfigBasedLevelsCompleted lc =
@@ -99,8 +99,8 @@ public class TestByNameConfigBasedLevelsCompleted
         );
 
         LevelsList levelsList = new FakeLevelsList(
-            levelSet( "foo" ),
-            levelSet( "bar" )
+            levelSet( "foo", 10 ),
+            levelSet( "bar", 10 )
         );
 
         ByNameConfigBasedLevelsCompleted lc =
@@ -126,8 +126,8 @@ public class TestByNameConfigBasedLevelsCompleted
         );
 
         LevelsList levelsList = new FakeLevelsList(
-            levelSet( "foo" ),
-            levelSet( "bar" )
+            levelSet( "foo", 10 ),
+            levelSet( "bar", 10 )
         );
 
         ByNameConfigBasedLevelsCompleted lc =
@@ -146,8 +146,8 @@ public class TestByNameConfigBasedLevelsCompleted
         );
 
         LevelsList levelsList = new FakeLevelsList(
-            levelSet( "foo" ),
-            levelSet( "bar" )
+            levelSet( "foo", 10 ),
+            levelSet( "bar", 10 )
         );
 
         ByNameConfigBasedLevelsCompleted lc =
@@ -184,8 +184,8 @@ public class TestByNameConfigBasedLevelsCompleted
         );
 
         LevelsList levelsList = new FakeLevelsList(
-            levelSet( "foo" ),
-            levelSet( "bar" )
+            levelSet( "foo", 10 ),
+            levelSet( "bar", 10 )
         );
 
         ByNameConfigBasedLevelsCompleted lc =
@@ -221,8 +221,8 @@ public class TestByNameConfigBasedLevelsCompleted
         );
 
         LevelsList levelsList = new FakeLevelsList(
-            levelSet( "foo" ),
-            levelSet( "bar" )
+            levelSet( "foo", 10 ),
+            levelSet( "bar", 10 )
         );
 
         ByNameConfigBasedLevelsCompleted lc =
@@ -334,54 +334,5 @@ public class TestByNameConfigBasedLevelsCompleted
         };
     }
 
-    private static class LevelSet
-    {
-        public final String name;
-        public final List<LevelsList.LevelInfo> levels;
 
-        public LevelSet( String name, List<LevelsList.LevelInfo> levels )
-        {
-            this.name = name;
-            this.levels = levels;
-        }
-    }
-
-    private static LevelSet levelSet( String name )
-    {
-        return new LevelSet( name, levelNames( name ) );
-    }
-
-    private static List<LevelsList.LevelInfo> levelNames( String name )
-    {
-        List<LevelsList.LevelInfo> ret = new ArrayList<LevelsList.LevelInfo>();
-
-        for ( int i = 1; i < 11; ++i )
-        {
-            ret.add(
-                new LevelsList.LevelInfo( "", "level " + name + " " + i ) );
-        }
-
-        return ret;
-    }
-
-    private static class FakeLevelsList implements LevelsList
-    {
-        private final HashMap<String, List<LevelsList.LevelInfo>> levelSets;
-
-        public FakeLevelsList( LevelSet... provided )
-        {
-            levelSets = new HashMap<String, List<LevelsList.LevelInfo>>();
-
-            for ( LevelSet s : provided )
-            {
-                levelSets.put( s.name, s.levels );
-            }
-        }
-
-        @Override
-        public List<LevelsList.LevelInfo> inDir( String levelsDir )
-        {
-            return levelSets.get( levelsDir );
-        }
-    }
 }

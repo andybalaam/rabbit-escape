@@ -1,4 +1,7 @@
 #!/bin/bash
 
-ls --hide=ls.txt --hide=levels.txt "$@"
+cd "$1"
+
+egrep -H '^:name=' *.rel | sed 's/^\([^:]*\)::name=\(.*\)/\1 "\2"/'
+
 

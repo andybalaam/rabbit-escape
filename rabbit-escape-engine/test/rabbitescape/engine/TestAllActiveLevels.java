@@ -4,6 +4,7 @@ import static org.hamcrest.MatcherAssert.*;
 import static org.hamcrest.CoreMatchers.*;
 import static rabbitescape.engine.Tools.*;
 import static rabbitescape.engine.textworld.TextWorldManip.*;
+import static rabbitescape.engine.util.Util.*;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -13,14 +14,8 @@ import java.util.Set;
 
 import org.junit.Test;
 
-import rabbitescape.engine.menu.ByNameConfigBasedLevelsCompleted;
-import rabbitescape.engine.menu.LevelMenuItem;
-import rabbitescape.engine.menu.LevelsCompleted;
-import rabbitescape.engine.menu.LevelsMenu;
-import rabbitescape.engine.menu.LevelsMenu.ErrorLoadingLevelList;
-import rabbitescape.engine.menu.Menu;
-import rabbitescape.engine.menu.MenuDefinition;
-import rabbitescape.engine.menu.MenuItem;
+import rabbitescape.engine.menu.*;
+import rabbitescape.engine.menu.LoadLevelsList.ErrorLoadingLevelList;
 import rabbitescape.engine.solution.Solution;
 import rabbitescape.engine.solution.SolutionExceptions;
 import rabbitescape.engine.solution.SolutionParser;
@@ -170,13 +165,29 @@ public class TestAllActiveLevels
 
     private void forEachUnofficialLevel( T test, String developmentStage )
     {
-        String[] levelSets = new String[]{ "dejavu", "paradise", "smallworld", "unsorted" };
+        String[] levelSets = new String[]
+            { "dejavu", "paradise", "smallworld", "unsorted" };
+
+        // TODO: short term fix
+        if ( developmentStage.equals( "staging" ) )
+        {
+            levelSets = new String[] { "dejavu" };
+        }
+
+        LevelsList levelsList = LoadLevelsList.load(
+            list(
+                map( prepend( developmentStage ), levelSets )
+            ).toArray( new String[ levelSets.length ] )
+        );
+
         for ( String levelSet : levelSets )
         {
             String levelsDir = developmentStage + File.separator + levelSet;
             try
             {
-                LevelsMenu lm = new LevelsMenu( levelsDir, new IgnoreLevelsCompleted() );
+                LevelsMenu lm = new LevelsMenu(
+                    levelsDir, levelsList, new IgnoreLevelsCompleted() );
+
                 for (MenuItem levelItem : lm.items)
                 {
                     LevelMenuItem lev = (LevelMenuItem)levelItem;
@@ -193,6 +204,18 @@ public class TestAllActiveLevels
                 System.out.println( "Warning: No level list found for " + levelsDir );
             }
         }
+    }
+
+    private Function<String, String> prepend( final String toPrepend )
+    {
+        return new Function<String, String>()
+        {
+            @Override
+            public String apply( String levelName )
+            {
+                return toPrepend + File.separator + levelName;
+            }
+        };
     }
 
     private boolean runSolutionString(

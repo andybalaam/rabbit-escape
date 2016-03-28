@@ -1,11 +1,22 @@
 package rabbitescape.engine.menu;
 
 import static rabbitescape.engine.menu.MenuConstruction.*;
-import static rabbitescape.engine.menu.MenuTargets.*;
+import static rabbitescape.engine.util.Util.*;
+
 import rabbitescape.engine.menu.MenuItem.Type;
+import rabbitescape.engine.util.Util.IdxObj;
 
 public class MenuDefinition
 {
+    public static final LevelSetDef[] allLevelSets = new LevelSetDef[]
+    {
+        new LevelSetDef( "Easy",     "01_easy"     ),
+        new LevelSetDef( "Medium",   "02_medium"   ),
+        new LevelSetDef( "Hard",     "03_hard"     ),
+        new LevelSetDef( "Outdoors", "04_outdoors" ),
+        new LevelSetDef( "Arcade",   "05_arcade"   )
+    };
+
     public static Menu mainMenu( LevelsCompleted levelsCompleted )
     {
         return mainMenu( levelsCompleted, true );
@@ -20,11 +31,7 @@ public class MenuDefinition
                 "Start Game",
                 menu(
                     "Choose a set of levels:",
-                    item( "Easy",     levels( "01_easy",     levelsCompleted ), true ),
-                    item( "Medium",   levels( "02_medium",   levelsCompleted ), true ),
-                    item( "Hard",     levels( "03_hard",     levelsCompleted ), true ),
-                    item( "Outdoors", levels( "04_outdoors", levelsCompleted ), true ),
-                    item( "Arcade",   levels( "05_arcade",   levelsCompleted ), true )
+                    items( levelsCompleted, allLevelSets )
                 ),
                 true
             ),
@@ -41,5 +48,54 @@ public class MenuDefinition
             ),
             item( "Quit",       Type.QUIT,  true )
         );
+    }
+
+    private static MenuItem[] items(
+        LevelsCompleted levelsCompleted,
+        LevelSetDef[] levelSets
+    )
+    {
+        LevelsList levelsList = LoadLevelsList.load( dirNames( levelSets ) );
+
+        MenuItem[] ret = new MenuItem[ levelSets.length ];
+        for ( IdxObj<LevelSetDef> setI : enumerate( levelSets ) )
+        {
+            LevelSetDef set = setI.object;
+            ret[setI.index] = item(
+                set.name,
+                new LevelsMenu( set.dirName, levelsList, levelsCompleted ),
+                true
+            );
+        }
+        return ret;
+    }
+
+    private static class LevelSetDef
+    {
+        public final String name;
+        public final String dirName;
+
+        public LevelSetDef( String name, String dirName )
+        {
+            this.name = name;
+            this.dirName = dirName;
+        }
+    }
+
+    private static String[] dirNames( LevelSetDef[] levelSets )
+    {
+        return list(
+            map(
+                new Function<LevelSetDef, String>()
+                {
+                    @Override
+                    public String apply( LevelSetDef levelSetDef )
+                    {
+                        return levelSetDef.dirName;
+                    }
+                },
+                levelSets
+            )
+        ).toArray( new String[ levelSets.length ] );
     }
 }

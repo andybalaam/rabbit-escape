@@ -2,34 +2,27 @@ package rabbitescape.engine.menu;
 
 import static rabbitescape.engine.util.Util.*;
 
-import rabbitescape.engine.err.RabbitEscapeException;
-import rabbitescape.engine.util.Util.ReadingResourceFailed;
+import java.util.List;
 
 public class LevelsMenu extends Menu
 {
-    public static class ErrorLoadingLevelList extends RabbitEscapeException
-    {
-        private static final long serialVersionUID = 1L;
-
-        public ErrorLoadingLevelList( Throwable cause )
-        {
-            super( cause );
-        }
-    }
-
     private final String levelsDir;
     private final LevelsCompleted levelsCompleted;
 
-    public LevelsMenu( String levelsDir, LevelsCompleted levelsCompleted )
+    public LevelsMenu(
+        String levelsDir,
+        LevelsList levelsList,
+        LevelsCompleted levelsCompleted
+    )
     {
         this(
             levelsDir,
             levelsCompleted,
-            menuItems( levelsDir, levelsCompleted )
+            menuItems( levelsDir, levelsList )
         );
     }
 
-    public LevelsMenu(
+    private LevelsMenu(
         String levelsDir, LevelsCompleted levelsCompleted, MenuItem[] items )
     {
         super( "Choose a level:", items );
@@ -41,44 +34,25 @@ public class LevelsMenu extends Menu
     }
 
     private static MenuItem[] menuItems(
-        String levelsDir, LevelsCompleted levelsCompleted )
+        String levelsDir,
+        LevelsList levelsInfo
+    )
     {
-        String[] levelFileNames = levelsInResource(
-            "/rabbitescape/levels/" + levelsDir + "/levels.txt" );
+        List<LevelsList.LevelInfo> levels = levelsInfo.inDir( levelsDir );
 
-        MenuItem[] ret = new MenuItem[ levelFileNames.length ];
+        MenuItem[] ret = new MenuItem[ levels.size() ];
 
-        for ( IdxObj<String> fileName : enumerate1( levelFileNames ) )
+        for ( IdxObj<LevelsList.LevelInfo> info : enumerate1( levels ) )
         {
-            ret[fileName.index - 1] = new LevelMenuItem(
-                levelsDir + "/" + fileName.object + ".rel",
+            ret[info.index - 1] = new LevelMenuItem(
+                levelsDir + "/" + info.object.fileName + ".rel",
                 levelsDir,
-                fileName.index,
+                info.index,
                 true
             );
         }
 
         return ret;
-    }
-
-    private static String[] levelsInResource( String lsResourceName )
-    {
-        try
-        {
-            return stringArray(
-                map(
-                    stripLast( 4 ),
-                    filter(
-                        endsWith( ".rel" ),
-                        resourceLines( lsResourceName )
-                    )
-                )
-            );
-        }
-        catch ( ReadingResourceFailed e )
-        {
-            throw new ErrorLoadingLevelList( e );
-        }
     }
 
     @Override

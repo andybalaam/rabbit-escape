@@ -14,7 +14,11 @@ public class TestLevelsMenu
     {
         LevelsCompleted levelsCompleted = new HardCodedLevelsCompleted( 0 );
 
-        LevelsMenu menu = new LevelsMenu( "test2", levelsCompleted );
+        FakeLevelsList levelsList
+            = new FakeLevelsList( FakeLevelsList.levelSet( "test2", 3 ) );
+
+        LevelsMenu menu = new LevelsMenu(
+            "test2", levelsList, levelsCompleted );
 
         // Only the first level is enabled
         assertThat(
@@ -34,7 +38,11 @@ public class TestLevelsMenu
     {
         LevelsCompleted levelsCompleted = new HardCodedLevelsCompleted( 1 );
 
-        LevelsMenu menu = new LevelsMenu( "test2", levelsCompleted );
+        FakeLevelsList levelsList
+            = new FakeLevelsList( FakeLevelsList.levelSet( "test2", 3 ) );
+
+        LevelsMenu menu = new LevelsMenu(
+            "test2", levelsList, levelsCompleted );
 
         // The level after the one we completed is enabled
         assertThat(
@@ -54,7 +62,11 @@ public class TestLevelsMenu
     {
         LevelsCompleted levelsCompleted = new HardCodedLevelsCompleted( 2 );
 
-        LevelsMenu menu = new LevelsMenu( "test2", levelsCompleted );
+        FakeLevelsList levelsList
+            = new FakeLevelsList( FakeLevelsList.levelSet( "test2", 3 ) );
+
+        LevelsMenu menu = new LevelsMenu(
+            "test2", levelsList, levelsCompleted );
 
         // All levels are enabled because we've completed the penultimate one
         assertThat(
@@ -74,7 +86,11 @@ public class TestLevelsMenu
     {
         LevelsCompleted levelsCompleted = new HardCodedLevelsCompleted( 3 );
 
-        LevelsMenu menu = new LevelsMenu( "test2", levelsCompleted );
+        FakeLevelsList levelsList
+            = new FakeLevelsList( FakeLevelsList.levelSet( "test2", 3 ) );
+
+        LevelsMenu menu = new LevelsMenu(
+            "test2", levelsList, levelsCompleted );
 
         // All levels are enabled because we've completed them all
         assertThat(
@@ -95,7 +111,11 @@ public class TestLevelsMenu
         HardCodedLevelsCompleted levelsCompleted =
             new HardCodedLevelsCompleted( 1 );
 
-        LevelsMenu menu = new LevelsMenu( "test2", levelsCompleted );
+        FakeLevelsList levelsList
+            = new FakeLevelsList( FakeLevelsList.levelSet( "test2", 3 ) );
+
+        LevelsMenu menu = new LevelsMenu(
+            "test2", levelsList, levelsCompleted );
 
         // Sanity: level 3 is disabled
         assertThat(
