@@ -337,12 +337,12 @@ public class TestByNameConfigBasedLevelsCompleted
     private static class LevelSet
     {
         public final String name;
-        public final List<String> levelNames;
+        public final List<LevelsList.LevelInfo> levels;
 
-        public LevelSet( String name, List<String> levelNames )
+        public LevelSet( String name, List<LevelsList.LevelInfo> levels )
         {
             this.name = name;
-            this.levelNames = levelNames;
+            this.levels = levels;
         }
     }
 
@@ -351,13 +351,14 @@ public class TestByNameConfigBasedLevelsCompleted
         return new LevelSet( name, levelNames( name ) );
     }
 
-    private static List<String> levelNames( String name )
+    private static List<LevelsList.LevelInfo> levelNames( String name )
     {
-        List<String> ret = new ArrayList<String>();
+        List<LevelsList.LevelInfo> ret = new ArrayList<LevelsList.LevelInfo>();
 
         for ( int i = 1; i < 11; ++i )
         {
-            ret.add( "level " + name + " " + i );
+            ret.add(
+                new LevelsList.LevelInfo( "", "level " + name + " " + i ) );
         }
 
         return ret;
@@ -365,20 +366,20 @@ public class TestByNameConfigBasedLevelsCompleted
 
     private static class FakeLevelsList implements LevelsList
     {
-        private final HashMap<String, List<String>> levelSets;
+        private final HashMap<String, List<LevelsList.LevelInfo>> levelSets;
 
         public FakeLevelsList( LevelSet... provided )
         {
-            levelSets = new HashMap<String, List<String>>();
+            levelSets = new HashMap<String, List<LevelsList.LevelInfo>>();
 
             for ( LevelSet s : provided )
             {
-                levelSets.put( s.name, s.levelNames );
+                levelSets.put( s.name, s.levels );
             }
         }
 
         @Override
-        public List<String> inDir( String levelsDir )
+        public List<LevelsList.LevelInfo> inDir( String levelsDir )
         {
             return levelSets.get( levelsDir );
         }
