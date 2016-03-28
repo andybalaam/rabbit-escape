@@ -4,9 +4,7 @@ import static org.hamcrest.MatcherAssert.*;
 import static org.hamcrest.CoreMatchers.*;
 import static rabbitescape.engine.Tools.*;
 import static rabbitescape.engine.textworld.TextWorldManip.*;
-import static rabbitescape.engine.util.Util.*;
 
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.HashSet;
@@ -15,7 +13,6 @@ import java.util.Set;
 import org.junit.Test;
 
 import rabbitescape.engine.menu.*;
-import rabbitescape.engine.menu.LoadLevelsList.ErrorLoadingLevelList;
 import rabbitescape.engine.solution.Solution;
 import rabbitescape.engine.solution.SolutionExceptions;
 import rabbitescape.engine.solution.SolutionParser;
@@ -25,7 +22,7 @@ import rabbitescape.engine.util.FileSystem;
 public class TestAllActiveLevels
 {
     @Test
-    public void All_levels_load_and_round_trip()
+    public void All_official_levels_load_and_round_trip()
     {
         forEachOfficialLevel( new T() {
             @Override public void run( World world, LevelMenuItem lev )
@@ -42,7 +39,7 @@ public class TestAllActiveLevels
     }
 
     @Test
-    public void All_solutions_are_correct()
+    public void All_official_solutions_are_correct()
     {
         forEachOfficialLevel( new T() {
             @Override public void run( World world, LevelMenuItem lev )
@@ -70,7 +67,7 @@ public class TestAllActiveLevels
     }
 
     @Test
-    public void All_levels_have_unique_names()
+    public void All_official_levels_have_unique_names()
     {
         final Set<String> names = new HashSet<String>();
 
@@ -163,59 +160,23 @@ public class TestAllActiveLevels
         forEachUnofficialLevel( test, "development" );
     }
 
-    private void forEachUnofficialLevel( T test, String developmentStage )
+    private void forEachUnofficialLevel( T test, String levelsDir )
     {
-        String[] levelSets = new String[]
-            { "dejavu", "paradise", "smallworld", "unsorted" };
+        LevelsList levelsList = LoadLevelsList.load( levelsDir );
 
-        // TODO: short term fix
-        if ( developmentStage.equals( "staging" ) )
+        LevelsMenu lm = new LevelsMenu(
+            levelsDir, levelsList, new IgnoreLevelsCompleted() );
+
+        for ( MenuItem levelItem : lm.items )
         {
-            levelSets = new String[] { "dejavu" };
+            LevelMenuItem lev = (LevelMenuItem)levelItem;
+
+            World world = new LoadWorldFile(
+                new NothingExistsFileSystem() ).load(
+                    new IgnoreWorldStatsListener(), lev.fileName );
+
+            test.run( world, lev );
         }
-
-        LevelsList levelsList = LoadLevelsList.load(
-            list(
-                map( prepend( developmentStage ), levelSets )
-            ).toArray( new String[ levelSets.length ] )
-        );
-
-        for ( String levelSet : levelSets )
-        {
-            String levelsDir = developmentStage + File.separator + levelSet;
-            try
-            {
-                LevelsMenu lm = new LevelsMenu(
-                    levelsDir, levelsList, new IgnoreLevelsCompleted() );
-
-                for (MenuItem levelItem : lm.items)
-                {
-                    LevelMenuItem lev = (LevelMenuItem)levelItem;
-
-                    World world = new LoadWorldFile(
-                        new NothingExistsFileSystem() ).load(
-                            new IgnoreWorldStatsListener(), lev.fileName );
-
-                    test.run( world, lev );
-                }
-            }
-            catch ( ErrorLoadingLevelList e )
-            {
-                System.out.println( "Warning: No level list found for " + levelsDir );
-            }
-        }
-    }
-
-    private Function<String, String> prepend( final String toPrepend )
-    {
-        return new Function<String, String>()
-        {
-            @Override
-            public String apply( String levelName )
-            {
-                return toPrepend + File.separator + levelName;
-            }
-        };
     }
 
     private boolean runSolutionString(

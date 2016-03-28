@@ -2,6 +2,8 @@
 
 cd "$1"
 
-egrep -H '^:name=' *.rel | sed 's/^\([^:]*\)::name=\(.*\)/\1 "\2"/'
-
+find . -name "*.rel" -print0 |\
+    xargs -0 egrep -H '^:name=' |\
+    sed 's/^\.\/\([^:]*\)::name=\(.*\)/\1 "\2"/' |\
+    sort
 

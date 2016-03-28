@@ -54,11 +54,11 @@ SVGANDROIDICONSHDPI  := $(SVGICONSSRC:images-src/icons/%.svg=$(ANDROIDICONSHDPI_
 SVGANDROIDICONSXHDPI := $(SVGICONSSRC:images-src/icons/%.svg=$(ANDROIDICONSXHDPI_DEST)/%.png)
 
 ANIMATIONS_DIR := rabbit-escape-render/src/rabbitescape/render/animations
-LEVELS_DIRS := \
-	$(shell \
-	find rabbit-escape-engine/src -name '*.rel' | xargs -n 1 dirname | uniq) \
-	$(shell \
-	find rabbit-escape-engine/test -name '*.rel' | xargs -n 1 dirname | uniq) \
+
+LEVELS_DIRS := $(shell \
+	find rabbit-escape-engine -type d \
+		-regex '.*/\(src\|test\)/rabbitescape/levels/[^/]*' \
+	)
 
 $(SOUNDSWAV_DEST)/%.wav: sounds-src/%.flac
 	@echo ".. Generating $@"
@@ -225,6 +225,9 @@ music: no-make-warnings $(MUSICWAV)
 	@ls $(@D) --hide=ls.txt > $(@D)/ls.txt
 
 %/levels.txt: %/*.rel
+	@./build-scripts/levelnames $(@D) > $(@D)/levels.txt
+
+%/levels.txt: %/*/*.rel
 	@./build-scripts/levelnames $(@D) > $(@D)/levels.txt
 
 animations: no-make-warnings $(ANIMATIONS_DIR)/ls.txt
