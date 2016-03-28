@@ -263,12 +263,13 @@ compile: images sounds music compile-noui
 
 clean: no-make-warnings
 	@echo ". Cleaning compiled Java, lists and dist dir"
-	@touch rabbit-escape-engine/bin/touchfile && rm -r rabbit-escape-engine/bin/*
-	@touch rabbit-escape-render/bin/touchfile && rm -r rabbit-escape-render/bin/*
-	@touch rabbit-escape-ui-text/bin/touchfile && rm -r rabbit-escape-ui-text/bin/*
-	@touch rabbit-escape-ui-swing/bin/touchfile && rm -r rabbit-escape-ui-swing/bin/*
+	@mkdir -p rabbit-escape-engine/bin && touch rabbit-escape-engine/bin/touchfile && rm -r rabbit-escape-engine/bin/*
+	@mkdir -p rabbit-escape-render/bin && touch rabbit-escape-render/bin/touchfile && rm -r rabbit-escape-render/bin/*
+	@mkdir -p rabbit-escape-ui-text/bin/touchfile && touch rabbit-escape-ui-text/bin/touchfile && rm -r rabbit-escape-ui-text/bin/*
+	@mkdir -p rabbit-escape-ui-swing/bin/touchfile && touch rabbit-escape-ui-swing/bin/touchfile && rm -r rabbit-escape-ui-swing/bin/*
 	@find ./ -name "ls.txt" -delete
 	@find ./ -name "levels.txt" -delete
+	@find ./ -empty -type d -delete
 	@mkdir -p dist && rm -r dist
 
 clean-images: no-make-warnings
