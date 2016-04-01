@@ -49,7 +49,7 @@ public class Drowning extends Behaviour
         BehaviourTools t,
         boolean triggered )
     {
-        return ( triggered ? State.RABBIT_OUT_OF_BOUNDS : null );
+        return ( triggered ? State.RABBIT_DROWNING : null );
     }
 
     @Override
@@ -57,7 +57,7 @@ public class Drowning extends Behaviour
     {
         switch ( state )
         {
-        case RABBIT_OUT_OF_BOUNDS:
+        case RABBIT_DROWNING:
             world.changes.killRabbit( rabbit );
             return true;
         default:
