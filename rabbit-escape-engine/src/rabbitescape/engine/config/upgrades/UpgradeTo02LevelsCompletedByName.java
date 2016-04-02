@@ -51,6 +51,7 @@ public class UpgradeTo02LevelsCompletedByName implements IConfigUpgrade
         for ( LevelSetInfo set : levelNames )
         {
             Integer progressInSet = levelsV1Map.get( set.dirName );
+
             if ( progressInSet != null )
             {
                 for ( int i = 0; i < progressInSet; ++i )

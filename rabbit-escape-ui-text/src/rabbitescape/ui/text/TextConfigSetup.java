@@ -1,11 +1,10 @@
 package rabbitescape.ui.text;
 
-import static rabbitescape.engine.config.ConfigKeys.*;
-
 import rabbitescape.engine.config.Config;
 import rabbitescape.engine.config.ConfigFile;
 import rabbitescape.engine.config.ConfigSchema;
 import rabbitescape.engine.config.RealConfigUpgrades;
+import rabbitescape.engine.config.StandardConfigSchema;
 import rabbitescape.engine.util.RealFileSystem;
 
 public class TextConfigSetup
@@ -17,18 +16,7 @@ public class TextConfigSetup
     public static Config createConfig()
     {
         ConfigSchema definition = new ConfigSchema();
-
-        definition.set(
-            CFG_LEVELS_COMPLETED,
-            "{}",
-            "Which level you have got to in each level set."
-        );
-
-        definition.set(
-            CFG_DEBUG_PRINT_STATES,
-            String.valueOf( false ),
-            "Rabbit states are printed to System.out."
-        );
+        StandardConfigSchema.setSchema( definition );
 
         return new Config(
             definition,

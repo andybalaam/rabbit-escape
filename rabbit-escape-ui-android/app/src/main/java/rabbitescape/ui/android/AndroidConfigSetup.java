@@ -8,6 +8,7 @@ import rabbitescape.engine.config.Config;
 import rabbitescape.engine.config.ConfigSchema;
 import rabbitescape.engine.config.IConfigUpgrade;
 import rabbitescape.engine.config.RealConfigUpgrades;
+import rabbitescape.engine.config.StandardConfigSchema;
 
 public class AndroidConfigSetup
 {
@@ -26,18 +27,7 @@ public class AndroidConfigSetup
     public static Config createConfig( SharedPreferences prefs, IConfigUpgrade... upgrades )
     {
         ConfigSchema definition = new ConfigSchema();
-
-        definition.set(
-            CFG_LEVELS_COMPLETED,
-            "{}",
-            ""
-        );
-
-        definition.set(
-            CFG_DEBUG_PRINT_STATES,
-            String.valueOf( false ),
-            ""
-        );
+        StandardConfigSchema.setSchema( definition );
 
         definition.set( CFG_MUTED, String.valueOf( false ), "" );
 
