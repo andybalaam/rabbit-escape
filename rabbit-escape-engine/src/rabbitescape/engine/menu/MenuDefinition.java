@@ -17,11 +17,6 @@ public class MenuDefinition
         new LevelSetDef( "Arcade",   "05_arcade"   )
     };
 
-    public static Menu mainMenu( LevelsCompleted levelsCompleted )
-    {
-        return mainMenu( levelsCompleted, true );
-    }
-
     public static Menu mainMenu(
         LevelsCompleted levelsCompleted, boolean includeLoadLevel )
     {

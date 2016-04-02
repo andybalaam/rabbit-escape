@@ -133,7 +133,9 @@ public class TestAllActiveLevels
 
     private void forEachOfficialLevel( T test )
     {
-        Menu menu = MenuDefinition.mainMenu( new IgnoreLevelsCompleted() );
+        Menu menu = MenuDefinition.mainMenu(
+            new IgnoreLevelsCompleted(), true );
+
         Menu levelSets = menu.items[0].menu;
         for ( MenuItem levelSet : levelSets.items )
         {
