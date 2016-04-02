@@ -12,7 +12,12 @@ public class TestLoadLevelsList
     @Test
     public void Test_levels_get_loaded_correctly()
     {
-        LevelsList levels = LoadLevelsList.load( "test1", "test2" );
+        LevelsList levels = LoadLevelsList.load(
+            new LevelsList(
+                new LevelsList.LevelSetInfo( null, "test1", null ),
+                new LevelsList.LevelSetInfo( null, "test2", null )
+            )
+        );
 
         assertThat(
             levels.inDir( "test1" ),

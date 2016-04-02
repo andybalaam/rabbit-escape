@@ -1,6 +1,7 @@
 package rabbitescape.engine.menu;
 
 import rabbitescape.engine.err.RabbitEscapeException;
+import rabbitescape.engine.menu.LevelsList.LevelSetInfo;
 import rabbitescape.engine.util.Util.ReadingResourceFailed;
 
 import java.util.ArrayList;
@@ -22,23 +23,22 @@ public class LoadLevelsList
         }
     }
 
-    public static LevelsList load( String... levelDirs )
+    public static LevelsList load( LevelsList emptyLevelSets )
     {
-        return new LevelsList( findLevels( levelDirs ) );
+        return new LevelsList( findLevels( emptyLevelSets ) );
     }
 
     private static List<LevelsList.LevelSetInfo> findLevels(
-        String... levelDirs )
+        LevelsList emptyLevelSets )
     {
         List<LevelsList.LevelSetInfo> ret = new ArrayList<>();
-
-        for ( String levelsDir : levelDirs )
+        for ( LevelSetInfo set : emptyLevelSets )
         {
             ret.add(
                 new LevelsList.LevelSetInfo(
-                    "",
-                    levelsDir,
-                    findLevelsInDir( levelsDir )
+                    set.name,
+                    set.dirName,
+                    findLevelsInDir( set.dirName )
                 )
             );
         }

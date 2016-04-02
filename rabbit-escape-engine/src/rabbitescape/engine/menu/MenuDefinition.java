@@ -55,7 +55,7 @@ public class MenuDefinition
         LevelSetDef[] levelSets
     )
     {
-        LevelsList levelsList = LoadLevelsList.load( dirNames( levelSets ) );
+        LevelsList levelsList = LoadLevelsList.load( levels( levelSets ) );
 
         MenuItem[] ret = new MenuItem[ levelSets.length ];
         for ( IdxObj<LevelSetDef> setI : enumerate( levelSets ) )
@@ -82,20 +82,24 @@ public class MenuDefinition
         }
     }
 
-    private static String[] dirNames( LevelSetDef[] levelSets )
+    private static LevelsList levels( LevelSetDef[] levelSets )
     {
-        return list(
-            map(
-                new Function<LevelSetDef, String>()
-                {
-                    @Override
-                    public String apply( LevelSetDef levelSetDef )
+        return new LevelsList(
+            list(
+                map(
+                    new Function<LevelSetDef, LevelsList.LevelSetInfo>()
                     {
-                        return levelSetDef.dirName;
-                    }
-                },
-                levelSets
-            )
-        ).toArray( new String[ levelSets.length ] );
+                        @Override
+                        public LevelsList.LevelSetInfo apply(
+                            LevelSetDef levelSetDef )
+                        {
+                            return new LevelsList.LevelSetInfo(
+                                levelSetDef.name, levelSetDef.dirName, null );
+                        }
+                    },
+                    levelSets
+                )
+            ).toArray( new LevelsList.LevelSetInfo[ levelSets.length ] )
+        );
     }
 }

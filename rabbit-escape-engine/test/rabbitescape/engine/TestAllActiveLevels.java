@@ -162,7 +162,11 @@ public class TestAllActiveLevels
 
     private void forEachUnofficialLevel( T test, String levelsDir )
     {
-        LevelsList levelsList = LoadLevelsList.load( levelsDir );
+        LevelsList levelsList = LoadLevelsList.load(
+            new LevelsList(
+                new LevelsList.LevelSetInfo( null, levelsDir, null )
+            )
+        );
 
         LevelsMenu lm = new LevelsMenu(
             levelsDir, levelsList, new IgnoreLevelsCompleted() );
