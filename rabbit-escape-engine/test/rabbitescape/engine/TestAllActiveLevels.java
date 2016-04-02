@@ -133,21 +133,18 @@ public class TestAllActiveLevels
 
     private void forEachOfficialLevel( T test )
     {
-        Menu menu = MenuDefinition.mainMenu(
-            new IgnoreLevelsCompleted(), true );
-
-        Menu levelSets = menu.items[0].menu;
-        for ( MenuItem levelSet : levelSets.items )
+        for ( LevelsList.LevelSetInfo set :
+            LoadLevelsList.load( MenuDefinition.allLevels ) )
         {
-            for ( MenuItem levelItem : levelSet.menu.items )
+            for ( LevelsList.LevelInfo level : set.levels )
             {
-                LevelMenuItem lev = (LevelMenuItem)levelItem;
+                World world = new LoadWorldFile( new NothingExistsFileSystem() )
+                .load(
+                    new IgnoreWorldStatsListener(),
+                    set.dirName + "/" + level.fileName + ".rel"
+                );
 
-                World world = new LoadWorldFile(
-                    new NothingExistsFileSystem() ).load(
-                        new IgnoreWorldStatsListener(), lev.fileName );
-
-                test.run( world, lev.fileName );
+                test.run( world, level.fileName );
             }
         }
     }
@@ -202,20 +199,6 @@ public class TestAllActiveLevels
             e.solutionId = solutionId;
             e.level = worldFileName;
             throw e;
-        }
-    }
-
-    private static class IgnoreLevelsCompleted implements LevelsCompleted
-    {
-        @Override
-        public int highestLevelCompleted( String levelsDir )
-        {
-            return 0;
-        }
-
-        @Override
-        public void setCompletedLevel( String levelsDir, int levelNum )
-        {
         }
     }
 

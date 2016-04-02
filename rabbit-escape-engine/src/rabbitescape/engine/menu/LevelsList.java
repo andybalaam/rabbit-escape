@@ -1,11 +1,14 @@
 package rabbitescape.engine.menu;
 
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
+import java.util.SortedMap;
+import java.util.TreeMap;
 
+/**
+ * List of all level sets in the game, sorted by directory name.
+ */
 public class LevelsList implements Iterable<LevelsList.LevelSetInfo>
 {
     public static class LevelSetInfo
@@ -68,7 +71,7 @@ public class LevelsList implements Iterable<LevelsList.LevelSetInfo>
 
     // ---
 
-    private final Map<String, LevelSetInfo> levelSets;
+    private final SortedMap<String, LevelSetInfo> levelSets;
 
     public LevelsList( LevelSetInfo... levelSets )
     {
@@ -77,7 +80,7 @@ public class LevelsList implements Iterable<LevelsList.LevelSetInfo>
 
     public LevelsList( List<LevelSetInfo> levelSets )
     {
-        this.levelSets = new HashMap<String, LevelSetInfo>();
+        this.levelSets = new TreeMap<String, LevelSetInfo>();
         for ( LevelSetInfo set : levelSets )
         {
             this.levelSets.put( set.dirName, set );
@@ -87,6 +90,11 @@ public class LevelsList implements Iterable<LevelsList.LevelSetInfo>
     public List<LevelInfo> inDir( String levelsDir )
     {
         return levelSets.get( levelsDir ).levels;
+    }
+
+    public int size()
+    {
+        return levelSets.size();
     }
 
     @Override

@@ -61,7 +61,8 @@ public class TextMenu
 
     public void run()
     {
-        Menu menu = MenuDefinition.mainMenu( levelsCompleted, true );
+        Menu menu = MenuDefinition.mainMenu(
+            levelsCompleted, MenuDefinition.allLevels, true );
 
         stack.clear();
         stack.push( menu );

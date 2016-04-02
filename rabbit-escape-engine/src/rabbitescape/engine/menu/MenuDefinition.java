@@ -3,34 +3,39 @@ package rabbitescape.engine.menu;
 import static rabbitescape.engine.menu.MenuConstruction.*;
 import static rabbitescape.engine.util.Util.*;
 
+import rabbitescape.engine.menu.LevelsList.LevelSetInfo;
 import rabbitescape.engine.menu.MenuItem.Type;
 import rabbitescape.engine.util.Util.IdxObj;
 
 public class MenuDefinition
 {
-    public static final LevelSetDef[] allLevelSets = new LevelSetDef[]
-    {
-        new LevelSetDef( "Easy",     "01_easy"     ),
-        new LevelSetDef( "Medium",   "02_medium"   ),
-        new LevelSetDef( "Hard",     "03_hard"     ),
-        new LevelSetDef( "Outdoors", "04_outdoors" ),
-        new LevelSetDef( "Arcade",   "05_arcade"   )
-    };
+    public static final LevelsList allLevels = new LevelsList(
+        new LevelSetInfo( "Easy",     "01_easy",     null ),
+        new LevelSetInfo( "Medium",   "02_medium",   null ),
+        new LevelSetInfo( "Hard",     "03_hard",     null ),
+        new LevelSetInfo( "Outdoors", "04_outdoors", null ),
+        new LevelSetInfo( "Arcade",   "05_arcade",   null )
+    );
 
     public static Menu mainMenu(
-        LevelsCompleted levelsCompleted, boolean includeLoadLevel )
+        LevelsCompleted levelsCompleted,
+        LevelsList levelsList,
+        boolean includeLoadLevel
+    )
     {
+        LevelsList loadedLevels = LoadLevelsList.load( levelsList );
+
         return menu(
             "Welcome to Rabbit Escape!",
             item(
                 "Start Game",
                 menu(
                     "Choose a set of levels:",
-                    items( levelsCompleted, allLevelSets )
+                    items( levelsCompleted, loadedLevels )
                 ),
                 true
             ),
-            item( "About",      Type.ABOUT, true ),
+            item( "About", Type.ABOUT, true ),
             maybeItem(
                 includeLoadLevel,
                 "Custom Levels",
@@ -41,60 +46,25 @@ public class MenuDefinition
                 ),
                 true
             ),
-            item( "Quit",       Type.QUIT,  true )
+            item( "Quit", Type.QUIT,  true )
         );
     }
 
     private static MenuItem[] items(
         LevelsCompleted levelsCompleted,
-        LevelSetDef[] levelSets
+        LevelsList loadedLevels
     )
     {
-        LevelsList levelsList = LoadLevelsList.load( levels( levelSets ) );
-
-        MenuItem[] ret = new MenuItem[ levelSets.length ];
-        for ( IdxObj<LevelSetDef> setI : enumerate( levelSets ) )
+        MenuItem[] ret = new MenuItem[ loadedLevels.size() ];
+        for ( IdxObj<LevelSetInfo> setI : enumerate( loadedLevels ) )
         {
-            LevelSetDef set = setI.object;
+            LevelSetInfo set = setI.object;
             ret[setI.index] = item(
                 set.name,
-                new LevelsMenu( set.dirName, levelsList, levelsCompleted ),
+                new LevelsMenu( set.dirName, loadedLevels, levelsCompleted ),
                 true
             );
         }
         return ret;
-    }
-
-    private static class LevelSetDef
-    {
-        public final String name;
-        public final String dirName;
-
-        public LevelSetDef( String name, String dirName )
-        {
-            this.name = name;
-            this.dirName = dirName;
-        }
-    }
-
-    private static LevelsList levels( LevelSetDef[] levelSets )
-    {
-        return new LevelsList(
-            list(
-                map(
-                    new Function<LevelSetDef, LevelsList.LevelSetInfo>()
-                    {
-                        @Override
-                        public LevelsList.LevelSetInfo apply(
-                            LevelSetDef levelSetDef )
-                        {
-                            return new LevelsList.LevelSetInfo(
-                                levelSetDef.name, levelSetDef.dirName, null );
-                        }
-                    },
-                    levelSets
-                )
-            ).toArray( new LevelsList.LevelSetInfo[ levelSets.length ] )
-        );
     }
 }

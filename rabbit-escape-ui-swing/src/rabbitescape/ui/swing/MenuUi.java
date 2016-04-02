@@ -173,6 +173,7 @@ public class MenuUi
         stack.push(
             MenuDefinition.mainMenu(
                 new ByNumberConfigBasedLevelsCompleted( uiConfig ),
+                MenuDefinition.allLevels,
                 true
             )
         );
