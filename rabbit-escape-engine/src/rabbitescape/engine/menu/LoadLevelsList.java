@@ -8,7 +8,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -42,7 +41,7 @@ public class LoadLevelsList
         }
 
         @Override
-        public Iterator<Entry<String, List<LevelInfo>>> iterator()
+        public Iterator<LevelSetInfo> iterator()
         {
             throw new UnsupportedOperationException();
         }

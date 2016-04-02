@@ -2,12 +2,12 @@ package rabbitescape.engine.config.upgrades;
 
 import static rabbitescape.engine.config.ConfigKeys.CFG_LEVELS_COMPLETED;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
@@ -18,15 +18,16 @@ import rabbitescape.engine.config.IConfigUpgrade;
 import rabbitescape.engine.menu.ByNameConfigBasedLevelsCompleted;
 import rabbitescape.engine.menu.LevelsList;
 import rabbitescape.engine.menu.LevelsList.LevelInfo;
+import rabbitescape.engine.menu.LevelsList.LevelSetInfo;
 import rabbitescape.engine.util.Util;
 
 public class UpgradeTo02LevelsCompletedByName implements IConfigUpgrade
 {
     private static class LevelNames implements LevelsList
     {
-        private final Map<String, List<LevelInfo>> names;
+        private final Map<String, LevelSetInfo> names;
 
-        public LevelNames( Map<String, List<LevelInfo>> names )
+        public LevelNames( Map<String, LevelSetInfo> names )
         {
             this.names = names;
         }
@@ -34,13 +35,13 @@ public class UpgradeTo02LevelsCompletedByName implements IConfigUpgrade
         @Override
         public List<LevelInfo> inDir( String levelsDir )
         {
-            return names.get( levelsDir );
+            return names.get( levelsDir ).levels;
         }
 
         @Override
-        public Iterator<Entry<String, List<LevelInfo>>> iterator()
+        public Iterator<LevelSetInfo> iterator()
         {
-            return names.entrySet().iterator();
+            return names.values().iterator();
         }
     }
 
@@ -71,17 +72,14 @@ public class UpgradeTo02LevelsCompletedByName implements IConfigUpgrade
         Map<String, Integer> levelsV1Map = ConfigTools.stringToMap(
             levelsV1, Integer.class );
 
-        for ( Map.Entry<String, List<LevelInfo>> e : levelNames )
+        for ( LevelSetInfo set : levelNames )
         {
-            String levelSetName = e.getKey();
-            List<LevelInfo> namesOfLevelsInSet = e.getValue();
-
-            Integer progressInSet = levelsV1Map.get( levelSetName );
+            Integer progressInSet = levelsV1Map.get( set.dirName );
             if ( progressInSet != null )
             {
                 for ( int i = 0; i < progressInSet; ++i )
                 {
-                    ret.add( namesOfLevelsInSet.get( i ).name );
+                    ret.add( set.levels.get( i ).name );
                 }
             }
         }
@@ -93,138 +91,158 @@ public class UpgradeTo02LevelsCompletedByName implements IConfigUpgrade
     // immediately before the upgrade.
     private static LevelsList makeLevelNames()
     {
-        Map<String, List<LevelInfo>> mp =
-            new HashMap<String, List<LevelInfo>>();
+        List<LevelSetInfo> levelSets = new ArrayList<LevelSetInfo>();
 
-        mp.put(
-            "easy",
-            Arrays.asList(
-                info( "Digging practice" ),
-                info( "Bashing practice" ),
-                info( "Build your way out" ),
-                info( "Block before you drop" ),
-                info( "Get down" ),
-                info( "Come together" ),
-                info( "Get in the burrow" ),
-                info( "Dig quick" ),
-                info( "Climbing practice" ),
-                info( "Cliff face" ),
-                info( "You wait here" ),
-                info( "Across the void" ),
-                info( "Give us a leg up" ),
-                info( "Three strikes" ),
-                info( "Keep it simple" ),
-                info( "The Lone Bridger" ),
-                info( "Go on without us" ),
-                info( "Face the right way" ),
-                info( "Saw tooth" ),
-                info( "To the top" )
+        levelSets.add(
+            new LevelSetInfo(
+                null,
+                "easy",
+                Arrays.asList(
+                    info( "Digging practice" ),
+                    info( "Bashing practice" ),
+                    info( "Build your way out" ),
+                    info( "Block before you drop" ),
+                    info( "Get down" ),
+                    info( "Come together" ),
+                    info( "Get in the burrow" ),
+                    info( "Dig quick" ),
+                    info( "Climbing practice" ),
+                    info( "Cliff face" ),
+                    info( "You wait here" ),
+                    info( "Across the void" ),
+                    info( "Give us a leg up" ),
+                    info( "Three strikes" ),
+                    info( "Keep it simple" ),
+                    info( "The Lone Bridger" ),
+                    info( "Go on without us" ),
+                    info( "Face the right way" ),
+                    info( "Saw tooth" ),
+                    info( "To the top" )
+                )
             )
         );
 
-        mp.put(
-            "medium",
-            Arrays.asList(
-                info( "Easy for some" ),
-                info( "Placement" ),
-                info( "Minefield" ),
-                info( "Leaky Bucket" ),
-                info( "Full Bucket" ),
-                info( "One Pop Shot" ),
-                info( "Scramble" ),
-                info( "Greek" ),
-                info( "The box" ),
-                info( "Castle" ),
-                info( "Rescuer" ),
-                info( "Family" ),
-                info( "Turn around, rabbit ears" ),
-                info( "Chess" ),
-                info( "Hills" ),
-                info( "Dig?" ),
-                info( "Jet Set" ),
-                info( "Assist" ),
-                info( "Charing Cross the Void" ),
-                info( "Branches" )
+        levelSets.add(
+            new LevelSetInfo(
+                null,
+                "medium",
+                Arrays.asList(
+                    info( "Easy for some" ),
+                    info( "Placement" ),
+                    info( "Minefield" ),
+                    info( "Leaky Bucket" ),
+                    info( "Full Bucket" ),
+                    info( "One Pop Shot" ),
+                    info( "Scramble" ),
+                    info( "Greek" ),
+                    info( "The box" ),
+                    info( "Castle" ),
+                    info( "Rescuer" ),
+                    info( "Family" ),
+                    info( "Turn around, rabbit ears" ),
+                    info( "Chess" ),
+                    info( "Hills" ),
+                    info( "Dig?" ),
+                    info( "Jet Set" ),
+                    info( "Assist" ),
+                    info( "Charing Cross the Void" ),
+                    info( "Branches" )
+                )
             )
         );
 
-        mp.put(
-            "hard",
-            Arrays.asList(
-                info( "Choppy" ),
-                info( "Walls" ),
-                info( "Quadrabbit" ),
-                info( "Stairs" ),
-                info( "Minecraft" ),
-                info( "Flat Back" ),
-                info( "Crowd" ),
-                info( "Ruts" ),
-                info( "Chimneys" ),
-                info( "Three Down" ),
-                info( "Flag" ),
-                info( "Not so easy for others" ),
-                info( "Co-operative" ),
-                info( "Whizz Bang" ),
-                info( "Cliff Path" ),
-                info( "Makes Me Cross" ),
-                info( "Maze" ),
-                info( "Mates" ),
-                info( "Panic!" ),
-                info( "Mary Poppins" )
+        levelSets.add(
+            new LevelSetInfo(
+                null,
+                "hard",
+                Arrays.asList(
+                    info( "Choppy" ),
+                    info( "Walls" ),
+                    info( "Quadrabbit" ),
+                    info( "Stairs" ),
+                    info( "Minecraft" ),
+                    info( "Flat Back" ),
+                    info( "Crowd" ),
+                    info( "Ruts" ),
+                    info( "Chimneys" ),
+                    info( "Three Down" ),
+                    info( "Flag" ),
+                    info( "Not so easy for others" ),
+                    info( "Co-operative" ),
+                    info( "Whizz Bang" ),
+                    info( "Cliff Path" ),
+                    info( "Makes Me Cross" ),
+                    info( "Maze" ),
+                    info( "Mates" ),
+                    info( "Panic!" ),
+                    info( "Mary Poppins" )
+                )
             )
         );
 
-        mp.put(
-            "outdoors",
-            Arrays.asList(
-                info( "Tree climb" ),
-                info( "Saw" ),
-                info( "C" ),
-                info( "Blockers" ),
-                info( "Platforms, small" ),
-                info( "Spare a blocker" ),
-                info( "Prison break" ),
-                info( "Rabbit hole descent" ),
-                info( "London Bridge" ),
-                info( "Home sweet home" ),
-                info( "Re-entry" ),
-                info( "Cloud bunnies" ),
-                info( "Spare 2 blockers?" ),
-                info( "Platforms, large" ),
-                info( "F" ),
-                info( "Half The World Away" ),
-                info( "Chasm" ),
-                info( "Cups and bridges" ),
-                info( "Sailing" ),
-                info( "K2" )
+        levelSets.add(
+            new LevelSetInfo(
+                null,
+                "outdoors",
+                Arrays.asList(
+                    info( "Tree climb" ),
+                    info( "Saw" ),
+                    info( "C" ),
+                    info( "Blockers" ),
+                    info( "Platforms, small" ),
+                    info( "Spare a blocker" ),
+                    info( "Prison break" ),
+                    info( "Rabbit hole descent" ),
+                    info( "London Bridge" ),
+                    info( "Home sweet home" ),
+                    info( "Re-entry" ),
+                    info( "Cloud bunnies" ),
+                    info( "Spare 2 blockers?" ),
+                    info( "Platforms, large" ),
+                    info( "F" ),
+                    info( "Half The World Away" ),
+                    info( "Chasm" ),
+                    info( "Cups and bridges" ),
+                    info( "Sailing" ),
+                    info( "K2" )
+                )
             )
         );
 
-        mp.put(
-            "arcade",
-            Arrays.asList(
-                info( "Ghost versus pie" ),
-                info( "Cliff hanger" ),
-                info( "The matrix" ),
-                info( "Tomb raider" ),
-                info( "Invader" ),
-                info( "UFO" ),
-                info( "Breakout" ),
-                info( "Slot machine" ),
-                info( "Asteroids" ),
-                info( "Forest" ),
-                info( "Dig for victory" ),
-                info( "Keep" ),
-                info( "The traitor" ),
-                info( "The mothership" ),
-                info( "Space invaders" ),
-                info( "Meander" ),
-                info( "Tunnels" ),
-                info( "Tetris" ),
-                info( "Galton box" ),
-                info( "Catch me if you can" )
+        levelSets.add(
+            new LevelSetInfo(
+                null,
+                "arcade",
+                Arrays.asList(
+                    info( "Ghost versus pie" ),
+                    info( "Cliff hanger" ),
+                    info( "The matrix" ),
+                    info( "Tomb raider" ),
+                    info( "Invader" ),
+                    info( "UFO" ),
+                    info( "Breakout" ),
+                    info( "Slot machine" ),
+                    info( "Asteroids" ),
+                    info( "Forest" ),
+                    info( "Dig for victory" ),
+                    info( "Keep" ),
+                    info( "The traitor" ),
+                    info( "The mothership" ),
+                    info( "Space invaders" ),
+                    info( "Meander" ),
+                    info( "Tunnels" ),
+                    info( "Tetris" ),
+                    info( "Galton box" ),
+                    info( "Catch me if you can" )
+                )
             )
         );
+
+        Map<String, LevelSetInfo> mp = new HashMap<String, LevelSetInfo>();
+        for ( LevelSetInfo set : levelSets )
+        {
+            mp.put( set.dirName, set );
+        }
 
         return new LevelNames( mp );
     }

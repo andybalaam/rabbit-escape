@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map.Entry;
 
 public class FakeLevelsList implements LevelsList
 {
@@ -55,7 +54,7 @@ public class FakeLevelsList implements LevelsList
     }
 
     @Override
-    public Iterator<Entry<String, List<LevelInfo>>> iterator()
+    public Iterator<LevelSetInfo> iterator()
     {
         throw new UnsupportedOperationException();
     }

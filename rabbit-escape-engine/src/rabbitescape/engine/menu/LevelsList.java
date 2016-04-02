@@ -1,11 +1,24 @@
 package rabbitescape.engine.menu;
 
 import java.util.List;
-import java.util.Map;
 
-public interface LevelsList
-    extends Iterable<Map.Entry<String, List<LevelsList.LevelInfo>>>
+public interface LevelsList extends Iterable<LevelsList.LevelSetInfo>
 {
+    public static class LevelSetInfo
+    {
+        public final String name;
+        public final String dirName;
+        public final List<LevelInfo> levels;
+
+        public LevelSetInfo(
+            String name, String dirName, List<LevelInfo> levels )
+        {
+            this.name = name;
+            this.dirName = dirName;
+            this.levels = levels;
+        }
+    }
+
     public static class LevelInfo
     {
         public final String fileName;
