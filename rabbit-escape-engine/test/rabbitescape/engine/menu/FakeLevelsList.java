@@ -29,7 +29,7 @@ class FakeLevelsList implements LevelsList
 
         for ( int i = 1; i <= num; ++i )
         {
-            ret.add( new LevelInfo( "lev" + i, "level " + name + " " + i ) );
+            ret.add( new LevelInfo( "lev" + i, "LeVeL " + name + " " + i ) );
         }
 
         return ret;

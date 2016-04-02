@@ -41,7 +41,7 @@ public class ByNameConfigBasedLevelsCompleted implements LevelsCompleted
         for ( LevelsList.LevelInfo level :
             levelsList.inDir( stripNumber_( levelsDir ) ) )
         {
-            if ( !completed.contains( level.name ) )
+            if ( !completed.contains( canonicalName( level.name ) ) )
             {
                 break;
             }
@@ -60,9 +60,11 @@ public class ByNameConfigBasedLevelsCompleted implements LevelsCompleted
         LevelsList.LevelInfo newlyCompleted =
             levelsList.inDir( levelsDir ).get( levelNum - 1 );
 
-        if ( !completed.contains( newlyCompleted.name ) )
+        String completedName = canonicalName( newlyCompleted.name );
+
+        if ( !completed.contains( completedName ) )
         {
-            completed.add( newlyCompleted.name );
+            completed.add( completedName );
             ConfigTools.setSet( config, CFG_LEVELS_COMPLETED, completed );
             config.save();
         }

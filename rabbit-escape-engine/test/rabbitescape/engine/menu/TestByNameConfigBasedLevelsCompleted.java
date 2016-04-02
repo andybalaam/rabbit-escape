@@ -73,9 +73,9 @@ public class TestByNameConfigBasedLevelsCompleted
     public void Report_highest_level_from_config_where_some_completed()
     {
         FakeConfig fakeConfig = new FakeConfig(
-            "level foo 1",
-            "level foo 2",
-            "level foo 3"
+            "level_foo_1",
+            "level_foo_2",
+            "level_foo_3"
         );
 
         LevelsList levelsList = new FakeLevelsList(
@@ -93,9 +93,9 @@ public class TestByNameConfigBasedLevelsCompleted
     public void Report_highest_level_from_config_where_none_completed()
     {
         FakeConfig fakeConfig = new FakeConfig(
-            "level foo 1",
-            "level foo 2",
-            "level foo 3"
+            "level_foo_1",
+            "level_foo_2",
+            "level_foo_3"
         );
 
         LevelsList levelsList = new FakeLevelsList(
@@ -113,16 +113,16 @@ public class TestByNameConfigBasedLevelsCompleted
     public void Report_highest_level_from_config_where_all_completed()
     {
         FakeConfig fakeConfig = new FakeConfig(
-            "level foo 1",
-            "level foo 2",
-            "level foo 3",
-            "level foo 4",
-            "level foo 5",
-            "level foo 6",
-            "level foo 7",
-            "level foo 8",
-            "level foo 9",
-            "level foo 10"
+            "level_foo_1",
+            "level_foo_2",
+            "level_foo_3",
+            "level_foo_4",
+            "level_foo_5",
+            "level_foo_6",
+            "level_foo_7",
+            "level_foo_8",
+            "level_foo_9",
+            "level_foo_10"
         );
 
         LevelsList levelsList = new FakeLevelsList(
@@ -140,9 +140,9 @@ public class TestByNameConfigBasedLevelsCompleted
     public void Save_changes_to_config_new_dir()
     {
         FakeConfig fakeConfig = new FakeConfig(
-            "level foo 1",
-            "level foo 2",
-            "level foo 3"
+            "level_foo_1",
+            "level_foo_2",
+            "level_foo_3"
         );
 
         LevelsList levelsList = new FakeLevelsList(
@@ -160,10 +160,10 @@ public class TestByNameConfigBasedLevelsCompleted
             fakeConfig.log.get( 1 ),  // 0 was a get
             equalTo(
                 "set levels.completed [" +
-                "\"level bar 1\"," +
-                "\"level foo 1\"," +
-                "\"level foo 2\"," +
-                "\"level foo 3\"" +
+                "\"level_bar_1\"," +
+                "\"level_foo_1\"," +
+                "\"level_foo_2\"," +
+                "\"level_foo_3\"" +
                 "]"
             )
         );
@@ -178,9 +178,9 @@ public class TestByNameConfigBasedLevelsCompleted
     public void Save_changes_to_config_existing_dir()
     {
         FakeConfig fakeConfig = new FakeConfig(
-            "level foo 1",
-            "level foo 2",
-            "level foo 3"
+            "level_foo_1",
+            "level_foo_2",
+            "level_foo_3"
         );
 
         LevelsList levelsList = new FakeLevelsList(
@@ -197,10 +197,10 @@ public class TestByNameConfigBasedLevelsCompleted
             fakeConfig.log.get( 1 ),  // 0 was a get
             equalTo(
                 "set levels.completed [" +
-                "\"level foo 1\"," +
-                "\"level foo 2\"," +
-                "\"level foo 3\"," +
-                "\"level foo 4\"" +
+                "\"level_foo_1\"," +
+                "\"level_foo_2\"," +
+                "\"level_foo_3\"," +
+                "\"level_foo_4\"" +
                 "]"
             )
         );
@@ -215,9 +215,9 @@ public class TestByNameConfigBasedLevelsCompleted
     public void No_need_to_update_if_weve_already_completed_a_level()
     {
         FakeConfig fakeConfig = new FakeConfig(
-            "level foo 1",
-            "level foo 2",
-            "level foo 3"
+            "level_foo_1",
+            "level_foo_2",
+            "level_foo_3"
         );
 
         LevelsList levelsList = new FakeLevelsList(
