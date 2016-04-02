@@ -5,8 +5,10 @@ import rabbitescape.engine.util.Util.ReadingResourceFailed;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -37,6 +39,12 @@ public class LoadLevelsList
         public List<LevelsList.LevelInfo> inDir( String levelsDir )
         {
             return levels.get( levelsDir );
+        }
+
+        @Override
+        public Iterator<Entry<String, List<LevelInfo>>> iterator()
+        {
+            throw new UnsupportedOperationException();
         }
     }
 

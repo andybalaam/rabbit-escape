@@ -2,9 +2,11 @@ package rabbitescape.engine.menu;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map.Entry;
 
-class FakeLevelsList implements LevelsList
+public class FakeLevelsList implements LevelsList
 {
     public static class LevelSet
     {
@@ -50,5 +52,11 @@ class FakeLevelsList implements LevelsList
     public List<LevelInfo> inDir( String levelsDir )
     {
         return levelSets.get( levelsDir );
+    }
+
+    @Override
+    public Iterator<Entry<String, List<LevelInfo>>> iterator()
+    {
+        throw new UnsupportedOperationException();
     }
 }

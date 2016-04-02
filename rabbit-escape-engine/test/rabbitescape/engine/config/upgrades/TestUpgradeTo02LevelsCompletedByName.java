@@ -7,14 +7,17 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
+import static rabbitescape.engine.config.ConfigKeys.*;
 import static rabbitescape.engine.util.Util.*;
-
 
 import org.junit.Test;
 
 import rabbitescape.engine.config.Config;
+import rabbitescape.engine.config.ConfigSchema;
 import rabbitescape.engine.config.ConfigTools;
 import rabbitescape.engine.config.IConfigUpgrade;
+import rabbitescape.engine.menu.ByNameConfigBasedLevelsCompleted;
+import rabbitescape.engine.menu.ByNumberConfigBasedLevelsCompleted;
 
 public class TestUpgradeTo02LevelsCompletedByName
 {
@@ -155,5 +158,60 @@ public class TestUpgradeTo02LevelsCompletedByName
             storage.log,
             hasItem( String.format( "set( levels.completed, %s )", namesList ) )
         );
+    }
+
+    @Test
+    public void Levels_completed_agrees_before_and_after_upgrade()
+    {
+        // Build some v1 Config
+        ConfigSchema definition = normalConfigDefinition();
+        TrackingConfigStorage storage = new TrackingConfigStorage(
+            Config.CFG_VERSION, "1" );
+        Config oldConfig = new Config(
+            definition, storage, new UpgradeTo01NonAndroidDummy() );
+
+        // Set some levels completed
+        ByNumberConfigBasedLevelsCompleted oldLevelsCompleted =
+            new ByNumberConfigBasedLevelsCompleted( oldConfig );
+
+        oldLevelsCompleted.setCompletedLevel( "easy", 3 );
+        oldLevelsCompleted.setCompletedLevel( "02_medium", 5 );
+
+        // This is what we are testing - upgrade to the v2 config format
+        Config newConfig = new Config(
+            definition,
+            storage,
+            new UpgradeTo01NonAndroidDummy(),
+            new UpgradeTo02LevelsCompletedByName()
+        );
+
+        // Use the new levels completed to ask what is completed
+        ByNameConfigBasedLevelsCompleted newLevelsCompleted =
+            new ByNameConfigBasedLevelsCompleted(
+                newConfig,
+                UpgradeTo02LevelsCompletedByName.levelNames
+            );
+
+        // The same levels are completed
+        assertThat(
+            newLevelsCompleted.highestLevelCompleted( "easy" ),
+            equalTo( 3 )
+        );
+
+        assertThat(
+            newLevelsCompleted.highestLevelCompleted( "medium" ),
+            equalTo( 5 )
+        );
+    }
+
+    private ConfigSchema normalConfigDefinition()
+    {
+        ConfigSchema definition = new ConfigSchema();
+        definition.set(
+            CFG_LEVELS_COMPLETED,
+            "{}",
+            "Which level you have got to in each level set."
+        );
+        return definition;
     }
 }

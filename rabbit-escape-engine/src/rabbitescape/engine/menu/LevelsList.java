@@ -1,8 +1,10 @@
 package rabbitescape.engine.menu;
 
 import java.util.List;
+import java.util.Map;
 
 public interface LevelsList
+    extends Iterable<Map.Entry<String, List<LevelsList.LevelInfo>>>
 {
     public static class LevelInfo
     {
