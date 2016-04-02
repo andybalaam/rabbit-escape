@@ -73,14 +73,14 @@ public class TestByNameConfigBasedLevelsCompleted
     public void Report_highest_level_from_config_where_some_completed()
     {
         FakeConfig fakeConfig = new FakeConfig(
-            "level_foo_1",
-            "level_foo_2",
-            "level_foo_3"
+            "level_01_foo_1",
+            "level_01_foo_2",
+            "level_01_foo_3"
         );
 
         LevelsList levelsList = new LevelsList(
-            levelSet( "foo", 10 ),
-            levelSet( "bar", 10 )
+            levelSet( "01_foo", 10 ),
+            levelSet( "02_bar", 10 )
         );
 
         ByNameConfigBasedLevelsCompleted lc =
@@ -93,14 +93,14 @@ public class TestByNameConfigBasedLevelsCompleted
     public void Report_highest_level_from_config_where_none_completed()
     {
         FakeConfig fakeConfig = new FakeConfig(
-            "level_foo_1",
-            "level_foo_2",
-            "level_foo_3"
+            "level_01_foo_1",
+            "level_01_foo_2",
+            "level_01_foo_3"
         );
 
         LevelsList levelsList = new LevelsList(
-            levelSet( "foo", 10 ),
-            levelSet( "bar", 10 )
+            levelSet( "01_foo", 10 ),
+            levelSet( "02_bar", 10 )
         );
 
         ByNameConfigBasedLevelsCompleted lc =
@@ -133,7 +133,7 @@ public class TestByNameConfigBasedLevelsCompleted
         ByNameConfigBasedLevelsCompleted lc =
             new ByNameConfigBasedLevelsCompleted( fakeConfig, levelsList );
 
-        assertThat( lc.highestLevelCompleted( "01_foo" ), equalTo( 10 ) );
+        assertThat( lc.highestLevelCompleted( "foo" ), equalTo( 10 ) );
     }
 
     @Test
@@ -242,13 +242,6 @@ public class TestByNameConfigBasedLevelsCompleted
             equalTo( "get levels.completed" )
         );
         assertThat( fakeConfig.log.size(), equalTo( 2 ) );
-    }
-
-    @Test
-    public void Characters_stripped_from_set_names()
-    {
-        assertThat( ByNameConfigBasedLevelsCompleted.stripNumber_( "01_easy" ),
-            equalTo( "easy" ) );
     }
 
     // ---

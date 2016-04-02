@@ -19,12 +19,10 @@ public class MenuDefinition
 
     public static Menu mainMenu(
         LevelsCompleted levelsCompleted,
-        LevelsList levelsList,
+        LevelsList loadedLevels,
         boolean includeLoadLevel
     )
     {
-        LevelsList loadedLevels = LoadLevelsList.load( levelsList );
-
         return menu(
             "Welcome to Rabbit Escape!",
             item(

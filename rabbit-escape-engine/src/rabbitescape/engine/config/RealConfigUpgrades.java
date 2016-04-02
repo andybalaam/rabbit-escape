@@ -1,6 +1,7 @@
 package rabbitescape.engine.config;
 
 import rabbitescape.engine.config.upgrades.UpgradeTo01NonAndroidDummy;
+import rabbitescape.engine.config.upgrades.UpgradeTo02LevelsCompletedByName;
 
 public class RealConfigUpgrades
 {
@@ -33,7 +34,8 @@ public class RealConfigUpgrades
     {
         return new IConfigUpgrade[]
         {
-            upgradeTo1
+            upgradeTo1,
+            new UpgradeTo02LevelsCompletedByName()
         };
     }
 }

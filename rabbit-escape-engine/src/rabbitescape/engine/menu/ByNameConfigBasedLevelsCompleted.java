@@ -38,8 +38,7 @@ public class ByNameConfigBasedLevelsCompleted implements LevelsCompleted
             config, CFG_LEVELS_COMPLETED, String.class );
 
         int i = 0;
-        for ( LevelsList.LevelInfo level :
-            levelsList.inDir( stripNumber_( levelsDir ) ) )
+        for ( LevelsList.LevelInfo level : levelsList.inDir( levelsDir ) )
         {
             if ( !completed.contains( canonicalName( level.name ) ) )
             {
@@ -82,13 +81,5 @@ public class ByNameConfigBasedLevelsCompleted implements LevelsCompleted
         {
             return name.toLowerCase( en_UK ).replaceAll( "[^a-z0-9]", "_" );
         }
-    }
-
-    /**
-     * Strips digits and underscores.
-     */
-    public static String stripNumber_( String levelsDir )
-    {
-        return levelsDir.replaceAll( "[0-9_]", "" );
     }
 }
