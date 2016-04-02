@@ -4,8 +4,6 @@ import static rabbitescape.engine.config.ConfigKeys.CFG_LEVELS_COMPLETED;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.SortedSet;
@@ -23,28 +21,6 @@ import rabbitescape.engine.util.Util;
 
 public class UpgradeTo02LevelsCompletedByName implements IConfigUpgrade
 {
-    private static class LevelNames implements LevelsList
-    {
-        private final Map<String, LevelSetInfo> names;
-
-        public LevelNames( Map<String, LevelSetInfo> names )
-        {
-            this.names = names;
-        }
-
-        @Override
-        public List<LevelInfo> inDir( String levelsDir )
-        {
-            return names.get( levelsDir ).levels;
-        }
-
-        @Override
-        public Iterator<LevelSetInfo> iterator()
-        {
-            return names.values().iterator();
-        }
-    }
-
     @Override
     public void run( IConfigStorage storage )
     {
@@ -238,13 +214,7 @@ public class UpgradeTo02LevelsCompletedByName implements IConfigUpgrade
             )
         );
 
-        Map<String, LevelSetInfo> mp = new HashMap<String, LevelSetInfo>();
-        for ( LevelSetInfo set : levelSets )
-        {
-            mp.put( set.dirName, set );
-        }
-
-        return new LevelNames( mp );
+        return new LevelsList( levelSets );
     }
 
     private static LevelInfo info( String name )

@@ -1,8 +1,12 @@
 package rabbitescape.engine.menu;
 
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
-public interface LevelsList extends Iterable<LevelsList.LevelSetInfo>
+public class LevelsList implements Iterable<LevelsList.LevelSetInfo>
 {
     public static class LevelSetInfo
     {
@@ -62,5 +66,32 @@ public interface LevelsList extends Iterable<LevelsList.LevelSetInfo>
         }
     }
 
-    List<LevelInfo> inDir( String levelsDir );
+    // ---
+
+    private final Map<String, LevelSetInfo> levelSets;
+
+    public LevelsList( LevelSetInfo... levelSets )
+    {
+        this( Arrays.asList( levelSets ) );
+    }
+
+    public LevelsList( List<LevelSetInfo> levelSets )
+    {
+        this.levelSets = new HashMap<String, LevelSetInfo>();
+        for ( LevelSetInfo set : levelSets )
+        {
+            this.levelSets.put( set.dirName, set );
+        }
+    }
+
+    public List<LevelInfo> inDir( String levelsDir )
+    {
+        return levelSets.get( levelsDir ).levels;
+    }
+
+    @Override
+    public Iterator<LevelSetInfo> iterator()
+    {
+        return levelSets.values().iterator();
+    }
 }

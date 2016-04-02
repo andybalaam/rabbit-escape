@@ -78,7 +78,7 @@ public class TestByNameConfigBasedLevelsCompleted
             "level_foo_3"
         );
 
-        LevelsList levelsList = new FakeLevelsList(
+        LevelsList levelsList = new LevelsList(
             levelSet( "foo", 10 ),
             levelSet( "bar", 10 )
         );
@@ -98,7 +98,7 @@ public class TestByNameConfigBasedLevelsCompleted
             "level_foo_3"
         );
 
-        LevelsList levelsList = new FakeLevelsList(
+        LevelsList levelsList = new LevelsList(
             levelSet( "foo", 10 ),
             levelSet( "bar", 10 )
         );
@@ -125,7 +125,7 @@ public class TestByNameConfigBasedLevelsCompleted
             "level_foo_10"
         );
 
-        LevelsList levelsList = new FakeLevelsList(
+        LevelsList levelsList = new LevelsList(
             levelSet( "foo", 10 ),
             levelSet( "bar", 10 )
         );
@@ -145,7 +145,7 @@ public class TestByNameConfigBasedLevelsCompleted
             "level_foo_3"
         );
 
-        LevelsList levelsList = new FakeLevelsList(
+        LevelsList levelsList = new LevelsList(
             levelSet( "foo", 10 ),
             levelSet( "bar", 10 )
         );
@@ -183,7 +183,7 @@ public class TestByNameConfigBasedLevelsCompleted
             "level_foo_3"
         );
 
-        LevelsList levelsList = new FakeLevelsList(
+        LevelsList levelsList = new LevelsList(
             levelSet( "foo", 10 ),
             levelSet( "bar", 10 )
         );
@@ -220,7 +220,7 @@ public class TestByNameConfigBasedLevelsCompleted
             "level_foo_3"
         );
 
-        LevelsList levelsList = new FakeLevelsList(
+        LevelsList levelsList = new LevelsList(
             levelSet( "foo", 10 ),
             levelSet( "bar", 10 )
         );

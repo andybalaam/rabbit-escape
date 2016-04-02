@@ -14,8 +14,8 @@ public class TestLevelsMenu
     {
         LevelsCompleted levelsCompleted = new HardCodedLevelsCompleted( 0 );
 
-        FakeLevelsList levelsList
-            = new FakeLevelsList( FakeLevelsList.levelSet( "test2", 3 ) );
+        LevelsList levelsList
+            = new LevelsList( FakeLevelsList.levelSet( "test2", 3 ) );
 
         LevelsMenu menu = new LevelsMenu(
             "test2", levelsList, levelsCompleted );
@@ -38,8 +38,8 @@ public class TestLevelsMenu
     {
         LevelsCompleted levelsCompleted = new HardCodedLevelsCompleted( 1 );
 
-        FakeLevelsList levelsList
-            = new FakeLevelsList( FakeLevelsList.levelSet( "test2", 3 ) );
+        LevelsList levelsList
+            = new LevelsList( FakeLevelsList.levelSet( "test2", 3 ) );
 
         LevelsMenu menu = new LevelsMenu(
             "test2", levelsList, levelsCompleted );
@@ -62,8 +62,8 @@ public class TestLevelsMenu
     {
         LevelsCompleted levelsCompleted = new HardCodedLevelsCompleted( 2 );
 
-        FakeLevelsList levelsList
-            = new FakeLevelsList( FakeLevelsList.levelSet( "test2", 3 ) );
+        LevelsList levelsList
+            = new LevelsList( FakeLevelsList.levelSet( "test2", 3 ) );
 
         LevelsMenu menu = new LevelsMenu(
             "test2", levelsList, levelsCompleted );
@@ -86,8 +86,8 @@ public class TestLevelsMenu
     {
         LevelsCompleted levelsCompleted = new HardCodedLevelsCompleted( 3 );
 
-        FakeLevelsList levelsList
-            = new FakeLevelsList( FakeLevelsList.levelSet( "test2", 3 ) );
+        LevelsList levelsList
+            = new LevelsList( FakeLevelsList.levelSet( "test2", 3 ) );
 
         LevelsMenu menu = new LevelsMenu(
             "test2", levelsList, levelsCompleted );
@@ -111,8 +111,8 @@ public class TestLevelsMenu
         HardCodedLevelsCompleted levelsCompleted =
             new HardCodedLevelsCompleted( 1 );
 
-        FakeLevelsList levelsList
-            = new FakeLevelsList( FakeLevelsList.levelSet( "test2", 3 ) );
+        LevelsList levelsList
+            = new LevelsList( FakeLevelsList.levelSet( "test2", 3 ) );
 
         LevelsMenu menu = new LevelsMenu(
             "test2", levelsList, levelsCompleted );

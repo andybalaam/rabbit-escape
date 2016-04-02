@@ -4,10 +4,7 @@ import rabbitescape.engine.err.RabbitEscapeException;
 import rabbitescape.engine.util.Util.ReadingResourceFailed;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -25,40 +22,25 @@ public class LoadLevelsList
         }
     }
 
-    private static class Loaded implements LevelsList
-    {
-        private final Map<String, List<LevelInfo>> levels;
-
-        public Loaded( Map<String, List<LevelInfo>> levels )
-        {
-            this.levels = levels;
-        }
-
-        @Override
-        public List<LevelsList.LevelInfo> inDir( String levelsDir )
-        {
-            return levels.get( levelsDir );
-        }
-
-        @Override
-        public Iterator<LevelSetInfo> iterator()
-        {
-            throw new UnsupportedOperationException();
-        }
-    }
-
     public static LevelsList load( String... levelDirs )
     {
-        return new Loaded( findLevels( levelDirs ) );
+        return new LevelsList( findLevels( levelDirs ) );
     }
 
-    private static Map<String, List<LevelsList.LevelInfo>> findLevels(
+    private static List<LevelsList.LevelSetInfo> findLevels(
         String... levelDirs )
     {
-        Map<String, List<LevelsList.LevelInfo>> ret = new HashMap<>();
+        List<LevelsList.LevelSetInfo> ret = new ArrayList<>();
+
         for ( String levelsDir : levelDirs )
         {
-            ret.put( levelsDir, findLevelsInDir( levelsDir ) );
+            ret.add(
+                new LevelsList.LevelSetInfo(
+                    "",
+                    levelsDir,
+                    findLevelsInDir( levelsDir )
+                )
+            );
         }
         return ret;
     }
