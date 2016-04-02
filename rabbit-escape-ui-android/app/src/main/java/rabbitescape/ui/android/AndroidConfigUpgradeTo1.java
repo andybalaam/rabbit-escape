@@ -10,7 +10,6 @@ import rabbitescape.engine.config.ConfigKeys;
 import rabbitescape.engine.config.ConfigTools;
 import rabbitescape.engine.config.IConfigStorage;
 import rabbitescape.engine.config.IConfigUpgrade;
-import rabbitescape.engine.menu.ByNumberConfigBasedLevelsCompleted;
 
 public class AndroidConfigUpgradeTo1 implements IConfigUpgrade
 {
@@ -73,7 +72,7 @@ public class AndroidConfigUpgradeTo1 implements IConfigUpgrade
             if ( entry.getKey().startsWith( LEVELS_COMPLETED ) )
             {
                 newMap.put(
-                    ByNumberConfigBasedLevelsCompleted.stripNumber_(
+                    stripNumber_(
                         entry.getKey().substring( LEVELS_COMPLETED.length() )
                     ),
                     (Integer)entry.getValue()
@@ -91,6 +90,11 @@ public class AndroidConfigUpgradeTo1 implements IConfigUpgrade
         }
 
         return doneSomething;
+    }
+
+    private static String stripNumber_( String levelsDir )
+    {
+        return levelsDir.replaceAll( "[0-9_]", "" );
     }
 
     private static boolean upgradeMuted( SharedPreferences prefs, SharedPreferences.Editor editor )
