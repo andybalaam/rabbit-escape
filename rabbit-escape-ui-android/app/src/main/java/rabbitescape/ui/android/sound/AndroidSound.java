@@ -24,6 +24,7 @@ public class AndroidSound implements SoundResources<Activity>, Sound
         init();
     }
 
+    @SuppressWarnings( "deprecation" ) // SoundPool constructor deprecated in API level 21
     private void init()
     {
         if ( !muted )
