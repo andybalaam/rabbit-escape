@@ -1,21 +1,21 @@
 package rabbitescape.engine.util;
 
 import java.io.PrintStream;
-import java.util.Vector;
+import java.util.ArrayList;
 
 /**
  * Formats a table of debug output.
  */
 public class CellDebugPrint
 {
-    private final Vector<Vector<Vector<String>>> strings;
+    private final ArrayList<ArrayList<ArrayList<String>>> strings;
 
     private static int maxLength = 0, maxX = 0, maxY = 0, maxI = 0;
     private static boolean off = false;
     
     public CellDebugPrint()
     {
-        strings = new Vector<Vector<Vector<String>>>();;
+        strings = new ArrayList<ArrayList<ArrayList<String>>>();;
     }
 
     public void addString( int x, int y, int i, String s )
@@ -27,11 +27,11 @@ public class CellDebugPrint
         }
         while ( strings.size() <= x )
         {
-            strings.add( new  Vector<Vector<String>>() );
+            strings.add( new  ArrayList<ArrayList<String>>() );
         }
         while ( strings.get( x ).size() <= y )
         {
-            strings.get( x ).add( new Vector<String>() );
+            strings.get( x ).add( new ArrayList<String>() );
         }
         while ( strings.get( x ).get(  y ).size() <= i )
         {
