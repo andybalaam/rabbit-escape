@@ -150,7 +150,10 @@ public class LookupTable2D <T extends LookupItem2D> implements Iterable<T>
         return list;
     }
 
-    public int itemCount()
+    /**
+     * @return The number of items in the lookup table.
+     */
+    public int size()
     {
         return list.size();
     }
