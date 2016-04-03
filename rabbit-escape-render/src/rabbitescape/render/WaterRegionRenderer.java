@@ -1,7 +1,7 @@
 package rabbitescape.render;
 
 
-import java.util.Vector;
+import java.util.ArrayList;
 
 import rabbitescape.engine.BehaviourTools;
 import rabbitescape.engine.Block;
@@ -147,10 +147,10 @@ public class WaterRegionRenderer implements LookupItem2D
 
     /**
      * Adds an upper vertex for the polygon for this region to the
-     * supplied vectors of coordinates. Supplied vertex is towards the
+     * supplied ArrayLists of coordinates. Supplied vertex is towards the
      * cell in the supplied direction.
      */
-    public void topVertex( Vector<Integer> retX, Vector<Integer> retY, CellularDirection d )
+    public void topVertex( ArrayList<Integer> retX, ArrayList<Integer> retY, CellularDirection d )
     {
         int x = region.x * 32, y = region.y * 32; // Local cell origin in nominal pixels.
         if ( 0 == height )
@@ -253,7 +253,7 @@ public class WaterRegionRenderer implements LookupItem2D
         return boundaryHeight;
     }
 
-    public void bottomVertex( Vector<Integer> retX, Vector<Integer> retY, CellularDirection d )
+    public void bottomVertex( ArrayList<Integer> retX, ArrayList<Integer> retY, CellularDirection d )
     {
         int x = region.x * 32, y = region.y * 32; // Local cell origin in nominal pixels.
         int xOffset;

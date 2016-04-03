@@ -1,17 +1,17 @@
 package rabbitescape.render;
 
-import java.util.Vector;
+import java.util.ArrayList;
 
 import rabbitescape.engine.util.Util;
 
 public class Polygon
 {
-    public Vector<Integer> x, y;
+    public ArrayList<Integer> x, y;
 
     public Polygon()
     {
-        x = new Vector<Integer>();
-        y = new Vector<Integer>();
+        x = new ArrayList<Integer>();
+        y = new ArrayList<Integer>();
     }
 
     public boolean isEmpty()
@@ -33,7 +33,7 @@ public class Polygon
         return unboxArray( y, f, o );
     }
 
-    private int[] unboxArray( Vector<Integer> v, double f, int offset )
+    private int[] unboxArray( ArrayList<Integer> v, double f, int offset )
     {
         int[] a = new int[v.size()];
         for ( int i = 0; i < v.size() ; i++ )
