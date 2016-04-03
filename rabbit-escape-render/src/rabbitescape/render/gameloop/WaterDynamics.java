@@ -1,7 +1,7 @@
 package rabbitescape.render.gameloop;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Vector;
 
 import static rabbitescape.engine.CellularDirection.*;
 
@@ -10,7 +10,7 @@ import rabbitescape.engine.World;
 import rabbitescape.engine.util.CellDebugPrint;
 import rabbitescape.engine.util.Dimension;
 import rabbitescape.engine.util.LookupTable2D;
-import rabbitescape.render.Polygon;
+import rabbitescape.render.PolygonBuilder;
 import rabbitescape.render.WaterRegionRenderer;
 
 /**
@@ -19,7 +19,7 @@ import rabbitescape.render.WaterRegionRenderer;
 public class WaterDynamics
 {
     public final LookupTable2D<WaterRegionRenderer> lookupRenderer ;
-    public final Vector<Polygon> polygons;
+    public final ArrayList<PolygonBuilder> polygons;
     private int lastFramenumber = 10;
     public final Dimension worldSize;
 
@@ -27,7 +27,7 @@ public class WaterDynamics
     {
         worldSize = world.size;
         lookupRenderer = new LookupTable2D<WaterRegionRenderer>( worldSize );
-        polygons = new Vector<Polygon>();
+        polygons = new ArrayList<PolygonBuilder>();
     }
 
     private WaterDynamics()
@@ -77,7 +77,7 @@ public class WaterDynamics
         }
         for ( int y = 0; y < worldSize.height ; y++ )
         {
-            Polygon p = new Polygon();
+            PolygonBuilder p = new PolygonBuilder();
             WaterRegionRenderer start = null;
             for ( int x = 0; x < worldSize.width; x++ )
             {
@@ -86,7 +86,7 @@ public class WaterDynamics
                 {
                     continue;
                 }
-                wrr.topVertex( p.x, p.y, LEFT );
+                p.add( wrr.topVertex( LEFT ) );
                 wrr.drawnLT = true;
                 if ( null == start )
                 {
@@ -94,13 +94,13 @@ public class WaterDynamics
                 }
                 if ( !wrr.region.isConnected( RIGHT ) || wrr.adjacentNull( RIGHT ) || wrr.adjacentWaterIsFalling( RIGHT ) )
                 {
-                    wrr.topVertex( p.x, p.y, RIGHT );
-                    wrr.bottomVertex( p.x, p.y, RIGHT );
-                    start.bottomVertex( p.x, p.y, LEFT );
+                    p.add( wrr.topVertex( RIGHT ) );
+                    p.add( wrr.bottomVertex( RIGHT ) );
+                    p.add( start.bottomVertex( LEFT ) );
                     start.drawnLB = wrr.drawnR = true;
                     start = null;
                     polygons.add( p );
-                    p = new Polygon();
+                    p = new PolygonBuilder();
                 }
             }
         }

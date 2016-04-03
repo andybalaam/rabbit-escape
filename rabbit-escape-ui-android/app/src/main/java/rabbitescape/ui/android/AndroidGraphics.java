@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.view.SurfaceHolder;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 
@@ -14,6 +15,7 @@ import rabbitescape.render.AnimationLoader;
 import rabbitescape.render.BitmapCache;
 import rabbitescape.render.GraphPaperBackground;
 import rabbitescape.render.Polygon;
+import rabbitescape.render.PolygonBuilder;
 import rabbitescape.render.Renderer;
 import rabbitescape.render.SoundPlayer;
 import rabbitescape.render.Sprite;
@@ -249,14 +251,13 @@ public class AndroidGraphics implements Graphics
         renderer.render( androidCanvas, sprites, paint );
     }
 
-    void drawPolygons( Vector<Polygon> polygons, AndroidCanvas androidCanvas, Renderer<AndroidBitmap, AndroidPaint> renderer )
+    void drawPolygons( ArrayList<PolygonBuilder> polygons, AndroidCanvas androidCanvas, Renderer<AndroidBitmap, AndroidPaint> renderer )
     {
-        double f = renderer.tileSize / 32.0;
-        for ( Polygon p: polygons )
+        float f = renderer.tileSize / 32f;
+        for ( PolygonBuilder pb: polygons )
         {
-            int[] x = p.getX( f, renderer.offsetX );
-            int[] y = p.getY( f, renderer.offsetY );
-            androidCanvas.drawFilledPoly( x, y, waterColor );
+            Polygon p = pb.polygon( f, renderer.offsetX, renderer.offsetY );
+            androidCanvas.drawFilledPoly( p.x, p.y, waterColor );
         }
     }
 

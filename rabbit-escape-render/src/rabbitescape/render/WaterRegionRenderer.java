@@ -1,8 +1,5 @@
 package rabbitescape.render;
 
-
-import java.util.ArrayList;
-
 import rabbitescape.engine.BehaviourTools;
 import rabbitescape.engine.Block;
 import rabbitescape.engine.CellularDirection;
@@ -14,6 +11,7 @@ import rabbitescape.engine.util.CellDebugPrint;
 import rabbitescape.engine.util.LookupItem2D;
 import rabbitescape.engine.util.Position;
 import rabbitescape.render.gameloop.WaterDynamics;
+import rabbitescape.render.Vertex;
 
 public class WaterRegionRenderer implements LookupItem2D
 {
@@ -150,7 +148,7 @@ public class WaterRegionRenderer implements LookupItem2D
      * supplied ArrayLists of coordinates. Supplied vertex is towards the
      * cell in the supplied direction.
      */
-    public void topVertex( ArrayList<Integer> retX, ArrayList<Integer> retY, CellularDirection d )
+    public Vertex topVertex( CellularDirection d )
     {
         int x = region.x * 32, y = region.y * 32; // Local cell origin in nominal pixels.
         if ( 0 == height )
@@ -158,21 +156,15 @@ public class WaterRegionRenderer implements LookupItem2D
             switch ( d )
             {
             case LEFT:
-                retX.add( x );
-                retY.add( y + 32 );
-                return;
+                return new Vertex( x, y + 32 );
             case RIGHT:
-                retX.add( x + 32 );
-                retY.add( y + 32 );
-                return;
+                return new Vertex( x + 32, y + 32 );
             default:
-                return;
+                throw new RuntimeException( "Can only add vertices for LEFT or RIGHT cells.");
             }
         }
         Block block = world.getBlockAt( region.x, region.y );
         int boundaryHeight = calcBoundaryHeight( d );
-        //boolean eitherFalling = isFalling() || adjacentWaterIsFalling( d );
-        //boundaryHeight = eitherFalling ? 0 : boundaryHeight; // If either is falling, then go with zero
         int xOffset;
 
         switch ( d )
@@ -198,10 +190,9 @@ public class WaterRegionRenderer implements LookupItem2D
             }
             break;
         default:
-            return;
+            throw new RuntimeException( "Can only add vertices for LEFT or RIGHT cells." );
         }
-        retX.add( x + xOffset );
-        retY.add( y + 32 - boundaryHeight );
+        return new Vertex( x + xOffset, y + 32 - boundaryHeight );
     }
 
     /**
@@ -253,7 +244,7 @@ public class WaterRegionRenderer implements LookupItem2D
         return boundaryHeight;
     }
 
-    public void bottomVertex( ArrayList<Integer> retX, ArrayList<Integer> retY, CellularDirection d )
+    public Vertex bottomVertex( CellularDirection d )
     {
         int x = region.x * 32, y = region.y * 32; // Local cell origin in nominal pixels.
         int xOffset;
@@ -281,10 +272,9 @@ public class WaterRegionRenderer implements LookupItem2D
             }
             break;
         default:
-            return;
+            throw new RuntimeException( "Can only add vertices for LEFT or RIGHT cells." );
         }
-        retX.add( x + xOffset );
-        retY.add( y + 32 );
+        return new Vertex( x + xOffset, y + 32 );
     }
 
     boolean isFalling()

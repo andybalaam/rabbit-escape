@@ -1,45 +1,12 @@
 package rabbitescape.render;
 
-import java.util.ArrayList;
-
-import rabbitescape.engine.util.Util;
-
 public class Polygon
 {
-    public ArrayList<Integer> x, y;
+    public final int[] x, y;
 
-    public Polygon()
+    public Polygon( int[] x, int[] y )
     {
-        x = new ArrayList<Integer>();
-        y = new ArrayList<Integer>();
-    }
-
-    public boolean isEmpty()
-    {
-        return x.size() == 0;
-    }
-
-    /**
-     * return int[] scaled by factor, f, and offset by o.
-     */
-    public int[] getX( double f, int o )
-    {
-        Util.reAssert( x.size() == y.size() );
-        return unboxArray( x, f, o );
-    }
-
-    public int[] getY( double f, int o )
-    {
-        return unboxArray( y, f, o );
-    }
-
-    private int[] unboxArray( ArrayList<Integer> v, double f, int offset )
-    {
-        int[] a = new int[v.size()];
-        for ( int i = 0; i < v.size() ; i++ )
-        {
-            a[i] = offset + (int)( f * (double)v.get( i ) );
-        }
-        return a;
+        this.x = x;
+        this.y = y;
     }
 }

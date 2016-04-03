@@ -10,20 +10,21 @@ public class TestPolygon
     @Test
     public void Scale_and_offset_is_correct()
     {
-        Polygon p = unitSquare();
-        int[] x = p.getX( 2.0, 3 );
-        int[] y = p.getY( 2.0, 3 );
-        assertThat( x, equalTo( new int[]{ 3, 3, 5, 5 } ) );
-        assertThat( y, equalTo( new int[]{ 3, 5, 5, 3 } ) );
+        PolygonBuilder pb = unitSquare();
+        Polygon p = pb.polygon( 2.0f, 3, 3 );
+        assertThat( p.x, equalTo( new int[]{ 3, 3, 5, 5 } ) );
+        assertThat( p.y, equalTo( new int[]{ 3, 5, 5, 3 } ) );
     }
 
     // ------------------------
 
-    private Polygon unitSquare()
+    private PolygonBuilder unitSquare()
     {
-        Polygon p = new Polygon();
-        p.x.add( 0 ); p.x.add( 0 ); p.x.add( 1 ); p.x.add( 1 );
-        p.y.add( 0 ); p.y.add( 1 ); p.y.add( 1 ); p.y.add( 0 );
+        PolygonBuilder p = new PolygonBuilder();
+        p.add( 0, 0 );
+        p.add( 0, 1 );
+        p.add( 1, 1 );
+        p.add( 1, 0 );
         return p;
     }
 }

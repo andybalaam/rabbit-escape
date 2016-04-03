@@ -91,6 +91,14 @@ public class Vector2D
     }
 
     @Override
+    public int hashCode()
+    {
+        // This will break if a world has more than 10000 rows
+        // Currently largest level is around 30.
+        return 10000 * 32 * x + y;
+    }
+
+    @Override
     public String toString()
     {
         return String.format( "(%04d,%04d)", x, y );

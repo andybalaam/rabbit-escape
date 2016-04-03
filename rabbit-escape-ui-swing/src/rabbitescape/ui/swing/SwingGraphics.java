@@ -3,8 +3,8 @@ package rabbitescape.ui.swing;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.image.BufferStrategy;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Vector;
 
 import rabbitescape.engine.World;
 import rabbitescape.engine.World.CompletionState;
@@ -12,6 +12,7 @@ import rabbitescape.render.AnimationCache;
 import rabbitescape.render.AnimationLoader;
 import rabbitescape.render.BitmapCache;
 import rabbitescape.render.GraphPaperBackground;
+import rabbitescape.render.PolygonBuilder;
 import rabbitescape.render.Polygon;
 import rabbitescape.render.Renderer;
 import rabbitescape.render.SoundPlayer;
@@ -93,14 +94,13 @@ public class SwingGraphics implements Graphics
             soundPlayer.play( sprites );
         }
 
-        void drawPolygons( Vector<Polygon> polygons, SwingCanvas swingCanvas )
+        void drawPolygons( ArrayList<PolygonBuilder> polygons, SwingCanvas swingCanvas )
         {
-            double f = renderer.tileSize / 32.0;
-            for ( Polygon p: polygons )
+            float f = renderer.tileSize / 32f;
+            for ( PolygonBuilder pb: polygons )
             {
-                int[] x = p.getX( f, renderer.offsetX );
-                int[] y = p.getY( f, renderer.offsetY );
-                swingCanvas.drawFilledPoly( x, y, waterColor );
+                Polygon p = pb.polygon( f, renderer.offsetX, renderer.offsetY );
+                swingCanvas.drawFilledPoly( p.x, p.y, waterColor );
             }
         }
     }
