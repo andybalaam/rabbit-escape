@@ -58,7 +58,7 @@ public class Vector2D
         return new Vector2D( this.x / operand, this.y / operand );
     }
 
-    public static Vector2D cellularDirection( CellularDirection d )
+    public static Vector2D translate( CellularDirection d )
     {
         return new Vector2D( d.xOffset, d.yOffset );
     }

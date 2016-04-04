@@ -51,7 +51,7 @@ public class TestVector2D
     @Test
     public void Vectors_can_be_created_from_cellular_directions()
     {
-        Vector2D a = Vector2D.cellularDirection( CellularDirection.DOWN );
+        Vector2D a = Vector2D.translate( CellularDirection.DOWN );
         assertThat( a, equalToVector2D( new Vector2D( 0, 1 ) ) );
     }
 
