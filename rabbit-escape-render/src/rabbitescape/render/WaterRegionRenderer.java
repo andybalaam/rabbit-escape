@@ -11,7 +11,7 @@ import rabbitescape.engine.util.CellDebugPrint;
 import rabbitescape.engine.util.LookupItem2D;
 import rabbitescape.engine.util.MathUtil;
 import rabbitescape.engine.util.Position;
-import rabbitescape.render.gameloop.WaterDynamics;
+import rabbitescape.render.gameloop.WaterAnimation;
 import rabbitescape.render.Vertex;
 
 public class WaterRegionRenderer implements LookupItem2D
@@ -36,18 +36,19 @@ public class WaterRegionRenderer implements LookupItem2D
     private int lastHeight = 0;
 
     private final World world;
-    private final WaterDynamics dynamics;
+    private final WaterAnimation waterAnimation;
 
-    public WaterRegionRenderer(WaterRegion region, World world, WaterDynamics dynamics )
+    public WaterRegionRenderer(WaterRegion region, World world,
+                               WaterAnimation waterAnimation )
     {
         this.region = region;
         this.world = world;
-        this.dynamics = dynamics;
+        this.waterAnimation = waterAnimation;
     }
 
     public WaterRegionRenderer adjacentRenderer( CellularDirection d )
     {
-        return dynamics.lookupRenderer.getItemAt( region.x + d.xOffset, region.y + d.yOffset );
+        return waterAnimation.lookupRenderer.getItemAt( region.x + d.xOffset, region.y + d.yOffset );
     }
 
     public boolean adjacentIsNull( CellularDirection d )
@@ -96,8 +97,8 @@ public class WaterRegionRenderer implements LookupItem2D
      */
     public void setWaterHeight()
     {
-        height = MathUtil.constrain( targetWaterHeight, 
-                                     lastHeight - maxHeightChange , 
+        height = MathUtil.constrain( targetWaterHeight,
+                                     lastHeight - maxHeightChange ,
                                      lastHeight + maxHeightChange );
         lastHeight = height;
     }
@@ -278,7 +279,7 @@ public class WaterRegionRenderer implements LookupItem2D
         { // Flat block cells have zero capacity: always full.
             return true;
         }
-        WaterRegionRenderer wrr = dynamics.lookupRenderer.getItemAt( x, y );
+        WaterRegionRenderer wrr = waterAnimation.lookupRenderer.getItemAt( x, y );
         if ( null == wrr )
         { // Not full of flat block, but no region yet, empty
             return false;

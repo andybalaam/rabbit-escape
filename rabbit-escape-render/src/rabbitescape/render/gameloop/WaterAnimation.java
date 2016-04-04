@@ -16,30 +16,30 @@ import rabbitescape.render.WaterRegionRenderer;
 /**
  * Manages animation of polygons for water.
  */
-public class WaterDynamics
+public class WaterAnimation
 {
     public final LookupTable2D<WaterRegionRenderer> lookupRenderer ;
     public final ArrayList<PolygonBuilder> polygons;
     private int lastFramenumber = 10;
     public final Dimension worldSize;
 
-    public WaterDynamics( World world )
+    public WaterAnimation( World world )
     {
         worldSize = world.size;
         lookupRenderer = new LookupTable2D<WaterRegionRenderer>( worldSize );
         polygons = new ArrayList<PolygonBuilder>();
     }
 
-    private WaterDynamics()
+    private WaterAnimation()
     {
         lookupRenderer = null;
         polygons = null;
         worldSize = null;
     }
 
-    public static WaterDynamics getDummyWaterDynamics()
+    public static WaterAnimation getDummyWaterAnimation()
     {
-        return new WaterDynamics();
+        return new WaterAnimation();
     }
 
     /**

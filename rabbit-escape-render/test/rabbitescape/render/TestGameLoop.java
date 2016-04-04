@@ -132,7 +132,7 @@ public class TestGameLoop
         PrintStream debugout = null;
 
         ret.gameLoop = new GameLoop(
-            ret.input, physics, new WaterDynamics( neverWonWorld ), ret.graphics, config, debugout );
+            ret.input, physics, new WaterAnimation( neverWonWorld ), ret.graphics, config, debugout );
 
         ret.gameLoop.resetClock();
 

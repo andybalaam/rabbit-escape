@@ -8,7 +8,7 @@ import static org.hamcrest.MatcherAssert.*;
 import org.junit.Test;
 
 import rabbitescape.engine.World;
-import rabbitescape.render.gameloop.WaterDynamics;
+import rabbitescape.render.gameloop.WaterAnimation;
 
 
 public class TestWater
@@ -21,9 +21,9 @@ public class TestWater
             "# /",
             "###"
         );
-        WaterDynamics dynamics = new WaterDynamics( world );
-        waterStep( 1, world, dynamics );
-        WaterRegionRenderer pipeRR = dynamics.lookupRenderer.getItemAt( 1, 0 );
+        WaterAnimation animation = new WaterAnimation( world );
+        waterStep( 1, world, animation );
+        WaterRegionRenderer pipeRR = animation.lookupRenderer.getItemAt( 1, 0 );
         assertThat( pipeRR.isFalling(), equalTo( true ) );
     }
 
@@ -35,11 +35,11 @@ public class TestWater
             "# #",
             "###"
         );
-        WaterDynamics dynamics = new WaterDynamics( world );
-        waterStep( 4, world, dynamics );
-        WaterRegionRenderer poolRR = dynamics.lookupRenderer.getItemAt( 1, 1 );
+        WaterAnimation animation = new WaterAnimation( world );
+        waterStep( 4, world, animation );
+        WaterRegionRenderer poolRR = animation.lookupRenderer.getItemAt( 1, 1 );
         assertThat( poolRR.isFull( 1, 1 ), equalTo( false ) );
-        waterStep( 1, world, dynamics );
+        waterStep( 1, world, animation );
         assertThat( poolRR.isFull( 1, 1 ), equalTo( true ) );
     }
 
@@ -51,17 +51,17 @@ public class TestWater
             "# #",
             "###"
         );
-        WaterDynamics dynamics = new WaterDynamics( world );
-        waterStep( 4, world, dynamics );
-        WaterRegionRenderer pipeRR = dynamics.lookupRenderer.getItemAt( 1, 0 );
+        WaterAnimation animation = new WaterAnimation( world );
+        waterStep( 4, world, animation );
+        WaterRegionRenderer pipeRR = animation.lookupRenderer.getItemAt( 1, 0 );
         assertThat( pipeRR.isFalling(), equalTo( true ) );
-        waterStep( 1, world, dynamics );
+        waterStep( 1, world, animation );
         assertThat( pipeRR.isFalling(), equalTo( false ) );
     }
 
     // -----------
 
-    private static void waterStep( int n, World w, WaterDynamics d )
+    private static void waterStep( int n, World w, WaterAnimation d )
     {
         for ( int i = 0 ; i < n; i++ )
         {

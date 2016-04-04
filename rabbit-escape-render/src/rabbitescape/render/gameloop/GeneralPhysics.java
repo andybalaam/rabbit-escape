@@ -54,7 +54,7 @@ public class GeneralPhysics implements Physics
     public int frame;
     public boolean fast;
     public final World world;
-    private final WaterDynamics water;
+    private final WaterAnimation water;
     private final WorldModifier worldModifier;
     private final LevelWinListener winListener;
     private final List<StatsChangedListener> statsListeners;
@@ -67,7 +67,7 @@ public class GeneralPhysics implements Physics
     {
         this(
             world,
-            WaterDynamics.getDummyWaterDynamics(),
+            WaterAnimation.getDummyWaterAnimation(),
             winListener,
             fast,
             new SolutionIgnorer(),
@@ -77,11 +77,11 @@ public class GeneralPhysics implements Physics
         );
     }
 
-    public GeneralPhysics( World world, WaterDynamics waterDynamics, LevelWinListener winListener, boolean fast )
+    public GeneralPhysics( World world, WaterAnimation waterAnimation, LevelWinListener winListener, boolean fast )
     {
         this(
             world,
-            waterDynamics,
+            waterAnimation,
             winListener,
             fast,
             new SolutionIgnorer(),
@@ -94,7 +94,7 @@ public class GeneralPhysics implements Physics
 
     public GeneralPhysics(
         World world,
-        WaterDynamics water,
+        WaterAnimation water,
         LevelWinListener winListener,
         boolean fast,
         SolutionRecorderTemplate solutionRecorder,

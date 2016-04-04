@@ -14,7 +14,7 @@ public class GameLoop
     private final Input input;
     private final Physics physics;
     private final Graphics graphics;
-    private final WaterDynamics water;
+    private final WaterAnimation water;
     private boolean running;
     private long simulation_time;
     private long frame_start_time;
@@ -25,7 +25,7 @@ public class GameLoop
     public GameLoop(
         Input input,
         Physics physics,
-        WaterDynamics water,
+        WaterAnimation water,
         Graphics graphics,
         Config config,
         PrintStream debugout

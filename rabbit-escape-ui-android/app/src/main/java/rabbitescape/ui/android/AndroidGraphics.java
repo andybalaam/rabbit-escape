@@ -7,7 +7,6 @@ import android.view.SurfaceHolder;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Vector;
 
 import rabbitescape.engine.World;
 import rabbitescape.render.AnimationCache;
@@ -21,7 +20,7 @@ import rabbitescape.render.SoundPlayer;
 import rabbitescape.render.Sprite;
 import rabbitescape.render.SpriteAnimator;
 import rabbitescape.render.gameloop.Graphics;
-import rabbitescape.render.gameloop.WaterDynamics;
+import rabbitescape.render.gameloop.WaterAnimation;
 
 public class AndroidGraphics implements Graphics
 {
@@ -31,7 +30,7 @@ public class AndroidGraphics implements Graphics
     private final BitmapCache<AndroidBitmap> bitmapCache;
     private final SoundPlayer soundPlayer;
     private final World world;
-    private final WaterDynamics waterDynamics;
+    private final WaterAnimation waterAnimation;
     private final AnimationCache animationCache;
     private final AndroidPaint paint;
 
@@ -82,7 +81,7 @@ public class AndroidGraphics implements Graphics
         BitmapCache<AndroidBitmap> bitmapCache,
         SoundPlayer soundPlayer,
         World world,
-        WaterDynamics waterDynamics,
+        WaterAnimation waterAnimation,
         int scrollX,
         int scrollY
     )
@@ -90,7 +89,7 @@ public class AndroidGraphics implements Graphics
         this.bitmapCache = bitmapCache;
         this.soundPlayer = soundPlayer;
         this.world = world;
-        this.waterDynamics = waterDynamics;
+        this.waterAnimation = waterAnimation;
         this.scrollX = scrollX;
         this.scrollY = scrollY;
 
@@ -242,7 +241,7 @@ public class AndroidGraphics implements Graphics
         GraphPaperBackground.drawBackground(
             world, renderer, androidCanvas, white, graphPaperMajor, graphPaperMinor );
 
-        drawPolygons(waterDynamics.polygons, androidCanvas, renderer );
+        drawPolygons(waterAnimation.polygons, androidCanvas, renderer );
 
         List<Sprite> sprites = animator.getSprites( frameNum );
 

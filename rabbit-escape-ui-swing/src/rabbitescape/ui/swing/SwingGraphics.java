@@ -19,7 +19,7 @@ import rabbitescape.render.SoundPlayer;
 import rabbitescape.render.Sprite;
 import rabbitescape.render.SpriteAnimator;
 import rabbitescape.render.gameloop.Graphics;
-import rabbitescape.render.gameloop.WaterDynamics;
+import rabbitescape.render.gameloop.WaterAnimation;
 
 public class SwingGraphics implements Graphics
 {
@@ -43,7 +43,7 @@ public class SwingGraphics implements Graphics
         private final SpriteAnimator animator;
         private final int frameNum;
         private final World world;
-        private final WaterDynamics waterDynamics;
+        private final WaterAnimation waterAnimation;
 
         public DrawFrame(
             BufferStrategy strategy,
@@ -53,7 +53,7 @@ public class SwingGraphics implements Graphics
             SpriteAnimator animator,
             int frameNum,
             World world,
-            WaterDynamics waterDynamics
+            WaterAnimation waterAnimation
         )
         {
             super( strategy );
@@ -63,7 +63,7 @@ public class SwingGraphics implements Graphics
             this.animator = animator;
             this.frameNum = frameNum;
             this.world = world;
-            this.waterDynamics = waterDynamics;
+            this.waterAnimation = waterAnimation;
         }
 
         @Override
@@ -81,7 +81,7 @@ public class SwingGraphics implements Graphics
                 graphPaperMinor
             );
 
-            drawPolygons( waterDynamics.polygons, swingCanvas );
+            drawPolygons( waterAnimation.polygons, swingCanvas );
 
             List<Sprite> sprites = animator.getSprites( frameNum );
 
@@ -111,7 +111,7 @@ public class SwingGraphics implements Graphics
     private final BufferStrategy strategy;
     private final SpriteAnimator animator;
     private final FrameDumper frameDumper;
-    private final WaterDynamics waterDynamics;
+    private final WaterAnimation waterAnimation;
 
     public final Renderer<SwingBitmap, SwingPaint> renderer;
     private final SoundPlayer soundPlayer;
@@ -126,7 +126,7 @@ public class SwingGraphics implements Graphics
         BitmapCache<SwingBitmap> bitmapCache,
         SwingSound sound,
         FrameDumper frameDumper,
-        WaterDynamics waterDynamics
+        WaterAnimation waterAnimation
     )
     {
         this.world = world;
@@ -144,7 +144,7 @@ public class SwingGraphics implements Graphics
         this.prevScrollY = -1;
         this.lastWorldState = null;
         this.frameDumper = frameDumper;
-        this.waterDynamics = waterDynamics;
+        this.waterAnimation = waterAnimation;
     }
 
     @Override
@@ -160,7 +160,7 @@ public class SwingGraphics implements Graphics
             animator,
             frame,
             world,
-            waterDynamics
+            waterAnimation
         );
 
         df.run();

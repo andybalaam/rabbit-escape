@@ -10,7 +10,7 @@ import rabbitescape.render.BitmapCache;
 import rabbitescape.render.SoundPlayer;
 import rabbitescape.render.gameloop.GameLoop;
 import rabbitescape.render.gameloop.GeneralPhysics;
-import rabbitescape.render.gameloop.WaterDynamics;
+import rabbitescape.render.gameloop.WaterAnimation;
 
 import static android.text.TextUtils.join;
 
@@ -24,7 +24,7 @@ public class AndroidGameLaunch implements Runnable
 
     private final Config config;
     public final GeneralPhysics physics;
-    private final WaterDynamics waterDynamics;
+    private final WaterAnimation waterAnimation;
     public final AndroidGraphics graphics;
     public final SoundPlayer soundPlayer;
     public final AndroidInput input;
@@ -60,9 +60,9 @@ public class AndroidGameLaunch implements Runnable
             fast = false;
         }
 
-        this.waterDynamics = new WaterDynamics( world );
+        this.waterAnimation = new WaterAnimation( world );
 
-        this.physics = new GeneralPhysics( world, waterDynamics, winListener, fast );
+        this.physics = new GeneralPhysics( world, waterAnimation, winListener, fast );
 
         this.worldSaver = new WorldSaver( world, this );
 
@@ -73,7 +73,7 @@ public class AndroidGameLaunch implements Runnable
         this.chosenAbility = null;
 
         this.graphics = new AndroidGraphics(
-                bitmapCache, soundPlayer, world, waterDynamics, scrollX, scrollY );
+                bitmapCache, soundPlayer, world, waterAnimation, scrollX, scrollY );
 
     }
 
@@ -130,7 +130,7 @@ public class AndroidGameLaunch implements Runnable
 
     public void readyToRun()
     {
-        this.loop = new GameLoop( input, physics, waterDynamics, graphics, config, null );
+        this.loop = new GameLoop( input, physics, waterAnimation, graphics, config, null );
     }
 
     public void scrollBy( float x, float y )
