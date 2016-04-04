@@ -83,7 +83,7 @@ public class SwingGraphics implements Graphics
 
             drawPolygons( waterDynamics.polygons, swingCanvas );
 
-            List<Sprite> sprites = animator.getSprites( frameNum, waterDynamics );
+            List<Sprite> sprites = animator.getSprites( frameNum );
 
             renderer.render(
                 swingCanvas,

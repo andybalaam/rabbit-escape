@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Locale;
 
 import rabbitescape.engine.*;
-import rabbitescape.render.gameloop.WaterDynamics;
 
 public class SpriteAnimator
 {
@@ -56,7 +55,7 @@ public class SpriteAnimator
         this.animationCache = animationCache;
     }
 
-    public List<Sprite> getSprites( int frameNum, WaterDynamics waterDynamics )
+    public List<Sprite> getSprites( int frameNum )
     {
         List<Sprite> ret = new ArrayList<>();
 

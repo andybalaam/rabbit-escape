@@ -244,7 +244,7 @@ public class AndroidGraphics implements Graphics
 
         drawPolygons(waterDynamics.polygons, androidCanvas, renderer );
 
-        List<Sprite> sprites = animator.getSprites( frameNum, waterDynamics );
+        List<Sprite> sprites = animator.getSprites( frameNum );
 
         soundPlayer.play( sprites );
 
