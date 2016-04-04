@@ -92,7 +92,7 @@ public class WaterDynamics
                 {
                     start = wrr;
                 }
-                if ( !wrr.region.isConnected( RIGHT ) || wrr.adjacentNull( RIGHT ) || wrr.adjacentWaterIsFalling( RIGHT ) )
+                if ( !wrr.region.isConnected( RIGHT ) || wrr.adjacentIsNull( RIGHT ) || wrr.adjacentWaterIsFalling( RIGHT ) )
                 {
                     p.add( wrr.topVertex( RIGHT ) );
                     p.add( wrr.bottomVertex( RIGHT ) );
