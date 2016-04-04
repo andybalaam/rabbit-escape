@@ -46,11 +46,6 @@ public class WaterRegionRenderer implements LookupItem2D
         this.dynamics = dynamics;
     }
 
-    public void setWaterRegion( WaterRegion region )
-    {
-        this.region = region;
-    }
-
     public WaterRegionRenderer adjacentRenderer( CellularDirection d )
     {
         return dynamics.lookupRenderer.getItemAt( region.x + d.xOffset, region.y + d.yOffset );

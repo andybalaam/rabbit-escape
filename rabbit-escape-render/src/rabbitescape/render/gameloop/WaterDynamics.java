@@ -131,9 +131,8 @@ public class WaterDynamics
             { // Remove renderers that are being used from temporary list.
                 currentRR.remove( r );
             }
-            // Items left are not matched to a region. Remove them.
-            // TODO should they disappear more slowly
         }
+        // Remove renderers that no longer have regions
         lookupRenderer.removeAll( currentRR );
 
         for( WaterRegionRenderer wrr: lookupRenderer )
