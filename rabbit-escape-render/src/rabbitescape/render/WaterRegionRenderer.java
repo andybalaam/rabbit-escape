@@ -9,6 +9,7 @@ import rabbitescape.engine.World;
 import rabbitescape.engine.textworld.BlockRenderer;
 import rabbitescape.engine.util.CellDebugPrint;
 import rabbitescape.engine.util.LookupItem2D;
+import rabbitescape.engine.util.MathUtil;
 import rabbitescape.engine.util.Position;
 import rabbitescape.render.gameloop.WaterDynamics;
 import rabbitescape.render.Vertex;
@@ -97,19 +98,9 @@ public class WaterRegionRenderer implements LookupItem2D
      */
     public void setWaterHeight()
     {
-        if ( lastHeight + maxHeightChange < targetWaterHeight )
-        {
-            height = lastHeight + maxHeightChange;
-            lastHeight = height;
-            return;
-        }
-        if ( lastHeight - maxHeightChange > targetWaterHeight )
-        {
-            height = lastHeight - maxHeightChange;
-            lastHeight = height;
-            return;
-        }
-        height = targetWaterHeight;
+        height = MathUtil.constrain( targetWaterHeight, 
+                                     lastHeight - maxHeightChange , 
+                                     lastHeight + maxHeightChange );
         lastHeight = height;
     }
 
