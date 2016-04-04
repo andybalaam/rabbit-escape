@@ -71,10 +71,6 @@ public class WaterDynamics
     private void calculatePolygons()
     {
         polygons.clear();
-        for ( WaterRegionRenderer wrr: lookupRenderer )
-        {
-            wrr.drawnLB = wrr.drawnLT = wrr.drawnR = false;
-        }
         for ( int y = 0; y < worldSize.height ; y++ )
         {
             PolygonBuilder p = new PolygonBuilder();
@@ -87,7 +83,6 @@ public class WaterDynamics
                     continue;
                 }
                 p.add( wrr.topVertex( LEFT ) );
-                wrr.drawnLT = true;
                 if ( null == start )
                 {
                     start = wrr;
@@ -97,7 +92,6 @@ public class WaterDynamics
                     p.add( wrr.topVertex( RIGHT ) );
                     p.add( wrr.bottomVertex( RIGHT ) );
                     p.add( start.bottomVertex( LEFT ) );
-                    start.drawnLB = wrr.drawnR = true;
                     start = null;
                     polygons.add( p );
                     p = new PolygonBuilder();

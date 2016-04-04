@@ -35,8 +35,6 @@ public class WaterRegionRenderer implements LookupItem2D
     private int height = 0;
     private int lastHeight = 0;
 
-    public boolean drawnLT, drawnLB, drawnR;
-
     private final World world;
     private final WaterDynamics dynamics;
 
@@ -325,10 +323,7 @@ public class WaterRegionRenderer implements LookupItem2D
 
         p.addString( region, 6, "height(targ) %02d(%02d)", height, targetWaterHeight );
 
-        p.addString( region, 7, " LT" + bool01( drawnLT ) +
-                                             " LB" + bool01( drawnLB ) +
-                                              " R" + bool01( drawnR ) );
-        p.addString(  region, 8, "(%d,%d)", region.x, region.y );
+        p.addString(  region, 7, "(%d,%d)", region.x, region.y );
     }
 
     private String bool01( boolean b )
