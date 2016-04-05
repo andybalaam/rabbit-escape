@@ -360,6 +360,10 @@ public class LineProcessor
                 throw new DuplicateMetaKey( lines, lineNum );
             }
 
+            if ( list.size() != listKey.number - 1 )
+            {
+                throw new ArrayByKeyElementMissing( lines, lineNum );
+            }
             list.put( listKey.number, value );
         }
         else if ( TextWorldManip.ABILITIES.contains( key ) )
