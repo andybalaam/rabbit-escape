@@ -20,6 +20,7 @@ import rabbitescape.engine.solution.SolutionExceptions;
 import rabbitescape.engine.solution.SolutionParser;
 import rabbitescape.engine.solution.SolutionRunner;
 import rabbitescape.engine.solution.SolutionExceptions.RanPastEnd;
+import rabbitescape.engine.textworld.ArrayByKeyElementMissing;
 import rabbitescape.engine.textworld.DuplicateMetaKey;
 import rabbitescape.engine.textworld.ItemsLineProcessor;
 import rabbitescape.engine.textworld.LineProcessor;
@@ -1154,6 +1155,8 @@ public class TestTextWorldManip
     public void Round_trip_comments_move_with_meta()
     {
         String[] lines = {
+            "% something erudite about hint.1",
+            ":hint.1=take",
             ":hint.2=a",
             "% wisdom regarding hint.3",
             ":hint.3=hint",
@@ -1164,8 +1167,6 @@ public class TestTextWorldManip
             ":num_to_save=18",
             "% why are we waiting?",
             ":rabbit_delay=10,3,2,10",
-            "% something erudite about hint.1",
-            ":hint.1=take",
             "% some already out: no",
             ":num_saved=0",
             "% dead already",
@@ -1656,7 +1657,7 @@ public class TestTextWorldManip
         assertThat( world.solutions[10], equalTo( "10" ) );
     }
 
-    @Test
+    @Test ( expected = ArrayByKeyElementMissing.class )
     public void Many_solutions_with_gaps()
     {
         String[] lines = {

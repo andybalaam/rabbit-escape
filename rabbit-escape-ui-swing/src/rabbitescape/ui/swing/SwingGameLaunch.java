@@ -141,7 +141,7 @@ public class SwingGameLaunch implements GameLaunch
             return SolutionInterpreter.getNothingPlaying();
         }
         else
-        { // TODO if solutions in file are numbered 1 and 3, what happens?
+        {
             Solution s = SolutionParser.parse( world.solutions[solutionIndex - 1] );
             return new SolutionInterpreter( s );
         }
