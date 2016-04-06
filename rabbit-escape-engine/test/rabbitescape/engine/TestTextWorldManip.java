@@ -1658,6 +1658,23 @@ public class TestTextWorldManip
     }
 
     @Test ( expected = ArrayByKeyElementMissing.class )
+    public void Disorderly_solutions_throw_exceptions()
+    {
+        String[] lines = {
+            ":num_rabbits=1",
+            ":bash=2",
+            ":solution.1=10",
+            ":solution.3=11",
+            ":solution.2=10;bash",
+            " Q   ",
+            "#   #",
+            "#####"
+        };
+
+        createWorld( lines );
+    }
+
+    @Test ( expected = ArrayByKeyElementMissing.class )
     public void Many_solutions_with_gaps()
     {
         String[] lines = {
