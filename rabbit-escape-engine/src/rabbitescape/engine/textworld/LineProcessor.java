@@ -31,23 +31,12 @@ import rabbitescape.engine.Token;
 import rabbitescape.engine.VoidMarkerStyle;
 import rabbitescape.engine.util.Dimension;
 import rabbitescape.engine.util.MegaCoder;
+import rabbitescape.engine.util.Position;
 import rabbitescape.engine.util.VariantGenerator;
 
 public class LineProcessor
 {
     public static final String CODE_SUFFIX = ".code";
-
-    private static class Point
-    {
-        public final int x;
-        public final int y;
-
-        public Point( int x, int y )
-        {
-            this.x = x;
-            this.y = y;
-        }
-    }
 
     public static class KeyListKey
     {
@@ -101,7 +90,7 @@ public class LineProcessor
     private final Map<String, Integer> m_metaInts;
     private final Map<String, Boolean> m_metaBools;
     private final Map<String, ArrayList<Integer>> m_metaIntArrays;
-    private final List<Point> starPoints;
+    private final List<Position> starPoints;
     private final List<Comment> comments;
 
     private int width;
@@ -128,7 +117,7 @@ public class LineProcessor
         this.m_metaInts              = new HashMap<>();
         this.m_metaBools             = new HashMap<>();
         this.m_metaIntArrays         = new HashMap<>();
-        starPoints = new ArrayList<Point>();
+        starPoints = new ArrayList<Position>();
         this.comments = new ArrayList<Comment>();
 
         width = -1;
@@ -381,7 +370,7 @@ public class LineProcessor
                 throw new NotEnoughStars( lines, lineNum );
             }
 
-            Point p = starPoints.get( currentStarPoint );
+            Position p = starPoints.get( currentStarPoint );
 
             new ItemsLineProcessor( this, p.x, p.y, value )
                 .process( variantGen );
@@ -618,7 +607,7 @@ public class LineProcessor
             }
             case '*':
             {
-                starPoints.add( new Point( x, y ) );
+                starPoints.add( new Position( x, y ) );
                 break;
             }
             default:
