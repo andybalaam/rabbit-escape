@@ -22,29 +22,11 @@ public class Position implements Comparable<Position>
     @Override
     public int compareTo( Position other )
     {
-        if ( y < other.y )
+        if ( y != other.y )
         {
-            return -1;
+            return y - other.y ;
         }
-        else if( y > other.y )
-        {
-            return 1;
-        }
-        else
-        {
-            if ( x < other.x )
-            {
-                return -1;
-            }
-            else if( x > other.x )
-            {
-                return 1;
-            }
-            else
-            {
-                return 0;
-            }
-        }
+        return x - other.x;
     }
 
 }
