@@ -9,20 +9,10 @@ import rabbitescape.engine.World.NoBlockFound;
 import rabbitescape.engine.World.NoSuchAbilityInThisWorld;
 import rabbitescape.engine.World.NoneOfThisAbilityLeft;
 import rabbitescape.engine.World.UnableToAddToken;
+import rabbitescape.engine.util.Position;
 
 public class WorldChanges
 {
-    public static class Point
-    {
-        public final int x;
-        public final int y;
-
-        public Point( int x, int y )
-        {
-            this.x = x;
-            this.y = y;
-        }
-    }
 
     private final World world;
     public final WorldStatsListener statsListener;
@@ -35,8 +25,8 @@ public class WorldChanges
     public  final List<Fire>   fireToRemove   = new ArrayList<Fire>();
     private final List<Block>  blocksToAdd    = new ArrayList<Block>();
     private final List<Block>  blocksToRemove = new ArrayList<Block>();
-    public final List<Point>   blocksJustRemoved = new ArrayList<Point>();
-    private final List<Point>  waterPointsToRecalculate = new ArrayList<>();
+    public final List<Position>   blocksJustRemoved = new ArrayList<Position>();
+    private final List<Position>  waterPointsToRecalculate = new ArrayList<>();
 
     private boolean explodeAll = false;
 
@@ -67,7 +57,7 @@ public class WorldChanges
         world.things.removeAll( fireToRemove );
         world.blockTable.removeAll(  blocksToRemove );
 
-        for ( Point point : waterPointsToRecalculate )
+        for ( Position point : waterPointsToRecalculate )
         {
             world.recalculateWaterRegions( point );
         }
@@ -207,7 +197,7 @@ public class WorldChanges
     public synchronized void addBlock( Block block )
     {
         blocksToAdd.add( block );
-        waterPointsToRecalculate.add( new Point( block.x, block.y ) );
+        waterPointsToRecalculate.add( new Position( block.x, block.y ) );
     }
 
     public synchronized void removeBlockAt( int x, int y )
@@ -217,9 +207,9 @@ public class WorldChanges
         {
             throw new NoBlockFound( x, y );
         }
-        blocksJustRemoved.add( new Point( x, y ) );
+        blocksJustRemoved.add( new Position( x, y ) );
         blocksToRemove.add( block );
-        waterPointsToRecalculate.add( new Point( x, y ) );
+        waterPointsToRecalculate.add( new Position( x, y ) );
     }
 
     public synchronized List<Thing> tokensAboutToAppear()

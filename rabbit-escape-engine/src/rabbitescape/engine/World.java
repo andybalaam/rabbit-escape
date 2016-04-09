@@ -7,11 +7,11 @@ import java.util.List;
 import java.util.Map;
 
 import rabbitescape.engine.WaterRegion;
-import rabbitescape.engine.WorldChanges.Point;
 import rabbitescape.engine.err.RabbitEscapeException;
 import rabbitescape.engine.textworld.Comment;
 import rabbitescape.engine.util.Dimension;
 import rabbitescape.engine.util.LookupTable2D;
+import rabbitescape.engine.util.Position;
 
 public class World
 {
@@ -335,7 +335,7 @@ public class World
         this.paused = paused;
     }
 
-    public void recalculateWaterRegions( Point point )
+    public void recalculateWaterRegions( Position point )
     {
         waterTable.removeItemsAt( point.x, point.y );
         WaterRegionFactory.createWaterRegionsAtPoint( blockTable, waterTable, point.x, point.y );
