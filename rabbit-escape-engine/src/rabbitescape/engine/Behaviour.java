@@ -20,6 +20,9 @@ public abstract class Behaviour
 
     /**
      * Move the rabbit in the world. Kill it, or record its safe exit.
+     *
+     * @return true if this behaviour has done all the work needed for
+     *         this time step
      */
     public abstract boolean behave( World world, Rabbit rabbit, State state );
 
