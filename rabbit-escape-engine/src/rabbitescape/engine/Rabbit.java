@@ -52,11 +52,13 @@ public class Rabbit extends Thing implements Comparable<Rabbit>
         Blocking blocking = new Blocking();
         Walking walking = new Walking();
         BaddyCrash baddyCrash = new BaddyCrash();
+        BaddyWait baddyWait = new BaddyWait();
 
         behavioursTriggerOrder.add( exploding );
         behavioursTriggerOrder.add( outOfBounds );
         behavioursTriggerOrder.add( burning );
         behavioursTriggerOrder.add( drowning );
+        behavioursTriggerOrder.add( baddyCrash );
         behavioursTriggerOrder.add( falling );
         behavioursTriggerOrder.add( exiting );
         behavioursTriggerOrder.add( brollychuting );
@@ -65,13 +67,14 @@ public class Rabbit extends Thing implements Comparable<Rabbit>
         behavioursTriggerOrder.add( digging );
         behavioursTriggerOrder.add( bridging );
         behavioursTriggerOrder.add( blocking );
-        behavioursTriggerOrder.add( baddyCrash );
+        behavioursTriggerOrder.add( baddyWait );
         behavioursTriggerOrder.add( walking );
 
         behaviours.add( exploding );
         behaviours.add( outOfBounds );
         behaviours.add( burning );
         behaviours.add( drowning );
+        behaviours.add( baddyCrash );
         behaviours.add( falling );
         behaviours.add( exiting );
         behaviours.add( brollychuting );
@@ -80,7 +83,7 @@ public class Rabbit extends Thing implements Comparable<Rabbit>
         behaviours.add( bridging );
         behaviours.add( blocking );
         behaviours.add( climbing );
-        behaviours.add( baddyCrash );
+        behaviours.add( baddyWait );
         behaviours.add( walking );
 
         assert behavioursTriggerOrder.size() == behaviours.size();

@@ -40,4 +40,22 @@ public class TestBaddyRabbits
             "####"
         );
     }
+
+    @Test
+    public void If_a_rabbit_will_cross_over_with_a_baddy_rabbit_the_baddy_rabbit_will_stop()
+    {
+        assertWorldEvolvesLike(
+            "t  j" + "\n" +
+            "####",
+
+            " <j " + "\n" +  // t is waiting
+            "####",
+
+            " Z  " + "\n" +
+            "####",
+
+            "    " + "\n" +
+            "####"
+        );
+    }
 }

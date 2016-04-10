@@ -290,6 +290,8 @@ public class ChangeRenderer
                 break;
             case RABBIT_OUT_OF_BOUNDS:
                 break;
+            case RABBIT_WAITING_LEFT:
+            case RABBIT_WAITING_RIGHT:
             case TOKEN_BASH_STILL:
             case TOKEN_BASH_ON_SLOPE:
             case TOKEN_DIG_STILL:
