@@ -155,18 +155,18 @@ public class LineProcessor
         }
         else
         {
-            ArrayList<String> ret = new ArrayList<String>( temp.size() );
 
-            for ( Map.Entry<Integer, String> entry : temp.entrySet() )
+            String[] ret = new String[temp.size()];
+            for ( int i = 1 ; i <= temp.size() ; i++ )
             {
-                while ( ret.size() < entry.getKey() - 1 )
+                String v = temp.get( i );
+                if ( null == v )
                 {
-                    ret.add( "" );
+                    throw new RuntimeException( "temp should have 1, 2, ..., temp.size() members." );
                 }
-
-                ret.add( entry.getKey() - 1, entry.getValue() );
+                ret[i - 1] = v;
             }
-            return ret.toArray( new String[ ret.size() ] );
+            return ret;
         }
     }
 
