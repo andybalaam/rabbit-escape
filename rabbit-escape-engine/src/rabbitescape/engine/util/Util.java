@@ -160,6 +160,32 @@ public class Util
         return ret;
     }
 
+    public static <T> List<T> filterIn( Iterable<T> i, Class<? extends T> filter )
+    {
+        ArrayList<T> filtered = new ArrayList<T>();
+        for ( T o: i)
+        {
+            if ( filter.isInstance( o ) )
+            {
+                filtered.add( o );
+            }
+        }
+        return filtered;
+    }
+
+    public static <T> List<T> filterOut( Iterable<T> i, Class<? extends T> filter )
+    {
+        ArrayList<T> filtered = new ArrayList<T>();
+        for ( T o: i)
+        {
+            if ( !filter.isInstance( o ) )
+            {
+                filtered.add( o );
+            }
+        }
+        return filtered;
+    }
+
     public static String[] stringArray( List<String> list )
     {
         return list.toArray( new String[list.size()] );
