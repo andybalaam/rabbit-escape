@@ -2,17 +2,16 @@ package rabbitescape.engine.util;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Vector;
 
 public class LookupItems2D <T extends LookupItem2D>
 {
 
-    private final Vector<T> items;
+    private final ArrayList<T> items;
     public final Position position;
 
     public LookupItems2D( final Position position )
     {
-        items = new Vector<T>( 1, 5 ) ;
+        items = new ArrayList<T>() ;
         this.position = position;
     }
 
