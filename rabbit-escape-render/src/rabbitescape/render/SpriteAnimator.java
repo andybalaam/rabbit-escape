@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Locale;
 
 import rabbitescape.engine.*;
+import rabbitescape.engine.util.Util;
 
 public class SpriteAnimator
 {
@@ -66,12 +67,9 @@ public class SpriteAnimator
             addBlock( block, ret );
         }
 
-        for ( Thing thing : world.things )
+        for ( Thing thing : Util.filterOut( world.things, Fire.class ) )
         {
-            if ( !( thing instanceof Fire ) )
-            {
-                addThing( frameNum, thing, null, ret );
-            }
+            addThing( frameNum, thing, null, ret );
         }
 
         for ( WaterRegion waterRegion : world.waterTable )
@@ -87,12 +85,9 @@ public class SpriteAnimator
             addThing( frameNum, rabbit, null, ret );
         }
 
-        for ( Thing thing : world.things )
+        for ( Thing thing : Util.filterIn( world.things, Fire.class ) )
         {
-            if ( thing instanceof Fire )
-            {
-                addThing( frameNum, thing, null, ret );
-            }
+            addThing( frameNum, thing, null, ret );
         }
 
         for ( Thing thing : world.changes.tokensAboutToAppear() )
