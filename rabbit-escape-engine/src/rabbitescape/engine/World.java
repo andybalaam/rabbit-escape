@@ -279,7 +279,11 @@ public class World
 
     public Token getTokenAt( int x, int y )
     {
-        // TODO: faster
+        // Note it is not worth using LookupTable2D for things.
+        // Handling their movement would complicate the code.
+        // There are not as many instances of Thing as Block.
+        // Iterating to check through is not too time
+        // consuming.
         for ( Thing thing : things )
         {
             if ( thing.x == x && thing.y == y && thing instanceof Token )
@@ -293,9 +297,26 @@ public class World
         return null;
     }
 
+    public List<Thing> getThingsAt( int x, int y )
+    {
+        ArrayList<Thing> ret = new ArrayList<Thing>();
+        for ( Thing thing : things )
+        {
+            if ( thing.x == x && thing.y == y )
+            {
+                if ( !changes.tokensToRemove.contains( thing ) && 
+                     !changes.fireToRemove.contains( thing ) )
+                {
+                    ret.add( thing );
+                }
+            }
+        }
+        return ret;
+    }
+    
     public boolean fireAt( int x, int y )
     {
-        // TODO: faster with LookupTable2D. can do getTokenAt at the same time.
+        // See note for getTokenAt() about Thing storage.
         for ( Thing thing : things )
         {
             if ( thing.x == x && thing.y == y && thing instanceof Fire )
