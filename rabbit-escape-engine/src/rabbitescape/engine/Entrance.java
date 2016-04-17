@@ -14,6 +14,8 @@ public class Entrance extends Thing
 
     private int rabbitEntranceCount = 0;
 
+    private World world;
+
     public Entrance( int x, int y )
     {
         super( x, y, ENTRANCE );
@@ -34,6 +36,7 @@ public class Entrance extends Thing
     @Override
     public void step( World world )
     {
+        this.world = world;
         if ( world.num_waiting <= 0 )
         {
             return;
@@ -75,5 +78,11 @@ public class Entrance extends Thing
         timeToNextRabbit = BehaviourState.restoreFromState(
             state, "Entrance.timeToNextRabbit", timeToNextRabbit
         );
+    }
+
+    @Override
+    public String toString()
+    {
+        return null == world ? "Entrance" : "Entrance\n" + world.num_waiting + " to come";
     }
 }

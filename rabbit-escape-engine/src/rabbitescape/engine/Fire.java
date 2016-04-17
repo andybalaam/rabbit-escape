@@ -162,4 +162,9 @@ public class Fire extends Thing
     {
     }
 
+    @Override
+    public String toString()
+    {
+        return "Fire";
+    }
 }

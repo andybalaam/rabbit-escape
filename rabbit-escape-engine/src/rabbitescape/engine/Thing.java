@@ -21,4 +21,7 @@ public abstract class Thing
     public abstract void step( World world );
     public abstract Map<String, String> saveState();
     public abstract void restoreFromState( Map<String, String> state );
+
+    @Override
+    public abstract String toString();
 }

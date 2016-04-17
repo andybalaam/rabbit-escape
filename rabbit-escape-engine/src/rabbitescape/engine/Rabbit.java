@@ -15,6 +15,9 @@ public class Rabbit extends Thing
     private final List<Behaviour> behaviours;
     private final List<Behaviour> behavioursTriggerOrder;
 
+    private static int count = 0;
+    private final int number;
+
     private Falling falling;
 
     public Direction dir;
@@ -28,6 +31,7 @@ public class Rabbit extends Thing
         behaviours = new ArrayList<>();
         behavioursTriggerOrder = new ArrayList<>();
         createBehaviours();
+        number = count++;
     }
 
     private void createBehaviours()
@@ -164,6 +168,24 @@ public class Rabbit extends Thing
         {
             behaviour.restoreFromState( state );
         }
+    }
+
+    @Override
+    public String toString()
+    {
+        String fmt;
+        switch ( dir )
+        {
+        case LEFT:
+            fmt = "<[%d] ";
+            break;
+        case RIGHT:
+            fmt = " [%d]>";
+            break;
+        default:
+            throw new RuntimeException( "Rabbit should only be left or right");
+        }
+        return String.format( fmt, number ) ;
     }
 
 }
