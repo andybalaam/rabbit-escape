@@ -13,13 +13,16 @@ public class WaterRenderer
             switch ( waterRegion.state )
             {
             case WATER_REGION:
-                chars.set( waterRegion.x, waterRegion.y, 'N' );
+                chars.set( waterRegion.x, waterRegion.y, 'N', null,
+                    waterRegion.getContents() );
                 break;
             case WATER_REGION_HALF:
-                chars.set( waterRegion.x, waterRegion.y, 'n' );
+                chars.set( waterRegion.x, waterRegion.y, 'n', null,
+                    waterRegion.getContents() );
                 break;
             case WATER_REGION_FALLING:
-                chars.set( waterRegion.x, waterRegion.y, 'n' );
+                chars.set( waterRegion.x, waterRegion.y, 'n', null,
+                    waterRegion.getContents() );
                 break;
             case WATER_REGION_EMPTY:
                 break;
