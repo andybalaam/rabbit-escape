@@ -1,11 +1,15 @@
 package rabbitescape.engine.logic;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static rabbitescape.engine.Tools.equalTo;
 import static rabbitescape.engine.textworld.TextWorldManip.createWorld;
+import static rabbitescape.engine.textworld.TextWorldManip.renderCompleteWorld;
 import static rabbitescape.engine.util.WorldAssertions.assertWorldEvolvesLike;
 
 import org.junit.Test;
 
 import rabbitescape.engine.World;
+import rabbitescape.engine.util.WaterUtil;
 
 public class TestWater
 {
@@ -226,10 +230,10 @@ public class TestWater
                 "#N* / #",
                 "#######",
                 ":*=nP",
-                ":*=/N",
-                ":*=/N",
-                ":*=/N",
-                ":*=/N",
+                ":*=/n",
+                ":*=/n",
+                ":*=/n",
+                ":*=/n",
                 ":n=1,0,224",
                 ":n=2,0,1083",
                 ":n=3,0,771",
@@ -272,7 +276,7 @@ public class TestWater
                 "#######"
             } );
     }
-    
+
     /**
      * Check that standing water can be loaded, stepped and output without any
      * need for water amount description lines (lines starting ":n=").
@@ -305,6 +309,53 @@ public class TestWater
                 ":n=1,0,682",
                 ":n=2,0,684",
                 ":n=3,0,682"
+            } );
+    }
+
+    /**
+     * Create some regions between ramps at the bottom and blocks at the top,
+     * and fill them with various amounts of water. Check that the water
+     * description isn't needed when the amount of water is exactly
+     * {@link WaterUtil#MAX_CAPACITY} (as created by a cell with an N) or
+     * {@link WaterUtil#HALF_CAPACITY} (as created by a cell with an n).
+     */
+    @Test
+    public void Standard_amounts_of_water_on_ramps_shouldnt_have_descriptions()
+    {
+        World world = createWorld(
+            "######",
+            "******",
+            ":*=\\N",
+            ":*=/N",
+            ":*=\\n",
+            ":*=/n",
+            ":*=\\n",
+            ":*=/n",
+            ":n=4,1,10",
+            ":n=5,1,20" );
+
+        // Check that this 'round trips' successfully.
+        String[] lines = renderCompleteWorld( world, true );
+        assertThat(
+            renderCompleteWorld( createWorld( lines ), true ),
+            equalTo( lines ) );
+
+        // Check that even after a step the left regions don't need
+        // descriptions.
+        assertWorldEvolvesLike(
+            world,
+            1,
+            new String[] {
+                "######",
+                "******",
+                ":*=\\N",
+                ":*=/N",
+                ":*=\\n",
+                ":*=/n",
+                ":*=\\n",
+                ":*=/n",
+                ":n=4,1,15",
+                ":n=5,1,15"
             } );
     }
 }
