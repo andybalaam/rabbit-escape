@@ -54,7 +54,7 @@ public class MainJFrame extends JFrame
 
             uiConfig.save();
 
-            if ( null != swingGraphics)
+            if ( null != swingGraphics )
             {
                 swingGraphics.redraw();
             }

@@ -168,7 +168,7 @@ public class Token extends Thing
     }
 
     @Override
-    public String toString()
+    public String overlayText()
     {
         return type.toString();
     }

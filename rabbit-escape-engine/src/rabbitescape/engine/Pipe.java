@@ -46,7 +46,7 @@ public class Pipe extends Thing
     }
 
     @Override
-    public String toString()
+    public String overlayText()
     {
         return "Pipe";
     }

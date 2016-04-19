@@ -81,7 +81,7 @@ public class Entrance extends Thing
     }
 
     @Override
-    public String toString()
+    public String overlayText()
     {
         return null == world ? "Entrance" : "Entrance\n" + world.num_waiting + " to come";
     }

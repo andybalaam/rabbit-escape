@@ -17,7 +17,7 @@ import rabbitescape.render.Renderer;
 import rabbitescape.render.SoundPlayer;
 import rabbitescape.render.Sprite;
 import rabbitescape.render.SpriteAnimator;
-import rabbitescape.render.ThingStrings;
+import rabbitescape.render.Overlay;
 import rabbitescape.render.gameloop.Graphics;
 
 public class SwingGraphics implements Graphics
@@ -98,18 +98,16 @@ public class SwingGraphics implements Graphics
             SwingPaint dull = new SwingPaint( new Color( 70, 70, 70, 200 ) );
             swingCanvas.drawColor( dull );
 
-            List<Thing> temp = Util.list( Util.chain( world.things, world.rabbits ) );
-
-            ThingStrings ts = new ThingStrings( world );
+            Overlay overlay = new Overlay( world );
             SwingPaint textPaint =
                 new SwingPaint( new Color( 100, 255, 100, 255 ) );
 
 
             int h = swingCanvas.stringHeight();
 
-            for ( Thing t : temp )
+            for ( Thing t : overlay.items )
             {
-                String notation = ts.at( t.x, t.y );
+                String notation = overlay.at( t.x, t.y );
 
                 String[] lines = Util.split( notation, "\n" );
 
@@ -168,6 +166,8 @@ public class SwingGraphics implements Graphics
         this.prevScrollY = -1;
         this.lastWorldState = null;
         this.frameDumper = frameDumper;
+
+        lastFrame = -1;
     }
 
     @Override
@@ -194,6 +194,11 @@ public class SwingGraphics implements Graphics
 
     public void redraw()
     {
+        // Can't redraw before drawing
+        if ( -1 == lastFrame )
+        {
+            return;
+        }
         setRendererOffset( renderer );
 
         DrawFrame df = new DrawFrame(

@@ -171,7 +171,7 @@ public class Rabbit extends Thing
     }
 
     @Override
-    public String toString()
+    public String overlayText()
     {
         String fmt;
         switch ( dir )

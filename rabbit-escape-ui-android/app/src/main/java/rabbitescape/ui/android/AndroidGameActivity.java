@@ -232,6 +232,9 @@ public class AndroidGameActivity extends RabbitEscapeActivity
             null
         );
         pauseButton.invalidate();
+
+        // Show Overlay
+        game.gameLaunch.graphics.redraw();
     }
 
     public void onSpeedClicked( View view )
