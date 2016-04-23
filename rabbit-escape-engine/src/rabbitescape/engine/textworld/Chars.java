@@ -8,6 +8,7 @@ import java.util.TreeMap;
 
 import rabbitescape.engine.World;
 import rabbitescape.engine.util.Position;
+import rabbitescape.engine.util.WaterUtil;
 
 public class Chars
 {
@@ -16,6 +17,7 @@ public class Chars
     private final char[][] impl;
     private final Map<Position, String> stars;
     private final int worldWidth, worldHeight;
+    private final Map<Position, String> waterAmounts;
 
     public Chars( World world, boolean starsMode )
     {
@@ -24,6 +26,7 @@ public class Chars
         this.worldHeight = world.size.height;
         this.impl = new char[worldHeight][worldWidth];
         this.stars = new TreeMap<Position, String>();
+        this.waterAmounts = new TreeMap<Position, String>();
 
         for( int i = 0; i < world.size.height; ++i )
         {
@@ -46,6 +49,11 @@ public class Chars
     }
 
     public void set( int x, int y, char ch, Map<String, String> state )
+    {
+        set( x, y, ch, state, 0 );
+    }
+
+    public void set( int x, int y, char ch, Map<String, String> state, int waterAmount )
     {
         String thisState = encodeState( state );
 
@@ -72,6 +80,14 @@ public class Chars
             starString += ch + thisState;
 
             stars.put( p, starString );
+        }
+
+        if ( waterAmount > 0
+            && ( ( ch == 'n' && waterAmount != WaterUtil.HALF_CAPACITY )
+                || ( ch == 'N' && waterAmount != WaterUtil.MAX_CAPACITY ) ) )
+        {
+            Position p = new Position( x, y );
+            waterAmounts.put( p, x + "," + y + "," + waterAmount );
         }
     }
 
@@ -129,6 +145,18 @@ public class Chars
         for ( Map.Entry<Position, String> e : stars.entrySet() )
         {
             ret.add( e.getValue() );
+        }
+
+        return ret;
+    }
+
+    public List<String> waterAmountLines()
+    {
+        List<String> ret = new ArrayList<String>();
+
+        for ( String amountString : waterAmounts.values() )
+        {
+            ret.add( amountString );
         }
 
         return ret;

@@ -1,15 +1,22 @@
 package rabbitescape.engine.logic;
 
-import static org.hamcrest.MatcherAssert.*;
-import static org.hamcrest.CoreMatchers.*;
-import static rabbitescape.engine.util.Util.*;
-import static rabbitescape.engine.Tools.*;
-import static rabbitescape.engine.textworld.TextWorldManip.*;
-import static rabbitescape.engine.World.CompletionState.*;
-import static rabbitescape.engine.ChangeDescription.State.*;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.hamcrest.CoreMatchers.nullValue;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static rabbitescape.engine.ChangeDescription.State.RABBIT_BRIDGING_RIGHT_1;
+import static rabbitescape.engine.ChangeDescription.State.RABBIT_WALKING_RIGHT;
+import static rabbitescape.engine.Tools.equalTo;
+import static rabbitescape.engine.World.CompletionState.LOST;
+import static rabbitescape.engine.World.CompletionState.RUNNING;
+import static rabbitescape.engine.World.CompletionState.WON;
+import static rabbitescape.engine.textworld.TextWorldManip.createWorld;
+import static rabbitescape.engine.util.Util.range;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.junit.Test;
 
@@ -19,6 +26,8 @@ import rabbitescape.engine.World;
 import rabbitescape.engine.World.DontStepAfterFinish;
 import rabbitescape.engine.WorldStatsListener;
 import rabbitescape.engine.textworld.TextWorldManip;
+import rabbitescape.engine.util.Position;
+import rabbitescape.engine.util.WaterUtil;
 
 public class TestWorld
 {
@@ -365,6 +374,21 @@ public class TestWorld
         assertThat( statsListener.calls.size(), equalTo( 2 ) );
         assertThat( statsListener.calls.get( 1 ).num_saved,   equalTo( 1 ) );
         assertThat( statsListener.calls.get( 1 ).num_to_save, equalTo( 7 ) );
+    }
+
+    @Test
+    public void Water_contents_can_be_retrieved()
+    {
+        World world = createWorld(
+            "#N#n# #",
+            "#######"
+        );
+
+        Map<Position, Integer> waterContents = world.getWaterContents();
+        assertThat( waterContents.get( new Position( 1, 0 ) ), equalTo( WaterUtil.MAX_CAPACITY ) );
+        assertThat( waterContents.get( new Position( 3, 0 ) ), equalTo( WaterUtil.HALF_CAPACITY ) );
+        // There should be no reference to the empty region.
+        assertThat( waterContents.containsKey( new Position( 5, 0 ) ), equalTo( false ) );
     }
 
     // ---

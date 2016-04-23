@@ -1,6 +1,7 @@
 package rabbitescape.engine.textworld;
 
-import static rabbitescape.engine.util.Util.*;
+import static rabbitescape.engine.util.Util.concat;
+import static rabbitescape.engine.util.Util.enumerate1;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -17,13 +18,14 @@ import rabbitescape.engine.Rabbit;
 import rabbitescape.engine.Thing;
 import rabbitescape.engine.Token;
 import rabbitescape.engine.VoidMarkerStyle;
-import rabbitescape.engine.WaterRegion;
 import rabbitescape.engine.World;
 import rabbitescape.engine.WorldStatsListener;
 import rabbitescape.engine.util.Dimension;
+import rabbitescape.engine.util.Position;
 import rabbitescape.engine.util.Util;
-import rabbitescape.engine.util.VariantGenerator;
+import rabbitescape.engine.util.Util.Function;
 import rabbitescape.engine.util.Util.IdxObj;
+import rabbitescape.engine.util.VariantGenerator;
 
 public class TextWorldManip
 {
@@ -44,6 +46,7 @@ public class TextWorldManip
     private static final String intro                = "intro";
     private static final String paused               = "paused";
     private static final String ready_to_explode_all = "ready_to_explode_all";
+    public  static final String water_definition     = "n";
 
     public static final List<String> META_INTS = Arrays.asList(
         num_rabbits,
@@ -114,7 +117,7 @@ public class TextWorldManip
         List<Block> blocks = new ArrayList<>();
         List<Rabbit> rabbits = new ArrayList<>();
         List<Thing> things = new ArrayList<>();
-        List<WaterRegion> waterRegions = new ArrayList<>();
+        Map<Position, Integer> waterAmounts = new HashMap<>();
         Map<Token.Type, Integer> abilities = new HashMap<>();
 
         int variantSeed = 0; // TODO: world property for the seed?
@@ -123,6 +126,7 @@ public class TextWorldManip
             blocks,
             rabbits,
             things,
+            waterAmounts,
             abilities,
             lines,
             new VariantGenerator( variantSeed )
@@ -131,7 +135,7 @@ public class TextWorldManip
         int num_rabs = processor.metaInt( num_rabbits, 10 );
 
         World world = createWorldFromLineProcessor(
-            nameIfNoneSupplied, statsListener, blocks, rabbits, things, waterRegions,
+            nameIfNoneSupplied, statsListener, blocks, rabbits, things, waterAmounts,
             abilities, processor, num_rabs );
 
         return world;
@@ -143,7 +147,7 @@ public class TextWorldManip
         List<Block> blocks,
         List<Rabbit> rabbits,
         List<Thing> things,
-        List<WaterRegion> waterRegions,
+        Map<Position, Integer> waterAmounts,
         Map<Token.Type, Integer> abilities,
         LineProcessor processor,
         int num_rabs )
@@ -153,7 +157,7 @@ public class TextWorldManip
             blocks,
             rabbits,
             things,
-            waterRegions,
+            waterAmounts,
             abilities,
             processor.metaString( name, nameIfNoneSupplied ),
             processor.metaString( description, "" ),
@@ -182,7 +186,7 @@ public class TextWorldManip
             new ArrayList<Block>(),
             new ArrayList<Rabbit>(),
             new ArrayList<Thing>(),
-            new ArrayList<WaterRegion>(),
+            new HashMap<Position, Integer>(),
             new HashMap<Token.Type, Integer>(),
             "Empty World",   //name
             "",              //description
@@ -431,6 +435,11 @@ public class TextWorldManip
         for ( String starLine : chars.starLines() )
         {
             ret.add( ":*=" + starLine );
+        }
+
+        for ( String waterAmountLine : chars.waterAmountLines() )
+        {
+            ret.add( ":n=" + waterAmountLine );
         }
 
         return ret.toArray( new String[ ret.size() ] );

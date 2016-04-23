@@ -46,7 +46,7 @@ public class SandboxGame
             world.blockTable.getListCopy(),
             clonedRabbits,
             clonedThings,
-            world.waterTable.getListCopy(),
+            world.getWaterContents(),
             new HashMap<>( world.abilities ),
             world.name,
             world.description,
