@@ -4,6 +4,7 @@ import static rabbitescape.engine.util.Util.*;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -134,7 +135,7 @@ public class World
         List<Block> blocks,
         List<Rabbit> rabbits,
         List<Thing> things,
-        List<WaterRegion> waterRegions,
+        Map<Position, Integer> waterAmounts,
         Map<Token.Type, Integer> abilities,
         String name,
         String description,
@@ -187,7 +188,8 @@ public class World
         else
         {
             this.blockTable = new LookupTable2D<Block>( blocks, size );
-            this.waterTable = WaterRegionFactory.generateWaterTable( blockTable );
+            this.waterTable = WaterRegionFactory.generateWaterTable( blockTable,
+                waterAmounts );
         }
 
         this.changes = new WorldChanges( this, statsListener );
@@ -401,5 +403,26 @@ public class World
     {
         waterTable.removeItemsAt( point.x, point.y );
         WaterRegionFactory.createWaterRegionsAtPoint( blockTable, waterTable, point.x, point.y );
+    }
+
+    public Map<Position, Integer> getWaterContents()
+    {
+        Map<Position, Integer> waterAmounts = new HashMap<>();
+        for ( WaterRegion waterRegion : waterTable )
+        {
+            if ( waterAmounts.containsKey( waterRegion.getPosition() ) )
+            {
+                throw new IllegalStateException(
+                    "There is currently no support for multiple WaterRegions "
+                        + "within a single cell." );
+            }
+            int contents = waterRegion.getContents();
+            if ( contents != 0 )
+            {
+                waterAmounts.put( waterRegion.getPosition(),
+                    contents );
+            }
+        }
+        return waterAmounts;
     }
 }

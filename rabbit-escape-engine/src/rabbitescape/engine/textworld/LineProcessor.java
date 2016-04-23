@@ -33,6 +33,7 @@ import rabbitescape.engine.util.Dimension;
 import rabbitescape.engine.util.MegaCoder;
 import rabbitescape.engine.util.Position;
 import rabbitescape.engine.util.VariantGenerator;
+import rabbitescape.engine.util.WaterUtil;
 
 public class LineProcessor
 {
@@ -83,6 +84,7 @@ public class LineProcessor
     private final List<Block> blocks;
     private final List<Rabbit> rabbits;
     private final List<Thing> things;
+    private final Map<Position, Integer> waterAmounts;
     private final Map<Token.Type, Integer> abilities;
     public  final String[] lines;
     private final Map<String, String>  m_metaStrings;
@@ -102,6 +104,7 @@ public class LineProcessor
         List<Block> blocks,
         List<Rabbit> rabbits,
         List<Thing> things,
+        Map<Position, Integer> waterAmounts,
         Map<Token.Type, Integer> abilities,
         String[] lines,
         VariantGenerator variantGen
@@ -110,6 +113,7 @@ public class LineProcessor
         this.blocks = blocks;
         this.rabbits = rabbits;
         this.things = things;
+        this.waterAmounts = waterAmounts;
         this.abilities = abilities;
         this.lines = lines;
         this.m_metaStrings           = new HashMap<>();
@@ -155,18 +159,18 @@ public class LineProcessor
         }
         else
         {
-            ArrayList<String> ret = new ArrayList<String>( temp.size() );
 
-            for ( Map.Entry<Integer, String> entry : temp.entrySet() )
+            String[] ret = new String[temp.size()];
+            for ( int i = 1 ; i <= temp.size() ; i++ )
             {
-                while ( ret.size() < entry.getKey() - 1 )
+                String v = temp.get( i );
+                if ( null == v )
                 {
-                    ret.add( "" );
+                    throw new RuntimeException( "temp should have 1, 2, ..., temp.size() members." );
                 }
-
-                ret.add( entry.getKey() - 1, entry.getValue() );
+                ret[i - 1] = v;
             }
-            return ret.toArray( new String[ ret.size() ] );
+            return ret;
         }
     }
 
@@ -362,6 +366,18 @@ public class LineProcessor
                 throw new DuplicateMetaKey( lines, lineNum );
             }
             abilities.put( Token.Type.valueOf( key ), toInt( value ) );
+        }
+        else if ( key.equals( TextWorldManip.water_definition ) )
+        {
+            String[] valueParts = split( value, "," );
+            if ( valueParts.length != 3 )
+            {
+                throw new InvalidWaterDescription( lines, lineNum );
+            }
+            int x = toInt( valueParts[0] );
+            int y = toInt( valueParts[1] );
+            int contents = toInt( valueParts[2] );
+            waterAmounts.put( new Position( x, y ), contents );
         }
         else if ( key.equals( "*" ) )
         {
@@ -603,6 +619,20 @@ public class LineProcessor
             {
                 ret = new Token( x, y, Token.Type.brolly );
                 things.add( ret );
+                break;
+            }
+            case 'N':
+            {
+                // Default amount for a full water region, but may be overwritten by
+                // an explicit water definition line.
+                waterAmounts.put( new Position( x, y ), WaterUtil.MAX_CAPACITY );
+                break;
+            }
+            case 'n':
+            {
+                // Default amount for a half water region, but may be overwritten by
+                // an explicit water definition line.
+                waterAmounts.put( new Position( x, y ), WaterUtil.HALF_CAPACITY );
                 break;
             }
             case '*':
