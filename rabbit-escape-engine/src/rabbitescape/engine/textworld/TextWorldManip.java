@@ -41,6 +41,7 @@ public class TextWorldManip
     private static final String num_saved            = "num_saved";
     private static final String num_killed           = "num_killed";
     private static final String num_waiting          = "num_waiting";
+    private static final String rabbit_index_count   = "rabbit_index_count";
     private static final String intro                = "intro";
     private static final String paused               = "paused";
     private static final String ready_to_explode_all = "ready_to_explode_all";
@@ -50,7 +51,8 @@ public class TextWorldManip
         num_to_save,
         num_saved,
         num_killed,
-        num_waiting
+        num_waiting,
+        rabbit_index_count
     );
 
     public static final List<String> META_INT_ARRAYS = Arrays.asList(
@@ -134,6 +136,8 @@ public class TextWorldManip
             nameIfNoneSupplied, statsListener, blocks, rabbits, things, waterRegions,
             abilities, processor, num_rabs );
 
+        world.countRabbitsForIndex();
+
         return world;
     }
 
@@ -148,6 +152,7 @@ public class TextWorldManip
         LineProcessor processor,
         int num_rabs )
     {
+
         return new World(
             processor.size(),
             blocks,
@@ -168,6 +173,7 @@ public class TextWorldManip
             processor.metaInt( num_saved, 0 ),
             processor.metaInt( num_killed, 0 ),
             processor.metaInt( num_waiting, num_rabs ),
+            processor.metaInt( rabbit_index_count, 0 ),
             processor.metaBool( paused, false ),
             processor.getComments(),
             statsListener,
@@ -190,13 +196,14 @@ public class TextWorldManip
             "",              //author_url
             new String[] {}, //hints
             new String[] {}, //solutions
-            0,
-            1,
-            new int[]{4},
-            null,
-            0,
-            0,
-            0,
+            0,               //num_rabs
+            1,               //num_to_save
+            new int[]{4},    //rabbit_delay
+            null,            //music
+            0,               //num_saved
+            0,               //num_killed
+            0,               //num_waiting
+            0,               //rabbit_index_count
             false,
             new Comment[] {},
             new IgnoreWorldStatsListener(),
@@ -328,6 +335,7 @@ public class TextWorldManip
             addMeta( ret, num_saved,   Integer.toString( world.num_saved ),   world.comments );
             addMeta( ret, num_killed,  Integer.toString( world.num_killed ),  world.comments );
             addMeta( ret, num_waiting, Integer.toString( world.num_waiting ), world.comments );
+            addMeta( ret, rabbit_index_count, Integer.toString( world.getRabbitIndexCount() ), world.comments );
             addMeta( ret, paused,      Boolean.toString( world.paused ),      world.comments );
         }
         abilityMetaLines( world, ret );

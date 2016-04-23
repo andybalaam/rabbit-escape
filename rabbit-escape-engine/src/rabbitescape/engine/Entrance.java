@@ -59,7 +59,11 @@ public class Entrance extends Thing
 
         timeToNextRabbit = delay[delayIndex];
 
-        world.changes.enterRabbit( new Rabbit( x, y + 1, RIGHT ) );
+        Rabbit r = new Rabbit( x, y + 1, RIGHT );
+
+        world.changes.enterRabbit( r );
+
+        world.rabbitIndex( r );
     }
 
     @Override

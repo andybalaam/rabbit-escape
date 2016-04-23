@@ -2224,7 +2224,15 @@ public class TestWalking
 
         String[] resultLines = renderCompleteWorld( world, false );
 
-        assertThat( resultLines, equalTo( lines ) );
+        String[] expected = {
+            " # # # # ",
+           "#\\*/#)*(#",
+            "#########",
+            ":*=r{index:1}",
+            ":*=r{index:2}"
+        };
+
+        assertThat( resultLines, equalTo( expected ) );
     }
 
     @Test

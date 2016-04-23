@@ -113,14 +113,17 @@ public class TestWorldChanges
             ":num_saved=5",
             ":num_killed=4",
             ":num_waiting=16",
+            ":rabbit_index_count=5",
             ":paused=false",
             ":bash=1",
             ":bridge=3",
             ":dig=2",
             "#####",
             "#i  #",
-            "# rr#",
-            "#####"
+            "# **#",
+            "#####",
+            ":*=r{index:2}",
+            ":*=r{index:4}"
         };
 
         World world = TextWorldManip.createWorld( worldText );

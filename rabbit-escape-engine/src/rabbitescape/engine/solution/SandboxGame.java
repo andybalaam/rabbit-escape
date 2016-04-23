@@ -61,6 +61,7 @@ public class SandboxGame
             world.num_saved,
             world.num_killed,
             world.num_waiting,
+            world.getRabbitIndexCount(),
             world.paused,
             new Comment[] {},
             new IgnoreWorldStatsListener(),
