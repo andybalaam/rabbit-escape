@@ -1,8 +1,14 @@
 package rabbitescape.engine.logic;
 
+
+import static org.hamcrest.MatcherAssert.*;
+import static org.hamcrest.CoreMatchers.*;
+import static rabbitescape.engine.textworld.TextWorldManip.*;
 import static rabbitescape.engine.util.WorldAssertions.*;
 
 import org.junit.Test;
+
+import rabbitescape.engine.World;
 
 public class TestBrollychuting
 {
@@ -172,6 +178,38 @@ public class TestBrollychuting
             " /|>  :?#" + "\n" +
             "#########"
             );
+    }
+
+    @Test
+    public void Rabbit_keeps_brolly_during_roundtrip()
+    {
+        World world = createWorld(
+            "r   " ,
+            "l   " ,
+            "### " ,
+            "    " ,
+            "    " ,
+            "    " ,
+            "    " ,
+            "    " ,
+            "   O" ,
+            "   #"
+        );
+
+        for ( int i = 0 ; i < 2 ; i++ )
+        {
+            world.step();
+        }
+
+        world = createWorld( renderCompleteWorld( world, true, true ) );
+
+        for ( int i = 0 ; i < 10 ; i++ )
+        {
+            world.step();
+        }
+
+        assertThat( world.num_saved, equalTo( 1 ) );
+
     }
 
 }
