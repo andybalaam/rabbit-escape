@@ -2,7 +2,11 @@ package rabbitescape.engine.behaviours;
 
 import static rabbitescape.engine.ChangeDescription.State.*;
 import static rabbitescape.engine.Token.Type.brolly;
+
+import java.util.Map;
+
 import rabbitescape.engine.Behaviour;
+import rabbitescape.engine.BehaviourState;
 import rabbitescape.engine.BehaviourTools;
 import rabbitescape.engine.Block;
 import rabbitescape.engine.ChangeDescription.State;
@@ -130,4 +134,21 @@ public class Brollychuting extends Behaviour
     {
     }
 
+    @Override
+    public void saveState( Map<String, String> saveState )
+    {
+        BehaviourState.addToStateIfTrue(
+            saveState, "Brollychuting.hasAbility", hasAbility
+        );
+
+    }
+
+    @Override
+    public void restoreFromState( Map<String, String> saveState )
+    {
+        hasAbility = BehaviourState.restoreFromState(
+            saveState, "Brollychuting.hasAbility", hasAbility
+        );
+
+    }
 }
