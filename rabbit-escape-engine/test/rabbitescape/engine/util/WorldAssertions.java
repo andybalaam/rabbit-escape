@@ -7,6 +7,10 @@ import static rabbitescape.engine.util.Util.*;
 
 import java.util.Collections;
 
+import org.hamcrest.BaseMatcher;
+import org.hamcrest.Description;
+import org.hamcrest.Matcher;
+
 import rabbitescape.engine.World;
 
 public class WorldAssertions
@@ -120,15 +124,47 @@ public class WorldAssertions
             Collections.reverse( world.rabbits );
         }
 
-        for ( String state : laterStates )
+        for ( IdxObj<String> state : enumerate( laterStates ) )
         {
             world.step();
 
             assertThat(
                 renderWorld( world, true, false ),
-                equalTo( split( state, "\n" ) )
+                equalToState( split( state.object, "\n" ), state.index + 2 )
             );
         }
+    }
+
+    private static Matcher<String[]> equalToState(
+        final String[] expected, final int stateNum )
+    {
+        return new BaseMatcher<String[]>()
+        {
+            String[] other;
+
+            @Override
+            public boolean matches( Object objOther )
+            {
+                if ( !( objOther instanceof String[] ) )
+                {
+                    return false;
+                }
+
+                other = (String[])objOther;
+                return equalTo( expected ).matches( other );
+            }
+
+            @Override
+            public void describeTo( Description description )
+            {
+                description.appendText(
+                    " (at frame number " + stateNum + ")\n" );
+
+                description.appendText( join( "\n", expected ) );
+                description.appendText( "\nActual:\n" );
+                description.appendText( join( "\n", other ) );
+            }
+        };
     }
 
     /**
@@ -147,11 +183,24 @@ public class WorldAssertions
 
         String[] steppedWorld = renderCompleteWorld( world, false );
 
-        assertThat( steppedWorld.length, equalTo( finalWorld.length ) );
-
-        assertThat(
-            steppedWorld,
-            equalTo( finalWorld )
-            );
+        try
+        {
+            assertThat( finalWorld.length, equalTo( steppedWorld.length ) );
+    
+            assertThat(
+                finalWorld,
+                equalTo( steppedWorld )
+                );
+        }
+        catch ( AssertionError e )
+        {
+            // Output the stepped world in case it's helpful for building an
+            // assertion.
+            for ( String s : steppedWorld )
+            {
+                System.out.println( "\"" + s + "\"," );
+            }
+            throw e;
+        }
     }
 }

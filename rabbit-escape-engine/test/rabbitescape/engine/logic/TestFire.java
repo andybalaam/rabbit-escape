@@ -300,7 +300,7 @@ public class TestFire
             "    #" + "\n" +
             "# ###" + "\n" +
             "# #Pn" + "\n" +
-            "#\\ Nn" + "\n" + // The rabbit drowns here.
+            "#\\ Rn" + "\n" + // The rabbit drowns here.
             "###nn" + "\n" +
             "   n#",
 

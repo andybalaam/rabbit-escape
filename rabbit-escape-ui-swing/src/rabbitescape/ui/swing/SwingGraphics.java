@@ -6,8 +6,10 @@ import java.awt.image.BufferStrategy;
 import java.util.ArrayList;
 import java.util.List;
 
+import rabbitescape.engine.Thing;
 import rabbitescape.engine.World;
 import rabbitescape.engine.World.CompletionState;
+import rabbitescape.engine.util.Util;
 import rabbitescape.render.AnimationCache;
 import rabbitescape.render.AnimationLoader;
 import rabbitescape.render.BitmapCache;
@@ -18,6 +20,7 @@ import rabbitescape.render.Renderer;
 import rabbitescape.render.SoundPlayer;
 import rabbitescape.render.Sprite;
 import rabbitescape.render.SpriteAnimator;
+import rabbitescape.render.Overlay;
 import rabbitescape.render.gameloop.Graphics;
 import rabbitescape.render.gameloop.WaterAnimation;
 
@@ -91,7 +94,47 @@ public class SwingGraphics implements Graphics
                 white
             );
 
-            soundPlayer.play( sprites );
+            if ( world.paused )
+            {
+                tacticalOverlay( swingCanvas, world );
+            }
+
+            if ( null != soundPlayer )
+            {
+                soundPlayer.play( sprites );
+            }
+        }
+
+        private void tacticalOverlay( SwingCanvas swingCanvas, World world )
+        {
+            SwingPaint dull = new SwingPaint( new Color( 70, 70, 70, 200 ) );
+            swingCanvas.drawColor( dull );
+
+            Overlay overlay = new Overlay( world );
+            SwingPaint textPaint =
+                new SwingPaint( new Color( 100, 255, 100, 255 ) );
+
+
+            int h = swingCanvas.stringHeight();
+
+            for ( Thing t : overlay.items )
+            {
+                String notation = overlay.at( t.x, t.y );
+
+                String[] lines = Util.split( notation, "\n" );
+
+                for ( int i = 0; i < lines.length ; i++ )
+                {
+                    int x = renderer.offsetX + t.x * renderer.tileSize;
+                    int y = renderer.offsetY + t.y * renderer.tileSize + i * h;
+                    x += ( renderer.tileSize - swingCanvas.stringWidth( lines[i] ) ) / 2; // centre
+                    y += ( renderer.tileSize - h * lines.length ) / 2 ;
+                    swingCanvas.drawText( lines[i],
+                        (float)x,
+                        (float)y,
+                        textPaint);
+                }
+            }
         }
 
         void drawPolygons( ArrayList<PolygonBuilder> polygons, SwingCanvas swingCanvas )
@@ -103,6 +146,7 @@ public class SwingGraphics implements Graphics
                 swingCanvas.drawFilledPoly( p.x, p.y, waterColor );
             }
         }
+        
     }
 
     private final World world;
@@ -119,6 +163,8 @@ public class SwingGraphics implements Graphics
     private int prevScrollX;
     private int prevScrollY;
     private CompletionState lastWorldState;
+
+    private int lastFrame;
 
     public SwingGraphics(
         World world,
@@ -145,6 +191,8 @@ public class SwingGraphics implements Graphics
         this.lastWorldState = null;
         this.frameDumper = frameDumper;
         this.waterAnimation = waterAnimation;
+
+        lastFrame = -1;
     }
 
     @Override
@@ -166,6 +214,31 @@ public class SwingGraphics implements Graphics
         df.run();
 
         frameDumper.dump( jframe.canvas, df );
+
+        lastFrame = frame;
+    }
+
+    public void redraw()
+    {
+        // Can't redraw before drawing
+        if ( -1 == lastFrame )
+        {
+            return;
+        }
+        setRendererOffset( renderer );
+
+        DrawFrame df = new DrawFrame(
+            strategy,
+            jframe.canvas,
+            renderer,
+            null, // Do not repeat sounds
+            animator,
+            lastFrame,
+            world,
+            waterAnimation
+        );
+
+        df.run();
     }
 
     public void setTileSize( int timeSize )

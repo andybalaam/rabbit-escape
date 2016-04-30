@@ -7,7 +7,9 @@ import javax.swing.JFileChooser;
 import rabbitescape.engine.config.Config;
 import rabbitescape.engine.config.ConfigFile;
 import rabbitescape.engine.config.ConfigSchema;
+import rabbitescape.engine.config.IConfigStorage;
 import rabbitescape.engine.config.RealConfigUpgrades;
+import rabbitescape.engine.config.StandardConfigSchema;
 import rabbitescape.engine.util.RealFileSystem;
 
 public class SwingConfigSetup
@@ -29,7 +31,15 @@ public class SwingConfigSetup
 
     public static Config createConfig()
     {
+        return createConfig(
+            new ConfigFile( new RealFileSystem(), CONFIG_PATH )
+        );
+    }
+
+    public static Config createConfig( IConfigStorage storage )
+    {
         ConfigSchema definition = new ConfigSchema();
+        StandardConfigSchema.setSchema( definition );
 
         definition.set(
             DEPRECATED_CFG_MENU_WINDOW_LEFT,
@@ -79,12 +89,6 @@ public class SwingConfigSetup
             "Time in ms. Longer than this are drags." );
 
         definition.set(
-            CFG_LEVELS_COMPLETED,
-            "{}",
-            "Which level you have got to in each level set."
-        );
-
-        definition.set(
             CFG_MUTED,
             String.valueOf( false ),
             "Disable all sound"
@@ -96,15 +100,9 @@ public class SwingConfigSetup
             "Default path in the dialog to load a level file for testing."
         );
 
-        definition.set(
-            CFG_DEBUG_PRINT_STATES,
-            String.valueOf( false ),
-            "Rabbit states are printed to System.out."
-        );
-
         return new Config(
             definition,
-            new ConfigFile( new RealFileSystem(), CONFIG_PATH ),
+            storage,
             RealConfigUpgrades.realConfigUpgrades()
         );
     }

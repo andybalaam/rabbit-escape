@@ -12,9 +12,11 @@ import rabbitescape.engine.MultiLevelWinListener;
 import rabbitescape.engine.config.Config;
 import rabbitescape.engine.err.RabbitEscapeException;
 import rabbitescape.engine.menu.AboutText;
-import rabbitescape.engine.menu.ByNumberConfigBasedLevelsCompleted;
+import rabbitescape.engine.menu.ByNameConfigBasedLevelsCompleted;
 import rabbitescape.engine.menu.LevelMenuItem;
 import rabbitescape.engine.menu.LevelsCompleted;
+import rabbitescape.engine.menu.LevelsList;
+import rabbitescape.engine.menu.LoadLevelsList;
 import rabbitescape.engine.menu.Menu;
 import rabbitescape.engine.menu.MenuDefinition;
 import rabbitescape.engine.menu.MenuItem;
@@ -49,6 +51,7 @@ public class TextMenu
 
     private final FileSystem fs;
     private final Terminal terminal;
+    private final LevelsList levelsList;
     private final LevelsCompleted levelsCompleted;
     private final Stack<Menu> stack = new Stack<Menu>();
 
@@ -56,12 +59,15 @@ public class TextMenu
     {
         this.fs = fs;
         this.terminal = terminal;
-        this.levelsCompleted = new ByNumberConfigBasedLevelsCompleted( config );
+        this.levelsList = LoadLevelsList.load( MenuDefinition.allLevels );
+        this.levelsCompleted = new ByNameConfigBasedLevelsCompleted(
+            config, levelsList );
     }
 
     public void run()
     {
-        Menu menu = MenuDefinition.mainMenu( levelsCompleted );
+        Menu menu = MenuDefinition.mainMenu(
+            levelsCompleted, levelsList, true );
 
         stack.clear();
         stack.push( menu );

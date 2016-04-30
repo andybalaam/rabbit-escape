@@ -44,4 +44,10 @@ public class Pipe extends Thing
     {
         // Deliberately left empty.
     }
+
+    @Override
+    public String overlayText()
+    {
+        return "Pipe";
+    }
 }

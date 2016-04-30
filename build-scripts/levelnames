@@ -1,4 +1,9 @@
 #!/bin/bash
 
-ls --hide=ls.txt --hide=levels.txt "$@"
+cd "$1"
+
+find . -name "*.rel" -print0 |\
+    xargs -0 egrep -H '^:name=' |\
+    sed 's/^\.\/\([^:]*\)::name=\(.*\)/\1 "\2"/' |\
+    sort
 

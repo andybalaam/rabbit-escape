@@ -14,6 +14,8 @@ public class Entrance extends Thing
 
     private int rabbitEntranceCount = 0;
 
+    private World world;
+
     public Entrance( int x, int y )
     {
         super( x, y, ENTRANCE );
@@ -34,6 +36,7 @@ public class Entrance extends Thing
     @Override
     public void step( World world )
     {
+        this.world = world;
         if ( world.num_waiting <= 0 )
         {
             return;
@@ -56,7 +59,11 @@ public class Entrance extends Thing
 
         timeToNextRabbit = delay[delayIndex];
 
-        world.changes.enterRabbit( new Rabbit( x, y + 1, RIGHT ) );
+        Rabbit r = new Rabbit( x, y + 1, RIGHT );
+
+        world.changes.enterRabbit( r );
+
+        world.rabbitIndex( r );
     }
 
     @Override
@@ -75,5 +82,11 @@ public class Entrance extends Thing
         timeToNextRabbit = BehaviourState.restoreFromState(
             state, "Entrance.timeToNextRabbit", timeToNextRabbit
         );
+    }
+
+    @Override
+    public String overlayText()
+    {
+        return null == world ? "Entrance" : "Entrance\n" + world.num_waiting + " to come";
     }
 }

@@ -33,6 +33,7 @@ class TrackingConfigStorage implements IConfigStorage
     public void set( String key, String value )
     {
         log.add( String.format( "set( %s, %s )", key, value ) );
+        existingConfig.put( key, value );
     }
 
     @Override

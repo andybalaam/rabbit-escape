@@ -32,7 +32,7 @@ public class TestDrowning
 
             "#P#" + "\n" +
             "#n#" + "\n" +
-            "#N#" + "\n" + // There is no rabbit now, as it has drowned.
+            "#R#" + "\n" + // Rabbit is drowning
             "###"
         );
     }
@@ -62,7 +62,7 @@ public class TestDrowning
             "#/   ",
 
             "# nP#" + "\n" +
-            "# nN " + "\n" +
+            "# nn " + "\n" +
             "# n  " + "\n" +
             "#%   ",
 
@@ -82,9 +82,9 @@ public class TestDrowning
             "#n   ",
 
             "# nP#" + "\n" +
-            "#nnn " + "\n" +
+            "#nnR " + "\n" +
             "#nn  " + "\n" +
-            "#N   "
+            "#n   "
         );
     }
 
@@ -149,7 +149,7 @@ public class TestDrowning
             "#   ?#" + "\n" +
             "# ####" + "\n" +
             "# \\PP#" + "\n" +
-            "# bNn#" + "\n" +
+            "# bnn#" + "\n" +
             "######",
 
             "#  <j#" + "\n" +
@@ -161,30 +161,30 @@ public class TestDrowning
             "# <j #" + "\n" +
             "# ####" + "\n" +
             "# nPP#" + "\n" +
-            "# bNN#" + "\n" +
+            "# bnN#" + "\n" +
             "######",
 
             "#<j  #" + "\n" +
             "# ####" + "\n" +
             "# nPP#" + "\n" +
-            "# bNN#" + "\n" +
+            "# bnN#" + "\n" +
             "######",
 
             "#j   #" + "\n" +
             "#f####" + "\n" +
-            "#fNPP#" + "\n" +
-            "# bNN#" + "\n" +
+            "#fnPP#" + "\n" +
+            "# bnN#" + "\n" +
             "######",
 
             "#    #" + "\n" +
             "# ####" + "\n" +
-            "#jNPP#" + "\n" +
-            "#fbNN#" + "\n" +
+            "#jnPP#" + "\n" +
+            "#fbnN#" + "\n" +
             "######",
 
             "#    #" + "\n" +
             "# ####" + "\n" +
-            "# NPP#" + "\n" +
+            "# nPP#" + "\n" +
             "#|bNN#" + "\n" +
             "######",
 
@@ -209,7 +209,7 @@ public class TestDrowning
             "#    #" + "\n" +
             "# ####" + "\n" +
             "# NPP#" + "\n" +
-            "#  NN#" + "\n" + // The rabbit has drowned.
+            "#  RN#" + "\n" + // The rabbit is drowning.
             "######",
 
             // If the world was to continue after the death of the rabbit then

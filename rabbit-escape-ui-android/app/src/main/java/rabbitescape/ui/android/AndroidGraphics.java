@@ -8,13 +8,16 @@ import android.view.SurfaceHolder;
 import java.util.ArrayList;
 import java.util.List;
 
+import rabbitescape.engine.Thing;
 import rabbitescape.engine.World;
+import rabbitescape.engine.util.Util;
 import rabbitescape.render.AnimationCache;
 import rabbitescape.render.AnimationLoader;
 import rabbitescape.render.BitmapCache;
 import rabbitescape.render.GraphPaperBackground;
 import rabbitescape.render.Polygon;
 import rabbitescape.render.PolygonBuilder;
+import rabbitescape.render.Overlay;
 import rabbitescape.render.Renderer;
 import rabbitescape.render.SoundPlayer;
 import rabbitescape.render.Sprite;
@@ -51,6 +54,9 @@ public class AndroidGraphics implements Graphics
     public int scrollX;
     public int scrollY;
 
+    private int lastFrame = -1;
+    private boolean soundOn = true;
+
     private static final AndroidPaint white = makePaint( Color.WHITE );
 
     private static final AndroidPaint graphPaperMajor =
@@ -59,9 +65,14 @@ public class AndroidGraphics implements Graphics
     private static final AndroidPaint graphPaperMinor =
         makePaint( Color.rgb( 235, 243, 255 ), Paint.ANTI_ALIAS_FLAG );
 
-
     private static final AndroidPaint waterColor =
             makePaint( Color.argb( 100, 10, 100, 220 ), Paint.ANTI_ALIAS_FLAG );
+
+    private static final AndroidPaint dullOverlay =
+        makePaint( Color.argb( 200, 70, 70, 70 ) );
+
+    private static final AndroidPaint greenText =
+            makePaint( Color.rgb( 100, 255, 100 ), Paint.ANTI_ALIAS_FLAG );
 
     private static AndroidPaint makePaint( int color )
     {
@@ -125,6 +136,8 @@ public class AndroidGraphics implements Graphics
     @Override
     public void draw( int frame )
     {
+        lastFrame = frame;
+
         if ( surfaceHolder == null )
         {
             System.err.println( "Error: AndroidGraphics - drawing without a surfaceHolder!" );
@@ -149,6 +162,17 @@ public class AndroidGraphics implements Graphics
         {
             surfaceHolder.unlockCanvasAndPost( canvas );
         }
+    }
+
+    public void redraw()
+    {
+        if ( -1 == lastFrame )
+        {
+            return;
+        }
+        soundOn = false;
+        draw( lastFrame );
+        soundOn = true;
     }
 
     @Override
@@ -245,9 +269,45 @@ public class AndroidGraphics implements Graphics
 
         List<Sprite> sprites = animator.getSprites( frameNum );
 
-        soundPlayer.play( sprites );
+        if ( soundOn )
+        {
+            soundPlayer.play(sprites);
+        }
 
-        renderer.render( androidCanvas, sprites, paint );
+        renderer.render(androidCanvas, sprites, paint);
+
+        if ( world.paused )
+        {
+            tacticalOverlay( renderer, androidCanvas, world );
+        }
+    }
+
+    private void tacticalOverlay( Renderer renderer, AndroidCanvas androidCanvas, World world )
+    {
+        androidCanvas.drawColor( dullOverlay );
+
+        Overlay overlay = new Overlay( world );
+
+        greenText.paint.setTextAlign( Paint.Align.CENTER );
+
+        float h = renderer.tileSize / 4 ;
+        greenText.paint.setTextSize( h );
+
+        for ( Thing t : overlay.items ) {
+            String notation = overlay.at(t.x, t.y);
+
+            String[] lines = Util.split(notation, "\n");
+
+            for (int i = 0; i < lines.length; i++)
+            {
+                int x = renderer.offsetX + t.x * renderer.tileSize;
+                int y = renderer.offsetY + t.y * renderer.tileSize + (int)( (float)i * h );
+                x += ( renderer.tileSize ) / 2; // centre
+                y += ( renderer.tileSize - h * lines.length ) / 2 ;
+                androidCanvas.drawText( lines[i], (float)x, (float)y, greenText);
+            }
+        }
+
     }
 
     void drawPolygons( ArrayList<PolygonBuilder> polygons, AndroidCanvas androidCanvas, Renderer<AndroidBitmap, AndroidPaint> renderer )

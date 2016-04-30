@@ -618,15 +618,21 @@ public class GameUi implements StatsChangedListener
         gameLaunch.graphics.setMuted( muted );
     }
 
+    private Point pixelToCell( Point pixelPosition )
+    {
+        return new Point(
+                             ( pixelPosition.x - gameLaunch.graphics.renderer.offsetX )
+                               / worldTileSizeInPixels,
+                             ( pixelPosition.y - gameLaunch.graphics.renderer.offsetY )
+                               / worldTileSizeInPixels
+                               );
+    }
+
     private void click( Point pixelPosition )
     {
-        int tileX = ( pixelPosition.x - gameLaunch.graphics.renderer.offsetX )
-            / worldTileSizeInPixels;
+        Point p = pixelToCell( pixelPosition );
 
-        int tileY = ( pixelPosition.y - gameLaunch.graphics.renderer.offsetY )
-            / worldTileSizeInPixels;
-
-        addToken( tileX, tileY );
+        addToken( p.x , p.y );
     }
 
     protected void addToken(int tileX, int tileY )

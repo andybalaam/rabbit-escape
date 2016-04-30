@@ -54,11 +54,11 @@ SVGANDROIDICONSHDPI  := $(SVGICONSSRC:images-src/icons/%.svg=$(ANDROIDICONSHDPI_
 SVGANDROIDICONSXHDPI := $(SVGICONSSRC:images-src/icons/%.svg=$(ANDROIDICONSXHDPI_DEST)/%.png)
 
 ANIMATIONS_DIR := rabbit-escape-render/src/rabbitescape/render/animations
-LEVELS_DIRS := \
-	$(shell \
-	find rabbit-escape-engine/src -name '*.rel' | xargs -n 1 dirname | uniq) \
-	$(shell \
-	find rabbit-escape-engine/test -name '*.rel' | xargs -n 1 dirname | uniq) \
+
+LEVELS_DIRS := $(shell \
+	find rabbit-escape-engine -type d \
+		-regex '.*/\(src\|test\)/rabbitescape/levels/[^/]*' \
+	)
 
 $(SOUNDSWAV_DEST)/%.wav: sounds-src/%.flac
 	@echo ".. Generating $@"
@@ -227,6 +227,9 @@ music: no-make-warnings $(MUSICWAV)
 %/levels.txt: %/*.rel
 	@./build-scripts/levelnames $(@D) > $(@D)/levels.txt
 
+%/levels.txt: %/*/*.rel
+	@./build-scripts/levelnames $(@D) > $(@D)/levels.txt
+
 animations: no-make-warnings $(ANIMATIONS_DIR)/ls.txt
 	@echo ". Generating animations list"
 
@@ -260,12 +263,13 @@ compile: images sounds music compile-noui
 
 clean: no-make-warnings
 	@echo ". Cleaning compiled Java, lists and dist dir"
-	@touch rabbit-escape-engine/bin/touchfile && rm -r rabbit-escape-engine/bin/*
-	@touch rabbit-escape-render/bin/touchfile && rm -r rabbit-escape-render/bin/*
-	@touch rabbit-escape-ui-text/bin/touchfile && rm -r rabbit-escape-ui-text/bin/*
-	@touch rabbit-escape-ui-swing/bin/touchfile && rm -r rabbit-escape-ui-swing/bin/*
+	@mkdir -p rabbit-escape-engine/bin && touch rabbit-escape-engine/bin/touchfile && rm -r rabbit-escape-engine/bin/*
+	@mkdir -p rabbit-escape-render/bin && touch rabbit-escape-render/bin/touchfile && rm -r rabbit-escape-render/bin/*
+	@mkdir -p rabbit-escape-ui-text/bin/touchfile && touch rabbit-escape-ui-text/bin/touchfile && rm -r rabbit-escape-ui-text/bin/*
+	@mkdir -p rabbit-escape-ui-swing/bin/touchfile && touch rabbit-escape-ui-swing/bin/touchfile && rm -r rabbit-escape-ui-swing/bin/*
 	@find ./ -name "ls.txt" -delete
 	@find ./ -name "levels.txt" -delete
+	@find ./ -empty -type d -delete
 	@mkdir -p dist && rm -r dist
 
 clean-images: no-make-warnings

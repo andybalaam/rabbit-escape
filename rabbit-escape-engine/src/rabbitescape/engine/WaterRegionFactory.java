@@ -9,17 +9,27 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import rabbitescape.engine.Block.Shape;
 import rabbitescape.engine.util.LookupTable2D;
+import rabbitescape.engine.util.Position;
 import rabbitescape.engine.util.WaterUtil;
 
 public class WaterRegionFactory
 {
-    /** Generate a 2D lookup table of water regions based on a 2D table of blocks. */
+    /**
+     * Generate a 2D lookup table of water regions based on a 2D table of
+     * blocks.
+     * 
+     * @param blockTable
+     *            The table of blocks.
+     * @param waterAmounts
+     *            Any water region contents that are currently known.
+     */
     public static LookupTable2D<WaterRegion> generateWaterTable(
-        LookupTable2D<Block> blockTable )
+        LookupTable2D<Block> blockTable, Map<Position, Integer> waterAmounts )
     {
         LookupTable2D<WaterRegion> waterTable = new LookupTable2D<>( blockTable.size );
         for ( int x = -1; x <= blockTable.size.width; x++ )
@@ -27,6 +37,11 @@ public class WaterRegionFactory
             for ( int y = -1; y <= blockTable.size.height; y++ )
             {
                 createWaterRegionsAtPoint( blockTable, waterTable, x, y );
+                Integer waterAmount = waterAmounts.get( new Position( x, y ) );
+                if ( waterAmount != null )
+                {
+                    waterTable.getItemAt( x, y ).setContents( waterAmount );
+                }
             }
         }
         return waterTable;

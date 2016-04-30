@@ -1,10 +1,10 @@
 package rabbitescape.engine.util;
 
+import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.Vector;
 
 public class LookupTable2D <T extends LookupItem2D> implements Iterable<T>
 {
@@ -46,8 +46,8 @@ public class LookupTable2D <T extends LookupItem2D> implements Iterable<T>
         return new ItemIterator();
     }
 
-    // Arrays of generics not allowed, use Vector instead
-    private final Vector<Vector<LookupItems2D<T>>> table;
+    // Arrays of generics not allowed, use ArrayList instead
+    private final ArrayList<ArrayList<LookupItems2D<T>>> table;
     private final List<T> list;
     /**
      * The size this table was created with. Note that changing the dimensions
@@ -58,10 +58,10 @@ public class LookupTable2D <T extends LookupItem2D> implements Iterable<T>
     public LookupTable2D( List<T> list, Dimension size )
     {
         // The table can store items +/-1 outside the nominal size.
-        table = new Vector<Vector<LookupItems2D<T>>>( size.width + 2 );
+        table = new ArrayList<ArrayList<LookupItems2D<T>>>( size.width + 2 );
         for ( int x = -1; x < size.width + 1 ; x++ )
         {
-            table.add( new Vector<LookupItems2D<T>>( size.height + 2 ) );
+            table.add( new ArrayList<LookupItems2D<T>>( size.height + 2 ) );
             for ( int y = -1 ; y < size.height + 1 ; y++ )
             {
                 table.get( i( x ) ).add( new LookupItems2D<T>( new Position( x, y ) ) );
@@ -96,10 +96,11 @@ public class LookupTable2D <T extends LookupItem2D> implements Iterable<T>
 
     public List<T> getItemsAt( int x, int y )
     {
-        return table.get( i( x ) ).get( i( y ) ).getItems();
+        ArrayList<T> ret = new ArrayList<T>( table.get( i( x ) ).get( i( y ) ).getItems() );
+        return ret;
     }
 
-    public void addAll( List<T> newItems )
+    public void addAll( List<? extends T> newItems )
     {
         list.addAll( newItems );
         for ( T item: newItems)
@@ -116,7 +117,7 @@ public class LookupTable2D <T extends LookupItem2D> implements Iterable<T>
         table.get( i( position.x ) ).get( i( position.y ) ).add( newItem );
     }
 
-    public void removeAll( List<T> itemsGoing )
+    public void removeAll( List<? extends T> itemsGoing )
     {
         list.removeAll( itemsGoing );
         for ( T item: itemsGoing )
@@ -157,4 +158,24 @@ public class LookupTable2D <T extends LookupItem2D> implements Iterable<T>
     {
         return list.size();
     }
+        
+    public void debugPrint()
+    {
+        PrintStream p = System.out;
+        p.printf( "\n\n" );
+        for ( T o: this )
+        {
+            Position pos = o.getPosition();
+            p.printf( "List:(%02d,%02d)%s\n", pos.x, pos.y , o.toString() );
+        }
+        for ( int y = -1 ; y <= size.height ; y++ )
+        {
+            for ( int x = -1 ; x <= size.width ; x++ )
+            {
+                p.print( "" + getItemsAt( x, y ).size() );
+            }
+            p.println();
+        }
+    }
+    
 }

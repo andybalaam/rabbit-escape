@@ -49,7 +49,7 @@ public class Config
             Util.reAssert(
                 version() == i + 1,
                 "Config upgrade to version " + ( i + 1 )
-                + "did not update the version correctly - version is: "
+                + " did not update the version correctly - version is: "
                 + version()
             );
             storage.save( this );

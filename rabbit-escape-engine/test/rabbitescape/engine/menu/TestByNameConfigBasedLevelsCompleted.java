@@ -1,12 +1,12 @@
 package rabbitescape.engine.menu;
 
+import static rabbitescape.engine.menu.FakeLevelsList.*;
 import static rabbitescape.engine.util.Util.*;
 
 import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.*;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import org.hamcrest.BaseMatcher;
@@ -73,18 +73,18 @@ public class TestByNameConfigBasedLevelsCompleted
     public void Report_highest_level_from_config_where_some_completed()
     {
         FakeConfig fakeConfig = new FakeConfig(
-            "level foo 1",
-            "level foo 2",
-            "level foo 3"
+            "level_01_foo_1",
+            "level_01_foo_2",
+            "level_01_foo_3"
         );
 
-        LevelNames levelNames = new FakeLevelNames(
-            levelSet( "foo" ),
-            levelSet( "bar" )
+        LevelsList levelsList = new LevelsList(
+            levelSet( "01_foo", 10 ),
+            levelSet( "02_bar", 10 )
         );
 
         ByNameConfigBasedLevelsCompleted lc =
-            new ByNameConfigBasedLevelsCompleted( fakeConfig, levelNames );
+            new ByNameConfigBasedLevelsCompleted( fakeConfig, levelsList );
 
         assertThat( lc.highestLevelCompleted( "01_foo" ), equalTo( 3 ) );
     }
@@ -93,18 +93,18 @@ public class TestByNameConfigBasedLevelsCompleted
     public void Report_highest_level_from_config_where_none_completed()
     {
         FakeConfig fakeConfig = new FakeConfig(
-            "level foo 1",
-            "level foo 2",
-            "level foo 3"
+            "level_01_foo_1",
+            "level_01_foo_2",
+            "level_01_foo_3"
         );
 
-        LevelNames levelNames = new FakeLevelNames(
-            levelSet( "foo" ),
-            levelSet( "bar" )
+        LevelsList levelsList = new LevelsList(
+            levelSet( "01_foo", 10 ),
+            levelSet( "02_bar", 10 )
         );
 
         ByNameConfigBasedLevelsCompleted lc =
-            new ByNameConfigBasedLevelsCompleted( fakeConfig, levelNames );
+            new ByNameConfigBasedLevelsCompleted( fakeConfig, levelsList );
 
         assertThat( lc.highestLevelCompleted( "02_bar" ), equalTo( 0 ) );
     }
@@ -113,45 +113,45 @@ public class TestByNameConfigBasedLevelsCompleted
     public void Report_highest_level_from_config_where_all_completed()
     {
         FakeConfig fakeConfig = new FakeConfig(
-            "level foo 1",
-            "level foo 2",
-            "level foo 3",
-            "level foo 4",
-            "level foo 5",
-            "level foo 6",
-            "level foo 7",
-            "level foo 8",
-            "level foo 9",
-            "level foo 10"
+            "level_foo_1",
+            "level_foo_2",
+            "level_foo_3",
+            "level_foo_4",
+            "level_foo_5",
+            "level_foo_6",
+            "level_foo_7",
+            "level_foo_8",
+            "level_foo_9",
+            "level_foo_10"
         );
 
-        LevelNames levelNames = new FakeLevelNames(
-            levelSet( "foo" ),
-            levelSet( "bar" )
+        LevelsList levelsList = new LevelsList(
+            levelSet( "foo", 10 ),
+            levelSet( "bar", 10 )
         );
 
         ByNameConfigBasedLevelsCompleted lc =
-            new ByNameConfigBasedLevelsCompleted( fakeConfig, levelNames );
+            new ByNameConfigBasedLevelsCompleted( fakeConfig, levelsList );
 
-        assertThat( lc.highestLevelCompleted( "01_foo" ), equalTo( 10 ) );
+        assertThat( lc.highestLevelCompleted( "foo" ), equalTo( 10 ) );
     }
 
     @Test
     public void Save_changes_to_config_new_dir()
     {
         FakeConfig fakeConfig = new FakeConfig(
-            "level foo 1",
-            "level foo 2",
-            "level foo 3"
+            "level_foo_1",
+            "level_foo_2",
+            "level_foo_3"
         );
 
-        LevelNames levelNames = new FakeLevelNames(
-            levelSet( "foo" ),
-            levelSet( "bar" )
+        LevelsList levelsList = new LevelsList(
+            levelSet( "foo", 10 ),
+            levelSet( "bar", 10 )
         );
 
         ByNameConfigBasedLevelsCompleted lc =
-            new ByNameConfigBasedLevelsCompleted( fakeConfig, levelNames );
+            new ByNameConfigBasedLevelsCompleted( fakeConfig, levelsList );
 
         lc.setCompletedLevel( "bar", 1 );
 
@@ -160,10 +160,10 @@ public class TestByNameConfigBasedLevelsCompleted
             fakeConfig.log.get( 1 ),  // 0 was a get
             equalTo(
                 "set levels.completed [" +
-                "\"level bar 1\"," +
-                "\"level foo 1\"," +
-                "\"level foo 2\"," +
-                "\"level foo 3\"" +
+                "\"level_bar_1\"," +
+                "\"level_foo_1\"," +
+                "\"level_foo_2\"," +
+                "\"level_foo_3\"" +
                 "]"
             )
         );
@@ -178,18 +178,18 @@ public class TestByNameConfigBasedLevelsCompleted
     public void Save_changes_to_config_existing_dir()
     {
         FakeConfig fakeConfig = new FakeConfig(
-            "level foo 1",
-            "level foo 2",
-            "level foo 3"
+            "level_foo_1",
+            "level_foo_2",
+            "level_foo_3"
         );
 
-        LevelNames levelNames = new FakeLevelNames(
-            levelSet( "foo" ),
-            levelSet( "bar" )
+        LevelsList levelsList = new LevelsList(
+            levelSet( "foo", 10 ),
+            levelSet( "bar", 10 )
         );
 
         ByNameConfigBasedLevelsCompleted lc =
-            new ByNameConfigBasedLevelsCompleted( fakeConfig, levelNames );
+            new ByNameConfigBasedLevelsCompleted( fakeConfig, levelsList );
 
         lc.setCompletedLevel( "foo", 4 );
 
@@ -197,10 +197,10 @@ public class TestByNameConfigBasedLevelsCompleted
             fakeConfig.log.get( 1 ),  // 0 was a get
             equalTo(
                 "set levels.completed [" +
-                "\"level foo 1\"," +
-                "\"level foo 2\"," +
-                "\"level foo 3\"," +
-                "\"level foo 4\"" +
+                "\"level_foo_1\"," +
+                "\"level_foo_2\"," +
+                "\"level_foo_3\"," +
+                "\"level_foo_4\"" +
                 "]"
             )
         );
@@ -215,18 +215,18 @@ public class TestByNameConfigBasedLevelsCompleted
     public void No_need_to_update_if_weve_already_completed_a_level()
     {
         FakeConfig fakeConfig = new FakeConfig(
-            "level foo 1",
-            "level foo 2",
-            "level foo 3"
+            "level_foo_1",
+            "level_foo_2",
+            "level_foo_3"
         );
 
-        LevelNames levelNames = new FakeLevelNames(
-            levelSet( "foo" ),
-            levelSet( "bar" )
+        LevelsList levelsList = new LevelsList(
+            levelSet( "foo", 10 ),
+            levelSet( "bar", 10 )
         );
 
         ByNameConfigBasedLevelsCompleted lc =
-            new ByNameConfigBasedLevelsCompleted( fakeConfig, levelNames );
+            new ByNameConfigBasedLevelsCompleted( fakeConfig, levelsList );
 
         // Two useless calls
         lc.setCompletedLevel( "foo", 3 );
@@ -242,13 +242,6 @@ public class TestByNameConfigBasedLevelsCompleted
             equalTo( "get levels.completed" )
         );
         assertThat( fakeConfig.log.size(), equalTo( 2 ) );
-    }
-
-    @Test
-    public void Characters_stripped_from_set_names()
-    {
-        assertThat( ByNameConfigBasedLevelsCompleted.stripNumber_( "01_easy" ),
-            equalTo( "easy" ) );
     }
 
     // ---
@@ -334,53 +327,5 @@ public class TestByNameConfigBasedLevelsCompleted
         };
     }
 
-    private static class LevelSet
-    {
-        public final String name;
-        public final List<String> levelNames;
 
-        public LevelSet( String name, List<String> levelNames )
-        {
-            this.name = name;
-            this.levelNames = levelNames;
-        }
-    }
-
-    private static LevelSet levelSet( String name )
-    {
-        return new LevelSet( name, levelNames( name ) );
-    }
-
-    private static List<String> levelNames( String name )
-    {
-        List<String> ret = new ArrayList<String>();
-
-        for ( int i = 1; i < 11; ++i )
-        {
-            ret.add( "level " + name + " " + i );
-        }
-
-        return ret;
-    }
-
-    private static class FakeLevelNames implements LevelNames
-    {
-        private final HashMap<String, List<String>> levelSets;
-
-        public FakeLevelNames( LevelSet... provided )
-        {
-            levelSets = new HashMap<String, List<String>>();
-
-            for ( LevelSet s : provided )
-            {
-                levelSets.put( s.name, s.levelNames );
-            }
-        }
-
-        @Override
-        public List<String> namesInDir( String levelsDir )
-        {
-            return levelSets.get( levelsDir );
-        }
-    }
 }

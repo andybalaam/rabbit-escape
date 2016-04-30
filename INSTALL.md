@@ -20,10 +20,19 @@ slow you might have better results using
 Prerequisites
 -------------
 
-You need Java, Git, Make, Sox and Inkscape to be able to build the
-images, sounds and code.  On Ubuntu, Debian and similar:
+You need Java, Git, Make, Sox, Inkscape and the standard Unix tools to be able
+to build the images, sounds and code.  On Ubuntu, Debian and similar:
 
-    sudo apt-get install git make openjdk-7-jdk ant sox inkscape expect
+    sudo apt-get install \
+        git \
+        make \
+        openjdk-7-jdk \
+        ant \
+        sox \
+        inkscape \
+        expect \
+        grep \
+        sed
 
 Run tests
 ---------

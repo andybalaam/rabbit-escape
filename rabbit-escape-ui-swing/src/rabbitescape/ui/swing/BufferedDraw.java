@@ -30,6 +30,13 @@ public abstract class BufferedDraw
                     // Display has gone away - nothing to do
                     return;
                 }
+                catch ( NullPointerException e)
+                {
+                    // Can get this from within getDrawGraphics()
+                    // While resizing when not paused.
+                    // Ignoring it seems harmless.
+                    return;
+                }
 
                 try
                 {

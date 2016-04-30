@@ -66,11 +66,11 @@ public class WaterRegion extends Thing implements LookupItem2D
     public void setContents( int contents )
     {
         this.contents = contents;
-        if (contents == 0)
+        if ( contents == 0 )
         {
             state = State.WATER_REGION_EMPTY;
         }
-        else if (contents < capacity)
+        else if ( contents < WaterUtil.MAX_CAPACITY )
         {
             state = State.WATER_REGION_HALF;
         }
@@ -244,5 +244,11 @@ public class WaterRegion extends Thing implements LookupItem2D
             .append( contents ).append( ", " )
             .append( flow );
         return sb.toString();
+    }
+
+    @Override
+    public String overlayText()
+    {
+        return 0 == contents ? "" : "~" + contents;
     }
 }

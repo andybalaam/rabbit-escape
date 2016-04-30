@@ -5,7 +5,6 @@ import static org.hamcrest.CoreMatchers.*;
 import static rabbitescape.engine.Tools.*;
 import static rabbitescape.engine.textworld.TextWorldManip.*;
 
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.HashSet;
@@ -13,14 +12,7 @@ import java.util.Set;
 
 import org.junit.Test;
 
-import rabbitescape.engine.menu.ByNameConfigBasedLevelsCompleted;
-import rabbitescape.engine.menu.LevelMenuItem;
-import rabbitescape.engine.menu.LevelsCompleted;
-import rabbitescape.engine.menu.LevelsMenu;
-import rabbitescape.engine.menu.LevelsMenu.ErrorLoadingLevelList;
-import rabbitescape.engine.menu.Menu;
-import rabbitescape.engine.menu.MenuDefinition;
-import rabbitescape.engine.menu.MenuItem;
+import rabbitescape.engine.menu.*;
 import rabbitescape.engine.solution.Solution;
 import rabbitescape.engine.solution.SolutionExceptions;
 import rabbitescape.engine.solution.SolutionParser;
@@ -30,10 +22,10 @@ import rabbitescape.engine.util.FileSystem;
 public class TestAllActiveLevels
 {
     @Test
-    public void All_levels_load_and_round_trip()
+    public void All_official_levels_load_and_round_trip()
     {
         forEachOfficialLevel( new T() {
-            @Override public void run( World world, LevelMenuItem lev )
+            @Override public void run( World world, String filename )
         {
 
             String[] lines = renderCompleteWorld( world, true );
@@ -47,17 +39,17 @@ public class TestAllActiveLevels
     }
 
     @Test
-    public void All_solutions_are_correct()
+    public void All_official_solutions_are_correct()
     {
         forEachOfficialLevel( new T() {
-            @Override public void run( World world, LevelMenuItem lev )
+            @Override public void run( World world, String fileName )
         {
 
             boolean solved = false;
             int i = 1;
             for ( String s : world.solutions )
             {
-                boolean thisS = runSolutionString( world, lev.fileName, i, s );
+                boolean thisS = runSolutionString( world, fileName, i, s );
                 if ( thisS )
                 {
                     solved = true;
@@ -68,19 +60,19 @@ public class TestAllActiveLevels
             if ( !solved )
             {
                 throw new AssertionError(
-                    "Level " + lev.fileName + " has no solution!" );
+                    "Level " + fileName + " has no solution!" );
             }
 
         } } );
     }
 
     @Test
-    public void All_levels_have_unique_names()
+    public void All_official_levels_have_unique_names()
     {
         final Set<String> names = new HashSet<String>();
 
         forEachOfficialLevel( new T() {
-            @Override public void run( World world, LevelMenuItem lev )
+            @Override public void run( World world, String fileName )
             {
                 String name = ByNameConfigBasedLevelsCompleted.canonicalName(
                     world.name );
@@ -96,14 +88,14 @@ public class TestAllActiveLevels
     public void All_staging_solutions_are_correct()
     {
         forEachStagingLevel( new T() {
-            @Override public void run( World world, LevelMenuItem lev )
+            @Override public void run( World world, String fileName )
         {
 
             boolean solved = false;
             int i = 1;
             for ( String s : world.solutions )
             {
-                boolean thisS = runSolutionString( world, lev.fileName, i, s );
+                boolean thisS = runSolutionString( world, fileName, i, s );
                 if ( thisS )
                 {
                     solved = true;
@@ -114,7 +106,7 @@ public class TestAllActiveLevels
             if ( !solved )
             {
                 throw new AssertionError(
-                    "Level " + lev.fileName + " has no solution!" );
+                    "Level " + fileName + " has no solution!" );
             }
 
         } } );
@@ -124,13 +116,13 @@ public class TestAllActiveLevels
     public void All_development_solutions_are_correct()
     {
         forEachDevelopmentLevel( new T() {
-            @Override public void run( World world, LevelMenuItem lev )
+            @Override public void run( World world, String fileName )
         {
 
             int i = 1;
             for ( String s : world.solutions )
             {
-                runSolutionString( world, lev.fileName, i, s );
+                runSolutionString( world, fileName, i, s );
                 ++i;
             }
 
@@ -141,19 +133,18 @@ public class TestAllActiveLevels
 
     private void forEachOfficialLevel( T test )
     {
-        Menu menu = MenuDefinition.mainMenu( new IgnoreLevelsCompleted() );
-        Menu levelSets = menu.items[0].menu;
-        for ( MenuItem levelSet : levelSets.items )
+        for ( LevelsList.LevelSetInfo set :
+            LoadLevelsList.load( MenuDefinition.allLevels ) )
         {
-            for ( MenuItem levelItem : levelSet.menu.items )
+            for ( LevelsList.LevelInfo level : set.levels )
             {
-                LevelMenuItem lev = (LevelMenuItem)levelItem;
+                World world = new LoadWorldFile( new NothingExistsFileSystem() )
+                .load(
+                    new IgnoreWorldStatsListener(),
+                    set.dirName + "/" + level.fileName + ".rel"
+                );
 
-                World world = new LoadWorldFile(
-                    new NothingExistsFileSystem() ).load(
-                        new IgnoreWorldStatsListener(), lev.fileName );
-
-                test.run( world, lev );
+                test.run( world, level.fileName );
             }
         }
     }
@@ -168,29 +159,25 @@ public class TestAllActiveLevels
         forEachUnofficialLevel( test, "development" );
     }
 
-    private void forEachUnofficialLevel( T test, String developmentStage )
+    private void forEachUnofficialLevel( T test, String levelsDir )
     {
-        String[] levelSets = new String[]{ "dejavu", "paradise", "smallworld", "unsorted" };
-        for ( String levelSet : levelSets )
+        LevelsList levelsList = LoadLevelsList.load(
+            new LevelsList(
+                new LevelsList.LevelSetInfo( null, levelsDir, null )
+            )
+        );
+
+        for ( LevelsList.LevelSetInfo set : levelsList )
         {
-            String levelsDir = developmentStage + File.separator + levelSet;
-            try
+            for ( LevelsList.LevelInfo level : set.levels )
             {
-                LevelsMenu lm = new LevelsMenu( levelsDir, new IgnoreLevelsCompleted() );
-                for (MenuItem levelItem : lm.items)
-                {
-                    LevelMenuItem lev = (LevelMenuItem)levelItem;
+                World world = new LoadWorldFile( new NothingExistsFileSystem() )
+                    .load(
+                        new IgnoreWorldStatsListener(),
+                        levelsDir + "/" + level.fileName + ".rel"
+                    );
 
-                    World world = new LoadWorldFile(
-                        new NothingExistsFileSystem() ).load(
-                            new IgnoreWorldStatsListener(), lev.fileName );
-
-                    test.run( world, lev );
-                }
-            }
-            catch ( ErrorLoadingLevelList e )
-            {
-                System.out.println( "Warning: No level list found for " + levelsDir );
+                test.run( world, level.fileName );
             }
         }
     }
@@ -212,20 +199,6 @@ public class TestAllActiveLevels
             e.solutionId = solutionId;
             e.level = worldFileName;
             throw e;
-        }
-    }
-
-    private static class IgnoreLevelsCompleted implements LevelsCompleted
-    {
-        @Override
-        public int highestLevelCompleted( String levelsDir )
-        {
-            return 0;
-        }
-
-        @Override
-        public void setCompletedLevel( String levelsDir, int levelNum )
-        {
         }
     }
 
@@ -272,6 +245,6 @@ public class TestAllActiveLevels
 
     private static interface T
     {
-        void run( World world, LevelMenuItem lev );
+        void run( World world, String filename );
     }
 }

@@ -10,10 +10,13 @@ import java.util.Map;
 import rabbitescape.engine.ChangeDescription.State;
 import rabbitescape.engine.behaviours.*;
 
-public class Rabbit extends Thing
+public class Rabbit extends Thing implements Comparable<Rabbit>
 {
+    public final static int NOT_INDEXED = 0;
     private final List<Behaviour> behaviours;
     private final List<Behaviour> behavioursTriggerOrder;
+
+    public int index;
 
     private Falling falling;
 
@@ -28,6 +31,7 @@ public class Rabbit extends Thing
         behaviours = new ArrayList<>();
         behavioursTriggerOrder = new ArrayList<>();
         createBehaviours();
+        index = NOT_INDEXED;
     }
 
     private void createBehaviours()
@@ -143,6 +147,8 @@ public class Rabbit extends Thing
     {
         Map<String, String> ret = new HashMap<String, String>();
 
+        BehaviourState.addToStateIfGtZero( ret, "index", index );
+
         BehaviourState.addToStateIfTrue( ret, "onSlope", onSlope );
 
         for ( Behaviour behaviour : behaviours )
@@ -156,6 +162,8 @@ public class Rabbit extends Thing
     @Override
     public void restoreFromState( Map<String, String> state )
     {
+        index = BehaviourState.restoreFromState( state, "index", -1 );
+
         onSlope = BehaviourState.restoreFromState(
             state, "onSlope", false
         );
@@ -166,4 +174,43 @@ public class Rabbit extends Thing
         }
     }
 
+    @Override
+    public String overlayText()
+    {
+        String fmt;
+        switch ( dir )
+        {
+        case LEFT:
+            fmt = "<[%d] ";
+            break;
+        case RIGHT:
+            fmt = " [%d]>";
+            break;
+        default:
+            throw new RuntimeException( "Rabbit should only be left or right");
+        }
+        return String.format( fmt, index ) ;
+    }
+
+    @Override
+    public int compareTo( Rabbit r )
+    {
+        return this.index - r.index;
+    }
+
+    @Override
+    public boolean equals( Object o )
+    {
+        if ( null == o || !( o instanceof Rabbit ) )
+        {
+            return false;
+        }
+        return ( (Rabbit)o ).index == this.index;
+    }
+
+    @Override
+    public int hashCode()
+    {
+        return index;
+    }
 }

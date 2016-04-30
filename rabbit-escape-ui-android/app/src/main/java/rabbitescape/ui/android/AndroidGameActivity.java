@@ -24,8 +24,11 @@ import rabbitescape.engine.Token;
 import rabbitescape.engine.World;
 import rabbitescape.engine.WorldStatsListener;
 import rabbitescape.engine.err.RabbitEscapeException;
-import rabbitescape.engine.menu.ByNumberConfigBasedLevelsCompleted;
+import rabbitescape.engine.menu.ByNameConfigBasedLevelsCompleted;
 import rabbitescape.engine.menu.LevelsCompleted;
+import rabbitescape.engine.menu.LevelsList;
+import rabbitescape.engine.menu.LoadLevelsList;
+import rabbitescape.engine.menu.MenuDefinition;
 import rabbitescape.engine.textworld.TextWorldManip;
 import rabbitescape.engine.util.RealFileSystem;
 
@@ -149,7 +152,8 @@ public class AndroidGameActivity extends RabbitEscapeActivity
 
     private void staticInit()
     {
-        levelsCompleted = new ByNumberConfigBasedLevelsCompleted( getConfig() );
+        LevelsList levelsList = LoadLevelsList.load( MenuDefinition.allLevels );
+        levelsCompleted = new ByNameConfigBasedLevelsCompleted( getConfig(), levelsList );
 
         setContentView( R.layout.activity_android_game );
 
@@ -228,6 +232,9 @@ public class AndroidGameActivity extends RabbitEscapeActivity
             null
         );
         pauseButton.invalidate();
+
+        // Show Overlay
+        game.gameLaunch.graphics.redraw();
     }
 
     public void onSpeedClicked( View view )

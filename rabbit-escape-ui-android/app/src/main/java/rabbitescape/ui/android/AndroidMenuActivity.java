@@ -10,8 +10,10 @@ import android.widget.ListView;
 
 import net.artificialworlds.rabbitescape.R;
 
-import rabbitescape.engine.menu.ByNumberConfigBasedLevelsCompleted;
+import rabbitescape.engine.menu.ByNameConfigBasedLevelsCompleted;
 import rabbitescape.engine.menu.LevelMenuItem;
+import rabbitescape.engine.menu.LevelsList;
+import rabbitescape.engine.menu.LoadLevelsList;
 import rabbitescape.engine.menu.Menu;
 import rabbitescape.engine.menu.MenuDefinition;
 import rabbitescape.engine.menu.MenuItem;
@@ -40,8 +42,13 @@ public class AndroidMenuActivity extends RabbitEscapeActivity
 
         muteButton = (Button)findViewById( R.id.menuMuteButton );
 
+        LevelsList levelsList = LoadLevelsList.load( MenuDefinition.allLevels );
+
         Menu mainMenu = MenuDefinition.mainMenu(
-            new ByNumberConfigBasedLevelsCompleted( getConfig() ), false );
+            new ByNameConfigBasedLevelsCompleted( getConfig(), levelsList ),
+            levelsList,
+            false
+        );
 
         if ( savedInstanceState != null )
         {
