@@ -594,7 +594,7 @@ public class TestTextWorldManip
         World world = createWorld(
             "####",
             "#**#",
-            ":*=rj",
+            ":*=r{index:2}j{index:3}",
             ":*=bi",
             "#**#",
             "####",
@@ -610,7 +610,7 @@ public class TestTextWorldManip
                 "#**#",
                 "#**#",
                 "####",
-                ":*=rj",
+                ":*=r{index:2}j{index:3}",
                 ":*=bi",
                 ":*=\\d",
                 ":*=/d"
@@ -773,7 +773,7 @@ public class TestTextWorldManip
             "#**#",
             "#**#",
             "####",
-            ":*=rj",
+            ":*=r{index:1}j{index:40}",
             ":*=bi",
             ":*=\\d",
             ":*=/d"
@@ -838,6 +838,7 @@ public class TestTextWorldManip
             ":num_saved=5",
             ":num_killed=4",
             ":num_waiting=16",
+            ":rabbit_index_count=7",
             ":paused=false",
             ":bash=1",
             ":block=4",
@@ -848,7 +849,7 @@ public class TestTextWorldManip
             "#**#",
             "#**#",
             "####",
-            ":*=rj",
+            ":*=r{index:5}j{index:7}",
             ":*=bi",
             ":*=\\d",
             ":*=/d"
@@ -924,6 +925,7 @@ public class TestTextWorldManip
             ":num_saved=5",
             ":num_killed=4",
             ":num_waiting=16",
+            ":rabbit_index_count=4",
             ":paused=true",
             ":bash=1",
             ":bridge=3",
@@ -933,10 +935,10 @@ public class TestTextWorldManip
             "#         #",
             "# * * * * #",
             "###########",
-            ":*=r{Bashing.stepsOfBashing:1}Q{Entrance.timeToNextRabbit:3}",
-            ":*=j{Bridging.bigSteps:1,Bridging.bridgeType:DOWN_UP,Bridging.smallSteps:1,onSlope:true}",
-            ":*=j{Climbing.hasAbility:true}",
-            ":*=j{Climbing.abilityActive:true,Climbing.hasAbility:true}",
+            ":*=r{Bashing.stepsOfBashing:1,index:1}Q{Entrance.timeToNextRabbit:3}",
+            ":*=j{Bridging.bigSteps:1,Bridging.bridgeType:DOWN_UP,Bridging.smallSteps:1,index:2,onSlope:true}",
+            ":*=j{Climbing.hasAbility:true,index:3}",
+            ":*=j{Climbing.abilityActive:true,Climbing.hasAbility:true,index:4}",
         };
 
         assertThat(
@@ -966,9 +968,14 @@ public class TestTextWorldManip
 
         String[] expectedLines = {
             "*                                                                            ",
-            "      r  r  r rr                                                             ",
+            "      *  *  * **                                                             ",
             "#############################################################################",
-            ":*=Q{Entrance.timeToNextRabbit:2}"
+            ":*=Q{Entrance.timeToNextRabbit:2}",
+            ":*=r{index:5}",
+            ":*=r{index:4}",
+            ":*=r{index:3}",
+            ":*=r{index:2}",
+            ":*=r{index:1}"
         };
         assertThat( resultLines, equalTo( expectedLines ));
 
@@ -998,6 +1005,7 @@ public class TestTextWorldManip
             ":num_saved=0",
             ":num_killed=0",
             ":num_waiting=20",
+            ":rabbit_index_count=0",
             ":paused=false",
             "#######",
             "#Q   Q#",
@@ -1045,6 +1053,7 @@ public class TestTextWorldManip
             ":num_saved=0",
             ":num_killed=0",
             ":num_waiting=20",
+            ":rabbit_index_count=0",
             ":paused=false",
             "#######",
             "#Q   Q#",
@@ -1072,6 +1081,7 @@ public class TestTextWorldManip
             ":num_saved=0",
             ":num_killed=0",
             ":num_waiting=20",
+            ":rabbit_index_count=0",
             ":paused=false",
             "% a",
             ":bash=1",
@@ -1130,6 +1140,7 @@ public class TestTextWorldManip
             ":num_killed=0",
             "% the bunnies are queuing in the pre-life",
             ":num_waiting=20",
+            ":rabbit_index_count=20",
             "% paused ",
             ":paused=false",
             "% pretty ascii art",
@@ -1138,9 +1149,9 @@ public class TestTextWorldManip
             "# *** #",
             "#######",
             "% starpoint comment",
-            ":*=rr",
-            ":*=jj",
-            ":*=rj",
+            ":*=r{index:1}r{index:2}",
+            ":*=j{index:3}j{index:4}",
+            ":*=r{index:5}j{index:20}",
             "% comments are also OK after",
             "% all the substantive metadata"
         };
@@ -1175,6 +1186,7 @@ public class TestTextWorldManip
             ":author_url=",
             "% the bunnies are queuing in the pre-life",
             ":num_waiting=20",
+            ":rabbit_index_count=0",
             "% paused ",
             ":paused=false",
             "% pretty ascii art",
@@ -1223,6 +1235,7 @@ public class TestTextWorldManip
             ":num_killed=0",
             "% the bunnies are queuing in the pre-life",
             ":num_waiting=20",
+            ":rabbit_index_count=0",
             "% paused ",
             ":paused=false",
             "% pretty ascii art",
@@ -1288,9 +1301,9 @@ public class TestTextWorldManip
             "% starpoint comment 1",
             "% starpoint comment 2",
             "% starpoint comment 3",
-            ":*=rr",
-            ":*=jj",
-            ":*=rj"
+            ":*=r{index:1}r{index:2}",
+            ":*=j{index:3}j{index:4}",
+            ":*=r{index:5}j{index:6}"
         };
 
         assertThat(
@@ -1469,6 +1482,7 @@ public class TestTextWorldManip
             ":num_saved=0",
             ":num_killed=0",
             ":num_waiting=20",
+            ":rabbit_index_count=40",
             ":paused=false",
             "#######",
             "#Q   Q#",
@@ -1759,6 +1773,7 @@ public class TestTextWorldManip
             ":num_saved=0",
             ":num_killed=0",
             ":num_waiting=20",
+            ":rabbit_index_count=0",
             ":paused=false",
             "#######",
             "#Q   Q#",

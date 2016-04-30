@@ -245,4 +245,10 @@ public class WaterRegion extends Thing implements LookupItem2D
             .append( flow );
         return sb.toString();
     }
+
+    @Override
+    public String overlayText()
+    {
+        return 0 == contents ? "" : "~" + contents;
+    }
 }

@@ -42,4 +42,14 @@ public class AndroidCanvas implements Canvas<AndroidBitmap, AndroidPaint>
     {
         this.canvas.drawLine( startX, startY, stopX, stopY, paint.paint );
     }
+
+    public void drawRect( rabbitescape.render.androidlike.Rect rect, AndroidPaint paint )
+    {
+        this.canvas.drawRect( new android.graphics.Rect( rect.left, rect.top, rect.right, rect.bottom ) , paint.paint );
+    }
+
+    public void drawText( String text, float x, float y, AndroidPaint paint )
+    {
+        this.canvas.drawText( text, x, y, paint.paint);
+    }
 }

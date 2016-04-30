@@ -7,6 +7,8 @@ import java.util.Map;
 
 public class Exit extends Thing
 {
+    World world;
+
     public Exit( int x, int y )
     {
         super( x, y, EXIT );
@@ -20,6 +22,7 @@ public class Exit extends Thing
     @Override
     public void step( World world )
     {
+        this.world = world;
     }
 
     @Override
@@ -31,5 +34,11 @@ public class Exit extends Thing
     @Override
     public void restoreFromState( Map<String, String> state )
     {
+    }
+
+    @Override
+    public String overlayText()
+    {
+        return world == null ? "Exit" : "Exit\n" + world.num_saved + " saved";
     }
 }

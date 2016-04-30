@@ -3,6 +3,7 @@ package rabbitescape.engine;
 import static rabbitescape.engine.util.Util.*;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -101,7 +102,6 @@ public class World
     }
 
     public final Dimension size;
-//    public final List<Block> blocks;
     public final LookupTable2D<Block> blockTable;
     /** A grid of water. Only one water object should be stored in each location. */
     public final LookupTable2D<WaterRegion> waterTable;
@@ -119,6 +119,7 @@ public class World
     public final int num_to_save;
     public final int[] rabbit_delay;
 
+    private int rabbit_index_count;
     public int num_saved;
     public int num_killed;
     public int num_waiting;
@@ -149,6 +150,7 @@ public class World
         int num_saved,
         int num_killed,
         int num_waiting,
+        int rabbit_index_count,
         boolean paused,
         Comment[] comments,
         WorldStatsListener statsListener,
@@ -172,6 +174,7 @@ public class World
         this.num_saved = num_saved;
         this.num_killed = num_killed;
         this.num_waiting = num_waiting;
+        this.rabbit_index_count = rabbit_index_count;
         this.paused = paused;
         this.comments = comments;
         this.voidStyle = voidStyle;
@@ -192,13 +195,51 @@ public class World
         this.changes = new WorldChanges( this, statsListener );
 
         init();
+
     }
 
     private void init()
     {
+        // Number the rabbits if necessary
+        for ( Rabbit r: rabbits )
+        {
+            rabbitIndex( r );
+        }
+
+        // Rearrange them, this may be necessary if they have been
+        // restored from state.
+        Collections.sort( rabbits );
+
         for ( Thing thing : allThings() )
         {
             thing.calcNewState( this );
+        }
+    }
+
+    public void rabbitIndex( Rabbit r )
+    {
+        r.index = ( r.index == Rabbit.NOT_INDEXED )
+                ? ++rabbit_index_count
+                : r.index;
+    }
+
+    public int getRabbitIndexCount()
+    {
+        return rabbit_index_count;
+    }
+
+    /**
+     * For levels with some rabbits in to start with.
+     * Then entering rabbits are indexed correctly.
+     */
+    public void countRabbitsForIndex()
+    {
+        rabbit_index_count = rabbit_index_count == 0 ?
+            rabbits.size() : rabbit_index_count;
+        for ( Rabbit r:rabbits )
+        {
+            rabbit_index_count = rabbit_index_count > r.index ?
+                rabbit_index_count : r.index;
         }
     }
 
@@ -281,7 +322,11 @@ public class World
 
     public Token getTokenAt( int x, int y )
     {
-        // TODO: faster
+        // Note it is not worth using LookupTable2D for things.
+        // Handling their movement would complicate the code.
+        // There are not as many instances of Thing as Block.
+        // Iterating to check through is not too time
+        // consuming.
         for ( Thing thing : things )
         {
             if ( thing.x == x && thing.y == y && thing instanceof Token )
@@ -295,9 +340,26 @@ public class World
         return null;
     }
 
+    public List<Thing> getThingsAt( int x, int y )
+    {
+        ArrayList<Thing> ret = new ArrayList<Thing>();
+        for ( Thing thing : things )
+        {
+            if ( thing.x == x && thing.y == y )
+            {
+                if ( !changes.tokensToRemove.contains( thing ) &&
+                     !changes.fireToRemove.contains( thing ) )
+                {
+                    ret.add( thing );
+                }
+            }
+        }
+        return ret;
+    }
+
     public boolean fireAt( int x, int y )
     {
-        // TODO: faster with LookupTable2D. can do getTokenAt at the same time.
+        // See note for getTokenAt() about Thing storage.
         for ( Thing thing : things )
         {
             if ( thing.x == x && thing.y == y && thing instanceof Fire )

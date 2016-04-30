@@ -12,4 +12,6 @@ public interface Canvas<T extends Bitmap, P extends Paint>
     public void drawColor( P paint );
     public void drawLine(
         float startX, float startY, float stopX, float stopY, P paint );
+    public void drawRect(Rect rect, P paint);
+    public void drawText(String text, float x, float y, P paint);
 }

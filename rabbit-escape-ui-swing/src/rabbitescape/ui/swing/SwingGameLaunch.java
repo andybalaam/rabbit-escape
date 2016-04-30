@@ -116,6 +116,9 @@ public class SwingGameLaunch implements GameLaunch
             frameDumper
         );
 
+        // Used for redraw after window is resized.
+        frame.setGraphics( graphics );
+
         jframe.setGameLaunch( this );
 
         sound.setMusic( world.music );

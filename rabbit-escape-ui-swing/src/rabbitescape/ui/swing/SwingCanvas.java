@@ -2,8 +2,11 @@ package rabbitescape.ui.swing;
 
 import java.awt.AlphaComposite;
 import java.awt.Graphics2D;
+import java.awt.Rectangle;
 
+import rabbitescape.engine.util.Util;
 import rabbitescape.render.androidlike.Canvas;
+import rabbitescape.render.androidlike.Rect;
 
 public class SwingCanvas implements Canvas<SwingBitmap, SwingPaint>
 {
@@ -55,5 +58,37 @@ public class SwingCanvas implements Canvas<SwingBitmap, SwingPaint>
     {
         this.gfx.setPaint( paint.color );
         this.gfx.drawLine( (int)startX, (int)startY, (int)stopX, (int)stopY );
+    }
+
+    @Override
+    public void drawText(String text, float x, float y, SwingPaint paint)
+    {
+        this.gfx.setPaint( paint.color );
+        String[] lines = Util.split( text, "\n" );
+        int h = this.gfx.getFontMetrics().getHeight();
+        for ( int i = 0; i < lines.length ; i++ )
+        {
+            this.gfx.drawString( lines[i], x, y + ( 1 + i ) * h );
+        }
+    }
+
+    public int stringWidth( String text )
+    {
+        return gfx.getFontMetrics().stringWidth( text );
+    }
+
+    public int stringHeight()
+    {
+        return gfx.getFontMetrics().getHeight();
+    }
+
+    @Override
+    public void drawRect(Rect rect, SwingPaint paint)
+    {
+        Rectangle r = new Rectangle(
+            rect.left, rect.top,
+            rect.right - rect.left, rect.bottom - rect.top );
+        this.gfx.setPaint( paint.color );
+        this.gfx.fill( r );
     }
 }

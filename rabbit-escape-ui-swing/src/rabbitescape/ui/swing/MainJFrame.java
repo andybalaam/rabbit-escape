@@ -53,11 +53,17 @@ public class MainJFrame extends JFrame
                 uiConfig, CFG_GAME_WINDOW_HEIGHT, frame.getHeight() );
 
             uiConfig.save();
+
+            if ( null != swingGraphics )
+            {
+                swingGraphics.redraw();
+            }
         }
     }
 
     private final Config uiConfig;
     private final SwingSound sound;
+    private SwingGraphics swingGraphics = null;
 
     public MainJFrame( Config uiConfig, SwingSound sound )
     {
@@ -71,6 +77,11 @@ public class MainJFrame extends JFrame
         setBoundsFromConfig();
 
         setIcon();
+    }
+
+    public void setGraphics( SwingGraphics swingGraphics )
+    {
+        this.swingGraphics = swingGraphics;
     }
 
     private void setIcon()
