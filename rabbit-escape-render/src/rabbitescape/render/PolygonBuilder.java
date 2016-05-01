@@ -2,6 +2,8 @@ package rabbitescape.render;
 
 import java.util.ArrayList;
 
+import rabbitescape.render.androidlike.Path;
+
 public class PolygonBuilder
 {
 
@@ -30,17 +32,15 @@ public class PolygonBuilder
     /**
      * return Polygon scaled by factor, f, and offset by ( oX, oY ).
      */
-    public Polygon polygon( float f, int oX, int oY )
+    public Path path( float f, Vertex offset )
     {
-        int[] x = new int[vertices.size()];
-        int[] y = new int[vertices.size()];
+        Path p = new Path();
         for ( int i = 0; i < vertices.size(); i++ )
         {
             Vertex v = vertices.get( i );
-            x[i] = (int)( f * v.x + oX );
-            y[i] = (int)( f * v.y + oY );
+            p.lineTo( f * v.x + offset.x, f * v.y + offset.y );
         }
-        return new Polygon( x, y );
+        return p;
     }
 
 }

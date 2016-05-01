@@ -3,9 +3,12 @@ package rabbitescape.ui.swing;
 import java.awt.AlphaComposite;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
+import java.util.List;
 
 import rabbitescape.engine.util.Util;
+import rabbitescape.render.Vertex;
 import rabbitescape.render.androidlike.Canvas;
+import rabbitescape.render.androidlike.Path;
 import rabbitescape.render.androidlike.Rect;
 
 public class SwingCanvas implements Canvas<SwingBitmap, SwingPaint>
@@ -61,10 +64,26 @@ public class SwingCanvas implements Canvas<SwingBitmap, SwingPaint>
     }
 
     @Override
-    public void drawFilledPoly( int[] xs, int[] ys, SwingPaint paint )
+    public void drawPath( Path path, SwingPaint paint )
     {
         this.gfx.setPaint( paint.color );
-        this.gfx.fillPolygon( xs, ys, xs.length );
+        List<Vertex> vertices = path.getVertices();
+        java.awt.Polygon poly = new java.awt.Polygon();
+        for ( Vertex v : vertices)
+        {
+            poly.addPoint( (int)v.x, (int)v.y );
+        }
+        switch ( paint.getStyle() )
+        {
+        case FILL:
+            this.gfx.fillPolygon( poly );
+            break;
+        case STROKE:
+            this.gfx.drawPolygon( poly );
+            break;
+        default:
+            throw new RuntimeException( "Unknown paint style" );
+        }
     }
 
     @Override

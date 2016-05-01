@@ -3,6 +3,10 @@ package rabbitescape.ui.android;
 import android.graphics.Paint;
 import android.graphics.Path;
 
+import java.util.Iterator;
+import java.util.List;
+
+import rabbitescape.render.Vertex;
 import rabbitescape.render.androidlike.Canvas;
 
 public class AndroidCanvas implements Canvas<AndroidBitmap, AndroidPaint>
@@ -47,21 +51,25 @@ public class AndroidCanvas implements Canvas<AndroidBitmap, AndroidPaint>
     }
 
     @Override
-    public void drawFilledPoly( int[] xs, int[] ys, AndroidPaint paint )
+    public void drawPath( rabbitescape.render.androidlike.Path rePath,
+                          AndroidPaint paint )
     {
-        if ( xs.length == 0 )
+        List<Vertex> vertices = rePath.getVertices();
+
+        if ( vertices.size() == 0 )
         {
             return;
         }
-        paint.paint.setStyle( Paint.Style.FILL );
-        Path p = new Path();
-        p.moveTo( (float)xs[0], (float)ys[0]);
-        for ( int i = 1; i < xs.length ; i++ )
+        android.graphics.Path aPath = new android.graphics.Path();
+        Iterator<Vertex> iterator = vertices.iterator();
+        Vertex start = vertices.get( 0 );
+        aPath.moveTo( start.x, start.y );
+        for ( int i = 1 ; i < vertices.size() ; i++ )
         {
-            p.lineTo( (float)xs[i], (float)ys[i] );
+            Vertex v = vertices.get( i );
+            aPath.lineTo( v.x, v.y );
         }
-        p.close();
-        canvas.drawPath( p, paint.paint );
+        canvas.drawPath( aPath, paint.paint );
     }
 
     public void drawRect( rabbitescape.render.androidlike.Rect rect, AndroidPaint paint )

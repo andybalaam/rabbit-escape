@@ -15,13 +15,13 @@ import rabbitescape.render.AnimationCache;
 import rabbitescape.render.AnimationLoader;
 import rabbitescape.render.BitmapCache;
 import rabbitescape.render.GraphPaperBackground;
-import rabbitescape.render.Polygon;
 import rabbitescape.render.PolygonBuilder;
 import rabbitescape.render.Overlay;
 import rabbitescape.render.Renderer;
 import rabbitescape.render.SoundPlayer;
 import rabbitescape.render.Sprite;
 import rabbitescape.render.SpriteAnimator;
+import rabbitescape.render.Vertex;
 import rabbitescape.render.gameloop.Graphics;
 import rabbitescape.render.gameloop.WaterAnimation;
 
@@ -73,6 +73,11 @@ public class AndroidGraphics implements Graphics
 
     private static final AndroidPaint greenText =
             makePaint( Color.rgb( 100, 255, 100 ), Paint.ANTI_ALIAS_FLAG );
+
+    static
+    {
+        waterColor.paint.setStyle( Paint.Style.FILL );
+    }
 
     private static AndroidPaint makePaint( int color )
     {
@@ -313,10 +318,12 @@ public class AndroidGraphics implements Graphics
     void drawPolygons( ArrayList<PolygonBuilder> polygons, AndroidCanvas androidCanvas, Renderer<AndroidBitmap, AndroidPaint> renderer )
     {
         float f = renderer.tileSize / 32f;
+
         for ( PolygonBuilder pb: polygons )
         {
-            Polygon p = pb.polygon( f, renderer.offsetX, renderer.offsetY );
-            androidCanvas.drawFilledPoly( p.x, p.y, waterColor );
+            rabbitescape.render.androidlike.Path rePath = pb.path(
+                    f, new Vertex( renderer.offsetX, renderer.offsetY ) );
+            androidCanvas.drawPath( rePath, waterColor );
         }
     }
 

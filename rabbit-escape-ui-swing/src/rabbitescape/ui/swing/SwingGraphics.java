@@ -15,12 +15,13 @@ import rabbitescape.render.AnimationLoader;
 import rabbitescape.render.BitmapCache;
 import rabbitescape.render.GraphPaperBackground;
 import rabbitescape.render.PolygonBuilder;
-import rabbitescape.render.Polygon;
 import rabbitescape.render.Renderer;
 import rabbitescape.render.SoundPlayer;
 import rabbitescape.render.Sprite;
 import rabbitescape.render.SpriteAnimator;
 import rabbitescape.render.Overlay;
+import rabbitescape.render.Vertex;
+import rabbitescape.render.androidlike.Path;
 import rabbitescape.render.gameloop.Graphics;
 import rabbitescape.render.gameloop.WaterAnimation;
 
@@ -47,6 +48,11 @@ public class SwingGraphics implements Graphics
         private final int frameNum;
         private final World world;
         private final WaterAnimation waterAnimation;
+
+        static
+        {
+            waterColor.setStyle( SwingPaint.Style.FILL );
+        }
 
         public DrawFrame(
             BufferStrategy strategy,
@@ -137,16 +143,18 @@ public class SwingGraphics implements Graphics
             }
         }
 
-        void drawPolygons( ArrayList<PolygonBuilder> polygons, SwingCanvas swingCanvas )
+        void drawPolygons( ArrayList<PolygonBuilder> polygons,
+            SwingCanvas swingCanvas )
         {
             float f = renderer.tileSize / 32f;
             for ( PolygonBuilder pb: polygons )
             {
-                Polygon p = pb.polygon( f, renderer.offsetX, renderer.offsetY );
-                swingCanvas.drawFilledPoly( p.x, p.y, waterColor );
+                Path p = pb.path( f,
+                    new Vertex( renderer.offsetX, renderer.offsetY ) );
+                swingCanvas.drawPath( p, waterColor );
             }
         }
-        
+
     }
 
     private final World world;

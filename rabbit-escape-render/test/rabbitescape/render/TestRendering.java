@@ -9,6 +9,7 @@ import java.util.List;
 import rabbitescape.render.androidlike.Bitmap;
 import rabbitescape.render.androidlike.Canvas;
 import rabbitescape.render.androidlike.Paint;
+import rabbitescape.render.androidlike.Path;
 import rabbitescape.render.androidlike.Rect;
 
 import org.junit.*;
@@ -366,8 +367,8 @@ public class TestRendering
         }
 
         @Override
-        public void drawFilledPoly( int[] xs, int[] ys, FakePaint paint )
-        {    
+        public void drawPath( Path path, FakePaint paint )
+        {
         }
 
         @Override
