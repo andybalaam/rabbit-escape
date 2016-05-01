@@ -3,6 +3,7 @@ package rabbitescape.ui.swing;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.image.BufferStrategy;
+import java.util.ArrayList;
 import java.util.List;
 
 import rabbitescape.engine.Thing;
@@ -13,12 +14,16 @@ import rabbitescape.render.AnimationCache;
 import rabbitescape.render.AnimationLoader;
 import rabbitescape.render.BitmapCache;
 import rabbitescape.render.GraphPaperBackground;
+import rabbitescape.render.PolygonBuilder;
 import rabbitescape.render.Renderer;
 import rabbitescape.render.SoundPlayer;
 import rabbitescape.render.Sprite;
 import rabbitescape.render.SpriteAnimator;
 import rabbitescape.render.Overlay;
+import rabbitescape.render.Vertex;
+import rabbitescape.render.androidlike.Path;
 import rabbitescape.render.gameloop.Graphics;
+import rabbitescape.render.gameloop.WaterAnimation;
 
 public class SwingGraphics implements Graphics
 {
@@ -33,12 +38,21 @@ public class SwingGraphics implements Graphics
         private static final SwingPaint graphPaperMinor =
             new SwingPaint( new Color( 235, 243, 255 ) );
 
+        private static final SwingPaint waterColor =
+            new SwingPaint( new Color( 10, 100, 220, 100 ) );
+
         private final java.awt.Canvas canvas;
         private final Renderer<SwingBitmap, SwingPaint> renderer;
         private final SoundPlayer soundPlayer;
         private final SpriteAnimator animator;
         private final int frameNum;
         private final World world;
+        private final WaterAnimation waterAnimation;
+
+        static
+        {
+            waterColor.setStyle( SwingPaint.Style.FILL );
+        }
 
         public DrawFrame(
             BufferStrategy strategy,
@@ -47,7 +61,8 @@ public class SwingGraphics implements Graphics
             SoundPlayer soundPlayer,
             SpriteAnimator animator,
             int frameNum,
-            World world
+            World world,
+            WaterAnimation waterAnimation
         )
         {
             super( strategy );
@@ -57,6 +72,7 @@ public class SwingGraphics implements Graphics
             this.animator = animator;
             this.frameNum = frameNum;
             this.world = world;
+            this.waterAnimation = waterAnimation;
         }
 
         @Override
@@ -73,6 +89,8 @@ public class SwingGraphics implements Graphics
                 graphPaperMajor,
                 graphPaperMinor
             );
+
+            drawPolygons( waterAnimation.polygons, swingCanvas );
 
             List<Sprite> sprites = animator.getSprites( frameNum );
 
@@ -125,6 +143,18 @@ public class SwingGraphics implements Graphics
             }
         }
 
+        void drawPolygons( ArrayList<PolygonBuilder> polygons,
+            SwingCanvas swingCanvas )
+        {
+            float f = renderer.tileSize / 32f;
+            for ( PolygonBuilder pb: polygons )
+            {
+                Path p = pb.path( f,
+                    new Vertex( renderer.offsetX, renderer.offsetY ) );
+                swingCanvas.drawPath( p, waterColor );
+            }
+        }
+
     }
 
     private final World world;
@@ -133,6 +163,7 @@ public class SwingGraphics implements Graphics
     private final BufferStrategy strategy;
     private final SpriteAnimator animator;
     private final FrameDumper frameDumper;
+    private final WaterAnimation waterAnimation;
 
     public final Renderer<SwingBitmap, SwingPaint> renderer;
     private final SoundPlayer soundPlayer;
@@ -148,7 +179,8 @@ public class SwingGraphics implements Graphics
         GameUi jframe,
         BitmapCache<SwingBitmap> bitmapCache,
         SwingSound sound,
-        FrameDumper frameDumper
+        FrameDumper frameDumper,
+        WaterAnimation waterAnimation
     )
     {
         this.world = world;
@@ -166,6 +198,7 @@ public class SwingGraphics implements Graphics
         this.prevScrollY = -1;
         this.lastWorldState = null;
         this.frameDumper = frameDumper;
+        this.waterAnimation = waterAnimation;
 
         lastFrame = -1;
     }
@@ -182,7 +215,8 @@ public class SwingGraphics implements Graphics
             soundPlayer,
             animator,
             frame,
-            world
+            world,
+            waterAnimation
         );
 
         df.run();
@@ -208,7 +242,8 @@ public class SwingGraphics implements Graphics
             null, // Do not repeat sounds
             animator,
             lastFrame,
-            world
+            world,
+            waterAnimation
         );
 
         df.run();

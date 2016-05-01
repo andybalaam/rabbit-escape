@@ -137,11 +137,6 @@ public class LookupTable2D <T extends LookupItem2D> implements Iterable<T>
         return new ArrayList<T>( list );
     }
 
-    public int size()
-    {
-        return list.size();
-    }
-
     /**
      * Convert coordinate to index. This allows the table to
      * store items 1 place outside the nominal size.
@@ -156,6 +151,14 @@ public class LookupTable2D <T extends LookupItem2D> implements Iterable<T>
         return list;
     }
 
+    /**
+     * @return The number of items in the lookup table.
+     */
+    public int size()
+    {
+        return list.size();
+    }
+        
     public void debugPrint()
     {
         PrintStream p = System.out;
@@ -174,4 +177,5 @@ public class LookupTable2D <T extends LookupItem2D> implements Iterable<T>
             p.println();
         }
     }
+    
 }

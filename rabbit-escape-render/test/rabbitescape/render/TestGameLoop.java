@@ -121,8 +121,9 @@ public class TestGameLoop
         // 0 ms to draw each per frame
         ret.graphics = new DrawTracker( ret.input, ret.calls, msPerFrame );
 
+        World neverWonWorld = new NeverWonWorld( TextWorldManip.createEmptyWorld( 5, 5 ) );
         GeneralPhysics physics = new GeneralPhysics(
-            new NeverWonWorld( TextWorldManip.createEmptyWorld( 5, 5 ) ),
+            neverWonWorld,
             null,
             false
         );
@@ -131,7 +132,7 @@ public class TestGameLoop
         PrintStream debugout = null;
 
         ret.gameLoop = new GameLoop(
-            ret.input, physics, ret.graphics, config, debugout );
+            ret.input, physics, new WaterAnimation( neverWonWorld ), ret.graphics, config, debugout );
 
         ret.gameLoop.resetClock();
 

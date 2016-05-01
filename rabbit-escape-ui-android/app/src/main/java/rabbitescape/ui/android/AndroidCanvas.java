@@ -1,5 +1,12 @@
 package rabbitescape.ui.android;
 
+import android.graphics.Paint;
+import android.graphics.Path;
+
+import java.util.Iterator;
+import java.util.List;
+
+import rabbitescape.render.Vertex;
 import rabbitescape.render.androidlike.Canvas;
 
 public class AndroidCanvas implements Canvas<AndroidBitmap, AndroidPaint>
@@ -40,7 +47,29 @@ public class AndroidCanvas implements Canvas<AndroidBitmap, AndroidPaint>
         float startX, float startY, float stopX, float stopY, AndroidPaint paint
     )
     {
-        this.canvas.drawLine( startX, startY, stopX, stopY, paint.paint );
+        this.canvas.drawLine(startX, startY, stopX, stopY, paint.paint);
+    }
+
+    @Override
+    public void drawPath( rabbitescape.render.androidlike.Path rePath,
+                          AndroidPaint paint )
+    {
+        List<Vertex> vertices = rePath.getVertices();
+
+        if ( vertices.size() == 0 )
+        {
+            return;
+        }
+        android.graphics.Path aPath = new android.graphics.Path();
+        Iterator<Vertex> iterator = vertices.iterator();
+        Vertex start = vertices.get( 0 );
+        aPath.moveTo( start.x, start.y );
+        for ( int i = 1 ; i < vertices.size() ; i++ )
+        {
+            Vertex v = vertices.get( i );
+            aPath.lineTo( v.x, v.y );
+        }
+        canvas.drawPath( aPath, paint.paint );
     }
 
     public void drawRect( rabbitescape.render.androidlike.Rect rect, AndroidPaint paint )
