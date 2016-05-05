@@ -1,5 +1,6 @@
 package rabbitescape.engine.menu;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
@@ -16,13 +17,16 @@ public class LevelsList implements Iterable<LevelsList.LevelSetInfo>
         public final String name;
         public final String dirName;
         public final List<LevelInfo> levels;
+        public final boolean hidden;
 
         public LevelSetInfo(
-            String name, String dirName, List<LevelInfo> levels )
+            String name, String dirName,
+            List<LevelInfo> levels, boolean hidden )
         {
             this.name = name;
             this.dirName = dirName;
             this.levels = levels;
+            this.hidden = hidden;
         }
     }
 
@@ -76,6 +80,19 @@ public class LevelsList implements Iterable<LevelsList.LevelSetInfo>
     public LevelsList( LevelSetInfo... levelSets )
     {
         this( Arrays.asList( levelSets ) );
+    }
+
+    public static LevelsList excludeHidden( LevelsList levelsList )
+    {
+        List<LevelSetInfo> copy = new ArrayList<LevelSetInfo>( levelsList.levelSets.values() );
+        for ( int i = copy.size() - 1 ; i >= 0 ; i-- )
+        {
+            if ( copy.get( i ).hidden )
+            {
+                copy.remove( i );
+            }
+        }
+        return new LevelsList( copy );
     }
 
     public LevelsList( List<LevelSetInfo> levelSets )

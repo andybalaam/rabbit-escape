@@ -8,7 +8,7 @@ public class FakeLevelsList
     public static LevelsList.LevelSetInfo levelSet( String dirName, int num )
     {
         return new LevelsList.LevelSetInfo(
-            null, dirName, levelNames( dirName, num ) );
+            null, dirName, levelNames( dirName, num ), false );
     }
 
     private static List<LevelsList.LevelInfo> levelNames( String name, int num )

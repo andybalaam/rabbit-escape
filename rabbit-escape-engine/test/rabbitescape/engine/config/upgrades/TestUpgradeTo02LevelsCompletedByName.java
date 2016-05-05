@@ -329,7 +329,8 @@ public class TestUpgradeTo02LevelsCompletedByName
                     info( "Face the right way" ),
                     info( "Saw tooth" ),
                     info( "To the top" )
-                )
+                ),
+                false
             ),
             new LevelSetInfo(
                 "Medium",
@@ -355,7 +356,8 @@ public class TestUpgradeTo02LevelsCompletedByName
                     info( "Assist" ),
                     info( "Charing Cross the Void" ),
                     info( "Branches" )
-                )
+                ),
+                false
             ),
             new LevelSetInfo(
                 "Hard",
@@ -381,7 +383,8 @@ public class TestUpgradeTo02LevelsCompletedByName
                     info( "Mates" ),
                     info( "Panic!" ),
                     info( "Mary Poppins" )
-                )
+                ),
+                false
             ),
             new LevelSetInfo(
                 "Outdoors",
@@ -407,7 +410,8 @@ public class TestUpgradeTo02LevelsCompletedByName
                     info( "Cups and bridges" ),
                     info( "Sailing" ),
                     info( "K2" )
-                )
+                ),
+                false
             ),
             new LevelSetInfo(
                 "Arcade",
@@ -433,7 +437,8 @@ public class TestUpgradeTo02LevelsCompletedByName
                     info( "Tetris" ),
                     info( "Galton box" ),
                     info( "Catch me if you can" )
-                )
+                ),
+                false
             )
         );
     }

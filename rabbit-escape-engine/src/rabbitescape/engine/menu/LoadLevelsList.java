@@ -38,7 +38,8 @@ public class LoadLevelsList
                 new LevelsList.LevelSetInfo(
                     set.name,
                     set.dirName,
-                    findLevelsInDir( set.dirName )
+                    findLevelsInDir( set.dirName ),
+                    set.hidden
                 )
             );
         }

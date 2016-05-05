@@ -22,30 +22,34 @@ public class MenuItem
     public final Map<String, Object> nameParams;
 
     public boolean enabled;
+    public boolean hidden;
 
-    public MenuItem( String name, Menu target, boolean enabled )
+    public MenuItem( String name, Menu target, boolean enabled, boolean hidden )
     {
         this.name = name;
         this.menu = target;
         this.type = Type.MENU;
         this.nameParams = new HashMap<String, Object>();
         this.enabled = enabled;
+        this.hidden = hidden;
     }
 
-    public MenuItem( String name, Type type, boolean enabled )
+    public MenuItem( String name, Type type, boolean enabled, boolean hidden )
     {
         this.name = name;
         this.menu = null;
         this.type = type;
         this.nameParams = new HashMap<String, Object>();
         this.enabled = enabled;
+        this.hidden = hidden;
     }
 
     public MenuItem(
         String name,
         Type type,
         Map<String, Object> nameParams,
-        boolean enabled
+        boolean enabled,
+        boolean hidden
     )
     {
         this.name = name;
@@ -53,5 +57,6 @@ public class MenuItem
         this.type = type;
         this.nameParams = nameParams;
         this.enabled = enabled;
+        this.hidden = hidden;
     }
 }
