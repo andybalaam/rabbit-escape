@@ -1,0 +1,20 @@
+:name=Whack-a-rat
+:description=Or should that be rabbit?
+:author_name=tttppp
+:author_url=https://github.com/tttppp
+:hint.1.code=?3x}3]%|,%33m]N?M?,+',)?8bTbx|x|333i-|M+
+:hint.2.code=uL4&Fo$F({N(`{F"(F$ 44 F(4((4uK(*S$4 {T *&$4(F*(LT&({{%Fu4*&4
+:hint.3.code=@O$e>H=[7>+kjX+@+=|]O+$0[`$+@+=a$|$@j+e[mDsk+>ssj$
+:solution.1.code=qQ$bQqQqQqQ$bb$Qq0ObMQb;0OQOQ$Q000OqOQqZbOLbQ:q0l$QlO$UObQbq$$b00OqHQbb$O$0Q0Q-
+:num_rabbits=10
+:num_to_save=10
+:rabbit_delay=5,7,3,1,4,2,1,1,10
+:brolly=10
+Q
+ 
+ 
+ 
+ 
+ 
+O
+#
