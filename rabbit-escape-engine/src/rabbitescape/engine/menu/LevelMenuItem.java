@@ -9,13 +9,14 @@ public class LevelMenuItem extends MenuItem
     public final int levelNumber;
 
     public LevelMenuItem(
-        String fileName, String levelsDir, int number, boolean enabled )
+        String fileName, String levelsDir, int number, boolean enabled, boolean hidden )
     {
         super(
             "Level ${number}",
             Type.LEVEL,
             newMap( "number", String.valueOf( number ) ),
-            enabled
+            enabled,
+            hidden
         );
 
         this.fileName = fileName;

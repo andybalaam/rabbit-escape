@@ -123,6 +123,10 @@ public class TestAllActiveLevels
         for ( LevelsList.LevelSetInfo set :
             LoadLevelsList.load( MenuDefinition.allLevels ) )
         {
+            if ( set.hidden )
+            {
+                continue;
+            }
             for ( LevelsList.LevelInfo level : set.levels )
             {
                 World world = new LoadWorldFile( new NothingExistsFileSystem() )
@@ -150,7 +154,7 @@ public class TestAllActiveLevels
     {
         LevelsList levelsList = LoadLevelsList.load(
             new LevelsList(
-                new LevelsList.LevelSetInfo( null, levelsDir, null )
+                new LevelsList.LevelSetInfo( null, levelsDir, null, false )
             )
         );
 
