@@ -1,0 +1,22 @@
+:name=Dambusters
+:description=
+:author_name=colonelfazackerley
+:author_url=
+:num_rabbits=5
+:num_to_save=5
+:rabbit_delay=4
+:solution.1.code=|CiC|CB?UH1H(U>C(U11(_|CHr9>B=|DC|?+UZHF(XHUD(1(_X|CHC|C991r)1Bk$>U(D(_?r9=CU(>H)CC||9_XLH}}C|A9BCFHHiCC$C(kDU=C
+:block=2
+:climb=1
+:bash=1
+:bridge=6
+:explode=5
+:dig=2
+/# #  ##\
+ P #  #  
+#  #  # A
+## #    #
+####  ###
+ Q       
+   ### AO
+#########

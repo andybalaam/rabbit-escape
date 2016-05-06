@@ -1,0 +1,31 @@
+:name=Dive
+:description=Who dropped it in the water?
+:author_name=
+:author_url=
+:hint.1.code=\c1HG7}\1-7y}99,c\(\}7
+:hint.2.code=|O3]|d$O$ORX]OjHIdRHO$a<$dOO$&2d]Hk3^Hllss|OO_j2$|Hm2OplmjOOd|Rll_pd
+:hint.3.code=mWYqW7qWM;W;WWM{vWW;m;WMI2;B-q"UvBmW`YfWMv$0;~-mqMW6;v`WWW2`;f6fWqqmfWm8$YMvM$Bf{B-W22v;6$0
+:solution.1.code=7q8XdH8XoH&y]daXdUdz-dUddc8&EUdXcc]dHzX7q8X=z&&*A8g%U&gE]dUdHdaE*XoH8a{]dAz{UH&dd]&Ed=dzU&d88UzU*da8EX-gdzd*X]7&a{]HAydqd*=&8&EUEU8U&XaddXdgdX
+:num_rabbits=3
+:num_to_save=3
+:rabbit_delay=3
+:block=4
+:bridge=2
+:dig=6
+ Q    
+/    \
+######
+)#NN#(
+ #NN# 
+ #NN# 
+ #N*# 
+ #### 
+:*=NO
+:n=2,3,1500
+:n=3,3,1500
+:n=2,4,1500
+:n=3,4,1500
+:n=2,5,1500
+:n=3,5,1500
+:n=2,6,2000
+:n=3,6,2000
