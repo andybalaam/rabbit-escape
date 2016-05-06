@@ -13,7 +13,7 @@ import rabbitescape.engine.config.TestConfig;
 
 public class TestByNumberConfigBasedLevelsCompleted
 {
-    @Test
+    @Test @Ignore
     public void Report_highest_level_from_config()
     {
         FakeConfig fakeConfig = new FakeConfig( "{\"bar\":2,\"foo\":3}" );
