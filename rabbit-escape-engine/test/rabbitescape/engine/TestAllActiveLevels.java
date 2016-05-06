@@ -24,46 +24,25 @@ public class TestAllActiveLevels
     @Test
     public void All_official_levels_load_and_round_trip()
     {
-        forEachOfficialLevel( new T() {
-            @Override public void run( World world, String filename )
-        {
-
-            String[] lines = renderCompleteWorld( world, true );
-
-            assertThat(
-                renderCompleteWorld( createWorld( lines ), true ),
-                equalTo( lines )
-            );
-
-        } } );
+        forEachOfficialLevel( assertItRoundTrips() );
     }
 
     @Test
-    public void All_official_solutions_are_correct()
+    public void All_official_levels_work_and_have_winning_solutions()
     {
-        forEachOfficialLevel( new T() {
-            @Override public void run( World world, String fileName )
-        {
+        forEachOfficialLevel( assertItsSolutionsWorkAndYouCanWin() );
+    }
 
-            boolean solved = false;
-            int i = 1;
-            for ( String s : world.solutions )
-            {
-                boolean thisS = runSolutionString( world, fileName, i, s );
-                if ( thisS )
-                {
-                    solved = true;
-                }
-                ++i;
-            }
+    @Test
+    public void All_staging_levels_work_and_have_winning_solutions()
+    {
+        forEachStagingLevel( assertItsSolutionsWorkAndYouCanWin() );
+    }
 
-            if ( !solved )
-            {
-                throw new AssertionError(
-                    "Level " + fileName + " has no solution!" );
-            }
-
-        } } );
+    @Test
+    public void All_development_levels_work_and_any_solutions_are_correct()
+    {
+        forEachDevelopmentLevel( assertItsSolutionsWork() );
     }
 
     @Test
@@ -84,10 +63,37 @@ public class TestAllActiveLevels
         } );
     }
 
-    @Test
-    public void All_staging_solutions_are_correct()
+    // --
+
+    private T assertItRoundTrips()
     {
-        forEachStagingLevel( new T() {
+        return new T() {
+            @Override public void run( World world, String filename )
+        {
+
+            String[] lines = renderCompleteWorld( world, true );
+
+            assertThat(
+                renderCompleteWorld( createWorld( lines ), true ),
+                equalTo( lines )
+            );
+
+        } };
+    }
+
+    private T assertItsSolutionsWork()
+    {
+        return assertTheSolutionsWorkAndYouCanWin( false );
+    }
+
+    private T assertItsSolutionsWorkAndYouCanWin()
+    {
+        return assertTheSolutionsWorkAndYouCanWin( true );
+    }
+
+    private T assertTheSolutionsWorkAndYouCanWin( final boolean mustWin )
+    {
+        return new T() {
             @Override public void run( World world, String fileName )
         {
 
@@ -103,33 +109,14 @@ public class TestAllActiveLevels
                 ++i;
             }
 
-            if ( !solved )
+            if ( mustWin && !solved )
             {
                 throw new AssertionError(
                     "Level " + fileName + " has no solution!" );
             }
 
-        } } );
+        } };
     }
-
-    @Test
-    public void All_development_solutions_are_correct()
-    {
-        forEachDevelopmentLevel( new T() {
-            @Override public void run( World world, String fileName )
-        {
-
-            int i = 1;
-            for ( String s : world.solutions )
-            {
-                runSolutionString( world, fileName, i, s );
-                ++i;
-            }
-
-        } } );
-    }
-
-    // --
 
     private void forEachOfficialLevel( T test )
     {
