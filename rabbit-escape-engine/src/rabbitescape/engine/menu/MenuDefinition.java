@@ -3,12 +3,18 @@ package rabbitescape.engine.menu;
 import static rabbitescape.engine.menu.MenuConstruction.*;
 import static rabbitescape.engine.util.Util.*;
 
+import rabbitescape.engine.config.TapTimer;
 import rabbitescape.engine.menu.LevelsList.LevelSetInfo;
 import rabbitescape.engine.menu.MenuItem.Type;
 import rabbitescape.engine.util.Util.IdxObj;
 
 public class MenuDefinition
 {
+    static
+    {
+        TapTimer.checkEnv();
+    }
+    
     public static final LevelsList allLevels = new LevelsList(
         new LevelSetInfo( "Easy",     "01_easy",     null, false ),
         new LevelSetInfo( "Medium",   "02_medium",   null, false ),
