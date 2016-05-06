@@ -8,7 +8,7 @@ public class TapTimer
     // Holst's Mars
     private static final float[] pattern = { 1.0f, 1.0f, 1.0f, 3.0f, 3.0f, 1.5f, 1.5f };
 
-    public static boolean matched = false;
+    public static boolean matched = true;
 
     private static long prevTime = 0;
 
