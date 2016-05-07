@@ -68,7 +68,7 @@ public class AndroidMenuActivity extends RabbitEscapeActivity
         }
         else
         {
-            levelsList = LoadLevelsList.load( LevelsList.excludeHidden( MenuDefinition.allLevels ) );
+            levelsList = LoadLevelsList.load( LevelsList.excludingHidden( MenuDefinition.allLevels ) );
         }
 
         Menu mainMenu = MenuDefinition.mainMenu(

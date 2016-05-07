@@ -82,7 +82,7 @@ public class LevelsList implements Iterable<LevelsList.LevelSetInfo>
         this( Arrays.asList( levelSets ) );
     }
 
-    public static LevelsList excludeHidden( LevelsList levelsList )
+    public static LevelsList excludingHidden( LevelsList levelsList )
     {
         List<LevelSetInfo> ret = new ArrayList<LevelSetInfo>();
         for ( LevelSetInfo i : levelsList )
