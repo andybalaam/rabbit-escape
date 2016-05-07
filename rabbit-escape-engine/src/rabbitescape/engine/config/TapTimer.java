@@ -17,18 +17,11 @@ public class TapTimer
 
     public static void checkEnv()
     {
-        try 
+        String tap = System.getenv("TAP");
+        if ( null != tap && tap.equals( "Mars" ) )
         {
-            if ( System.getenv("TAP").equals( "Mars" ) )
-            {
-                matched = true;
-                System.out.println( "Mars" );
-            }
-        }
-        catch ( NullPointerException e )
-        {
-            // This may happen if env var not set.
-            // It can be ignored.
+            matched = true;
+            System.out.println( "Mars" );
         }
     }
     
