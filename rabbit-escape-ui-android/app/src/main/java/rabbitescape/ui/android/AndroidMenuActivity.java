@@ -1,6 +1,8 @@
 package rabbitescape.ui.android;
 
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.support.v7.app.ActionBar;
 import android.os.Bundle;
 import android.view.View;
@@ -38,6 +40,21 @@ public class AndroidMenuActivity extends RabbitEscapeActivity
     {
         super.onCreate( savedInstanceState );
         sound.setMusic( "tryad-let_them_run" );
+
+        try
+        {
+            PackageInfo info = getPackageManager().getPackageInfo(getPackageName(), 0 );
+            if ( info.versionName.endsWith( "mars" ) )
+            {
+                System.out.println( "Mars" );
+                TapTimer.matched = true;
+            }
+        }
+        catch ( PackageManager.NameNotFoundException e )
+        {
+            System.err.println( "AndroidMenuActivity: NameNotFoundException while getting version" );
+        }
+
 
         setContentView( R.layout.activity_android_menu );
 
