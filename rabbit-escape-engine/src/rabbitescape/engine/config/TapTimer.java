@@ -8,21 +8,22 @@ public class TapTimer
     // Holst's Mars
     private static final float[] pattern = { 1.0f, 1.0f, 1.0f, 3.0f, 3.0f, 1.5f, 1.5f };
 
-    public static boolean matched = false;
+    public static boolean matched = checkEnv();
 
     private static long prevTime = 0;
 
     private static int nextI = 0;
 
 
-    public static void checkEnv()
+    public static boolean checkEnv()
     {
         String tap = System.getenv("TAP");
         if ( null != tap && tap.equals( "Mars" ) )
         {
-            matched = true;
             System.out.println( "Mars" );
+            return true;
         }
+        return false;
     }
     
     public static void newTap()
