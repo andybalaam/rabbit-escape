@@ -23,5 +23,11 @@ public class LevelMenuItem extends MenuItem
         this.levelsDir = levelsDir;
         this.levelNumber = number;
     }
+    
+    public LevelMenuItem(
+        String fileName, String levelsDir, int number, boolean enabled )
+    {
+        this( fileName, levelsDir, number, enabled, false );
+    }
 
 }

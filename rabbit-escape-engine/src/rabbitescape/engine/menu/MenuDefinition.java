@@ -16,11 +16,11 @@ public class MenuDefinition
     }
     
     public static final LevelsList allLevels = new LevelsList(
-        new LevelSetInfo( "Easy",     "01_easy",     null, false ),
-        new LevelSetInfo( "Medium",   "02_medium",   null, false ),
-        new LevelSetInfo( "Hard",     "03_hard",     null, false ),
-        new LevelSetInfo( "Outdoors", "04_outdoors", null, false ),
-        new LevelSetInfo( "Arcade",   "05_arcade",   null, false ),
+        new LevelSetInfo( "Easy",     "01_easy",     null ),
+        new LevelSetInfo( "Medium",   "02_medium",   null ),
+        new LevelSetInfo( "Hard",     "03_hard",     null ),
+        new LevelSetInfo( "Outdoors", "04_outdoors", null ),
+        new LevelSetInfo( "Arcade",   "05_arcade",   null ),
         new LevelSetInfo( "Development", "development", null, true ),
         new LevelSetInfo( "Staging",  "staging",     null, true)
     );
@@ -42,19 +42,18 @@ public class MenuDefinition
                 true,
                 false
             ),
-            item( "About", Type.ABOUT, true, false ),
+            item( "About", Type.ABOUT, true ),
             maybeItem(
                 includeLoadLevel,
                 "Custom Levels",
                 menu(
                     "Get from file or network",
-                    item( "Load Level", Type.LOAD, true, false ),
-                    item( "GitHub Issue", Type.GITHUB_ISSUE, true, false )
+                    item( "Load Level", Type.LOAD, true ),
+                    item( "GitHub Issue", Type.GITHUB_ISSUE, true )
                 ),
-                true,
-                false
+                true
             ),
-            item( "Quit", Type.QUIT,  true, false )
+            item( "Quit", Type.QUIT,  true )
         );
     }
 

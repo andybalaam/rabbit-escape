@@ -95,8 +95,7 @@ public class UpgradeTo02LevelsCompletedByName implements IConfigUpgrade
                     info( "Face the right way" ),
                     info( "Saw tooth" ),
                     info( "To the top" )
-                ),
-                false
+                )
             )
         );
 
@@ -125,8 +124,7 @@ public class UpgradeTo02LevelsCompletedByName implements IConfigUpgrade
                     info( "Assist" ),
                     info( "Charing Cross the Void" ),
                     info( "Branches" )
-                ),
-                false
+                )
             )
         );
 
@@ -155,8 +153,7 @@ public class UpgradeTo02LevelsCompletedByName implements IConfigUpgrade
                     info( "Mates" ),
                     info( "Panic!" ),
                     info( "Mary Poppins" )
-                ),
-                false
+                )
             )
         );
 
@@ -185,8 +182,7 @@ public class UpgradeTo02LevelsCompletedByName implements IConfigUpgrade
                     info( "Cups and bridges" ),
                     info( "Sailing" ),
                     info( "K2" )
-                ),
-                false
+                )
             )
         );
 
@@ -215,8 +211,7 @@ public class UpgradeTo02LevelsCompletedByName implements IConfigUpgrade
                     info( "Tetris" ),
                     info( "Galton box" ),
                     info( "Catch me if you can" )
-                ),
-                false
+                )
             )
         );
 

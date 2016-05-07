@@ -28,6 +28,13 @@ public class LevelsList implements Iterable<LevelsList.LevelSetInfo>
             this.levels = levels;
             this.hidden = hidden;
         }
+        
+        public LevelSetInfo(
+            String name, String dirName,
+            List<LevelInfo> levels )
+        {
+            this( name, dirName, levels, false );
+        }
     }
 
     public static class LevelInfo
