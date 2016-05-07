@@ -9,6 +9,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class RealFileSystem implements FileSystem
@@ -69,5 +70,33 @@ public class RealFileSystem implements FileSystem
     public void mkdirs( String dirPath )
     {
         new File( dirPath ).mkdirs();
+    }
+
+    public List<String> ls( String dir, boolean recursive )
+    {
+        String[] content = new File( dir ).list();
+        if ( null == content || 0 == content.length )
+        {
+            return new ArrayList<String>();
+        }
+        List<String> ret = Arrays.asList( content );
+        if ( recursive )
+        {
+            List<String> retRecursive = new ArrayList<String>( ret );
+            for ( String s : ret )
+            {
+                String subdir = dir + File.separator + s;
+                List<String> more = ls( subdir, recursive );
+                for ( String t : more )
+                {
+                    retRecursive.add( s + File.separator + t );
+                }
+            }
+            return retRecursive;
+        }
+        else
+        {
+            return ret;
+        }
     }
 }

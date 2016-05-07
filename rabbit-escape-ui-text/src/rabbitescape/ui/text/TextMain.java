@@ -14,6 +14,7 @@ import rabbitescape.engine.util.FileSystem;
 import rabbitescape.engine.util.RealFileSystem;
 import rabbitescape.engine.util.Util;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.Locale;
 
@@ -43,13 +44,14 @@ public class TextMain
         CommandLineOption placeholders = new CommandLineOption( "--placeholders", true );
         CommandLineOption template =     new CommandLineOption( "--template",     true );
         CommandLineOption gentest =      new CommandLineOption( "--gentest",      false );
+        CommandLineOption rellist =      new CommandLineOption( "--rellist",      false );
         CommandLineOption mars =         new CommandLineOption( "--mars",         false );
         try
         {
             CommandLineOptionSet.parse( args,
                                         level, solution, encode, decode,
                                         help, noinput, placeholders,
-                                        template, gentest, mars );
+                                        template, gentest, rellist, mars );
             if ( mars.isPresent() )
             {
                 TapTimer.matched = true;
@@ -62,6 +64,11 @@ public class TextMain
             if ( noinput.isPresent() )
             {
                 TextSingleGameEntryPoint.entryPoint( new String[] {noinput.getValue(), "noinput"} );
+            }
+            if ( rellist.isPresent() )
+            {
+                listRel();
+                System.exit( 0 );
             }
             if ( gentest.isPresent() )
             {
@@ -117,6 +124,22 @@ public class TextMain
         m.run( args );
     }
 
+    private static void listRel()
+    {
+        final String d = File.separator;
+        String dir =
+            "rabbit-escape-engine" + d + "bin" + d +
+            "rabbitescape" + d + "levels";
+        RealFileSystem fs = new RealFileSystem();
+        for ( String s : fs.ls( dir, true ) )
+        {
+            if ( s.endsWith( ".rel" ) )
+            {
+                System.out.println( s );
+            }
+        }
+
+    }
 
     public static void placeholders( String fileName ) throws IOException
     {
@@ -171,6 +194,7 @@ public class TextMain
             " --placeholders <level.rel>     Rewrite file, inserting blank meta\n" +
             "                                and re-ordering meta. Decodes.\n" +
             " --template <level.rel>         Create blank rel file\n" +
+            " --rellist                      List repository rel files: playable with -l.\n" +
             "\n" +
             "When used with rel files the de/encode options will leave the source file\n" +
             "untouched, but may overwrite another file without further warning\n" +

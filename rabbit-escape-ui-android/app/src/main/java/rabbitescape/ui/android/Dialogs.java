@@ -22,6 +22,7 @@ public class Dialogs
         private final AndroidGameActivity activity;
         private final World world;
         private int hintNum;
+        private final String[] hints;
 
         DialogInterface.OnClickListener onOk = new DialogInterface.OnClickListener()
         {
@@ -40,6 +41,25 @@ public class Dialogs
             this.hintNum = 0;
 
             activity.setPaused( world, true );
+
+            hints = new String[4];
+            hints[0] = introMessage();
+            for ( int i = 1, j = 0 ; i < 4 ; i++, j++ )
+            {
+                while ( j < world.hints.length
+                        && Util.isEmpty( world.hints[j] ) )
+                {
+                    j++;
+                }
+                if ( j >= world.hints.length )
+                {
+                    hints[i] = "Hint " + i + " needed.";
+                }
+                else
+                {
+                    hints[i] = world.hints[j];
+                }
+            }
         }
 
         DialogInterface.OnClickListener onHint = new DialogInterface.OnClickListener()
@@ -47,9 +67,7 @@ public class Dialogs
             @Override
             public void onClick( DialogInterface dialogInterface, int i )
             {
-                ++hintNum;
-                if ( hintNum > 3 || Util.isEmpty( hint( hintNum ) ) ) hintNum = 0;
-
+                hintNum = ( hintNum + 1 ) % 4 ;
                 show();
             }
         };
@@ -60,42 +78,18 @@ public class Dialogs
                 .setTitle( t( world.name ) )
                 .setPositiveButton( t( "Start" ), onOk );
 
-            if ( Util.isEmpty( hint( hintNum + 1 ) ) )
-            {
-                if ( hintNum != 0 ) // No more hints, but there were some
-                {
-                    dialogBuilder.setNeutralButton( t( "Info" ), onHint );
-                }
-            }
-            else
-            {
-                // More hints
-                dialogBuilder.setNeutralButton( t( hintName() ), onHint );
-            }
+            dialogBuilder.setNeutralButton( t( hintName() ), onHint );
 
             activity.currentDialog = dialogBuilder.create();
 
             TextView view = new TextView( activity.currentDialog.getContext() );
-            view.setText( Html.fromHtml( hint( hintNum ) ) );
+            view.setText( Html.fromHtml( hints[hintNum] ) );
             view.setMovementMethod( LinkMovementMethod.getInstance() );
             view.setPadding( 10, 10, 10, 10 );
 
             activity.currentDialog.setView( view );
 
             activity.currentDialog.show();
-        }
-
-        private String hint( int i )
-        {
-            if ( i > 3 ) i = 0;
-
-            switch ( i )
-            {
-                case 0:  return introMessage();
-                case 1:  return readyForDialog( world.hints[0] );
-                case 2:  return readyForDialog( world.hints[1] );
-                default: return readyForDialog( world.hints[2] );
-            }
         }
 
         private String hintName()

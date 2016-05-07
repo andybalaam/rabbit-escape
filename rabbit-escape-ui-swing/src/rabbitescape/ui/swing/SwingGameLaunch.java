@@ -25,6 +25,7 @@ import rabbitescape.render.GameLaunch;
 import rabbitescape.render.gameloop.GameLoop;
 import rabbitescape.render.gameloop.GeneralPhysics;
 import rabbitescape.render.gameloop.Physics;
+import rabbitescape.render.gameloop.WaterAnimation;
 import rabbitescape.ui.swing.SwingGameInit.WhenUiReady;
 
 public class SwingGameLaunch implements GameLaunch
@@ -95,8 +96,10 @@ public class SwingGameLaunch implements GameLaunch
             this.frameDumper = FrameDumper.createInactiveDumper();
         }
         this.swingPlayback = new SwingPlayback( this );
+        WaterAnimation waterAnimation = new WaterAnimation( world ) ;
         this.physics = new GeneralPhysics(
             world,
+            waterAnimation,
             winListener,
             false,
             solutionRecorder,
@@ -113,7 +116,8 @@ public class SwingGameLaunch implements GameLaunch
             uiPieces.jframe,
             uiPieces.bitmapCache,
             sound,
-            frameDumper
+            frameDumper,
+            waterAnimation
         );
 
         // Used for redraw after window is resized.
@@ -124,7 +128,7 @@ public class SwingGameLaunch implements GameLaunch
         sound.setMusic( world.music );
 
         loop = new GameLoop(
-            new SwingInput(), physics, graphics, config, debugout );
+            new SwingInput(), physics, waterAnimation, graphics, config, debugout );
     }
 
     public GameUi getUi()

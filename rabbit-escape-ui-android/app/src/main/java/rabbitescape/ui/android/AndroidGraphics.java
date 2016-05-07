@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.view.SurfaceHolder;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import rabbitescape.engine.Thing;
@@ -14,12 +15,15 @@ import rabbitescape.render.AnimationCache;
 import rabbitescape.render.AnimationLoader;
 import rabbitescape.render.BitmapCache;
 import rabbitescape.render.GraphPaperBackground;
+import rabbitescape.render.PolygonBuilder;
 import rabbitescape.render.Overlay;
 import rabbitescape.render.Renderer;
 import rabbitescape.render.SoundPlayer;
 import rabbitescape.render.Sprite;
 import rabbitescape.render.SpriteAnimator;
+import rabbitescape.render.Vertex;
 import rabbitescape.render.gameloop.Graphics;
+import rabbitescape.render.gameloop.WaterAnimation;
 
 public class AndroidGraphics implements Graphics
 {
@@ -29,6 +33,7 @@ public class AndroidGraphics implements Graphics
     private final BitmapCache<AndroidBitmap> bitmapCache;
     private final SoundPlayer soundPlayer;
     private final World world;
+    private final WaterAnimation waterAnimation;
     private final AnimationCache animationCache;
     private final AndroidPaint paint;
 
@@ -60,11 +65,19 @@ public class AndroidGraphics implements Graphics
     private static final AndroidPaint graphPaperMinor =
         makePaint( Color.rgb( 235, 243, 255 ), Paint.ANTI_ALIAS_FLAG );
 
+    private static final AndroidPaint waterColor =
+            makePaint( Color.argb( 100, 10, 100, 220 ), Paint.ANTI_ALIAS_FLAG );
+
     private static final AndroidPaint dullOverlay =
         makePaint( Color.argb( 200, 70, 70, 70 ) );
 
     private static final AndroidPaint greenText =
             makePaint( Color.rgb( 100, 255, 100 ), Paint.ANTI_ALIAS_FLAG );
+
+    static
+    {
+        waterColor.paint.setStyle( Paint.Style.FILL );
+    }
 
     private static AndroidPaint makePaint( int color )
     {
@@ -84,6 +97,7 @@ public class AndroidGraphics implements Graphics
         BitmapCache<AndroidBitmap> bitmapCache,
         SoundPlayer soundPlayer,
         World world,
+        WaterAnimation waterAnimation,
         int scrollX,
         int scrollY
     )
@@ -91,6 +105,7 @@ public class AndroidGraphics implements Graphics
         this.bitmapCache = bitmapCache;
         this.soundPlayer = soundPlayer;
         this.world = world;
+        this.waterAnimation = waterAnimation;
         this.scrollX = scrollX;
         this.scrollY = scrollY;
 
@@ -211,7 +226,7 @@ public class AndroidGraphics implements Graphics
 
         levelWidthPixels  = (int)( renderingTileSize * world.size.width );
         levelHeightPixels = (int)( renderingTileSize * world.size.height );
-        scrollBy( 0, 0 );
+        scrollBy(0, 0);
     }
 
     private float chooseRenderingTileSize( float suggestedSize )
@@ -255,6 +270,8 @@ public class AndroidGraphics implements Graphics
         GraphPaperBackground.drawBackground(
             world, renderer, androidCanvas, white, graphPaperMajor, graphPaperMinor );
 
+        drawPolygons(waterAnimation.polygons, androidCanvas, renderer );
+
         List<Sprite> sprites = animator.getSprites( frameNum );
 
         if ( soundOn )
@@ -296,6 +313,18 @@ public class AndroidGraphics implements Graphics
             }
         }
 
+    }
+
+    void drawPolygons( ArrayList<PolygonBuilder> polygons, AndroidCanvas androidCanvas, Renderer<AndroidBitmap, AndroidPaint> renderer )
+    {
+        float f = renderer.tileSize / 32f;
+
+        for ( PolygonBuilder pb: polygons )
+        {
+            rabbitescape.render.androidlike.Path rePath = pb.path(
+                    f, new Vertex( renderer.offsetX, renderer.offsetY ) );
+            androidCanvas.drawPath( rePath, waterColor );
+        }
     }
 
     public void scrollBy( float x, float y )
