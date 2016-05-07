@@ -84,15 +84,15 @@ public class LevelsList implements Iterable<LevelsList.LevelSetInfo>
 
     public static LevelsList excludeHidden( LevelsList levelsList )
     {
-        List<LevelSetInfo> copy = new ArrayList<LevelSetInfo>( levelsList.levelSets.values() );
-        for ( int i = copy.size() - 1 ; i >= 0 ; i-- )
+        List<LevelSetInfo> ret = new ArrayList<LevelSetInfo>();
+        for ( LevelSetInfo i : levelsList )
         {
-            if ( copy.get( i ).hidden )
+            if ( !i.hidden )
             {
-                copy.remove( i );
+                ret.add( i );
             }
         }
-        return new LevelsList( copy );
+        return new LevelsList( ret );
     }
 
     public LevelsList( List<LevelSetInfo> levelSets )
