@@ -66,12 +66,12 @@ public class TextMain
             }
             if ( gentest.isPresent() )
             {
-                new SolutionDemo( level.getValue(), solution.getInt(), true );
+                new SolutionDemo( level.getValue(), solution.getValue(), true );
                 System.exit( 0 );
             }
             if ( solution.isPresent() )
             {
-                new SolutionDemo( level.getValue(), solution.getInt(), false );
+                new SolutionDemo( level.getValue(), solution.getValue(), false );
                 System.exit( 0 );
             }
             if ( level.isPresent() )
