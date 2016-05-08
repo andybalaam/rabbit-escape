@@ -48,7 +48,8 @@ public class LevelsMenu extends Menu
                 levelsDir + "/" + info.object.fileName + ".rel",
                 levelsDir,
                 info.index,
-                true
+                true,
+                info.object.name
             );
         }
 
