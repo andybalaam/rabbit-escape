@@ -4,6 +4,7 @@ import rabbitescape.engine.IgnoreWorldStatsListener;
 import rabbitescape.engine.LoadWorldFile;
 import rabbitescape.engine.World;
 import rabbitescape.engine.config.Config;
+import rabbitescape.engine.config.TapTimer;
 import static rabbitescape.engine.i18n.Translation.*;
 import rabbitescape.engine.i18n.Translation;
 import rabbitescape.engine.textworld.TextWorldManip;
@@ -44,12 +45,17 @@ public class TextMain
         CommandLineOption template =     new CommandLineOption( "--template",     true );
         CommandLineOption gentest =      new CommandLineOption( "--gentest",      false );
         CommandLineOption rellist =      new CommandLineOption( "--rellist",      false );
+        CommandLineOption mars =         new CommandLineOption( "--mars",         false );
         try
         {
             CommandLineOptionSet.parse( args,
-                                        level, solution, encode, decode, help,
-                                        noinput, placeholders, template, gentest,
-                                        rellist );
+                                        level, solution, encode, decode,
+                                        help, noinput, placeholders,
+                                        template, gentest, rellist, mars );
+            if ( mars.isPresent() )
+            {
+                TapTimer.matched = true;
+            }
             if ( help.isPresent() )
             {
                 usageMessage();
@@ -164,6 +170,8 @@ public class TextMain
 
     public static void usageMessage()
     {
+        // Note cheat mode option for text mode ( --mars ) is not listed:
+        // It's a secret
         //                                                          Eighty character limit >|
         System.out.println( t(
             "runrabbit [options]\n" +

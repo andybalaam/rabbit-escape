@@ -93,9 +93,9 @@ public class TestTextMenu
 
         public MyMenu()
         {
-            this.a = new MenuItem( "a", MenuItem.Type.ABOUT, true );
-            this.b = new MenuItem( "b", MenuItem.Type.ABOUT, false );
-            this.c = new MenuItem( "c", MenuItem.Type.ABOUT, true );
+            this.a = new MenuItem( "a", MenuItem.Type.ABOUT, true, false );
+            this.b = new MenuItem( "b", MenuItem.Type.ABOUT, false, false );
+            this.c = new MenuItem( "c", MenuItem.Type.ABOUT, true, false );
             this.m = new Menu( "", new MenuItem[] { a, b, c } );
         }
     }

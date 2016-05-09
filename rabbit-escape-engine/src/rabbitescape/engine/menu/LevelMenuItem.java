@@ -11,19 +11,26 @@ public class LevelMenuItem extends MenuItem
 
     public LevelMenuItem(
         String fileName, String levelsDir, int number, boolean enabled,
-        String levelName )
+        String levelName, boolean hidden )
     {
         super(
             "${number} " + levelName,
             Type.LEVEL,
             newMap( "number", String.valueOf( number ) ),
-            enabled
+            enabled,
+            hidden
         );
 
         this.fileName = fileName;
         this.levelsDir = levelsDir;
         this.levelNumber = number;
         this.name = levelName;
+    }
+    
+    public LevelMenuItem(
+        String fileName, String levelsDir, int number, boolean enabled, String levelName )
+    {
+        this( fileName, levelsDir, number, enabled, levelName, false );
     }
 
 }

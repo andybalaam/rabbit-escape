@@ -5,6 +5,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import rabbitescape.engine.config.TapTimer;
 import rabbitescape.engine.menu.Menu;
 import rabbitescape.engine.menu.MenuItem;
 
@@ -31,7 +32,7 @@ public class MenuListAdapter extends ArrayAdapter<MenuItem>
     @Override
     public boolean isEnabled( int position )
     {
-        return items[position].enabled;
+        return items[position].enabled || TapTimer.matched;
     }
 
     @Override
@@ -50,7 +51,7 @@ public class MenuListAdapter extends ArrayAdapter<MenuItem>
         MenuItem item = items[ position ];
         ret.setText( t( item.name, item.nameParams ) );
         ret.setTypeface( null, menuActivity.selectedItemPosition == position ? 1 : 0 );
-        ret.setEnabled( item.enabled );
+        ret.setEnabled( item.enabled || TapTimer.matched );
 
         return ret;
     }

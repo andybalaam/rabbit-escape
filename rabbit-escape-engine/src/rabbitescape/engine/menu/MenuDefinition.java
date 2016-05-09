@@ -9,12 +9,15 @@ import rabbitescape.engine.util.Util.IdxObj;
 
 public class MenuDefinition
 {
+    
     public static final LevelsList allLevels = new LevelsList(
         new LevelSetInfo( "Easy",     "01_easy",     null ),
         new LevelSetInfo( "Medium",   "02_medium",   null ),
         new LevelSetInfo( "Hard",     "03_hard",     null ),
         new LevelSetInfo( "Outdoors", "04_outdoors", null ),
-        new LevelSetInfo( "Arcade",   "05_arcade",   null )
+        new LevelSetInfo( "Arcade",   "05_arcade",   null ),
+        new LevelSetInfo( "Development", "development", null, true ),
+        new LevelSetInfo( "Staging",  "staging",     null, true)
     );
 
     public static Menu mainMenu(
@@ -31,7 +34,8 @@ public class MenuDefinition
                     "Choose a set of levels:",
                     items( levelsCompleted, loadedLevels )
                 ),
-                true
+                true,
+                false
             ),
             item( "About", Type.ABOUT, true ),
             maybeItem(
@@ -60,7 +64,8 @@ public class MenuDefinition
             ret[setI.index] = item(
                 set.name,
                 new LevelsMenu( set.dirName, loadedLevels, levelsCompleted ),
-                true
+                true,
+                set.hidden
             );
         }
         return ret;
