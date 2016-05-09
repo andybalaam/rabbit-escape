@@ -49,7 +49,7 @@ public class LevelsMenu extends Menu
                 levelsDir,
                 info.index,
                 true,
-                false
+                info.object.name
             );
         }
 

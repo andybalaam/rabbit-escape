@@ -229,7 +229,7 @@ public class MenuUi
 
         menuPanel.removeAll();
 
-        Dimension buttonSize = new Dimension( 200, 40 );
+        Dimension buttonSize = new Dimension( 300, 40 );
 
         JLabel label = new JLabel( t( menu.intro ) );
         label.setHorizontalAlignment( SwingConstants.CENTER );
