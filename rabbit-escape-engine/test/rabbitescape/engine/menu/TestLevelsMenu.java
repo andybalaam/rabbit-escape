@@ -25,9 +25,9 @@ public class TestLevelsMenu
             menuItemsToStrings( menu.items ),
             equalTo(
                 new String[] {
-                    "Level 1 test2/lev1.rel",
-                    "Level 2 test2/lev2.rel (disabled)",
-                    "Level 3 test2/lev3.rel (disabled)"
+                    "LeVeL test2 1 test2/lev1.rel",
+                    "LeVeL test2 2 test2/lev2.rel (disabled)",
+                    "LeVeL test2 3 test2/lev3.rel (disabled)"
                 }
             )
         );
@@ -49,9 +49,9 @@ public class TestLevelsMenu
             menuItemsToStrings( menu.items ),
             equalTo(
                 new String[] {
-                    "Level 1 test2/lev1.rel",
-                    "Level 2 test2/lev2.rel",
-                    "Level 3 test2/lev3.rel (disabled)"
+                    "LeVeL test2 1 test2/lev1.rel",
+                    "LeVeL test2 2 test2/lev2.rel",
+                    "LeVeL test2 3 test2/lev3.rel (disabled)"
                 }
             )
         );
@@ -73,9 +73,9 @@ public class TestLevelsMenu
             menuItemsToStrings( menu.items ),
             equalTo(
                 new String[] {
-                    "Level 1 test2/lev1.rel",
-                    "Level 2 test2/lev2.rel",
-                    "Level 3 test2/lev3.rel"
+                    "LeVeL test2 1 test2/lev1.rel",
+                    "LeVeL test2 2 test2/lev2.rel",
+                    "LeVeL test2 3 test2/lev3.rel"
                 }
             )
         );
@@ -97,9 +97,9 @@ public class TestLevelsMenu
             menuItemsToStrings( menu.items ),
             equalTo(
                 new String[] {
-                    "Level 1 test2/lev1.rel",
-                    "Level 2 test2/lev2.rel",
-                    "Level 3 test2/lev3.rel"
+                    "LeVeL test2 1 test2/lev1.rel",
+                    "LeVeL test2 2 test2/lev2.rel",
+                    "LeVeL test2 3 test2/lev3.rel"
                 }
             )
         );
@@ -122,9 +122,9 @@ public class TestLevelsMenu
             menuItemsToStrings( menu.items ),
             equalTo(
                 new String[] {
-                    "Level 1 test2/lev1.rel",
-                    "Level 2 test2/lev2.rel",
-                    "Level 3 test2/lev3.rel (disabled)"
+                    "LeVeL test2 1 test2/lev1.rel",
+                    "LeVeL test2 2 test2/lev2.rel",
+                    "LeVeL test2 3 test2/lev3.rel (disabled)"
                 }
             )
         );
@@ -138,9 +138,9 @@ public class TestLevelsMenu
             menuItemsToStrings( menu.items ),
             equalTo(
                 new String[] {
-                    "Level 1 test2/lev1.rel",
-                    "Level 2 test2/lev2.rel",
-                    "Level 3 test2/lev3.rel"
+                    "LeVeL test2 1 test2/lev1.rel",
+                    "LeVeL test2 2 test2/lev2.rel",
+                    "LeVeL test2 3 test2/lev3.rel"
                 }
             )
         );
