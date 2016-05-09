@@ -34,9 +34,18 @@ to build the images, sounds and code.  On Ubuntu, Debian and similar:
         grep \
         sed
 
+Get the source
+--------------
+
+    git clone https://github.com/andybalaam/rabbit-escape.git
+
 Run tests
 ---------
 
+Compile and run tests. Note that rendering the images (SVG to PNG) takes a while
+the first time.
+
+    cd rabbit-escape
     make test
 
 IntelliJ IDEA
