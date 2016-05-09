@@ -10,6 +10,7 @@ import rabbitescape.engine.CompletedLevelWinListener;
 import rabbitescape.engine.LevelWinListener;
 import rabbitescape.engine.MultiLevelWinListener;
 import rabbitescape.engine.config.Config;
+import rabbitescape.engine.config.TapTimer;
 import rabbitescape.engine.err.RabbitEscapeException;
 import rabbitescape.engine.menu.AboutText;
 import rabbitescape.engine.menu.ByNameConfigBasedLevelsCompleted;
@@ -161,7 +162,7 @@ public class TextMenu
             else
             {
                 MenuItem ret = menu.items[chosenNum];
-                if ( ret.enabled )
+                if ( ret.enabled || TapTimer.matched )
                 {
                     return ret;
                 }
@@ -215,6 +216,10 @@ public class TextMenu
 
         for ( IdxObj<MenuItem> item : enumerate1( menu.items ) )
         {
+            if ( item.object.hidden && !TapTimer.matched )
+            {
+                continue;
+            }
             ret.append( renderItem( item.index, item.object ) );
         }
 
@@ -223,7 +228,7 @@ public class TextMenu
 
     private static String renderItem( int i, MenuItem item )
     {
-        if ( item.enabled )
+        if ( item.enabled || TapTimer.matched )
         {
             return t(
                 "${num}. ${item}\n",

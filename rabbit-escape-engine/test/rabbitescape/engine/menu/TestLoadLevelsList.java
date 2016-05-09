@@ -14,8 +14,8 @@ public class TestLoadLevelsList
     {
         LevelsList levels = LoadLevelsList.load(
             new LevelsList(
-                new LevelsList.LevelSetInfo( null, "test1", null ),
-                new LevelsList.LevelSetInfo( null, "test2", null )
+                new LevelsList.LevelSetInfo( null, "test1", null, false ),
+                new LevelsList.LevelSetInfo( null, "test2", null, false )
             )
         );
 

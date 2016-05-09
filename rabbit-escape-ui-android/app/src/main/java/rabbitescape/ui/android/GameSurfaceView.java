@@ -12,6 +12,7 @@ import java.util.Map;
 
 import rabbitescape.engine.Token;
 import rabbitescape.engine.World;
+import rabbitescape.engine.config.TapTimer;
 import rabbitescape.ui.android.sound.AndroidSound;
 
 public class GameSurfaceView extends SurfaceView
@@ -96,6 +97,9 @@ public class GameSurfaceView extends SurfaceView
     @Override
     public void onClick( View view )
     {
+        // Check for cheat mode enabling
+        TapTimer.newTap();
+
         if ( game.gameLaunch.chosenAbility == null )
         {
             return;
