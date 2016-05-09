@@ -14,9 +14,8 @@ import rabbitescape.engine.Token;
 import rabbitescape.engine.World;
 import rabbitescape.engine.config.Config;
 import rabbitescape.engine.solution.PlaceTokenAction;
-import rabbitescape.engine.solution.Solution;
+import rabbitescape.engine.solution.SolutionDemo;
 import rabbitescape.engine.solution.SolutionInterpreter;
-import rabbitescape.engine.solution.SolutionParser;
 import rabbitescape.engine.solution.SolutionRecorder;
 import rabbitescape.engine.solution.SolutionRecorderTemplate;
 
@@ -56,7 +55,7 @@ public class SwingGameLaunch implements GameLaunch
         }
     }
 
-    public static final int NOT_DEMO_MODE = 0;
+    public static final String NOT_DEMO_MODE = "NOT_DEMO_MODE";
     public final World world;
     private final GeneralPhysics physics;
     public final SwingGraphics graphics;
@@ -79,12 +78,14 @@ public class SwingGameLaunch implements GameLaunch
         SwingSound sound,
         Config config,
         PrintStream debugout,
-        int solutionIndex,
+        String solution,
         boolean frameDumping
     )
     {
         this.world = world;
-        SolutionInterpreter solutionInterpreter = createSolutionInterpreter( solutionIndex, world );
+
+        SolutionInterpreter solutionInterpreter = createSolutionInterpreter( solution, world );
+
         this.frame = init.frame;
         this.solutionRecorder = new SolutionRecorder();
         if ( frameDumping )
@@ -141,17 +142,14 @@ public class SwingGameLaunch implements GameLaunch
         physics.fast = !physics.fast;
     }
 
-    private static SolutionInterpreter createSolutionInterpreter( int solutionIndex, World world )
+    private static SolutionInterpreter createSolutionInterpreter( String solution, World world )
     {
-        if ( NOT_DEMO_MODE == solutionIndex )
+        if ( solution.equals( NOT_DEMO_MODE ) )
         {
             return SolutionInterpreter.getNothingPlaying();
         }
-        else
-        {
-            Solution s = SolutionParser.parse( world.solutions[solutionIndex - 1] );
-            return new SolutionInterpreter( s );
-        }
+        SolutionDemo demo = new SolutionDemo( solution, world );
+        return new SolutionInterpreter( demo.solution );
     }
 
     public void stop()

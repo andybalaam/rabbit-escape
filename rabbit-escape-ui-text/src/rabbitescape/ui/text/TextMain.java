@@ -6,6 +6,8 @@ import rabbitescape.engine.World;
 import rabbitescape.engine.config.Config;
 import static rabbitescape.engine.i18n.Translation.*;
 import rabbitescape.engine.i18n.Translation;
+import rabbitescape.engine.solution.SolutionDemo;
+import rabbitescape.engine.solution.SolutionRunner;
 import rabbitescape.engine.textworld.TextWorldManip;
 import rabbitescape.engine.util.CommandLineOption;
 import rabbitescape.engine.util.CommandLineOptionSet;
@@ -66,12 +68,12 @@ public class TextMain
             }
             if ( gentest.isPresent() )
             {
-                new SolutionDemo( level.getValue(), solution.getValue(), true );
+                demo( level.getValue(), solution.getValue(), true );
                 System.exit( 0 );
             }
             if ( solution.isPresent() )
             {
-                new SolutionDemo( level.getValue(), solution.getValue(), false );
+                demo( level.getValue(), solution.getValue(), false );
                 System.exit( 0 );
             }
             if ( level.isPresent() )
@@ -116,6 +118,17 @@ public class TextMain
         );
 
         m.run( args );
+    }
+
+    private static void demo( String relPath, String solnCmdLine, boolean genTest )
+    {
+
+        World world = new LoadWorldFile(
+            new RealFileSystem() ).load(
+                new IgnoreWorldStatsListener(), relPath );
+
+        SolutionDemo demo = new SolutionDemo( solnCmdLine, world );
+        SolutionRunner.runSolution( demo.solution, world, System.out, genTest );
     }
 
     private static void listRel()

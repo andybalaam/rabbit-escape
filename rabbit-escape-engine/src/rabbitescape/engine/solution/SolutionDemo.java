@@ -1,19 +1,17 @@
-package rabbitescape.ui.text;
+package rabbitescape.engine.solution;
 
-import rabbitescape.engine.IgnoreWorldStatsListener;
-import rabbitescape.engine.LoadWorldFile;
 import rabbitescape.engine.World;
 import rabbitescape.engine.solution.Solution;
 import rabbitescape.engine.solution.SolutionParser;
-import rabbitescape.engine.solution.SolutionRunner;
 import rabbitescape.engine.util.MegaCoder;
-import rabbitescape.engine.util.RealFileSystem;
 
 
 public class SolutionDemo
 {
     public final String solnChars =
         "[0-9a-z\\(\\);,&]*";
+
+    public final Solution solution;
 
     /**
      * @param path           The path of the .rel file.
@@ -23,12 +21,8 @@ public class SolutionDemo
      * @param genTest        If true the output is in a format useful
      *                       for copying into Java unit test source.
      */
-    public SolutionDemo(
-        String path, String solutionCommandLine, boolean genTest )
+    public SolutionDemo( String solutionCommandLine, World world )
     {
-        World world = new LoadWorldFile(
-            new RealFileSystem() ).load(
-                new IgnoreWorldStatsListener(), path );
 
         String solutionString;
         try
@@ -45,9 +39,7 @@ public class SolutionDemo
             }
         }
 
-        Solution solution = SolutionParser.parse( solutionString );
-
-        SolutionRunner.runSolution( solution, world, System.out, genTest );
+        this.solution = SolutionParser.parse( solutionString );
     }
 
 }

@@ -26,7 +26,7 @@ public class SwingSingleGameEntryPoint extends SingleGameEntryPoint
     private final MainJFrame frame;
     private final SwingSound sound;
     private final MenuUi menuUi;
-    private final int solutionIndex;
+    private final String solution;
     private final boolean frameDumping;
 
     public SwingSingleGameEntryPoint(
@@ -38,7 +38,7 @@ public class SwingSingleGameEntryPoint extends SingleGameEntryPoint
         MainJFrame frame,
         SwingSound sound,
         MenuUi menuUi,
-        int solutionIndex,
+        String solution,
         boolean frameDumping
     )
     {
@@ -48,7 +48,7 @@ public class SwingSingleGameEntryPoint extends SingleGameEntryPoint
         this.frame = frame;
         this.sound = sound;
         this.menuUi = menuUi;
-        this.solutionIndex = solutionIndex;
+        this.solution = solution;
         this.frameDumping = frameDumping;
     }
 
@@ -76,7 +76,7 @@ public class SwingSingleGameEntryPoint extends SingleGameEntryPoint
             }
             if ( solution.isPresent() )
             {
-                go( new String[] {level.getValue()}, solution.getInt(), dump.isPresent() );
+                go( new String[] {level.getValue()}, solution.getValue(), dump.isPresent() );
                 System.exit( 0 );
             }
             if ( level.isPresent() )
@@ -93,7 +93,7 @@ public class SwingSingleGameEntryPoint extends SingleGameEntryPoint
 
     }
 
-    private static void go( String[] fileName, int solutionIndex, boolean frameDumping )
+    private static void go( String[] fileName, String solution, boolean frameDumping )
     {
 
         Config cfg = SwingConfigSetup.createConfig();
@@ -114,7 +114,7 @@ public class SwingSingleGameEntryPoint extends SingleGameEntryPoint
             new MainJFrame( cfg, sound ),
             sound,
             null,
-            solutionIndex,
+            solution,
             frameDumping
         );
 
@@ -131,6 +131,6 @@ public class SwingSingleGameEntryPoint extends SingleGameEntryPoint
         SwingUtilities.invokeLater( init );
 
         return new SwingGameLaunch(
-            init, world, winListener, sound, uiConfig, out, solutionIndex, frameDumping );
+            init, world, winListener, sound, uiConfig, out, solution, frameDumping );
     }
 }
