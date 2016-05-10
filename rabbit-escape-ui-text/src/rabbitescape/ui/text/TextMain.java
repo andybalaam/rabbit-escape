@@ -185,34 +185,10 @@ public class TextMain
     {
         // Note cheat mode option for text mode ( --mars ) is not listed:
         // It's a secret
-        //                                                          Eighty character limit >|
-        System.out.println( t(
-            "runrabbit [options]\n" +
-            "If no options are given, the game starts the text UI with menus.\n" +
-            "Any option can be abbreviated: '--help' becomes '-h'.\n" +
-            " --help                         (This) message and exit.\n" +
-            " swing                          Play using the swing GUI menus.\n" +
-            " swing [--level] <level.rel>    Play a single level using the swing GUI.\n" +
-            " swing --level <l.rel> --solution <n> [--dump] Show a recorded solution.\n" +
-            "                                Optionally dump frames to png.\n" +
-            " swing --animation              Animation tester.\n" +
-            " [--level] level.rel            Play a single level using the text UI.\n" +
-            " --level <file> --solution <n>  Print world steps.\n" +
-            " --level <file> --solution <n> --gentest  Print world steps using a format for\n" +
-            "                                creating unit tests.\n" +
-            " --encode <string>              Obfuscate a string, for hints etc\n" +
-            " --decode <string>              Deobfuscate.\n" +
-            " --encode <level.rel>           Obfuscate hints and solutions.\n" +
-            " --decode <level.code.rel>      Deobfuscate.\n" +
-            " --placeholders <level.rel>     Rewrite file, inserting blank meta\n" +
-            "                                and re-ordering meta. Decodes.\n" +
-            " --template <level.rel>         Create blank rel file\n" +
-            " --rellist                      List repository rel files: playable with -l.\n" +
-            "\n" +
-            "When used with rel files the de/encode options will leave the source file\n" +
-            "untouched, but may overwrite another file without further warning\n" +
-            " foo.rel -> foo.code.rel          foo.code.rel -> foo.uncode.rel\n" +
-            " foo.uncode.rel -> foo.code.rel   foo.rel -> foo.uncode.rel\n"
-        ) );
+        for ( String s : Util.resourceLines( "/rabbitescape/cli-help.txt" ) )
+        {
+            System.out.println( t( s ) );
+        }
     }
+
 }

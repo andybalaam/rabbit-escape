@@ -1,0 +1,30 @@
+runrabbit [options]
+If no options are given, the game starts the text UI with menus.
+Any option can be abbreviated: '--help' becomes '-h'.
+ --help                         (This) message and exit.
+ swing                          Play using the swing GUI menus.
+ swing [--level] <level.rel>    Play a single level using the swing GUI.
+ swing --level <l.rel> --solution <n> [--dump] Show a recorded solution.
+                                Optionally dump frames to png.
+ swing --animation              Animation tester.
+ [--level] level.rel            Play a single level using the text UI.
+ --level <file> --solution <n>  Print world steps.
+ --level <file> --solution <n> --gentest  Print world steps using a format for
+                                creating unit tests.
+ --encode <string>              Obfuscate a string, for hints etc
+ --decode <string>              Deobfuscate.
+ --encode <level.rel>           Obfuscate hints and solutions.
+ --decode <level.code.rel>      Deobfuscate.
+ --placeholders <level.rel>     Rewrite file, inserting blank meta
+                                and re-ordering meta. Decodes.
+ --template <level.rel>         Create blank rel file
+ --rellist                      List repository rel files: playable with -l.
+
+When used with rel files the de/encode options will leave the source file
+untouched, but may overwrite another file without further warning
+ foo.rel -> foo.code.rel          foo.code.rel -> foo.uncode.rel
+ foo.uncode.rel -> foo.code.rel   foo.rel -> foo.uncode.rel
+
+For all uses of the solution option <n> may be a the number of the solution
+in the file, a solution command string or encoded command string.
+ 
