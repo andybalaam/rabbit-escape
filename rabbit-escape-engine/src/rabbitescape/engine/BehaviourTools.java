@@ -246,6 +246,32 @@ public class BehaviourTools
         return rabbit.onSlope && hereIsUpSlope();
     }
 
+    /**
+     * Check if rabbit is changing from an up slope directly to a down slope.
+     */
+    public boolean isCresting()
+    {
+        // block where slope would be if it continues
+        Block contBlock = world.getBlockAt( nextX(), nextY() );
+        Block belowContBlock = world.getBlockAt( nextX(), nextY() + 1 );
+
+        return isOnUpSlope() &&
+               null == contBlock &&
+               isDownSlope( belowContBlock );
+    }
+
+    /**
+     * Check if rabbit is changing from a down slope directly to an up slope.
+     */
+    public boolean isValleying()
+    {
+        // block where slope would be if it continues
+        Block alongBlock = world.getBlockAt( nextX(), rabbit.y );
+
+        return isOnDownSlope() &&
+               isUpSlope( alongBlock );
+    }
+
     public boolean hereIsUpSlope()
     {
         return isUpSlope( blockHere() );
