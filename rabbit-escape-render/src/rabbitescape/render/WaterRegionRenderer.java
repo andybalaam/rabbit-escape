@@ -1,6 +1,6 @@
 package rabbitescape.render;
 
-import rabbitescape.engine.BehaviourTools;
+import static rabbitescape.engine.BehaviourTools.*;
 import rabbitescape.engine.Block;
 import rabbitescape.engine.CellularDirection;
 import static rabbitescape.engine.CellularDirection.*;
@@ -77,11 +77,11 @@ public class WaterRegionRenderer implements LookupItem2D
             return;
         }
         Block block = world.getBlockAt( region.x, region.y );
-        if ( null == block)
+        if ( null == block || isBridge( block ))
         {
             targetWaterHeight = region.getContents() / 32;
         }
-        else if ( BehaviourTools.isSlope( block ) )
+        else if ( isSlopeNotBridge( block ) )
         {
             targetWaterHeight = triangleHeight( region.getContents() );
         }
@@ -155,7 +155,7 @@ public class WaterRegionRenderer implements LookupItem2D
         switch ( d )
         {
         case LEFT:
-            if ( BehaviourTools.isLeftRiseSlope( block ) )
+            if ( shapeEquals ( block, Block.Shape.UP_LEFT ) )
             {
                 xOffset = 32 - boundaryHeight;
             }
@@ -165,7 +165,7 @@ public class WaterRegionRenderer implements LookupItem2D
             }
             break;
         case RIGHT:
-            if ( BehaviourTools.isRightRiseSlope( block ) )
+            if ( shapeEquals ( block, Block.Shape.UP_RIGHT ) )
             {
                 xOffset = boundaryHeight;
             }
@@ -237,7 +237,7 @@ public class WaterRegionRenderer implements LookupItem2D
         switch ( d )
         {
         case LEFT:
-            if ( BehaviourTools.isLeftRiseSlope( block ) )
+            if ( shapeEquals ( block, Block.Shape.UP_LEFT ) )
             {
                 xOffset = 32;
             }
@@ -247,7 +247,7 @@ public class WaterRegionRenderer implements LookupItem2D
             }
             break;
         case RIGHT:
-            if ( BehaviourTools.isRightRiseSlope( block ) )
+            if ( shapeEquals ( block, Block.Shape.UP_RIGHT ) )
             {
                 xOffset = 0;
             }
@@ -264,7 +264,7 @@ public class WaterRegionRenderer implements LookupItem2D
 
     boolean isFalling()
     {
-        if ( BehaviourTools.isSlopeNotBridge( world.getBlockAt( region.x, region.y ) ) )
+        if ( isSlopeNotBridge( world.getBlockAt( region.x, region.y ) ) )
         { // Non bridge slopes are not connected down.
             return false;
         }
@@ -275,7 +275,7 @@ public class WaterRegionRenderer implements LookupItem2D
     boolean isFull( int x, int y )
     {
         Block b = world.getBlockAt( x, y );
-        if ( BehaviourTools.s_isFlat( b ) )
+        if ( s_isFlat( b ) )
         { // Flat block cells have zero capacity: always full.
             return true;
         }

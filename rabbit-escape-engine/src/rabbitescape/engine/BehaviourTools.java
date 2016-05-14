@@ -159,6 +159,16 @@ public class BehaviourTools
         );
     }
 
+
+    public static boolean shapeEquals( Block b, Block.Shape s )
+    {
+        if ( null == b )
+        {
+            return false;
+        }
+        return s == b.shape;
+    }
+
     public static boolean isRightRiseSlope( Block b )
     {
         if( b == null )
@@ -182,6 +192,22 @@ public class BehaviourTools
     public static boolean isSlope( Block b )
     {
         return isRightRiseSlope( b ) || isLeftRiseSlope( b );
+    }
+
+    public static boolean isBridge( Block b )
+    {
+        if( b == null )
+        {
+            return false;
+        }
+        switch ( b.shape )
+        {
+        case BRIDGE_UP_LEFT:
+        case BRIDGE_UP_RIGHT:
+            return true;
+        default:
+            return false;
+        }
     }
 
     public static boolean isSolid( Block block )
