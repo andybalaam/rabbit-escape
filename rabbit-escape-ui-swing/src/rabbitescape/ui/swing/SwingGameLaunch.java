@@ -446,7 +446,10 @@ public class SwingGameLaunch implements GameLaunch
         {
             graphics.playSound( "place_token" );
         }
-        solutionRecorder.append( new PlaceTokenAction( tileX, tileY ) );
+        if ( prev != now )
+        {
+            solutionRecorder.append( new PlaceTokenAction( tileX, tileY ) );
+        }
         return now;
     }
 
