@@ -3,7 +3,6 @@ package rabbitescape.ui.swing;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.image.BufferStrategy;
-import java.util.ArrayList;
 import java.util.List;
 
 import rabbitescape.engine.Thing;
@@ -90,7 +89,7 @@ public class SwingGraphics implements Graphics
                 graphPaperMinor
             );
 
-            drawPolygons( waterAnimation.polygons, swingCanvas );
+            drawPolygons( waterAnimation, swingCanvas );
 
             List<Sprite> sprites = animator.getSprites( frameNum );
 
@@ -143,11 +142,11 @@ public class SwingGraphics implements Graphics
             }
         }
 
-        void drawPolygons( ArrayList<PolygonBuilder> polygons,
+        synchronized void drawPolygons( WaterAnimation wa,
             SwingCanvas swingCanvas )
         {
             float f = renderer.tileSize / 32f;
-            for ( PolygonBuilder pb: polygons )
+            for ( PolygonBuilder pb: wa.getPolygons()  )
             {
                 Path p = pb.path( f,
                     new Vertex( renderer.offsetX, renderer.offsetY ) );

@@ -19,7 +19,7 @@ import rabbitescape.render.WaterRegionRenderer;
 public class WaterAnimation
 {
     public final LookupTable2D<WaterRegionRenderer> lookupRenderer ;
-    public final ArrayList<PolygonBuilder> polygons;
+    private final List<PolygonBuilder> polygons;
     private int lastFramenumber = 10;
     public final Dimension worldSize;
 
@@ -40,6 +40,11 @@ public class WaterAnimation
     public static WaterAnimation getDummyWaterAnimation()
     {
         return new WaterAnimation();
+    }
+
+    public synchronized List<PolygonBuilder> getPolygons()
+    {
+        return new ArrayList<PolygonBuilder>( polygons );
     }
 
     /**
