@@ -125,7 +125,7 @@ public class AndroidGameLaunch implements Runnable
 
     public boolean isRunning()
     {
-        return loop.isRunning();
+        return loop != null && loop.isRunning();
     }
 
     public void readyToRun()
