@@ -270,7 +270,7 @@ public class AndroidGraphics implements Graphics
         GraphPaperBackground.drawBackground(
             world, renderer, androidCanvas, white, graphPaperMajor, graphPaperMinor );
 
-        drawPolygons(waterAnimation.polygons, androidCanvas, renderer );
+        drawPolygons( waterAnimation.getPolygons(), androidCanvas, renderer );
 
         List<Sprite> sprites = animator.getSprites( frameNum );
 
@@ -315,7 +315,11 @@ public class AndroidGraphics implements Graphics
 
     }
 
-    void drawPolygons( ArrayList<PolygonBuilder> polygons, AndroidCanvas androidCanvas, Renderer<AndroidBitmap, AndroidPaint> renderer )
+    void drawPolygons(
+        List<PolygonBuilder> polygons,
+        AndroidCanvas androidCanvas,
+        Renderer<AndroidBitmap, AndroidPaint> renderer
+    )
     {
         float f = renderer.tileSize / 32f;
 
