@@ -135,8 +135,8 @@ public class SwingGraphics implements Graphics
                     x += ( renderer.tileSize - swingCanvas.stringWidth( lines[i] ) ) / 2; // centre
                     y += ( renderer.tileSize - h * lines.length ) / 2 ;
                     swingCanvas.drawText( lines[i],
-                        (float)x,
-                        (float)y,
+                        x,
+                        y,
                         textPaint);
                 }
             }
@@ -155,7 +155,7 @@ public class SwingGraphics implements Graphics
 
     }
 
-    private final World world;
+    public final World world;
 
     private final GameUi jframe;
     private final BufferStrategy strategy;
@@ -171,6 +171,7 @@ public class SwingGraphics implements Graphics
     private CompletionState lastWorldState;
 
     private int lastFrame;
+    private volatile boolean drawing;
 
     public SwingGraphics(
         World world,
@@ -198,7 +199,8 @@ public class SwingGraphics implements Graphics
         this.frameDumper = frameDumper;
         this.waterAnimation = waterAnimation;
 
-        lastFrame = -1;
+        this.lastFrame = -1;
+        this.drawing = false;
     }
 
     @Override
@@ -226,11 +228,20 @@ public class SwingGraphics implements Graphics
 
     public void redraw()
     {
+        // We may be invoked from multiple threads - give up if we're already
+        // drawing.
+        if ( drawing )
+        {
+            return;
+        }
+        drawing = true;
+
         // Can't redraw before drawing
         if ( -1 == lastFrame )
         {
             return;
         }
+
         setRendererOffset( renderer );
 
         DrawFrame df = new DrawFrame(
@@ -245,6 +256,8 @@ public class SwingGraphics implements Graphics
         );
 
         df.run();
+
+        drawing = false;
     }
 
     public void setTileSize( int timeSize )

@@ -54,9 +54,35 @@ public class MainJFrame extends JFrame
 
             uiConfig.save();
 
+            updateScreenIfPaused();
+        }
+
+        @Override
+        public void componentShown( ComponentEvent arg0 )
+        {
+            updateScreenIfPaused();
+        }
+
+        @Override
+        public void windowActivated( WindowEvent arg0 )
+        {
+            updateScreenIfPaused();
+        }
+
+        private void updateScreenIfPaused()
+        {
             if ( null != swingGraphics )
             {
-                swingGraphics.redraw();
+                if ( swingGraphics.world.paused )
+                {
+                    new Thread() {
+                        @Override
+                        public void run()
+                        {
+                            swingGraphics.redraw();
+                        }
+                    }.start();
+                }
             }
         }
     }
