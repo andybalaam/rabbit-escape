@@ -1,0 +1,26 @@
+:name=Infiltrate
+:description=One rabbit. One exit. Thirty thousand units of water.
+:author_name=tttppp
+:author_url=https://github.com/tttppp
+:solution.1.code=9pBJ=jrjBjrMrjB\p&p&p&p&p&9Ajhp.Cejrjh9pAjh1zphprj&j1AJ=ijjphprj&SjeB91Cej?jhjSp1&rjh9JS&rjjMi9p&jjpJp&CehBh1Szhzhz\J=jrjhSjp&jrjJ=jr&jjjJ&eCShBjpSAre1?\h&jSjhh-1ejr&z1zB&hejSjjJjJrhAMjizr=M1jrrjhjhrJ9MArji1p=&MBjh1S9jBr9e&1jjrh&\pz&rJM1jp&9CjrBJifCjeB&\S?jejh\i1jp1jj
+:solution.2.code=oh8~]Ch(!ax8!m~m>r>f>]Ch!!h8]f>r>>s!(mf>h~4boxh>r(m4!>h>r(m4!>>(Xf>xmT>!h>X!>rrh8!T>r>]>>!]ZT>8msXoCr&r>h>*XhT>8m rma8h8m]C>r>88(m>>]r]a>a>mXfsfx>xoro>>>!>h>f8h]r8>(>8m(h>m8]>hT4~s>!Cm8>!xZr>>>8hm>(>sr4r(>om]4>>rfsxXC>xK>>hm>88hT>(8~rm~8h>mZ>>>!!>>>aX]XMafXXxrfBx
+:num_rabbits=1
+:num_to_save=1
+:rabbit_delay=4
+:bash=99
+:block=99
+:bridge=99
+:dig=99
+:explode=1
+Q  /M##
+    ###
+#   /AO
+###  ##
+###  M 
+\######
+#\(####
+#N###N#
+##*####
+:n=1,7,15000
+:n=5,7,15000
+:*=()
