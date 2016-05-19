@@ -18,8 +18,7 @@ import rabbitescape.render.WaterRegionRenderer;
  */
 public class WaterAnimation
 {
-    public final LookupTable2D<WaterRegionRenderer> lookupRenderer ;
-    private final List<PolygonBuilder> polygons;
+    public final LookupTable2D<WaterRegionRenderer> lookupRenderer;
     private int lastFramenumber = 10;
     public final Dimension worldSize;
 
@@ -27,13 +26,11 @@ public class WaterAnimation
     {
         worldSize = world.size;
         lookupRenderer = new LookupTable2D<WaterRegionRenderer>( worldSize );
-        polygons = new ArrayList<PolygonBuilder>();
     }
 
     private WaterAnimation()
     {
         lookupRenderer = null;
-        polygons = null;
         worldSize = null;
     }
 
@@ -42,20 +39,16 @@ public class WaterAnimation
         return new WaterAnimation();
     }
 
-    public synchronized List<PolygonBuilder> getPolygons()
-    {
-        return new ArrayList<PolygonBuilder>( polygons );
-    }
-
     /**
      * Animation step update. Several may have passed before this is called.
      */
     public void update( int frameNumber )
     {
-        if ( null == polygons )
+        if ( null == lookupRenderer )
         {
             return;
         }
+
         int interval = frameNumber - lastFramenumber;
         interval = ( interval < 0 ) ? ( interval + 10 ) : ( interval );
         lastFramenumber = frameNumber;
@@ -70,12 +63,11 @@ public class WaterAnimation
                 wrr.removeHeightGaps();
             }
         }
-        calculatePolygons();
     }
 
-    private void calculatePolygons()
+    public List<PolygonBuilder> calculatePolygons()
     {
-        polygons.clear();
+        ArrayList<PolygonBuilder> polygons = new ArrayList<PolygonBuilder>();
         for ( int y = 0; y < worldSize.height ; y++ )
         {
             PolygonBuilder p = new PolygonBuilder();
@@ -103,17 +95,20 @@ public class WaterAnimation
                 }
             }
         }
+
+        return polygons;
     }
 
     /**
      * Game step. Usually ten animation steps per game step.
      */
-    public void step( World world)
+    public void step( World world )
     {
-        if ( null == world || null == polygons )
+        if ( null == world || null == lookupRenderer )
         {
             return;
         }
+
         List<WaterRegionRenderer> currentRR = lookupRenderer.getListCopy();
         for ( WaterRegion w: world.waterTable )
         {

@@ -142,11 +142,10 @@ public class SwingGraphics implements Graphics
             }
         }
 
-        synchronized void drawPolygons( WaterAnimation wa,
-            SwingCanvas swingCanvas )
+        public void drawPolygons( WaterAnimation wa, SwingCanvas swingCanvas )
         {
             float f = renderer.tileSize / 32f;
-            for ( PolygonBuilder pb: wa.getPolygons()  )
+            for ( PolygonBuilder pb : wa.calculatePolygons() )
             {
                 Path p = pb.path( f,
                     new Vertex( renderer.offsetX, renderer.offsetY ) );
