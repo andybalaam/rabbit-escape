@@ -1,0 +1,17 @@
+:name=Tunnel
+:description=The exit is buried!
+:hint.1=Try to find a way to bash along to the exit.
+:hint.2=Dig down then bridge up one square.
+:hint.3=Dig on the last square before the metal.  Place a bridge token immediately below, and then a bash token on the same square to bash right.
+:solution.1=;dig&(4,1);bridge;(4,4);bash;10;(4,4);22
+:dig=1
+:bash=1
+:bridge=1
+:num_to_save=3
+:num_rabbits=3
+#Q        
+#         
+#####MMMMM
+#########O
+#    M####
+##########
