@@ -1,14 +1,17 @@
 :name=Tunnel
 :description=The exit is buried!
+:author_name=Andy Balaam
+:author_url=http://artificialworlds.net/rabbit-escape/
 :hint.1=Try to find a way to bash along to the exit.
 :hint.2=Dig down then bridge up one square.
 :hint.3=Dig on the last square before the metal.  Place a bridge token immediately below, and then a bash token on the same square to bash right.
 :solution.1=dig;(3,1);;bridge;(3,4);;bash;3;(3,4);8
-:dig=1
+:num_rabbits=3
+:num_to_save=3
+:rabbit_delay=4
 :bash=1
 :bridge=1
-:num_to_save=3
-:num_rabbits=3
+:dig=1
 #Q     
 #      
 ####MMM
