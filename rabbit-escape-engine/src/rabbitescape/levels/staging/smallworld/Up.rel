@@ -1,0 +1,19 @@
+:name=Up
+        
+#####   
+#O  #   
+##  #   
+#   #   
+#Q  #   
+#   #   
+#####   
+:bridge=2
+:bash=1
+:climb=1
+:block=1
+:dig=1
+:explode=1
+:num_to_save=1
+:num_rabbits=3
+:rabbit_delay=7
+:solution.1=bash;(3,6)&bridge;2;(4,6);block;5;(7,4);bridge;7;(6,5);climb;;(5,5);;dig&(1,0)&explode;(7,4);13
