@@ -1,6 +1,7 @@
 package rabbitescape.render;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import rabbitescape.engine.Rabbit;
@@ -29,7 +30,7 @@ public class Overlay
 
     public String at( int x, int y )
     {
-        List<WaterRegion> waterRegions= world.waterTable.getItemsAt( x, y );
+        List<WaterRegion> waterRegions = waterRegionsAt( x, y );
         List<Thing> things = world.getThingsAt( x, y );
         Rabbit[] rabbits = world.getRabbitsAt( x, y );
 
@@ -37,7 +38,7 @@ public class Overlay
              things.size() == 0  &&
              rabbits.length == 0 )
         {
-            return null;
+            return "";
         }
 
         Iterable<Thing> thingsHere = Util.chain( waterRegions, things, Arrays.asList( rabbits ) );
@@ -55,5 +56,17 @@ public class Overlay
 
         DupeStringCounter dsc = new DupeStringCounter( strings );
         return dsc.join( "\n" );
+    }
+
+    private List<WaterRegion> waterRegionsAt( int x, int y )
+    {
+        if ( x < 0 || y < 0 || x >= world.size.width || y >= world.size.height )
+        {
+            return Collections.emptyList();
+        }
+        else
+        {
+            return world.waterTable.getItemsAt( x, y );
+        }
     }
 }
