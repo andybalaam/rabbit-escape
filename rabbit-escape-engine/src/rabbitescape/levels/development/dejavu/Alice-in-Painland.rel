@@ -1,18 +1,23 @@
 :name=Alice in Painland
-:description=
+:description=Follow the white rabbit
+:hint.1=Get someone down, and then bridge up.
+:hint.2=Dig the right-hand side of the left column with your first rabbit, then block with the second.
+:hint.3=When the first rabbit gets to the bottom, bridge up 4 times.  Bash through the bridges to make a path, then bash above the exit and dig towards it.  Turn the blocker into a digger, then later a bridger to stop the digging.
+:author_name=colonelfazackerley (solution by tttppp)
+:author_url=https://github.com/colonelfazackerley
+:solution.1=;dig&(3,4)&bash;;(3,5)&dig;5;(6,5);2;block;2;(5,5);3;bridge;15;(6,18);8;(9,16);10;(6,14);9;(9,12);5;bash;7;(8,12);6;(7,14);2;(9,16);;dig;2;(10,15);2;(5,5);;bridge;11;(5,12);27
 :num_rabbits=4
 :num_to_save=4
 :rabbit_delay=25
-:bridge=5
-:dig=4
 :bash=4
 :block=1
-:music=tryad-witness
+:bridge=5
+:dig=4
 ###################
-
-
+                   
+                   
   Q                
-
+                   
 #######   #########
 #######   #########
      ##   ##       
@@ -28,4 +33,4 @@
      ##   O#       
 #######   #########
 #######   #########
-
+                   
