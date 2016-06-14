@@ -14,6 +14,8 @@
                 <compilerarg value="-Werror"/>
                 <compilerarg value="-Xlint"/>
                 <compilerarg value="-Xlint:-path"/>
+                <compilerarg value="-encoding"/>
+                <compilerarg value="utf8"/>
                 <classpath>
                     <pathelement location="lib/org.hamcrest.core_1.3.0.jar"/>
                     <pathelement location="lib/junit.jar"/>
