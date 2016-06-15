@@ -21,6 +21,15 @@ public class SolutionExceptions
         public int commandIndex = -1;
         public String level = "<>";
         public String world = "";
+
+        public ProblemRunningSolution()
+        {
+        }
+
+        public ProblemRunningSolution( Throwable cause )
+        {
+            super( cause );
+        }
     }
 
     /**
@@ -164,6 +173,19 @@ public class SolutionExceptions
         public UntilActionNeverEnded( World.CompletionState expectedState )
         {
             this.expectedState = expectedState;
+        }
+    }
+
+    /**
+     * Some other exception was thrown.
+     */
+    public static class UnknownProblem extends ProblemRunningSolution
+    {
+        private static final long serialVersionUID = 1L;
+
+        public UnknownProblem( Throwable cause )
+        {
+            super( cause );
         }
     }
 }

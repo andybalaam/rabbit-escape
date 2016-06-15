@@ -15,6 +15,7 @@ import org.junit.Test;
 import rabbitescape.engine.menu.*;
 import rabbitescape.engine.solution.Solution;
 import rabbitescape.engine.solution.SolutionExceptions;
+import rabbitescape.engine.solution.SolutionExceptions.UnknownProblem;
 import rabbitescape.engine.solution.SolutionParser;
 import rabbitescape.engine.solution.SolutionRunner;
 import rabbitescape.engine.util.FileSystem;
@@ -180,9 +181,9 @@ public class TestAllActiveLevels
         String solutionString
     )
     {
-        Solution solution = SolutionParser.parse( solutionString );
         try
         {
+            Solution solution = SolutionParser.parse( solutionString );
             return SolutionRunner.runSolution( solution, world );
         }
         catch ( SolutionExceptions.ProblemRunningSolution e )
@@ -190,6 +191,13 @@ public class TestAllActiveLevels
             e.solutionId = solutionId;
             e.level = worldFileName;
             throw e;
+        }
+        catch ( Throwable e )
+        {
+            UnknownProblem u = new SolutionExceptions.UnknownProblem( e );
+            u.solutionId = solutionId;
+            u.level = worldFileName;
+            throw u;
         }
     }
 
