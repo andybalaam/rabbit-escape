@@ -3,6 +3,7 @@ package rabbitescape.engine.logic;
 import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.*;
 
+import static rabbitescape.engine.ChangeDescription.State.*;
 import static rabbitescape.engine.textworld.TextWorldManip.*;
 import static rabbitescape.engine.util.WorldAssertions.*;
 
@@ -333,5 +334,24 @@ public class TestTokens
                 "####)(\\ #",
                 "####### #"
             });
+    }
+
+    @Test
+    public void Tokens_start_off_in_non_falling_states()
+    {
+        // See https://github.com/andybalaam/rabbit-escape/issues/447
+
+        World world = createWorld(
+            "  ",
+            " /",
+            "##"
+        );
+
+        Token inAir = new Token( 0, 0, Token.Type.brolly, world );
+        Token onSlope = new Token( 1, 1, Token.Type.brolly, world );
+
+        // Until a time step passes, these are in non-moving states
+        assertThat( inAir.state, is( TOKEN_BROLLY_STILL ) );
+        assertThat( onSlope.state, is( TOKEN_BROLLY_ON_SLOPE ) );
     }
 }

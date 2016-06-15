@@ -44,7 +44,10 @@ public class Token extends Thing
     public Token( int x, int y, Type type, World world )
     {
         this( x, y, type );
-        calcNewState( world );
+        boolean onSlope = BehaviourTools.isSlope( world.getBlockAt( x, y ) );
+        // Can't use calcNewState here since we have just been created, so
+        // can't be moving (until a time step passes).
+        state = switchType( type, false, false, onSlope );
     }
 
     private static State switchType( Type type, boolean moving, boolean slopeBelow, boolean onSlope )
