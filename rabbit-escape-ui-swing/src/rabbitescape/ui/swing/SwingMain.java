@@ -12,6 +12,7 @@ import rabbitescape.engine.config.ConfigTools;
 import rabbitescape.engine.i18n.Translation;
 import rabbitescape.engine.util.RealFileSystem;
 import rabbitescape.render.BitmapCache;
+import rabbitescape.render.androidlike.Sound;
 
 public class SwingMain
 {
@@ -20,7 +21,7 @@ public class SwingMain
     private final Locale locale;
     private final BitmapCache<SwingBitmap> bitmapCache;
     private final Config uiConfig;
-    private final SwingSound sound;
+    private final Sound sound;
 
     public SwingMain(
         RealFileSystem fs,
@@ -28,7 +29,7 @@ public class SwingMain
         Locale locale,
         BitmapCache<SwingBitmap> bitmapCache,
         Config uiConfig,
-        SwingSound sound
+        Sound sound
     )
     {
         this.fs = fs;
@@ -51,7 +52,7 @@ public class SwingMain
         Translation.init( locale );
         Config config = SwingConfigSetup.createConfig();
 
-        SwingSound sound = new SwingSound(
+        Sound sound = SwingSound.create(
             ConfigTools.getBool( config, CFG_MUTED ) );
 
         SwingMain m = new SwingMain(

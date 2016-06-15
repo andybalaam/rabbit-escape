@@ -18,13 +18,14 @@ import rabbitescape.engine.util.RealFileSystem;
 import rabbitescape.render.BitmapCache;
 import rabbitescape.render.GameLaunch;
 import rabbitescape.render.SingleGameEntryPoint;
+import rabbitescape.render.androidlike.Sound;
 
 public class SwingSingleGameEntryPoint extends SingleGameEntryPoint
 {
     private final BitmapCache<SwingBitmap> bitmapCache;
     private final Config uiConfig;
     private final MainJFrame frame;
-    private final SwingSound sound;
+    private final Sound sound;
     private final MenuUi menuUi;
     private final String solution;
     private final boolean frameDumping;
@@ -36,7 +37,7 @@ public class SwingSingleGameEntryPoint extends SingleGameEntryPoint
         BitmapCache<SwingBitmap> bitmapCache,
         Config uiConfig,
         MainJFrame frame,
-        SwingSound sound,
+        Sound sound,
         MenuUi menuUi,
         String solution,
         boolean frameDumping
@@ -98,7 +99,7 @@ public class SwingSingleGameEntryPoint extends SingleGameEntryPoint
 
         Config cfg = SwingConfigSetup.createConfig();
 
-        SwingSound sound = new SwingSound(
+        Sound sound = SwingSound.create(
             ConfigTools.getBool( cfg, CFG_MUTED ) );
 
         SingleGameEntryPoint m = new SwingSingleGameEntryPoint(

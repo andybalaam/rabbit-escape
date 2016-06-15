@@ -54,6 +54,7 @@ import rabbitescape.engine.menu.MenuItem;
 import rabbitescape.engine.util.RealFileSystem;
 import rabbitescape.engine.util.Util.IdxObj;
 import rabbitescape.render.BitmapCache;
+import rabbitescape.render.androidlike.Sound;
 
 public class MenuUi
 {
@@ -146,7 +147,7 @@ public class MenuUi
     private final Stack<Menu> stack;
     private final Config uiConfig;
     private final MainJFrame frame;
-    private final SwingSound sound;
+    private final Sound sound;
 
     private final JPanel menuPanel;
     private final LevelsCompleted levelsCompleted;
@@ -159,7 +160,7 @@ public class MenuUi
         BitmapCache<SwingBitmap> bitmapCache,
         Config uiConfig,
         MainJFrame frame,
-        SwingSound sound
+        Sound sound
     )
     {
         this.fs = fs;

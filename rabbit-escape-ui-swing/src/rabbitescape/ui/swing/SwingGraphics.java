@@ -21,6 +21,7 @@ import rabbitescape.render.SpriteAnimator;
 import rabbitescape.render.Overlay;
 import rabbitescape.render.Vertex;
 import rabbitescape.render.androidlike.Path;
+import rabbitescape.render.androidlike.Sound;
 import rabbitescape.render.gameloop.Graphics;
 import rabbitescape.render.gameloop.WaterAnimation;
 
@@ -177,7 +178,7 @@ public class SwingGraphics implements Graphics
         World world,
         GameUi jframe,
         BitmapCache<SwingBitmap> bitmapCache,
-        SwingSound sound,
+        Sound sound,
         FrameDumper frameDumper,
         WaterAnimation waterAnimation
     )

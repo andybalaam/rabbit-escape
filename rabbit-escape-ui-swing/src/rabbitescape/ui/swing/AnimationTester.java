@@ -510,7 +510,7 @@ public class AnimationTester extends JFrame
             new Renderer<SwingBitmap, SwingPaint>( 0, 0, tileSize, bitmapCache );
 
         SoundPlayer soundPlayer =
-            new SoundPlayer( new SwingSound( false ) );
+            new SoundPlayer( SwingSound.create( false ) );
 
         FrameCounter counter = new FrameCounter();
         running = true;

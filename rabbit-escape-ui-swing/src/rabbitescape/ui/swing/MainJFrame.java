@@ -10,6 +10,7 @@ import javax.swing.JFrame;
 
 import rabbitescape.engine.config.Config;
 import rabbitescape.engine.config.ConfigTools;
+import rabbitescape.render.androidlike.Sound;
 
 public class MainJFrame extends JFrame
 {
@@ -88,10 +89,10 @@ public class MainJFrame extends JFrame
     }
 
     private final Config uiConfig;
-    private final SwingSound sound;
+    private final Sound sound;
     private SwingGraphics swingGraphics = null;
 
-    public MainJFrame( Config uiConfig, SwingSound sound )
+    public MainJFrame( Config uiConfig, Sound sound )
     {
         this.uiConfig = uiConfig;
         this.sound = sound;

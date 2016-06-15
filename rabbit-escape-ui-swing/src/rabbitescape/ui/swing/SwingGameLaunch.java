@@ -21,6 +21,7 @@ import rabbitescape.engine.solution.SolutionRecorderTemplate;
 
 import rabbitescape.engine.util.Util;
 import rabbitescape.render.GameLaunch;
+import rabbitescape.render.androidlike.Sound;
 import rabbitescape.render.gameloop.GameLoop;
 import rabbitescape.render.gameloop.GeneralPhysics;
 import rabbitescape.render.gameloop.Physics;
@@ -75,7 +76,7 @@ public class SwingGameLaunch implements GameLaunch
         SwingGameInit init,
         World world,
         LevelWinListener winListener,
-        SwingSound sound,
+        Sound sound,
         Config config,
         PrintStream debugout,
         String solution,

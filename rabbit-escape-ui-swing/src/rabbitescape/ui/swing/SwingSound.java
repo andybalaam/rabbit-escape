@@ -12,7 +12,21 @@ public class SwingSound implements Sound
     private boolean muted;
     private String music;
 
-    public SwingSound( boolean muted )
+    public static Sound create( boolean muted )
+    {
+        // Disable all sound in OpenJDK.  It causes frequent crashes.
+        // See https://github.com/andybalaam/rabbit-escape/issues/95
+        if ( System.getProperty( "java.vm.name" ).contains( "OpenJDK" ) )
+        {
+            return new SwingNullSound();
+        }
+        else
+        {
+            return new SwingSound( muted );
+        }
+    }
+
+    private SwingSound( boolean muted )
     {
         this.cache = new SwingSoundCache();
         this.muted = muted;
