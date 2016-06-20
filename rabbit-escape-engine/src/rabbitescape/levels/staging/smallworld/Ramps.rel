@@ -1,0 +1,22 @@
+:name=Ramps
+:description=Go against the grain
+:author_name=Andy Balaam
+:author_url=http://www.artificialworlds.net/rabbit-escape
+:hint.1=Go down in order to get up.
+:hint.2=Climb up the right-hand wall.
+:hint.3=Dig through the ramp under the entrance and climb up on the right.  Bridge from the block next to the entrance, and dig through the second piece of bridge.
+:solution.1=dig;(2,5);climb&(5,5);bridge&(4,1);3;dig;22;(2,0);climb;2;(5,5);24
+:num_rabbits=2
+:num_to_save=2
+:rabbit_delay=4
+:bridge=1
+:climb=2
+:dig=2
+ /  / /#
+/      #
+  /Q#/(#
+O/  /  #
+#  /  ##
+  /  /##
+ /  / ##
+########
