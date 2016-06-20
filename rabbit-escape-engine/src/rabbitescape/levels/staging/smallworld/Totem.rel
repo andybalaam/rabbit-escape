@@ -1,7 +1,7 @@
 :name=Totem
-:description=
-:author_name=
-:author_url=
+:description=Climb to the top of the pole
+:author_name=Andy Balaam
+:author_url=http://www.artificialworlds.net/rabbit-escape
 :num_rabbits=5
 :num_to_save=4
 :dig=2
