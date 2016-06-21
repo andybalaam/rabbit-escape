@@ -1,0 +1,16 @@
+:name=Bed
+:description=Snuggle up
+:author_name=Andy Balaam
+:author_url=http://www.artificialworlds.net/rabbit-escape
+:num_rabbits=2
+:num_to_save=3
+:bash=3
+:bridge=2
+:solution.1=bash;4;(6,2);2;(5,3);(4,4);4;bridge;5;(2,5);2;(7,1);14;until:WON
+              
+ M r    MMMOM 
+ M####/#####M 
+ M###/######M 
+ MQ#/#######M 
+ M          M 
+##############
