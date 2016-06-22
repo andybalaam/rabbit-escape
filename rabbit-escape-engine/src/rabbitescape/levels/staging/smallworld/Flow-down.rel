@@ -1,0 +1,23 @@
+:name=Flow down
+:description=Follow around
+:author_name=Andy Balaam
+:author_url=http://www.artificialworlds.net/rabbit-escape
+:hint.1=Bridge to the floating block to stop the rabbits falling out.
+:hint.2=Dig under the entrance.
+:hint.3=Use the first rabbit to bridge right to the bottom of the floating block, then drop a dig token under the entrance.
+:solution.1=bridge;;(5,3);;dig;2;(4,2);24
+:num_rabbits=5
+:num_to_save=5
+:rabbit_delay=4
+:bridge=1
+:dig=1
+:block=1
+:explode=1
+    Q   
+        
+ /  /  \
+   /M\  
+  /###\ 
+  #####\
+/   O   
+ #######
