@@ -1,0 +1,21 @@
+:name=Plug
+:description=Switch it on
+:hint.1=Get on to one of the lower platforms and turn around.
+:hint.2=Bridge into the wall to turn around.
+:hint.3=Bridge up one square in the centre and climb one rabbit onto the horizontal platform.  Bridge towards the wall from there - the rabbit will climb up the side and fall down.  Bridge towards the central platfrom, then climb the other rabbit up to follow the first.
+:author_name=Andy Balaam
+:author_url=http://www.artificialworlds.net/rabbit-escape
+:solution.1=bridge;6;(5,6);2;climb;;bridge;3;(2,4);6;climb;2;(4,6);7;bridge;5;(2,4);6;climb;2;(4,6);24
+:num_rabbits=2
+:num_to_save=2
+:rabbit_delay=4
+:bridge=3
+:climb=2
+#########
+#   O   #
+#   #   #
+#   #   #
+#   Q   #
+# ## ## #
+#       #
+#########
