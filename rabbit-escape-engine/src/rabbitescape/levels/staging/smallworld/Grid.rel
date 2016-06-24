@@ -1,0 +1,24 @@
+:name=Grid
+:description=Work together to free yourselves
+:author_name=Andy Balaam
+:author_url=http://www.artificialworlds.net/rabbit-escape
+:hint.1=Get one rabbit down by digging down a column.
+:hint.2=Build a bridge to save the top-right rabbit.
+:hint.3=Bash the top-left rabbit right and then dig down the column.  Climb the same rabbit onto the two-block wall and bridge from the top.  Wait for that rabbit to climb and fall down, then dig from the top onto the bridge.  Bash the last rabbit towards the exit.
+:solution.1=bash&(1,1);dig;(2,1)&climb;(3,7);bridge;2;(4,5);7;bash;3;(5,7);2;dig;6;(5,1);10
+:num_rabbits=3
+:num_to_save=3
+:rabbit_delay=4
+:bash=2
+:bridge=1
+:climb=1
+:dig=2
+MQM#MQM
+# # M #
+M#####M
+# # # #
+M # # M
+# #   #
+M # #QM
+#O# # #
+M#M#M#M
