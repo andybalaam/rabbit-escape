@@ -1,10 +1,10 @@
 :name=Up
 :description=Get on up.
+:author_name=Andy Balaam
+:author_url=http://www.artificialworlds.net/rabbit-escape
 :hint.1=Bridge out to the right, beyond the right-hand wall.
 :hint.2=Bash right, bridge to the right, and block at the end.
 :hint.3=Bridge back onto the outside of the right wall, and send a climber up.  Dig above the exit.
-:author_name=Andy Balaam
-:author_url=http://www.artificialworlds.net/rabbit-escape
 :solution.1=bash;(3,6)&bridge;2;(4,6);block;5;(7,4);bridge;7;(6,5);climb;;(5,5);;dig&(1,0)&explode;(7,4);13
 :num_rabbits=3
 :num_to_save=1

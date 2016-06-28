@@ -5,12 +5,12 @@
 :hint.1=You can't stop them picking up climbing tokens.
 :hint.2=Bridge to above the gap so the rabbits hit their heads when they climb up.
 :hint.3=Drop a bridge token 1 square to the right of the entrance, and another on the second-from-bottom square of the already-existing bridge.  Dig through the bridge when the rabbits have turned around.
+:solution.1=bridge&(2,4)&(5,3);bash;(1,4);(1,4)&(1,4);(1,4)&(1,4)&(1,4);2;dig;3;(3,1);19
 :num_rabbits=2
 :num_to_save=2
 :rabbit_delay=3
-:solution.1.code=8M8c8c8MWM0~~G0'8M1EN~1~1m1~@~1M1M0M8MN08[::R1:W:Mi00`~0c 80:: L'8ic:101'~cR
-:bridge=2
 :bash=6
+:bridge=2
 :dig=3
 ##)    ##
 #  )    #

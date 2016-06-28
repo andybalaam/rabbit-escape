@@ -2,12 +2,12 @@
 :description=Try to keep a level head.
 :author_name=tttppp
 :author_url=https://github.com/tttppp
-:hint.1.code=E}}7W}bEWM2gFi2v22WEE2WE]D2W2h6M2H7}WqHhHq;6W2Eb2vW
-:hint.2.code=CC{2r5&5&/2rx8Cr9xr{2;CrwCC_wmC;xCtC/xtC5$9x5rCr88&&7rruCCumx:&wrrxnCxwx5x5m&&Clrr
-:hint.3.code=9+,f,Bg$e~r+++,b'rB8B%W3fB9i~3B+,,G&9ee3,+~
-:solution.1.code=>,0a!>%>[>[T!Tj>%s>!|Z>[>1;~U>>&|/=/>&,=s&aj&[|0j&>T=>>T=!U
+:hint.1=A climber can get from the bottom left to the exit.
+:hint.2=There are three tokens in the middle, try to make sure the right rabbits get them.
+:hint.3=Some rabbits start directly above the exit.
+:solution.1=;brolly;;(1,1);2;dig;4;(3,2);;brolly;(3,2);4;climb;(1,7);17
 % Based on colonelfazackerley's solution.
-:solution.2.code=DgFgeIgFgEFgDtgUhg!|'xQ!HgxhnxMCDMwgCg!gbD'gFM!Ethg
+:solution.2=;dig;5;(3,2);;brolly;(3,2);1;(3,1);6;climb;;(1,7);6
 :num_rabbits=10
 :num_to_save=9
 :rabbit_delay=4

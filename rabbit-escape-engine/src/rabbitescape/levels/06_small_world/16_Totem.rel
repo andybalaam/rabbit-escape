@@ -2,17 +2,18 @@
 :description=Climb to the top of the pole
 :author_name=Andy Balaam
 :author_url=http://www.artificialworlds.net/rabbit-escape
-:num_rabbits=5
-:num_to_save=4
-:dig=2
-:bridge=1
-:climb=5
-:bash=1
-:solution.1=climb&(6,7)&bridge;10;(7,2);dig&(4,0);;(4,6);2;climb;10;(4,7);;(4,7);;(4,7)&(4,7);6
-:solution.2=climb&(6,7);2;bridge;7;(7,2);dig;(4,0);2;climb;2;(6,7);;(6,7);(6,7)&(6,7);18;LOST
 :hint.1=Get up on the right
 :hint.2=Bridge from the nook on the right towards the centre, then dig.
 :hint.3=Climb one rabbit up the right wall, bridge leftwards after climbing.  Dig through the two block you bridge onto.  Dig again through the sloping block.  Climb the remaining rabbits up into the exit.
+:solution.1=climb&(6,7)&bridge;10;(7,2);dig&(4,0);;(4,6);2;climb;10;(4,7);;(4,7);;(4,7)&(4,7);6
+:solution.2=climb&(6,7);2;bridge;7;(7,2);dig;(4,0);2;climb;2;(6,7);;(6,7);(6,7)&(6,7);18;LOST
+:num_rabbits=5
+:num_to_save=4
+:rabbit_delay=4
+:bash=1
+:bridge=1
+:climb=5
+:dig=2
 #       #
 #  M#  ##
 #   #   #

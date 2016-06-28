@@ -9,9 +9,9 @@
 :num_rabbits=5
 :num_to_save=5
 :rabbit_delay=4
+:block=1
 :bridge=1
 :dig=1
-:block=1
 :explode=1
     Q   
         

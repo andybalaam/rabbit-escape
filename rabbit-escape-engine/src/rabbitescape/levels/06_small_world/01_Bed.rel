@@ -5,11 +5,12 @@
 :hint.1=Find a way to get the top rabbit down to the bottom.
 :hint.2=Place basher tokens on the slope blocks.
 :hint.3=Bash down the slope with 3 basher tokens, one on each sloping block.  Bridge rightwards from under the entrance, then bridge on the top of the slope.
+:solution.1=bash;4;(6,2);2;(5,3);(4,4);4;bridge;5;(2,5);2;(7,1);14;until:WON
 :num_rabbits=2
 :num_to_save=3
+:rabbit_delay=4
 :bash=3
 :bridge=2
-:solution.1=bash;4;(6,2);2;(5,3);(4,4);4;bridge;5;(2,5);2;(7,1);14;until:WON
               
  M r    MMMOM 
  M####/#####M 

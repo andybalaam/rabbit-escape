@@ -1,10 +1,10 @@
 :name=Upshot
 :description=This time we need to get two of them up.
+:author_name=Andy Balaam
+:author_url=http://www.artificialworlds.net/rabbit-escape
 :hint.1=Bridge out to the right.
 :hint.2=Bash right, bridge, block at the end.  Slow the second rabbit with a bash token under the entrance.
 :hint.3=Bridge up to the outside of the right wall, and send a climber up.  Dig away the right-hand wall, then bridge when there is only one block left.
-:author_name=Andy Balaam
-:author_url=http://www.artificialworlds.net/rabbit-escape
 :solution.1=bash&(3,6)&bridge;3;(4,6)&bash;(2,6)&block;6;(7,4);bridge&(6,5);2;climb&(5,5);dig&(4,0);2;bridge;13;(4,4);21;explode;;(7,3);2
 :num_rabbits=3
 :num_to_save=2

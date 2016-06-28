@@ -5,7 +5,7 @@
 :hint.1=Two rabbits must give their lives.
 :hint.2=Bash the middle block with the top rabbit.
 :hint.3=Bash the lower middle block with a lower rabbit.
-:solution.1.code=f'C0'fcUUd%f^l0fjdcE}
+:solution.1=bash;(4,2);7;(4,5);23
 :num_rabbits=5
 :num_to_save=4
 :rabbit_delay=12,6,3

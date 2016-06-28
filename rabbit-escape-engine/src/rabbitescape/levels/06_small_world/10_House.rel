@@ -1,20 +1,21 @@
 :name=House
 :description=Get upstairs and repair the chimney.
-:solution.1=bash&(3,3);;dig&(2,3);block;(0,4);climb;(2,7);bridge;3;climb&(2,7);bridge;9;(1,3);;climb&(2,7);3;explode;7;(0,4);5
+:author_name=Andy Balaam
+:author_url=http://www.artificialworlds.net/rabbit-escape
 :hint.1=Dig down to allow everyone to climb up.
 :hint.2=Climb up the left-hand wall and get over the roof.
 :hint.3=Bash leftwards on the bridge piece in the roof, then dig downwards next to the left-hand wall.  Climb a rabbit back up that wall and block on the far left edge of the roof.  Send another rabbit up and bridge over the hole you made in the roof so the rabbits can go over the top to the exit.  Climb the last rabbit up to follow.
-:author_name=Andy Balaam
-:author_url=http://www.artificialworlds.net/rabbit-escape
+:solution.1=bash&(3,3);;dig&(2,3);block;(0,4);climb;(2,7);bridge;3;climb&(2,7);bridge;9;(1,3);;climb&(2,7);3;explode;7;(0,4);5
 :num_rabbits=2
 :num_to_save=2
+:rabbit_delay=4
+:bash=1
+:block=1
+:bridge=1
 :climb=3
 :dig=1
-:bridge=1
-:block=1
 :explode=1
-:bash=1
-
+        
    /\O  
   /  #  
  / )(r\ 

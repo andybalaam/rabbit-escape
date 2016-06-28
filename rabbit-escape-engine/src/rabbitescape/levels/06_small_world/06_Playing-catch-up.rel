@@ -5,18 +5,14 @@
 :hint.1=Find a way to make the first rabbit wait for the others.
 :hint.2=Dig from the top, but maybe don't go all the way down just yet?
 :hint.3=Dig one square to the left of the exit, and when you are two squares down, turn the rabbit into a climber, and dig directly above the exit.
-:solution.1.code=UhDu@_NuAt:AbD:{{je}:YMuSL:t:]:t_O+MM{H
+:solution.1=dig;(4,0);(3,0);climb;7;(3,2);until:WON
 :num_rabbits=3
 :num_to_save=3
 :rabbit_delay=10,4
-:num_saved=0
-:num_killed=0
-:num_waiting=3
-:paused=false
 :bridge=5
 :climb=2
 :dig=2
-
+      
 #(####
 #)####
 #(####

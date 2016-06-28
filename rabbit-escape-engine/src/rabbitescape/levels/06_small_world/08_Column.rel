@@ -2,10 +2,10 @@
 :description=Two rabbits must get past the metal pole
 :author_name=Andy Balaam
 :author_url=http://www.artificialworlds.net/rabbit-escape
-:solution.1=bridge;2;(3,5);;(6,3);5;block;4;(7,3);bridge&(6,3);4;dig;(7,3);bash;3;(3,1)&climb;;(1,5);;(1,5);17
 :hint.1=Bridge up and bash through the top.
 :hint.2=Bridge to the floating block, then bridge to the right from it one square and block there.
 :hint.3=When your second rabbit turns around because of the blocker, bridge up to the middle, bash through and climb up your two rabbits on the left.  Make your blocker dig into the exit.
+:solution.1=bridge;2;(3,5);;(6,3);5;block;4;(7,3);bridge&(6,3);4;dig;(7,3);bash;3;(3,1)&climb;;(1,5);;(1,5);17
 :num_rabbits=4
 :num_to_save=3
 :rabbit_delay=8
