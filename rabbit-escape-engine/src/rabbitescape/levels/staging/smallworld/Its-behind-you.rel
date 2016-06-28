@@ -1,7 +1,10 @@
-:name=Its-behind-you
-:description=
-:author_name=
-:author_url=
+:name=It's behind you!
+:description=If only there were a turn-around token
+:author_name=colonelfazackerley
+:author_url=https://github.com/colonelfazackerley
+:hint.1=You can't stop them picking up climbing tokens.
+:hint.2=Bridge to above the gap so the rabbits hit their heads when they climb up.
+:hint.3=Drop a bridge token 1 square to the right of the entrance, and another on the second-from-bottom square of the already-existing bridge.  Dig through the bridge when the rabbits have turned around.
 :num_rabbits=2
 :num_to_save=2
 :rabbit_delay=3

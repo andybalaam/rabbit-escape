@@ -2,6 +2,9 @@
 :description=Snuggle up
 :author_name=Andy Balaam
 :author_url=http://www.artificialworlds.net/rabbit-escape
+:hint.1=Find a way to get the top rabbit down to the bottom.
+:hint.2=Place basher tokens on the slope blocks.
+:hint.3=Bash down the slope with 3 basher tokens, one on each sloping block.  Bridge rightwards from under the entrance, then bridge on the top of the slope.
 :num_rabbits=2
 :num_to_save=3
 :bash=3

@@ -1,7 +1,7 @@
 :name=Water tower
 :description=
 :author_name=colonelfazackerley
-:author_url=
+:author_url=https://github.com/colonelfazackerley
 :num_rabbits=5
 :num_to_save=4
 :rabbit_delay=4

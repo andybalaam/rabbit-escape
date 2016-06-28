@@ -1,7 +1,10 @@
 :name=The bunny's not for turning
-:description=
-:author_name=
-:author_url=
+:description=Meet The Iron Rabbit
+:author_name=colonelfazackerley
+:author_url=https://github.com/colonelfazackerley
+:hint.1=Bash to make a wall no-one can climb up.
+:hint.2=Stop your basher quickly before you bash too far.
+:hint.3=Bash as the rabbit hits the wall, then immediately drop a blocking token to stop it bashing more than one block.  Turn it back into a basher to release it.
 :solution.1.code=3rK~Kj8e3(+Kh7Z+2O3tZ+yQrKKy&72n&K(~79(&[W~
 :num_rabbits=3
 :num_to_save=3

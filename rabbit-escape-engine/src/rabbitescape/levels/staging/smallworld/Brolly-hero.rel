@@ -1,7 +1,10 @@
 :name=Brolly hero
-:description=
-:author_name=
-:author_url=
+:description=Great responsibility
+:author_name=colonelfazackerley
+:author_url=https://github.com/colonelfazackerley
+:hint.1=Get the top rabbit down and use it to save the others.
+:hint.2=Give the top rabbit a brolly, and dig just to the right of the centre line.
+:hint.3=Wait for the top rabbit to get onto the central column, then dig it away and explode the top rabbit when the column is gone.
 :solution.1.code=4|x%%e%<$u4?J%9B"AQM%M?A4o5ZweE%Jx]4]A%]#h^##%BeAa@#]&e
 :num_rabbits=2
 :num_to_save=2
@@ -18,4 +21,3 @@
 #  #  #
 #O #  #
 #######
-

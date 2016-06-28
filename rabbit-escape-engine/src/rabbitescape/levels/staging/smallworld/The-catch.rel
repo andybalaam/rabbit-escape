@@ -1,7 +1,10 @@
 :name=The catch
-:description=
-:author_name=
-:author_url=
+:description=Timing is everything
+:author_name=tttppp
+:author_url=https://github.com/tttppp
+:hint.1=Dig away the top block to prevent a bridger hitting it.
+:hint.2=You can use the blocker to make the timing easier.
+:hint.3=Block the top rabbit as far left as it can go.  Bridge up from the flat block.  Just as the bridger is about to hit its head, make the blocker dig.  The bridger will continue to the end, and the digger will land on the bridge.  If you're really good, you can do it without a blocker!
 :solution.1.code=v@vnvv<v6m"vEp_m)cnbb)E"Fx@Fx
 :num_rabbits=0
 :num_to_save=2

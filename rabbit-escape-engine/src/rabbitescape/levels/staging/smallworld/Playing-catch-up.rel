@@ -1,7 +1,10 @@
 :name=Playing catch up
-:description=
-:author_name=
-:author_url=
+:description=Some rabbits are behind
+:author_name=colonelfazackerley
+:author_url=https://github.com/colonelfazackerley
+:hint.1=Find a way to make the first rabbit wait for the others.
+:hint.2=Dig from the top, but maybe don't go all the way down just yet?
+:hint.3=Dig one square to the left of the exit, and when you are two squares down, turn the rabbit into a climber, and dig directly above the exit.
 :solution.1.code=UhDu@_NuAt:AbD:{{je}:YMuSL:t:]:t_O+MM{H
 :num_rabbits=3
 :num_to_save=3

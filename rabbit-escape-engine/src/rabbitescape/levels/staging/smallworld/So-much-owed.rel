@@ -1,7 +1,10 @@
 :name=So much owed
-:description=
-:author_name=
-:author_url=
+:description=Let's make rabbits great again
+:author_name=colonelfazackerley
+:author_url=https://github.com/colonelfazackerley
+:hint.1=Two rabbits must give their lives.
+:hint.2=Bash the middle block with the top rabbit.
+:hint.3=Bash the lower middle block with a lower rabbit.
 :solution.1.code=f'C0'fcUUd%f^l0fjdcE}
 :num_rabbits=5
 :num_to_save=4
