@@ -11,13 +11,14 @@ public class MenuDefinition
 {
     
     public static final LevelsList allLevels = new LevelsList(
-        new LevelSetInfo( "Easy",     "01_easy",     null ),
-        new LevelSetInfo( "Medium",   "02_medium",   null ),
-        new LevelSetInfo( "Hard",     "03_hard",     null ),
+        new LevelSetInfo( "Easy", "01_easy", null ),
+        new LevelSetInfo( "Medium", "02_medium", null ),
+        new LevelSetInfo( "Hard", "03_hard", null ),
         new LevelSetInfo( "Outdoors", "04_outdoors", null ),
-        new LevelSetInfo( "Arcade",   "05_arcade",   null ),
+        new LevelSetInfo( "Arcade", "05_arcade", null ),
+        new LevelSetInfo( "Small World", "06_small_world", null ),
         new LevelSetInfo( "Development", "development", null, true ),
-        new LevelSetInfo( "Staging",  "staging",     null, true)
+        new LevelSetInfo( "Staging", "staging", null, true )
     );
 
     public static Menu mainMenu(
