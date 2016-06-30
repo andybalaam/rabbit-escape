@@ -4,7 +4,7 @@
 :author_url=https://github.com/tttppp
 :hint.1=Make sure you give each rabbit a brolly.
 :hint.2=Rabbits need to get their brollies before they hit the floor.
-:hint.3=Make sure you give each rabbit exactly one brolly.
+:hint.3=Let each rabbit fall 2 squares and give them brolly tokens there.
 :solution.1=brolly;(0,3);4;(0,3);6;(0,3);2;(0,3);(0,3);3;(0,3);;(0,3);(0,3);(0,3);9;(0,3);3
 :num_rabbits=10
 :num_to_save=10
