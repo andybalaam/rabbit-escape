@@ -31,7 +31,7 @@ public class SmokeTest extends ActivityInstrumentationTestCase2<AndroidMenuActiv
         driver.clickMenuItem( 1, "Medium" );
 
         // Open a level
-        MenuItem levelItem = driver.clickMenuItem( 0, "Level ${number}" );
+        MenuItem levelItem = driver.clickMenuItem( 0, "${number} Easy for some" );
         assertEquals( "1", levelItem.nameParams.get( "number" ) );
         driver.clickPositive( "Start" );
 
@@ -51,7 +51,7 @@ public class SmokeTest extends ActivityInstrumentationTestCase2<AndroidMenuActiv
         // Open an easy level
         driver.clickMenuItem( 0, "Start Game" );
         driver.clickMenuItem( 0, "Easy" );
-        driver.clickMenuItem( 0, "Level ${number}" );
+        driver.clickMenuItem( 0, "${number} Digging practice" );
         driver.clickPositive( "Start" );
 
         // Solve it
@@ -63,7 +63,7 @@ public class SmokeTest extends ActivityInstrumentationTestCase2<AndroidMenuActiv
         driver.clickPositive( "Great!", true );
 
         // Open next
-        MenuItem level1Item = driver.clickMenuItem( 1, "Level ${number}" );
+        MenuItem level1Item = driver.clickMenuItem( 1, "${number} Bashing practice" );
         assertEquals( "2", level1Item.nameParams.get( "number" ) );
     }
 }

@@ -22,7 +22,7 @@ public class DialogsTest extends ActivityInstrumentationTestCase2<AndroidMenuAct
         // Click some menu items
         driver.clickMenuItem( 0, "Start Game" );
         driver.clickMenuItem( 0, "Easy" );
-        driver.clickMenuItem( 0, "Level ${number}" );
+        driver.clickMenuItem( 0, "${number} Digging practice" );
 
         // I can cycle through the hints
         driver.clickNeutral( "Hint" );
