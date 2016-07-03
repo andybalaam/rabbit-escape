@@ -8,6 +8,7 @@ import java.util.Set;
 import rabbitescape.engine.config.Config;
 import rabbitescape.engine.config.ConfigTools;
 import rabbitescape.engine.err.RabbitEscapeException;
+import rabbitescape.engine.util.Util;
 
 public class ByNameConfigBasedLevelsCompleted implements LevelsCompleted
 {
@@ -73,7 +74,7 @@ public class ByNameConfigBasedLevelsCompleted implements LevelsCompleted
 
     public static String canonicalName( String name )
     {
-        if ( name.isEmpty() )
+        if ( Util.isEmpty( name ) )
         {
             throw new EmptyLevelName();
         }
