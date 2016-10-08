@@ -10,10 +10,13 @@
                 destdir="@{dir}/bin"
                 includeantruntime="false"
                 debug="on"
+                target="1.7"
+                source="1.7"
             >
                 <compilerarg value="-Werror"/>
                 <compilerarg value="-Xlint"/>
                 <compilerarg value="-Xlint:-path"/>
+                <compilerarg value="-Xlint:-options"/>
                 <compilerarg value="-encoding"/>
                 <compilerarg value="utf8"/>
                 <classpath>
