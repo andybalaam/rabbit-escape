@@ -8,8 +8,8 @@ android {
         applicationId "net.artificialworlds.rabbitescape"
         minSdkVersion 8
         targetSdkVersion 21
-        versionCode 91
-        versionName "0.9.1"
+        versionCode 100
+        versionName "0.10"
     }
     signingConfigs {
         release {
