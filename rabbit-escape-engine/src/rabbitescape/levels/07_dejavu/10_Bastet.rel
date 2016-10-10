@@ -1,0 +1,29 @@
+:name=Bastet
+:description=
+:author_name=colonelfazackerley
+:author_url=https://github.com/colonelfazackerley
+:hint.1=
+:hint.2=
+:hint.3=
+:bridge=20
+:bash=4
+:block=4
+:explode=4
+:num_rabbits=10
+:num_to_save=7
+:rabbit_delay=30,30,30,10
+     O#    
+     ##    
+     # ##  
+       ##  
+  ###      
+  #    #   
+      ##   
+  Q## #    
+   ##   #  
+        #  
+   ###  #  
+    #   #  
+  #    #   
+  #  ###   
+  ##       

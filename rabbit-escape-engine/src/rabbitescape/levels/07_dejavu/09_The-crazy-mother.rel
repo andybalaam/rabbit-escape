@@ -1,0 +1,32 @@
+:name=The crazy mother
+:description=
+:author_name=tttppp
+:author_url=https://github.com/tttppp
+:hint.1=
+:hint.2=
+:hint.3=
+:solution.1=
+:num_rabbits=20
+:num_to_save=20
+:dig=1
+:bridge=2
+:rabbit_delay=4
+    #            #        #
+          #          #     
+ #    #        #           
+                           
+                           
+                           
+                           
+                           
+      /     /#\     \      
+     /   /### ###\   \     
+    /   (    #    )   \    
+  )/ / / ##\ O /## \ \ \(  
+ #()(# # ######### # #)()# 
+  #\ # # #Q#####Q# # # /#  
+   #\ \  #   #   #  / /#   
+    #\ \ ### # ### / /#    
+    /#\     /#\     /#\    
+   /# #\ /#\   /#\ /# #\   
+  /## ############### ##\  

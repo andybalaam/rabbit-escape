@@ -1,0 +1,29 @@
+:name=Upstairs
+:description=
+:author_name=Andy Balaam (solution by colonelfazackerley)
+:author_url=http://artificialworlds.net/rabbit-escape/
+:hint.1=
+:hint.2=
+:hint.3=
+:num_rabbits=10
+:num_to_save=10
+:bridge=5
+:climb=1
+:dig=5
+:block=5
+:explode=5
+##################
+#           O    #
+#           ####\#
+#               )#
+#    # ###       #
+#    # ###       #
+#    #   #  ###) #
+#\  /#)  #)  # (##
+#  /## ) # ) ##) #
+# /##        # (##
+#/##         ##) #
+###Q         # (##
+#            ##) #
+#              /##
+##################

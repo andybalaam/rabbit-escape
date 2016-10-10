@@ -1,0 +1,28 @@
+:name=Carpal tunnels
+:description=We think you should be able to save 4: let us know if you do!
+:author_name=tttppp
+:author_url=https://github.com/tttppp
+:hint.1=
+:hint.2=
+:hint.3=
+:solution.1=
+:num_rabbits=4
+:num_to_save=3
+:bash=99
+:dig=99
+:bridge=99
+:rabbit_delay=30
+########### #### ###
+#  Q  ##### ###A####
+#\   /#A############
+#####A## ######## A#
+#A#### # #####A## ##
+ ##### #####A###### 
+ ######AA ########A#
+####A#### ##########
+#A###### ####### ###
+ ####### ###A### A##
+ ##A###A##### ######
+############# ######
+#### #####A##### #O#
+#### ## ######## ###

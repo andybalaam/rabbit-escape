@@ -2,14 +2,13 @@
 :description=
 :author_name=GamingInky
 :author_url=https://github.com/GamingInky
-:solution.1.code=guw{:g/w90wg5ggg7+,>gb5grwK0r5g;w:5gw5gr:ugg:+r{Ku5Y5rL:rPg9Gg9g+:ruw{Y{/Lc5Pg:Grwg0
+:solution.1=;bridge;(10,4);;block;(8,4);;(3,4);bridge;;(13,4);(17,4);;(20,2);12;(8,4);8;(3,4);39
 :num_rabbits=10
 :num_to_save=10
 :rabbit_delay=4
 :block=2
 :bridge=6
 :explode=2
-:music=tryad-the_final_rewind
 ##############################
 #                            #
 #    Q                      O#

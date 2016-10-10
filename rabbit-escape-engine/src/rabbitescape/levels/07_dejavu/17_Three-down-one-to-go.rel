@@ -1,4 +1,4 @@
-:name=Three Down
+:name=Three Down, one to go
 :description=Can the two climbers pull their friend to safety?
 :hint.1.code=h{VllV)aV{W.]WaQVWhVcZ{7(ZZhV"x"Ve.]&WZWV.{,%.
 :hint.2.code=h'z*zd)9hzBoMByEdnh_y-nS*zzVUDzb9';zzz'bUD
@@ -13,7 +13,6 @@
 :dig=3
 :explode=3
 :block=3
-:music=tryad-the_final_rewind
 #################
 #  Q           O#
 #           / /##

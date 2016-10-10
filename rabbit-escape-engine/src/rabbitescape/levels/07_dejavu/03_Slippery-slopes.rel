@@ -1,0 +1,23 @@
+:name=Slippery Slopes
+:description=
+:author_name=tttppp
+:author_url=https://github.com/tttppp
+:hint.1=
+:hint.2=
+:hint.3=
+:solution.1=
+:num_rabbits=10
+:num_to_save=10
+:rabbit_delay=4
+:brolly=2
+:climb=1
+:dig=20
+:explode=1
+Q\/Q\
+  c \
+/#c\\
+/ c \
+/ / \
+/   \
+/ \O\
+//\#\
