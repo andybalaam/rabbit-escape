@@ -2,20 +2,15 @@
 :description=
 :author_name=tttppp
 :author_url=https://github.com/tttppp
-:hint.1.code=
-:hint.2.code=
-:hint.3.code=
+:hint.1=
+:hint.2=
+:hint.3=
 :num_rabbits=5
 :num_to_save=5
 :rabbit_delay=10
-:num_saved=0
-:num_killed=0
-:num_waiting=5
-:paused=false
+:bridge=2
 :climb=2
 :dig=3
-:bridge=2
-:music=tryad-the_final_rewind
 ##############
 #            #
 #            #

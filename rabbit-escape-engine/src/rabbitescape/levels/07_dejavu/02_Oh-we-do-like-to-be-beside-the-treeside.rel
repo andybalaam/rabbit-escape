@@ -6,12 +6,11 @@
 :num_to_save=4
 :rabbit_delay=15
 :bash=20
+:block=20
 :bridge=20
 :dig=20
-:block=20
 :explode=20
-:music=tryad-empty
-
+                   
             O  /#  
             #####  
               ##   

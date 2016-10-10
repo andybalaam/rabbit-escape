@@ -2,16 +2,15 @@
 :description=Dig a path through the mine!
 :author_name=tttppp
 :author_url=https://github.com/tttppp
-:hint.1.code=[3[<g3ym3$e3mIhH43*[z3[33[J=z*VHem*yheyM443Nyezh43zNWzzy)M3y
-:hint.2.code=::49ii;/8;xi:40w4&ixm&xP//ix/iu099iumi5xm$xim5t45i:tPi:&_x00mtxt{:95ii;x5_:i05:li&
-:hint.3.code==Pj!OjPmmjm=v{&jvj j1{1jjPmq!vjj1m= Ovjm{mjPaKj&vf1/Pjjmo:j01{=~fjOvj:11P1j&0m&j&jof= !BmW~mf=Oo=jfm!j& oj7=:m0Pj{v; {~fjmjvqj{81m&~jq:!{{PO ==100~&=mm!Ojj0 1vOmOovjo0/PmmvmO
-:music=tryad-the_final_rewind
+:hint.1=Dig, bash, bridge and bash to the bottom of a two-high hole.
+:hint.2=Bash with the first rabbit and bridge with the second to hold back all the others.
+:hint.3=Tunnel with the single rabbit to near the exit. You will need some quick changes between dig, bash and bridge near the end to hollow out a large enough hole to bridge across.
 :num_rabbits=4
 :num_to_save=2
-:bash=99
-:dig=99
-:bridge=99
 :rabbit_delay=30
+:bash=99
+:bridge=99
+:dig=99
 ########### #### ###
 #  Q  ##### ###A####
 #\   /#A############

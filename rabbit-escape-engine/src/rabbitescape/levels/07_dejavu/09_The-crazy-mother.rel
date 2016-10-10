@@ -7,9 +7,9 @@
 :hint.3=
 :num_rabbits=20
 :num_to_save=20
-:dig=1
-:bridge=2
 :rabbit_delay=4
+:bridge=2
+:dig=1
     #            #        #
           #          #     
  #    #        #           

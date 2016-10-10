@@ -1,16 +1,16 @@
 :name=Cups of suffering
+:description=
 :author_name=colonelfazackerley (solution by tttppp)
 :author_url=https://github.com/colonelfazackerley
 :hint.1=
 :hint.2=
 :hint.3=
-:description=
 :num_rabbits=9
 :num_to_save=8
 :rabbit_delay=32
+:block=4
 :bridge=4
 :dig=3
-:block=4
 :explode=4
                                  
 #        #  #       #  #        #

@@ -1,23 +1,23 @@
 :name=C Red
 :description=Down and around... and down a bit more than that?
 :author_name=colonelfazackerley/tttppp
-:hint.1.code=Z*,vI)E)&$I3$`)$EYI$E)$'&//E3IE?/y
-:hint.2.code=ig5EE5'(E7i5ED}555]F5hF6qGq'(W6EbW5WWDg756;(65qqb'D
-:hint.3.code=C72 C OsCuOn^ 2sCnabCCOuGGOnG2oy|GC9|XyyGoCyaCCsl7yCooCnuyyquCC2O .a2ubyyb
+:author_url=
+:hint.1=Separate one rabbit from the rest.
+:hint.2=Use a single rabbit to dig down the left hand side.
+:hint.3=The lone rabbit can bridge across the hole in the C to rescue his friends.
+:solution.1=block;(11,1);dig;(3,2);14;(11,1);18;bash;2;(3,9);bridge;(5,11);11;(8,9);dig;11;(5,11);bash;4;(5,14);bridge;(11,14);bash;3;(11,5);36;
+:solution.2=dig&(4,1);(4,3);4;bash;(4,5);dig;(2,5);bash;(3,9);(9,12);bridge;(11,14);until:WON
+:solution.3=dig;(11,1);12;(13,5);bridge;(12,5);(9,12);bash;(10,4);bridge;14;(6,10);dig;(4,3);13;bash;(4,5);(9,12);5;bridge;3;(12,14);12;until:WON
 :num_rabbits=9
 :num_to_save=9
 :rabbit_delay=10
+:bash=3
+:block=4
 :bridge=4
 :dig=3
-:block=4
-:bash=3
 :explode=2
-:music=tryad-the_final_rewind
-:solution.1.code=.exzzv$Dz.Yz _YYzn|Y+|YzzZY.vY$YYz]L,vzz_+YY,D YnYznZ+z]xHYZzLz.$c]|$XvIdezy$.UYYz]+.qLY ]YxvvIzY$Z$zzz.]xqY v$IYvzIz.$D|zvv..HYz$zz
-:solution.2.code=wpPpPk:-jPk_V]pkp0w+DHPp-pkHjyj0pMcOO6Q<,kjMDk-,8YMOjy+0p%PjpO%,kPnp6pj0M0pCP+O8=
-:solution.3.code=ts3#Oyv_^sg)d6JOyyZZlx|-30J#Z)ydtZsyZc#tZg0^t&-ZtZ)c#s#yZv-v#t[) Q-Z_3yZJ^#ZJy#O&ys[yZ^ttsyZZsdvZs6yt3)0-Z^J#ZPy)ZOZyt3ydsZs3#Z!EvZi6
     Q                
-
+                     
     #########        
    # #####   #       
   ########\   #      

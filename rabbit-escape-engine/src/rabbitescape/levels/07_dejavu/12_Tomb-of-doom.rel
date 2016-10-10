@@ -1,18 +1,20 @@
 :name=Tomb of Doom
 :description=
-:hint.1.code=?@1J&&@y,r@)&?@Iz7,a@&?@rr&@z29)/@[?)29?@@z?&h2@?a12 7Va)?&*y7?@[&[y@J9&Ir[z&r@?2&@&r@1z7 J9@@79)@71))[z2I1&*
-:hint.2.code=7HSxS*HK*/HkH7HS@W*s@*SH@0S sSH7s1HSD5:x*801+7s1xD1xrS5:!@@@JKH: S@SHsHsSDS7JHSSD@:JJJSS/5S7JHK5S0S0SSDx
-:hint.3.code=Z4T q4^*^k77.oZtuo .Zoy!7Lu47oto}kTo?7t,Zuoto+Tko6Z.y^kyt^4T!o,oukyty!Zk}roTo.ko!.k4o@y^yZToy@}47dsoZ46o kuy74oZokyo^okypoo^yky4^uoTtJ7L>tT>o^ 7L6uoZ.^q.ooTotkZ7o^ZTyZL@ookuTyo4o.o6uk7L^y^y>ook*,T
+:author_name=
+:author_url=
+:hint.1=Dig once then block with the first rabbit to stop rabbits walking to the right. This rabbit will escape last.
+:hint.2=Using the second rabbit dig a small pit to the left of the first rabbit and block to wait for the third.
+:hint.3=Once the third rabbit is in the pit, drop a dig token above the two and then quickly drop a bash token directly on them. The third rabbit should bash once before the floor is taken from under him.
 % This is colonelfazackerley's solution, not the "official" solution.
-:solution.1.code=<x}:~-f`|:f`ZQPb~:H.x}f::3.3`|:f`Q{.Dfm.DUhJJ.hhm++e::DxxHb.}ffx}}e:{}``/::<$vC:::eexFQ[
-:num_to_save=3
+:solution.1=dig;(10,2);3;block;(10,4);20;dig;(10,4);6;bash;(10,8);block&(10,8);bash;(10,8);until:WON
 :num_rabbits=3
-:dig=5
+:num_to_save=3
+:rabbit_delay=10
 :bash=5
 :block=2
-:rabbit_delay=10
+:dig=5
           Q          
-
+                     
           /\         
          /##\        
         /####\       

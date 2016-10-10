@@ -7,9 +7,9 @@
 :hint.3=Bridging would be useful at the end.
 :num_rabbits=1
 :num_to_save=1
+:rabbit_delay=4
 :bash=2
 :bridge=2
-:music=
                  Q         
                           #
                           #

@@ -1,18 +1,21 @@
 :name=Three Down, one to go
 :description=Can the two climbers pull their friend to safety?
-:hint.1.code=h{VllV)aV{W.]WaQVWhVcZ{7(ZZhV"x"Ve.]&WZWV.{,%.
-:hint.2.code=h'z*zd)9hzBoMByEdnh_y-nS*zzVUDzb9';zzz'bUD
-:hint.3.code=s$@DkO]D=]@@Wa]D3Oj]D[D@seajkW@[j@XaXO@FD>W@@3>[H|
+:author_name=
+:author_url=
+:hint.1=You don't need to use all the climbing tokens.
+:hint.2=Dig a hole from the top and climb back up.
+:hint.3=Bridge up to the hole using all the bridge tokens.
 % Colonel Fazackerley's solution
-:solution.1.code=52wh&5&Fh5*}&/y&*}&"{zhw/&BPDKF*}%5*}&@Kvh>`&Xvy/FIy&`h&D2&ZhAF/&%Vy}:*@00h!&8&VO*}&v*/}`P@&BhZF&I&/Z*>b55I}y`@`Oh2F&&>/*5ksVG}
+:solution.1=block;(8,3);bridge;(6,9);bash&(10,3);dig&(10,3);4;bash;(8,3);bridge;(9,7);8;climb;(11,5);dig;(12,2);5;bridge;5;(12,4);until:WON
 :num_rabbits=4
 :num_to_save=4
-:climb=2
-:bridge=3
+:rabbit_delay=4
 :bash=3
+:block=3
+:bridge=3
+:climb=2
 :dig=3
 :explode=3
-:block=3
 #################
 #  Q           O#
 #           / /##
