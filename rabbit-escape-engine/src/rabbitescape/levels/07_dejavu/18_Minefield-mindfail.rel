@@ -1,12 +1,12 @@
 :name=Minefield Mind-fail
-:description=Dig a path through the mine!
+:description=Mmmm - Deep fried rabbit
 :author_name=tttppp
 :author_url=https://github.com/tttppp
 :hint.1=Dig, bash, bridge and bash to the bottom of a two-high hole.
 :hint.2=Bash with the first rabbit and bridge with the second to hold back all the others.
 :hint.3=Tunnel with the single rabbit to near the exit. You will need some quick changes between dig, bash and bridge near the end to hollow out a large enough hole to bridge across.
 :num_rabbits=4
-:num_to_save=2
+:num_to_save=4
 :rabbit_delay=30
 :bash=99
 :bridge=99
