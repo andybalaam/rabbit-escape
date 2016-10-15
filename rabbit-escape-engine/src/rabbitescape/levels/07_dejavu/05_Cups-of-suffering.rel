@@ -2,6 +2,7 @@
 :description=
 :author_name=colonelfazackerley (solution by tttppp)
 :author_url=https://github.com/colonelfazackerley
+:solution.1=;dig;(16,8);3;(27,8);;block;(18,11);;bridge;2;(25,11)&(18,11);block;4;(30,11);3;dig;;(5,8)&block;3;(14,11);bridge;;(7,11);(14,11);15;block;18;explode;27;(30,11);27
 :hint.1=
 :hint.2=
 :hint.3=
