@@ -20,7 +20,7 @@ public class SolutionInterpreter
     private CompletionState untilState;
     private SolutionCommand command;
     private int untilCount;
-    private boolean emptySteps = false;
+    public boolean emptySteps = false;
 
     /**
      * appendWon defaults to true if you omit it.

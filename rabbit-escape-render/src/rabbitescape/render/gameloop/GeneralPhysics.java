@@ -58,7 +58,7 @@ public class GeneralPhysics implements Physics
     private final WorldModifier worldModifier;
     private final LevelWinListener winListener;
     private final List<StatsChangedListener> statsListeners;
-    private final SolutionInterpreter solutionInterpreter;
+    public final SolutionInterpreter solutionInterpreter;
     private final UiPlayback uiPlayback;
 
     private static final int FAST_FRAME_SKIP = 3;

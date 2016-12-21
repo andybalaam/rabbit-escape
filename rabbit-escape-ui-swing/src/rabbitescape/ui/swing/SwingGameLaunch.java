@@ -266,6 +266,11 @@ public class SwingGameLaunch implements GameLaunch
      */
     private void showIntroDialog()
     {
+        if (inDemoMode())
+        {
+            return;
+        }
+
         Util.Function<String, String> insertNewlines =
             new Util.Function<String, String>()
         {
@@ -376,6 +381,11 @@ public class SwingGameLaunch implements GameLaunch
      */
     private void showWonDialog()
     {
+        if (inDemoMode())
+        {
+            return;
+        }
+
         showDialog(
             t( "You won!" ),
             t(
@@ -462,5 +472,10 @@ public class SwingGameLaunch implements GameLaunch
     public void addStatsChangedListener( Physics.StatsChangedListener listener )
     {
         physics.addStatsChangedListener( listener );
+    }
+
+    private boolean inDemoMode()
+    {
+        return ( !physics.solutionInterpreter.emptySteps );
     }
 }
