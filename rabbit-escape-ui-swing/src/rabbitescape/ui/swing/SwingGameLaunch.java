@@ -383,6 +383,14 @@ public class SwingGameLaunch implements GameLaunch
     {
         if (inDemoMode())
         {
+            try
+            {
+                Thread.sleep( 2000 );
+            }
+            catch ( InterruptedException e )
+            {
+                // Ignore
+            }
             return;
         }
 
@@ -401,6 +409,19 @@ public class SwingGameLaunch implements GameLaunch
      */
     private void showLostDialog()
     {
+        if (inDemoMode())
+        {
+            try
+            {
+                Thread.sleep( 2000 );
+            }
+            catch ( InterruptedException e )
+            {
+                // Ignore
+            }
+            return;
+        }
+
         showDialog(
             t( "You lost!" ),
             t(
