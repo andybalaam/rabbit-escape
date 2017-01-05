@@ -2,11 +2,12 @@
 :description=
 :author_name=tttppp
 :author_url=https://github.com/tttppp
+:solution.1=bridge;(5,8);4;(3,7);6;(8,6);;(2,6);5;(6,5);2;(1,5);37
 :hint.1=
 :hint.2=
 :hint.3=
 :num_rabbits=25
-:num_to_save=13
+:num_to_save=12
 :rabbit_delay=10
 :bridge=99
 #Q Q Q Q Q    #
