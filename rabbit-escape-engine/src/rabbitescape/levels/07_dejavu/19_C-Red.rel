@@ -8,6 +8,7 @@
 :solution.1=block;(11,1);dig;(3,2);14;(11,1);18;bash;2;(3,9);bridge;(5,11);11;(8,9);dig;11;(5,11);bash;4;(5,14);bridge;(11,14);bash;3;(11,5);36;
 :solution.2=dig&(4,1);(4,3);4;bash;(4,5);dig;(2,5);bash;(3,9);(9,12);bridge;(11,14);until:WON
 :solution.3=dig;(11,1);12;(13,5);bridge;(12,5);(9,12);bash;(10,4);bridge;14;(6,10);dig;(4,3);13;bash;(4,5);(9,12);5;bridge;3;(12,14);12;until:WON
+:solution.4=2;dig;(10,1);;bash;5;(10,4);11;dig;5;(4,3);3;(4,5);bridge;3;(4,7);3;bash;4;(9,12);2;bridge;(11,14);67
 :num_rabbits=9
 :num_to_save=9
 :rabbit_delay=10
