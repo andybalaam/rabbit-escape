@@ -2,6 +2,7 @@
 :description=
 :author_name=tttppp
 :author_url=https://github.com/tttppp
+:solution.1=;climb;(3,7);;dig&(5,2);10;climb;;(3,7);;dig;3;(4,2);;bridge;11;(4,7);;dig;2;(6,2);30
 :hint.1=
 :hint.2=
 :hint.3=
@@ -10,7 +11,7 @@
 :rabbit_delay=10
 :bridge=1
 :climb=2
-:dig=4
+:dig=3
 ##############
 #            #
 #            #
