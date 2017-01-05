@@ -2,6 +2,9 @@
 :description=Wait, can rabbits climb trees?
 :author_name=tttppp
 :author_url=https://github.com/tttppp
+:hint.1=Bridge rightwards towards the underside of the branch, and bash away a single chunk of it.  Do this twice more until there is a hole in the branch.  You will need to bash away the bottom of each bridge to allow making the next.
+:hint.2=Bridge up onto the branch and find a way to clear enough of it away that you can get a bridge up to the exit.
+:hint.3=Bash the lump at the end of the branch, and dig away the slope and two more blocks from the end.  Bridge from directly under the entrance up to the exit.  You may need a second bridge under the first to catch rabbits who fall off before it's finished.
 :solution.1=bridge;;(6,11);(1,11);;bash;7;(9,9);9;(4,9);(8,11);2;bridge;;(7,11);3;bash;3;(10,9);4;(7,11);bridge;10;(8,11);7;bash;(11,9);5;bridge;(11,9);2;(7,11);15;(5,10);9;(13,7);bash;(7,6);dig;(5,7);10;(6,6);(7,6);3;bridge;36;(4,9);9;(7,6);8;(10,3);31
 :num_rabbits=4
 :num_to_save=4

@@ -1,8 +1,8 @@
 :name=Tree, tree, tree again
 :description=This time you have to save all of them!
-:hint.1=Use all the bridges.
-:hint.2=Explode is not needed.
-:hint.3=The lowest branch is not needed.
+:hint.1=Find a way up that doesn't use blockers.
+:hint.2=Skip straight past the lowest branch.
+:hint.3=Bash into the trunk, then dig down one and bash again to keep all rabbits to the right.  Bridge onto the platform at the right and bridge left from it up to the second branch.  Bridge from the second branch up to the top.
 :solution.1=;bash;;(12,11);dig;(17,11);2;bash;12;(17,11);2;bridge;(28,11);13;(30,10);7;(27,8);6;(21,4);10;(18,2);30
 :author_name=GamingInky
 :author_url=https://github.com/GamingInky

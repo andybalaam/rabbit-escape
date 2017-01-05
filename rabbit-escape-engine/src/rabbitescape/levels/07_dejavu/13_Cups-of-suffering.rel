@@ -1,11 +1,11 @@
 :name=Cups of suffering
-:description=
+:description=Precision co-ordination is key.
 :author_name=colonelfazackerley (solution by tttppp)
 :author_url=https://github.com/colonelfazackerley
 :solution.1=;dig;(16,8);3;(27,8);;block;(18,11);;bridge;2;(25,11)&(18,11);block;4;(30,11);3;dig;;(5,8)&block;3;(14,11);bridge;;(7,11);(14,11);15;block;18;explode;27;(30,11);27
-:hint.1=
-:hint.2=
-:hint.3=
+:hint.1=Dig from the middle cup facing right, and the right cup facing left.  Find a way to get them to start bridging at the exact same moment.
+:hint.2=Block the right-facing rabbit next to the gap so it can wait for the left-facing one.  Make them bridge at the exact same moment - using the pause button may help.
+:hint.3=Block at the far right, and block your right-facing rabbit to wait for a new left-facing one you dig down from the left-hand cup.  Co-ordinate bridging again to finish your work!
 :num_rabbits=9
 :num_to_save=8
 :rabbit_delay=32

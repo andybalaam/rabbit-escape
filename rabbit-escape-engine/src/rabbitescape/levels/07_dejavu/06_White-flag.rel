@@ -1,11 +1,11 @@
 :name=White flag
-:description=
+:description=Ready to surrender?
 :author_name=tttppp
 :author_url=https://github.com/tttppp
 :solution.1=bridge;5;(1,7);3;dig;4;climb;(3,6);;dig;(4,2);bridge;12;(4,6);5;dig;(5,2);25
-:hint.1=
-:hint.2=
-:hint.3=
+:hint.1=Get one rabbit to climb up and dig away the flagpole.
+:hint.2=Dig the flagpole down to one block high and bridge to stop digging.
+:hint.3=Let the climber climb up again and dig away the piece of flag next to the flagpole.  Bridge the other rabbits over the lump that remains.
 :num_rabbits=5
 :num_to_save=5
 :rabbit_delay=10
