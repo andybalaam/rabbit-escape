@@ -2,6 +2,7 @@
 :description=
 :author_name=Andy Balaam (solution by colonelfazackerley)
 :author_url=http://artificialworlds.net/rabbit-escape/
+:solution.1=2;bridge;33;(12,5)&(12,5);2;block;;(8,3);;bridge;5;(9,3);26;climb;;(8,3);16;bridge;(5,3);28
 :hint.1=
 :hint.2=
 :hint.3=
