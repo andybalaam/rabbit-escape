@@ -1,25 +1,30 @@
-:name=Planet Paradise
-:description=Don't lose your gravity and fall off the planet just get to the core.
+:name=Tree, tree, tree again
+:description=This time you have to save all of them!
+:hint.1=Use all the bridges.
+:hint.2=Explode is not needed.
+:hint.3=The lowest branch is not needed.
+:solution.1=;bash;;(12,11);dig;(17,11);2;bash;12;(17,11);2;bridge;(28,11);13;(30,10);7;(27,8);6;(21,4);10;(18,2);30
 :author_name=GamingInky
 :author_url=https://github.com/GamingInky
-:hint.1=You have to smash the planet.
-:hint.2=The lower you are the better.
-:hint.3=Bridging would be useful at the end.
-:num_rabbits=1
-:num_to_save=1
-:rabbit_delay=4
-:bash=2
-:bridge=2
-                 Q         
-                          #
-                          #
-               # #         
-                ###        
-               #####    #  
-           #  #######   ## 
-          #################
-         # #  ## O###   ## 
-        #        ###    #  
-       #        ###        
-     #           #         
-     ########## # #        
+:num_rabbits=4
+:num_to_save=4
+:rabbit_delay=15
+:bash=3
+:bridge=5
+:dig=2
+:block=1
+:explode=1
+:music=tryad-empty
+                                
+            O  /#               
+            #####               
+              ##                
+              ##                
+              ##########\       
+      #       ###      ##       
+     /#####\  ###               
+     #    #######               
+             ####               
+ Q           ####              #
+\           /####\           ###
+############################### 
