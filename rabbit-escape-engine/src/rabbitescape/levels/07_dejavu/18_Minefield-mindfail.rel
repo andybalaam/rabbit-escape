@@ -5,6 +5,7 @@
 :hint.1=Dig, bash, bridge and bash to the bottom of a two-high hole.
 :hint.2=Bash with the first rabbit and bridge with the second to hold back all the others.
 :hint.3=Tunnel with the single rabbit to near the exit. You will need some quick changes between dig, bash and bridge near the end to hollow out a large enough hole to bridge across.
+:solution.1=dig&(3,2)&bash;5;(3,5)&bridge;3;(5,5)&bash;;(6,5);(8,4)&dig;6;(10,4);2;bash;2;(10,7)&dig;7;(14,7)&bridge&(7,4);bash;6;(14,11);dig;;(15,11);;bridge&(15,12)&bash;;(16,12);(7,4);64
 :num_rabbits=4
 :num_to_save=4
 :rabbit_delay=30
