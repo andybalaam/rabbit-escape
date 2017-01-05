@@ -1,0 +1,28 @@
+:name=Block drop stop shop
+:description=Don't blow up your blockers!
+:author_name=GamingInky
+:author_url=
+:hint.1=Place the 2 blockers in the normal place.
+:hint.2=Is there some way of getting them down and them surviving?
+:hint.3=When all the other rabbits have gone past turn the first blocker into a brolly and the second into a bridger.
+:solution.1=2;block;(15,4);;(3,6);58;brolly;2;(15,4);5;bridge;(3,6);28
+:num_rabbits=10
+:num_to_save=10
+:rabbit_delay=5
+:block=2
+:bridge=1
+:brolly=1
+:music=tryad-witness
+#####################
+#    Q              #
+#                   #
+#  #######          #
+#                   #
+#     ##########    #
+#                   #
+#  ########         #
+#                   #
+#         ####      #
+#                   #
+#                 O #
+#####################
