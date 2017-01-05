@@ -5,8 +5,8 @@
 :hint.1=Dig once then block with the first rabbit to stop rabbits walking to the right. This rabbit will escape last.
 :hint.2=Using the second rabbit dig a small pit to the left of the first rabbit and block to wait for the third.
 :hint.3=Once the third rabbit is in the pit, drop a dig token above the two and then quickly drop a bash token directly on them. The third rabbit should bash once before the floor is taken from under him.
-% This is colonelfazackerley's solution, not the "official" solution.
 :solution.1=dig;(10,2);3;block;(10,4);20;dig;(10,4);6;bash;(10,8);block&(10,8);bash;(10,8);until:WON
+:solution.2=dig&(11,2);6;bash;;(11,5)&dig;;(12,5);;bash;3;(12,8)&block;2;(13,8);3;bash;;(13,8);3;(12,8);14
 :num_rabbits=3
 :num_to_save=3
 :rabbit_delay=10
