@@ -2,7 +2,7 @@
 :description=Wait, can rabbits climb trees?
 :author_name=tttppp
 :author_url=https://github.com/tttppp
-:solution.1=bridge&(1,11);6;bash;(4,9);bridge;(5,11);3;bash;2;(5,11);bridge;4;(6,11);3;bash;;(8,11);6;(9,9);bridge;;(8,11);4;(7,11);5;(6,11);2;bash;8;(6,11);6;(6,11);6;(6,11);4;bridge;;(9,10);;bash;(10,9);5;bridge;5;(8,11);;bash;5;(11,9);2;bridge;;(11,9);8;(13,7);;bash;(7,6);dig;(5,7);11;bridge;;(4,9);dig;5;(6,6);3;bridge;;(6,7);3;dig;(7,6);;(5,7);4;bridge;(6,7);18;(9,4);27
+:solution.1=bridge;;(6,11);(1,11);;bash;7;(9,9);9;(4,9);(8,11);2;bridge;;(7,11);3;bash;3;(10,9);4;(7,11);bridge;10;(8,11);7;bash;(11,9);5;bridge;(11,9);2;(7,11);15;(5,10);9;(13,7);bash;(7,6);dig;(5,7);10;(6,6);(7,6);3;bridge;36;(4,9);9;(7,6);8;(10,3);31
 :num_rabbits=4
 :num_to_save=4
 :rabbit_delay=15
