@@ -1,7 +1,7 @@
 :name=Tomb of Doom
-:description=
-:author_name=
-:author_url=
+:description=Make sure you bring your pickaxe!
+:author_name=tttppp
+:author_url=https://github.com/tttppp
 :hint.1=Dig once then block with the first rabbit to stop rabbits walking to the right. This rabbit will escape last.
 :hint.2=Using the second rabbit dig a small pit to the left of the first rabbit and block to wait for the third.
 :hint.3=Once the third rabbit is in the pit, drop a dig token above the two and then quickly drop a bash token directly on them. The third rabbit should bash once before the floor is taken from under him.

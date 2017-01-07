@@ -4,7 +4,7 @@
 :author_url=https://github.com/tttppp
 :hint.1=It's all about timing when you build.  Wait until all five rabbits are out, then let the last rabbit walk right, left, right, left and just before it gets to the far left, get the rabbit on the far right to bridge up to the left (the bridging rabbit should be one of two who were walking on top of each other).
 :hint.2=As soon as the first bridge is finished, get the same rabbit to bridge up left-to-right.  As soon as that is finished, do the same to bridge left again.
-:hint.3=When 3 bridges are built, wait for the builder to walk across to the right and back to the left, turn around and take one step right.  Get the rabbit behind (who is turning around) to bridge left-to-right up to the top of the flag (the bridging rabbit should have been walking alone, not on top of another).  Dig at the second-last block of the flag and all the rabbits will be able get to the hold before it's too deep and make it down.
+:hint.3=When 3 bridges are built, wait for the builder to walk across to the right and back to the left, turn around and take one step right.  Get the rabbit behind (who is turning around) to bridge left-to-right up to the top of the flag (the bridging rabbit should have been walking alone, not on top of another).  Dig at the second-last block of the flag and all the rabbits will be able get to the hole before it's too deep and make it down.
 :solution.1=50;bridge;(3,7);6;(1,6);6;(3,5);13;(1,4);dig;(8,2);until:WON
 :num_rabbits=5
 :num_to_save=5

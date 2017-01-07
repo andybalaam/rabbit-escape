@@ -1,10 +1,10 @@
 :name=Three Down, one to go
 :description=Can the two climbers pull their friend to safety?
-:author_name=
-:author_url=
+:author_name=tttppp
+:author_url=https://github.com/tttppp
 :hint.1=You don't need to use all the climbing tokens.
-:hint.2=Dig a hole from the top and climb back up.
-:hint.3=Bridge up to the hole using all the bridge tokens.
+:hint.2=Dig a hole from the top of the first slope and place a climb token to stop the digger disappearing through the floor.
+:hint.3=Bridge up from the ground, placing another bridge token when the rabbit stops because it hit its head.
 % Colonel Fazackerley's solution
 :solution.1=block;(8,3);bridge;(6,9);bash&(10,3);dig&(10,3);4;bash;(8,3);bridge;(9,7);8;climb;(11,5);dig;(12,2);5;bridge;5;(12,4);until:WON
 :solution.2=;dig;(12,2);19;climb;2;(12,9);;bridge;12;(6,9);32;(9,7);7;(10,6);30
