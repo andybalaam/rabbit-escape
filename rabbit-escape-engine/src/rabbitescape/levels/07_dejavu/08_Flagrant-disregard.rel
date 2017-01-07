@@ -2,10 +2,10 @@
 :description=Will you have enough regard for rabbit safety?
 :author_name=tttppp
 :author_url=https://github.com/tttppp
-:solution.1=;climb;(3,7);;dig&(5,2);10;climb;;(3,7);;dig;3;(4,2);;bridge;11;(4,7);;dig;2;(6,2);30
 :hint.1=Can you find a way to climb up and dig away the flagpole?
 :hint.2=Climb one rabbit up and dig on the second square, cutting the flag away from the pole.
 :hint.3=Climb another, and dig away the flagpole.  Bridge at the bottom to stop digging.  When that rabbit climbs up again, dig away the nearest piece of flag to free everyone.
+:solution.1=;climb;(3,7);;dig&(5,2);10;climb;;(3,7);;dig;3;(4,2);;bridge;11;(4,7);;dig;2;(6,2);30
 :num_rabbits=5
 :num_to_save=5
 :rabbit_delay=10

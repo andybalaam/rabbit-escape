@@ -2,10 +2,10 @@
 :description=Remember to take breaks to avoid RSI!
 :author_name=tttppp
 :author_url=https://github.com/tttppp
-:solution.1=dig&(3,2)&bash;5;(3,5)&bridge&(6,5);bash;(8,4);5;(6,5);dig;5;(10,4);;bash;3;(10,7);4;dig;2;(16,9);6;(14,7);bash;9;(14,11)&bridge&dig;;(15,11)&bridge;;(15,12)&bash;2;(16,11);2;(16,12);51
 :hint.1=Dig above the entrance and bash right towards the bottom of the two-space-high hole.  Once there, bridge and bash to get to the bottom of the next two-space-high hole.  Bash again for two blocks, and dig.
 :hint.2=Dig down three blocks then bash all the way across until you run out of floor.  When the rabbit drops down, dig.  This rabbit will be sacrificed by falling down the two-space hole to the left of the exit.
 :hint.3=Get the next rabbit to dig 2 blocks before reaching the hole we just made.  Two blocks above the bottom, bash right to next to the hold, then dig one down. Bridge across the gap where our last rabbit was sacrificed, then bash across and fall into the exit.
+:solution.1=dig&(3,2)&bash;5;(3,5)&bridge&(6,5);bash;(8,4);5;(6,5);dig;5;(10,4);;bash;3;(10,7);4;dig;2;(16,9);6;(14,7);bash;9;(14,11)&bridge&dig;;(15,11)&bridge;;(15,12)&bash;2;(16,11);2;(16,12);51
 :num_rabbits=4
 :num_to_save=3
 :rabbit_delay=30

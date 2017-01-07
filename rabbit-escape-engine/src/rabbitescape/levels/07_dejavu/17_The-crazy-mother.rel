@@ -2,10 +2,10 @@
 :description=It's a bit like a washing machine.
 :author_name=tttppp
 :author_url=https://github.com/tttppp
-:solution.1=2;bridge;2;(20,14);38;(20,13);12;dig;35;(15,8);50
 :hint.1=You can use a well-placed stack of bridges to turn your rabbits around.
 :hint.2=As soon as the level starts, place a bridge token 4 squares to the right of the right-hand entrance, so it sits at the top of a two-space slope.
 :hint.3=When the rabbit gets there and builds a bridge, bridge again on top, but time it right so the bridge goes leftwards.  Now wait for all the rabbits to be going the same way, and dig above the right of the entrance to save everyone!
+:solution.1=2;bridge;2;(20,14);38;(20,13);12;dig;35;(15,8);50
 :num_rabbits=20
 :num_to_save=20
 :rabbit_delay=4

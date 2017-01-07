@@ -2,10 +2,10 @@
 :description=Need more climbers?
 :author_name=tttppp
 :author_url=https://github.com/tttppp
-:solution.1=brolly;2;(1,1);4;dig;2;(3,2);brolly;3;(3,1);2;climb;;(1,7);8
 :hint.1=Give one of your early right-facing rabbits a brolly so the left-facing one gets to the climb token first.
 :hint.2=Make the 4th left-facing rabbit dig directly below its entrance, so it doesn't fall too far into the exit.
 :hint.3=Give the 5th left-facing rabbit a brolly to survive too.  Use your climb token to help one more rabbit escape from the hole on the left.
+:solution.1=brolly;2;(1,1);4;dig;2;(3,2);brolly;3;(3,1);2;climb;;(1,7);8
 :num_rabbits=10
 :num_to_save=10
 :rabbit_delay=4

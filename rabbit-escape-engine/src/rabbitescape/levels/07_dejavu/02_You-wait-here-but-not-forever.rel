@@ -2,10 +2,10 @@
 :description=Can you save all the rabbits?
 :author_name=GamingInky
 :author_url=https://github.com/GamingInky
-:solution.1=;bridge;(10,4);;block;(8,4);;(3,4);bridge;;(13,4);(17,4);;(20,2);12;(8,4);8;(3,4);39
 :hint.1=Send your first rabbit rightwards building bridges to the exit.
 :hint.2=Keep the other rabbits near the entrance using blockers, and free them at the end.
 :hint.3=Once the path to the exit is created, turn the right-hand blocker into a bridger.  Later, bridge the left-hand blocker into the wall to turn around.
+:solution.1=;bridge;(10,4);;block;(8,4);;(3,4);bridge;;(13,4);(17,4);;(20,2);12;(8,4);8;(3,4);39
 :num_rabbits=10
 :num_to_save=10
 :rabbit_delay=4

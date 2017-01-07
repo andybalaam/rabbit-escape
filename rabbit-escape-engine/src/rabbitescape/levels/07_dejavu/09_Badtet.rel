@@ -2,10 +2,10 @@
 :description=No, that was BAD intelligence.
 :author_name=colonelfazackerley
 :author_url=https://github.com/colonelfazackerley
-:solution.1=bridge;(3,13);;block&bridge&bash&bridge;(5,12);8;(7,11);2;(6,10);6;bash;;(6,11);bridge;(6,11);10;(3,9);block;11;(0,7);;bridge;2;(1,8);bash;2;(2,8)&bridge;3;(4,7);8;(3,7);9;(6,5)&bash;2;(5,5)&bridge;;(5,5);4;(2,3);block;6;(0,2);bridge;3;(1,3);74;explode;2;(0,2);(0,7);
 :hint.1=Bridge back and forth between islands.
 :hint.2=If your bridge doesn't go high enough, sometimes you can bash and bridge again to make it.
 :hint.3=Place blockers at the end of bridges to the far left to get past the piece by the entrance, and again for the piece above that.
+:solution.1=bridge;(3,13);;block&bridge&bash&bridge;(5,12);8;(7,11);2;(6,10);6;bash;;(6,11);bridge;(6,11);10;(3,9);block;11;(0,7);;bridge;2;(1,8);bash;2;(2,8)&bridge;3;(4,7);8;(3,7);9;(6,5)&bash;2;(5,5)&bridge;;(5,5);4;(2,3);block;6;(0,2);bridge;3;(1,3);74;explode;2;(0,2);(0,7);
 :num_rabbits=10
 :num_to_save=8
 :rabbit_delay=30,30,30,10
