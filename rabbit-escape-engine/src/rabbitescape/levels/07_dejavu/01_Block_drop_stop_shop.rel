@@ -2,16 +2,17 @@
 :description=Don't blow up your blockers!
 :author_name=GamingInky
 :author_url=https://github.com/GamingInky
-:hint.1=Place the 2 blockers in the normal place.
-:hint.2=Is there some way of getting them down and them surviving?
-:hint.3=Wait for the other rabbits to walk past, then give the first blocker a brolly and turn the second into a bridger.
-:solution.1=2;block;(15,4);;(3,6);58;brolly;2;(15,4);5;bridge;(3,6);28
+:hint.1=Can you free the right-hand blocker by bridging, with a bridge below to catch the rabbit?
+:hint.2=Block on the right and bridge left to the wall.  Bridge up to save the blocker.
+:hint.3=Bridge from the floor where you fall off the last platform (over the exit).  Block on the lowest platform to stop other rabbits getting involved.  Keep the bridge going until you reach the right-hand wall.  Bridge back to the left to join to the lowest platform, turn around at the blocker, and bridge from the top of the bridge you just built (parallel to the bridge over the exit).  Continue bridging to the right-hand wall.  Now free both blockers by bridging, and bash through the bridge on the floor to get to the exit.
+:solution.1=block&(15,4)&bridge&(3,6)&(14,11);block;46;(12,8);2;bridge;6;(17,9);10;(16,10);9;(14,9);6;(17,7);8;(15,4);(12,8);2;bash;2;(14,11);47
+:solution.2=bridge;;block&(11,4);;bridge;(3,6);28;(14,11);15;(17,9);8;(19,7);5;(18,7);3;(11,4);5;bash;2;(14,11);49
 :num_rabbits=10
 :num_to_save=10
 :rabbit_delay=5
+:bash=1
 :block=2
-:bridge=1
-:brolly=1
+:bridge=8
 :music=tryad-the_final_rewind
 #####################
 #    Q              #
