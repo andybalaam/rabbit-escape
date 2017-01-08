@@ -1,10 +1,11 @@
-:name=Gotta catch em all
-:description=
+:name=Gotta catch 'em all
+:description=I choose you Bridger!
 :author_name=tttppp
 :author_url=https://github.com/tttppp
-:hint.1=
-:hint.2=
-:hint.3=
+:hint.1=You want to create bridges so that no rabbit falls to their death from a bridge.
+:hint.2=Use the first rabbit from the left entrance to create the right-most bridge.
+:hint.3=If you find a solution that would work if there was another row of sky then you're on the right tracks!
+:solution.1=bridge;(5,8);6;(3,7);4;(8,6);;(1,5);5;(6,5);7;(3,4);32
 :num_rabbits=25
 :num_to_save=13
 :rabbit_delay=10
