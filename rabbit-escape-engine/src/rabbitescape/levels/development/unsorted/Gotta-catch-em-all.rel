@@ -1,14 +1,16 @@
 :name=Gotta catch em all
-:description=
+:description=Or at least lots of them.
 :author_name=tttppp
 :author_url=https://github.com/tttppp
-:hint.1=
-:hint.2=
-:hint.3=
+:hint.1=You will need six bridging tokens, building three long bridges.
+:hint.2=Isn't it annoying that bridging from the very first position ends up with rabbits dying off the top of the screen?
+:hint.3=Place a token on the first piece of flat land and wait for a rabbit to pick it up.  Place a token on the second-from-bottom piece of slope and wait for a rabbit to pick that up.  Extend both those bridges in the normal way, so they are each 6 pieces long.  Meanwhile, place a token at the very top of the slope.  Once that bridge is 3 blocks long, place a token, not at the top, but one square before (under the second entrance from the left).  You will end with with a bridge 5 pieces long, preventing rabbits dying at the top and still saving enough to win.
+:solution.1=bridge;(5,8);5;(3,7);6;(8,6);;(1,5);6;(6,5);6;(3,4);31
 :num_rabbits=25
 :num_to_save=13
 :rabbit_delay=10
 :bridge=99
+:music=tryad-the_final_rewind
 #Q Q Q Q Q    #
 #             #
 #             #
