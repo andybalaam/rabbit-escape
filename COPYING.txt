@@ -1,8 +1,8 @@
 Rabbit Escape
 =============
 
-Code, levels and graphics Copyright(C) 2014-2017 by Andy Balaam and the
-Rabbit Escape developers, released under GPL v2 or later.
+Code, levels, sound effects and graphics Copyright(C) 2014-2017 by Andy Balaam
+and the Rabbit Escape developers, released under GPL v2 or later.
 https://www.gnu.org/licenses/old-licenses/gpl-2.0.txt
 
 Music Copyright(C) 2006 by tryad http://tryad.org/
