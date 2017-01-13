@@ -351,8 +351,8 @@ android-images-128: $(SVGANDROIDIMAGES128) $(PNGANDROIDIMAGES128)
 android-icons-mdpi:    $(SVGANDROIDICONSMDPI)
 android-icons-hdpi:    $(SVGANDROIDICONSHDPI)
 android-icons-xhdpi:   $(SVGANDROIDICONSXHDPI)
-android-icons-xxhdpi:  $(ANDROIDICONSXXHDPI_DEST)/ic_launcher.png
-android-icons-xxxhdpi: $(ANDROIDICONSXXXHDPI_DEST)/ic_launcher.png
+android-icons-xxhdpi:  $(ANDROIDICONSXXHDPI_DEST)/ic_launcher.png $(ANDROIDICONSXXHDPI_DEST)/ic_launcher_free.png
+android-icons-xxxhdpi: $(ANDROIDICONSXXXHDPI_DEST)/ic_launcher.png $(ANDROIDICONSXXXHDPI_DEST)/ic_launcher_free.png
 
 android-images: \
 	android-images-32 \
@@ -379,27 +379,26 @@ android-compile: android-pre
 	@cd rabbit-escape-ui-android && \
 	./gradlew --daemon -q compileDebugSources
 
-android-debug: app/build/outputs/apk/app-debug.apk
+android-debug: app/build/outputs/apk/app-paid-debug.apk
 
-app/build/outputs/apk/app-debug.apk: android-pre
+app/build/outputs/apk/app-paid-debug.apk: android-pre
 	@echo ". Building debug apk $@"
 	@cd rabbit-escape-ui-android && ./gradlew assembleDebug
-
-dist-android-release-signed: dist/rabbit-escape-${VERSION}.apk
 
 KEY_STORE_PASSWORD_FILE := $(HOME)/pw/android-key-store-password.txt
 KEY_PASSWORD_FILE := $(HOME)/pw/android-key-password.txt
 
 # ls commands are to check that the password files exist
-dist/rabbit-escape-${VERSION}.apk: android-pre
-	@echo ". Building and signing release apk $@"
+dist-android-release-signed: android-pre
+	@echo ". Building and signing release apk dist/rabbit-escape-${VERSION}.apk and dist/rabbit-escape-free-${VERSION}.apk"
 	@ls $(KEY_STORE_PASSWORD_FILE) > /dev/null && \
 	ls $(KEY_PASSWORD_FILE) > /dev/null && \
 	cd rabbit-escape-ui-android && \
 	KEY_STORE_PASSWORD=`cat $(KEY_STORE_PASSWORD_FILE)` \
 	KEY_PASSWORD=`cat $(KEY_PASSWORD_FILE)` \
 	./gradlew -q assembleRelease && \
-	mv app/build/outputs/apk/app-release.apk ../dist/rabbit-escape-${VERSION}.apk
+	mv app/build/outputs/apk/app-paid-release.apk ../dist/rabbit-escape-${VERSION}.apk && \
+	mv app/build/outputs/apk/app-free-release.apk ../dist/rabbit-escape-free-${VERSION}.apk
 
 # Requires sudo apt-get install doxygen graphviz
 doxygen:

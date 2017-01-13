@@ -4,8 +4,24 @@ android {
     compileSdkVersion 21
     buildToolsVersion "21.1.2"
 
+    productFlavors {
+        paid {
+            applicationId "net.artificialworlds.rabbitescape"
+            resValue "string", "app_name", "Rabbit Escape"
+            manifestPlaceholders = [
+                appIcon: "@drawable/ic_launcher"
+            ]
+        }
+        free {
+            applicationId "net.artificialworlds.rabbitescapefree"
+            resValue "string", "app_name", "Rabbit Escape Free"
+            manifestPlaceholders = [
+                appIcon: "@drawable/ic_launcher_free"
+            ]
+        }
+    }
+
     defaultConfig {
-        applicationId "net.artificialworlds.rabbitescape"
         minSdkVersion 8
         targetSdkVersion 21
         versionCode 100
