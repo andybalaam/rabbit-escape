@@ -1,0 +1,9 @@
+#!/bin/bash
+
+set -x
+set -u
+
+echo -e "auth $(cat ~/.emulator_console_auth_token)\nkill" \
+    | telnet localhost 5554
+
+echo "Emulator stopped."

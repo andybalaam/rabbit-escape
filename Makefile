@@ -332,19 +332,13 @@ slowtest: test android-debug-test slowtest-run
 # Run slow tests without building first
 slowtest-run: expecttest android-smoke-tests
 
-slowtest-verbose: expecttest-verbose android-smoke-tests
-
 expecttest:
 	@echo ". Running expect tests"
-	@./expecttests/expecttests > /dev/null
-
-expecttest-verbose:
 	./expecttests/expecttests
 
 # Android
 # -------
 
-ADB := ~/Android/Sdk/platform-tools/adb
 GRADLE := ./gradlew --daemon -q
 
 rabbit-escape-ui-android/app/libs/rabbit-escape-generic.jar: dist/rabbit-escape-generic.jar
@@ -391,7 +385,7 @@ android-debug: \
 	rabbit-escape-ui-android/app/build/outputs/apk/app-paid-debug.apk \
 	rabbit-escape-ui-android/app/build/outputs/apk/app-free-debug.apk
 
-android-debug-test: \
+android-debug-test: android-debug \
 	rabbit-escape-ui-android/app/build/outputs/apk/app-paid-debug-androidTest.apk \
 	rabbit-escape-ui-android/app/build/outputs/apk/app-free-debug-androidTest.apk
 
@@ -428,20 +422,10 @@ dist-android-release-signed: android-pre
 
 android-smoke-tests:
 	@echo ". Running Android smoke tests"
-	@echo "(Start an emulator and ensure running '${ADB} devices' shows a device before you try to do this.)"
-	${ADB} devices
-	- ${ADB} shell am force-stop net.artificialworlds.rabbitescapefree
-	${ADB} push rabbit-escape-ui-android/app/build/outputs/apk/app-free-debug-androidTest.apk /data/local/tmp/net.artificialworlds.rabbitescapefree.test
-	${ADB} shell pm install -r "/data/local/tmp/net.artificialworlds.rabbitescapefree.test"
-	${ADB} shell am instrument -w -r -e debug false -e class rabbitescape.ui.android.DialogsTest net.artificialworlds.rabbitescapefree.test/android.test.InstrumentationTestRunner
-	${ADB} shell am instrument -w -r -e debug false -e class rabbitescape.ui.android.SmokeTest net.artificialworlds.rabbitescapefree.test/android.test.InstrumentationTestRunner
-	${ADB} shell am instrument -w -r -e debug false -e class rabbitescape.ui.android.TestAndroidConfigUpgradeTo1 net.artificialworlds.rabbitescapefree.test/android.test.InstrumentationTestRunner
-	- ${ADB} shell am force-stop net.artificialworlds.rabbitescape
-	${ADB} push rabbit-escape-ui-android/app/build/outputs/apk/app-paid-debug-androidTest.apk /data/local/tmp/net.artificialworlds.rabbitescape.test
-	${ADB} shell pm install -r "/data/local/tmp/net.artificialworlds.rabbitescape.test"
-	${ADB} shell am instrument -w -r -e debug false -e class rabbitescape.ui.android.DialogsTest net.artificialworlds.rabbitescape.test/android.test.InstrumentationTestRunner
-	${ADB} shell am instrument -w -r -e debug false -e class rabbitescape.ui.android.SmokeTest net.artificialworlds.rabbitescape.test/android.test.InstrumentationTestRunner
-	${ADB} shell am instrument -w -r -e debug false -e class rabbitescape.ui.android.TestAndroidConfigUpgradeTo1 net.artificialworlds.rabbitescape.test/android.test.InstrumentationTestRunner
+	./build-scripts/android-start-emulator "android-8" "3.2in QVGA (ADP2)"
+	./build-scripts/android-test "free" "app-free-debug"
+	./build-scripts/android-test "" "app-paid-debug"
+	./build-scripts/android-stop-emulator
 
 clean-android:
 	cd rabbit-escape-ui-android && ${GRADLE} clean

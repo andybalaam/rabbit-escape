@@ -1,0 +1,49 @@
+#!/bin/bash
+
+set -x
+set -u
+set -e
+
+# Args
+
+TARGET="$1"   # E.g. "android-8"
+DEVICE="$2"   # E.g. "3.2in QVGA (ADP2)"
+
+# Setup
+
+ADB="${HOME}/Android/Sdk/platform-tools/adb"
+EMULATOR="${HOME}/Android/Sdk/tools/emulator"
+ANDROID="${HOME}/Android/Sdk/tools/android"
+NAME="rabbitescape-${TARGET}"
+TMP="/data/local/tmp"
+
+${ANDROID} create avd \
+    --force \
+    --name "${NAME}" \
+    --target "${TARGET}" \
+    --abi "armeabi" \
+    --device "${DEVICE}"
+
+# Start the emulator
+${EMULATOR} -avd "${NAME}" &
+
+# Wait for the device to boot and unlock it
+${ADB} wait-for-device shell <<ENDSCRIPT
+echo -n "Waiting for device to boot "
+echo "" > ${TMP}/zero
+getprop dev.bootcomplete > ${TMP}/bootcomplete
+while cmp ${TMP}/zero ${TMP}/bootcomplete; do
+{
+    echo -n "."
+    sleep 1
+    getprop dev.bootcomplete > ${TMP}/bootcomplete
+}; done
+echo "Booted."
+exit
+ENDSCRIPT
+
+echo "Waiting 30 secs for us to be really booted"
+sleep 30
+
+echo "Unlocking screen"
+${ADB} shell "input keyevent 82"

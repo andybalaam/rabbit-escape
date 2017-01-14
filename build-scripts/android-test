@@ -1,0 +1,40 @@
+#!/bin/bash
+
+set -x
+set -u
+set -e
+
+PKGSUFFIX="$1"   # E.g. "free"
+APKNAME="$2"     # E.g. "app-free-debug"
+
+APPID="net.artificialworlds.rabbitescape${PKGSUFFIX}"
+TESTAPPID="net.artificialworlds.rabbitescape${PKGSUFFIX}.test"
+APK="rabbit-escape-ui-android/app/build/outputs/apk/${APKNAME}.apk"
+TESTAPK="rabbit-escape-ui-android/app/build/outputs/apk/${APKNAME}-androidTest.apk"
+ADB="${HOME}/Android/Sdk/platform-tools/adb"
+DIR="/data/local/tmp/${APPID}"
+TESTDIR="/data/local/tmp/${TESTAPPID}"
+
+function run_test()
+{
+    TMPFILE=$(mktemp)
+
+    ${ADB} shell am instrument \
+        -w \
+        -r \
+        -e class "$1" \
+        "${TESTAPPID}/android.test.InstrumentationTestRunner" \
+    | tee ${TMPFILE}
+
+    egrep "OK (.* tests?)" ${TMPFILE}
+}
+
+${ADB} push "${APK}" "${DIR}"
+${ADB} push "${TESTAPK}" "${TESTDIR}"
+
+${ADB} shell pm install -r "${DIR}"
+${ADB} shell pm install -r "${TESTDIR}"
+
+run_test rabbitescape.ui.android.DialogsTest
+run_test rabbitescape.ui.android.SmokeTest
+run_test rabbitescape.ui.android.TestAndroidConfigUpgradeTo1
