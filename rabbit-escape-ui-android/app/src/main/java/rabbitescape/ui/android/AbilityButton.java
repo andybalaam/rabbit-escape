@@ -11,6 +11,8 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.RadioGroup;
 
+import static net.artificialworlds.rabbitescape.BuildConfig.APPLICATION_ID;
+
 public class AbilityButton extends Button
 {
     private class OnClickListener implements ImageButton.OnClickListener
@@ -66,7 +68,7 @@ public class AbilityButton extends Button
             resources.getIdentifier(
                 "ability_" + ability,
                 "drawable",
-                "net.artificialworlds.rabbitescape"
+                APPLICATION_ID
             )
         );
 

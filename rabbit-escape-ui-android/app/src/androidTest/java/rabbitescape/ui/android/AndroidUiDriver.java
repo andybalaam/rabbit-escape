@@ -21,6 +21,8 @@ import java.util.Map;
 import rabbitescape.engine.Token;
 import rabbitescape.engine.menu.MenuItem;
 
+import static net.artificialworlds.rabbitescape.BuildConfig.APPLICATION_ID;
+
 class AndroidUiDriver
 {
     private static class Holder<T>
@@ -48,7 +50,7 @@ class AndroidUiDriver
         monitor( testCase, AndroidAboutActivity.class );
 
         testCase.launchActivity(
-            "net.artificialworlds.rabbitescape", AndroidMenuActivity.class, null
+            APPLICATION_ID, AndroidMenuActivity.class, null
         );
     }
 
