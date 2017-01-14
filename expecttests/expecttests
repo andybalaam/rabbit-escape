@@ -25,13 +25,13 @@ function expect_with_prejudice()
     sed "s/demand \(.*\)/${PREJ_EXP}/g" < $1 | expect -
 }
 
-for E in slowtests/*.expect; do
+for E in expecttests/*.expect; do
 {
     expect_with_prejudice $E
 }; done
 
 echo
-echo "All slow tests passed."
+echo "All expect tests passed."
 echo
 
 

@@ -294,7 +294,7 @@ clean-music: no-make-warnings
 	- rm $(MUSICWAV_DEST)/*
 	- rm $(ANDROIDMUSICOGG_DEST)/*
 
-clean-all: clean clean-images clean-sounds clean-music clean-doxygen
+clean-all: clean clean-images clean-sounds clean-music clean-doxygen clean-android
 
 remove-trailing:
 	git status --porcelain | sed 's_^...__' | grep '\.java$$' - | xargs perl -p -i -e 's/[ \t]+$$//'
@@ -327,17 +327,25 @@ test-verbose: compile
 	@# Work around what looks like an Ant 1.9 bug by including the classpath here
 	@CLASSPATH=lib/org.hamcrest.core_1.3.0.jar:lib/junit.jar ant test
 
-slowtest: test android-compile slowtest-run
+slowtest: test android-debug-test slowtest-run
 
-slowtest-run:
-	@echo ". Running system tests"
-	@./slowtests/slowtests > /dev/null
+# Run slow tests without building first
+slowtest-run: expecttest android-smoke-tests
 
-slowtest-verbose:
-	./slowtests/slowtests
+slowtest-verbose: expecttest-verbose android-smoke-tests
+
+expecttest:
+	@echo ". Running expect tests"
+	@./expecttests/expecttests > /dev/null
+
+expecttest-verbose:
+	./expecttests/expecttests
 
 # Android
 # -------
+
+ADB := ~/Android/Sdk/platform-tools/adb
+GRADLE := ./gradlew --daemon -q
 
 rabbit-escape-ui-android/app/libs/rabbit-escape-generic.jar: dist/rabbit-escape-generic.jar
 	@echo ". Copying generic jar into Android workspace $@"
@@ -377,13 +385,31 @@ android-pre: \
 android-compile: android-pre
 	@echo ". Compiling Android code"
 	@cd rabbit-escape-ui-android && \
-	./gradlew --daemon -q compileDebugSources
+	${GRADLE} compileDebugSources
 
-android-debug: app/build/outputs/apk/app-paid-debug.apk
+android-debug: \
+	rabbit-escape-ui-android/app/build/outputs/apk/app-paid-debug.apk \
+	rabbit-escape-ui-android/app/build/outputs/apk/app-free-debug.apk
 
-app/build/outputs/apk/app-paid-debug.apk: android-pre
-	@echo ". Building debug apk $@"
-	@cd rabbit-escape-ui-android && ./gradlew assembleDebug
+android-debug-test: \
+	rabbit-escape-ui-android/app/build/outputs/apk/app-paid-debug-androidTest.apk \
+	rabbit-escape-ui-android/app/build/outputs/apk/app-free-debug-androidTest.apk
+
+rabbit-escape-ui-android/app/build/outputs/apk/app-paid-debug.apk: android-pre
+	@echo ". Building $@"
+	@cd rabbit-escape-ui-android && ${GRADLE} assemblePaidDebug
+
+rabbit-escape-ui-android/app/build/outputs/apk/app-free-debug.apk: android-pre
+	@echo ". Building $@"
+	@cd rabbit-escape-ui-android && ${GRADLE} assembleFreeDebug
+
+rabbit-escape-ui-android/app/build/outputs/apk/app-free-debug-androidTest.apk: android-pre
+	@echo ". Building $@"
+	@cd rabbit-escape-ui-android && ${GRADLE} assembleFreeDebugAndroidTest
+
+rabbit-escape-ui-android/app/build/outputs/apk/app-paid-debug-androidTest.apk: android-pre
+	@echo ". Building $@"
+	@cd rabbit-escape-ui-android && ${GRADLE} assemblePaidDebugAndroidTest
 
 KEY_STORE_PASSWORD_FILE := $(HOME)/pw/android-key-store-password.txt
 KEY_PASSWORD_FILE := $(HOME)/pw/android-key-password.txt
@@ -396,9 +422,32 @@ dist-android-release-signed: android-pre
 	cd rabbit-escape-ui-android && \
 	KEY_STORE_PASSWORD=`cat $(KEY_STORE_PASSWORD_FILE)` \
 	KEY_PASSWORD=`cat $(KEY_PASSWORD_FILE)` \
-	./gradlew -q assembleRelease && \
+	${GRADLE} assembleRelease && \
 	mv app/build/outputs/apk/app-paid-release.apk ../dist/rabbit-escape-${VERSION}.apk && \
 	mv app/build/outputs/apk/app-free-release.apk ../dist/rabbit-escape-free-${VERSION}.apk
+
+android-smoke-tests:
+	@echo ". Running Android smoke tests"
+	@echo "(Start an emulator and ensure running '${ADB} devices' shows a device before you try to do this.)"
+	${ADB} devices
+	- ${ADB} shell am force-stop net.artificialworlds.rabbitescapefree
+	${ADB} push rabbit-escape-ui-android/app/build/outputs/apk/app-free-debug-androidTest.apk /data/local/tmp/net.artificialworlds.rabbitescapefree.test
+	${ADB} shell pm install -r "/data/local/tmp/net.artificialworlds.rabbitescapefree.test"
+	${ADB} shell am instrument -w -r -e debug false -e class rabbitescape.ui.android.DialogsTest net.artificialworlds.rabbitescapefree.test/android.test.InstrumentationTestRunner
+	${ADB} shell am instrument -w -r -e debug false -e class rabbitescape.ui.android.SmokeTest net.artificialworlds.rabbitescapefree.test/android.test.InstrumentationTestRunner
+	${ADB} shell am instrument -w -r -e debug false -e class rabbitescape.ui.android.TestAndroidConfigUpgradeTo1 net.artificialworlds.rabbitescapefree.test/android.test.InstrumentationTestRunner
+	- ${ADB} shell am force-stop net.artificialworlds.rabbitescape
+	${ADB} push rabbit-escape-ui-android/app/build/outputs/apk/app-paid-debug-androidTest.apk /data/local/tmp/net.artificialworlds.rabbitescape.test
+	${ADB} shell pm install -r "/data/local/tmp/net.artificialworlds.rabbitescape.test"
+	${ADB} shell am instrument -w -r -e debug false -e class rabbitescape.ui.android.DialogsTest net.artificialworlds.rabbitescape.test/android.test.InstrumentationTestRunner
+	${ADB} shell am instrument -w -r -e debug false -e class rabbitescape.ui.android.SmokeTest net.artificialworlds.rabbitescape.test/android.test.InstrumentationTestRunner
+	${ADB} shell am instrument -w -r -e debug false -e class rabbitescape.ui.android.TestAndroidConfigUpgradeTo1 net.artificialworlds.rabbitescape.test/android.test.InstrumentationTestRunner
+
+clean-android:
+	cd rabbit-escape-ui-android && ${GRADLE} clean
+
+# Docs
+# ----
 
 # Requires sudo apt-get install doxygen graphviz
 doxygen:
