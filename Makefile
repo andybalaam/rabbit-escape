@@ -376,6 +376,12 @@ android-pre: \
 	android-music \
 	rabbit-escape-ui-android/app/libs/rabbit-escape-generic.jar
 
+# Special target for F-Droid that does not build the sound or music files,
+# to avoid needing sox to be installed on the F-Droid server.
+android-pre-fdroid: \
+	android-images \
+	rabbit-escape-ui-android/app/libs/rabbit-escape-generic.jar
+
 android-compile: android-pre
 	@echo ". Compiling Android code"
 	@cd rabbit-escape-ui-android && \
