@@ -21,7 +21,18 @@ public class AndroidCanvas implements Canvas<AndroidBitmap, AndroidPaint>
     @Override
     public void drawBitmap( AndroidBitmap bitmap, float left, float top, AndroidPaint paint )
     {
-        canvas.drawBitmap( bitmap.bitmap, left, top, paint.paint );
+        // v0.10.1 crashed on Nexus 10 in some levels with
+        // "java.lang.RuntimeException: Canvas: trying to use a recycled bitmap"
+        // This lock and check should protect us from using a bitmap that has been recycled.
+        // I added the same lock into AndroidBitmap.recycle, so we should not get a race
+        // condition here.
+        // See https://github.com/andybalaam/rabbit-escape/issues/476
+        synchronized ( bitmap.bitmap )
+        {
+            if ( !bitmap.bitmap.isRecycled() ) {
+                canvas.drawBitmap(bitmap.bitmap, left, top, paint.paint);
+            }
+        }
     }
 
     @Override

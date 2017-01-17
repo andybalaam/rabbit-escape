@@ -39,6 +39,10 @@ public class AndroidBitmap implements Bitmap
     @Override
     public void recycle()
     {
-        bitmap.recycle();
+        // Prevent recycling this bitmap while we're drawing it
+        synchronized ( bitmap )
+        {
+            bitmap.recycle();
+        }
     }
 }
