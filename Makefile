@@ -188,7 +188,7 @@ dist: no-make-warnings dist-swing dist-android-release-signed
 
 dist-swing: dist/rabbit-escape-${VERSION}.jar
 
-dist/rabbit-escape-generic.jar: compile
+dist/rabbit-escape-generic.jar: compile-noui
 	@echo ". Building generic jar $@"
 	@mkdir -p dist
 	@rm -f dist/rabbit-escape-generic.jar
