@@ -1,8 +1,9 @@
 package rabbitescape.engine.config;
 
 import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.StringWriter;
+import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
@@ -139,14 +140,14 @@ public class ConfigFile implements IConfigStorage
         return ret.toString();
     }
 
-    private String propertyLine(  Config config, String key )
+    private String propertyLine( Config config, String key )
     {
         Properties props = new Properties();
         props.setProperty( key, config.get( key ) );
-        StringWriter writer = new StringWriter();
+        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
         try
         {
-            props.store( writer, null );
+            props.store( bytes, null );
         }
         catch ( IOException e )
         {
@@ -154,6 +155,14 @@ public class ConfigFile implements IConfigStorage
             throw new RuntimeException( e );
         }
 
-        return writer.toString().split( "\n" )[1];
+        try
+        {
+            return bytes.toString("UTF-8").toString().split( "\n" )[1];
+        }
+        catch ( UnsupportedEncodingException e )
+        {
+            // Should not happen since everyone knows UTF-8
+            throw new RuntimeException(e);
+        }
     }
 }
