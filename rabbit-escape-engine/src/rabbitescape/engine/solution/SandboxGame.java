@@ -102,7 +102,7 @@ public class SandboxGame
             else if ( thing instanceof Fire )
             {
                 Fire fire = (Fire)thing;
-                clonedThings.add( new Fire( fire.x, fire.y ) );
+                clonedThings.add( new Fire( fire.x, fire.y, fire.variant ) );
             }
             else if ( thing instanceof Pipe )
             {

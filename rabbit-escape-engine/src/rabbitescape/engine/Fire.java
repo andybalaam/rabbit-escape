@@ -4,24 +4,25 @@ import static rabbitescape.engine.ChangeDescription.State.*;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.ThreadLocalRandom;
 
 import rabbitescape.engine.ChangeDescription.State;
 
 public class Fire extends Thing
 {
+    public int variant;
+
     private final State baseVariant;
 
-    public Fire( int x, int y )
+    public Fire( int x, int y, int variant )
     {
-        super( x, y, chooseVariant() );
+        super( x, y, stateForVariant( variant ) );
+        this.variant = variant;
         baseVariant = state;
     }
 
-    private static State chooseVariant()
+    private static State stateForVariant( int variant )
     {
-        int r = ThreadLocalRandom.current().nextInt( 0, 4 );
-        switch ( r )
+        switch ( variant )
         {
         case 0:
             return FIRE_A;
@@ -33,7 +34,7 @@ public class Fire extends Thing
             return FIRE_D;
         }
         throw new RuntimeException(
-            "Random number outside expected range (0 - 3):" + r );
+            "Variant outside expected range (0 - 3):" + variant );
     }
 
     @Override
