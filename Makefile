@@ -385,7 +385,7 @@ android-pre-fdroid: \
 android-compile: android-pre
 	@echo ". Compiling Android code"
 	@cd rabbit-escape-ui-android && \
-	${GRADLE} compileDebugSources
+	${GRADLE} compilePaidDebugSources
 
 android-debug: \
 	rabbit-escape-ui-android/app/build/outputs/apk/app-paid-debug.apk \
