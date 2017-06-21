@@ -1,5 +1,7 @@
 package rabbitescape.engine.config;
 
+import static rabbitescape.engine.util.Util.*;
+
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -75,7 +77,7 @@ public class ConfigFile implements IConfigStorage
             throw new UnableToLoad( filePath, e );
         }
 
-        for ( String name : props.stringPropertyNames() )
+        for ( String name : stringPropertyNames( props ) )
         {
             set( name, props.getProperty( name ) );
         }

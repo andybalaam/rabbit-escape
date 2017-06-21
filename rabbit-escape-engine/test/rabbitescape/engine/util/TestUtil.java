@@ -16,6 +16,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
@@ -1129,6 +1130,19 @@ public class TestUtil
         assertThat(
             Util.concat( a, _bcd, efg, hij ),
             equalTo( new String[] {"a", "e", "f", "g", "h", "i", "j" } )
+        );
+    }
+
+    @Test
+    public void Can_get_property_names_from_properties()
+    {
+        Properties props = new Properties();
+        props.setProperty( "a", "av" );
+        props.setProperty( "bb", "bbv" );
+
+        assertThat(
+            list(sorted(stringPropertyNames(props))),
+            equalTo( Arrays.asList( "a", "bb" ) )
         );
     }
 }

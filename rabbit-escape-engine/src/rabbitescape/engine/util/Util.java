@@ -6,12 +6,14 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
+import java.util.Properties;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.regex.Matcher;
@@ -936,4 +938,16 @@ public class Util
         return sb.toString();
     }
 
+    public static List<String> stringPropertyNames( Properties props )
+    {
+        List<String> ret = new ArrayList<String>();
+
+        Enumeration<?> names = props.propertyNames();
+        while( names.hasMoreElements() )
+        {
+            // Safe cast since propertyNames() always returns Strings.
+            ret.add( (String)names.nextElement() );
+        }
+        return ret;
+    }
 }
