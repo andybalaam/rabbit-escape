@@ -1,0 +1,50 @@
+#!/usr/bin/env python3
+
+# Takes in a rabbit image SVG, and spits out a rabbot equivalent,
+# with all white arcs (rabbit body) turned red,
+# and all grey arcs (ear) turned black.
+
+# sudo apt install python3-lxml
+
+import sys
+from lxml import etree
+
+
+replacements = {
+    "fill:#ffffff": "fill:#ff0000",
+    "fill:#4d4d4b": "fill:#000000"
+}
+
+
+def update_single(s):
+    if s in replacements:
+        return replacements[s]
+    else:
+        return s
+
+
+def update_style(style):
+    return ";".join(update_single(s) for s in style.split(";"))
+
+
+def update_xml(root):
+    for path in root.iterfind("./{*}g/{*}path"):
+        style = path.get("style")
+        if style is not None:
+            new_style = update_style(style)
+            if new_style != style:
+                path.set("style", new_style)
+
+
+root = etree.parse(sys.stdin)
+
+update_xml(root)
+
+sys.stdout.write(
+    etree.tostring(
+        root,
+        pretty_print=True,
+        xml_declaration=True,
+        encoding="UTF-8"
+    ).decode("UTF-8")
+)

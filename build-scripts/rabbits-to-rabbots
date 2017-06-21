@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+# Just testing for now
+
+./build-scripts/rabbit-to-rabbot < images-src/rabbit_bash_left_01.svg | xmllint --format - > ~/Desktop/tmp.svg
