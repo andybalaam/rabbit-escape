@@ -426,9 +426,9 @@ dist-android-release-signed: android-pre
 	mv app/build/outputs/apk/app-paid-release.apk ../dist/rabbit-escape-${VERSION}.apk && \
 	mv app/build/outputs/apk/app-free-release.apk ../dist/rabbit-escape-free-${VERSION}.apk
 
-android-smoke-tests:
+android-smoke-tests: android-debug-test
 	@echo ". Running Android smoke tests"
-	./build-scripts/android-start-emulator "android-8" "3.2in QVGA (ADP2)"
+	./build-scripts/android-start-emulator "android-10" "system-images;android-10;default;x86" "3.2in QVGA (ADP2)"
 	./build-scripts/android-test "free" "app-free-debug"
 	./build-scripts/android-test "" "app-paid-debug"
 	./build-scripts/android-stop-emulator

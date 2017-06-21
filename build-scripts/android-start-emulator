@@ -6,22 +6,26 @@ set -e
 
 # Args
 
-TARGET="$1"   # E.g. "android-8"
-DEVICE="$2"   # E.g. "3.2in QVGA (ADP2)"
+TARGET="$1"   # E.g. "android-10"
+PACKAGE="$2"  # E.g. "system-images;android-10;default;x86"
+DEVICE="$3"   # E.g. "3.2in QVGA (ADP2)"
 
 # Setup
 
 ADB="${HOME}/Android/Sdk/platform-tools/adb"
 EMULATOR="${HOME}/Android/Sdk/tools/emulator"
-ANDROID="${HOME}/Android/Sdk/tools/android"
+AVDMANAGER="${HOME}/Android/Sdk/tools/bin/avdmanager"
+SDKMANAGER="${HOME}/Android/Sdk/tools/bin/sdkmanager"
 NAME="rabbitescape-${TARGET}"
 TMP="/data/local/tmp"
 
-${ANDROID} create avd \
+
+"${SDKMANAGER}" "${PACKAGE}"
+
+"${AVDMANAGER}" create avd \
     --force \
     --name "${NAME}" \
-    --target "${TARGET}" \
-    --abi "armeabi" \
+    --package "${PACKAGE}" \
     --device "${DEVICE}"
 
 # Start the emulator
