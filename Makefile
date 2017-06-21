@@ -1,8 +1,12 @@
 
+# Ensure all intermediate files are kept
+.SECONDARY:
+
 MAKEFLAGS += --warn-undefined-variables
 
 CLASSPATH=rabbit-escape-engine/bin/:rabbit-escape-render/bin/:rabbit-escape-ui-text/bin/:rabbit-escape-ui-swing/bin/
 
+IMAGESSVGGEN_DEST=bin/imagessvggen
 IMAGES32_DEST=rabbit-escape-ui-swing/src/rabbitescape/ui/swing/images32
 IMAGES64_DEST=rabbit-escape-ui-swing/src/rabbitescape/ui/swing/images64
 IMAGES128_DEST=rabbit-escape-ui-swing/src/rabbitescape/ui/swing/images128
@@ -18,9 +22,17 @@ ANDROIDICONSXXXHDPI_DEST=rabbit-escape-ui-android/app/src/main/res/drawable-xxxh
 
 SVGIMAGESSRC := $(wildcard images-src/*.svg)
 SVGICONSSRC  := $(wildcard images-src/icons/*.svg)
-SVGIMAGES32  := $(SVGIMAGESSRC:images-src/%.svg=$(IMAGES32_DEST)/%.png) $(SVGICONSSRC:images-src/icons/%.svg=$(IMAGES32_DEST)/%.png)
-SVGIMAGES64  := $(SVGIMAGESSRC:images-src/%.svg=$(IMAGES64_DEST)/%.png) $(SVGICONSSRC:images-src/icons/%.svg=$(IMAGES64_DEST)/%.png)
-SVGIMAGES128 := $(SVGIMAGESSRC:images-src/%.svg=$(IMAGES128_DEST)/%.png) $(SVGICONSSRC:images-src/icons/%.svg=$(IMAGES128_DEST)/%.png)
+
+# Find all rabbits images, check whether the equivalent rabbot image
+# exists.  If not, add it to a list of images to generate.
+SVGRABBITS := $(wildcard images-src/rabbit_*.svg)
+bit2bot = $(subst rabbit,rabbot,$(1))
+botexists = $(wildcard $(call bit2bot,$(1)))
+SVGGENERATERABBOTS := $(foreach F,$(SVGRABBITS),$(if $(call botexists,$(F)),,$(subst images-src,$(IMAGESSVGGEN_DEST),$(call bit2bot,$(F)))))
+
+SVGIMAGES32  := $(SVGIMAGESSRC:images-src/%.svg=$(IMAGES32_DEST)/%.png) $(SVGICONSSRC:images-src/icons/%.svg=$(IMAGES32_DEST)/%.png) $(SVGGENERATERABBOTS:$(IMAGESSVGGEN_DEST)/%.svg=$(IMAGES32_DEST)/%.png)
+SVGIMAGES64  := $(SVGIMAGESSRC:images-src/%.svg=$(IMAGES64_DEST)/%.png) $(SVGICONSSRC:images-src/icons/%.svg=$(IMAGES64_DEST)/%.png) $(SVGGENERATERABBOTS:$(IMAGESSVGGEN_DEST)/%.svg=$(IMAGES64_DEST)/%.png)
+SVGIMAGES128 := $(SVGIMAGESSRC:images-src/%.svg=$(IMAGES128_DEST)/%.png) $(SVGICONSSRC:images-src/icons/%.svg=$(IMAGES128_DEST)/%.png) $(SVGGENERATERABBOTS:$(IMAGESSVGGEN_DEST)/%.svg=$(IMAGES128_DEST)/%.png)
 
 PNGIMAGESSRC := $(wildcard images-src/*.png)
 PNGIMAGES32  := $(PNGIMAGESSRC:images-src/%.png=$(IMAGES32_DEST)/%.png)
@@ -42,9 +54,9 @@ ANDROIDSOUNDSOGG := $(SOUNDSSRC:sounds-src/%.flac=$(ANDROIDSOUNDSOGG_DEST)/%.ogg
 MUSICWAV := $(MUSICSRC:music-src/%.flac=$(MUSICWAV_DEST)/%.wav)
 ANDROIDMUSICOGG := $(MUSICSRC:music-src/%.flac=$(ANDROIDMUSICOGG_DEST)/%.ogg)
 
-SVGANDROIDIMAGES32  := $(SVGIMAGESSRC:images-src/%.svg=$(ANDROIDIMAGES32_DEST)/%.png)
-SVGANDROIDIMAGES64  := $(SVGIMAGESSRC:images-src/%.svg=$(ANDROIDIMAGES64_DEST)/%.png)
-SVGANDROIDIMAGES128 := $(SVGIMAGESSRC:images-src/%.svg=$(ANDROIDIMAGES128_DEST)/%.png)
+SVGANDROIDIMAGES32  := $(SVGIMAGESSRC:images-src/%.svg=$(ANDROIDIMAGES32_DEST)/%.png) $(SVGGENERATERABBOTS:$(IMAGESSVGGEN_DEST)/%.svg=$(ANDROIDIMAGES32_DEST)/%.png)
+SVGANDROIDIMAGES64  := $(SVGIMAGESSRC:images-src/%.svg=$(ANDROIDIMAGES64_DEST)/%.png) $(SVGGENERATERABBOTS:$(IMAGESSVGGEN_DEST)/%.svg=$(ANDROIDIMAGES64_DEST)/%.png)
+SVGANDROIDIMAGES128 := $(SVGIMAGESSRC:images-src/%.svg=$(ANDROIDIMAGES128_DEST)/%.png) $(SVGGENERATERABBOTS:$(IMAGESSVGGEN_DEST)/%.svg=$(ANDROIDIMAGES128_DEST)/%.png)
 PNGANDROIDIMAGES32  := $(PNGIMAGESSRC:images-src/%.png=$(ANDROIDIMAGES32_DEST)/%.png)
 PNGANDROIDIMAGES64  := $(PNGIMAGESSRC:images-src/%.png=$(ANDROIDIMAGES64_DEST)/%.png)
 PNGANDROIDIMAGES128 := $(PNGIMAGESSRC:images-src/%.png=$(ANDROIDIMAGES128_DEST)/%.png)
@@ -76,13 +88,29 @@ $(ANDROIDMUSICOGG_DEST)/%.ogg: music-src/%.flac
 	@echo ".. Generating $@"
 	@mkdir -p $(ANDROIDMUSICOGG_DEST); sox $< $@
 
+$(IMAGESSVGGEN_DEST)/rabbot_%.svg: images-src/rabbit_%.svg
+	@echo ".. Generating $@"
+	@mkdir -p $(IMAGESSVGGEN_DEST); ./build-scripts/rabbit-to-rabbot < $< > $@
+
+$(IMAGES32_DEST)/%.png: $(IMAGESSVGGEN_DEST)/%.svg
+	@echo ".. Generating $@"
+	@mkdir -p $(IMAGES32_DEST); inkscape $< --export-png=$@ --export-dpi=90 > /dev/null
+
 $(IMAGES32_DEST)/%.png: images-src/%.svg
 	@echo ".. Generating $@"
 	@mkdir -p $(IMAGES32_DEST); inkscape $< --export-png=$@ --export-dpi=90 > /dev/null
 
+$(IMAGES64_DEST)/%.png: $(IMAGESSVGGEN_DEST)/%.svg
+	@echo ".. Generating $@"
+	@mkdir -p $(IMAGES64_DEST); inkscape $< --export-png=$@ --export-dpi=180 > /dev/null
+
 $(IMAGES64_DEST)/%.png: images-src/%.svg
 	@echo ".. Generating $@"
 	@mkdir -p $(IMAGES64_DEST); inkscape $< --export-png=$@ --export-dpi=180 > /dev/null
+
+$(IMAGES128_DEST)/%.png: $(IMAGESSVGGEN_DEST)/%.svg
+	@echo ".. Generating $@"
+	@mkdir -p $(IMAGES128_DEST); inkscape $< --export-png=$@ --export-dpi=360 > /dev/null
 
 $(IMAGES128_DEST)/%.png: images-src/%.svg
 	@echo ".. Generating $@"
@@ -270,6 +298,7 @@ clean: no-make-warnings
 	@find ./ -name "ls.txt" -delete
 	@find ./ -name "levels.txt" -delete
 	@find ./ -empty -type d -delete
+	@mkdir -p bin && rm -r bin
 	@mkdir -p dist && rm -r dist
 
 clean-images: no-make-warnings
