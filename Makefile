@@ -298,11 +298,11 @@ clean: no-make-warnings
 	@find ./ -name "ls.txt" -delete
 	@find ./ -name "levels.txt" -delete
 	@find ./ -empty -type d -delete
-	@mkdir -p bin && rm -r bin
 	@mkdir -p dist && rm -r dist
 
 clean-images: no-make-warnings
 	- rm \
+		$(IMAGESSVGGEN_DEST)/* \
 		$(IMAGES32_DEST)/* \
 		$(IMAGES64_DEST)/* \
 		$(IMAGES128_DEST)/* \
