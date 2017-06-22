@@ -6,6 +6,7 @@ import static org.junit.Assert.fail;
 import static rabbitescape.engine.ChangeDescription.State.*;
 import static rabbitescape.engine.Tools.*;
 import static rabbitescape.engine.textworld.TextWorldManip.*;
+import static rabbitescape.engine.Rabbit.Type.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -532,8 +533,8 @@ public class TestTextWorldManip
         );
 
         // put 2 rabbits and 2 items all in the same place, on top of a block
-        world.rabbits.add( new Rabbit( 2, 2, Direction.RIGHT, "good" ) );
-        world.rabbits.add( new Rabbit( 2, 2, Direction.LEFT, "good" ) );
+        world.rabbits.add( new Rabbit( 2, 2, Direction.RIGHT, RABBIT ) );
+        world.rabbits.add( new Rabbit( 2, 2, Direction.LEFT, RABBIT ) );
         world.things.add( new Token( 2, 2, Token.Type.bash ) );
         world.things.add( new Token( 2, 2, Token.Type.bridge ) );
 
@@ -561,8 +562,8 @@ public class TestTextWorldManip
         );
 
         // Rabbits in top left
-        world.rabbits.add( new Rabbit( 1, 1, Direction.RIGHT, "good" ) );
-        world.rabbits.add( new Rabbit( 1, 1, Direction.LEFT, "good" ) );
+        world.rabbits.add( new Rabbit( 1, 1, Direction.RIGHT, RABBIT ) );
+        world.rabbits.add( new Rabbit( 1, 1, Direction.LEFT, RABBIT ) );
 
         // bash and bridge in top right
         world.things.add( new Token( 2, 1, Token.Type.bash ) );

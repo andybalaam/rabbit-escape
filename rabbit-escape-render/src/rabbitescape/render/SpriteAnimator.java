@@ -73,7 +73,7 @@ public class SpriteAnimator
         for ( Rabbit rabbit : world.rabbits )
         {
             String baddy;
-            if ( rabbit.type.equals( "bad" ) )
+            if ( rabbit.type == Rabbit.Type.RABBOT )
             {
                 baddy = "baddy_";
             }

@@ -12,6 +12,12 @@ import rabbitescape.engine.behaviours.*;
 
 public class Rabbit extends Thing implements Comparable<Rabbit>
 {
+    public static enum Type
+    {
+        RABBIT,
+        RABBOT
+    }
+
     public final static int NOT_INDEXED = 0;
     private final List<Behaviour> behaviours;
     private final List<Behaviour> behavioursTriggerOrder;
@@ -22,9 +28,9 @@ public class Rabbit extends Thing implements Comparable<Rabbit>
 
     public Direction dir;
     public boolean onSlope;
-    public final String type;
+    public final Type type;
 
-    public Rabbit( int x, int y, Direction dir, String type )
+    public Rabbit( int x, int y, Direction dir, Type type )
     {
         super( x, y, RABBIT_WALKING_LEFT );
         this.dir = dir;

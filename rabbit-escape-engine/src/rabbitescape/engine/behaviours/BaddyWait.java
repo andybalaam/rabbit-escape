@@ -42,11 +42,11 @@ public class BaddyWait extends Behaviour
     @Override
     public boolean checkTriggered( Rabbit rabbit, World world )
     {
-        if ( rabbit.type.equals( "bad" ) )
+        if ( rabbit.type == Rabbit.Type.RABBOT )
         {
             for ( Rabbit otherRabbit : world.rabbits )
             {
-                if ( otherRabbit.type.equals( "good" ) &&
+                if ( otherRabbit.type == Rabbit.Type.RABBIT &&
                     within1Vertically( otherRabbit, rabbit ) &&
                     noseToNose( otherRabbit, rabbit ) )
                 {

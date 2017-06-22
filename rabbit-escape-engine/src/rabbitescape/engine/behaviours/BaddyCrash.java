@@ -16,11 +16,11 @@ public class BaddyCrash extends Behaviour
     @Override
     public boolean checkTriggered( Rabbit rabbit, World world )
     {
-        if ( rabbit.type.equals( "bad" ) )
+        if ( rabbit.type == Rabbit.Type.RABBOT )
         {
             for ( Rabbit otherRabbit : world.rabbits )
             {
-                if ( otherRabbit.type.equals( "good" ) &&
+                if ( otherRabbit.type == Rabbit.Type.RABBIT &&
                     otherRabbit.x == rabbit.x &&
                     otherRabbit.y == rabbit.y
                 )

@@ -5,6 +5,7 @@ import static org.hamcrest.MatcherAssert.*;
 import static rabbitescape.engine.textworld.TextWorldManip.*;
 import static rabbitescape.engine.util.WorldAssertions.*;
 import static rabbitescape.engine.Tools.*;
+import static rabbitescape.engine.Rabbit.Type.*;
 
 import org.junit.Test;
 
@@ -1483,8 +1484,8 @@ public class TestBridging
         );
 
         // Add 2 rabbits in the same place
-        world.rabbits.add( new Rabbit( 2, 2, Direction.RIGHT, "good" ) );
-        world.rabbits.add( new Rabbit( 2, 2, Direction.RIGHT, "good" ) );
+        world.rabbits.add( new Rabbit( 2, 2, Direction.RIGHT, RABBIT ) );
+        world.rabbits.add( new Rabbit( 2, 2, Direction.RIGHT, RABBIT ) );
 
         world.step();
         assertThat(

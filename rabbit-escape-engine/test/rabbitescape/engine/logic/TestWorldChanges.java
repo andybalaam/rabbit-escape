@@ -132,7 +132,9 @@ public class TestWorldChanges
         Rabbit rabbit1 = world.rabbits.get( 1 );
 
         // One of every type of change
-        world.changes.enterRabbit( new Rabbit( 1, 2, Direction.RIGHT, "good" ) );
+        world.changes.enterRabbit(
+            new Rabbit( 1, 2, Direction.RIGHT, Rabbit.Type.RABBIT ) );
+
         world.changes.killRabbit( rabbit0 );
         world.changes.saveRabbit( rabbit1 );
         world.changes.addToken( 2, 1, Token.Type.bash );

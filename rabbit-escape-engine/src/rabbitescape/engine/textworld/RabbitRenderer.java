@@ -30,7 +30,7 @@ public class RabbitRenderer
     {
         if ( rabbit.dir == RIGHT )
         {
-            if ( rabbit.type.equals( "good" ) )
+            if ( rabbit.type == Rabbit.Type.RABBIT )
             {
                 return 'r';
             }
@@ -41,7 +41,7 @@ public class RabbitRenderer
         }
         else
         {
-            if ( rabbit.type.equals( "good" ) )
+            if ( rabbit.type == Rabbit.Type.RABBIT )
             {
                 return 'j';
             }
