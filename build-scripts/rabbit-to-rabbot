@@ -7,6 +7,7 @@
 # sudo apt install python3-lxml
 
 import sys
+from itertools import chain
 from lxml import etree
 
 
@@ -28,12 +29,15 @@ def update_style(style):
 
 
 def update_xml(root):
-    for path in root.iterfind("./{*}g/{*}path"):
-        style = path.get("style")
+    for obj in chain(
+        root.iterfind(".//{*}path"),
+        root.iterfind(".//{*}ellipse")
+    ):
+        style = obj.get("style")
         if style is not None:
             new_style = update_style(style)
             if new_style != style:
-                path.set("style", new_style)
+                obj.set("style", new_style)
 
 
 root = etree.parse(sys.stdin)
