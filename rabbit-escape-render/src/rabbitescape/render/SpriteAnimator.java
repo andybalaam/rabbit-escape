@@ -67,22 +67,31 @@ public class SpriteAnimator
 
         for ( Thing thing : Util.filterOut( world.things, Fire.class ) )
         {
-            addThing( frameNum, thing, null, ret );
+            addThing( frameNum, thing, null, "", ret );
         }
 
         for ( Rabbit rabbit : world.rabbits )
         {
-            addThing( frameNum, rabbit, null, ret );
+            String baddy;
+            if ( rabbit.type.equals( "bad" ) )
+            {
+                baddy = "baddy_";
+            }
+            else
+            {
+                baddy = "";
+            }
+            addThing( frameNum, rabbit, null, baddy, ret );
         }
 
         for ( Thing thing : Util.filterIn( world.things, Fire.class ) )
         {
-            addThing( frameNum, thing, null, ret );
+            addThing( frameNum, thing, null, "", ret );
         }
 
         for ( Thing thing : world.changes.tokensAboutToAppear() )
         {
-            addThing( frameNum, thing, null, ret );
+            addThing( frameNum, thing, null, "", ret );
         }
 
         // TODO: probably easier if we just had a rabbit entering animation
@@ -90,7 +99,7 @@ public class SpriteAnimator
         {
             for ( Thing thing : world.changes.rabbitsJustEntered() )
             {
-                addThing( -1, thing, "rabbit_entering", ret );
+                addThing( -1, thing, "rabbit_entering", "", ret );
             }
         }
 
@@ -117,10 +126,11 @@ public class SpriteAnimator
         int frameNum,
         Thing thing,
         String soundEffectOverride,
+        String baddy,
         List<Sprite> ret
     )
     {
-        Frame frame = frameForThing( frameNum, thing );
+        Frame frame = frameForThing( frameNum, thing, baddy );
 
         String bitmapName = null;
         int offsetX = 0;
@@ -160,7 +170,7 @@ public class SpriteAnimator
         return null;
     }
 
-    private Frame frameForThing( int frameNum, Thing thing )
+    private Frame frameForThing( int frameNum, Thing thing, String baddy )
     {
         if ( frameNum == -1 )
         {
@@ -168,6 +178,7 @@ public class SpriteAnimator
         }
 
         String frameName = thing.state.name().toLowerCase( Locale.ENGLISH );
+        frameName = baddy + frameName;
         Animation animation = animationCache.get( frameName );
 
         if ( animation == null )

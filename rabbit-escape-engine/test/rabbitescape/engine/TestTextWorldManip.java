@@ -37,6 +37,7 @@ public class TestTextWorldManip
             "#\\  M   i/#",
             "#  O     d#",
             "#r j )(  b#",
+            "# t y     #",
             "###########"
         };
 
@@ -531,8 +532,8 @@ public class TestTextWorldManip
         );
 
         // put 2 rabbits and 2 items all in the same place, on top of a block
-        world.rabbits.add( new Rabbit( 2, 2, Direction.RIGHT ) );
-        world.rabbits.add( new Rabbit( 2, 2, Direction.LEFT ) );
+        world.rabbits.add( new Rabbit( 2, 2, Direction.RIGHT, "good" ) );
+        world.rabbits.add( new Rabbit( 2, 2, Direction.LEFT, "good" ) );
         world.things.add( new Token( 2, 2, Token.Type.bash ) );
         world.things.add( new Token( 2, 2, Token.Type.bridge ) );
 
@@ -560,8 +561,8 @@ public class TestTextWorldManip
         );
 
         // Rabbits in top left
-        world.rabbits.add( new Rabbit( 1, 1, Direction.RIGHT ) );
-        world.rabbits.add( new Rabbit( 1, 1, Direction.LEFT ) );
+        world.rabbits.add( new Rabbit( 1, 1, Direction.RIGHT, "good" ) );
+        world.rabbits.add( new Rabbit( 1, 1, Direction.LEFT, "good" ) );
 
         // bash and bridge in top right
         world.things.add( new Token( 2, 1, Token.Type.bash ) );

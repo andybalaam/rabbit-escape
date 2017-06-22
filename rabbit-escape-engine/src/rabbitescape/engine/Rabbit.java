@@ -22,12 +22,14 @@ public class Rabbit extends Thing implements Comparable<Rabbit>
 
     public Direction dir;
     public boolean onSlope;
+    public final String type;
 
-    public Rabbit( int x, int y, Direction dir )
+    public Rabbit( int x, int y, Direction dir, String type )
     {
         super( x, y, RABBIT_WALKING_LEFT );
         this.dir = dir;
         this.onSlope = false;
+        this.type = type;
         behaviours = new ArrayList<>();
         behavioursTriggerOrder = new ArrayList<>();
         createBehaviours();
@@ -49,11 +51,14 @@ public class Rabbit extends Thing implements Comparable<Rabbit>
         Bridging bridging = new Bridging();
         Blocking blocking = new Blocking();
         Walking walking = new Walking();
+        BaddyCrash baddyCrash = new BaddyCrash();
+        BaddyWait baddyWait = new BaddyWait();
 
         behavioursTriggerOrder.add( exploding );
         behavioursTriggerOrder.add( outOfBounds );
         behavioursTriggerOrder.add( burning );
         behavioursTriggerOrder.add( drowning );
+        behavioursTriggerOrder.add( baddyCrash );
         behavioursTriggerOrder.add( falling );
         behavioursTriggerOrder.add( exiting );
         behavioursTriggerOrder.add( brollychuting );
@@ -62,12 +67,14 @@ public class Rabbit extends Thing implements Comparable<Rabbit>
         behavioursTriggerOrder.add( digging );
         behavioursTriggerOrder.add( bridging );
         behavioursTriggerOrder.add( blocking );
+        behavioursTriggerOrder.add( baddyWait );
         behavioursTriggerOrder.add( walking );
 
         behaviours.add( exploding );
         behaviours.add( outOfBounds );
         behaviours.add( burning );
         behaviours.add( drowning );
+        behaviours.add( baddyCrash );
         behaviours.add( falling );
         behaviours.add( exiting );
         behaviours.add( brollychuting );
@@ -76,6 +83,7 @@ public class Rabbit extends Thing implements Comparable<Rabbit>
         behaviours.add( bridging );
         behaviours.add( blocking );
         behaviours.add( climbing );
+        behaviours.add( baddyWait );
         behaviours.add( walking );
 
         assert behavioursTriggerOrder.size() == behaviours.size();

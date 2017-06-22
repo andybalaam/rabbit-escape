@@ -543,14 +543,28 @@ public class LineProcessor
             }
             case 'r':
             {
-                Rabbit r = new Rabbit( x, y, RIGHT );
+                Rabbit r = new Rabbit( x, y, RIGHT, "good" );
                 ret = r;
                 rabbits.add( r );
                 break;
             }
             case 'j':
             {
-                Rabbit r = new Rabbit( x, y, LEFT );;
+                Rabbit r = new Rabbit( x, y, LEFT, "good" );
+                ret = r;
+                rabbits.add( r );
+                break;
+            }
+            case 't':
+            {
+                Rabbit r = new Rabbit( x, y, RIGHT, "bad" );
+                ret = r;
+                rabbits.add( r );
+                break;
+            }
+            case 'y':
+            {
+                Rabbit r = new Rabbit( x, y, LEFT, "bad" );
                 ret = r;
                 rabbits.add( r );
                 break;
