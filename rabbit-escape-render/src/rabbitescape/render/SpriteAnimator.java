@@ -2,7 +2,6 @@ package rabbitescape.render;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 import rabbitescape.engine.*;
 import rabbitescape.engine.util.Util;
@@ -67,31 +66,22 @@ public class SpriteAnimator
 
         for ( Thing thing : Util.filterOut( world.things, Fire.class ) )
         {
-            addThing( frameNum, thing, null, "", ret );
+            addThing( frameNum, thing, null, ret );
         }
 
         for ( Rabbit rabbit : world.rabbits )
         {
-            String baddy;
-            if ( rabbit.type == Rabbit.Type.RABBOT )
-            {
-                baddy = "baddy_";
-            }
-            else
-            {
-                baddy = "";
-            }
-            addThing( frameNum, rabbit, null, baddy, ret );
+            addThing( frameNum, rabbit, null, ret );
         }
 
         for ( Thing thing : Util.filterIn( world.things, Fire.class ) )
         {
-            addThing( frameNum, thing, null, "", ret );
+            addThing( frameNum, thing, null, ret );
         }
 
         for ( Thing thing : world.changes.tokensAboutToAppear() )
         {
-            addThing( frameNum, thing, null, "", ret );
+            addThing( frameNum, thing, null, ret );
         }
 
         // TODO: probably easier if we just had a rabbit entering animation
@@ -99,7 +89,7 @@ public class SpriteAnimator
         {
             for ( Thing thing : world.changes.rabbitsJustEntered() )
             {
-                addThing( -1, thing, "rabbit_entering", "", ret );
+                addThing( -1, thing, "rabbit_entering", ret );
             }
         }
 
@@ -126,11 +116,10 @@ public class SpriteAnimator
         int frameNum,
         Thing thing,
         String soundEffectOverride,
-        String baddy,
         List<Sprite> ret
     )
     {
-        Frame frame = frameForThing( frameNum, thing, baddy );
+        Frame frame = frameForThing( frameNum, thing );
 
         String bitmapName = null;
         int offsetX = 0;
@@ -170,20 +159,19 @@ public class SpriteAnimator
         return null;
     }
 
-    private Frame frameForThing( int frameNum, Thing thing, String baddy )
+    private Frame frameForThing( int frameNum, Thing thing )
     {
         if ( frameNum == -1 )
         {
             return null;
         }
 
-        String frameName = thing.state.name().toLowerCase( Locale.ENGLISH );
-        frameName = baddy + frameName;
-        Animation animation = animationCache.get( frameName );
+        Animation animation = animationCache.get( thing.stateName() );
 
         if ( animation == null )
         {
-            System.out.println( "Missing animation for state " + thing.state );
+            System.out.println(
+                "Missing animation for state " + thing.stateName() );
             return null;
         }
 

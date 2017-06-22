@@ -7,7 +7,7 @@ import org.junit.Test;
 public class TestBaddyRabbits
 {
     @Test
-    public void If_a_rabbit_meets_a_baddy_rabbit_they_both_explode()
+    public void If_a_rabbit_meets_a_rabbot_they_both_explode()
     {
         assertWorldEvolvesLike(
             "r   y" + "\n" +
@@ -24,7 +24,7 @@ public class TestBaddyRabbits
         );
     }
     @Test
-    public void If_a_baddy_rabbit_gets_a_bridging_token_it_still_explodes()
+    public void If_a_rabbot_gets_a_bridging_token_it_still_explodes()
     {
         assertWorldEvolvesLike(
             "ti j" + "\n" +
@@ -42,7 +42,7 @@ public class TestBaddyRabbits
     }
 
     @Test
-    public void If_a_rabbit_will_cross_over_with_a_baddy_rabbit_the_baddy_rabbit_will_stop()
+    public void If_a_rabbit_will_cross_over_with_a_rabbot_the_rabbot_will_stop()
     {
         assertWorldEvolvesLike(
             "t  j" + "\n" +

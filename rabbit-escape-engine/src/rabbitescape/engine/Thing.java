@@ -1,5 +1,6 @@
 package rabbitescape.engine;
 
+import java.util.Locale;
 import java.util.Map;
 
 import rabbitescape.engine.ChangeDescription.State;
@@ -24,7 +25,7 @@ public abstract class Thing implements ShownOnOverlay
 
     public String stateName()
     {
-        return state.name().toLowerCase();
+        return state.name().toLowerCase( Locale.ENGLISH );
     }
 
     @Override
