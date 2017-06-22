@@ -66,6 +66,8 @@ SVGANDROIDICONSHDPI  := $(SVGICONSSRC:images-src/icons/%.svg=$(ANDROIDICONSHDPI_
 SVGANDROIDICONSXHDPI := $(SVGICONSSRC:images-src/icons/%.svg=$(ANDROIDICONSXHDPI_DEST)/%.png)
 
 ANIMATIONS_DIR := rabbit-escape-render/src/rabbitescape/render/animations
+RABBIT_ANIMATIONS := $(wildcard $(ANIMATIONS_DIR)/rabbit_*.rea)
+RABBOT_ANIMATIONS := $(subst animations/rabbit,animations/rabbot,$(RABBIT_ANIMATIONS))
 
 LEVELS_DIRS := $(shell \
 	find rabbit-escape-engine -type d \
@@ -258,7 +260,11 @@ music: no-make-warnings $(MUSICWAV)
 %/levels.txt: %/*/*.rel
 	@./build-scripts/levelnames $(@D) > $(@D)/levels.txt
 
-animations: no-make-warnings $(ANIMATIONS_DIR)/ls.txt
+
+$(ANIMATIONS_DIR)/rabbot%.rea: $(ANIMATIONS_DIR)/rabbit%.rea
+	./build-scripts/rea-rabbit-to-rabbot < $< > $@
+
+animations: no-make-warnings $(ANIMATIONS_DIR)/ls.txt $(RABBOT_ANIMATIONS)
 	@echo ". Generating animations list"
 
 levels: no-make-warnings $(patsubst %, %/levels.txt, $(LEVELS_DIRS))
