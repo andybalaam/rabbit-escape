@@ -3,37 +3,11 @@ package rabbitescape.engine.behaviours;
 import rabbitescape.engine.Behaviour;
 import rabbitescape.engine.BehaviourTools;
 import rabbitescape.engine.ChangeDescription.State;
-import rabbitescape.engine.Direction;
 import rabbitescape.engine.Rabbit;
 import rabbitescape.engine.World;
 
-public class BaddyWait extends Behaviour
+public class RabbotCrash extends Behaviour
 {
-    private boolean within1Vertically( Rabbit otherRabbit, Rabbit rabbit )
-    {
-        return ( Math.abs( otherRabbit.y - rabbit.y ) < 2 );
-    }
-
-    private boolean noseToNose( Rabbit otherRabbit, Rabbit rabbit )
-    {
-        if ( otherRabbit.x == rabbit.x - 1 &&
-            otherRabbit.dir == Direction.RIGHT &&
-            rabbit.dir == Direction.LEFT )
-        {
-            return true;
-        }
-        else if ( otherRabbit.x == rabbit.x + 1 &&
-            otherRabbit.dir == Direction.LEFT &&
-            rabbit.dir == Direction.RIGHT )
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
-    }
-
     @Override
     public void cancel()
     {
@@ -47,9 +21,11 @@ public class BaddyWait extends Behaviour
             for ( Rabbit otherRabbit : world.rabbits )
             {
                 if ( otherRabbit.type == Rabbit.Type.RABBIT &&
-                    within1Vertically( otherRabbit, rabbit ) &&
-                    noseToNose( otherRabbit, rabbit ) )
+                    otherRabbit.x == rabbit.x &&
+                    otherRabbit.y == rabbit.y
+                )
                 {
+                    world.changes.killRabbit( otherRabbit );
                     return true;
                 }
             }
@@ -62,7 +38,7 @@ public class BaddyWait extends Behaviour
     {
         if ( triggered )
         {
-            return t.rl( State.RABBIT_WAITING_RIGHT, State.RABBIT_WAITING_LEFT );
+            return State.RABBIT_CRASHING;
         }
         else
         {
@@ -73,9 +49,9 @@ public class BaddyWait extends Behaviour
     @Override
     public boolean behave( World world, Rabbit rabbit, State state )
     {
-        if ( state == State.RABBIT_WAITING_LEFT ||
-            state == State.RABBIT_WAITING_RIGHT )
+        if ( state == State.RABBIT_CRASHING )
         {
+            world.changes.killRabbit( rabbit );
             return true;
         }
 

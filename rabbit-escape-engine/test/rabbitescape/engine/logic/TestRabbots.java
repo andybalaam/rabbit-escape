@@ -4,7 +4,7 @@ import static rabbitescape.engine.util.WorldAssertions.*;
 
 import org.junit.Test;
 
-public class TestBaddyRabbits
+public class TestRabbots
 {
     @Test
     public void If_a_rabbit_meets_a_rabbot_they_both_explode()
