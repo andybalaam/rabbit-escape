@@ -213,6 +213,7 @@ public class SpriteAnimator
                 }
                 break;
         }
-		throw new RuntimeException("Unknown Block type: " + block.material + " " + block.shape);
+        throw new RuntimeException(
+            "Unknown Block type: " + block.material + " " + block.shape);
     }
 }
