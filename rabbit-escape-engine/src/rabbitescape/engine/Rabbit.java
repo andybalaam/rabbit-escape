@@ -227,4 +227,19 @@ public class Rabbit extends Thing implements Comparable<Rabbit>
     {
         return index;
     }
+
+    @Override
+    public String stateName()
+    {
+        String normalName = super.stateName();
+        if ( type == Type.RABBIT )
+        {
+            return normalName;
+        }
+        else
+        {
+            return normalName.replaceFirst(
+                "^rabbit", type.name().toLowerCase() );
+        }
+    }
 }

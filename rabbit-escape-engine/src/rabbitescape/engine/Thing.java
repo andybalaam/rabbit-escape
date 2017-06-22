@@ -22,6 +22,11 @@ public abstract class Thing implements ShownOnOverlay
     public abstract Map<String, String> saveState();
     public abstract void restoreFromState( Map<String, String> state );
 
+    public String stateName()
+    {
+        return state.name().toLowerCase();
+    }
+
     @Override
     public abstract String overlayText();
 }

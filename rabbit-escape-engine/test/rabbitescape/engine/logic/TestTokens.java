@@ -17,6 +17,14 @@ public class TestTokens
     // TODO: slopes and bridges
 
     @Test
+    public void Tokens_return_their_state_names_lowercase()
+    {
+        Token t = new Token( 1, 2, Token.Type.bash );
+        t.state = TOKEN_BASH_FALLING;
+        assertThat(t.stateName(), equalTo("token_bash_falling"));
+    }
+
+    @Test
     public void Tokens_fall_slowly_and_stop_on_ground()
     {
         assertWorldEvolvesLike(
