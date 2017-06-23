@@ -181,4 +181,25 @@ public class TestExit
         // None lived
         assertThat( world.num_saved, equalTo ( 0 ) );
     }
+
+    @Test
+    public void Rabbots_ignore_the_exit()
+    {
+        assertWorldEvolvesLike(
+            "t  O y" + "\n" +
+            "######",
+
+            " t><y " + "\n" +
+            "######",
+
+            "  <>  " + "\n" +
+            "######",
+
+            " <yO> " + "\n" + // They just walked straight past!
+            "######",
+
+            "<y Ot>" + "\n" +
+            "######"
+        );
+    }
 }
