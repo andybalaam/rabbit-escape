@@ -1,0 +1,18 @@
+:name=Nemeses
+:description=Red "rabbots" explode on contact with rabbits
+:hint.1=How can you stop the rabbots before the collision?
+:hint.2=Explode the red rabbots.
+:hint.3=Place explode tokens near the right to eliminate the rabbots.
+:author_name=andybalaam
+:author_url=https://github.com/andybalaam
+:num_rabbits=2
+:num_to_save=2
+:rabbit_delay=2
+:explode=2
+:music=tryad-the_final_rewind
+##############
+#            #
+# Q          #
+#            #
+#         yOy#
+##############
