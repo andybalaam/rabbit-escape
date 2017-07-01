@@ -12,6 +12,7 @@ doc/doxygen
 recordings/
 .directory
 /.ropeproject
+.metadata/
 
 # Android
 rabbit-escape-ui-android/app/libs/rabbit-escape-generic.jar
