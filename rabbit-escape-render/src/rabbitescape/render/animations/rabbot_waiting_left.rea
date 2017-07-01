@@ -1,10 +1,10 @@
-rabbot_walk_left_01 -32 0
-rabbot_walk_left_01 -32 0
-rabbot_walk_left_01 -32 0
-rabbot_walk_left_01 -32 0
-rabbot_walk_left_01 -32 0
-rabbot_walk_left_01 -32 0
-rabbot_walk_left_01 -32 0
-rabbot_walk_left_01 -32 0
-rabbot_walk_left_01 -32 0
-rabbot_walk_left_01 -32 0
+rabbot_wait_left_01
+rabbot_wait_left_02
+rabbot_wait_left_03
+rabbot_wait_left_04
+rabbot_wait_left_05
+rabbot_wait_left_05
+rabbot_wait_left_04
+rabbot_wait_left_03
+rabbot_wait_left_01
+rabbot_wait_left_01
