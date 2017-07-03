@@ -38,6 +38,37 @@ public class TestDrowning
     }
 
     @Test
+    public void rabbits_drown_but_rabbots_dont()
+    {
+        assertWorldEvolvesLike(
+            "#P#P#" + "\n" +
+            "# # #" + "\n" +
+            "#t#r#" + "\n" +
+            "#####",
+
+            "#P#P#" + "\n" +
+            "# # #" + "\n" +
+            "#|#|#" + "\n" +
+            "#####",
+
+            "#P#P#" + "\n" +
+            "#n#n#" + "\n" +
+            "#?#?#" + "\n" +
+            "#####",
+
+            "#P#P#" + "\n" +
+            "#n#n#" + "\n" +
+            "#|#|#" + "\n" + // Rabbits and Rabbots characters are displayed in preference to water.
+            "#####",
+
+            "#P#P#" + "\n" +
+            "#n#n#" + "\n" +
+            "#?#R#" + "\n" + // Rabbit is drowning but the Rabbot isn't
+            "#####"
+        );
+    }
+    
+    @Test
     public void rabbits_drown_on_slopes()
     {
         assertWorldEvolvesLike(
