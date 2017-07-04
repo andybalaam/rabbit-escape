@@ -113,23 +113,25 @@ public class TestWorldChanges
             ":num_saved=5",
             ":num_killed=4",
             ":num_waiting=16",
-            ":rabbit_index_count=5",
+            ":rabbit_index_count=7",
             ":paused=false",
             ":bash=1",
             ":bridge=3",
             ":dig=2",
-            "#####",
-            "#i  #",
-            "# **#",
-            "#####",
+            "######",
+            "#i   #",
+            "# ***#",
+            "######",
             ":*=r{index:2}",
-            ":*=r{index:4}"
+            ":*=r{index:4}",
+            ":*=t{index:6}"
         };
 
         World world = TextWorldManip.createWorld( worldText );
         Token tok0 = world.getTokenAt( 1, 1 );
         Rabbit rabbit0 = world.rabbits.get( 0 );
         Rabbit rabbit1 = world.rabbits.get( 1 );
+        Rabbit rabbit2 = world.rabbits.get( 2 );
 
         // One of every type of change
         world.changes.enterRabbit(
@@ -137,6 +139,7 @@ public class TestWorldChanges
 
         world.changes.killRabbit( rabbit0 );
         world.changes.saveRabbit( rabbit1 );
+        world.changes.killRabbit( rabbit2 );
         world.changes.addToken( 2, 1, Token.Type.bash );
         world.changes.removeToken( tok0 );
         world.changes.addBlock( new Block( 1, 1, Block.Material.EARTH, Shape.FLAT, 0 ) );

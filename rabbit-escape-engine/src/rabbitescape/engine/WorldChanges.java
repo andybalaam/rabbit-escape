@@ -123,13 +123,22 @@ public class WorldChanges
 
     private synchronized void revertKillRabbits()
     {
-        world.num_killed -= rabbitsToKill.size();
+        for ( Rabbit rabbit : rabbitsToKill )
+        {
+            if ( rabbit.type == Rabbit.Type.RABBIT )
+            {
+                --world.num_killed;
+            }
+        }
         rabbitsToKill.clear();
     }
 
     public synchronized void killRabbit( Rabbit rabbit )
     {
-        ++world.num_killed;
+        if ( rabbit.type == Rabbit.Type.RABBIT )
+        {
+            ++world.num_killed;
+        }
         rabbitsToKill.add( rabbit );
     }
 
