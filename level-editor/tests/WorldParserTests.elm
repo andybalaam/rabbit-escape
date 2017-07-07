@@ -4,7 +4,7 @@ import Test exposing (describe,test,Test)
 import Expect
 
 
-import World exposing (World, initWorld)
+import World exposing (World, Block(..), initWorld, makeBlockGrid, makeWorld)
 import WorldParser exposing (parse)
 
 
@@ -15,6 +15,9 @@ all =
         ]
 
 
+-- ---
+
+
 okAndEqual : Result String a -> a -> () -> Expect.Expectation
 okAndEqual actual expected =
     \() ->
@@ -23,18 +26,29 @@ okAndEqual actual expected =
             Err error -> Expect.fail error
 
 
-parseLines : List String -> Result String World
-parseLines strings =
-    parse ((String.join "\n" strings) ++ "\n")
+parseLines : String -> List String -> Result String World
+parseLines comment strings =
+    parse comment ((String.join "\n" strings) ++ "\n")
 
+
+-- ---
 
 parseEmptyWorld : () -> Expect.Expectation
 parseEmptyWorld =
     okAndEqual
         (parseLines
+            "tst"
             [ "   "
             , "   "
             , "   "
             ]
         )
-        initWorld
+        (makeWorld
+            "tst"
+            (makeBlockGrid
+                [ [NoBlock, NoBlock, NoBlock]
+                , [NoBlock, NoBlock, NoBlock]
+                , [NoBlock, NoBlock, NoBlock]
+                ]
+            )
+        )
