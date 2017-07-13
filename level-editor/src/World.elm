@@ -1,5 +1,7 @@
 module World exposing
     ( Block(..)
+    , BlockMaterial(..)
+    , BlockShape(..)
     , Grid
     , World
     , initWorld

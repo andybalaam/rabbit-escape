@@ -1,7 +1,15 @@
 module WorldParser exposing (parse)
 
 
-import World exposing (Block(..), Grid, World, makeBlockGrid, makeWorld)
+import World exposing (
+    Block(..),
+    BlockMaterial(..),
+    BlockShape(..),
+    Grid,
+    World,
+    makeBlockGrid,
+    makeWorld
+    )
 
 
 parse : String -> String -> Result String World
@@ -42,6 +50,7 @@ toBlock : Char -> Result String Block
 toBlock c =
     case c of
         ' ' -> Ok NoBlock
+        '#' -> Ok (Block Earth Flat)
         _ -> Err ("Unrecognised character '" ++ (String.fromChar c) ++ "'.")
 
 
