@@ -11,8 +11,9 @@ levels.txt
 doc/doxygen
 recordings/
 .directory
-/.ropeproject
-.metadata/
+/.ropeproject/
+/.recommenders/
+/.metadata/
 
 # Android
 rabbit-escape-ui-android/app/libs/rabbit-escape-generic.jar
