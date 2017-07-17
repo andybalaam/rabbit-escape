@@ -9,7 +9,6 @@ import World exposing
     , Block(..)
     , BlockMaterial(..)
     , BlockShape(..)
-    , initWorld
     , makeBlockGrid
     , makeWorld
     )

@@ -1,8 +1,10 @@
-import Html exposing (Html, programWithFlags, text)
+import Html exposing (Html, div, pre, programWithFlags, text)
 import Window
 
 
-import World exposing(World, initWorld)
+import World exposing (World, makeBlockGrid, makeWorld)
+import WorldParser exposing (parse)
+import WorldTextRender exposing (render)
 
 
 type alias Model =
@@ -11,8 +13,8 @@ type alias Model =
         , height : Int
         }
     , world : World
-    , past : List World
-    , future: List World
+    --, past : List World
+    --, future: List World
     }
 
 
@@ -26,6 +28,23 @@ type Msg =
       Resize Int Int
 
 
+initWorld : World
+initWorld =
+    let
+        p =
+            WorldParser.parse
+                "Empty level"
+                (  "####\n"
+                ++ "#  #\n"
+                ++ "#  #\n"
+                ++ "####\n"
+                )
+    in
+        case p of
+            Ok w -> w
+            Err s -> makeWorld "Unexpected Error" (makeBlockGrid [])
+
+
 initModel : Flags -> Model
 initModel flags =
     { screen =
@@ -33,8 +52,8 @@ initModel flags =
         , height = flags.height
         }
     , world = initWorld
-    , past = []
-    , future = []
+    --, past = []
+    --, future = []
     }
 
 
@@ -48,11 +67,20 @@ view model =
     let
         s = model.screen
     in
-        text
-            (  (toString s.width)
-            ++ ", "
-            ++ (toString s.height)
-            )
+        div
+            []
+            [
+                text
+                    (  (toString s.width)
+                    ++ ", "
+                    ++ (toString s.height)
+                    )
+                ,
+                pre
+                    []
+                    [ text (render model.world)
+                    ]
+            ]
 
 
 update : Msg -> Model -> (Model, Cmd Msg)

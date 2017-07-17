@@ -4,7 +4,7 @@ module World exposing
     , BlockShape(..)
     , Grid
     , World
-    , initWorld
+    , blocks
     , makeBlockGrid
     , makeWorld
     )
@@ -41,15 +41,6 @@ initBlocks =
     ]
 
 
-initWorld : World
-initWorld =
-    { comment = "Empty level"
-    , blocks =
-        Grid
-            8 6 initBlocks
-    }
-
-
 makeWorld : String -> Grid Block -> World
 makeWorld comment blocks =
     { comment = comment
@@ -62,3 +53,10 @@ makeBlockGrid blocks =
     case blocks of
         [] -> Grid 0 0 blocks
         x :: _ -> Grid (List.length x) (List.length blocks) blocks
+
+
+-- Extract the blocks from a world
+blocks : World -> List (List Block)
+blocks world =
+    case world.blocks of
+        Grid w h ls -> ls
