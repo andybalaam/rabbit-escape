@@ -14,6 +14,7 @@ all =
     describe "Tests for round-trips of worlds as text"
         [ test "Just blocks" justBlocks
         , test "Slopes" slopes
+        , test "Bridges" bridges
         ]
 
 
@@ -55,5 +56,14 @@ slopes =
     roundTrips
         [ "  /"
         , "#\\ "
+        , " ##"
+        ]
+
+
+bridges : () -> Expect.Expectation
+bridges =
+    roundTrips
+        [ "/ ("
+        , "#) "
         , " ##"
         ]

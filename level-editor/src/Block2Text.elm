@@ -18,6 +18,8 @@ t2bList =
     , ('#',  Block Earth Flat)
     , ('\\', Block Earth UpLeft)
     , ('/',  Block Earth UpRight)
+    , (')',  Block Earth BridgeUpLeft)
+    , ('(',  Block Earth BridgeUpRight)
     ]
 
 
