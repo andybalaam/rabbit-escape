@@ -6,6 +6,7 @@ import Json.Encode exposing (Value)
 
 
 import WorldParserTests
+import WorldRoundTripTests
 import WorldTextRenderTests
 
 
@@ -13,6 +14,7 @@ all : Test
 all =
     describe "All tests"
         [ WorldParserTests.all
+        , WorldRoundTripTests.all
         , WorldTextRenderTests.all
         ]
 
