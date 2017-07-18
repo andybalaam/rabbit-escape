@@ -15,6 +15,7 @@ all =
         [ test "Just blocks" justBlocks
         , test "Slopes" slopes
         , test "Bridges" bridges
+        , test "Metal" metal
         ]
 
 
@@ -66,4 +67,13 @@ bridges =
         [ "/ ("
         , "#) "
         , " ##"
+        ]
+
+
+metal : () -> Expect.Expectation
+metal =
+    roundTrips
+        [ "/ ("
+        , "#) "
+        , " MM"
         ]
