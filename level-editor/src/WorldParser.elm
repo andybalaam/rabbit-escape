@@ -12,6 +12,9 @@ import World exposing (
     )
 
 
+import Block2Text exposing (toBlock)
+
+
 parse : String -> String -> Result String World
 parse comment text_world =
     Result.map
@@ -44,14 +47,6 @@ toLines manyLines =
 toLine : String -> Result String (List Block)
 toLine line =
     combine (List.map toBlock (String.toList line))
-
-
-toBlock : Char -> Result String Block
-toBlock c =
-    case c of
-        ' ' -> Ok NoBlock
-        '#' -> Ok (Block Earth Flat)
-        _ -> Err ("Unrecognised character '" ++ (String.fromChar c) ++ "'.")
 
 
 {- From https://github.com/circuithub/elm-result-extra -}

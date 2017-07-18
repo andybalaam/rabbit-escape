@@ -1,6 +1,7 @@
 module WorldTextRender exposing (render)
 
 
+import Block2Text exposing (toText)
 import World exposing (Block, Grid(..), World, blocks)
 
 
@@ -13,9 +14,4 @@ render world =
 
 renderLine : List Block -> String
 renderLine blocks =
-    String.concat (List.map renderBlock blocks)
-
-
-renderBlock : Block -> String
-renderBlock block =
-    " "
+    String.fromList (List.map toText blocks)

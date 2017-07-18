@@ -19,7 +19,7 @@ all : Test
 all =
     describe "Tests of the world parser and manipulation"
         [ test "Render empty world" renderEmptyWorld
---        , test "Render world with blocks" renderWorldWithBlocks
+        , test "Render world with blocks" renderWorldWithBlocks
         ]
 
 
@@ -36,6 +36,11 @@ fltErth =
     Block Earth Flat
 
 
+rend : List (List Block) -> List String
+rend blocks =
+    renderToLines (makeWorld "tst" (makeBlockGrid blocks))
+
+
 -- ---
 
 renderEmptyWorld : () -> Expect.Expectation
@@ -46,14 +51,27 @@ renderEmptyWorld =
             , "   "
             , "   "
             ]
-            (renderToLines
-                (makeWorld
-                    "tst"
-                    (makeBlockGrid
-                        [ [NoBlock, NoBlock, NoBlock]
-                        , [NoBlock, NoBlock, NoBlock]
-                        , [NoBlock, NoBlock, NoBlock]
-                        ]
-                    )
-                )
+            (rend
+                [ [NoBlock, NoBlock, NoBlock]
+                , [NoBlock, NoBlock, NoBlock]
+                , [NoBlock, NoBlock, NoBlock]
+                ]
+            )
+
+
+renderWorldWithBlocks : () -> Expect.Expectation
+renderWorldWithBlocks =
+    \() ->
+        Expect.equal
+            [ "    "
+            , "   #"
+            , "    "
+            , "####"
+            ]
+            (rend
+                [ [NoBlock, NoBlock, NoBlock, NoBlock]
+                , [NoBlock, NoBlock, NoBlock, fltErth]
+                , [NoBlock, NoBlock, NoBlock, NoBlock]
+                , [fltErth, fltErth, fltErth, fltErth]
+                ]
             )
