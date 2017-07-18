@@ -14,8 +14,10 @@ import World exposing
 
 t2bList : List (Char, Block)
 t2bList =
-    [ (' ', NoBlock)
-    , ('#', Block Earth Flat)
+    [ (' ',  NoBlock)
+    , ('#',  Block Earth Flat)
+    , ('\\', Block Earth UpLeft)
+    , ('/',  Block Earth UpRight)
     ]
 
 

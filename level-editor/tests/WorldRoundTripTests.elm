@@ -12,7 +12,8 @@ import WorldTextRender exposing (render)
 all : Test
 all =
     describe "Tests for round-trips of worlds as text"
-        [ test "Simple world" simpleWorld
+        [ test "Just blocks" justBlocks
+        , test "Slopes" slopes
         ]
 
 
@@ -40,10 +41,19 @@ roundTrips text =
 -- ---
 
 
-simpleWorld : () -> Expect.Expectation
-simpleWorld =
+justBlocks : () -> Expect.Expectation
+justBlocks =
     roundTrips
         [ "   "
         , "#  "
+        , " ##"
+        ]
+
+
+slopes : () -> Expect.Expectation
+slopes =
+    roundTrips
+        [ "  /"
+        , "#\\ "
         , " ##"
         ]
