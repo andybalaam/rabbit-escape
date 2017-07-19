@@ -64,6 +64,7 @@ parseEmptyWorld =
                 , [NoBlock, NoBlock, NoBlock]
                 ]
             )
+            []
         )
 
 
@@ -87,4 +88,5 @@ parseWorldWithBlocks =
                 , [fltErth, fltErth, fltErth, fltErth]
                 ]
             )
+            []
         )

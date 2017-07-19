@@ -42,7 +42,7 @@ initWorld =
     in
         case p of
             Ok w -> w
-            Err s -> makeWorld "Unexpected Error" (makeBlockGrid [])
+            Err s -> makeWorld "Unexpected Error" (makeBlockGrid []) []
 
 
 initModel : Flags -> Model

@@ -17,9 +17,10 @@ import Block2Text exposing (toBlock)
 
 parse : String -> String -> Result String World
 parse comment text_world =
-    Result.map
+    Result.map2
         (makeWorld comment)
         (Result.map makeBlockGrid (toLines text_world))
+        (Ok [])
 
 
 removeFirstIfEmpty : List String -> List String

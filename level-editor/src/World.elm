@@ -10,6 +10,9 @@ module World exposing
     )
 
 
+import Rabbit exposing (Rabbit)
+
+
 type BlockMaterial =
     Earth | Metal
 
@@ -29,6 +32,7 @@ type Grid a =
 type alias World =
     { comment : String
     , blocks : Grid Block
+    , rabbits : List Rabbit
     }
 
 
@@ -41,10 +45,11 @@ initBlocks =
     ]
 
 
-makeWorld : String -> Grid Block -> World
-makeWorld comment blocks =
+makeWorld : String -> Grid Block -> List Rabbit -> World
+makeWorld comment blocks rabbits =
     { comment = comment
     , blocks = blocks
+    , rabbits = rabbits
     }
 
 

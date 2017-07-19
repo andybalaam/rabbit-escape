@@ -38,7 +38,7 @@ fltErth =
 
 rend : List (List Block) -> List String
 rend blocks =
-    renderToLines (makeWorld "tst" (makeBlockGrid blocks))
+    renderToLines (makeWorld "tst" (makeBlockGrid blocks) [])
 
 
 -- ---
