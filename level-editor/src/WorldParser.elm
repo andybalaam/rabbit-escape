@@ -12,7 +12,7 @@ import World exposing (
     )
 
 
-import Item2Text exposing (toBlock)
+import Item2Text exposing (toItems)
 
 
 parse : String -> String -> Result String World
@@ -47,7 +47,7 @@ toLines manyLines =
 
 toLine : String -> Result String (List Block)
 toLine line =
-    combine (List.map toBlock (String.toList line))
+    combine (List.map toItems (String.toList line))
 
 
 {- From https://github.com/circuithub/elm-result-extra -}

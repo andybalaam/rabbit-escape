@@ -1,4 +1,4 @@
-module Item2Text exposing (toText, toBlock)
+module Item2Text exposing (toText, toItems)
 
 
 import Dict
@@ -58,8 +58,8 @@ b2t =
     AllDict.fromList ordBlock (List.map swap t2bList)
 
 
-toBlock : Char -> Result String Block
-toBlock c =
+toItems : Char -> Result String Block
+toItems c =
     case Dict.get c t2b of
         Just b ->
             Ok b
