@@ -59,13 +59,13 @@ b2t =
     AllDict.fromList ordBlock (List.map swap t2bList)
 
 
-type alias Item =
+type alias Items =
     { block : Block
     , rabbits : List Rabbit
     }
 
 
-toItems : Char -> Result String Item
+toItems : Char -> Result String Items
 toItems c =
     case Dict.get c t2b of
         Just b ->
