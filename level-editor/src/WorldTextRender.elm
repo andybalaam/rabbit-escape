@@ -1,7 +1,7 @@
 module WorldTextRender exposing (render)
 
 
-import Block2Text exposing (toText)
+import Item2Text exposing (toText)
 import World exposing (Block, Grid(..), World, blocks)
 
 

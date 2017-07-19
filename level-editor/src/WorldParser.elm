@@ -12,7 +12,7 @@ import World exposing (
     )
 
 
-import Block2Text exposing (toBlock)
+import Item2Text exposing (toBlock)
 
 
 parse : String -> String -> Result String World
