@@ -5,6 +5,7 @@ import Dict
 import AllDict
 
 
+import Rabbit exposing (Rabbit)
 import World exposing
     ( Block(..)
     , BlockMaterial(..)
@@ -58,11 +59,17 @@ b2t =
     AllDict.fromList ordBlock (List.map swap t2bList)
 
 
-toItems : Char -> Result String Block
+type alias Item =
+    { block : Block
+    , rabbits : List Rabbit
+    }
+
+
+toItems : Char -> Result String Item
 toItems c =
     case Dict.get c t2b of
         Just b ->
-            Ok b
+            Ok { block = b, rabbits = [] }
         Nothing ->
             Err ("Unrecognised character '" ++ (String.fromChar c) ++ "'.")
 

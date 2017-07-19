@@ -45,9 +45,14 @@ toLines manyLines =
     combine (List.map toLine (split manyLines))
 
 
+toBlock : Char -> Result String Block
+toBlock char =
+    Result.map .block (toItems char)
+
+
 toLine : String -> Result String (List Block)
 toLine line =
-    combine (List.map toItems (String.toList line))
+    combine (List.map toBlock (String.toList line))
 
 
 {- From https://github.com/circuithub/elm-result-extra -}
