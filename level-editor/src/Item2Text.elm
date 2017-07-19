@@ -1,4 +1,4 @@
-module Item2Text exposing (toText, toItems)
+module Item2Text exposing (Items, toText, toItems)
 
 
 import Dict

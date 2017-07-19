@@ -12,15 +12,17 @@ import World exposing (
     )
 
 
-import Item2Text exposing (toItems)
+import Item2Text exposing (Items, toItems)
 
 
 parse : String -> String -> Result String World
-parse comment text_world =
-    Result.map2
-        (makeWorld comment)
-        (Result.map makeBlockGrid (toLines text_world))
-        (Ok [])
+parse comment textWorld =
+    let
+        items = parseLines textWorld
+        grid = Result.map makeBlockGrid (Result.map findBlocks items)
+        rabbits = Ok []
+    in
+        Result.map2 (makeWorld comment) grid rabbits
 
 
 removeFirstIfEmpty : List String -> List String
@@ -40,19 +42,19 @@ split s =
     removeLastIfEmpty (String.lines s)
 
 
-toLines : String -> Result String (List (List Block))
-toLines manyLines =
-    combine (List.map toLine (split manyLines))
+findBlocks : List (List Items) -> List (List Block)
+findBlocks items =
+    List.map (\item -> List.map .block item) items
 
 
-toBlock : Char -> Result String Block
-toBlock char =
-    Result.map .block (toItems char)
+parseLines : String -> Result String (List (List Items))
+parseLines manyLines =
+    combine (List.map parseLine (split manyLines))
 
 
-toLine : String -> Result String (List Block)
-toLine line =
-    combine (List.map toBlock (String.toList line))
+parseLine : String -> Result String (List Items)
+parseLine line =
+    combine (List.map toItems (String.toList line))
 
 
 {- From https://github.com/circuithub/elm-result-extra -}
