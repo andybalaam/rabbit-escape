@@ -2,7 +2,7 @@ module Item2Text exposing (Items, toText, toItems)
 
 
 import Dict
-import AllDict
+import EveryDict
 
 
 import Rabbit exposing (Direction(..), Rabbit, makeRabbit)
@@ -51,45 +51,9 @@ swap (x, y) =
     (y, x)
 
 
-ordBlock : Block -> Int
-ordBlock block =
-    let
-        a =
-            case block of
-                NoBlock -> 0
-                Block Earth _ -> 1
-                Block Metal _ -> 2
-        b = case block of
-                NoBlock -> 0
-                Block _ Flat -> 1
-                Block _ UpRight -> 2
-                Block _ UpLeft -> 3
-                Block _ BridgeUpRight -> 4
-                Block _ BridgeUpLeft -> 5
-    in
-        a * 100 + b
-
-
-ordRabbit : Rabbit -> Int
-ordRabbit rabbit =
-    let
-        d =
-            case rabbit.dir of
-                Left -> 0
-                _ -> 1
-    in
-        1 + rabbit.x * 100 + rabbit.y * 10 + d
-
-
-ordItems : Items -> Int
-ordItems items =
-    (1000 * (ordBlock items.block))
-        + (List.sum (List.map ordRabbit items.rabbits))
-
-
-b2t : AllDict.AllDict Items Char Int
+b2t : EveryDict.EveryDict Items Char
 b2t =
-    AllDict.fromList ordItems (List.map swap t2bList)
+    EveryDict.fromList (List.map swap t2bList)
 
 
 type alias Items =
@@ -119,7 +83,7 @@ toItems y x c =
 
 toText : Block -> Char
 toText b =
-    case AllDict.get {block = b, rabbits = []} b2t of
+    case EveryDict.get {block = b, rabbits = []} b2t of
         Just c ->
             c
         Nothing ->
