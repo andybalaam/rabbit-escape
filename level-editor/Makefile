@@ -14,16 +14,19 @@ GAME_IMAGES := $(foreach X,${GAME_IMAGE_NAMES}, ${GAME_IMAGES_DIR}/${X})
 
 all: compile test
 
-www/game-images/%: ../images-src/%
+www:
+	mkdir -p www
+
+www/game-images/%: ../images-src/% www
 	cp $< $@
 
-www/game-images:
+www/game-images: www
 	mkdir -p $@
 
-www/index.html: index.html
+www/index.html: index.html www
 	cp $< $@
 
-www/style.css: style.css
+www/style.css: style.css www
 	cp $< $@
 
 images: ${GAME_IMAGES_DIR} ${GAME_IMAGES}
