@@ -1,0 +1,23 @@
+table
+{
+    border-collapse: collapse;
+    border-spacing: 0px;
+    padding: 0px;
+}
+tr
+{
+    padding: 0px;
+    margin: 0px;
+}
+
+td
+{
+    padding: 0px;
+    margin: 0px;
+}
+
+img
+{
+    margin: 0px;
+    padding: 0px;
+}
