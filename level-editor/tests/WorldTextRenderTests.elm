@@ -4,6 +4,7 @@ import Test exposing (describe,test,Test)
 import Expect
 
 
+import Rabbit exposing (Direction(..), Rabbit, makeRabbit)
 import World exposing
     ( World
     , Block(..)
@@ -20,6 +21,7 @@ all =
     describe "Tests of the world parser and manipulation"
         [ test "Render empty world" renderEmptyWorld
         , test "Render world with blocks" renderWorldWithBlocks
+        , test "Render world with rabbits" renderWorldWithRabbits
         ]
 
 
@@ -36,9 +38,9 @@ fltErth =
     Block Earth Flat
 
 
-rend : List (List Block) -> List String
-rend blocks =
-    renderToLines (makeWorld "tst" (makeBlockGrid blocks) [])
+rend : List (List Block) -> List Rabbit -> List String
+rend blocks rabbits =
+    renderToLines (makeWorld "tst" (makeBlockGrid blocks) rabbits)
 
 
 -- ---
@@ -56,6 +58,7 @@ renderEmptyWorld =
                 , [NoBlock, NoBlock, NoBlock]
                 , [NoBlock, NoBlock, NoBlock]
                 ]
+                []
             )
 
 
@@ -73,5 +76,27 @@ renderWorldWithBlocks =
                 , [NoBlock, NoBlock, NoBlock, fltErth]
                 , [NoBlock, NoBlock, NoBlock, NoBlock]
                 , [fltErth, fltErth, fltErth, fltErth]
+                ]
+                []
+            )
+
+
+renderWorldWithRabbits : () -> Expect.Expectation
+renderWorldWithRabbits =
+    \() ->
+        Expect.equal
+            [ "    "
+            , "  r#"
+            , " j  "
+            , "####"
+            ]
+            (rend
+                [ [NoBlock, NoBlock, NoBlock, NoBlock]
+                , [NoBlock, NoBlock, NoBlock, fltErth]
+                , [NoBlock, NoBlock, NoBlock, NoBlock]
+                , [fltErth, fltErth, fltErth, fltErth]
+                ]
+                [ makeRabbit 2 1 Right
+                , makeRabbit 1 2 Left
                 ]
             )

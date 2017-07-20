@@ -7,6 +7,7 @@ module World exposing
     , blocks
     , makeBlockGrid
     , makeWorld
+    , rabbitsAt
     )
 
 
@@ -65,3 +66,9 @@ blocks : World -> List (List Block)
 blocks world =
     case world.blocks of
         Grid w h ls -> ls
+
+
+-- Give me all rabbits at a co-ordinate
+rabbitsAt : World -> Int -> Int -> List Rabbit
+rabbitsAt world x y =
+    List.filter (\r -> r.x == x && r.y == y) world.rabbits

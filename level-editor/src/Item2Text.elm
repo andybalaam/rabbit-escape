@@ -81,10 +81,18 @@ toItems y x c =
             Err ("Unrecognised character '" ++ (String.fromChar c) ++ "'.")
 
 
-toText : Block -> Char
-toText b =
-    case EveryDict.get {block = b, rabbits = []} b2t of
-        Just c ->
-            c
-        Nothing ->
-            Debug.crash "Unknown block!"
+zeroCoords : Rabbit -> Rabbit
+zeroCoords rabbit =
+    { rabbit | x = 0, y = 0 }
+
+
+toText : Block -> List Rabbit -> Char
+toText block rabbits =
+    let
+        items = {block = block, rabbits = List.map zeroCoords rabbits}
+    in
+        case EveryDict.get items b2t of
+            Just c ->
+                c
+            Nothing ->
+                Debug.crash ("Unknown block!" ++ (toString items))
