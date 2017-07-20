@@ -4,6 +4,7 @@ import Test exposing (describe,test,Test)
 import Expect
 
 
+import Rabbit exposing (Direction(..), makeRabbit)
 import World exposing
     ( World
     , Block(..)
@@ -20,6 +21,7 @@ all =
     describe "Tests of the world parser and manipulation"
         [ test "Parse empty world" parseEmptyWorld
         , test "Parse world with blocks" parseWorldWithBlocks
+        , test "Parse world with rabbits" parseWorldWithRabbits
         ]
 
 
@@ -89,4 +91,30 @@ parseWorldWithBlocks =
                 ]
             )
             []
+        )
+
+
+parseWorldWithRabbits : () -> Expect.Expectation
+parseWorldWithRabbits =
+    okAndEqual
+        (parseLines
+            "tst"
+            [ "   j"
+            , "   #"
+            , "r   "
+            , "####"
+            ]
+        )
+        (makeWorld
+            "tst"
+            (makeBlockGrid
+                [ [NoBlock, NoBlock, NoBlock, NoBlock]
+                , [NoBlock, NoBlock, NoBlock, fltErth]
+                , [NoBlock, NoBlock, NoBlock, NoBlock]
+                , [fltErth, fltErth, fltErth, fltErth]
+                ]
+            )
+            [ makeRabbit 3 0 Left
+            , makeRabbit 0 2 Right
+            ]
         )

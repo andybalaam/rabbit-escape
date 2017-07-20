@@ -19,8 +19,17 @@ parse : String -> String -> Result String World
 parse comment textWorld =
     let
         items = parseLines textWorld
-        grid = Result.map makeBlockGrid (Result.map findBlocks items)
-        rabbits = Ok []
+
+        grid =
+            items                                       -- List (List Items)
+            |> Result.map (List.map (List.map .block))  -- List (List Block)
+            |> Result.map makeBlockGrid                 -- Grid
+
+        rabbits =
+            items                              -- List (List Items)
+            |> Result.map List.concat          -- List Items
+            |> Result.map (List.map .rabbits)  -- List (List Rabbit)
+            |> Result.map List.concat          -- List Rabbit
     in
         Result.map2 (makeWorld comment) grid rabbits
 
@@ -42,19 +51,14 @@ split s =
     removeLastIfEmpty (String.lines s)
 
 
-findBlocks : List (List Items) -> List (List Block)
-findBlocks items =
-    List.map (\item -> List.map .block item) items
-
-
 parseLines : String -> Result String (List (List Items))
 parseLines manyLines =
-    combine (List.map parseLine (split manyLines))
+    combine (List.indexedMap parseLine (split manyLines))
 
 
-parseLine : String -> Result String (List Items)
-parseLine line =
-    combine (List.map toItems (String.toList line))
+parseLine : Int -> String -> Result String (List Items)
+parseLine y line =
+    combine (List.indexedMap (toItems y) (String.toList line))
 
 
 {- From https://github.com/circuithub/elm-result-extra -}

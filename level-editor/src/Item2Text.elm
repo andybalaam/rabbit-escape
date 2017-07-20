@@ -5,7 +5,7 @@ import Dict
 import AllDict
 
 
-import Rabbit exposing (Rabbit)
+import Rabbit exposing (Direction(..), Rabbit, makeRabbit)
 import World exposing
     ( Block(..)
     , BlockMaterial(..)
@@ -13,19 +13,35 @@ import World exposing
     )
 
 
-t2bList : List (Char, Block)
+blockItem : Block -> Items
+blockItem block =
+    { block = block
+    , rabbits = []
+    }
+
+
+rabbitItem : Rabbit -> Items
+rabbitItem rabbit =
+    { block = NoBlock
+    , rabbits = [rabbit]
+    }
+
+
+t2bList : List (Char, Items)
 t2bList =
-    [ (' ',  NoBlock)
-    , ('#',  Block Earth Flat)
-    , ('\\', Block Earth UpLeft)
-    , ('/',  Block Earth UpRight)
-    , (')',  Block Earth BridgeUpLeft)
-    , ('(',  Block Earth BridgeUpRight)
-    , ('M',  Block Metal Flat)
+    [ (' ',  blockItem NoBlock)
+    , ('#',  blockItem (Block Earth Flat))
+    , ('\\', blockItem (Block Earth UpLeft))
+    , ('/',  blockItem (Block Earth UpRight))
+    , (')',  blockItem (Block Earth BridgeUpLeft))
+    , ('(',  blockItem (Block Earth BridgeUpRight))
+    , ('M',  blockItem (Block Metal Flat))
+    , ('j',  rabbitItem (makeRabbit 0 0 Left))
+    , ('r',  rabbitItem (makeRabbit 0 0 Right))
     ]
 
 
-t2b : Dict.Dict Char Block
+t2b : Dict.Dict Char Items
 t2b =
     Dict.fromList t2bList
 
@@ -54,9 +70,26 @@ ordBlock block =
         a * 100 + b
 
 
-b2t : AllDict.AllDict Block Char Int
+ordRabbit : Rabbit -> Int
+ordRabbit rabbit =
+    let
+        d =
+            case rabbit.dir of
+                Left -> 0
+                _ -> 1
+    in
+        1 + rabbit.x * 100 + rabbit.y * 10 + d
+
+
+ordItems : Items -> Int
+ordItems items =
+    (1000 * (ordBlock items.block))
+        + (List.sum (List.map ordRabbit items.rabbits))
+
+
+b2t : AllDict.AllDict Items Char Int
 b2t =
-    AllDict.fromList ordBlock (List.map swap t2bList)
+    AllDict.fromList ordItems (List.map swap t2bList)
 
 
 type alias Items =
@@ -65,18 +98,28 @@ type alias Items =
     }
 
 
-toItems : Char -> Result String Items
-toItems c =
+addRabbitCoords : Int -> Int -> Rabbit -> Rabbit
+addRabbitCoords y x rabbit =
+    { rabbit | x = x, y = y }
+
+
+addCoords : Int -> Int -> Items -> Items
+addCoords y x items =
+    { items | rabbits = List.map (addRabbitCoords y x) items.rabbits }
+
+
+toItems : Int -> Int -> Char -> Result String Items
+toItems y x c =
     case Dict.get c t2b of
-        Just b ->
-            Ok { block = b, rabbits = [] }
+        Just items ->
+            Ok (addCoords y x items)
         Nothing ->
             Err ("Unrecognised character '" ++ (String.fromChar c) ++ "'.")
 
 
 toText : Block -> Char
 toText b =
-    case AllDict.get b b2t of
+    case AllDict.get {block = b, rabbits = []} b2t of
         Just c ->
             c
         Nothing ->
