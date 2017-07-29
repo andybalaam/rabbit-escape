@@ -40,7 +40,7 @@ html, body, div, button
     background-color: inherit;
 }
 
-.levelimg
+.levelimg,.thingimg
 {
     position: absolute;
 }

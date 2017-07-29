@@ -1,7 +1,6 @@
 module Units exposing (..)
 
 type Pixels = Pixels Int
-type Em = Em Float
 
 
 (.+.) : Pixels -> Pixels -> Pixels
@@ -39,11 +38,22 @@ type Em = Em Float
     a < b
 
 
-em : Em -> String
-em (Em f) =
-    (toString f) ++ "em"
-
-
 px : Pixels -> String
 px (Pixels i) =
     (toString i) ++ "px"
+
+
+-- ---
+
+
+type Em = Em Float
+
+
+(:*:) : Em -> Int -> Em
+(:*:) (Em a) b =
+    Em (a * (toFloat b))
+
+
+em : Em -> String
+em (Em f) =
+    (toString f) ++ "em"
