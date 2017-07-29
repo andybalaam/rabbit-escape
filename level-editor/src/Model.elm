@@ -1,12 +1,13 @@
 module Model exposing (Model, ModelScreen)
 
 
+import Units exposing (..)
 import World exposing (World)
 
 
 type alias ModelScreen =
-    { width : Int
-    , height : Int
+    { width : Pixels
+    , height : Pixels
     }
 
 

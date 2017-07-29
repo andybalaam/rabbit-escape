@@ -57,8 +57,8 @@ initWorld =
 initModel : Flags -> Model
 initModel flags =
     { screen =
-        { width = flags.width
-        , height = flags.height
+        { width = Pixels flags.width
+        , height = Pixels flags.height
         }
     , world = initWorld
     --, past = []
@@ -76,7 +76,13 @@ update msg model =
     let
         m =
             case msg of
-                Resize w h -> {model|screen = {width=w, height=h}}
+                Resize w h ->
+                    { model
+                    | screen =
+                        { width = Pixels w
+                        , height = Pixels h
+                        }
+                    }
     in
         (m, Cmd.none)
 

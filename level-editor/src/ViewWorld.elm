@@ -17,6 +17,8 @@ import Html.Attributes exposing (class, height, src, style, width)
 import Model exposing (Model)
 import Msg exposing (Msg)
 import Rabbit exposing (Direction(..), Rabbit)
+import ToolbarDims exposing (ToolbarDims)
+import ToolbarOrientation exposing (ToolbarOrientation(..))
 import Units exposing (..)
 import World exposing
     ( Block(..)
@@ -25,6 +27,11 @@ import World exposing
     , World
     , rabbitsAt
     )
+
+
+extraMargin : Pixels
+extraMargin =
+    Pixels 10  -- toolbar 4 + 2 * (border=1px + padding=2px)
 
 
 rabbitImage : Float -> Rabbit -> Html Msg
@@ -88,13 +95,26 @@ viewRow blockWidth world y blocks =
     List.concat (List.indexedMap (viewBlock blockWidth world y) blocks)
 
 
-viewWorld : {x| square_width : Em } -> World -> Html Msg
+toolbarMargin : ToolbarDims -> (String, String)
+toolbarMargin tbdims =
+    let
+        th = tbdims.thickness .+. extraMargin |> px
+    in
+        case tbdims.orientation of
+            LeftToolbar -> ("margin-left", th)
+            TopToolbar  -> ("margin-top", th)
+
+
+viewWorld : {x| square_width : Em, toolbar : ToolbarDims } -> World -> Html Msg
 viewWorld dims world =
     let
         blockWidth = 100.0 / toFloat (World.width world)
     in
         div
             [ class "world"
+            , style
+                [ toolbarMargin dims.toolbar
+                ]
             ]
             (List.concat
                 (List.indexedMap

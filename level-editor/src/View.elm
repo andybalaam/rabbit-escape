@@ -21,11 +21,11 @@ import World exposing (World, width)
 toolbarDims : ModelScreen -> World -> ToolbarDims
 toolbarDims screen world =
     { orientation =
-        if screen.width > screen.height then
+        if screen.width .>. screen.height then
             LeftToolbar
         else
             TopToolbar
-    , thickness = Pixels ((toFloat (screen.height + screen.width)) / 10.0)
+    , thickness = (screen.height .+. screen.width) ./. 10
     }
 
 

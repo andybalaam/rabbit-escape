@@ -1,12 +1,43 @@
-module Units exposing (Em(..), Pixels(..), em, px, px_minus)
+module Units exposing (..)
 
 type Pixels = Pixels Int
 type Em = Em Float
 
 
-(px_minus) : Pixels -> Pixels -> Pixels
-(px_minus) (Pixels a) (Pixels b) =
+(.+.) : Pixels -> Pixels -> Pixels
+(.+.) (Pixels a) (Pixels b) =
     Pixels (a + b)
+
+
+(.-.) : Pixels -> Pixels -> Pixels
+(.-.) (Pixels a) (Pixels b) =
+    Pixels (a - b)
+
+
+(.*.) : Pixels -> Int -> Pixels
+(.*.) (Pixels a) b =
+    Pixels (a * b)
+
+
+(.**.) : Pixels -> Float -> Pixels
+(.**.) (Pixels a) b =
+    Pixels (round (toFloat a * b))
+
+
+(./.) : Pixels -> Int -> Pixels
+(./.) (Pixels a) b =
+    Pixels (round (toFloat a / toFloat b))
+
+
+(.>.) : Pixels -> Pixels -> Bool
+(.>.) (Pixels a) (Pixels b) =
+    a > b
+
+
+(.<.) : Pixels -> Pixels -> Bool
+(.<.) (Pixels a) (Pixels b) =
+    a < b
+
 
 em : Em -> String
 em (Em f) =

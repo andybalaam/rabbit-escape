@@ -12,7 +12,8 @@ html, body, div, button
     left: 0px;
     z-index: 1;
     background-color: #eeeeff;
-    margin: 2px;
+    padding: 2px;
+    border-color: 1px solid black;
 }
 
 .button
