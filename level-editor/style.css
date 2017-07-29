@@ -1,23 +1,45 @@
-table
+html, body, div, button
 {
-    border-collapse: collapse;
-    border-spacing: 0px;
-    padding: 0px;
-}
-tr
-{
-    padding: 0px;
     margin: 0px;
+    padding: 0px;
+    font-size: 1em;
 }
 
-td
+#toolbar
 {
-    padding: 0px;
-    margin: 0px;
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    z-index: 1;
+    background-color: #eeeeff;
+    margin: 2px;
 }
 
-img
+.button
 {
-    margin: 0px;
-    padding: 0px;
+    display: inline-block;
+    overflow: hidden;
+}
+
+.buttonimg
+{
+}
+
+#level
+{
+    margin: 2px;
+    position: relative;
+    background-color: #eeeeee;
+}
+
+.levelsquare
+{
+    position: absolute;
+    border: 0px;
+    background-color: inherit;
+}
+
+.levelimg
+{
+    position: absolute;
 }

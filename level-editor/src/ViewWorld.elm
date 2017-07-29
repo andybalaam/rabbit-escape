@@ -11,12 +11,13 @@ import Html exposing
     , tr
     , td
     )
-import Html.Attributes exposing (height, src, style, width)
+import Html.Attributes exposing (class, height, src, style, width)
 
 
 import Model exposing (Model)
 import Msg exposing (Msg)
 import Rabbit exposing (Direction(..), Rabbit)
+import Units exposing (..)
 import World exposing
     ( Block(..)
     , BlockMaterial(..)
@@ -26,12 +27,12 @@ import World exposing
     )
 
 
-rabbitImage : Int -> Rabbit -> Html Msg
-rabbitImage sq_width rabbit =
+rabbitImage : Float -> Rabbit -> Html Msg
+rabbitImage blockWidth rabbit =
     let
         (lr, adj) =
             case rabbit.dir of
-                Left -> ("left", -sq_width)
+                Left -> ("left", 0)
                 Right -> ("right", 0)
 
         s =  "game-images/rabbit_walk_" ++ lr ++ "_01.svg"
@@ -40,49 +41,64 @@ rabbitImage sq_width rabbit =
             [ src s
             , style
                 [ ("position", "relative")
-                , ("width", (toString (sq_width * 2)) ++ "px")
-                , ("margin-right", (toString -sq_width) ++ "px")
+                , ("width", pc blockWidth)
+                , ("margin-right", (toString 0) ++ "px")
                 , ("left", (toString adj) ++ "px")
                 ]
             ]
             []
 
 
-blockImage : Int -> Block -> Int -> Int -> List (Html Msg)
-blockImage sq_width block x y =
+pc : Float -> String
+pc f =
+    (toString f) ++ "em"
+
+
+blockImage : Float -> Block -> Int -> Int -> List (Html Msg)
+blockImage blockWidth block x y =
     case block of
-        Block Earth Flat -> [img [src "game-images/land_block_1.png", width sq_width][]]
-        _ -> []
-
-
-viewBlockContents : Int -> Block -> List Rabbit -> Int -> Int -> List (Html Msg)
-viewBlockContents sq_width block rabbits x y =
-    blockImage sq_width block x y ++ List.map (rabbitImage sq_width) rabbits
-
-
-viewBlock : Int -> World -> Int -> Int -> Block -> Html Msg
-viewBlock sq_width world y x block =
-    td
-        [ style
-            [ ("width",  (toString sq_width) ++ "px")
-            , ("height", (toString sq_width) ++ "px")
+        Block Earth Flat ->
+            [ img
+                [ src "game-images/land_block_1.png"
+                , style
+                    [ ("width", pc blockWidth)
+                    , ("left", pc (blockWidth * (toFloat x)))
+                    , ("top",  pc (blockWidth * (toFloat y)))
+                    ]
+                ]
+                []
             ]
-        ]
-        (viewBlockContents sq_width block (rabbitsAt world x y) x y)
+        _ ->
+            []
 
 
-viewRow : Int -> World -> Int -> List Block -> Html Msg
-viewRow sq_width world y blocks =
-    tr
-        [ style
-            [ ("height", (toString sq_width) ++ "px")
+viewBlockContents :
+    Float -> Block -> List Rabbit -> Int -> Int -> List (Html Msg)
+viewBlockContents blockWidth block rabbits x y =
+    blockImage blockWidth block x y ++ List.map (rabbitImage blockWidth) rabbits
+
+
+viewBlock : Float -> World -> Int -> Int -> Block -> List (Html Msg)
+viewBlock blockWidth world y x block =
+    viewBlockContents blockWidth block (rabbitsAt world x y) x y
+
+
+viewRow : Float -> World -> Int -> List Block -> List (Html Msg)
+viewRow blockWidth world y blocks =
+    List.concat (List.indexedMap (viewBlock blockWidth world y) blocks)
+
+
+viewWorld : {x| square_width : Em } -> World -> Html Msg
+viewWorld dims world =
+    let
+        blockWidth = 100.0 / toFloat (World.width world)
+    in
+        div
+            [ class "world"
             ]
-        ]
-        (List.indexedMap (viewBlock sq_width world y) blocks)
-
-
-viewWorld : World -> Int -> Html Msg
-viewWorld world sq_width =
-    table
-        []
-        (List.indexedMap (viewRow sq_width world) (World.blocks world))
+            (List.concat
+                (List.indexedMap
+                    (viewRow blockWidth world)
+                    (World.blocks world)
+                )
+            )

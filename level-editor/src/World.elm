@@ -8,6 +8,7 @@ module World exposing
     , makeBlockGrid
     , makeWorld
     , rabbitsAt
+    , width
     )
 
 
@@ -59,6 +60,13 @@ makeBlockGrid blocks =
     case blocks of
         [] -> Grid 0 0 blocks
         x :: _ -> Grid (List.length x) (List.length blocks) blocks
+
+
+-- How many blocks across this world
+width : World -> Int
+width world =
+    case world.blocks of
+        Grid x _ _ -> x
 
 
 -- Extract the blocks from a world

@@ -1,14 +1,17 @@
-module Model exposing (Model)
+module Model exposing (Model, ModelScreen)
 
 
 import World exposing (World)
 
 
+type alias ModelScreen =
+    { width : Int
+    , height : Int
+    }
+
+
 type alias Model =
-    { screen :
-        { width : Int
-        , height : Int
-        }
+    { screen : ModelScreen
     , world : World
     --, past : List World
     --, future: List World

@@ -9,14 +9,15 @@ import Html exposing
     , tr
     , td
     )
-import Html.Attributes exposing (height, src, style, width)
+import Html.Attributes exposing (class, height, id, src, style, width)
 import Window
 
 
 import Model exposing (Model)
 import Msg exposing (Msg(..))
 import Rabbit exposing (Direction(..), Rabbit)
-import ViewWorld exposing (viewWorld)
+import Units exposing (..)
+import View exposing (view)
 import World exposing
     ( Block(..)
     , BlockMaterial(..)
@@ -68,31 +69,6 @@ initModel flags =
 init : Flags -> (Model, Cmd Msg)
 init flags =
     (initModel flags, Cmd.none)
-
-
-view : Model -> Html Msg
-view model =
-    let
-        s = model.screen
-        w = model.world
-        sq_width = 20
-    in
-        div
-            []
-            [
-                text
-                    (  (toString s.width)
-                    ++ ", "
-                    ++ (toString s.height)
-                    )
-                ,
-                pre
-                    []
-                    [ text (render model.world)
-                    ]
-                ,
-                (viewWorld w sq_width)
-            ]
 
 
 update : Msg -> Model -> (Model, Cmd Msg)

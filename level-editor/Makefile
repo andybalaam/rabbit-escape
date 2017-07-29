@@ -5,7 +5,8 @@ GAME_IMAGE_NAMES := \
 	land_rising_left_3.png land_rising_left_4.png \
 	land_rising_right_1.png land_rising_right_2.png \
 	land_rising_right_3.png land_rising_right_4.png \
-	rabbit_walk_left_01.svg rabbit_walk_right_01.svg \
+	rabbit_stand_left.svg rabbit_stand_right.svg \
+	save.svg \
 
 
 GAME_IMAGES_DIR := www/game-images
@@ -17,7 +18,10 @@ all: compile test
 www:
 	mkdir -p www
 
-www/game-images/%: ../images-src/% www
+www/game-images/%: ../images-src/% www/game-images
+	cp $< $@
+
+www/game-images/%: images-src/% www/game-images
 	cp $< $@
 
 www/game-images: www
