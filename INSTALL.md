@@ -32,7 +32,8 @@ to build the images, sounds and code.  On Ubuntu, Debian and similar:
         inkscape \
         expect \
         grep \
-        sed
+        sed \
+        python3-lxml
 
 Get the source
 --------------
