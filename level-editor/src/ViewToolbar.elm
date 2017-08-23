@@ -46,8 +46,7 @@ styles : ToolbarDims -> List (Html.Attribute Msg)
 styles tbdims =
     let
         th = tbdims.thickness |> px
-        len = tbdims.thickness .*. (List.length buttonsList) |> px
-        -- or max height of window
+        len = tbdims.screenLength |> px
     in
         case tbdims.orientation of
             LeftToolbar ->

@@ -20,13 +20,20 @@ import World exposing (World, width)
 
 toolbarDims : ModelScreen -> World -> ToolbarDims
 toolbarDims screen world =
-    { orientation =
-        if screen.width .>. screen.height then
-            LeftToolbar
-        else
-            TopToolbar
-    , thickness = (screen.height .+. screen.width) ./. 10
-    }
+    let
+        orientation =
+            if screen.width .>. screen.height then
+                LeftToolbar
+            else
+                TopToolbar
+    in
+        { orientation = orientation
+        , thickness = (screen.height .+. screen.width) ./. 10
+        , screenLength =
+            case orientation of
+                LeftToolbar -> screen.height
+                TopToolbar -> screen.width
+        }
 
 
 view : Model -> Html Msg
