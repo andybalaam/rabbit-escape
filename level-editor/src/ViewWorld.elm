@@ -2,6 +2,7 @@ module ViewWorld exposing (viewWorld)
 
 import Html exposing
     ( Html
+    , button
     , div
     , img
     , pre
@@ -48,9 +49,7 @@ rabbitImage square_width rabbit =
             [ class "thingimg"
             , src s
             , style
-                [ ("left", square_width :*: rabbit.x |> em)
-                , ("top", square_width :*: rabbit.y |> em)
-                , ("width", square_width |> em)
+                [ ("width", square_width |> em)
                 ]
             ]
             []
@@ -65,8 +64,6 @@ blockImage square_width block x y =
                 , src "game-images/land_block_1.png"
                 , style
                     [ ("width", square_width |> em)
-                    , ("left", square_width :*: x |> em)
-                    , ("top",  square_width :*: y |> em)
                     ]
                 ]
                 []
@@ -76,20 +73,31 @@ blockImage square_width block x y =
 
 
 viewBlockContents :
-    Em -> Block -> List Rabbit -> Int -> Int -> List (Html Msg)
+    Em -> Block -> List Rabbit -> Int -> Int -> Html Msg
 viewBlockContents square_width block rabbits x y =
-    blockImage square_width block x y
-        ++ List.map (rabbitImage square_width) rabbits
+    button
+        [ class "levelbutton"
+        , style
+            [ ("width", square_width |> em)
+            , ("height", square_width |> em)
+            , ("left", square_width :*: x |> em)
+            , ("top",  square_width :*: y |> em)
+            ]
+        ]
+        (
+            blockImage square_width block x y
+                ++ List.map (rabbitImage square_width) rabbits
+        )
 
 
-viewBlock : Em -> World -> Int -> Int -> Block -> List (Html Msg)
+viewBlock : Em -> World -> Int -> Int -> Block -> Html Msg
 viewBlock square_width world y x block =
     viewBlockContents square_width block (rabbitsAt world x y) x y
 
 
 viewRow : Em -> World -> Int -> List Block -> List (Html Msg)
 viewRow square_width world y blocks =
-    List.concat (List.indexedMap (viewBlock square_width world y) blocks)
+    List.indexedMap (viewBlock square_width world y) blocks
 
 
 toolbarMargin : ToolbarDims -> List (String, String)

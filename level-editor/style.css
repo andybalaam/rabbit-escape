@@ -40,7 +40,15 @@ html, body, div, button
     background-color: inherit;
 }
 
-.levelimg,.thingimg
+.levelbutton
 {
     position: absolute;
+    border: none;
+    background: none;
+    overflow: hidden;
+}
+
+.levelbutton:focus {
+    outline: 1px dotted #000;
+    z-index: 1;
 }
