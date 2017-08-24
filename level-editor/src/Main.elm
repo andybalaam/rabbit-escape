@@ -17,6 +17,7 @@ import Model exposing (Model)
 import Msg exposing (Msg(..))
 import Rabbit exposing (Direction(..), Rabbit)
 import Units exposing (..)
+import Update exposing (update)
 import View exposing (view)
 import World exposing
     ( Block(..)
@@ -69,22 +70,6 @@ initModel flags =
 init : Flags -> (Model, Cmd Msg)
 init flags =
     (initModel flags, Cmd.none)
-
-
-update : Msg -> Model -> (Model, Cmd Msg)
-update msg model =
-    let
-        m =
-            case msg of
-                Resize w h ->
-                    { model
-                    | screen =
-                        { width = Pixels w
-                        , height = Pixels h
-                        }
-                    }
-    in
-        (m, Cmd.none)
 
 
 subscriptions : Model -> Sub Msg

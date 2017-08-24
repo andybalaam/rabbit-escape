@@ -50,5 +50,11 @@ html, body, div, button
 
 .levelbutton:focus {
     outline: 1px dotted #000;
-    z-index: 1;
+    z-index: 2;
+}
+
+.levelimg, .thingimg {
+    position: absolute;
+    top: 0px;
+    left: 0px;
 }

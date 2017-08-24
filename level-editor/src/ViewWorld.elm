@@ -13,10 +13,11 @@ import Html exposing
     , td
     )
 import Html.Attributes exposing (class, height, id, src, style, width)
+import Html.Events exposing (onClick)
 
 
 import Model exposing (Model)
-import Msg exposing (Msg)
+import Msg exposing (Msg(..))
 import Rabbit exposing (Direction(..), Rabbit)
 import ToolbarDims exposing (ToolbarDims)
 import ToolbarOrientation exposing (ToolbarOrientation(..))
@@ -83,6 +84,7 @@ viewBlockContents square_width block rabbits x y =
             , ("left", square_width :*: x |> em)
             , ("top",  square_width :*: y |> em)
             ]
+        , onClick (LevelClick x y)
         ]
         (
             blockImage square_width block x y

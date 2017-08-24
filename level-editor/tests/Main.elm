@@ -5,6 +5,7 @@ import Test.Runner.Node exposing (run)
 import Json.Encode exposing (Value)
 
 
+import UpdateTests
 import WorldParserTests
 import WorldRoundTripTests
 import WorldTextRenderTests
@@ -13,7 +14,8 @@ import WorldTextRenderTests
 all : Test
 all =
     describe "All tests"
-        [ WorldParserTests.all
+        [ UpdateTests.all
+        , WorldParserTests.all
         , WorldRoundTripTests.all
         , WorldTextRenderTests.all
         ]
