@@ -40,6 +40,9 @@ index: www/index.html www/style.css
 compile: index images
 	elm-make --output=www/level-editor.js src/Main.elm
 
+upload: compile
+	rsync -r --delete ./www/ dreamhost:artificialworlds.net/rabbit-escape/level-editor/
+
 run:
 	elm-reactor
 
