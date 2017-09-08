@@ -4,7 +4,7 @@ import Test exposing (describe,test,Test)
 import Expect
 
 
-import Model exposing (Model, ModelScreen)
+import Model exposing (Model, ModelScreen, UiMode(..))
 import Msg exposing (Msg(..))
 import Units exposing (Pixels(..))
 import Update exposing (update)
@@ -46,6 +46,7 @@ resizingAffectsScreenSize =
             (
                 { screen = { width = Pixels 23, height = Pixels 45 }
                 , world = emptyWorld
+                , uiMode = InitialMode
                 }
             , Cmd.none
             )
@@ -54,6 +55,7 @@ resizingAffectsScreenSize =
                 (
                     { screen = { width = Pixels 1, height = Pixels 1 }
                     , world = emptyWorld
+                    , uiMode = InitialMode
                     }
                 )
             )
@@ -66,6 +68,7 @@ clickEmptySquareAddsBlock =
             (
                 { screen = someScreen
                 , world = parseFixed "####\n# ##\n# r#\n####"
+                , uiMode = InitialMode
                 }
             , Cmd.none
             )
@@ -74,6 +77,7 @@ clickEmptySquareAddsBlock =
                 (
                     { screen = someScreen
                     , world = parseFixed "####\n#  #\n# r#\n####"
+                    , uiMode = InitialMode
                     }
                 )
             )

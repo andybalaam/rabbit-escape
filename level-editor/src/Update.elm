@@ -24,6 +24,8 @@ update msg model =
                     updateResize model w h
                 LevelClick x y ->
                     updateLevelClick model x y
+                ChangeMode mode ->
+                    model
     in
         (m, Cmd.none)
 

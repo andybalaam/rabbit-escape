@@ -13,7 +13,7 @@ import Html.Attributes exposing (class, height, id, src, style, width)
 import Window
 
 
-import Model exposing (Model)
+import Model exposing (Model, UiMode(..))
 import Msg exposing (Msg(..))
 import Rabbit exposing (Direction(..), Rabbit)
 import Units exposing (..)
@@ -62,6 +62,7 @@ initModel flags =
         , height = Pixels flags.height
         }
     , world = initWorld
+    , uiMode = InitialMode
     --, past = []
     --, future = []
     }
