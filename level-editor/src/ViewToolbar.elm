@@ -26,9 +26,9 @@ import World exposing (BlockMaterial(..), BlockShape(..))
 
 
 type ButtonDef =
-      SaveButton String
-    | BlockButton BlockMaterial BlockShape String
-    | RabbitButton Direction String
+      SaveButton
+    | BlockButton
+    | RabbitButton
 
 
 margin : Pixels
@@ -38,9 +38,9 @@ margin =
 
 buttonsList : List ButtonDef
 buttonsList =
-    [ SaveButton "save.svg"
-    , BlockButton Earth Flat "land_block_1.png"
-    , RabbitButton Left "rabbit_stand_left.svg"
+    [ SaveButton
+    , BlockButton
+    , RabbitButton
     ]
 
 
@@ -75,37 +75,37 @@ styles tbdims =
 buildClickCmd : UiState -> ButtonDef -> Msg
 buildClickCmd uiState buttonDef =
     case buttonDef of
-        BlockButton _ _ _ ->
-            ChangeMode ChooseBlockMode
-        default ->
-            ChangeMode InitialMode
+        BlockButton -> ChangeMode ChooseBlockMode
+        default     -> ChangeMode InitialMode
 
 
-buttonClass : UiMode -> ButtonDef -> String
-buttonClass mode buttondef =
-    case mode of
-        ChooseBlockMode ->
-            case buttondef of
-                BlockButton _ _ _ -> " pressed"
-                default -> ""
-        default -> ""
+pressedIf : UiMode -> UiMode -> String
+pressedIf exp act =
+    if exp == act then " pressed" else ""
+
+
+buttonLook : UiMode -> ButtonDef -> (String, String)
+buttonLook mode buttondef =
+    case buttondef of
+        SaveButton ->
+            ("", "save.svg")
+        BlockButton ->
+            (pressedIf ChooseBlockMode mode, "land_block_1.png")
+        RabbitButton ->
+            ("", "rabbit_stand_right.svg")
 
 
 viewButton : UiState -> ToolbarDims -> ButtonDef -> Html Msg
 viewButton uiState tbdims def =
     let
         clickCmd = buildClickCmd uiState def
-        imgfile =
-            case def of
-                SaveButton s -> s
-                BlockButton _ _ s -> s
-                RabbitButton _ s -> s
+        (imgclass, imgfile) = buttonLook uiState.mode def
         marg = margin |> px
         size = (tbdims.thickness .-. (margin .*. 2)) |> px
         img_size = ((tbdims.thickness .**. 0.8) .-. (margin .*. 2)) |> px
     in
         button
-            [ class ("button" ++ (buttonClass uiState.mode def))
+            [ class ("button" ++ imgclass)
             , style
                 [ ("width", size)
                 , ("height", size)
