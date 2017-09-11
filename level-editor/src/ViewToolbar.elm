@@ -81,6 +81,16 @@ buildClickCmd uiState buttonDef =
             ChangeMode InitialMode
 
 
+buttonClass : UiMode -> ButtonDef -> String
+buttonClass mode buttondef =
+    case mode of
+        ChooseBlockMode ->
+            case buttondef of
+                BlockButton _ _ _ -> " pressed"
+                default -> ""
+        default -> ""
+
+
 viewButton : UiState -> ToolbarDims -> ButtonDef -> Html Msg
 viewButton uiState tbdims def =
     let
@@ -95,7 +105,7 @@ viewButton uiState tbdims def =
         img_size = ((tbdims.thickness .**. 0.8) .-. (margin .*. 2)) |> px
     in
         button
-            [ class "button"
+            [ class ("button" ++ (buttonClass uiState.mode def))
             , style
                 [ ("width", size)
                 , ("height", size)

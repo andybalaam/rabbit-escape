@@ -20,6 +20,12 @@ html, body, div, button
 {
     display: inline-block;
     overflow: hidden;
+    border-style: outset;
+}
+
+.pressed
+{
+    border-style: inset;
 }
 
 .buttonimg
