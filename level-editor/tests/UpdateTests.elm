@@ -4,11 +4,11 @@ import Test exposing (describe,test,Test)
 import Expect
 
 
-import Model exposing (Model, ModelScreen, UiMode(..))
+import Model exposing (Model, ModelScreen, UiMode(..), UiState)
 import Msg exposing (Msg(..))
 import Units exposing (Pixels(..))
 import Update exposing (update)
-import World exposing (World)
+import World exposing (Block(..), World)
 import WorldParser exposing (parse)
 
 
@@ -27,15 +27,11 @@ parseFixed textWorld =
         Ok w -> w
 
 
-emptyWorld : World
-emptyWorld =
-    parseFixed ""
-
-
-someScreen : ModelScreen
-someScreen =
-    { width = Pixels 2
-    , height = Pixels 2
+emptyModel : Model
+emptyModel =
+    { screen = { width = Pixels 0, height = Pixels 0 }
+    , world = parseFixed ""
+    , uiState = { mode = InitialMode, block = NoBlock }
     }
 
 
@@ -44,21 +40,12 @@ resizingAffectsScreenSize =
     \() ->
         Expect.equal
             (
-                { screen = { width = Pixels 23, height = Pixels 45 }
-                , world = emptyWorld
-                , uiMode = InitialMode
+                { emptyModel
+                | screen = { width = Pixels 23, height = Pixels 45 }
                 }
             , Cmd.none
             )
-            ( update
-                (Resize 23 45)
-                (
-                    { screen = { width = Pixels 1, height = Pixels 1 }
-                    , world = emptyWorld
-                    , uiMode = InitialMode
-                    }
-                )
-            )
+            (update (Resize 23 45) emptyModel)
 
 
 clickEmptySquareAddsBlock : () -> Expect.Expectation
@@ -66,18 +53,16 @@ clickEmptySquareAddsBlock =
     \() ->
         Expect.equal
             (
-                { screen = someScreen
-                , world = parseFixed "####\n# ##\n# r#\n####"
-                , uiMode = InitialMode
+                { emptyModel
+                | world = parseFixed "####\n# ##\n# r#\n####"
                 }
             , Cmd.none
             )
             ( update
                 (LevelClick 2 1)
                 (
-                    { screen = someScreen
-                    , world = parseFixed "####\n#  #\n# r#\n####"
-                    , uiMode = InitialMode
+                    { emptyModel
+                    | world = parseFixed "####\n#  #\n# r#\n####"
                     }
                 )
             )

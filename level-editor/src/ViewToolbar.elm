@@ -17,7 +17,7 @@ import Html.Events exposing (onClick)
 
 
 import Msg exposing (Msg(..))
-import Model exposing (UiMode(..))
+import Model exposing (UiMode(..), UiState)
 import Rabbit exposing (Direction(..))
 import ToolbarDims exposing (ToolbarDims)
 import ToolbarOrientation exposing (ToolbarOrientation(..))
@@ -72,8 +72,8 @@ styles tbdims =
                 ]
 
 
-buildClickCmd : UiMode -> ButtonDef -> Msg
-buildClickCmd uiMode buttonDef =
+buildClickCmd : UiState -> ButtonDef -> Msg
+buildClickCmd uiState buttonDef =
     case buttonDef of
         BlockButton _ _ _ ->
             ChangeMode ChooseBlockMode
@@ -81,10 +81,10 @@ buildClickCmd uiMode buttonDef =
             ChangeMode InitialMode
 
 
-viewButton : UiMode -> ToolbarDims -> ButtonDef -> Html Msg
-viewButton uiMode tbdims def =
+viewButton : UiState -> ToolbarDims -> ButtonDef -> Html Msg
+viewButton uiState tbdims def =
     let
-        clickCmd = buildClickCmd uiMode def
+        clickCmd = buildClickCmd uiState def
         imgfile =
             case def of
                 SaveButton s -> s
@@ -114,13 +114,13 @@ viewButton uiMode tbdims def =
                 []
             ]
 
-buttons : UiMode -> ToolbarDims -> List (Html Msg)
-buttons uiMode tbdims =
-    List.map (viewButton uiMode tbdims) buttonsList
+buttons : UiState -> ToolbarDims -> List (Html Msg)
+buttons uiState tbdims =
+    List.map (viewButton uiState tbdims) buttonsList
 
 
-viewToolbar : UiMode -> {x| toolbar : ToolbarDims } -> Html Msg
-viewToolbar uiMode dims =
+viewToolbar : UiState -> {x| toolbar : ToolbarDims } -> Html Msg
+viewToolbar uiState dims =
     div
         ([ id "toolbar" ] ++ styles dims.toolbar)
-        (buttons uiMode dims.toolbar)
+        (buttons uiState dims.toolbar)

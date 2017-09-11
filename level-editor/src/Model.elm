@@ -1,13 +1,19 @@
-module Model exposing (Model, ModelScreen, UiMode(..))
+module Model exposing (Model, ModelScreen, UiMode(..), UiState)
 
 
 import Units exposing (..)
-import World exposing (World)
+import World exposing (Block(..), World)
 
 
 type UiMode =
       InitialMode
     | ChooseBlockMode
+
+
+type alias UiState =
+    { mode : UiMode
+    , block : Block
+    }
 
 
 type alias ModelScreen =
@@ -19,7 +25,7 @@ type alias ModelScreen =
 type alias Model =
     { screen : ModelScreen
     , world : World
-    , uiMode : UiMode
+    , uiState : UiState
     --, past : List World
     --, future: List World
     }

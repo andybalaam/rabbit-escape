@@ -49,6 +49,6 @@ view model =
         div
             [ id "whole_page"
             ]
-            [ (viewToolbar model.uiMode dims)
+            [ (viewToolbar model.uiState dims)
             , (viewWorld dims world)
             ]
