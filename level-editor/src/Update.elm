@@ -1,7 +1,7 @@
 module Update exposing (update)
 
 
-import Model exposing (Model)
+import Model exposing (Model, UiMode)
 import Msg exposing (Msg(..))
 import Units exposing (..)
 import World exposing
@@ -25,7 +25,7 @@ update msg model =
                 LevelClick x y ->
                     updateLevelClick model x y
                 ChangeMode mode ->
-                    model
+                    updateChangeMode model mode
     in
         (m, Cmd.none)
 
@@ -67,3 +67,13 @@ updateLevelClickBlock x y rowy colx block =
         Block Earth Flat
     else
         block
+
+
+updateChangeMode : Model -> UiMode -> Model
+updateChangeMode model mode =
+    let
+        uiState = model.uiState
+    in
+        { model
+        | uiState = { uiState | mode = mode }
+        }

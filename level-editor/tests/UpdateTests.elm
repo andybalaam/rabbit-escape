@@ -17,6 +17,7 @@ all =
     describe "Tests of the update function"
         [ test "Resizing affects screen size" resizingAffectsScreenSize
         , test "Clicking empty square adds block" clickEmptySquareAddsBlock
+        , test "ChangeMode changes mode" changeModeChangesMode
         ]
 
 
@@ -66,3 +67,22 @@ clickEmptySquareAddsBlock =
                     }
                 )
             )
+
+
+changeModeChangesMode : () -> Expect.Expectation
+changeModeChangesMode =
+    let
+       uiState = emptyModel.uiState
+    in
+        \() ->
+            Expect.equal
+                (
+                    { emptyModel
+                    | uiState = { uiState | mode = ChooseBlockMode }
+                    }
+                , Cmd.none
+                )
+                ( update
+                    (ChangeMode ChooseBlockMode)
+                    emptyModel
+                )
