@@ -79,27 +79,33 @@ buildClickCmd uiState buttonDef =
         default     -> ChangeMode InitialMode
 
 
-pressedIf : UiMode -> UiMode -> String
-pressedIf exp act =
-    if exp == act then " pressed" else ""
-
-
-buttonLook : UiMode -> ButtonDef -> (String, String)
-buttonLook mode buttondef =
+buttonImage : UiState -> ButtonDef -> String
+buttonImage uiState buttondef =
     case buttondef of
-        SaveButton ->
-            ("", "save.svg")
-        BlockButton ->
-            (pressedIf ChooseBlockMode mode, "land_block_1.png")
-        RabbitButton ->
-            ("", "rabbit_stand_right.svg")
+        SaveButton -> "save.svg"
+        BlockButton -> "land_block_1.png"
+        RabbitButton -> "rabbit_stand_right.svg"
 
+
+buttonClass : UiMode -> ButtonDef -> String
+buttonClass mode buttondef =
+    let
+        pressedTypes =
+            case mode of
+                InitialMode -> []
+                ChooseBlockMode -> [BlockButton]
+    in
+        if List.member buttondef pressedTypes then
+            " pressed"
+        else
+            ""
 
 viewButton : UiState -> ToolbarDims -> ButtonDef -> Html Msg
 viewButton uiState tbdims def =
     let
         clickCmd = buildClickCmd uiState def
-        (imgclass, imgfile) = buttonLook uiState.mode def
+        imgclass = buttonClass uiState.mode def
+        imgfile = buttonImage uiState def
         marg = margin |> px
         size = (tbdims.thickness .-. (margin .*. 2)) |> px
         img_size = ((tbdims.thickness .**. 0.8) .-. (margin .*. 2)) |> px
