@@ -1,27 +1,13 @@
 module ViewWorld exposing (viewWorld)
 
-import Html exposing
-    ( Html
-    , button
-    , div
-    , img
-    , pre
-    , programWithFlags
-    , table
-    , text
-    , tr
-    , td
-    )
-import Html.Attributes exposing (class, height, id, src, style, width)
+import Html exposing (Html, button, div, img)
+import Html.Attributes exposing (id, class, src, style)
 import Html.Events exposing (onClick)
 
 
 import Model exposing (Model)
 import Msg exposing (Msg(..))
 import Rabbit exposing (Direction(..), Rabbit)
-import ToolbarDims exposing (ToolbarDims)
-import ToolbarOrientation exposing (ToolbarOrientation(..))
-import Units exposing (..)
 import World exposing
     ( Block(..)
     , BlockMaterial(..)
@@ -31,97 +17,69 @@ import World exposing
     )
 
 
-extraMargin : Pixels
-extraMargin =
-    Pixels 10  -- toolbar 4 + 2 * (border=1px + padding=2px)
-
-
-rabbitImage : Em -> Rabbit -> Html Msg
-rabbitImage square_width rabbit =
+rabbitImage : Rabbit -> Html Msg
+rabbitImage rabbit =
     let
-        (lr, adj) =
+        lr =
             case rabbit.dir of
-                Left -> ("left", 0)
-                Right -> ("right", 0)
-
-        s =  "game-images/rabbit_stand_" ++ lr ++ ".svg"
+                Left  -> "left"
+                Right -> "right"
     in
         img
-            [ class "thingimg"
-            , src s
-            , style
-                [ ("width", square_width |> em)
-                ]
+            [ src ("images/rabbit_stand_" ++ lr ++ ".svg")
+            , class "thing"
             ]
             []
 
 
-blockImage : Em -> Block -> Int -> Int -> List (Html Msg)
-blockImage square_width block x y =
+blockImage : Block -> Int -> Int -> List (Html Msg)
+blockImage block x y =
     case block of
         Block Earth Flat ->
             [ img
-                [ class "levelimg"
-                , src "game-images/land_block_1.png"
-                , style
-                    [ ("width", square_width |> em)
-                    ]
-                ]
+                [ src "images/land_block_1.png" ]
                 []
             ]
         _ ->
             []
 
 
-viewBlockContents :
-    Em -> Block -> List Rabbit -> Int -> Int -> Html Msg
-viewBlockContents square_width block rabbits x y =
-    button
-        [ class "levelbutton"
-        , style
-            [ ("width", square_width |> em)
-            , ("height", square_width |> em)
-            , ("left", square_width :*: x |> em)
-            , ("top",  square_width :*: y |> em)
-            ]
-        , onClick (LevelClick x y)
-        ]
-        (
-            blockImage square_width block x y
-                ++ List.map (rabbitImage square_width) rabbits
-        )
-
-
-viewBlock : Em -> World -> Int -> Int -> Block -> Html Msg
-viewBlock square_width world y x block =
-    viewBlockContents square_width block (rabbitsAt world x y) x y
-
-
-viewRow : Em -> World -> Int -> List Block -> List (Html Msg)
-viewRow square_width world y blocks =
-    List.indexedMap (viewBlock square_width world y) blocks
-
-
-toolbarMargin : ToolbarDims -> List (String, String)
-toolbarMargin tbdims =
+viewBlockContents : Block -> List Rabbit -> Int -> Int -> Html Msg
+viewBlockContents block rabbits x y =
     let
-        th = tbdims.thickness .+. extraMargin |> px
-        ex = extraMargin |> px
+        sx = toString (x + 1)
+        sy = toString (y + 1)
     in
-        case tbdims.orientation of
-            LeftToolbar -> [("margin-left", th), ("margin-top", ex)]
-            TopToolbar  -> [("margin-left", ex), ("margin-top", th)]
+        button
+            [ onClick (LevelClick x y)
+            , style
+                [ ("grid-row-start", sy)
+                , ("grid-row-end",   sy)
+                , ("grid-column-start", sx)
+                , ("grid-column-end",   sx)
+                ]
+            , id (sx++","++sy)
+            ]
+            ( blockImage block x y ++ List.map rabbitImage rabbits )
 
 
-viewWorld : {x| square_width : Em, toolbar : ToolbarDims } -> World -> Html Msg
-viewWorld dims world =
+viewBlock : World -> Int -> Int -> Block -> Html Msg
+viewBlock world y x block =
+    viewBlockContents block (rabbitsAt world x y) x y
+
+
+viewRow : World -> Int -> List Block -> List (Html Msg)
+viewRow world y blocks =
+    List.indexedMap (viewBlock world y) blocks
+
+
+viewWorld : World -> Html Msg
+viewWorld world =
     div
-        [ id "level"
-        , style (toolbarMargin dims.toolbar)
-        ]
+        [ id "level" ]
         (List.concat
             (List.indexedMap
-                (viewRow dims.square_width world)
+                (viewRow world)
                 (World.blocks world)
             )
         )

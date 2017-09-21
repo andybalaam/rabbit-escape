@@ -3,7 +3,6 @@ module Update exposing (update)
 
 import Model exposing (Model, UiMode)
 import Msg exposing (Msg(..))
-import Units exposing (..)
 import World exposing
     ( Block(..)
     , BlockMaterial(..)
@@ -20,24 +19,12 @@ update msg model =
     let
         m =
             case msg of
-                Resize w h ->
-                    updateResize model w h
                 LevelClick x y ->
                     updateLevelClick model x y
                 ChangeMode mode ->
                     updateChangeMode model mode
     in
         (m, Cmd.none)
-
-
-updateResize : Model -> Int -> Int -> Model
-updateResize model w h =
-    { model
-    | screen =
-        { width = Pixels w
-        , height = Pixels h
-        }
-    }
 
 
 updateLevelClick : Model -> Int -> Int -> Model

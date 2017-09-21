@@ -1,16 +1,16 @@
 
 GAME_IMAGE_NAMES := \
-	land_block_1.png land_block_2.png land_block_3.png land_block_4.png \
-	land_rising_left_1.png land_rising_left_2.png \
-	land_rising_left_3.png land_rising_left_4.png \
-	land_rising_right_1.png land_rising_right_2.png \
-	land_rising_right_3.png land_rising_right_4.png \
-	rabbit_stand_left.svg rabbit_stand_right.svg \
+	allblocks.png \
+	land_block_1.png \
+	land_rising_left_1.png \
+	land_rising_right_1.png \
+	rabbit_stand_left.svg \
+	rabbit_stand_right.svg \
 	save.svg \
 
 
-GAME_IMAGES_DIR := www/game-images
-GAME_IMAGES := $(foreach X,${GAME_IMAGE_NAMES}, ${GAME_IMAGES_DIR}/${X})
+IMAGES_DIR := www/images
+IMAGES := $(foreach X,${GAME_IMAGE_NAMES}, ${IMAGES_DIR}/${X})
 
 
 all: compile test
@@ -18,13 +18,13 @@ all: compile test
 www:
 	mkdir -p www
 
-www/game-images/%: ../images-src/% www/game-images
+www/images/%: ../images-src/% www/images
 	cp $< $@
 
-www/game-images/%: images-src/% www/game-images
+www/images/%: images-src/% www/images
 	cp $< $@
 
-www/game-images: www
+www/images: www
 	mkdir -p $@
 
 www/index.html: index.html www
@@ -33,7 +33,7 @@ www/index.html: index.html www
 www/style.css: style.css www
 	cp $< $@
 
-images: ${GAME_IMAGES_DIR} ${GAME_IMAGES}
+images: ${IMAGES_DIR} ${IMAGES}
 
 index: www/index.html www/style.css
 

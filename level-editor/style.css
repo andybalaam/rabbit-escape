@@ -1,66 +1,155 @@
-html, body, div, button
+html, body, #main
 {
-    margin: 0px;
-    padding: 0px;
-    font-size: 1em;
+    height: 100%;
+    margin: 0em;
+    padding: 0em;
+}
+
+html
+{
+    box-sizing: border-box;
+}
+
+*, *:*
+{
+    box-sizing: inherit;
+}
+
+@media all and (orientation:landscape)
+{
+    #main
+    {
+        display: grid;
+        grid-template-columns: 5em 1fr;
+    }
+    #toolbar
+    {
+        overflow-x: hidden;
+        overflow-y: auto;
+    }
+    #workspace, #dialogBackground, #dialog
+    {
+        grid-row: 1;
+        grid-column: 2;
+    }
+    #dialog
+    {
+        margin-left: 2%;
+        margin-top: 5%;
+    }
+}
+
+@media all and (orientation:portrait)
+{
+    #main
+    {
+        display: grid;
+        grid-template-rows: 5em 1fr;
+    }
+    #toolbar
+    {
+        overflow-x: auto;
+        overflow-y: hidden;
+        white-space: nowrap;
+    }
+    #workspace, #dialogBackground, #dialog
+    {
+        grid-row: 2;
+        grid-column: 1;
+    }
+    #dialog
+    {
+        margin-left: 5%;
+        margin-top: 2%;
+    }
+}
+
+#workspace
+{
+    overflow: auto;
+    padding: 0.1em;
 }
 
 #toolbar
 {
-    position: fixed;
-    top: 0px;
-    left: 0px;
-    z-index: 1;
     background-color: #eeeeff;
-    padding: 2px;
-    border-color: 1px solid black;
+    padding: 0.2em;
 }
 
-.button
+#toolbar button
 {
-    display: inline-block;
     overflow: hidden;
     border-style: outset;
+    width: 4.6em;
+    height: 4.6em;
+    padding: 0em;
 }
 
-.pressed
+#toolbar button.pressed
 {
     border-style: inset;
 }
 
-.buttonimg
+#toolbar button img
 {
+    width: 4.2em;
+    height: 4.2em;
 }
 
 #level
 {
-    margin: 2px;
+    margin: 0.1em;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, 4em);
+    grid-template-rows: repeat(auto-fill, 4em);
+}
+
+#level button
+{
     position: relative;
-    background-color: #eeeeee;
-}
-
-.levelsquare
-{
-    position: absolute;
-    border: 0px;
-    background-color: inherit;
-}
-
-.levelbutton
-{
-    position: absolute;
     border: none;
     background: none;
     overflow: hidden;
+    padding: 0em;
+    margin: 0em;
+    width: 4em;
+    height: 4em;
 }
 
-.levelbutton:focus {
-    outline: 1px dotted #000;
+#level button:focus
+{
+    outline: 0.05em dotted #000;
+}
+
+#level button img
+{
+    width: 4em;
+    height: 4em;
+    position: absolute;
+    left: 0em;
+    top: 0em;
+}
+
+#level button img.thing
+{
+    z-index: 1;
+}
+
+#dialogBackground {
+    opacity: 0.6;
+    background-color: black;
+    visibility: hidden;
     z-index: 2;
 }
 
-.levelimg, .thingimg {
-    position: absolute;
-    top: 0px;
-    left: 0px;
+#dialog {
+    width: 90%;
+    height: 90%;
+    background-color: white;
+    visibility: hidden;
+    border-width: 0.2em;
+    border-style: outset;
+    overflow: auto;
+    opacity: 0.85;
+    z-index: 3;
 }

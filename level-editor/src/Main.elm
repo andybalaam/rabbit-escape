@@ -1,22 +1,9 @@
-import Html exposing
-    ( Html
-    , div
-    , img
-    , pre
-    , programWithFlags
-    , table
-    , text
-    , tr
-    , td
-    )
-import Html.Attributes exposing (class, height, id, src, style, width)
+import Html exposing (Html, program)
 import Window
-
 
 import Model exposing (Model, UiMode(..), UiState)
 import Msg exposing (Msg(..))
 import Rabbit exposing (Direction(..), Rabbit)
-import Units exposing (..)
 import Update exposing (update)
 import View exposing (view)
 import World exposing
@@ -26,16 +13,9 @@ import World exposing
     , World
     , makeBlockGrid
     , makeWorld
-    , rabbitsAt
     )
 import WorldParser exposing (parse)
 import WorldTextRender exposing (render)
-
-
-type alias Flags =
-    { width : Int
-    , height : Int
-    }
 
 
 initWorld : World
@@ -55,13 +35,9 @@ initWorld =
             Err s -> makeWorld "Unexpected Error" (makeBlockGrid []) []
 
 
-initModel : Flags -> Model
-initModel flags =
-    { screen =
-        { width = Pixels flags.width
-        , height = Pixels flags.height
-        }
-    , world = initWorld
+initModel : Model
+initModel =
+    { world = initWorld
     , uiState =
         { mode = InitialMode
         , block = NoBlock
@@ -71,22 +47,15 @@ initModel flags =
     }
 
 
-init : Flags -> (Model, Cmd Msg)
-init flags =
-    (initModel flags, Cmd.none)
-
-
-subscriptions : Model -> Sub Msg
-subscriptions model =
-    Sub.batch
-        [ Window.resizes(\size -> Resize size.width size.height)
-        ]
+init : (Model, Cmd Msg)
+init =
+    (initModel, Cmd.none)
 
 
 main =
-   programWithFlags
+   program
      { init = init
      , view = view
      , update = update
-     , subscriptions = subscriptions
+     , subscriptions = \(model) -> Sub.none
      }
