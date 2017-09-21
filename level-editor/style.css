@@ -100,8 +100,11 @@ html
 {
     margin: 0.1em;
     display: grid;
-    grid-template-columns: repeat(auto-fill, 4em);
-    grid-template-rows: repeat(auto-fill, 4em);
+    /* Using 4em here in Chrome measures different from
+     * 4em in the width and height of a button.
+     * Pixel measurements agree... */
+    grid-template-columns: repeat(auto-fill, 55px);
+    grid-template-rows: repeat(auto-fill, 55px);
 }
 
 #level button
@@ -112,8 +115,8 @@ html
     overflow: hidden;
     padding: 0em;
     margin: 0em;
-    width: 4em;
-    height: 4em;
+    width: 55px;
+    height: 55px;
 }
 
 #level button:focus
@@ -123,8 +126,8 @@ html
 
 #level button img
 {
-    width: 4em;
-    height: 4em;
+    width: 55px;
+    height: 55px;
     position: absolute;
     left: 0em;
     top: 0em;
