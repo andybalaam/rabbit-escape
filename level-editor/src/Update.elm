@@ -23,8 +23,15 @@ update msg model =
                     updateLevelClick model x y
                 ChangeMode mode ->
                     updateChangeMode model mode
+                ChangeBlock block ->
+                    updateChangeBlock model block
     in
         (m, Cmd.none)
+
+
+updateChangeBlock : Model -> Block -> Model
+updateChangeBlock model block =
+    model
 
 
 updateLevelClick : Model -> Int -> Int -> Model

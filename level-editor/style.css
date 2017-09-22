@@ -35,7 +35,7 @@ html
     #dialog
     {
         margin-left: 2%;
-        margin-top: 5%;
+        margin-top: 4%;
     }
 }
 
@@ -76,7 +76,7 @@ html
     padding: 0.2em;
 }
 
-#toolbar button
+#toolbar button, #dialog button
 {
     overflow: hidden;
     border-style: outset;
@@ -85,12 +85,17 @@ html
     padding: 0em;
 }
 
+#dialog button
+{
+    margin: 0.2em;
+}
+
 #toolbar button.pressed
 {
     border-style: inset;
 }
 
-#toolbar button img
+#toolbar button img, #dialog button img
 {
     width: 4.2em;
     height: 4.2em;
@@ -146,8 +151,8 @@ html
 }
 
 #dialog {
-    width: 90%;
-    height: 90%;
+    max-width: 90%;
+    max-height: 90%;
     background-color: white;
     visibility: hidden;
     border-width: 0.2em;

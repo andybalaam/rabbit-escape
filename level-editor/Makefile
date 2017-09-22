@@ -4,8 +4,10 @@ GAME_IMAGE_NAMES := \
 	land_block_1.png \
 	land_rising_left_1.png \
 	land_rising_right_1.png \
+	metal_block_1.png \
 	rabbit_stand_left.svg \
 	rabbit_stand_right.svg \
+	remove_block.png \
 	save.svg \
 
 
