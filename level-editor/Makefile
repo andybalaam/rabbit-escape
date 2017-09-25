@@ -48,6 +48,9 @@ upload: compile
 run:
 	elm-reactor
 
+debug: clean index images
+	elm-make --output=www/level-editor.js src/Main.elm --debug
+
 test:
 	elm-test
 
