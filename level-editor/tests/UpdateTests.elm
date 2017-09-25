@@ -7,7 +7,7 @@ import Expect
 import Model exposing (Model, UiMode(..), UiState)
 import Msg exposing (Msg(..))
 import Update exposing (update)
-import World exposing (Block(..), World)
+import World exposing (Block(..), BlockMaterial(..), BlockShape(..), World)
 import WorldParser exposing (parse)
 
 
@@ -16,6 +16,7 @@ all =
     describe "Tests of the update function"
         [ test "Clicking empty square adds block" clickEmptySquareAddsBlock
         , test "ChangeMode changes mode" changeModeChangesMode
+        , test "Choosing a block updates block and mode" choosingBlockUpdates
         ]
 
 
@@ -68,5 +69,28 @@ changeModeChangesMode =
                 )
                 ( update
                     (ChangeMode ChooseBlockMode)
+                    emptyModel
+                )
+
+
+choosingBlockUpdates : () -> Expect.Expectation
+choosingBlockUpdates =
+    let
+       uiState = emptyModel.uiState
+    in
+        \() ->
+            Expect.equal
+                (
+                    { emptyModel
+                    | uiState =
+                        { uiState
+                        | mode = PlaceBlockMode
+                        , block = Block Earth UpRight
+                        }
+                    }
+                , Cmd.none
+                )
+                ( update
+                    (ChangeBlock (Block Earth UpRight))
                     emptyModel
                 )

@@ -7,6 +7,7 @@ import World exposing (Block(..), World)
 type UiMode =
       InitialMode
     | ChooseBlockMode
+    | PlaceBlockMode
 
 
 type alias UiState =

@@ -1,5 +1,6 @@
 module ViewDialog exposing (viewDialog)
 
+import BlockImage exposing (blockImage)
 import Html exposing (Html, button, div, img)
 import Html.Attributes exposing (id, src, style)
 import Html.Events exposing (onClick)
@@ -8,23 +9,27 @@ import Msg exposing (Msg(..))
 import World exposing (Block(..), BlockMaterial(..), BlockShape(..))
 
 
-but : Msg -> String -> Html Msg
-but changeBlock imageName =
+but : Block -> Html Msg
+but block =
     button
         []
         [ img
-            [ src ("images/" ++ imageName) ]
+            [ src ("images/" ++ (blockImage block))
+            , onClick (ChangeBlock block)
+            ]
             []
         ]
 
 
 chooseBlockButtons : UiState -> List (Html Msg)
 chooseBlockButtons state =
-    [ but (ChangeBlock (Block Earth Flat))    "land_block_1.png"
-    , but (ChangeBlock (Block Earth UpRight)) "land_rising_right_1.png"
-    , but (ChangeBlock (Block Earth UpLeft))  "land_rising_left_1.png"
-    , but (ChangeBlock (Block Metal Flat))    "metal_block_1.png"
-    , but (ChangeBlock (NoBlock))             "remove_block.png"
+    [ but (Block Earth Flat)
+    , but (Block Earth UpRight)
+    , but (Block Earth UpLeft)
+    , but (Block Earth BridgeUpRight)
+    , but (Block Earth BridgeUpLeft)
+    , but (Block Metal Flat)
+    , but (NoBlock)
     ]
 
 

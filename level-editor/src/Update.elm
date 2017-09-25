@@ -1,7 +1,7 @@
 module Update exposing (update)
 
 
-import Model exposing (Model, UiMode)
+import Model exposing (Model, UiMode(..))
 import Msg exposing (Msg(..))
 import World exposing
     ( Block(..)
@@ -31,7 +31,16 @@ update msg model =
 
 updateChangeBlock : Model -> Block -> Model
 updateChangeBlock model block =
-    model
+    let
+        uiState = model.uiState
+    in
+        { model
+        | uiState =
+            { uiState
+            | mode = PlaceBlockMode
+            , block = block
+            }
+        }
 
 
 updateLevelClick : Model -> Int -> Int -> Model

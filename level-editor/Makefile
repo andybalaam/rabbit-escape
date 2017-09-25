@@ -1,6 +1,8 @@
 
 GAME_IMAGE_NAMES := \
 	allblocks.png \
+	bridge_rising_left.svg \
+	bridge_rising_right.svg \
 	land_block_1.png \
 	land_rising_left_1.png \
 	land_rising_right_1.png \
@@ -19,9 +21,6 @@ all: compile test
 
 www:
 	mkdir -p www
-
-www/images/%: ../images-src/% www/images
-	cp $< $@
 
 www/images/%: images-src/% www/images
 	cp $< $@

@@ -1,5 +1,6 @@
 module ViewToolbar exposing (viewToolbar)
 
+import BlockImage exposing (blockImage)
 import Html exposing
     ( Html
     , button
@@ -11,6 +12,7 @@ import Html.Events exposing (onClick)
 
 import Msg exposing (Msg(..))
 import Model exposing (UiMode(..), UiState)
+import World exposing (Block(..), BlockMaterial(..), BlockShape(..))
 
 
 type ButtonDef =
@@ -38,7 +40,11 @@ buttonImage : UiState -> ButtonDef -> String
 buttonImage uiState buttondef =
     case buttondef of
         SaveButton -> "save.svg"
-        BlockButton -> "allblocks.png"
+        BlockButton ->
+            case uiState.mode of
+                InitialMode -> "allblocks.png"
+                default ->
+                    blockImage uiState.block
         RabbitButton -> "rabbit_stand_right.svg"
 
 
@@ -49,6 +55,7 @@ pressedClass mode buttondef =
             case mode of
                 InitialMode -> []
                 ChooseBlockMode -> [BlockButton]
+                PlaceBlockMode -> [BlockButton]
     in
         if List.member buttondef pressedTypes then
             [ class "pressed" ]
