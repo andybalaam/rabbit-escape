@@ -32,7 +32,10 @@ buttonsList =
 buildClickCmd : UiState -> ButtonDef -> Msg
 buildClickCmd uiState buttonDef =
     case buttonDef of
-        BlockButton -> ChangeMode ChooseBlockMode
+        BlockButton ->
+            case uiState.mode of
+                ChooseBlockMode -> ChangeMode PlaceBlockMode
+                default         -> ChangeMode ChooseBlockMode
         default     -> ChangeMode InitialMode
 
 
