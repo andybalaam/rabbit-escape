@@ -38,7 +38,7 @@ updateChangeBlock model block =
         | uiState =
             { uiState
             | mode = PlaceBlockMode
-            , block = block
+            , block = Just block
             }
         }
 

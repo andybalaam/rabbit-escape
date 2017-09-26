@@ -41,10 +41,9 @@ buttonImage uiState buttondef =
     case buttondef of
         SaveButton -> "save.svg"
         BlockButton ->
-            case uiState.mode of
-                InitialMode -> "allblocks.png"
-                default ->
-                    blockImage uiState.block
+            case uiState.block of
+                Nothing    -> "allblocks.png"
+                Just block -> blockImage block
         RabbitButton -> "rabbit_stand_right.svg"
 
 

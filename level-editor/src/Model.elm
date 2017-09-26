@@ -12,7 +12,7 @@ type UiMode =
 
 type alias UiState =
     { mode : UiMode
-    , block : Block
+    , block : Maybe Block
     }
 
 

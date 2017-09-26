@@ -40,7 +40,7 @@ initModel =
     { world = initWorld
     , uiState =
         { mode = InitialMode
-        , block = NoBlock
+        , block = Nothing
         }
     --, past = []
     --, future = []

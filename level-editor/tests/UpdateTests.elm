@@ -30,7 +30,7 @@ parseFixed textWorld =
 emptyModel : Model
 emptyModel =
     { world = parseFixed ""
-    , uiState = { mode = InitialMode, block = NoBlock }
+    , uiState = { mode = InitialMode, block = Nothing }
     }
 
 
@@ -85,7 +85,7 @@ choosingBlockUpdates =
                     | uiState =
                         { uiState
                         | mode = PlaceBlockMode
-                        , block = Block Earth UpRight
+                        , block = Just (Block Earth UpRight)
                         }
                     }
                 , Cmd.none
