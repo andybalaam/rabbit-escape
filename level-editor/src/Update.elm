@@ -45,29 +45,35 @@ updateChangeBlock model block =
 
 updateLevelClick : Model -> Int -> Int -> Model
 updateLevelClick model x y =
-    { model | world = updateLevelClickWorld model.world x y }
+    { model
+    | world = updateLevelClickWorld model.uiState.block model.world x y
+    }
 
 
-updateLevelClickWorld : World -> Int -> Int -> World
-updateLevelClickWorld world x y =
+updateLevelClickWorld : Maybe Block -> World -> Int -> Int -> World
+updateLevelClickWorld newBlock world x y =
     makeWorld
         world.comment
         (makeBlockGrid
             (List.indexedMap
-                (updateLevelClickRow x y) (blocks world))
+                (updateLevelClickRow newBlock x y) (blocks world))
         )
         world.rabbits
 
 
-updateLevelClickRow : Int -> Int -> Int -> List Block -> List Block
-updateLevelClickRow x y rowy blocks =
-    List.indexedMap (updateLevelClickBlock x y rowy) blocks
+updateLevelClickRow :
+    Maybe Block -> Int -> Int -> Int -> List Block -> List Block
+updateLevelClickRow newBlock x y rowy blocks =
+    List.indexedMap (updateLevelClickBlock newBlock x y rowy) blocks
 
 
-updateLevelClickBlock : Int -> Int -> Int -> Int -> Block -> Block
-updateLevelClickBlock x y rowy colx block =
+updateLevelClickBlock :
+    Maybe Block -> Int -> Int -> Int -> Int -> Block -> Block
+updateLevelClickBlock newBlock x y rowy colx block =
     if x == colx && y == rowy then
-        Block Earth Flat
+        case newBlock of
+            Nothing -> Block Earth Flat
+            Just b  -> b
     else
         block
 

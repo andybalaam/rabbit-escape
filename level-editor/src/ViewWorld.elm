@@ -5,6 +5,7 @@ import Html.Attributes exposing (id, class, src, style)
 import Html.Events exposing (onClick)
 
 
+import BlockImage exposing (blockImage)
 import Model exposing (Model)
 import Msg exposing (Msg(..))
 import Rabbit exposing (Direction(..), Rabbit)
@@ -32,16 +33,15 @@ rabbitImage rabbit =
             []
 
 
-blockImage : Block -> Int -> Int -> List (Html Msg)
-blockImage block x y =
+blockImg : Block -> Int -> Int -> List (Html Msg)
+blockImg block x y =
     case block of
-        Block Earth Flat ->
+        NoBlock -> []
+        default ->
             [ img
-                [ src "images/land_block_1.png" ]
+                [ src ("images/" ++ blockImage block) ]
                 []
             ]
-        _ ->
-            []
 
 
 viewBlockContents : Block -> List Rabbit -> Int -> Int -> Html Msg
@@ -60,7 +60,7 @@ viewBlockContents block rabbits x y =
                 ]
             , id (sx++","++sy)
             ]
-            ( blockImage block x y ++ List.map rabbitImage rabbits )
+            ( blockImg block x y ++ List.map rabbitImage rabbits )
 
 
 viewBlock : World -> Int -> Int -> Block -> Html Msg

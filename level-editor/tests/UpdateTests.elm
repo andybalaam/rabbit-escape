@@ -15,6 +15,7 @@ all : Test
 all =
     describe "Tests of the update function"
         [ test "Clicking empty square adds block" clickEmptySquareAddsBlock
+        , test "Clicking full replaces with chosen block" clickFullReplaces
         , test "ChangeMode changes mode" changeModeChangesMode
         , test "Choosing a block updates block and mode" choosingBlockUpdates
         ]
@@ -49,6 +50,34 @@ clickEmptySquareAddsBlock =
                 (
                     { emptyModel
                     | world = parseFixed "####\n#  #\n# r#\n####"
+                    }
+                )
+            )
+
+
+clickFullReplaces : () -> Expect.Expectation
+clickFullReplaces =
+    \() ->
+        Expect.equal
+            (
+                { emptyModel
+                | world = parseFixed "####\n/  #\n# r#\n####"
+                , uiState =
+                    { mode = PlaceBlockMode
+                    , block = Just (Block Earth UpRight)
+                    }
+                }
+            , Cmd.none
+            )
+            ( update
+                (LevelClick 0 1)
+                (
+                    { emptyModel
+                    | world = parseFixed "####\n#  #\n# r#\n####"
+                    , uiState =
+                        { mode = PlaceBlockMode
+                        , block = Just (Block Earth UpRight)
+                        }
                     }
                 )
             )
