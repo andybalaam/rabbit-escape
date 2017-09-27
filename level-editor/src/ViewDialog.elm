@@ -12,13 +12,8 @@ import World exposing (Block(..), BlockMaterial(..), BlockShape(..))
 but : Block -> Html Msg
 but block =
     button
-        []
-        [ img
-            [ src ("images/" ++ (blockImage block))
-            , onClick (ChangeBlock block)
-            ]
-            []
-        ]
+        [ onClick (ChangeBlock block) ]
+        [ img [ src ("images/" ++ (blockImage block)) ] [] ]
 
 
 chooseBlockButtons : UiState -> List (Html Msg)
