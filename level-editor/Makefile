@@ -47,8 +47,11 @@ upload: compile
 run:
 	elm-reactor
 
-debug: clean index images
+compile-debug: clean index images
 	elm-make --output=www/level-editor.js src/Main.elm --debug
+
+upload-debug: compile-debug
+	rsync -r --delete ./www/ dreamhost:artificialworlds.net/rabbit-escape/level-editor-debug/
 
 test:
 	elm-test
