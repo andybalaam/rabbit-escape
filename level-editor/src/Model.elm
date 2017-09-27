@@ -6,6 +6,7 @@ import World exposing (Block(..), World)
 
 type UiMode =
       InitialMode
+    | CodeMode
     | ChooseBlockMode
     | PlaceBlockMode
 

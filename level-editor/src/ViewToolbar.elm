@@ -36,6 +36,7 @@ buildClickCmd uiState buttonDef =
             case uiState.mode of
                 ChooseBlockMode -> ChangeMode PlaceBlockMode
                 default         -> ChangeMode ChooseBlockMode
+        SaveButton  -> ChangeMode CodeMode
         default     -> ChangeMode InitialMode
 
 
@@ -56,6 +57,7 @@ pressedClass mode buttondef =
         pressedTypes =
             case mode of
                 InitialMode -> []
+                CodeMode -> [SaveButton]
                 ChooseBlockMode -> [BlockButton]
                 PlaceBlockMode -> [BlockButton]
     in
