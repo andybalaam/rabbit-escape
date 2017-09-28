@@ -28,11 +28,11 @@ chooseBlockButtons state =
     ]
 
 
-codeText : Model -> List (Html Msg)
-codeText model =
+codeText : String -> List (Html Msg)
+codeText code =
     [ textarea
         [ id "code" ]
-        [ text "foo" ]
+        [ text code ]
     ]
 
 
@@ -59,6 +59,6 @@ viewDialog model =
     drawDialog
         ( case model.uiState.mode of
             ChooseBlockMode -> chooseBlockButtons model.uiState
-            CodeMode -> codeText model
+            CodeMode code -> codeText code
             default -> []
         )

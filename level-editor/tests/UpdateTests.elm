@@ -17,6 +17,7 @@ all =
         [ test "Clicking empty square adds block" clickEmptySquareAddsBlock
         , test "Clicking full replaces with chosen block" clickFullReplaces
         , test "ChangeMode changes mode" changeModeChangesMode
+        , test "Changing to code mode stores code text" codeModeStoresText
         , test "Choosing a block updates block and mode" choosingBlockUpdates
         ]
 
@@ -98,6 +99,25 @@ changeModeChangesMode =
                 )
                 ( update
                     (ChangeMode ChooseBlockMode)
+                    emptyModel
+                )
+
+
+codeModeGensText : () -> Expect.Expectation
+codeModeGensText =
+    let
+       uiState = emptyModel.uiState
+    in
+        \() ->
+            Expect.equal
+                (
+                    { emptyModel
+                    | uiState = { uiState | mode = CodeMode "#r#"}
+                    }
+                , Cmd.none
+                )
+                ( update
+                    (ChangeMode (CodeMode "#r#"))
                     emptyModel
                 )
 
