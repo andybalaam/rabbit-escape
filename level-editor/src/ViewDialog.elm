@@ -43,24 +43,28 @@ styles visible =
         []
 
 
-viewDialog : UiState -> List (Html Msg)
-viewDialog uiState =
+drawDialog : List (Html Msg) -> List (Html Msg)
+drawDialog contents =
     let
-        visible =
-            case uiState.mode of
-                ChooseBlockMode -> True
-                default -> False
-        visibleStyle = styles visible
+        visibleStyle =
+            if List.isEmpty contents then
+                []
+            else
+                [style [("visibility", "visible")]]
     in
         [ div
-            ( [ id "dialogBackground"
-              ] ++ visibleStyle
-            )
-            [
-            ]
+            ( [ id "dialogBackground" ] ++ visibleStyle )
+            []
         , div
-            ( [ id "dialog"
-              ] ++ visibleStyle
-            )
-            (buttons uiState)
+            ( [ id "dialog" ] ++ visibleStyle )
+            contents
         ]
+
+
+viewDialog : UiState -> List (Html Msg)
+viewDialog uiState =
+    drawDialog
+        ( case uiState.mode of
+            ChooseBlockMode -> buttons uiState
+            default -> []
+        )
