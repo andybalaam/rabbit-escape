@@ -161,3 +161,11 @@ html
     opacity: 0.85;
     z-index: 3;
 }
+
+#code {
+    width: 98%;
+    min-height: 50%;
+    max-height: 90%;
+    resize: none;
+    background-color: white;
+}

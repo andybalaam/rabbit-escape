@@ -20,5 +20,5 @@ view model =
         (
             [ (viewToolbar model.uiState)
             , (viewWorkspace model.world)
-            ] ++ (viewDialog model.uiState)
+            ] ++ (viewDialog model)
         )

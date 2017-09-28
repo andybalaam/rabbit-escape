@@ -1,10 +1,10 @@
 module ViewDialog exposing (viewDialog)
 
 import BlockImage exposing (blockImage)
-import Html exposing (Html, button, div, img)
+import Html exposing (Html, button, div, img, text, textarea)
 import Html.Attributes exposing (id, src, style)
 import Html.Events exposing (onClick)
-import Model exposing (UiMode(..), UiState)
+import Model exposing (Model, UiMode(..), UiState)
 import Msg exposing (Msg(..))
 import World exposing (Block(..), BlockMaterial(..), BlockShape(..))
 
@@ -28,11 +28,12 @@ chooseBlockButtons state =
     ]
 
 
-blockButtons : UiState -> List (Html Msg)
-blockButtons uiState =
-    case uiState.mode of
-        ChooseBlockMode -> chooseBlockButtons uiState
-        default -> []
+codeText : Model -> List (Html Msg)
+codeText model =
+    [ textarea
+        [ id "code" ]
+        [ text "foo" ]
+    ]
 
 
 drawDialog : List (Html Msg) -> List (Html Msg)
@@ -53,10 +54,11 @@ drawDialog contents =
         ]
 
 
-viewDialog : UiState -> List (Html Msg)
-viewDialog uiState =
+viewDialog : Model -> List (Html Msg)
+viewDialog model =
     drawDialog
-        ( case uiState.mode of
-            ChooseBlockMode -> blockButtons uiState
+        ( case model.uiState.mode of
+            ChooseBlockMode -> chooseBlockButtons model.uiState
+            CodeMode -> codeText model
             default -> []
         )
