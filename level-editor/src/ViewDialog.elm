@@ -28,19 +28,11 @@ chooseBlockButtons state =
     ]
 
 
-buttons : UiState -> List (Html Msg)
-buttons uiState =
+blockButtons : UiState -> List (Html Msg)
+blockButtons uiState =
     case uiState.mode of
         ChooseBlockMode -> chooseBlockButtons uiState
         default -> []
-
-
-styles : Bool -> List (Html.Attribute Msg)
-styles visible =
-    if visible then
-        [style [("visibility", "visible")]]
-    else
-        []
 
 
 drawDialog : List (Html Msg) -> List (Html Msg)
@@ -65,6 +57,6 @@ viewDialog : UiState -> List (Html Msg)
 viewDialog uiState =
     drawDialog
         ( case uiState.mode of
-            ChooseBlockMode -> buttons uiState
+            ChooseBlockMode -> blockButtons uiState
             default -> []
         )
