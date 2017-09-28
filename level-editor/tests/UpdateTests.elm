@@ -36,6 +36,12 @@ emptyModel =
     }
 
 
+smallModel =
+    { world = parseFixed "#r#"
+    , uiState = { mode = InitialMode, block = Nothing }
+    }
+
+
 clickEmptySquareAddsBlock : () -> Expect.Expectation
 clickEmptySquareAddsBlock =
     \() ->
@@ -106,19 +112,20 @@ changeModeChangesMode =
 codeModeStoresText : () -> Expect.Expectation
 codeModeStoresText =
     let
-       uiState = emptyModel.uiState
+       uiState = smallModel.uiState
     in
         \() ->
             Expect.equal
                 (
-                    { emptyModel
+                    { smallModel
                     | uiState = { uiState | mode = CodeMode "#r#"}
+                        -- We get a model
                     }
                 , Cmd.none
                 )
                 ( update
-                    (ChangeMode (CodeMode "#r#"))
-                    emptyModel
+                    (ChangeMode (CodeMode ""))  -- Even though we sent nothing
+                    smallModel
                 )
 
 

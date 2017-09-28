@@ -12,6 +12,7 @@ import World exposing
     , makeWorld
     , makeBlockGrid
     )
+import WorldTextRender
 
 
 update : Msg -> Model -> (Model, Cmd Msg)
@@ -82,7 +83,11 @@ updateChangeMode : Model -> UiMode -> Model
 updateChangeMode model mode =
     let
         uiState = model.uiState
+        m =
+            case mode of
+                CodeMode _ -> CodeMode (WorldTextRender.render model.world)
+                default -> mode
     in
         { model
-        | uiState = { uiState | mode = mode }
+        | uiState = { uiState | mode = m }
         }

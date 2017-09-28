@@ -13,7 +13,6 @@ import Html.Events exposing (onClick)
 import Msg exposing (Msg(..))
 import Model exposing (Model, UiMode(..), UiState)
 import World exposing (Block(..), BlockMaterial(..), BlockShape(..))
-import WorldTextRender
 
 
 type ButtonDef =
@@ -30,14 +29,14 @@ buttonsList =
     ]
 
 
-buildClickCmd : Model -> ButtonDef -> Msg
-buildClickCmd model buttonDef =
+buildClickCmd : UiState -> ButtonDef -> Msg
+buildClickCmd uiState buttonDef =
     case buttonDef of
         BlockButton ->
-            case model.uiState.mode of
+            case uiState.mode of
                 ChooseBlockMode -> ChangeMode PlaceBlockMode
                 default         -> ChangeMode ChooseBlockMode
-        SaveButton  -> ChangeMode (CodeMode (WorldTextRender.render model.world))
+        SaveButton  -> ChangeMode (CodeMode "")
         default     -> ChangeMode InitialMode
 
 
@@ -68,14 +67,14 @@ pressedClass mode buttondef =
             []
 
 
-viewButton : Model -> ButtonDef -> Html Msg
-viewButton model def =
+viewButton : UiState -> ButtonDef -> Html Msg
+viewButton uiState def =
     button
-        ( [ onClick (buildClickCmd model def)
-          ] ++ pressedClass model.uiState.mode def
+        ( [ onClick (buildClickCmd uiState def)
+          ] ++ pressedClass uiState.mode def
         )
         [ img
-            [ src ("images/" ++ (buttonImage model.uiState def)) ]
+            [ src ("images/" ++ (buttonImage uiState def)) ]
             []
         ]
 
@@ -84,4 +83,4 @@ viewToolbar : Model -> Html Msg
 viewToolbar model =
     div
         [ id "toolbar" ]
-        (List.map (viewButton model) buttonsList)
+        (List.map (viewButton model.uiState) buttonsList)
