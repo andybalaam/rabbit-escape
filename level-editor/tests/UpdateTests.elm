@@ -103,8 +103,8 @@ changeModeChangesMode =
                 )
 
 
-codeModeGensText : () -> Expect.Expectation
-codeModeGensText =
+codeModeStoresText : () -> Expect.Expectation
+codeModeStoresText =
     let
        uiState = emptyModel.uiState
     in

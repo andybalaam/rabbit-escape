@@ -18,7 +18,7 @@ view model =
         [ id "main"
         ]
         (
-            [ (viewToolbar model.uiState)
+            [ (viewToolbar model)
             , (viewWorkspace model.world)
             ] ++ (viewDialog model)
         )
