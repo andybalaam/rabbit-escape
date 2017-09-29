@@ -1,0 +1,12 @@
+- Allow converting multiple things at the same place to text
+- Support pasting text into the real game on Android
+- Support pasting text into the real game on PC
+- Place things in level
+- Add/delete columns and rows
+- Modify abilities, number of rabbits, number to save
+- Modify name, hints, description, author, music
+- Modify/paste code directly
+- Save/load to/from the cloud and/or as a URL and/or as github issue
+- Log in and have a list of saved things
+- Play/test levels online
+- Provide solutions after playing
