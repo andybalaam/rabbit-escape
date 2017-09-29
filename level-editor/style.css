@@ -85,11 +85,6 @@ html
     padding: 0em;
 }
 
-#dialog button
-{
-    margin: 0.2em;
-}
-
 #toolbar button.pressed
 {
     border-style: inset;
@@ -143,29 +138,45 @@ html
     z-index: 1;
 }
 
-#dialogBackground {
+#dialogBackground
+{
     opacity: 0.6;
     background-color: black;
     visibility: hidden;
     z-index: 2;
 }
 
-#dialog {
+#dialog
+{
     max-width: 90%;
     max-height: 90%;
     background-color: white;
     visibility: hidden;
     border-width: 0.2em;
     border-style: outset;
-    overflow: auto;
-    opacity: 0.85;
+    opacity: 0.95;
     z-index: 3;
 }
 
-#code {
-    width: 98%;
-    min-height: 50%;
-    max-height: 90%;
+#dialog p
+{
+    font-family: verdana, sans-serif;
+    margin: 0.2em;
+    padding: 0em;
+    text-size: 1.5em;
+    overflow-y: auto;
+}
+
+#dialog button
+{
+    margin: 0.2em;
+}
+
+#dialog textarea
+{
+    width: 96%;
+    height: 96%;
+    margin: 0em;
     resize: none;
     background-color: white;
 }
