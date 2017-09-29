@@ -35,6 +35,11 @@ initWorld =
             Err s -> makeWorld "Unexpected Error" (makeBlockGrid []) []
 
 
+translationPlaceholder : String -> String
+translationPlaceholder x =
+    x
+
+
 initModel : Model
 initModel =
     { world = initWorld
@@ -42,6 +47,7 @@ initModel =
         { mode = InitialMode
         , block = Nothing
         }
+    , t = translationPlaceholder
     --, past = []
     --, future = []
     }

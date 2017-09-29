@@ -33,12 +33,14 @@ emptyModel : Model
 emptyModel =
     { world = parseFixed ""
     , uiState = { mode = InitialMode, block = Nothing }
+    , t = \x -> x
     }
 
 
 smallModel =
     { world = parseFixed "#r#"
     , uiState = { mode = InitialMode, block = Nothing }
+    , t = \x -> x
     }
 
 
