@@ -23,7 +23,7 @@ all =
         , test "Render world with blocks" renderWorldWithBlocks
         , test "Render world with rabbits" renderWorldWithRabbits
         , test "Render 2 rabbits in same place" render2RabbitsInSamePlace
---        , test "Render rabbit on top of block" renderRabbitOnBlock
+        , test "Render rabbit on top of block" renderRabbitOnBlock
         ]
 
 
@@ -126,23 +126,23 @@ render2RabbitsInSamePlace =
             )
 
 
---renderRabbitOnBlock : () -> Expect.Expectation
---renderRabbitOnBlock =
---    \() ->
---        Expect.equal
---            [ "    "
---            , "  * "
---            , "    "
---            , "    "
---            , ":*=#rj"
---            ]
---            (rend
---                [ [NoBlock, NoBlock, NoBlock, NoBlock]
---                , [NoBlock, NoBlock, fltErth, NoBlock]
---                , [NoBlock, NoBlock, NoBlock, NoBlock]
---                , [NoBlock, NoBlock, NoBlock, NoBlock]
---                ]
---                [ makeRabbit 2 1 Right
---                , makeRabbit 2 1 Left
---                ]
---            )
+renderRabbitOnBlock : () -> Expect.Expectation
+renderRabbitOnBlock =
+    \() ->
+        Expect.equal
+            [ "    "
+            , "  * "
+            , "    "
+            , "    "
+            , ":*=#rj"
+            ]
+            (rend
+                [ [NoBlock, NoBlock, NoBlock, NoBlock]
+                , [NoBlock, NoBlock, fltErth, NoBlock]
+                , [NoBlock, NoBlock, NoBlock, NoBlock]
+                , [NoBlock, NoBlock, NoBlock, NoBlock]
+                ]
+                [ makeRabbit 2 1 Right
+                , makeRabbit 2 1 Left
+                ]
+            )

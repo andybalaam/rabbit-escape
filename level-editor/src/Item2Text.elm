@@ -105,28 +105,25 @@ rabbitToChar rabbit =
             Debug.crash ("Unknown rabbit! " ++ (toString rabbit))
 
 
-rabbitsToStarLine : List Rabbit -> StarLine
-rabbitsToStarLine rabbits =
-    StarLine (String.fromList (List.map rabbitToChar rabbits))
+rabbitsToChars : List Rabbit -> List Char
+rabbitsToChars rabbits =
+    List.map rabbitToChar rabbits
 
 
-rabbitsToText : List Rabbit -> (Char, Maybe StarLine)
-rabbitsToText rabbits =
-    case rabbits of
-        [] -> (' ', Nothing)
-        [r] -> (rabbitToChar r, Nothing)
-        default -> ('*', Just (rabbitsToStarLine rabbits))
-
-
-blockToText : Block -> Char
-blockToText block =
+blockToChars : Block -> List Char
+blockToChars block =
     case EveryDict.get block b2t of
-        Just c -> c
+        Just ' ' -> []
+        Just c -> [c]
         Nothing -> Debug.crash ("Unknown block!" ++ (toString block))
 
 
 toText : Block -> List Rabbit -> (Char, Maybe StarLine)
 toText block rabbits =
-    case block of
-        NoBlock -> rabbitsToText rabbits
-        default -> (blockToText block, Nothing)
+    let
+        chars = blockToChars block ++ rabbitsToChars rabbits
+    in
+        case chars of
+            [] -> (' ', Nothing)
+            [c] -> (c, Nothing)
+            default -> ('*', Just (StarLine (String.fromList chars)))
