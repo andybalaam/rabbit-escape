@@ -40,6 +40,16 @@ fltErth =
     Block Earth Flat
 
 
+fltMetl : Block
+fltMetl =
+    Block Metal Flat
+
+
+uprErth : Block
+uprErth =
+    Block Earth UpRight
+
+
 rend : List (List Block) -> List Rabbit -> List String
 rend blocks rabbits =
     renderToLines (makeWorld "tst" (makeBlockGrid blocks) rabbits)
@@ -131,18 +141,22 @@ renderRabbitOnBlock =
     \() ->
         Expect.equal
             [ "    "
-            , "  * "
-            , "    "
+            , "  **"
+            , "*   "
             , "    "
             , ":*=#rj"
+            , ":*=Mr"
+            , ":*=/j"
             ]
             (rend
                 [ [NoBlock, NoBlock, NoBlock, NoBlock]
-                , [NoBlock, NoBlock, fltErth, NoBlock]
-                , [NoBlock, NoBlock, NoBlock, NoBlock]
+                , [NoBlock, NoBlock, fltErth, fltMetl]
+                , [uprErth, NoBlock, NoBlock, NoBlock]
                 , [NoBlock, NoBlock, NoBlock, NoBlock]
                 ]
                 [ makeRabbit 2 1 Right
                 , makeRabbit 2 1 Left
+                , makeRabbit 3 1 Right
+                , makeRabbit 0 2 Left
                 ]
             )
