@@ -1,4 +1,11 @@
-module Item2Text exposing (CharItem(..), StarLine(..), toText, toItems)
+module Item2Text exposing
+    ( CharItem(..)
+    , Pos
+    , StarLine(..)
+    , toText
+    , charToBlock
+    , charToRabbit
+    )
 
 
 import Dict
@@ -37,16 +44,33 @@ t2b : Dict.Dict Char Block
 t2b =
     Dict.fromList t2bList
 
+charToBlock : Char -> Maybe Block
+charToBlock c =
+    Dict.get c t2b
 
 b2t : EveryDict.EveryDict Block Char
 b2t =
     EveryDict.fromList (List.map swap t2bList)
 
 
+type alias Pos =
+    { row : Int
+    , col : Int
+    }
+
+
 type CharItem =
-      StarChar
-    | BlockChar Block
-    | RabbitChar Rabbit
+      StarChar Pos
+    | BlockChar Pos Block
+    | RabbitChar Pos Rabbit
+
+
+posOf : CharItem -> Pos
+posOf ch =
+    case ch of
+        StarChar p -> p
+        BlockChar p _ -> p
+        RabbitChar p _ -> p
 
 
 t2rList : List (Char, Rabbit)
@@ -61,33 +85,14 @@ t2r =
     Dict.fromList t2rList
 
 
+charToRabbit : Char -> Maybe Rabbit
+charToRabbit c =
+    Dict.get c t2r
+
+
 r2t : EveryDict.EveryDict Rabbit Char
 r2t =
     EveryDict.fromList (List.map swap t2rList)
-
-
-addRabbitCoords : Int -> Int -> Rabbit -> Rabbit
-addRabbitCoords y x rabbit =
-    { rabbit | x = x, y = y }
-
-
-toItems : Int -> Int -> Char -> Result String CharItem
-toItems y x c =
-    if c == '*' then
-        Ok StarChar
-    else case Dict.get c t2b of
-        Just block ->
-            Ok (BlockChar block)
-        Nothing ->
-            case Dict.get c t2r of
-                Just rabbit ->
-                    Ok (RabbitChar (addRabbitCoords y x rabbit))
-                Nothing      ->
-                    Err
-                        (  "Unrecognised character '"
-                        ++ (String.fromChar c)
-                        ++ "'."
-                        )
 
 
 zeroCoords : Rabbit -> Rabbit

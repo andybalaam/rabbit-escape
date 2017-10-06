@@ -8,7 +8,7 @@ import Model exposing (Model, UiMode(..), UiState)
 import Msg exposing (Msg(..))
 import Update exposing (update)
 import World exposing (Block(..), BlockMaterial(..), BlockShape(..), World)
-import WorldParser exposing (parse)
+import WorldParser exposing (parse, parseErrToString)
 
 
 all : Test
@@ -25,7 +25,7 @@ all =
 parseFixed : String -> World
 parseFixed textWorld =
     case parse "" textWorld of
-        Err s -> Debug.crash s
+        Err e -> Debug.crash (parseErrToString e)
         Ok w -> w
 
 

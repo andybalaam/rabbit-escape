@@ -20,6 +20,7 @@ import WorldParser exposing
     , resultCombine
     , mergeNewCharIntoItems
     , parse
+    , parseErrToString
     )
 
 
@@ -40,15 +41,15 @@ all =
 -- ---
 
 
-okAndEqual : Result String a -> a -> () -> Expect.Expectation
+okAndEqual : Result ParseErr a -> a -> () -> Expect.Expectation
 okAndEqual actual expected =
     \() ->
         case actual of
             Ok value -> Expect.equal value expected
-            Err error -> Expect.fail error
+            Err error -> Expect.fail ( parseErrToString error )
 
 
-parseLines : String -> List String -> Result String World
+parseLines : String -> List String -> Result ParseErr World
 parseLines comment strings =
     parse comment ((String.join "\n" strings) ++ "\n")
 
@@ -99,45 +100,51 @@ emptyItems = { block = NoBlock, rabbits = [] }
 mergeNewCharIntoItemsCases : Test
 mergeNewCharIntoItemsCases =
     let
-        mrg pos ch items = mergeNewCharIntoItems pos ch ( Ok items )
+        mrg ch items = mergeNewCharIntoItems ch ( Ok items )
         blc = fltErth
         rab = makeRabbit 3 0 Right
         ra2 = makeRabbit 3 1 Left
-        blcCh = BlockChar blc
-        rabCh = RabbitChar rab
-        ra2Ch = RabbitChar ra2
-        staCh = StarChar
-        err = Err ( TwoBlocksInOneStarPoint (3, 6) '#' '#')
+        pos13 = { row = 3, col = 1 }
+        pos24 = { row = 4, col = 2 }
+        pos36 = { row = 6, col = 3 }
+        staPos = { row = 4, col = 0 }
+        rabPos = { row = rab.y, col = rab.x }
+        ra2Pos = { row = ra2.y, col = ra2.x }
+        blcCh = BlockChar pos24 blc
+        rabCh = RabbitChar rabPos rab
+        ra2Ch = RabbitChar ra2Pos ra2
+        staCh = StarChar staPos
+        err = Err ( TwoBlocksInOneStarPoint pos36 '#' '#')
         t desc act exp = test desc (\() -> Expect.equal act exp)
     in
         describe "mergeNewCharIntoItems"
             [ t "Block merges into empty"
-                ( mrg (2, 4) blcCh emptyItems )
+                ( mrg blcCh emptyItems )
                 ( Ok { block = fltErth, rabbits = [] } )
 
             , t "Rabbit merges into empty"
-                ( mrg (2, 4) rabCh emptyItems )
+                ( mrg rabCh emptyItems )
                 ( Ok { block = NoBlock, rabbits = [rab] } )
 
             , t "Block won't merge over a block"
-                ( mrg (2, 4) blcCh { emptyItems | block = fltMetl } )
-                ( Err ( TwoBlocksInOneStarPoint (2, 4) 'M' '#' ) )
+                ( mrg blcCh { emptyItems | block = fltMetl } )
+                ( Err ( TwoBlocksInOneStarPoint pos24 'M' '#' ) )
 
             , t "Rabbit merges into block"
-                ( mrg (2, 4) rabCh { emptyItems | block = fltMetl } )
+                ( mrg rabCh { emptyItems | block = fltMetl } )
                 ( Ok { block = fltMetl, rabbits = [rab] } )
 
             , t "Rabbit merges into block"
-                ( mrg (2, 4) ra2Ch { block = fltMetl, rabbits = [rab] } )
+                ( mrg ra2Ch { block = fltMetl, rabbits = [rab] } )
                 ( Ok { block = fltMetl, rabbits = [rab, ra2] } )
 
             , t "Errors propagate"
-                ( mergeNewCharIntoItems (2, 4) ra2Ch err )
+                ( mergeNewCharIntoItems ra2Ch err )
                 ( err )
 
             , t "Star in starline is an error"
-                ( mrg (1, 3) staCh emptyItems )
-                ( Err ( StarInsideStarPoint (1, 3) ) )
+                ( mrg staCh emptyItems )
+                ( Err ( StarInsideStarPoint staPos ) )
             ]
 
 

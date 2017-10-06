@@ -4,6 +4,7 @@ module WorldParser exposing
     , resultCombine
     , mergeNewCharIntoItems
     , parse
+    , parseErrToString
     )
 
 
@@ -19,7 +20,14 @@ import World exposing (
     )
 
 
-import Item2Text exposing (CharItem(..), StarLine(..), toItems, toText)
+import Item2Text exposing
+    ( CharItem(..)
+    , Pos
+    , StarLine(..)
+    , charToBlock
+    , charToRabbit
+    , toText
+    )
 
 
 type alias Items =
@@ -28,13 +36,43 @@ type alias Items =
     }
 
 
-type alias Pos =
-    ( Int, Int )  -- row, column
-
-
 type ParseErr =
       TwoBlocksInOneStarPoint Pos Char Char
     | StarInsideStarPoint Pos
+    | UnrecognisedChar Pos Char
+
+
+posToString : Pos -> String
+posToString pos =
+    (  "Line "
+    ++ (toString (pos.row + 1))
+    ++ ", column "
+    ++ (toString (pos.col + 1))
+    ++ ": "
+    )
+
+
+parseErrToString : ParseErr -> String
+parseErrToString e =
+    case e of
+        TwoBlocksInOneStarPoint pos c1 c2 ->
+            ( posToString pos
+            ++ "Two blocks in one startpoint: '"
+            ++ (toString c1)
+            ++ "' and '"
+            ++ (toString c2)
+            ++ "'."
+            )
+        StarInsideStarPoint pos ->
+            ( posToString pos
+            ++ "Star inside a star point."
+            )
+        UnrecognisedChar pos ch ->
+            ( posToString pos
+            ++ "Unrecognised character: '"
+            ++ (toString ch)
+            ++ "'."
+            )
 
 
 blockToText : Block -> Char
@@ -42,11 +80,33 @@ blockToText block =
     Tuple.first (toText block [])
 
 
-mergeNewCharIntoOkItems :
-    Pos -> CharItem -> Items -> Result ParseErr Items
-mergeNewCharIntoOkItems pos chItem items =
+addRabbitCoords : Pos -> Rabbit -> Rabbit
+addRabbitCoords pos rabbit =
+    { rabbit | x = pos.col, y = pos.row }
+
+
+toItems : Int -> Int -> Char -> Result ParseErr CharItem
+toItems y x c =
+    let
+        pos = { row = y, col = x }
+    in
+        if c == '*' then
+            Ok (StarChar pos)
+        else case charToBlock c of
+            Just block ->
+                Ok (BlockChar pos block)
+            Nothing ->
+                case charToRabbit c of
+                    Just rabbit ->
+                        Ok (RabbitChar pos (addRabbitCoords pos rabbit))
+                    Nothing ->
+                        Err ( UnrecognisedChar pos c )
+
+
+mergeNewCharIntoOkItems : CharItem -> Items -> Result ParseErr Items
+mergeNewCharIntoOkItems chItem items =
     case chItem of
-        BlockChar charBlock ->
+        BlockChar pos charBlock ->
             if items.block == NoBlock then
                 Ok { items | block = charBlock }
             else
@@ -56,20 +116,20 @@ mergeNewCharIntoOkItems pos chItem items =
                         ( blockToText items.block )
                         ( blockToText charBlock )
                     )
-        RabbitChar charRabbit ->
+        RabbitChar pos charRabbit ->
+            -- TODO: should we set pos of rabbit?
             Ok { items | rabbits = items.rabbits ++ [charRabbit] }
-        StarChar ->
+        StarChar pos ->
             Err ( StarInsideStarPoint pos )
 
 
 mergeNewCharIntoItems :
-    Pos ->
     CharItem ->
     Result ParseErr Items ->
     Result ParseErr Items
-mergeNewCharIntoItems pos chItem items =
+mergeNewCharIntoItems chItem items =
     case items of
-        Ok its -> mergeNewCharIntoOkItems pos chItem its
+        Ok its -> mergeNewCharIntoOkItems chItem its
         e -> e
 
 
@@ -139,16 +199,19 @@ mergeNewCharIntoItems pos chItem items =
 singleCharItemsToItems : CharItem -> Items
 singleCharItemsToItems ch =
     case ch of
-        BlockChar b -> { block = b, rabbits = [] }
-        RabbitChar r -> { block = NoBlock, rabbits = [r] }
-        StarChar -> { block = NoBlock, rabbits = [] } -- TODO
+        BlockChar pos b -> { block = b, rabbits = [] }
+        RabbitChar pos r -> { block = NoBlock, rabbits = [r] }
+        StarChar pos -> { block = NoBlock, rabbits = [] }
+        -- TODO: I think this method will go away - if not, the StarChar
+        -- line above is wrong
 
 
-parse : String -> String -> Result String World
+parse : String -> String -> Result ParseErr World
 parse comment textWorld =
     let
         allLines = split textWorld
         (grLines, stLines) = separateLineTypes allLines
+        -- TODO: error on unrecognised line
         charItems = parseGridLines grLines
         starLines = parseStarLines stLines
         items = Result.map (List.map (List.map singleCharItemsToItems)) charItems
@@ -209,7 +272,7 @@ parseStarLines lines =
     resultCombine (List.map parseStarLine lines)
 
 
-parseGridLines : List String -> Result String (List (List CharItem))
+parseGridLines : List String -> Result ParseErr (List (List CharItem))
 parseGridLines lines =
     resultCombine (List.indexedMap parseGridLine lines)
 
@@ -222,7 +285,7 @@ parseStarLine line =
         Err "Star line did not start with ':*='."
 
 
-parseGridLine : Int -> String -> Result String (List CharItem)
+parseGridLine : Int -> String -> Result ParseErr (List CharItem)
 parseGridLine y line =
     resultCombine (List.indexedMap (toItems y) (String.toList line))
 

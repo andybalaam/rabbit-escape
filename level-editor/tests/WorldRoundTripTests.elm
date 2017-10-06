@@ -5,7 +5,7 @@ import Expect
 
 
 import World exposing (World)
-import WorldParser exposing (parse)
+import WorldParser exposing (ParseErr, parse, parseErrToString)
 import WorldTextRender exposing (render)
 
 
@@ -22,7 +22,7 @@ all =
 -- ---
 
 
-parseLines : String -> List String -> Result String World
+parseLines : String -> List String -> Result ParseErr World
 parseLines comment strings =
     parse comment ((String.join "\n" strings) ++ "\n")
 
@@ -37,7 +37,11 @@ roundTrips text =
     \() ->
         case parseLines "test" text of
             Ok world -> Expect.equal text (renderToLines world)
-            Err error -> Expect.fail ("Parsing failed: " ++ error)
+            Err error ->
+                Expect.fail
+                    ( "Parsing failed: "
+                    ++ ( parseErrToString error )
+                    )
 
 
 -- ---
