@@ -19,7 +19,7 @@ import World exposing (
     )
 
 
-import Item2Text exposing (SingleCharItems(..), StarLine(..), toItems, toText)
+import Item2Text exposing (CharItem(..), StarLine(..), toItems, toText)
 
 
 type alias Items =
@@ -43,7 +43,7 @@ blockToText block =
 
 
 mergeNewCharIntoOkItems :
-    Pos -> SingleCharItems -> Items -> Result ParseErr Items
+    Pos -> CharItem -> Items -> Result ParseErr Items
 mergeNewCharIntoOkItems pos chItem items =
     case chItem of
         BlockChar charBlock ->
@@ -64,7 +64,7 @@ mergeNewCharIntoOkItems pos chItem items =
 
 mergeNewCharIntoItems :
     Pos ->
-    SingleCharItems ->
+    CharItem ->
     Result ParseErr Items ->
     Result ParseErr Items
 mergeNewCharIntoItems pos chItem items =
@@ -85,9 +85,9 @@ mergeNewCharIntoItems pos chItem items =
 
 
 --integrateChar :
---    SingleCharItems ->
---    List SingleCharItems->
---    List (List SingleCharItems) ->
+--    CharItem ->
+--    List CharItem->
+--    List (List CharItem) ->
 --    List StarLine ->
 --    List (List Items)
 --integrateChar hc tc t starLines =
@@ -104,8 +104,8 @@ mergeNewCharIntoItems pos chItem items =
 --
 --
 --integrateLine :
---    List SingleCharItems ->
---    List (List SingleCharItems) ->
+--    List CharItem ->
+--    List (List CharItem) ->
 --    List StarLine ->
 --    List (List Items)
 --integrateLine h t starLines =
@@ -115,7 +115,7 @@ mergeNewCharIntoItems pos chItem items =
 --
 --
 --integrateLines :
---    List (List SingleCharItems) ->
+--    List (List CharItem) ->
 --    List StarLine ->
 --    List (List Items)
 --integrateLines grid starLines =
@@ -125,7 +125,7 @@ mergeNewCharIntoItems pos chItem items =
 --
 --
 --integrateStarLines :
---    Result String (List (List SingleCharItems)) ->
+--    Result String (List (List CharItem)) ->
 --    Result (List StarLine) ->
 --    List (List Items)
 --integrateStarLines grid starLines =
@@ -136,7 +136,7 @@ mergeNewCharIntoItems pos chItem items =
 --        (Err s, Err t) -> Err (s ++ "\n" ++ t)
 
 
-singleCharItemsToItems : SingleCharItems -> Items
+singleCharItemsToItems : CharItem -> Items
 singleCharItemsToItems ch =
     case ch of
         BlockChar b -> { block = b, rabbits = [] }
@@ -209,7 +209,7 @@ parseStarLines lines =
     resultCombine (List.map parseStarLine lines)
 
 
-parseGridLines : List String -> Result String (List (List SingleCharItems))
+parseGridLines : List String -> Result String (List (List CharItem))
 parseGridLines lines =
     resultCombine (List.indexedMap parseGridLine lines)
 
@@ -222,7 +222,7 @@ parseStarLine line =
         Err "Star line did not start with ':*='."
 
 
-parseGridLine : Int -> String -> Result String (List SingleCharItems)
+parseGridLine : Int -> String -> Result String (List CharItem)
 parseGridLine y line =
     resultCombine (List.indexedMap (toItems y) (String.toList line))
 

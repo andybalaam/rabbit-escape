@@ -4,7 +4,7 @@ import Test exposing (describe,test,Test)
 import Expect
 
 
-import Item2Text exposing (SingleCharItems(..))
+import Item2Text exposing (CharItem(..))
 import Rabbit exposing (Direction(..), makeRabbit)
 import World exposing
     ( World

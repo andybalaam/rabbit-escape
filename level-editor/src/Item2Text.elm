@@ -1,4 +1,4 @@
-module Item2Text exposing (SingleCharItems(..), StarLine(..), toText, toItems)
+module Item2Text exposing (CharItem(..), StarLine(..), toText, toItems)
 
 
 import Dict
@@ -43,7 +43,7 @@ b2t =
     EveryDict.fromList (List.map swap t2bList)
 
 
-type SingleCharItems =
+type CharItem =
       StarChar
     | BlockChar Block
     | RabbitChar Rabbit
@@ -71,7 +71,7 @@ addRabbitCoords y x rabbit =
     { rabbit | x = x, y = y }
 
 
-toItems : Int -> Int -> Char -> Result String SingleCharItems
+toItems : Int -> Int -> Char -> Result String CharItem
 toItems y x c =
     if c == '*' then
         Ok StarChar
