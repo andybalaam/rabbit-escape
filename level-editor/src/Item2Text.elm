@@ -1,4 +1,4 @@
-module Item2Text exposing (Items, StarLine(..), toText, toItems)
+module Item2Text exposing (SingleCharItems(..), StarLine(..), toText, toItems)
 
 
 import Dict
@@ -43,10 +43,11 @@ b2t =
     EveryDict.fromList (List.map swap t2bList)
 
 
-type alias Items =
-    { block : Block
-    , rabbits : List Rabbit
-    }
+type SingleCharItems =
+      StarChar
+    | BlockChar Block
+    | RabbitChar Rabbit
+
 
 t2rList : List (Char, Rabbit)
 t2rList =
@@ -70,20 +71,17 @@ addRabbitCoords y x rabbit =
     { rabbit | x = x, y = y }
 
 
-addCoords : Int -> Int -> List Rabbit -> List Rabbit
-addCoords y x rabbits =
-    List.map (addRabbitCoords y x) rabbits
-
-
-toItems : Int -> Int -> Char -> Result String Items
+toItems : Int -> Int -> Char -> Result String SingleCharItems
 toItems y x c =
-    case Dict.get c t2b of
+    if c == '*' then
+        Ok StarChar
+    else case Dict.get c t2b of
         Just block ->
-            Ok {block = block, rabbits = []}
+            Ok (BlockChar block)
         Nothing ->
             case Dict.get c t2r of
                 Just rabbit ->
-                    Ok {block = NoBlock, rabbits = addCoords y x [rabbit]}
+                    Ok (RabbitChar (addRabbitCoords y x rabbit))
                 Nothing      ->
                     Err
                         (  "Unrecognised character '"
