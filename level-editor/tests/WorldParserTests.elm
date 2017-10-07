@@ -21,6 +21,8 @@ import WorldParser exposing
     , mergeNewCharIntoItems
     , parse
     , parseErrToString
+    , makeStarLine
+    , starLineToItems
     , toItems
     )
 
@@ -33,6 +35,7 @@ all =
         , test "Combining no items makes a good empty list" combiningNone
         , toItemsCases
         , mergeNewCharIntoItemsCases
+        , starLineToItemsCases
         , test "Parse empty world" parseEmptyWorld
         , test "Parse world with blocks" parseWorldWithBlocks
         , test "Parse world with rabbits" parseWorldWithRabbits
@@ -178,6 +181,55 @@ mergeNewCharIntoItemsCases =
             , t "Star in starline is an error"
                 ( mrg staCh emptyItems )
                 ( Err ( StarInsideStarPoint staPos ) )
+            ]
+
+
+starLineToItemsCases : Test
+starLineToItemsCases =
+    let
+        pos56 = { row = 6, col = 5 }
+        rabl36 = makeRabbit 3 6 Left
+        rabr45 = makeRabbit 4 5 Right
+        rabr46 = makeRabbit 4 6 Right
+        makeStarLineOk line =
+            case makeStarLine line of
+                Ok s -> s
+                default -> Debug.crash "Starline failed to parse"
+        t desc inp row exp =
+            test
+                desc
+                ( \() ->
+                    Expect.equal
+                        ( starLineToItems
+                            ( makeStarLineOk { row = row, content = inp } )
+                        )
+                        exp
+                )
+    in
+        describe "starLineToItems"
+            [ t "Single block"
+                ":*=#" 3
+                (Ok {block=fltErth, rabbits=[]})
+
+            , t "Block and rabbit"
+                ":*=/r" 5
+                (Ok {block=uprErth, rabbits=[rabr45]})
+
+            , t "Rabbits"
+                ":*=jr" 6
+                (Ok {block=NoBlock, rabbits=[rabl36, rabr46]})
+
+            , t "Rabbits and block"
+                ":*=jr#" 6
+                (Ok {block=fltErth, rabbits=[rabl36, rabr46]})
+
+            , t "Unknown char"
+                ":*=jr>#" 6
+                (Err (UnrecognisedChar pos56 '>'))
+
+            , t "Star in star"
+                ":*=jr*#" 6
+                (Err (StarInsideStarPoint pos56))
             ]
 
 

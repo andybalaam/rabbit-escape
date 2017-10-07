@@ -1,7 +1,7 @@
 module Item2Text exposing
     ( CharItem(..)
     , Pos
-    , StarLine(..)
+    , StarContent(..)
     , toText
     , charToBlock
     , charToRabbit
@@ -20,7 +20,8 @@ import World exposing
     )
 
 
-type StarLine = StarLine String
+type StarContent =
+    StarContent String
 
 
 swap : (a, b) -> (b, a)
@@ -121,7 +122,7 @@ blockToChars block =
         Nothing -> Debug.crash ("Unknown block!" ++ (toString block))
 
 
-toText : Block -> List Rabbit -> (Char, Maybe StarLine)
+toText : Block -> List Rabbit -> (Char, Maybe StarContent)
 toText block rabbits =
     let
         chars = blockToChars block ++ rabbitsToChars rabbits
@@ -129,4 +130,4 @@ toText block rabbits =
         case chars of
             [] -> (' ', Nothing)
             [c] -> (c, Nothing)
-            default -> ('*', Just (StarLine (String.fromList chars)))
+            default -> ('*', Just (StarContent (String.fromList chars)))

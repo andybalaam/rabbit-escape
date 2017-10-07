@@ -5,6 +5,8 @@ module WorldParser exposing
     , mergeNewCharIntoItems
     , parse
     , parseErrToString
+    , makeStarLine
+    , starLineToItems
     , toItems
     )
 
@@ -24,7 +26,6 @@ import World exposing (
 import Item2Text exposing
     ( CharItem(..)
     , Pos
-    , StarLine(..)
     , charToBlock
     , charToRabbit
     , toText
@@ -41,6 +42,22 @@ type ParseErr =
       TwoBlocksInOneStarPoint Pos Char Char
     | StarInsideStarPoint Pos
     | UnrecognisedChar Pos Char
+    | StarLineDidNotStartWithColonStarEquals Pos String
+
+
+type alias Line =
+    { row : Int, content : String }
+
+
+type alias StarLine =
+    { row : Int
+    , chars : List Char
+    }
+
+
+makeLine : Int -> String -> Line
+makeLine row content =
+    { row = row, content = content }
 
 
 posToString : Pos -> String
@@ -73,6 +90,12 @@ parseErrToString e =
             ++ "Unrecognised character: '"
             ++ (toString ch)
             ++ "'."
+            )
+        StarLineDidNotStartWithColonStarEquals pos line ->
+            ( posToString pos
+            ++ "Star line '"
+            ++ line
+            ++ "' did not start with ':+='.  This should never happen."
             )
 
 
@@ -134,15 +157,17 @@ mergeNewCharIntoItems chItem items =
         e -> e
 
 
---integrateStarLine : StarLine -> Result ParseErr Items
---integrateStarLine (StarLine chars) =
---    let
---        noItems = { block = NoBlock, rabbits = [] }
---        itemsList = resultCombine (List.map (toItems 0 0) (String.toList chars))
---    in
---        case itemsList of
---            Ok items -> List.foldl mergeNewCharIntoItems noItems items
---            Err s -> { block = NoBlock, rabbits = [] } -- TODO: handle this error
+starLineToItems : StarLine -> Result ParseErr Items
+starLineToItems starLine =
+    let
+        noItems = Ok { block = NoBlock, rabbits = [] }
+        -- Items start at column 4, after ":*="
+        toItemsAt col = toItems starLine.row (3 + col)
+        itemsList = resultCombine (List.indexedMap toItemsAt starLine.chars)
+    in
+        case itemsList of
+            Ok items -> List.foldl mergeNewCharIntoItems noItems items
+            Err e -> Err e
 
 
 --integrateChar :
@@ -214,7 +239,7 @@ parse comment textWorld =
         (grLines, stLines) = separateLineTypes allLines
         -- TODO: error on unrecognised line
         charItems = parseGridLines grLines
-        starLines = parseStarLines stLines
+        starLines = makeStarLines stLines
         items = Result.map (List.map (List.map singleCharItemsToItems)) charItems
 --        items = integrateStarLines grLines stLines
 
@@ -249,46 +274,51 @@ split s =
     removeLastIfEmpty (String.lines s)
 
 
-isStarLine : String -> Bool
+isStarLine : Line -> Bool
 isStarLine line =
-    String.left 3 line == ":*="
+    String.left 3 line.content == ":*="
 
 
-notStarLine : String -> Bool
+notStarLine : Line -> Bool
 notStarLine line =
     not (isStarLine line)
 
 
-separateLineTypes : List String -> (List String, List String)
+separateLineTypes : List String -> (List Line, List Line)
 separateLineTypes lines =
     let
-        grLines = List.filter notStarLine lines
-        stLines = List.filter isStarLine lines
+        numLines = List.indexedMap makeLine lines
+        grLines = List.filter notStarLine numLines
+        stLines = List.filter isStarLine numLines
     in
         (grLines, stLines)
 
 
-parseStarLines : List String -> Result String (List StarLine)
-parseStarLines lines =
-    resultCombine (List.map parseStarLine lines)
+makeStarLines : List Line -> Result ParseErr (List StarLine)
+makeStarLines lines =
+    resultCombine (List.map makeStarLine lines)
 
 
-parseGridLines : List String -> Result ParseErr (List (List CharItem))
+parseGridLines : List Line -> Result ParseErr (List (List CharItem))
 parseGridLines lines =
-    resultCombine (List.indexedMap parseGridLine lines)
+    resultCombine (List.map parseGridLine lines)
 
 
-parseStarLine : String -> Result String StarLine
-parseStarLine line =
-    if (String.left 3 line) == ":*=" then
-        Ok (StarLine (String.dropLeft 3 line))
+makeStarLine : Line -> Result ParseErr StarLine
+makeStarLine line =
+    if (String.left 3 line.content) == ":*=" then
+        Ok (StarLine line.row (String.toList (String.dropLeft 3 line.content)))
     else
-        Err "Star line did not start with ':*='."
+        Err ( StarLineDidNotStartWithColonStarEquals
+                { row = line.row, col = 0 }
+                line.content
+            )
 
 
-parseGridLine : Int -> String -> Result ParseErr (List CharItem)
-parseGridLine y line =
-    resultCombine (List.indexedMap (toItems y) (String.toList line))
+parseGridLine : Line -> Result ParseErr (List CharItem)
+parseGridLine line =
+    resultCombine
+        (List.indexedMap (toItems line.row) (String.toList line.content))
 
 
 {- From https://github.com/circuithub/elm-result-extra -}

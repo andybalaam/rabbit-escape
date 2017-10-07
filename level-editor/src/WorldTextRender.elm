@@ -1,14 +1,14 @@
 module WorldTextRender exposing (render)
 
 
-import Item2Text exposing (StarLine(..), toText)
+import Item2Text exposing (StarContent(..), toText)
 import World exposing (Block, Grid(..), World, blocks, rabbitsAt)
 
 
-renderStarLine : StarLine -> String
-renderStarLine starLine =
-    case starLine of
-        StarLine x -> ":*=" ++ x
+renderStarLine : StarContent -> String
+renderStarLine starContent =
+    case starContent of
+        StarContent x -> ":*=" ++ x
 
 
 render : World -> String
@@ -24,7 +24,7 @@ render world =
             )
 
 
-toText2 : World -> Int -> Int -> Block -> (Char, Maybe StarLine)
+toText2 : World -> Int -> Int -> Block -> (Char, Maybe StarContent)
 toText2 world y x block =
     toText block (rabbitsAt world x y)
 
@@ -37,7 +37,7 @@ catMaybes maybes =
         [] -> []
 
 
-renderLine : World -> Int -> List Block -> (String, List StarLine)
+renderLine : World -> Int -> List Block -> (String, List StarContent)
 renderLine world y blocks =
     let
         items = List.indexedMap (toText2 world y) blocks
