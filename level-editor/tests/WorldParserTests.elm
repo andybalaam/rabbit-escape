@@ -21,6 +21,7 @@ import WorldParser exposing
     , mergeNewCharIntoItems
     , parse
     , parseErrToString
+    , toItems
     )
 
 
@@ -30,6 +31,7 @@ all =
         [ test "Combining good items make a good list" combiningGood
         , test "Combining a bad items makes a bad result" combiningBad
         , test "Combining no items makes a good empty list" combiningNone
+        , toItemsCases
         , mergeNewCharIntoItemsCases
         , test "Parse empty world" parseEmptyWorld
         , test "Parse world with blocks" parseWorldWithBlocks
@@ -57,6 +59,11 @@ parseLines comment strings =
 fltErth : Block
 fltErth =
     Block Earth Flat
+
+
+uprErth : Block
+uprErth =
+    Block Earth UpRight
 
 
 fltMetl : Block
@@ -95,6 +102,32 @@ combiningNone =
 
 emptyItems : Items
 emptyItems = { block = NoBlock, rabbits = [] }
+
+
+toItemsCases : Test
+toItemsCases =
+    let
+        pos14 = { row = 4, col = 1 }
+        pos36 = { row = 6, col = 3 }
+        rabr14 = makeRabbit 1 4 Right
+        rabl36 = makeRabbit 3 6 Left
+        t desc pos char exp =
+            test
+                desc
+                ( \() ->
+                    Expect.equal
+                        ( toItems pos.row pos.col char )
+                        ( exp )
+                )
+    in
+        describe "toItems"
+            [ t "Sloping block" pos14 '/' ( Ok (BlockChar pos14 uprErth ) )
+            , t "Flat metal"    pos36 'M' ( Ok (BlockChar pos36 fltMetl ) )
+            , t "Right rabbit"  pos14 'r' ( Ok (RabbitChar pos14 rabr14 ) )
+            , t "Left rabbit"   pos36 'j' ( Ok (RabbitChar pos36 rabl36 ) )
+            , t "Star"          pos14 '*' ( Ok ( StarChar pos14 ) )
+            , t "Unknown" pos14 '>' ( Err ( UnrecognisedChar pos14 '>' ) )
+            ]
 
 
 mergeNewCharIntoItemsCases : Test

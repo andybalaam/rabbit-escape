@@ -5,6 +5,7 @@ module WorldParser exposing
     , mergeNewCharIntoItems
     , parse
     , parseErrToString
+    , toItems
     )
 
 
@@ -133,14 +134,14 @@ mergeNewCharIntoItems chItem items =
         e -> e
 
 
---integrateStarLine : StarLine -> Items
+--integrateStarLine : StarLine -> Result ParseErr Items
 --integrateStarLine (StarLine chars) =
 --    let
 --        noItems = { block = NoBlock, rabbits = [] }
 --        itemsList = resultCombine (List.map (toItems 0 0) (String.toList chars))
 --    in
 --        case itemsList of
---            Ok okItems -> List.foldl combineItems noItems okItems
+--            Ok items -> List.foldl mergeNewCharIntoItems noItems items
 --            Err s -> { block = NoBlock, rabbits = [] } -- TODO: handle this error
 
 
