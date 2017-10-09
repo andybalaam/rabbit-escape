@@ -1,13 +1,15 @@
 module WorldParser exposing
     ( Items
     , ParseErr(..)
+    , StarLine
+    , integrateSquare
     , resultCombine
     , mergeNewCharIntoItems
     , parse
     , parseErrToString
     , makeStarLine
     , starLineToItems
-    , toItems
+    , toCharItem
     )
 
 
@@ -43,6 +45,7 @@ type ParseErr =
     | StarInsideStarPoint Pos
     | UnrecognisedChar Pos Char
     | StarLineDidNotStartWithColonStarEquals Pos String
+    | NotEnoughStarLines Pos
 
 
 type alias Line =
@@ -97,6 +100,10 @@ parseErrToString e =
             ++ line
             ++ "' did not start with ':+='.  This should never happen."
             )
+        NotEnoughStarLines pos ->
+            ( posToString pos
+            ++ "More stars (*) in level description than star lines (:*=)."
+            )
 
 
 blockToText : Block -> Char
@@ -109,22 +116,29 @@ addRabbitCoords pos rabbit =
     { rabbit | x = pos.col, y = pos.row }
 
 
-toItems : Int -> Int -> Char -> Result ParseErr CharItem
-toItems y x c =
+toCharItem : Maybe Pos -> Int -> Int -> Char -> Result ParseErr CharItem
+toCharItem gridPos y x c =
     let
-        pos = { row = y, col = x }
+        literalPos = { row = y, col = x }
+        pos = case gridPos of
+            Just p -> p
+            Nothing -> literalPos
     in
         if c == '*' then
-            Ok (StarChar pos)
+            Ok (StarChar literalPos)
         else case charToBlock c of
             Just block ->
-                Ok (BlockChar pos block)
+                Ok (BlockChar literalPos block)
             Nothing ->
                 case charToRabbit c of
                     Just rabbit ->
-                        Ok (RabbitChar pos (addRabbitCoords pos rabbit))
+                        Ok
+                            (RabbitChar
+                                literalPos
+                                (addRabbitCoords pos rabbit)
+                            )
                     Nothing ->
-                        Err ( UnrecognisedChar pos c )
+                        Err ( UnrecognisedChar literalPos c )
 
 
 mergeNewCharIntoOkItems : CharItem -> Items -> Result ParseErr Items
@@ -157,38 +171,44 @@ mergeNewCharIntoItems chItem items =
         e -> e
 
 
-starLineToItems : StarLine -> Result ParseErr Items
-starLineToItems starLine =
+starLineToItems : StarLine -> Pos -> Result ParseErr Items
+starLineToItems starLine gridPos =
     let
         noItems = Ok { block = NoBlock, rabbits = [] }
         -- Items start at column 4, after ":*="
-        toItemsAt col = toItems starLine.row (3 + col)
-        itemsList = resultCombine (List.indexedMap toItemsAt starLine.chars)
+        toCharItemAt col = toCharItem (Just gridPos) starLine.row (3 + col)
+        itemsList = resultCombine (List.indexedMap toCharItemAt starLine.chars)
     in
         case itemsList of
             Ok items -> List.foldl mergeNewCharIntoItems noItems items
             Err e -> Err e
 
 
---integrateChar :
---    CharItem ->
---    List CharItem->
---    List (List CharItem) ->
---    List StarLine ->
---    List (List Items)
---integrateChar hc tc t starLines =
---    case hc of
---        StarChar ->
---            case starLines of
---                [] -> Err "Not enough star lines!"
---                hs :: ts ->
---                    (integrateStarLine hs) :: integrateLine tc t ts
---        BlockChar b ->
---            { block = b, rabbits = [] }
---        RabbitChar r ->
---            { block = NoBlock, rabbits = [r] }
---
---
+integrateSquare :
+    CharItem ->
+    List StarLine ->
+    Result ParseErr (Items, List StarLine)
+integrateSquare ch starLines =
+    case ch of
+        StarChar pos ->
+            case starLines of
+                starLine :: tail ->
+                    case starLineToItems starLine pos of
+                        Ok items -> Ok (items, tail)
+                        Err e -> Err e
+                [] -> Err (NotEnoughStarLines pos)
+        BlockChar _ b ->
+            Ok
+                ( { block = b, rabbits = [] }
+                , starLines
+                )
+        RabbitChar pos r ->
+            Ok
+                ( { block = NoBlock, rabbits = [(addRabbitCoords pos r)] }
+                , starLines
+                )
+
+
 --integrateLine :
 --    List CharItem ->
 --    List (List CharItem) ->
@@ -318,7 +338,10 @@ makeStarLine line =
 parseGridLine : Line -> Result ParseErr (List CharItem)
 parseGridLine line =
     resultCombine
-        (List.indexedMap (toItems line.row) (String.toList line.content))
+        (List.indexedMap
+            (toCharItem Nothing line.row)
+            (String.toList line.content)
+        )
 
 
 {- From https://github.com/circuithub/elm-result-extra -}

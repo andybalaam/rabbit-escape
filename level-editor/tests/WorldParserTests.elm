@@ -17,13 +17,15 @@ import World exposing
 import WorldParser exposing
     ( Items
     , ParseErr(..)
+    , StarLine
+    , integrateSquare
     , resultCombine
     , mergeNewCharIntoItems
     , parse
     , parseErrToString
     , makeStarLine
     , starLineToItems
-    , toItems
+    , toCharItem
     )
 
 
@@ -33,7 +35,7 @@ all =
         [ test "Combining good items make a good list" combiningGood
         , test "Combining a bad items makes a bad result" combiningBad
         , test "Combining no items makes a good empty list" combiningNone
-        , toItemsCases
+        , toCharItemCases
         , mergeNewCharIntoItemsCases
         , starLineToItemsCases
         , test "Parse empty world" parseEmptyWorld
@@ -107,29 +109,33 @@ emptyItems : Items
 emptyItems = { block = NoBlock, rabbits = [] }
 
 
-toItemsCases : Test
-toItemsCases =
+toCharItemCases : Test
+toCharItemCases =
     let
         pos14 = { row = 4, col = 1 }
         pos36 = { row = 6, col = 3 }
         rabr14 = makeRabbit 1 4 Right
         rabl36 = makeRabbit 3 6 Left
-        t desc pos char exp =
+        n = Nothing
+        t desc gridPos pos char exp =
             test
                 desc
                 ( \() ->
                     Expect.equal
-                        ( toItems pos.row pos.col char )
+                        ( toCharItem gridPos pos.row pos.col char )
                         ( exp )
                 )
     in
-        describe "toItems"
-            [ t "Sloping block" pos14 '/' ( Ok (BlockChar pos14 uprErth ) )
-            , t "Flat metal"    pos36 'M' ( Ok (BlockChar pos36 fltMetl ) )
-            , t "Right rabbit"  pos14 'r' ( Ok (RabbitChar pos14 rabr14 ) )
-            , t "Left rabbit"   pos36 'j' ( Ok (RabbitChar pos36 rabl36 ) )
-            , t "Star"          pos14 '*' ( Ok ( StarChar pos14 ) )
-            , t "Unknown" pos14 '>' ( Err ( UnrecognisedChar pos14 '>' ) )
+        describe "toCharItem"
+            [ t "Sloping block" n pos14 '/' ( Ok (BlockChar pos14 uprErth ) )
+            , t "Flat metal"    n pos36 'M' ( Ok (BlockChar pos36 fltMetl ) )
+            , t "Right rabbit"  n pos14 'r' ( Ok (RabbitChar pos14 rabr14 ) )
+            , t "Left rabbit"   n pos36 'j' ( Ok (RabbitChar pos36 rabl36 ) )
+            , t "Star"          n pos14 '*' ( Ok ( StarChar pos14 ) )
+            , t "Unknown" n pos14 '>' ( Err ( UnrecognisedChar pos14 '>' ) )
+
+            , t "Rabbit at a different position"
+               (Just pos36) pos14 'j' ( Ok (RabbitChar pos14 rabl36 ) )
             ]
 
 
@@ -188,49 +194,90 @@ starLineToItemsCases : Test
 starLineToItemsCases =
     let
         pos56 = { row = 6, col = 5 }
+        pos59 = { row = 9, col = 5 }
+        pos69 = { row = 9, col = 6 }
         rabl36 = makeRabbit 3 6 Left
         rabr45 = makeRabbit 4 5 Right
         rabr46 = makeRabbit 4 6 Right
+        rabl56 = makeRabbit 5 6 Left
+        rabr56 = makeRabbit 5 6 Right
         makeStarLineOk line =
             case makeStarLine line of
                 Ok s -> s
                 default -> Debug.crash "Starline failed to parse"
-        t desc inp row exp =
+        t desc inp row pos exp =
             test
                 desc
                 ( \() ->
                     Expect.equal
                         ( starLineToItems
                             ( makeStarLineOk { row = row, content = inp } )
+                            pos
                         )
                         exp
                 )
     in
         describe "starLineToItems"
             [ t "Single block"
-                ":*=#" 3
+                ":*=#" 9 pos56
                 (Ok {block=fltErth, rabbits=[]})
 
             , t "Block and rabbit"
-                ":*=/r" 5
-                (Ok {block=uprErth, rabbits=[rabr45]})
+                ":*=/r" 9 pos56
+                (Ok {block=uprErth, rabbits=[rabr56]})
 
             , t "Rabbits"
-                ":*=jr" 6
-                (Ok {block=NoBlock, rabbits=[rabl36, rabr46]})
+                ":*=jr" 9 pos56
+                (Ok {block=NoBlock, rabbits=[rabl56, rabr56]})
 
             , t "Rabbits and block"
-                ":*=jr#" 6
-                (Ok {block=fltErth, rabbits=[rabl36, rabr46]})
+                ":*=jr#" 9 pos56
+                (Ok {block=fltErth, rabbits=[rabl56, rabr56]})
 
             , t "Unknown char"
-                ":*=jr>#" 6
-                (Err (UnrecognisedChar pos56 '>'))
+                ":*=jr#>" 9 pos56
+                (Err (UnrecognisedChar pos69 '>'))
 
             , t "Star in star"
-                ":*=jr*#" 6
-                (Err (StarInsideStarPoint pos56))
+                ":*=jr*#" 9 pos56
+                (Err (StarInsideStarPoint pos59))
             ]
+
+
+integrateSquareCases : Test
+integrateSquareCases =
+    let
+        pos11 = { row =  1, col = 1 }
+        pos25 = { row =  5, col = 2 }
+        pos88 = { row =  8, col = 8 }
+        pos34 = { row =  4, col = 3 }
+        pos39 = { row =  9, col = 3 }
+        pos3a = { row = 10, col = 3 }
+        blcErth11 = BlockChar pos11 fltErth
+        rab25 = (makeRabbit 2 5 Right)
+        rab34 = (makeRabbit 3 4 Right)
+        rabCh25 = RabbitChar pos25 rab25
+        star34 = StarChar pos34
+        remainingStarLines =
+            [ StarLine 9 (String.toList "rrj")
+            ]
+        starLines = StarLine 8 (String.toList "/r") :: remainingStarLines
+        t desc act exp = test desc (\() -> Expect.equal act exp)
+    in
+        describe "integrateSquare"
+            [ t "Block is left alone"
+                (integrateSquare blcErth11 starLines)
+                (Ok ({block=fltErth, rabbits=[]}, starLines))
+
+            , t "Rabbit is left alone"
+                (integrateSquare rabCh25 starLines)
+                (Ok ({block=NoBlock, rabbits=[rab25]}, starLines))
+
+            , t "Star integrates first starpoint"
+                (integrateSquare star34 starLines)
+                (Ok ({block = uprErth, rabbits=[rab34]}, remainingStarLines))
+            ]
+
 
 
 -- Parse --
