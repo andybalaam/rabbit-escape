@@ -4,6 +4,7 @@ module WorldParser exposing
     , StarLine
     , integrateSquare
     , integrateLine
+    , integrateLines
     , resultCombine
     , mergeNewCharIntoItems
     , parse
@@ -226,16 +227,24 @@ integrateLine charItems starLines =
         default -> Ok ([], starLines)
 
 
---integrateLines :
---    List (List CharItem) ->
---    List StarLine ->
---    List (List Items)
---integrateLines grid starLines =
---    case grid of
---        [] -> []
---        h :: t -> integrateLine h t starLines
---
---
+integrateLines :
+    List (List CharItem) ->
+    List StarLine ->
+    Result ParseErr (List (List Items), List StarLine)
+integrateLines grid starLines =
+    case grid of
+        line :: otherLines ->
+            case integrateLine line starLines of
+                Err e -> Err e
+                Ok (newLine, newStarLines) ->
+                    case integrateLines otherLines newStarLines of
+                        Err e ->
+                            Err e
+                        Ok (newOtherLines, sl) ->
+                            Ok (newLine :: newOtherLines, sl)
+        default -> Ok ([], starLines)
+
+
 --integrateStarLines :
 --    Result String (List (List CharItem)) ->
 --    Result (List StarLine) ->

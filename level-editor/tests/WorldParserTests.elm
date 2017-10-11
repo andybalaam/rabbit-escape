@@ -20,6 +20,7 @@ import WorldParser exposing
     , StarLine
     , integrateSquare
     , integrateLine
+    , integrateLines
     , resultCombine
     , mergeNewCharIntoItems
     , parse
@@ -41,6 +42,7 @@ all =
         , starLineToItemsCases
         , integrateSquareCases
         , integrateLineCases
+        , integrateLinesCases
         , test "Parse empty world" parseEmptyWorld
         , test "Parse world with blocks" parseWorldWithBlocks
         , test "Parse world with rabbits" parseWorldWithRabbits
@@ -353,6 +355,76 @@ integrateLineCases =
                 )
                 ( Err
                     ( TwoBlocksInOneStarPoint { row = 10, col = 4 } 'M' 'M' )
+                )
+            ]
+
+
+integrateLinesCases : Test
+integrateLinesCases =
+    let
+        chErth = BlockChar pos11 fltErth
+        pos10 = { row = 0, col = 1 }
+        rabl10 = makeRabbit 1 0 Left
+        chRabb10 = RabbitChar pos10 rabl10
+        pos01 = { row = 1, col = 0 }
+        rabr01 = makeRabbit 0 1 Right
+        rabl01 = makeRabbit 0 1 Left
+        pos11 = { row = 1, col = 1 }
+        rabl11 = makeRabbit 1 1 Left
+        pos12 = { row = 2, col = 1 }
+        rabr12 = makeRabbit 1 2 Right
+        chRabb12 = RabbitChar pos12 rabr12
+        pos21 = { row = 1, col = 2 }
+        rabr21 = makeRabbit 2 1 Right
+        rabl21 = makeRabbit 2 1 Left
+        pos02 = { row = 2, col = 0 }
+        rabl02 = makeRabbit 0 2 Left
+        rabr02 = makeRabbit 0 2 Right
+        starLine1 = StarLine 10 (String.toList "rrj")
+        starLine2 = StarLine 11 (String.toList "Mj")
+        starLine3 = StarLine 12 (String.toList "#rj")
+        starLine4 = StarLine 13 (String.toList "#rj")
+        starLine5 = StarLine 14 (String.toList "#rj")
+        starLines = [starLine1, starLine2, starLine3, starLine4, starLine5]
+        t desc act exp = test desc (\() -> Expect.equal act exp)
+    in
+        describe "integrateLines"
+            [ t "Multiple lines"
+                (integrateLines
+                    [ [chErth, chRabb10, chErth]
+                    , [StarChar pos01, StarChar pos11, StarChar pos21]
+                    , [StarChar pos02, chRabb12, chErth]
+                    ]
+                    starLines
+                )
+                ( Ok
+                    (
+                        [ [ { block=fltErth, rabbits=[] }
+                          , { block=NoBlock, rabbits=[rabl10] }
+                          , { block=fltErth, rabbits=[] }
+                          ]
+                        , [ { block=NoBlock, rabbits=[rabr01, rabr01, rabl01] }
+                          , { block=fltMetl, rabbits=[rabl11] }
+                          , { block=fltErth, rabbits=[rabr21, rabl21] }
+                          ]
+                        , [ { block=fltErth, rabbits=[rabr02, rabl02] }
+                          , { block=NoBlock, rabbits=[rabr12] }
+                          , { block=fltErth, rabbits=[] }
+                          ]
+                        ]
+                    , [starLine5]
+                    )
+                )
+
+            , t "Bad star produces an error"
+                (integrateLines
+                    [ [chErth, chRabb10, chErth]
+                    , [StarChar pos01, chErth, chErth]
+                    ]
+                    [StarLine 10 (String.toList "Mr*")] -- star in star
+                )
+                ( Err
+                    ( StarInsideStarPoint { row = 10, col = 5 } )
                 )
             ]
 
