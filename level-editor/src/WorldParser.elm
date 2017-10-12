@@ -48,6 +48,7 @@ type ParseErr =
     | UnrecognisedChar Pos Char
     | StarLineDidNotStartWithColonStarEquals Pos String
     | NotEnoughStarLines Pos
+    | TooManyStarLines Pos
 
 
 type alias Line =
@@ -105,6 +106,10 @@ parseErrToString e =
         NotEnoughStarLines pos ->
             ( posToString pos
             ++ "More stars (*) in level description than star lines (:*=)."
+            )
+        TooManyStarLines pos ->
+            ( posToString pos
+            ++ "Too many star lines (:*=) - not enough stars (*) in grid."
             )
 
 
@@ -245,41 +250,50 @@ integrateLines grid starLines =
         default -> Ok ([], starLines)
 
 
---integrateStarLines :
---    Result String (List (List CharItem)) ->
---    Result (List StarLine) ->
---    List (List Items)
---integrateStarLines grid starLines =
---    case (grid, starLines) of
---        (Ok g, Ok s) -> integrateLines g s
---        (Err s, Ok _) -> Err s
---        (Ok _, Err s) -> Err s
---        (Err s, Err t) -> Err (s ++ "\n" ++ t)
-
-
-singleCharItemsToItems : CharItem -> Items
-singleCharItemsToItems ch =
-    case ch of
-        BlockChar pos b -> { block = b, rabbits = [] }
-        RabbitChar pos r -> { block = NoBlock, rabbits = [r] }
-        StarChar pos -> { block = NoBlock, rabbits = [] }
-        -- TODO: I think this method will go away - if not, the StarChar
-        -- line above is wrong
+integrateStarLines :
+    Result ParseErr (List (List CharItem)) ->
+    Result ParseErr (List StarLine) ->
+    Result ParseErr (List (List Items))
+integrateStarLines charItems starLines =
+    case charItems of
+        Err e -> Err e
+        Ok items ->
+            case starLines of
+                Err e -> Err e
+                Ok stars ->
+                    case integrateLines items stars of
+                        Err e ->
+                            Err e
+                        Ok (items, []) ->  -- No extra star lines - all good
+                            Ok items
+                        Ok (_, extraStar :: _) ->
+                            Err
+                                ( TooManyStarLines
+                                    { row = extraStar.row, col = 0 }
+                                )
 
 
 parse : String -> String -> Result ParseErr World
 parse comment textWorld =
     let
+        allLines : List String
         allLines = split textWorld
+
+        -- (grLines, stLines) : (List Line, List Line)
         (grLines, stLines) = separateLineTypes allLines
         -- TODO: error on unrecognised line
+
+        charItems : Result ParseErr (List (List CharItem))
         charItems = parseGridLines grLines
+
+        starLines : Result ParseErr (List StarLine)
         starLines = makeStarLines stLines
-        items = Result.map (List.map (List.map singleCharItemsToItems)) charItems
---        items = integrateStarLines grLines stLines
+
+        items : Result ParseErr (List (List Items))
+        items = integrateStarLines charItems starLines
 
         grid =
-            items                                       -- List (List Items)
+              items
             |> Result.map (List.map (List.map .block))  -- List (List Block)
             |> Result.map makeBlockGrid                 -- Grid
 

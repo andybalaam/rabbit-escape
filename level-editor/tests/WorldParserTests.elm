@@ -46,7 +46,9 @@ all =
         , test "Parse empty world" parseEmptyWorld
         , test "Parse world with blocks" parseWorldWithBlocks
         , test "Parse world with rabbits" parseWorldWithRabbits
---        , test "Parse overlapping rabbits" parseOverlappingRabbits
+        , test "Parse overlapping rabbits" parseOverlappingRabbits
+        , test "Parse multiple stars" parseMultipleStars
+        , parseErrorCases
         ]
 
 
@@ -529,3 +531,88 @@ parseOverlappingRabbits =
             , makeRabbit 3 0 Left
             ]
         )
+
+
+parseMultipleStars : () -> Expect.Expectation
+parseMultipleStars =
+    okAndEqual
+        (parseLines
+            "tst"
+            [ "   *"
+            , " **#"
+            , "    "
+            , "####"
+            , ":*=rj"
+            , ":*=#rj"
+            , ":*=/jr"
+            ]
+        )
+        (makeWorld
+            "tst"
+            (makeBlockGrid
+                [ [NoBlock, NoBlock, NoBlock, NoBlock]
+                , [NoBlock, fltErth, uprErth, fltErth]
+                , [NoBlock, NoBlock, NoBlock, NoBlock]
+                , [fltErth, fltErth, fltErth, fltErth]
+                ]
+            )
+            [ makeRabbit 3 0 Right
+            , makeRabbit 3 0 Left
+            , makeRabbit 1 1 Right
+            , makeRabbit 1 1 Left
+            , makeRabbit 2 1 Left
+            , makeRabbit 2 1 Right
+            ]
+        )
+
+
+parseErrorCases : Test
+parseErrorCases =
+    let
+        t desc act exp =
+            test desc ( \() -> Expect.equal (parseLines desc act) (Err exp) )
+    in
+        describe "parse errors"
+            [ t "Invalid character in grid"
+                [ "   >"
+                , "    "
+                ]
+                ( UnrecognisedChar {row=0, col=3} '>' )
+
+            , t "Invalid character in star line"
+                [ "   *"
+                , "    "
+                , ":*=rrrr<"
+                ]
+                ( UnrecognisedChar {row=2, col=7} '<' )
+
+            , t "Not enough star lines"
+                [ "   *"
+                , " *  "
+                , ":*=rrrr"
+                ]
+                ( NotEnoughStarLines {row=1, col=1} )
+
+            , t "Too many star lines"
+                [ "    "
+                , " *  "
+                , ":*=rrrr"
+                , ":*=rrrr"
+                ]
+                ( TooManyStarLines {row=3, col=0} )
+
+            , t "Two blocks in one star point"
+                [ "    "
+                , " *  "
+                , ":*=r#r/"
+                ]
+                ( TwoBlocksInOneStarPoint {row=2, col=6} '#' '/' )
+
+            , t "Star inside a star line"
+                [ "    "
+                , "    "
+                , " *  "
+                , ":*=*"
+                ]
+                ( StarInsideStarPoint {row=3, col=3} )
+            ]
