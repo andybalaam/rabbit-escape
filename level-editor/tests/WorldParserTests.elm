@@ -1,4 +1,13 @@
-module WorldParserTests exposing (all)
+module WorldParserTests exposing
+    ( all
+    , toCharItemCases
+    , mergeNewCharIntoItemsCases
+    , starLineToItemsCases
+    , integrateSquareCases
+    , integrateLineCases
+    , integrateLinesCases
+    , parseErrorCases
+    )
 
 import Test exposing (describe,test,Test)
 import Expect
@@ -37,18 +46,11 @@ all =
         [ test "Combining good items make a good list" combiningGood
         , test "Combining a bad items makes a bad result" combiningBad
         , test "Combining no items makes a good empty list" combiningNone
-        , toCharItemCases
-        , mergeNewCharIntoItemsCases
-        , starLineToItemsCases
-        , integrateSquareCases
-        , integrateLineCases
-        , integrateLinesCases
         , test "Parse empty world" parseEmptyWorld
         , test "Parse world with blocks" parseWorldWithBlocks
         , test "Parse world with rabbits" parseWorldWithRabbits
         , test "Parse overlapping rabbits" parseOverlappingRabbits
         , test "Parse multiple stars" parseMultipleStars
-        , parseErrorCases
         ]
 
 
@@ -183,7 +185,7 @@ mergeNewCharIntoItemsCases =
                 ( mrg rabCh { emptyItems | block = fltMetl } )
                 ( Ok { block = fltMetl, rabbits = [rab] } )
 
-            , t "Rabbit merges into block"
+            , t "Rabbit merges into block + rabbit"
                 ( mrg ra2Ch { block = fltMetl, rabbits = [rab] } )
                 ( Ok { block = fltMetl, rabbits = [rab, ra2] } )
 
@@ -615,4 +617,25 @@ parseErrorCases =
                 , ":*=*"
                 ]
                 ( StarInsideStarPoint {row=3, col=3} )
+
+            , t "Unrecognised colon line"
+                [ "  "
+                , "  "
+                , ":foo=bar"
+                ]
+                ( UnrecognisedChar {row=2, col=0} ':' )
+
+            , t "Line too long"
+                [ "  "
+                , "      "
+                , "  "
+                ]
+                ( LineWrongLength {row=1, col=2} 2 6 )
+
+            , t "Line too short"
+                [ "  "
+                , " "
+                , "  "
+                ]
+                ( LineWrongLength {row=1, col=0} 2 1 )
             ]

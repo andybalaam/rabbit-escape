@@ -49,6 +49,7 @@ type ParseErr =
     | StarLineDidNotStartWithColonStarEquals Pos String
     | NotEnoughStarLines Pos
     | TooManyStarLines Pos
+    | LineWrongLength Pos Int Int
 
 
 type alias Line =
@@ -110,6 +111,15 @@ parseErrToString e =
         TooManyStarLines pos ->
             ( posToString pos
             ++ "Too many star lines (:*=) - not enough stars (*) in grid."
+            )
+        LineWrongLength pos exp act ->
+            ( posToString pos
+            ++ "The lines of this level are different lengths - they must be "
+            ++ "all exactly the same length.  The first line was "
+            ++ toString exp
+            ++ " characters long, but this one is "
+            ++ toString act
+            ++ "."
             )
 
 
@@ -273,6 +283,36 @@ integrateStarLines charItems starLines =
                                 )
 
 
+-- Check whether a grid of items has the right length lines,
+-- and return it if so.  If not, return a ParseErr.
+itemsIfValid : List (List Items) -> Result ParseErr (List (List Items))
+itemsIfValid itemsGrid =
+    let
+        firstLineLen =
+            case List.head itemsGrid of
+                Just firstLine -> List.length firstLine
+                Nothing -> -1
+
+        lineIfValid : Int -> Int -> List Items -> Result ParseErr (List Items)
+        lineIfValid requiredLen row line =
+            let
+                len = List.length line
+            in
+                if len == requiredLen then
+                    Ok line
+                else
+                    let
+                        col =
+                            if len > requiredLen then
+                                requiredLen
+                            else
+                                len - 1
+                    in
+                        Err (LineWrongLength {row=row, col=col} requiredLen len)
+    in
+        resultCombine (List.indexedMap (lineIfValid firstLineLen) itemsGrid)
+
+
 parse : String -> String -> Result ParseErr World
 parse comment textWorld =
     let
@@ -281,7 +321,6 @@ parse comment textWorld =
 
         -- (grLines, stLines) : (List Line, List Line)
         (grLines, stLines) = separateLineTypes allLines
-        -- TODO: error on unrecognised line
 
         charItems : Result ParseErr (List (List CharItem))
         charItems = parseGridLines grLines
@@ -289,13 +328,19 @@ parse comment textWorld =
         starLines : Result ParseErr (List StarLine)
         starLines = makeStarLines stLines
 
-        items : Result ParseErr (List (List Items))
-        items = integrateStarLines charItems starLines
+        rawItems : Result ParseErr (List (List Items))
+        rawItems = integrateStarLines charItems starLines
 
-        grid =
-              items
-            |> Result.map (List.map (List.map .block))  -- List (List Block)
-            |> Result.map makeBlockGrid                 -- Grid
+        items : Result ParseErr (List (List Items))
+        items = case rawItems of
+            Ok a -> itemsIfValid a
+            e -> e
+
+        blocks : Result ParseErr (List (List Block))
+        blocks = Result.map (List.map (List.map .block)) items
+
+        grid : Result ParseErr (Grid Block)
+        grid = Result.map makeBlockGrid blocks
 
         rabbits =
             items                              -- List (List Items)
