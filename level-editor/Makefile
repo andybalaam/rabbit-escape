@@ -57,8 +57,9 @@ test:
 	elm-test
 
 setup:
-	sudo npm install -g elm@0.18
+	sudo npm install -g elm@0.18 elm-test
 	elm-package install -y
+	cd tests; elm-package install -y
 
 clean:
 	rm -r www
