@@ -12,10 +12,38 @@ import WorldTextRender exposing (render)
 all : Test
 all =
     describe "Tests for round-trips of worlds as text"
-        [ test "Just blocks" justBlocks
-        , test "Slopes" slopes
-        , test "Bridges" bridges
-        , test "Metal" metal
+        [ test "Just blocks"
+            ( roundTrips
+                [ "   "
+                , "#  "
+                , " ##"
+                ]
+            )
+
+        , test "Slopes"
+            ( roundTrips
+                [ "  /"
+                , "#\\ "
+                , " ##"
+                ]
+            )
+
+        , test "Bridges"
+            ( roundTrips
+                [ "/ ("
+                , "#) "
+                , " ##"
+                ]
+            )
+
+        , test "Metal"
+            ( roundTrips
+                [ "/ ("
+                , "#) "
+                , " MM"
+                ]
+            )
+
         ]
 
 
@@ -42,42 +70,3 @@ roundTrips text =
                     ( "Parsing failed: "
                     ++ ( parseErrToString error )
                     )
-
-
--- ---
-
-
-justBlocks : () -> Expect.Expectation
-justBlocks =
-    roundTrips
-        [ "   "
-        , "#  "
-        , " ##"
-        ]
-
-
-slopes : () -> Expect.Expectation
-slopes =
-    roundTrips
-        [ "  /"
-        , "#\\ "
-        , " ##"
-        ]
-
-
-bridges : () -> Expect.Expectation
-bridges =
-    roundTrips
-        [ "/ ("
-        , "#) "
-        , " ##"
-        ]
-
-
-metal : () -> Expect.Expectation
-metal =
-    roundTrips
-        [ "/ ("
-        , "#) "
-        , " MM"
-        ]
