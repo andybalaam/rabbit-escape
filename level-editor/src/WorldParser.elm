@@ -172,7 +172,6 @@ mergeNewCharIntoOkItems chItem items =
                         ( blockToText charBlock )
                     )
         RabbitChar pos charRabbit ->
-            -- TODO: should we set pos of rabbit?
             Ok { items | rabbits = items.rabbits ++ [charRabbit] }
         StarChar pos ->
             Err ( StarInsideStarPoint pos )
