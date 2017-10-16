@@ -44,6 +44,24 @@ all =
                 ]
             )
 
+        , test "Rabbits"
+            ( roundTrips
+                [ "/ ("
+                , "#r "
+                , "jMM"
+                ]
+            )
+
+        , test "Starpoints"
+            ( roundTrips
+                [ "/ *"
+                , "#* "
+                , "jMM"
+                , ":*=)rjrj"
+                , ":*=#jj"
+                ]
+            )
+
         ]
 
 
