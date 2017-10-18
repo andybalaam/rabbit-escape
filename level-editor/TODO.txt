@@ -1,12 +1,15 @@
-- Allow converting multiple things at the same place to text
-- Support pasting text into the real game on Android
-- Support pasting text into the real game on PC
++ Allow converting multiple things at the same place to text
++ Parser, including star points
+- Undo and redo
+- Place rabbits in level
 - Place things in level
 - Convert everything possible to/from text
 - Add/delete columns and rows
+- Modify/paste code directly
+- Support pasting text into the real game on Android
+- Support pasting text into the real game on PC
 - Modify abilities, number of rabbits, number to save
 - Modify name, hints, description, author, music
-- Modify/paste code directly
 - Save/load to/from the cloud and/or as a URL and/or as github issue
 - Log in and have a list of saved things
 - Play/test levels online
