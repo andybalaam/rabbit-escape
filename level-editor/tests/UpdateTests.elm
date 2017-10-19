@@ -100,9 +100,127 @@ all =
                 ]
               , { mode = InitialMode, block = Nothing }
               )
+            , ( (ChangeBlock (Block Earth UpRight))
+              , [ "  #"
+                , "   "
+                ]
+              , { mode = PlaceBlockMode
+                , block = Just (Block Earth UpRight)
+                }
+              )
+            , ( Undo
+              , [ "   "  -- The world goes back to before
+                , "   "  -- but the mode and block stay selected.
+                ]
+              , { mode = PlaceBlockMode
+                , block = Just (Block Earth UpRight)
+                }
+              )
+            ]
+
+        , testActions "Undo skips actions that don't modify the world"
+            (
+                [ "   "
+                , "   "
+                ]
+              , { mode = InitialMode, block = Nothing }
+            )
+            [ ( (LevelClick 2 0)
+              , [ "  #"
+                , "   "
+                ]
+              , { mode = InitialMode, block = Nothing }
+              )
             , ( Undo
               , [ "   "
                 , "   "
+                ]
+              , { mode = InitialMode, block = Nothing }
+              )
+            ]
+
+        , testActions "Can undo multiple actions"
+            (
+                [ "/  "
+                , "/  "
+                ]
+              , { mode = InitialMode, block = Nothing }
+            )
+            [ ( (LevelClick 2 0)
+              , [ "/ #"
+                , "/  "
+                ]
+              , { mode = InitialMode, block = Nothing }
+              )
+            , ( (LevelClick 1 1)
+              , [ "/ #"
+                , "/# "
+                ]
+              , { mode = InitialMode, block = Nothing }
+              )
+            , ( (LevelClick 2 1)
+              , [ "/ #"
+                , "/##"
+                ]
+              , { mode = InitialMode, block = Nothing }
+              )
+            , ( Undo
+              , [ "/ #"
+                , "/# "
+                ]
+              , { mode = InitialMode, block = Nothing }
+              )
+            , ( Undo
+              , [ "/ #"
+                , "/  "
+                ]
+              , { mode = InitialMode, block = Nothing }
+              )
+            , ( Undo
+              , [ "/  "
+                , "/  "
+                ]
+              , { mode = InitialMode, block = Nothing }
+              )
+            ]
+
+        , testActions "Undoing when no history does nothing"
+            (
+                [ "MMM"
+                , "MMM"
+                ]
+              , { mode = InitialMode, block = Nothing }
+            )
+            [ ( Undo
+              , [ "MMM"
+                , "MMM"
+                ]
+              , { mode = InitialMode, block = Nothing }
+              )
+            ]
+
+        , testActions "Undoing back past the beginning does nothing"
+            (
+                [ "MMM"
+                , "MMM"
+                ]
+              , { mode = InitialMode, block = Nothing }
+            )
+            [ ( (LevelClick 2 1)
+              , [ "MMM"
+                , "MM#"
+                ]
+              , { mode = InitialMode, block = Nothing }
+              )
+            , ( Undo
+              , [ "MMM"
+                , "MMM"
+                ]
+              , { mode = InitialMode, block = Nothing }
+              )
+            , ( Undo
+              , [ "MMM"
+                , "MMM"
                 ]
               , { mode = InitialMode, block = Nothing }
               )
