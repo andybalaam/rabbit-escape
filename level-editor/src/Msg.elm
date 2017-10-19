@@ -9,3 +9,4 @@ type Msg =
       LevelClick Int Int
     | ChangeMode UiMode
     | ChangeBlock Block
+    | Undo

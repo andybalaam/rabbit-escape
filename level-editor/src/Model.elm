@@ -21,6 +21,6 @@ type alias Model =
     { world : World
     , uiState : UiState
     , t : String -> String
-    --, past : List World
+    , past : List World
     --, future: List World
     }

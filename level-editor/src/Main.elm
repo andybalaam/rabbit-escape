@@ -48,7 +48,7 @@ initModel =
         , block = Nothing
         }
     , t = translationPlaceholder
-    --, past = []
+    , past = []
     --, future = []
     }
 

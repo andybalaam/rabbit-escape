@@ -18,7 +18,20 @@ import WorldTextRender
 update : Msg -> Model -> (Model, Cmd Msg)
 update msg model =
     let
-        m =
+
+        updatedModel =
+            case msg of
+                Undo -> updateUndo model
+                default -> normalUpdate msg model
+    in
+        (updatedModel, Cmd.none)
+
+
+normalUpdate : Msg -> Model -> Model
+normalUpdate msg model =
+    let
+
+        updatedModel =
             case msg of
                 LevelClick x y ->
                     updateLevelClick model x y
@@ -26,8 +39,25 @@ update msg model =
                     updateChangeMode model mode
                 ChangeBlock block ->
                     updateChangeBlock model block
+                default ->
+                    Debug.crash -- yuck
+                        ( "Msg '" ++ toString msg ++ "' should not "
+                        ++ "be passed in to normalUpdate."
+                        )
     in
-        (m, Cmd.none)
+        -- If something changed, remember in undo stack.
+        if updatedModel.world == model.world then
+            updatedModel
+        else
+            { updatedModel | past = model.world :: model.past }
+
+
+updateUndo : Model -> Model
+updateUndo model =
+    case model.past of
+        [] -> model  -- TODO: error?
+        recent :: others ->
+            { model | world = recent, past = others }
 
 
 updateChangeBlock : Model -> Block -> Model

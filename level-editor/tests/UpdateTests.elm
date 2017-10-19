@@ -100,12 +100,12 @@ all =
                 ]
               , { mode = InitialMode, block = Nothing }
               )
-            --, ( Undo
-            --  , [ "   "
-            --    , "   "
-            --    ]
-            --  , { mode = InitialMode, block = Nothing }
-            --  )
+            , ( Undo
+              , [ "   "
+                , "   "
+                ]
+              , { mode = InitialMode, block = Nothing }
+              )
             ]
         ]
 
@@ -128,13 +128,14 @@ testActions desc (initWorld, initState) msgsAndWorlds =
 
         parseWorld : (Msg, List String, UiState) -> (Msg, Model)
         parseWorld (msg, lines, state) =
-            (msg, {world = parseFixed lines, uiState = state, t = t})
+            (msg, {world = parseFixed lines, uiState = state, t = t, past = []})
 
         initModel : Model
         initModel =
             { world = parseFixed initWorld
             , uiState = initState
             , t = t
+            , past = []
             }
 
         msgsAndModels : List (Msg, Model)
@@ -145,19 +146,37 @@ testActions desc (initWorld, initState) msgsAndWorlds =
         describe desc (expectUpdateGives 1 initModel msgsAndModels)
 
 
+expectEqualWithoutHistory :
+    (Model, Cmd Msg) ->
+    (Model, Cmd Msg) ->
+    () ->
+    Expect.Expectation
+expectEqualWithoutHistory (m1, c1) (m2, c2) =
+    let
+        removeHistory : Model -> Model
+        removeHistory m =
+            { m | past = [] }
+
+    in
+        \() -> Expect.equal (removeHistory m1, c1) (removeHistory m2, c2)
+
+
 expectUpdateGives : Int -> Model -> List (Msg, Model) -> List (Test)
 expectUpdateGives num initModel msgsAndModels =
-    let
-        t : Model -> Msg -> Model -> Test
-        t before msg after =
-            test
-                ( "Step " ++ (toString num) )
-                ( \() ->
-                    Expect.equal ( after, Cmd.none ) ( update msg before )
-                )
-    in
-        case msgsAndModels of
-            [] ->
-                []
-            (msg, model) :: mms ->
-                t initModel msg model :: expectUpdateGives (num + 1) model mms
+    case msgsAndModels of
+        [] ->
+            []
+        (msg, expectedModel) :: mms ->
+            let
+                (newModel, newCmd) = update msg initModel
+
+                headTest : Test
+                headTest =
+                    test
+                        ( "Step " ++ (toString num) )
+                        ( expectEqualWithoutHistory
+                            ( expectedModel, Cmd.none )
+                            ( newModel, newCmd )
+                        )
+            in
+                headTest :: expectUpdateGives (num + 1) newModel mms
