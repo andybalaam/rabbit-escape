@@ -39,7 +39,7 @@ normalUpdate msg model =
                     updateChangeMode model mode
                 ChangeBlock block ->
                     updateChangeBlock model block
-                default ->
+                Undo ->
                     Debug.crash -- yuck
                         ( "Msg '" ++ toString msg ++ "' should not "
                         ++ "be passed in to normalUpdate."
