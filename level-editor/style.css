@@ -90,6 +90,11 @@ html
     border-style: inset;
 }
 
+#toolbar button[disabled] img
+{
+    opacity: 0.3;
+}
+
 #toolbar button img, #dialog button img
 {
     width: 4.2em;

@@ -11,6 +11,8 @@ GAME_IMAGE_NAMES := \
 	rabbit_stand_right.svg \
 	remove_block.png \
 	save.svg \
+	undo.svg \
+	redo.svg \
 
 
 IMAGES_DIR := www/images
