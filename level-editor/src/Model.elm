@@ -9,6 +9,8 @@ type UiMode =
     | CodeMode String
     | ChooseBlockMode
     | PlaceBlockMode
+    | ChooseRabbitMode
+    | PlaceRabbitMode
 
 
 type alias UiState =

@@ -36,10 +36,6 @@ buttonsList =
 buildClickCmd : UiState -> ButtonDef -> Msg
 buildClickCmd uiState buttonDef =
     case buttonDef of
-        BlockButton ->
-            case uiState.mode of
-                ChooseBlockMode -> ChangeMode PlaceBlockMode
-                default         -> ChangeMode ChooseBlockMode
         SaveButton  ->
             case uiState.mode of
                 CodeMode _ -> ChangeMode InitialMode
@@ -48,7 +44,14 @@ buildClickCmd uiState buttonDef =
             Undo
         RedoButton ->
             Redo
-        default     -> ChangeMode InitialMode
+        BlockButton ->
+            case uiState.mode of
+                ChooseBlockMode -> ChangeMode PlaceBlockMode
+                default         -> ChangeMode ChooseBlockMode
+        RabbitButton ->
+            case uiState.mode of
+                ChooseRabbitMode -> ChangeMode PlaceRabbitMode
+                default          -> ChangeMode ChooseRabbitMode
 
 
 buttonImage : UiState -> ButtonDef -> String
@@ -73,6 +76,8 @@ pressedClass mode buttondef =
                 CodeMode _ -> [SaveButton]
                 ChooseBlockMode -> [BlockButton]
                 PlaceBlockMode -> [BlockButton]
+                ChooseRabbitMode -> [RabbitButton]
+                PlaceRabbitMode -> [RabbitButton]
     in
         if List.member buttondef pressedTypes then
             [ class "pressed" ]
