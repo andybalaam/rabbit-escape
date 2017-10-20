@@ -83,10 +83,16 @@ pressedClass mode buttondef =
 buttonEnabled : Model -> ButtonDef -> List (Html.Attribute Msg)
 buttonEnabled model buttondef =
     if
-        case buttondef of
-            UndoButton -> List.isEmpty model.past
-            RedoButton -> List.isEmpty model.future
-            default -> False
+        case model.uiState.mode of
+            CodeMode _ ->
+                case buttondef of
+                    SaveButton -> False
+                    default -> True
+            default ->
+                case buttondef of
+                    UndoButton -> List.isEmpty model.past
+                    RedoButton -> List.isEmpty model.future
+                    default -> False
     then
         [disabled True]
     else
