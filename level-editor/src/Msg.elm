@@ -10,3 +10,4 @@ type Msg =
     | ChangeMode UiMode
     | ChangeBlock Block
     | Undo
+    | Redo

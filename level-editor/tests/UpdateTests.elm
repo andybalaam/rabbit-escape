@@ -86,8 +86,28 @@ all =
                 }
               )
             ]
-
         , testActions "Can undo an action"
+            (
+                [ "   "
+                , "   "
+                ]
+              , { mode = InitialMode, block = Nothing }
+            )
+            [ ( (LevelClick 2 0)
+              , [ "  #"
+                , "   "
+                ]
+              , { mode = InitialMode, block = Nothing }
+              )
+            , ( Undo
+              , [ "   "
+                , "   "
+                ]
+              , { mode = InitialMode, block = Nothing }
+              )
+            ]
+
+        , testActions "Undo skips actions that don't modify the world"
             (
                 [ "   "
                 , "   "
@@ -115,27 +135,6 @@ all =
               , { mode = PlaceBlockMode
                 , block = Just (Block Earth UpRight)
                 }
-              )
-            ]
-
-        , testActions "Undo skips actions that don't modify the world"
-            (
-                [ "   "
-                , "   "
-                ]
-              , { mode = InitialMode, block = Nothing }
-            )
-            [ ( (LevelClick 2 0)
-              , [ "  #"
-                , "   "
-                ]
-              , { mode = InitialMode, block = Nothing }
-              )
-            , ( Undo
-              , [ "   "
-                , "   "
-                ]
-              , { mode = InitialMode, block = Nothing }
               )
             ]
 
@@ -225,6 +224,195 @@ all =
               , { mode = InitialMode, block = Nothing }
               )
             ]
+
+        , testActions "Redo restores an undone action"
+            (
+                [ "MMM"
+                , "MM/"
+                ]
+              , { mode = InitialMode, block = Nothing }
+            )
+            [ ( (LevelClick 2 1)
+              , [ "MMM"
+                , "MM#"
+                ]
+              , { mode = InitialMode, block = Nothing }
+              )
+            , ( Undo
+              , [ "MMM"
+                , "MM/"
+                ]
+              , { mode = InitialMode, block = Nothing }
+              )
+            , ( Redo
+              , [ "MMM"
+                , "MM#"
+                ]
+              , { mode = InitialMode, block = Nothing }
+              )
+            ]
+
+        , testActions "Doing something new removes redo stack"
+            (
+                [ "MMM"
+                , "MM/"
+                ]
+              , { mode = InitialMode, block = Nothing }
+            )
+            [ ( (LevelClick 2 1)
+              , [ "MMM"
+                , "MM#"
+                ]
+              , { mode = InitialMode, block = Nothing }
+              )
+            , ( Undo
+              , [ "MMM"
+                , "MM/"
+                ]
+              , { mode = InitialMode, block = Nothing }
+              )
+            , ( (LevelClick 0 0)
+              , [ "#MM"
+                , "MM/"
+                ]
+              , { mode = InitialMode, block = Nothing }
+              )
+            , ( Redo
+              , [ "#MM"  -- The redo did nothing because
+                , "MM/"  -- we had placed a block in between
+                ]
+              , { mode = InitialMode, block = Nothing }
+              )
+            , ( Undo
+              , [ "MMM"  -- Undo still works
+                , "MM/"
+                ]
+              , { mode = InitialMode, block = Nothing }
+              )
+            , ( Redo
+              , [ "#MM"  -- And redo undoes the undo
+                , "MM/"
+                ]
+              , { mode = InitialMode, block = Nothing }
+              )
+            ]
+
+        , testActions "Non-modifying actions don't affect redo"
+            (
+                [ "///"
+                , "   "
+                ]
+              , { mode = InitialMode, block = Nothing }
+            )
+            [ ( (LevelClick 2 1)
+              , [ "///"
+                , "  #"
+                ]
+              , { mode = InitialMode, block = Nothing }
+              )
+            , ( Undo
+              , [ "///"
+                , "   "
+                ]
+              , { mode = InitialMode, block = Nothing }
+              )
+            , ( (ChangeBlock (Block Earth UpRight))
+              , [ "///"
+                , "   "
+                ]
+              , { mode = PlaceBlockMode
+                , block = Just (Block Earth UpRight)
+                }
+              )
+            , ( Redo
+              , [ "///"
+                , "  #"
+                ]
+              , { mode = PlaceBlockMode
+                , block = Just (Block Earth UpRight)
+                }
+              )
+            , ( (ChangeBlock (Block Earth UpLeft))
+              , [ "///"
+                , "  #"
+                ]
+              , { mode = PlaceBlockMode
+                , block = Just (Block Earth UpLeft)
+                }
+              )
+            , ( Undo
+              , [ "///"
+                , "   "
+                ]
+              , { mode = PlaceBlockMode
+                , block = Just (Block Earth UpLeft)
+                }
+              )
+            , ( (ChangeBlock NoBlock)
+              , [ "///"
+                , "   "
+                ]
+              , { mode = PlaceBlockMode
+                , block = Just NoBlock
+                }
+              )
+            , ( Redo
+              , [ "///"
+                , "  #"
+                ]
+              , { mode = PlaceBlockMode
+                , block = Just NoBlock
+                }
+              )
+            ]
+
+        , testActions "Redoing when no history does nothing"
+            (
+                [ "MMM"
+                , "MMM"
+                ]
+              , { mode = InitialMode, block = Nothing }
+            )
+            [ ( Redo
+              , [ "MMM"
+                , "MMM"
+                ]
+              , { mode = InitialMode, block = Nothing }
+              )
+            ]
+
+        , testActions "Redoing past the end does nothing"
+            (
+                [ "MMM"
+                , "MMM"
+                ]
+              , { mode = InitialMode, block = Nothing }
+            )
+            [ ( (LevelClick 2 1)
+              , [ "MMM"
+                , "MM#"
+                ]
+              , { mode = InitialMode, block = Nothing }
+              )
+            , ( Undo
+              , [ "MMM"
+                , "MMM"
+                ]
+              , { mode = InitialMode, block = Nothing }
+              )
+            , ( Redo
+              , [ "MMM"
+                , "MM#"
+                ]
+              , { mode = InitialMode, block = Nothing }
+              )
+            , ( Redo
+              , [ "MMM"
+                , "MM#"
+                ]
+              , { mode = InitialMode, block = Nothing }
+              )
+            ]
         ]
 
 
@@ -246,7 +434,14 @@ testActions desc (initWorld, initState) msgsAndWorlds =
 
         parseWorld : (Msg, List String, UiState) -> (Msg, Model)
         parseWorld (msg, lines, state) =
-            (msg, {world = parseFixed lines, uiState = state, t = t, past = []})
+            ( msg
+            , { world = parseFixed lines
+              , uiState = state
+              , t = t
+              , past = []
+              , future = []
+              }
+            )
 
         initModel : Model
         initModel =
@@ -254,6 +449,7 @@ testActions desc (initWorld, initState) msgsAndWorlds =
             , uiState = initState
             , t = t
             , past = []
+            , future = []
             }
 
         msgsAndModels : List (Msg, Model)
@@ -273,7 +469,7 @@ expectEqualWithoutHistory (m1, c1) (m2, c2) =
     let
         removeHistory : Model -> Model
         removeHistory m =
-            { m | past = [] }
+            { m | past = [], future = [] }
 
     in
         \() -> Expect.equal (removeHistory m1, c1) (removeHistory m2, c2)

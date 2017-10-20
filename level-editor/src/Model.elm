@@ -22,5 +22,5 @@ type alias Model =
     , uiState : UiState
     , t : String -> String
     , past : List World
-    --, future: List World
+    , future: List World
     }

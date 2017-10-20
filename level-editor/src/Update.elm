@@ -22,6 +22,7 @@ update msg model =
         updatedModel =
             case msg of
                 Undo -> updateUndo model
+                Redo -> updateRedo model
                 default -> normalUpdate msg model
     in
         (updatedModel, Cmd.none)
@@ -40,24 +41,47 @@ normalUpdate msg model =
                 ChangeBlock block ->
                     updateChangeBlock model block
                 Undo ->
-                    Debug.crash -- yuck
-                        ( "Msg '" ++ toString msg ++ "' should not "
-                        ++ "be passed in to normalUpdate."
-                        )
+                    crashBadMessage msg
+                Redo ->
+                    crashBadMessage msg
     in
         -- If something changed, remember in undo stack.
         if updatedModel.world == model.world then
             updatedModel
         else
-            { updatedModel | past = model.world :: model.past }
+            { updatedModel | past = model.world :: model.past, future = [] }
+
+
+crashBadMessage : Msg -> Model
+crashBadMessage msg =
+    Debug.crash -- yuck
+        ( "Msg '" ++ toString msg ++ "' should not "
+        ++ "be passed in to normalUpdate."
+        )
 
 
 updateUndo : Model -> Model
 updateUndo model =
     case model.past of
-        [] -> model  -- TODO: error?
+        [] -> model
         recent :: others ->
-            { model | world = recent, past = others }
+            { model
+            | world = recent
+            , past = others
+            , future = model.world :: model.future
+            }
+
+
+updateRedo : Model -> Model
+updateRedo model =
+    case model.future of
+        [] -> model
+        recent :: others ->
+            { model
+            | world = recent
+            , future = others
+            , past = model.world :: model.past
+            }
 
 
 updateChangeBlock : Model -> Block -> Model

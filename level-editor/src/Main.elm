@@ -49,7 +49,7 @@ initModel =
         }
     , t = translationPlaceholder
     , past = []
-    --, future = []
+    , future = []
     }
 
 
