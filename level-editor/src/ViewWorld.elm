@@ -9,6 +9,7 @@ import BlockImage exposing (blockImage)
 import Model exposing (Model)
 import Msg exposing (Msg(..))
 import Rabbit exposing (Direction(..), Rabbit)
+import RabbitImage exposing (rabbitImage)
 import World exposing
     ( Block(..)
     , BlockMaterial(..)
@@ -18,19 +19,13 @@ import World exposing
     )
 
 
-rabbitImage : Rabbit -> Html Msg
-rabbitImage rabbit =
-    let
-        lr =
-            case rabbit.dir of
-                Left  -> "left"
-                Right -> "right"
-    in
-        img
-            [ src ("images/rabbit_stand_" ++ lr ++ ".svg")
-            , class "thing"
-            ]
-            []
+rabbitImg : Rabbit -> Html Msg
+rabbitImg rabbit =
+    img
+        [ src ("images/" ++ rabbitImage (Just rabbit))
+        , class "thing"
+        ]
+        []
 
 
 blockImg : Block -> Int -> Int -> List (Html Msg)
@@ -60,7 +55,7 @@ viewBlockContents block rabbits x y =
                 ]
             , id (sx++","++sy)
             ]
-            ( blockImg block x y ++ List.map rabbitImage rabbits )
+            ( blockImg block x y ++ List.map rabbitImg rabbits )
 
 
 viewBlock : World -> Int -> Int -> Block -> Html Msg

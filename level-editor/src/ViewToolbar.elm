@@ -12,6 +12,7 @@ import Html.Events exposing (onClick)
 
 import Msg exposing (Msg(..))
 import Model exposing (Model, UiMode(..), UiState)
+import RabbitImage exposing (rabbitImage)
 import World exposing (Block(..), BlockMaterial(..), BlockShape(..))
 
 
@@ -64,7 +65,8 @@ buttonImage uiState buttondef =
             case uiState.block of
                 Nothing    -> "allblocks.png"
                 Just block -> blockImage block
-        RabbitButton -> "rabbit_stand_right.svg"
+        RabbitButton ->
+            rabbitImage uiState.rabbit
 
 
 pressedClass : UiMode -> ButtonDef -> List (Html.Attribute Msg)

@@ -7,6 +7,14 @@ import Html.Events exposing (onClick)
 import Model exposing (Model, UiMode(..), UiState)
 import Msg exposing (Msg(..))
 import World exposing (Block(..), BlockMaterial(..), BlockShape(..))
+import Rabbit exposing
+    ( Direction(..)
+    , Rabbit
+    , RabbitType(..)
+    , makeRabbit
+    , makeRabbot
+    )
+import RabbitImage exposing (rabbitImage)
 
 
 type alias Contents =
@@ -14,13 +22,6 @@ type alias Contents =
     , dialogStyles : List (String, String)
     , items : List (Html Msg)
     }
-
-
-but : Block -> Html Msg
-but block =
-    button
-        [ onClick (ChangeBlock block) ]
-        [ img [ src ("images/" ++ (blockImage block)) ] [] ]
 
 
 -- Make a string into a paragraph of translated text
@@ -31,21 +32,52 @@ tp model s =
 
 chooseBlockButtons : Model -> Contents
 chooseBlockButtons model =
-    { visible =
-        True
-    , dialogStyles =
-        [ ("overflow", "auto") ]
-    , items =
-        [ tp model "Choose a block:"
-        , but (Block Earth Flat)
-        , but (Block Earth UpRight)
-        , but (Block Earth UpLeft)
-        , but (Block Earth BridgeUpRight)
-        , but (Block Earth BridgeUpLeft)
-        , but (Block Metal Flat)
-        , but (NoBlock)
-        ]
-    }
+    let
+        but : Block -> Html Msg
+        but block =
+            button
+                [ onClick (ChangeBlock block) ]
+                [ img [ src ("images/" ++ (blockImage block)) ] [] ]
+    in
+        { visible =
+            True
+        , dialogStyles =
+            [ ("overflow", "auto") ]
+        , items =
+            [ tp model "Choose a block:"
+            , but (Block Earth Flat)
+            , but (Block Earth UpRight)
+            , but (Block Earth UpLeft)
+            , but (Block Earth BridgeUpRight)
+            , but (Block Earth BridgeUpLeft)
+            , but (Block Metal Flat)
+            , but (NoBlock)
+            ]
+        }
+
+
+chooseRabbitButtons : Model -> Contents
+chooseRabbitButtons model =
+    let
+        but : Maybe Rabbit -> Html Msg
+        but rabbit =
+            button
+                [ onClick (ChangeRabbit rabbit) ]
+                [ img [ src ("images/" ++ (rabbitImage rabbit)) ] [] ]
+    in
+        { visible =
+            True
+        , dialogStyles =
+            [ ("overflow", "auto") ]
+        , items =
+            [ tp model "Choose a rabbit:"
+            , but (Just (makeRabbit 0 0 Right))
+            , but (Just (makeRabbit 0 0 Left))
+            , but (Just (makeRabbot 0 0 Right))
+            , but (Just (makeRabbot 0 0 Left))
+            , but (Nothing)
+            ]
+        }
 
 
 codeText : Model -> String -> Contents
@@ -110,6 +142,7 @@ viewDialog model =
     drawDialog
         ( case model.uiState.mode of
             ChooseBlockMode -> chooseBlockButtons model
+            ChooseRabbitMode -> chooseRabbitButtons model
             CodeMode code   -> codeText model code
             other           -> invisible
         )

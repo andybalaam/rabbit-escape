@@ -3,6 +3,7 @@ module Update exposing (update)
 
 import Model exposing (Model, UiMode(..))
 import Msg exposing (Msg(..))
+import Rabbit exposing (Rabbit, movedRabbit)
 import World exposing
     ( Block(..)
     , BlockMaterial(..)
@@ -35,11 +36,21 @@ normalUpdate msg model =
         updatedModel =
             case msg of
                 LevelClick x y ->
-                    updateLevelClick model x y
+                    case model.uiState.mode of
+                        InitialMode ->
+                            updateLevelClickBlock model x y
+                        PlaceBlockMode ->
+                            updateLevelClickBlock model x y
+                        PlaceRabbitMode ->
+                            updateLevelClickRabbit model x y
+                        default ->
+                            model
                 ChangeMode mode ->
                     updateChangeMode model mode
                 ChangeBlock block ->
                     updateChangeBlock model block
+                ChangeRabbit rabbit ->
+                    updateChangeRabbit model rabbit
                 Undo ->
                     crashBadMessage msg
                 Redo ->
@@ -98,33 +109,69 @@ updateChangeBlock model block =
         }
 
 
-updateLevelClick : Model -> Int -> Int -> Model
-updateLevelClick model x y =
+updateChangeRabbit : Model -> Maybe Rabbit -> Model
+updateChangeRabbit model rabbit =
+    let
+        uiState = model.uiState
+    in
+        { model
+        | uiState =
+            { uiState
+            | mode = PlaceRabbitMode
+            , rabbit = rabbit
+            }
+        }
+
+
+updateLevelClickRabbit : Model -> Int -> Int -> Model
+updateLevelClickRabbit model x y =
     { model
-    | world = updateLevelClickWorld model.uiState.block model.world x y
+    | world = updateLevelClickRabbitWorld model.uiState.rabbit model.world x y
     }
 
 
-updateLevelClickWorld : Maybe Block -> World -> Int -> Int -> World
-updateLevelClickWorld newBlock world x y =
+updateLevelClickRabbitWorld : Maybe Rabbit -> World -> Int -> Int -> World
+updateLevelClickRabbitWorld newRabbit world x y =
+    let
+        rabbits =
+            case newRabbit of
+                Nothing ->
+                    List.filter
+                        (\rabbit -> rabbit.x /= x || rabbit.y /= y)
+                        world.rabbits
+                Just r ->
+                    movedRabbit x y r :: world.rabbits
+    in
+        makeWorld world.comment world.blocks rabbits
+
+
+updateLevelClickBlock : Model -> Int -> Int -> Model
+updateLevelClickBlock model x y =
+    { model
+    | world = updateLevelClickBlockWorld model.uiState.block model.world x y
+    }
+
+
+updateLevelClickBlockWorld : Maybe Block -> World -> Int -> Int -> World
+updateLevelClickBlockWorld newBlock world x y =
     makeWorld
         world.comment
         (makeBlockGrid
             (List.indexedMap
-                (updateLevelClickRow newBlock x y) (blocks world))
+                (updateLevelClickBlockRow newBlock x y) (blocks world))
         )
         world.rabbits
 
 
-updateLevelClickRow :
+updateLevelClickBlockRow :
     Maybe Block -> Int -> Int -> Int -> List Block -> List Block
-updateLevelClickRow newBlock x y rowy blocks =
-    List.indexedMap (updateLevelClickBlock newBlock x y rowy) blocks
+updateLevelClickBlockRow newBlock x y rowy blocks =
+    List.indexedMap (updateLevelClickBlockBlock newBlock x y rowy) blocks
 
 
-updateLevelClickBlock :
+updateLevelClickBlockBlock :
     Maybe Block -> Int -> Int -> Int -> Int -> Block -> Block
-updateLevelClickBlock newBlock x y rowy colx block =
+updateLevelClickBlockBlock newBlock x y rowy colx block =
     if x == colx && y == rowy then
         case newBlock of
             Nothing -> Block Earth Flat

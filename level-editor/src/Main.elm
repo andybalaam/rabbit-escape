@@ -3,7 +3,7 @@ import Window
 
 import Model exposing (Model, UiMode(..), UiState)
 import Msg exposing (Msg(..))
-import Rabbit exposing (Direction(..), Rabbit)
+import Rabbit exposing (Direction(..), Rabbit, makeRabbit)
 import Update exposing (update)
 import View exposing (view)
 import World exposing
@@ -46,6 +46,7 @@ initModel =
     , uiState =
         { mode = InitialMode
         , block = Nothing
+        , rabbit = Just (makeRabbit 0 0 Right)
         }
     , t = translationPlaceholder
     , past = []

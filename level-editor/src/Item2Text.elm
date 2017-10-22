@@ -12,7 +12,7 @@ import Dict
 import EveryDict
 
 
-import Rabbit exposing (Direction(..), Rabbit, makeRabbit)
+import Rabbit exposing (Direction(..), Rabbit, makeRabbit, makeRabbot)
 import World exposing
     ( Block(..)
     , BlockMaterial(..)
@@ -78,6 +78,8 @@ t2rList : List (Char, Rabbit)
 t2rList =
     [ ('j', makeRabbit 0 0 Left)
     , ('r', makeRabbit 0 0 Right)
+    , ('y', makeRabbot 0 0 Left)
+    , ('t', makeRabbot 0 0 Right)
     ]
 
 

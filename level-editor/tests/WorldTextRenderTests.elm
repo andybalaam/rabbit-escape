@@ -4,7 +4,7 @@ import Test exposing (describe,test,Test)
 import Expect
 
 
-import Rabbit exposing (Direction(..), Rabbit, makeRabbit)
+import Rabbit exposing (Direction(..), Rabbit, makeRabbit, makeRabbot)
 import World exposing
     ( World
     , Block(..)
@@ -97,8 +97,8 @@ renderWorldWithRabbits : () -> Expect.Expectation
 renderWorldWithRabbits =
     \() ->
         Expect.equal
-            [ "    "
-            , "  r#"
+            [ "y   "
+            , "t r#"
             , " j  "
             , "####"
             ]
@@ -108,7 +108,9 @@ renderWorldWithRabbits =
                 , [NoBlock, NoBlock, NoBlock, NoBlock]
                 , [fltErth, fltErth, fltErth, fltErth]
                 ]
-                [ makeRabbit 2 1 Right
+                [ makeRabbot 0 1 Right
+                , makeRabbot 0 0 Left
+                , makeRabbit 2 1 Right
                 , makeRabbit 1 2 Left
                 ]
             )

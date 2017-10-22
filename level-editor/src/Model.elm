@@ -1,6 +1,8 @@
 module Model exposing (Model, UiMode(..), UiState)
 
 
+import Rabbit exposing (Rabbit)
+
 import World exposing (Block(..), World)
 
 
@@ -16,6 +18,7 @@ type UiMode =
 type alias UiState =
     { mode : UiMode
     , block : Maybe Block
+    , rabbit : Maybe Rabbit
     }
 
 

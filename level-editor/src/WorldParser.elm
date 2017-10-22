@@ -15,7 +15,7 @@ module WorldParser exposing
     )
 
 
-import Rabbit exposing (Rabbit)
+import Rabbit exposing (Rabbit, movedRabbit)
 import World exposing (
     Block(..),
     BlockMaterial(..),
@@ -130,7 +130,7 @@ blockToText block =
 
 addRabbitCoords : Pos -> Rabbit -> Rabbit
 addRabbitCoords pos rabbit =
-    { rabbit | x = pos.col, y = pos.row }
+    movedRabbit pos.col pos.row rabbit
 
 
 toCharItem : Maybe Pos -> Int -> Int -> Char -> Result ParseErr CharItem

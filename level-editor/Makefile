@@ -9,7 +9,10 @@ GAME_IMAGE_NAMES := \
 	metal_block_1.png \
 	rabbit_stand_left.svg \
 	rabbit_stand_right.svg \
+	rabbot_stand_left.svg \
+	rabbot_stand_right.svg \
 	remove_block.png \
+	remove_rabbit.svg \
 	save.svg \
 	undo.svg \
 	redo.svg \
