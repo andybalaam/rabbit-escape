@@ -59,6 +59,7 @@ test:
 	elm-test
 
 setup:
+	sudo apt install nodejs npm
 	sudo npm install -g elm@0.18 elm-test
 	elm-package install -y
 	cd tests; elm-package install -y
