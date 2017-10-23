@@ -15,6 +15,7 @@ import Expect
 
 import Item2Text exposing (CharItem(..))
 import Rabbit exposing (Direction(..), makeRabbit)
+import Thing exposing (Thing(..))
 import World exposing
     ( World
     , Block(..)
@@ -49,6 +50,7 @@ all =
         , test "Parse empty world" parseEmptyWorld
         , test "Parse world with blocks" parseWorldWithBlocks
         , test "Parse world with rabbits" parseWorldWithRabbits
+        , test "Parse world with things" parseWorldWithThings
         , test "Parse overlapping rabbits" parseOverlappingRabbits
         , test "Parse multiple stars" parseMultipleStars
         ]
@@ -115,7 +117,7 @@ combiningNone =
 
 
 emptyItems : Items
-emptyItems = { block = NoBlock, rabbits = [] }
+emptyItems = { block = NoBlock, rabbits = [], things = [] }
 
 
 toCharItemCases : Test
@@ -171,11 +173,11 @@ mergeNewCharIntoItemsCases =
         describe "mergeNewCharIntoItems"
             [ t "Block merges into empty"
                 ( mrg blcCh emptyItems )
-                ( Ok { block = fltErth, rabbits = [] } )
+                ( Ok { block = fltErth, rabbits = [], things = [] } )
 
             , t "Rabbit merges into empty"
                 ( mrg rabCh emptyItems )
-                ( Ok { block = NoBlock, rabbits = [rab] } )
+                ( Ok { block = NoBlock, rabbits = [rab], things = [] } )
 
             , t "Block won't merge over a block"
                 ( mrg blcCh { emptyItems | block = fltMetl } )
@@ -183,11 +185,11 @@ mergeNewCharIntoItemsCases =
 
             , t "Rabbit merges into block"
                 ( mrg rabCh { emptyItems | block = fltMetl } )
-                ( Ok { block = fltMetl, rabbits = [rab] } )
+                ( Ok { block = fltMetl, rabbits = [rab], things = [] } )
 
             , t "Rabbit merges into block + rabbit"
-                ( mrg ra2Ch { block = fltMetl, rabbits = [rab] } )
-                ( Ok { block = fltMetl, rabbits = [rab, ra2] } )
+                ( mrg ra2Ch { block = fltMetl, rabbits = [rab], things = [] } )
+                ( Ok { block = fltMetl, rabbits = [rab, ra2], things = [] } )
 
             , t "Errors propagate"
                 ( mergeNewCharIntoItems ra2Ch err )
@@ -229,18 +231,18 @@ starLineToItemsCases =
         describe "starLineToItems"
             [ t "Single block"
                 ":*=#" 9 pos56
-                (Ok {block=fltErth, rabbits=[]})
+                (Ok {block=fltErth, rabbits=[], things=[]})
 
             , t "Block and rabbit"
                 ":*=/r" 9 pos56
-                (Ok {block=uprErth, rabbits=[rabr56]})
+                (Ok {block=uprErth, rabbits=[rabr56], things=[]})
 
             , t "Rabbits"
                 ":*=jr" 9 pos56
-                (Ok {block=NoBlock, rabbits=[rabl56, rabr56]})
+                (Ok {block=NoBlock, rabbits=[rabl56, rabr56], things=[]})
 
             , t "Rabbits and block" ":*=jr#" 9 pos56
-                (Ok {block=fltErth, rabbits=[rabl56, rabr56]})
+                (Ok {block=fltErth, rabbits=[rabl56, rabr56], things=[]})
 
             , t "Unknown char"
                 ":*=jr#>" 9 pos56
@@ -275,15 +277,18 @@ integrateSquareCases =
         describe "integrateSquare"
             [ t "Block is left alone"
                 (integrateSquare blcErth11 starLines)
-                (Ok ({block=fltErth, rabbits=[]}, starLines))
+                (Ok ({block=fltErth, rabbits=[], things=[]}, starLines))
 
             , t "Rabbit is left alone"
                 (integrateSquare rabCh25 starLines)
-                (Ok ({block=NoBlock, rabbits=[rab25]}, starLines))
+                (Ok ({block=NoBlock, rabbits=[rab25], things=[]}, starLines))
 
             , t "Star integrates first starpoint"
                 (integrateSquare star34 starLines)
-                (Ok ({block = uprErth, rabbits=[rab34]}, remainingStarLines))
+                (Ok
+                    ( {block = uprErth, rabbits=[rab34], things=[]}
+                    , remainingStarLines)
+                    )
 
             , t "Bad starline produces error"
                 (integrateSquare star34 [ StarLine 3 ['*']])
@@ -317,9 +322,9 @@ integrateLineCases =
                 (integrateLine [chErth, chRabb, chErth] starLines)
                 ( Ok
                     (
-                        [ { block=fltErth, rabbits=[] }
-                        , { block=NoBlock, rabbits=[rabl11] }
-                        , { block=fltErth, rabbits=[] }
+                        [ { block=fltErth, rabbits=[], things=[] }
+                        , { block=NoBlock, rabbits=[rabl11], things=[] }
+                        , { block=fltErth, rabbits=[], things=[] }
                         ]
                     , starLines
                     )
@@ -329,9 +334,12 @@ integrateLineCases =
                 (integrateLine [StarChar pos01, chRabb, chErth] starLines)
                 ( Ok
                     (
-                        [ { block=NoBlock, rabbits=[rabr01, rabr01, rabl01] }
-                        , { block=NoBlock, rabbits=[rabl11] }
-                        , { block=fltErth, rabbits=[] }
+                        [ { block=NoBlock
+                          , rabbits=[rabr01, rabr01, rabl01]
+                          , things=[]
+                          }
+                        , { block=NoBlock, rabbits=[rabl11], things=[] }
+                        , { block=fltErth, rabbits=[], things=[] }
                         ]
                     , [starLine2, starLine3]
                     )
@@ -344,9 +352,15 @@ integrateLineCases =
                 )
                 ( Ok
                     (
-                        [ { block=NoBlock, rabbits=[rabr01, rabr01, rabl01] }
-                        , { block=fltMetl, rabbits=[rabl11] }
-                        , { block=fltErth, rabbits=[rabr21, rabl21] }
+                        [ { block=NoBlock
+                          , rabbits=[rabr01, rabr01, rabl01]
+                          , things=[]
+                          }
+                        , { block=fltMetl, rabbits=[rabl11], things=[] }
+                        , { block=fltErth
+                          , rabbits=[rabr21, rabl21]
+                          , things=[]
+                          }
                         ]
                     , []
                     )
@@ -403,17 +417,26 @@ integrateLinesCases =
                 )
                 ( Ok
                     (
-                        [ [ { block=fltErth, rabbits=[] }
-                          , { block=NoBlock, rabbits=[rabl10] }
-                          , { block=fltErth, rabbits=[] }
+                        [ [ { block=fltErth, rabbits=[], things=[] }
+                          , { block=NoBlock, rabbits=[rabl10], things=[] }
+                          , { block=fltErth, rabbits=[], things=[] }
                           ]
-                        , [ { block=NoBlock, rabbits=[rabr01, rabr01, rabl01] }
-                          , { block=fltMetl, rabbits=[rabl11] }
-                          , { block=fltErth, rabbits=[rabr21, rabl21] }
+                        , [ { block=NoBlock
+                            , rabbits=[rabr01, rabr01, rabl01]
+                            , things=[]
+                            }
+                          , { block=fltMetl, rabbits=[rabl11], things=[] }
+                          , { block=fltErth
+                            , rabbits=[rabr21, rabl21]
+                            , things=[]
+                            }
                           ]
-                        , [ { block=fltErth, rabbits=[rabr02, rabl02] }
-                          , { block=NoBlock, rabbits=[rabr12] }
-                          , { block=fltErth, rabbits=[] }
+                        , [ { block=fltErth
+                            , rabbits=[rabr02, rabl02]
+                            , things=[]
+                            }
+                          , { block=NoBlock, rabbits=[rabr12], things=[] }
+                          , { block=fltErth, rabbits=[], things=[] }
                           ]
                         ]
                     , [starLine5]
@@ -511,6 +534,35 @@ parseWorldWithRabbits =
         )
 
 
+parseWorldWithThings : () -> Expect.Expectation
+parseWorldWithThings =
+    okAndEqual
+        (parseLines
+            "tst"
+            [ "Q  j"
+            , "   #"
+            , "rO  "
+            , "####"
+            ]
+        )
+        (makeWorld
+            "tst"
+            (makeBlockGrid
+                [ [NoBlock, NoBlock, NoBlock, NoBlock]
+                , [NoBlock, NoBlock, NoBlock, fltErth]
+                , [NoBlock, NoBlock, NoBlock, NoBlock]
+                , [fltErth, fltErth, fltErth, fltErth]
+                ]
+            )
+            [ makeRabbit 3 0 Left
+            , makeRabbit 0 2 Right
+            ]
+            [ Entrance 0 0
+            , Exit 1 2
+            ]
+        )
+
+
 parseOverlappingRabbits : () -> Expect.Expectation
 parseOverlappingRabbits =
     okAndEqual
@@ -548,9 +600,9 @@ parseMultipleStars =
             , " **#"
             , "    "
             , "####"
-            , ":*=rj"
+            , ":*=rjQ"
             , ":*=#rj"
-            , ":*=/jr"
+            , ":*=/jrO"
             ]
         )
         (makeWorld
@@ -569,7 +621,9 @@ parseMultipleStars =
             , makeRabbit 2 1 Left
             , makeRabbit 2 1 Right
             ]
-            []
+            [ Entrance 3 0
+            , Exit 2 1
+            ]
         )
 
 

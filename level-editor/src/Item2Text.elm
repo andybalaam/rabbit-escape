@@ -5,6 +5,7 @@ module Item2Text exposing
     , toText
     , charToBlock
     , charToRabbit
+    , charToThing
     )
 
 
@@ -65,6 +66,7 @@ type CharItem =
       StarChar Pos
     | BlockChar Pos Block
     | RabbitChar Pos Rabbit
+    | ThingChar Pos Thing
 
 
 posOf : CharItem -> Pos
@@ -73,6 +75,7 @@ posOf ch =
         StarChar p -> p
         BlockChar p _ -> p
         RabbitChar p _ -> p
+        ThingChar p _ -> p
 
 
 t2rList : List (Char, Rabbit)

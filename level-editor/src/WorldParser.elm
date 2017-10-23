@@ -25,6 +25,7 @@ import World exposing (
     makeBlockGrid,
     makeWorld
     )
+import Thing exposing (Thing)
 
 
 import Item2Text exposing
@@ -32,6 +33,7 @@ import Item2Text exposing
     , Pos
     , charToBlock
     , charToRabbit
+    , charToThing
     , toText
     )
 
@@ -39,6 +41,7 @@ import Item2Text exposing
 type alias Items =
     { block : Block
     , rabbits : List Rabbit
+    , things : List Thing
     }
 
 
@@ -155,7 +158,15 @@ toCharItem gridPos y x c =
                                 (addRabbitCoords pos rabbit)
                             )
                     Nothing ->
-                        Err ( UnrecognisedChar literalPos c )
+                        case charToThing c of
+                        Just thing ->
+                            Ok
+                                (ThingChar
+                                    literalPos
+                                    (Thing.moved pos.col pos.row thing)
+                                )
+                        Nothing ->
+                            Err ( UnrecognisedChar literalPos c )
 
 
 mergeNewCharIntoOkItems : CharItem -> Items -> Result ParseErr Items
@@ -173,6 +184,8 @@ mergeNewCharIntoOkItems chItem items =
                     )
         RabbitChar pos charRabbit ->
             Ok { items | rabbits = items.rabbits ++ [charRabbit] }
+        ThingChar pos charThing ->
+            Ok { items | things = items.things ++ [charThing] }
         StarChar pos ->
             Err ( StarInsideStarPoint pos )
 
@@ -190,7 +203,7 @@ mergeNewCharIntoItems chItem items =
 starLineToItems : StarLine -> Pos -> Result ParseErr Items
 starLineToItems starLine gridPos =
     let
-        noItems = Ok { block = NoBlock, rabbits = [] }
+        noItems = Ok { block = NoBlock, rabbits = [], things = [] }
         -- Items start at column 4, after ":*="
         toCharItemAt col = toCharItem (Just gridPos) starLine.row (3 + col)
         itemsList = resultCombine (List.indexedMap toCharItemAt starLine.chars)
@@ -215,12 +228,23 @@ integrateSquare ch starLines =
                 [] -> Err (NotEnoughStarLines pos)
         BlockChar _ b ->
             Ok
-                ( { block = b, rabbits = [] }
+                ( { block = b, rabbits = [], things = [] }
                 , starLines
                 )
         RabbitChar pos r ->
             Ok
-                ( { block = NoBlock, rabbits = [(addRabbitCoords pos r)] }
+                ( { block = NoBlock
+                  , rabbits = [(addRabbitCoords pos r)]
+                  , things = []
+                  }
+                , starLines
+                )
+        ThingChar pos t ->
+            Ok
+                ( { block = NoBlock
+                  , rabbits = []
+                  , things = [Thing.moved pos.col pos.row t]
+                  }
                 , starLines
                 )
 
@@ -346,8 +370,14 @@ parse comment textWorld =
             |> Result.map List.concat          -- List Items
             |> Result.map (List.map .rabbits)  -- List (List Rabbit)
             |> Result.map List.concat          -- List Rabbit
+
+        things =
+            items                              -- List (List Items)
+            |> Result.map List.concat          -- List Items
+            |> Result.map (List.map .things)   -- List (List Thing)
+            |> Result.map List.concat          -- List Thing
     in
-        Result.map3 (makeWorld comment) grid rabbits (Ok [])
+        Result.map3 (makeWorld comment) grid rabbits things
 
 
 removeFirstIfEmpty : List String -> List String
