@@ -4,6 +4,7 @@ module Update exposing (update)
 import Model exposing (Model, UiMode(..))
 import Msg exposing (Msg(..))
 import Rabbit exposing (Rabbit, movedRabbit)
+import Thing exposing (Thing(..))
 import World exposing
     ( Block(..)
     , BlockMaterial(..)
@@ -41,6 +42,8 @@ normalUpdate msg model =
                             updateLevelClickBlock model x y
                         PlaceBlockMode ->
                             updateLevelClickBlock model x y
+                        PlaceThingMode ->
+                            updateLevelClickThing model x y
                         PlaceRabbitMode ->
                             updateLevelClickRabbit model x y
                         default ->
@@ -49,6 +52,8 @@ normalUpdate msg model =
                     updateChangeMode model mode
                 ChangeBlock block ->
                     updateChangeBlock model block
+                ChangeThing thing ->
+                    updateChangeThing model thing
                 ChangeRabbit rabbit ->
                     updateChangeRabbit model rabbit
                 Undo ->
@@ -123,6 +128,20 @@ updateChangeRabbit model rabbit =
         }
 
 
+updateChangeThing : Model -> Maybe Thing -> Model
+updateChangeThing model thing =
+    let
+        uiState = model.uiState
+    in
+        { model
+        | uiState =
+            { uiState
+            | mode = PlaceThingMode
+            , thing = Just thing
+            }
+        }
+
+
 updateLevelClickRabbit : Model -> Int -> Int -> Model
 updateLevelClickRabbit model x y =
     { model
@@ -143,6 +162,40 @@ updateLevelClickRabbitWorld newRabbit world x y =
                     movedRabbit x y r :: world.rabbits
     in
         makeWorld world.comment world.blocks rabbits world.things
+
+
+updateLevelClickThing : Model -> Int -> Int -> Model
+updateLevelClickThing model x y =
+    { model
+    | world = updateLevelClickThingWorld model.uiState.thing model.world x y
+    }
+
+
+updateLevelClickThingWorld :
+    Maybe (Maybe Thing) ->
+    World ->
+    Int ->
+    Int ->
+    World
+updateLevelClickThingWorld maybeNewThing world x y =
+    let
+        newThing : Maybe Thing
+        newThing =
+            case maybeNewThing of
+                Nothing -> Just (Entrance 0 0)
+                Just t -> t
+
+        things : List (Thing)
+        things =
+            case newThing of
+                Nothing ->
+                    List.filter
+                        (\thing -> Thing.pos thing /= (x, y))
+                        world.things
+                Just t ->
+                    Thing.moved x y t :: world.things
+    in
+        makeWorld world.comment world.blocks world.rabbits things
 
 
 updateLevelClickBlock : Model -> Int -> Int -> Model

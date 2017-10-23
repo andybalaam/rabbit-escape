@@ -32,7 +32,7 @@ initWorld =
     in
         case p of
             Ok w -> w
-            Err s -> makeWorld "Unexpected Error" (makeBlockGrid []) []
+            Err s -> makeWorld "Unexpected Error" (makeBlockGrid []) [] []
 
 
 translationPlaceholder : String -> String
@@ -47,6 +47,7 @@ initModel =
         { mode = InitialMode
         , block = Nothing
         , rabbit = Just (makeRabbit 0 0 Right)
+        , thing = Nothing
         }
     , t = translationPlaceholder
     , past = []

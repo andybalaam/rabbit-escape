@@ -13,6 +13,7 @@ import Html.Events exposing (onClick)
 import Msg exposing (Msg(..))
 import Model exposing (Model, UiMode(..), UiState)
 import RabbitImage exposing (rabbitImage)
+import ThingImage exposing (thingImage)
 import World exposing (Block(..), BlockMaterial(..), BlockShape(..))
 
 
@@ -21,6 +22,7 @@ type ButtonDef =
     | UndoButton
     | RedoButton
     | BlockButton
+    | ThingButton
     | RabbitButton
 
 
@@ -30,6 +32,7 @@ buttonsList =
     , UndoButton
     , RedoButton
     , BlockButton
+    , ThingButton
     , RabbitButton
     ]
 
@@ -49,6 +52,10 @@ buildClickCmd uiState buttonDef =
             case uiState.mode of
                 ChooseBlockMode -> ChangeMode PlaceBlockMode
                 default         -> ChangeMode ChooseBlockMode
+        ThingButton ->
+            case uiState.mode of
+                ChooseThingMode -> ChangeMode PlaceThingMode
+                default         -> ChangeMode ChooseThingMode
         RabbitButton ->
             case uiState.mode of
                 ChooseRabbitMode -> ChangeMode PlaceRabbitMode
@@ -65,6 +72,10 @@ buttonImage uiState buttondef =
             case uiState.block of
                 Nothing    -> "allblocks.png"
                 Just block -> blockImage block
+        ThingButton ->
+            case uiState.thing of
+                Nothing    -> "allthings.png"
+                Just thing -> thingImage thing
         RabbitButton ->
             rabbitImage uiState.rabbit
 
@@ -78,6 +89,8 @@ pressedClass mode buttondef =
                 CodeMode _ -> [SaveButton]
                 ChooseBlockMode -> [BlockButton]
                 PlaceBlockMode -> [BlockButton]
+                ChooseThingMode -> [ThingButton]
+                PlaceThingMode -> [ThingButton]
                 ChooseRabbitMode -> [RabbitButton]
                 PlaceRabbitMode -> [RabbitButton]
     in

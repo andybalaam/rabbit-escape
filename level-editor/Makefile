@@ -1,8 +1,11 @@
 
 GAME_IMAGE_NAMES := \
 	allblocks.png \
+	allthings.png \
 	bridge_rising_left.svg \
 	bridge_rising_right.svg \
+	entrance.png \
+	exit.png \
 	land_block_1.png \
 	land_rising_left_1.png \
 	land_rising_right_1.png \
@@ -13,6 +16,7 @@ GAME_IMAGE_NAMES := \
 	rabbot_stand_right.svg \
 	remove_block.png \
 	remove_rabbit.svg \
+	remove_thing.png \
 	save.svg \
 	undo.svg \
 	redo.svg \

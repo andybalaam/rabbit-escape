@@ -7,6 +7,7 @@ import Expect
 import Model exposing (Model, UiMode(..), UiState)
 import Msg exposing (Msg(..))
 import Rabbit exposing (Direction(..), Rabbit, makeRabbit)
+import Thing exposing (Thing(..))
 import Update exposing (update)
 import World exposing (Block(..), BlockMaterial(..), BlockShape(..), World)
 import WorldParser exposing (parse, parseErrToString)
@@ -21,7 +22,7 @@ all =
               , "# r#"
               , "####"
               ]
-            , { mode = InitialMode, block = Nothing, rabbit = Nothing }
+            , emptyState
             )
             [ ( (LevelClick 2 1)
               , [ "####"
@@ -29,7 +30,7 @@ all =
                 , "# r#"
                 , "####"
                 ]
-              , { mode = InitialMode, block = Nothing, rabbit = Nothing }
+              , emptyState
               )
             ]
 
@@ -39,9 +40,9 @@ all =
               , "# r#"
               , "####"
               ]
-            , { mode = PlaceBlockMode
+            , { emptyState
+              | mode = PlaceBlockMode
               , block = Just (Block Earth UpRight)
-              , rabbit = Nothing
               }
             )
             [ ( (LevelClick 0 1)
@@ -50,9 +51,9 @@ all =
                 , "# r#"
                 , "####"
                 ]
-              , { mode = PlaceBlockMode
+              , { emptyState
+                | mode = PlaceBlockMode
                 , block = Just (Block Earth UpRight)
-                , rabbit = Nothing
                 }
               )
             ]
@@ -63,8 +64,8 @@ all =
               , "#  #"
               , "####"
               ]
-            , { mode = PlaceRabbitMode
-              , block = Nothing
+            , { emptyState
+              | mode = PlaceRabbitMode
               , rabbit = Just (makeRabbit 0 0 Left)
               }
             )
@@ -74,47 +75,72 @@ all =
                 , "#  #"
                 , "####"
                 ]
-              , { mode = PlaceRabbitMode
-                , block = Nothing
+              , { emptyState
+                | mode = PlaceRabbitMode
                 , rabbit = Just (makeRabbit 0 0 Left)
                 }
               )
             ]
 
---        , testActions "Placing a thing"
---            ( [ "####"
---              , "#  #"
---              , "#  #"
---              , "####"
---              ]
---            , { mode = PlaceThingMode
---              , block = Nothing
---              , rabbit = Nothing
---              , thing = Entrance 0 0
---              }
---            )
---            [ ( (LevelClick 1 2)
---              , [ "####"
---                , "#  #"
---                , "#Q #"
---                , "####"
---                ]
---              , { mode = PlaceThingMode
---                , block = Nothing
---                , rabbit = Nothing
---                , thing = Entrance 0 0
---                }
---              )
---            ]
---
+
+        , testActions "Placing a thing"
+            ( [ "####"
+              , "#  #"
+              , "#  #"
+              , "####"
+              ]
+            , { emptyState
+              | mode = PlaceThingMode
+              , thing = Just (Just (Entrance 0 0))
+              }
+            )
+            [ ( (LevelClick 1 2)
+              , [ "####"
+                , "#  #"
+                , "#Q #"
+                , "####"
+                ]
+              , { emptyState
+                | mode = PlaceThingMode
+                , thing = Just (Just (Entrance 0 0))
+                }
+              )
+            ]
+
+
+        , testActions "Removing a thing"
+            ( [ "####"
+              , "# O#"
+              , "#  #"
+              , "####"
+              ]
+            , { emptyState
+              | mode = PlaceThingMode
+              , thing = Just Nothing
+              }
+            )
+            [ ( (LevelClick 2 1)
+              , [ "####"
+                , "#  #"
+                , "#  #"
+                , "####"
+                ]
+              , { emptyState
+                | mode = PlaceThingMode
+                , thing = Just Nothing
+                }
+              )
+            ]
+
+
         , testActions "Removing a rabbit"
             ( [ "####"
               , "# j#"
               , "# r#"
               , "####"
               ]
-            , { mode = PlaceRabbitMode
-              , block = Nothing
+            , { emptyState
+              | mode = PlaceRabbitMode
               , rabbit = Nothing
               }
             )
@@ -124,8 +150,8 @@ all =
                 , "# r#"
                 , "####"
                 ]
-              , { mode = PlaceRabbitMode
-                , block = Nothing
+              , { emptyState
+                | mode = PlaceRabbitMode
                 , rabbit = Nothing
                 }
               )
@@ -135,8 +161,8 @@ all =
                 , "#  #"
                 , "####"
                 ]
-              , { mode = PlaceRabbitMode
-                , block = Nothing
+              , { emptyState
+                | mode = PlaceRabbitMode
                 , rabbit = Nothing
                 }
               )
@@ -144,50 +170,50 @@ all =
 
         , testActions "ChangeMode changes mode"
             ( [ "" ]
-            , { mode = InitialMode, block = Nothing, rabbit = Nothing }
+            , emptyState
             )
             [ ( (ChangeMode ChooseBlockMode)
               , [ "" ]
-              , { mode = ChooseBlockMode, block = Nothing, rabbit = Nothing }
+              , { emptyState | mode = ChooseBlockMode }
               )
             , ( (ChangeMode ChooseRabbitMode)
               , [ "" ]
-              , { mode = ChooseRabbitMode, block = Nothing, rabbit = Nothing }
+              , { emptyState | mode = ChooseRabbitMode }
               )
             ]
 
         , testActions "Changing to code mode stores code text"
             ( [ "#r#" ]
-            , { mode = InitialMode, block = Nothing, rabbit = Nothing }
+            , emptyState
             )
             [ ( (ChangeMode (CodeMode ""))  -- Even though we sent nothing
               , [ "#r#" ]
-              , { mode = CodeMode "#r#", block = Nothing, rabbit = Nothing }
+              , { emptyState | mode = CodeMode "#r#" }
                 -- We get a model
               )
             ]
 
         , testActions "Choosing a block updates block and mode"
             ( [ "" ]
-            , { mode = InitialMode, block = Nothing, rabbit = Nothing }
+            , emptyState
             )
             [ ( (ChangeBlock (Block Earth UpRight))
               , [ "" ]
-              , { mode = PlaceBlockMode
+              , { emptyState
+                | mode = PlaceBlockMode
                 , block = Just (Block Earth UpRight)
-                , rabbit = Nothing
                 }
               )
             ]
 
         , testActions "Choosing a rabbit updates rabbit and mode"
             ( [ "" ]
-            , { mode = InitialMode, block = Nothing, rabbit = Nothing }
+            , emptyState
             )
             [ ( (ChangeRabbit (Just (makeRabbit 0 0 Left)))
               , [ "" ]
-              , { mode = PlaceRabbitMode
-                , block = Nothing
+              , { emptyState
+                | mode = PlaceRabbitMode
                 , rabbit = Just (makeRabbit 0 0 Left)
                 }
               )
@@ -198,19 +224,19 @@ all =
                 [ "   "
                 , "   "
                 ]
-              , { mode = InitialMode, block = Nothing, rabbit = Nothing }
+              , emptyState
             )
             [ ( (LevelClick 2 0)
               , [ "  #"
                 , "   "
                 ]
-              , { mode = InitialMode, block = Nothing, rabbit = Nothing }
+              , emptyState
               )
             , ( Undo
               , [ "   "
                 , "   "
                 ]
-              , { mode = InitialMode, block = Nothing, rabbit = Nothing }
+              , emptyState
               )
             ]
 
@@ -219,30 +245,30 @@ all =
                 [ "   "
                 , "   "
                 ]
-              , { mode = InitialMode, block = Nothing, rabbit = Nothing }
+              , emptyState
             )
             [ ( (LevelClick 2 0)
               , [ "  #"
                 , "   "
                 ]
-              , { mode = InitialMode, block = Nothing, rabbit = Nothing }
+              , emptyState
               )
             , ( (ChangeBlock (Block Earth UpRight))
               , [ "  #"
                 , "   "
                 ]
-              , { mode = PlaceBlockMode
+              , { emptyState
+                | mode = PlaceBlockMode
                 , block = Just (Block Earth UpRight)
-                , rabbit = Nothing
                 }
               )
             , ( Undo
               , [ "   "  -- The world goes back to before
                 , "   "  -- but the mode and block stay selected.
                 ]
-              , { mode = PlaceBlockMode
+              , { emptyState
+                | mode = PlaceBlockMode
                 , block = Just (Block Earth UpRight)
-                , rabbit = Nothing
                 }
               )
             ]
@@ -252,43 +278,43 @@ all =
                 [ "/  "
                 , "/  "
                 ]
-              , { mode = InitialMode, block = Nothing, rabbit = Nothing }
+              , emptyState
             )
             [ ( (LevelClick 2 0)
               , [ "/ #"
                 , "/  "
                 ]
-              , { mode = InitialMode, block = Nothing, rabbit = Nothing }
+              , emptyState
               )
             , ( (LevelClick 1 1)
               , [ "/ #"
                 , "/# "
                 ]
-              , { mode = InitialMode, block = Nothing, rabbit = Nothing }
+              , emptyState
               )
             , ( (LevelClick 2 1)
               , [ "/ #"
                 , "/##"
                 ]
-              , { mode = InitialMode, block = Nothing, rabbit = Nothing }
+              , emptyState
               )
             , ( Undo
               , [ "/ #"
                 , "/# "
                 ]
-              , { mode = InitialMode, block = Nothing, rabbit = Nothing }
+              , emptyState
               )
             , ( Undo
               , [ "/ #"
                 , "/  "
                 ]
-              , { mode = InitialMode, block = Nothing, rabbit = Nothing }
+              , emptyState
               )
             , ( Undo
               , [ "/  "
                 , "/  "
                 ]
-              , { mode = InitialMode, block = Nothing, rabbit = Nothing }
+              , emptyState
               )
             ]
 
@@ -297,13 +323,13 @@ all =
                 [ "MMM"
                 , "MMM"
                 ]
-              , { mode = InitialMode, block = Nothing, rabbit = Nothing }
+              , emptyState
             )
             [ ( Undo
               , [ "MMM"
                 , "MMM"
                 ]
-              , { mode = InitialMode, block = Nothing, rabbit = Nothing }
+              , emptyState
               )
             ]
 
@@ -312,25 +338,25 @@ all =
                 [ "MMM"
                 , "MMM"
                 ]
-              , { mode = InitialMode, block = Nothing, rabbit = Nothing }
+              , emptyState
             )
             [ ( (LevelClick 2 1)
               , [ "MMM"
                 , "MM#"
                 ]
-              , { mode = InitialMode, block = Nothing, rabbit = Nothing }
+              , emptyState
               )
             , ( Undo
               , [ "MMM"
                 , "MMM"
                 ]
-              , { mode = InitialMode, block = Nothing, rabbit = Nothing }
+              , emptyState
               )
             , ( Undo
               , [ "MMM"
                 , "MMM"
                 ]
-              , { mode = InitialMode, block = Nothing, rabbit = Nothing }
+              , emptyState
               )
             ]
 
@@ -339,25 +365,25 @@ all =
                 [ "MMM"
                 , "MM/"
                 ]
-              , { mode = InitialMode, block = Nothing, rabbit = Nothing }
+              , emptyState
             )
             [ ( (LevelClick 2 1)
               , [ "MMM"
                 , "MM#"
                 ]
-              , { mode = InitialMode, block = Nothing, rabbit = Nothing }
+              , emptyState
               )
             , ( Undo
               , [ "MMM"
                 , "MM/"
                 ]
-              , { mode = InitialMode, block = Nothing, rabbit = Nothing }
+              , emptyState
               )
             , ( Redo
               , [ "MMM"
                 , "MM#"
                 ]
-              , { mode = InitialMode, block = Nothing, rabbit = Nothing }
+              , emptyState
               )
             ]
 
@@ -366,43 +392,43 @@ all =
                 [ "MMM"
                 , "MM/"
                 ]
-              , { mode = InitialMode, block = Nothing, rabbit = Nothing }
+              , emptyState
             )
             [ ( (LevelClick 2 1)
               , [ "MMM"
                 , "MM#"
                 ]
-              , { mode = InitialMode, block = Nothing, rabbit = Nothing }
+              , emptyState
               )
             , ( Undo
               , [ "MMM"
                 , "MM/"
                 ]
-              , { mode = InitialMode, block = Nothing, rabbit = Nothing }
+              , emptyState
               )
             , ( (LevelClick 0 0)
               , [ "#MM"
                 , "MM/"
                 ]
-              , { mode = InitialMode, block = Nothing, rabbit = Nothing }
+              , emptyState
               )
             , ( Redo
               , [ "#MM"  -- The redo did nothing because
                 , "MM/"  -- we had placed a block in between
                 ]
-              , { mode = InitialMode, block = Nothing, rabbit = Nothing }
+              , emptyState
               )
             , ( Undo
               , [ "MMM"  -- Undo still works
                 , "MM/"
                 ]
-              , { mode = InitialMode, block = Nothing, rabbit = Nothing }
+              , emptyState
               )
             , ( Redo
               , [ "#MM"  -- And redo undoes the undo
                 , "MM/"
                 ]
-              , { mode = InitialMode, block = Nothing, rabbit = Nothing }
+              , emptyState
               )
             ]
 
@@ -411,72 +437,72 @@ all =
                 [ "///"
                 , "   "
                 ]
-              , { mode = InitialMode, block = Nothing, rabbit = Nothing }
+              , emptyState
             )
             [ ( (LevelClick 2 1)
               , [ "///"
                 , "  #"
                 ]
-              , { mode = InitialMode, block = Nothing, rabbit = Nothing }
+              , emptyState
               )
             , ( Undo
               , [ "///"
                 , "   "
                 ]
-              , { mode = InitialMode, block = Nothing, rabbit = Nothing }
+              , emptyState
               )
             , ( (ChangeBlock (Block Earth UpRight))
               , [ "///"
                 , "   "
                 ]
-              , { mode = PlaceBlockMode
+              , { emptyState
+                | mode = PlaceBlockMode
                 , block = Just (Block Earth UpRight)
-                , rabbit = Nothing
                 }
               )
             , ( Redo
               , [ "///"
                 , "  #"
                 ]
-              , { mode = PlaceBlockMode
+              , { emptyState
+                | mode = PlaceBlockMode
                 , block = Just (Block Earth UpRight)
-                , rabbit = Nothing
                 }
               )
             , ( (ChangeBlock (Block Earth UpLeft))
               , [ "///"
                 , "  #"
                 ]
-              , { mode = PlaceBlockMode
+              , { emptyState
+                | mode = PlaceBlockMode
                 , block = Just (Block Earth UpLeft)
-                , rabbit = Nothing
                 }
               )
             , ( Undo
               , [ "///"
                 , "   "
                 ]
-              , { mode = PlaceBlockMode
+              , { emptyState
+                | mode = PlaceBlockMode
                 , block = Just (Block Earth UpLeft)
-                , rabbit = Nothing
                 }
               )
             , ( (ChangeBlock NoBlock)
               , [ "///"
                 , "   "
                 ]
-              , { mode = PlaceBlockMode
+              , { emptyState
+                | mode = PlaceBlockMode
                 , block = Just NoBlock
-                , rabbit = Nothing
                 }
               )
             , ( Redo
               , [ "///"
                 , "  #"
                 ]
-              , { mode = PlaceBlockMode
+              , { emptyState
+                | mode = PlaceBlockMode
                 , block = Just NoBlock
-                , rabbit = Nothing
                 }
               )
             ]
@@ -486,13 +512,13 @@ all =
                 [ "MMM"
                 , "MMM"
                 ]
-              , { mode = InitialMode, block = Nothing, rabbit = Nothing }
+              , emptyState
             )
             [ ( Redo
               , [ "MMM"
                 , "MMM"
                 ]
-              , { mode = InitialMode, block = Nothing, rabbit = Nothing }
+              , emptyState
               )
             ]
 
@@ -501,31 +527,31 @@ all =
                 [ "MMM"
                 , "MMM"
                 ]
-              , { mode = InitialMode, block = Nothing, rabbit = Nothing }
+              , emptyState
             )
             [ ( (LevelClick 2 1)
               , [ "MMM"
                 , "MM#"
                 ]
-              , { mode = InitialMode, block = Nothing, rabbit = Nothing }
+              , emptyState
               )
             , ( Undo
               , [ "MMM"
                 , "MMM"
                 ]
-              , { mode = InitialMode, block = Nothing, rabbit = Nothing }
+              , emptyState
               )
             , ( Redo
               , [ "MMM"
                 , "MM#"
                 ]
-              , { mode = InitialMode, block = Nothing, rabbit = Nothing }
+              , emptyState
               )
             , ( Redo
               , [ "MMM"
                 , "MM#"
                 ]
-              , { mode = InitialMode, block = Nothing, rabbit = Nothing }
+              , emptyState
               )
             ]
         ]
@@ -609,3 +635,12 @@ expectUpdateGives num initModel msgsAndModels =
                         )
             in
                 headTest :: expectUpdateGives (num + 1) newModel mms
+
+
+emptyState : UiState
+emptyState =
+    { mode = InitialMode
+    , block = Nothing
+    , rabbit = Nothing
+    , thing = Nothing
+    }

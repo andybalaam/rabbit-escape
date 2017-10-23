@@ -2,7 +2,7 @@ module Model exposing (Model, UiMode(..), UiState)
 
 
 import Rabbit exposing (Rabbit)
-
+import Thing exposing (Thing)
 import World exposing (Block(..), World)
 
 
@@ -11,6 +11,8 @@ type UiMode =
     | CodeMode String
     | ChooseBlockMode
     | PlaceBlockMode
+    | ChooseThingMode
+    | PlaceThingMode
     | ChooseRabbitMode
     | PlaceRabbitMode
 
@@ -19,6 +21,7 @@ type alias UiState =
     { mode : UiMode
     , block : Maybe Block
     , rabbit : Maybe Rabbit
+    , thing : Maybe (Maybe Thing)
     }
 
 

@@ -15,6 +15,8 @@ import Rabbit exposing
     , makeRabbot
     )
 import RabbitImage exposing (rabbitImage)
+import Thing exposing (Thing(..))
+import ThingImage exposing (thingImage)
 
 
 type alias Contents =
@@ -75,6 +77,28 @@ chooseRabbitButtons model =
             , but (Just (makeRabbit 0 0 Left))
             , but (Just (makeRabbot 0 0 Right))
             , but (Just (makeRabbot 0 0 Left))
+            , but (Nothing)
+            ]
+        }
+
+
+chooseThingButtons : Model -> Contents
+chooseThingButtons model =
+    let
+        but : Maybe Thing -> Html Msg
+        but thing =
+            button
+                [ onClick (ChangeThing thing) ]
+                [ img [ src ("images/" ++ (thingImage thing)) ] [] ]
+    in
+        { visible =
+            True
+        , dialogStyles =
+            [ ("overflow", "auto") ]
+        , items =
+            [ tp model "Choose an item:"
+            , but (Just (Entrance 0 0))
+            , but (Just (Exit 0 0))
             , but (Nothing)
             ]
         }
@@ -142,6 +166,7 @@ viewDialog model =
     drawDialog
         ( case model.uiState.mode of
             ChooseBlockMode -> chooseBlockButtons model
+            ChooseThingMode -> chooseThingButtons model
             ChooseRabbitMode -> chooseRabbitButtons model
             CodeMode code   -> codeText model code
             other           -> invisible
