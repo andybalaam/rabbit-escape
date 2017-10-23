@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="32"
+   height="32"
+   id="svg2"
+   version="1.1"
+   inkscape:version="0.92.2 (5c3e80d, 2017-08-06)"
+   sodipodi:docname="add_row.svg">
+  <defs
+     id="defs4" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="11.844039"
+     inkscape:cx="-0.74092529"
+     inkscape:cy="16"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     inkscape:window-width="1869"
+     inkscape:window-height="990"
+     inkscape:window-x="51"
+     inkscape:window-y="28"
+     inkscape:window-maximized="1" />
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(0,-1020.3622)">
+    <g
+       id="g5236"
+       transform="translate(3.8838102,-11.234553)">
+      <rect
+         y="1034.9695"
+         x="11.144846"
+         height="10.469401"
+         width="2.3640585"
+         id="rect5217" />
+      <rect
+         transform="rotate(90)"
+         y="-17.561577"
+         x="1039.3599"
+         height="10.469401"
+         width="2.3640585"
+         id="rect5217-3" />
+    </g>
+    <g
+       id="g5397"
+       transform="rotate(90,16.189579,1036.695)">
+      <rect
+         y="1025.3391"
+         x="18.068161"
+         height="22.120832"
+         width="2.2796278"
+         id="rect5238" />
+      <rect
+         y="1025.3391"
+         x="20.812157"
+         height="22.120832"
+         width="2.2796278"
+         id="rect5238-6" />
+      <rect
+         y="1025.3391"
+         x="23.556154"
+         height="22.120832"
+         width="2.2796278"
+         id="rect5238-0" />
+      <rect
+         style="fill:#008000"
+         y="1025.3391"
+         x="26.30015"
+         height="22.120832"
+         width="2.2796278"
+         id="rect5238-0-6" />
+    </g>
+  </g>
+</svg>

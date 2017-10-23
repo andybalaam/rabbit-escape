@@ -56,6 +56,14 @@ normalUpdate msg model =
                     updateChangeThing model thing
                 ChangeRabbit rabbit ->
                     updateChangeRabbit model rabbit
+                AddColumn ->
+                    updateAddColumn model
+                RemoveColumn ->
+                    updateRemoveColumn model
+                AddRow ->
+                    updateAddRow model
+                RemoveRow ->
+                    updateRemoveRow model
                 Undo ->
                     crashBadMessage msg
                 Redo ->
@@ -245,4 +253,94 @@ updateChangeMode model mode =
     in
         { model
         | uiState = { uiState | mode = m }
+        }
+
+
+updateAddColumn : Model -> Model
+updateAddColumn model =
+    { model
+    | world =
+        makeWorld
+            model.world.comment
+            ( makeBlockGrid
+                (List.map (\r -> r ++ [NoBlock]) (blocks model.world))
+            )
+            model.world.rabbits
+            model.world.things
+    }
+
+
+updateRemoveColumn : Model -> Model
+updateRemoveColumn model =
+    let
+        bls = blocks model.world
+        cols =
+            case bls of
+                [] -> 3
+                h :: _ -> List.length h
+
+        lastColRabbit : Rabbit -> Bool
+        lastColRabbit rabbit =
+            rabbit.x /= cols - 1
+
+        lastColThing : Thing -> Bool
+        lastColThing thing =
+            let (x, _) = Thing.pos thing in
+                x /= cols - 1
+    in
+        { model
+        | world =
+            makeWorld
+                model.world.comment
+                ( makeBlockGrid
+                    (List.map (\r -> List.take ((List.length r) - 1) r) bls)
+                )
+                ( List.filter lastColRabbit model.world.rabbits )
+                ( List.filter lastColThing model.world.things )
+        }
+
+
+updateAddRow : Model -> Model
+updateAddRow model =
+    let
+        bls = blocks model.world
+        cols =
+            case bls of
+                [] -> 3
+                h :: _ -> List.length h
+    in
+        { model
+        | world =
+            makeWorld
+                model.world.comment
+                ( makeBlockGrid
+                    (blocks model.world ++ [List.repeat cols NoBlock])
+                )
+                model.world.rabbits
+                model.world.things
+        }
+
+
+updateRemoveRow : Model -> Model
+updateRemoveRow model =
+    let
+        bls = blocks model.world
+        rows = List.length bls
+
+        lastRowRabbit : Rabbit -> Bool
+        lastRowRabbit rabbit =
+            rabbit.y /= rows - 1
+
+        lastRowThing : Thing -> Bool
+        lastRowThing thing =
+            let (_, y) = Thing.pos thing in
+                y /= rows - 1
+    in
+        { model
+        | world =
+            makeWorld
+                model.world.comment
+                ( makeBlockGrid (List.take (rows - 1) bls) )
+                ( List.filter lastRowRabbit model.world.rabbits )
+                ( List.filter lastRowThing model.world.things )
         }

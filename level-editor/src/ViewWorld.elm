@@ -51,6 +51,23 @@ blockImg block x y =
             ]
 
 
+buttonAttrs : Int -> Int -> List (Html.Attribute Msg)
+buttonAttrs x y =
+    let
+        sx = toString (x + 1)
+        sy = toString (y + 1)
+    in
+        [ style
+            [ ("grid-row-start", sy)
+            , ("grid-row-end",   sy)
+            , ("grid-column-start", sx)
+            , ("grid-column-end",   sx)
+            ]
+        , id (sx++","++sy)
+        ]
+
+
+
 viewBlockContents :
     Block ->
     List Rabbit ->
@@ -59,24 +76,40 @@ viewBlockContents :
     Int ->
     Html Msg
 viewBlockContents block rabbits things x y =
-    let
-        sx = toString (x + 1)
-        sy = toString (y + 1)
-    in
         button
-            [ onClick (LevelClick x y)
-            , style
-                [ ("grid-row-start", sy)
-                , ("grid-row-end",   sy)
-                , ("grid-column-start", sx)
-                , ("grid-column-end",   sx)
-                ]
-            , id (sx++","++sy)
-            ]
+            ( [ onClick (LevelClick x y) ] ++ buttonAttrs x y )
             (  blockImg block x y
             ++ List.map thingImg things
             ++ List.map rabbitImg rabbits
             )
+
+
+addCol : Int -> Int -> List (Html Msg)
+addCol x y =
+    case y of
+        0 ->
+            [ button
+                ( [ onClick (AddColumn) ] ++ buttonAttrs x y )
+                [ img [ src "images/add_column.svg" ] [] ]
+            ]
+        1 ->
+            [ button
+                ( [ onClick (RemoveColumn) ] ++ buttonAttrs x y )
+                [ img [ src "images/remove_column.svg" ] [] ]
+            ]
+        default ->
+            []
+
+
+addRow : Int -> List (Html Msg)
+addRow y =
+    [ button
+        ( [ onClick (AddRow) ] ++ buttonAttrs 0 y )
+        [ img [ src "images/add_row.svg" ] [] ]
+    , button
+        ( [ onClick (RemoveRow) ] ++ buttonAttrs 1 y )
+        [ img [ src "images/remove_row.svg" ] [] ]
+    ]
 
 
 viewBlock : World -> Int -> Int -> Block -> Html Msg
@@ -86,16 +119,20 @@ viewBlock world y x block =
 
 viewRow : World -> Int -> List Block -> List (Html Msg)
 viewRow world y blocks =
-    List.indexedMap (viewBlock world y) blocks
+       ( List.indexedMap (viewBlock world y) blocks)
+    ++ addCol (List.length blocks) y
 
 
 viewWorld : World -> Html Msg
 viewWorld world =
     div
         [ id "level" ]
-        (List.concat
-            (List.indexedMap
-                (viewRow world)
-                (World.blocks world)
+        (
+            ( List.concat
+                (List.indexedMap
+                    (viewRow world)
+                    (World.blocks world)
+                )
             )
+        ++ addRow (List.length (World.blocks world))
         )

@@ -1,5 +1,7 @@
 
 GAME_IMAGE_NAMES := \
+	add_column.svg \
+	add_row.svg \
 	allblocks.png \
 	allthings.png \
 	bridge_rising_left.svg \
@@ -15,7 +17,9 @@ GAME_IMAGE_NAMES := \
 	rabbot_stand_left.svg \
 	rabbot_stand_right.svg \
 	remove_block.png \
+	remove_column.svg \
 	remove_rabbit.svg \
+	remove_row.svg \
 	remove_thing.png \
 	save.svg \
 	undo.svg \

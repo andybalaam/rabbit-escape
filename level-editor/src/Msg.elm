@@ -13,5 +13,9 @@ type Msg =
     | ChangeBlock Block
     | ChangeThing (Maybe Thing)
     | ChangeRabbit (Maybe Rabbit)
+    | AddColumn
+    | RemoveColumn
+    | AddRow
+    | RemoveRow
     | Undo
     | Redo

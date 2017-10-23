@@ -554,6 +554,79 @@ all =
               , emptyState
               )
             ]
+
+        , testActions "Adding a column"
+            ( [ "####"
+              , "#  #"
+              , "# r#"
+              , "####"
+              ]
+            , emptyState
+            )
+            [ ( AddColumn
+              , [ "#### "
+                , "#  # "
+                , "# r# "
+                , "#### "
+                ]
+              , emptyState
+              )
+            ]
+
+        , testActions "Removing a column"
+            ( [ "####"
+              , "# jr"
+              , "#  O"
+              , "####"
+              ]
+            , emptyState
+            )
+            [ ( RemoveColumn
+              , [ "###"
+                , "# j"
+                , "#  "
+                , "###"
+                ]
+              , emptyState
+              )
+            ]
+
+        , testActions "Adding a row"
+            ( [ "####"
+              , "#  #"
+              , "#j #"
+              , "####"
+              ]
+            , emptyState
+            )
+            [ ( AddRow
+              , [ "####"
+                , "#  #"
+                , "#j #"
+                , "####"
+                , "    "
+                ]
+              , emptyState
+              )
+            ]
+
+        , testActions "Removing a row"
+            ( [ "####"
+              , "#  #"
+              , "#j #"
+              , "Q#r#"
+              ]
+            , emptyState
+            )
+            [ ( RemoveRow
+              , [ "####"
+                , "#  #"
+                , "#j #"
+                ]
+              , emptyState
+              )
+            ]
+
         ]
 
 
