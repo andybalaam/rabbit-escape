@@ -5,6 +5,7 @@ import Expect
 
 
 import Rabbit exposing (Direction(..), Rabbit, makeRabbit, makeRabbot)
+import Thing exposing (Thing(..))
 import World exposing
     ( World
     , Block(..)
@@ -23,8 +24,7 @@ all =
             [ [NoBlock, NoBlock, NoBlock]
             , [NoBlock, NoBlock, NoBlock]
             , [NoBlock, NoBlock, NoBlock]
-            ]
-            []
+            ] [] []
             [ "   "
             , "   "
             , "   "
@@ -35,8 +35,7 @@ all =
             , [NoBlock, NoBlock, NoBlock, fltErth]
             , [NoBlock, NoBlock, NoBlock, NoBlock]
             , [fltErth, fltErth, fltErth, fltErth]
-            ]
-            []
+            ] [] []
             [ "    "
             , "   #"
             , "    "
@@ -53,8 +52,28 @@ all =
             , makeRabbot 0 0 Left
             , makeRabbit 2 1 Right
             , makeRabbit 1 2 Left
-            ]
+            ] []
             [ "y   "
+            , "t r#"
+            , " j  "
+            , "####"
+            ]
+
+        , t "Render world with things"
+            [ [NoBlock, NoBlock, NoBlock, NoBlock]
+            , [NoBlock, NoBlock, NoBlock, fltErth]
+            , [NoBlock, NoBlock, NoBlock, NoBlock]
+            , [fltErth, fltErth, fltErth, fltErth]
+            ]
+            [ makeRabbot 0 1 Right
+            , makeRabbot 0 0 Left
+            , makeRabbit 2 1 Right
+            , makeRabbit 1 2 Left
+            ]
+            [ Entrance 1 0
+            , Exit 3 0
+            ]
+            [ "yQ O"
             , "t r#"
             , " j  "
             , "####"
@@ -68,7 +87,7 @@ all =
             ]
             [ makeRabbit 2 1 Right
             , makeRabbit 2 1 Left
-            ]
+            ] []
             [ "    "
             , "  * "
             , "    "
@@ -76,7 +95,7 @@ all =
             , ":*=rj"
             ]
 
-        , t "Render rabbit on top of block"
+        , t "Render multiple things in same place"
             [ [NoBlock, NoBlock, NoBlock, NoBlock]
             , [NoBlock, NoBlock, fltErth, fltMetl]
             , [uprErth, NoBlock, NoBlock, NoBlock]
@@ -87,12 +106,15 @@ all =
             , makeRabbit 3 1 Right
             , makeRabbit 0 2 Left
             ]
+            [ Entrance 2 1
+            , Exit 3 1
+            ]
             [ "    "
             , "  **"
             , "*   "
             , "    "
-            , ":*=#rj"
-            , ":*=Mr"
+            , ":*=#rjQ"
+            , ":*=MrO"
             , ":*=/j"
             ]
         ]
@@ -121,15 +143,20 @@ uprErth =
     Block Earth UpRight
 
 
-rend : List (List Block) -> List Rabbit -> List String
-rend blocks rabbits =
-    renderToLines (makeWorld "tst" (makeBlockGrid blocks) rabbits)
+rend : List (List Block) -> List Rabbit -> List Thing -> List String
+rend blocks rabbits things =
+    renderToLines (makeWorld "tst" (makeBlockGrid blocks) rabbits things)
 
 
-t : String -> List (List Block) -> List Rabbit -> List String -> Test
-t desc blocks rabbits expected =
+t :
+    String ->
+    List (List Block) ->
+    List Rabbit ->
+    List Thing -> List String ->
+    Test
+t desc blocks rabbits things expected =
     test
         desc
         ( \() ->
-            Expect.equal expected (rend blocks rabbits)
+            Expect.equal expected (rend blocks rabbits things)
         )

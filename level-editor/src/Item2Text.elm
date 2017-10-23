@@ -13,6 +13,7 @@ import EveryDict
 
 
 import Rabbit exposing (Direction(..), Rabbit, makeRabbit, makeRabbot)
+import Thing exposing (Thing(..))
 import World exposing
     ( Block(..)
     , BlockMaterial(..)
@@ -116,6 +117,41 @@ rabbitsToChars rabbits =
     List.map rabbitToChar rabbits
 
 
+t2thList : List (Char, Thing)
+t2thList =
+    [ ('Q', Entrance 0 0)
+    , ('O', Exit 0 0)
+    ]
+
+
+t2th : Dict.Dict Char Thing
+t2th =
+    Dict.fromList t2thList
+
+
+charToThing : Char -> Maybe Thing
+charToThing c =
+    Dict.get c t2th
+
+
+th2t : EveryDict.EveryDict Thing Char
+th2t =
+    EveryDict.fromList (List.map swap t2thList)
+
+
+thingToChar : Thing -> Char
+thingToChar thing =
+    case EveryDict.get (Thing.moved 0 0 thing) th2t of
+        Just c -> c
+        Nothing ->
+            Debug.crash ("Unknown thing! " ++ (toString thing))
+
+
+thingsToChars : List Thing -> List Char
+thingsToChars things =
+    List.map thingToChar things
+
+
 blockToChars : Block -> List Char
 blockToChars block =
     case EveryDict.get block b2t of
@@ -124,10 +160,13 @@ blockToChars block =
         Nothing -> Debug.crash ("Unknown block!" ++ (toString block))
 
 
-toText : Block -> List Rabbit -> (Char, Maybe StarContent)
-toText block rabbits =
+toText : Block -> List Rabbit -> List Thing -> (Char, Maybe StarContent)
+toText block rabbits things =
     let
-        chars = blockToChars block ++ rabbitsToChars rabbits
+        chars =
+               blockToChars block
+            ++ rabbitsToChars rabbits
+            ++ thingsToChars things
     in
         case chars of
             [] -> (' ', Nothing)

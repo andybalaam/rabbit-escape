@@ -142,7 +142,7 @@ updateLevelClickRabbitWorld newRabbit world x y =
                 Just r ->
                     movedRabbit x y r :: world.rabbits
     in
-        makeWorld world.comment world.blocks rabbits
+        makeWorld world.comment world.blocks rabbits world.things
 
 
 updateLevelClickBlock : Model -> Int -> Int -> Model
@@ -161,6 +161,7 @@ updateLevelClickBlockWorld newBlock world x y =
                 (updateLevelClickBlockRow newBlock x y) (blocks world))
         )
         world.rabbits
+        world.things
 
 
 updateLevelClickBlockRow :

@@ -455,6 +455,7 @@ parseEmptyWorld =
                 ]
             )
             []
+            []
         )
 
 
@@ -478,6 +479,7 @@ parseWorldWithBlocks =
                 , [fltErth, fltErth, fltErth, fltErth]
                 ]
             )
+            []
             []
         )
 
@@ -505,6 +507,7 @@ parseWorldWithRabbits =
             [ makeRabbit 3 0 Left
             , makeRabbit 0 2 Right
             ]
+            []
         )
 
 
@@ -532,6 +535,7 @@ parseOverlappingRabbits =
             [ makeRabbit 3 0 Right
             , makeRabbit 3 0 Left
             ]
+            []
         )
 
 
@@ -565,6 +569,7 @@ parseMultipleStars =
             , makeRabbit 2 1 Left
             , makeRabbit 2 1 Right
             ]
+            []
         )
 
 

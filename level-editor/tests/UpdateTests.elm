@@ -81,6 +81,32 @@ all =
               )
             ]
 
+--        , testActions "Placing a thing"
+--            ( [ "####"
+--              , "#  #"
+--              , "#  #"
+--              , "####"
+--              ]
+--            , { mode = PlaceThingMode
+--              , block = Nothing
+--              , rabbit = Nothing
+--              , thing = Entrance 0 0
+--              }
+--            )
+--            [ ( (LevelClick 1 2)
+--              , [ "####"
+--                , "#  #"
+--                , "#Q #"
+--                , "####"
+--                ]
+--              , { mode = PlaceThingMode
+--                , block = Nothing
+--                , rabbit = Nothing
+--                , thing = Entrance 0 0
+--                }
+--              )
+--            ]
+--
         , testActions "Removing a rabbit"
             ( [ "####"
               , "# j#"

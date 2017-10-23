@@ -125,7 +125,7 @@ parseErrToString e =
 
 blockToText : Block -> Char
 blockToText block =
-    Tuple.first (toText block [])
+    Tuple.first (toText block [] [])
 
 
 addRabbitCoords : Pos -> Rabbit -> Rabbit
@@ -347,7 +347,7 @@ parse comment textWorld =
             |> Result.map (List.map .rabbits)  -- List (List Rabbit)
             |> Result.map List.concat          -- List Rabbit
     in
-        Result.map2 (makeWorld comment) grid rabbits
+        Result.map3 (makeWorld comment) grid rabbits (Ok [])
 
 
 removeFirstIfEmpty : List String -> List String

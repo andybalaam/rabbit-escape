@@ -2,7 +2,7 @@ module WorldTextRender exposing (render)
 
 
 import Item2Text exposing (StarContent(..), toText)
-import World exposing (Block, Grid(..), World, blocks, rabbitsAt)
+import World exposing (Block, Grid(..), World, blocks, rabbitsAt, thingsAt)
 
 
 renderStarLine : StarContent -> String
@@ -26,7 +26,7 @@ render world =
 
 toText2 : World -> Int -> Int -> Block -> (Char, Maybe StarContent)
 toText2 world y x block =
-    toText block (rabbitsAt world x y)
+    toText block (rabbitsAt world x y) (thingsAt world x y)
 
 
 catMaybes : List (Maybe a) -> List a

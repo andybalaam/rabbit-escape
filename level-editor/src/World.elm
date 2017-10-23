@@ -8,11 +8,13 @@ module World exposing
     , makeBlockGrid
     , makeWorld
     , rabbitsAt
+    , thingsAt
     , width
     )
 
 
 import Rabbit exposing (Rabbit)
+import Thing exposing (Thing)
 
 
 type BlockMaterial =
@@ -35,6 +37,7 @@ type alias World =
     { comment : String
     , blocks : Grid Block
     , rabbits : List Rabbit
+    , things : List Thing
     }
 
 
@@ -47,11 +50,12 @@ initBlocks =
     ]
 
 
-makeWorld : String -> Grid Block -> List Rabbit -> World
-makeWorld comment blocks rabbits =
+makeWorld : String -> Grid Block -> List Rabbit -> List Thing -> World
+makeWorld comment blocks rabbits things =
     { comment = comment
     , blocks = blocks
     , rabbits = rabbits
+    , things = things
     }
 
 
@@ -80,3 +84,8 @@ blocks world =
 rabbitsAt : World -> Int -> Int -> List Rabbit
 rabbitsAt world x y =
     List.filter (\r -> r.x == x && r.y == y) world.rabbits
+
+
+thingsAt : World -> Int -> Int -> List Thing
+thingsAt world x y =
+    List.filter (\t -> Thing.pos t == (x, y)) world.things
