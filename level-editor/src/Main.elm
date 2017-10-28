@@ -11,6 +11,7 @@ import World exposing
     , BlockMaterial(..)
     , BlockShape(..)
     , World
+    , defaultMeta
     , makeBlockGrid
     , makeWorld
     )
@@ -31,8 +32,15 @@ initWorld =
                 )
     in
         case p of
-            Ok w -> w
-            Err s -> makeWorld "Unexpected Error" (makeBlockGrid []) [] []
+            Ok w ->
+                w
+            Err s ->
+                makeWorld
+                    "Unexpected Error"
+                    (makeBlockGrid [])
+                    []
+                    []
+                    defaultMeta
 
 
 translationPlaceholder : String -> String

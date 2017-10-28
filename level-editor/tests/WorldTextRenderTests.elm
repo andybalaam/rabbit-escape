@@ -11,6 +11,7 @@ import World exposing
     , Block(..)
     , BlockMaterial(..)
     , BlockShape(..)
+    , defaultMeta
     , makeBlockGrid
     , makeWorld
     )
@@ -145,7 +146,8 @@ uprErth =
 
 rend : List (List Block) -> List Rabbit -> List Thing -> List String
 rend blocks rabbits things =
-    renderToLines (makeWorld "tst" (makeBlockGrid blocks) rabbits things)
+    renderToLines
+        (makeWorld "tst" (makeBlockGrid blocks) rabbits things defaultMeta)
 
 
 t :

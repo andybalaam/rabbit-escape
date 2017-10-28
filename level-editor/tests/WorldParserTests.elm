@@ -6,6 +6,7 @@ module WorldParserTests exposing
     , integrateSquareCases
     , integrateLineCases
     , integrateLinesCases
+    , metaLineCases
     , parseErrorCases
     )
 
@@ -14,13 +15,15 @@ import Expect
 
 
 import Item2Text exposing (CharItem(..))
-import Rabbit exposing (Direction(..), makeRabbit)
+import Rabbit exposing (Direction(..), Rabbit, makeRabbit)
 import Thing exposing (Thing(..))
 import World exposing
     ( World
     , Block(..)
     , BlockMaterial(..)
     , BlockShape(..)
+    , MetaLines
+    , defaultMeta
     , makeBlockGrid
     , makeWorld
     )
@@ -479,6 +482,7 @@ parseEmptyWorld =
             )
             []
             []
+            defaultMeta
         )
 
 
@@ -504,6 +508,7 @@ parseWorldWithBlocks =
             )
             []
             []
+            defaultMeta
         )
 
 
@@ -531,6 +536,7 @@ parseWorldWithRabbits =
             , makeRabbit 0 2 Right
             ]
             []
+            defaultMeta
         )
 
 
@@ -560,6 +566,7 @@ parseWorldWithThings =
             [ Entrance 0 0
             , Exit 1 2
             ]
+            defaultMeta
         )
 
 
@@ -588,6 +595,7 @@ parseOverlappingRabbits =
             , makeRabbit 3 0 Left
             ]
             []
+            defaultMeta
         )
 
 
@@ -624,6 +632,7 @@ parseMultipleStars =
             [ Entrance 3 0
             , Exit 2 1
             ]
+            defaultMeta
         )
 
 
@@ -682,7 +691,7 @@ parseErrorCases =
                 , "  "
                 , ":foo=bar"
                 ]
-                ( UnrecognisedChar {row=2, col=0} ':' )
+                ( UnknownMetaName {row=2, col=0} "foo" "bar" )
 
             , t "Line too long"
                 [ "  "
@@ -697,4 +706,41 @@ parseErrorCases =
                 , "  "
                 ]
                 ( LineWrongLength {row=1, col=0} 2 1 )
+            ]
+
+
+metaLineCases : Test
+metaLineCases =
+    let
+        t
+            :  String
+            -> List String
+            -> ( List (List Block)
+               , List Rabbit
+               , List Thing
+               , MetaLines
+               )
+            -> Test
+        t desc act (blocks, rabbits, things, metaLines) =
+            test
+                desc
+                ( \() ->
+                    Expect.equal
+                        (parseLines desc act)
+                        ( Ok
+                            ( makeWorld
+                                desc
+                                (makeBlockGrid blocks)
+                                rabbits
+                                things
+                                metaLines
+                            )
+                        )
+                )
+    in
+        describe "Meta-lines"
+            [ t "Meta-line on its own"
+                [ ":num_rabbits=3"
+                ]
+                ( [], [], [], { defaultMeta | num_rabbits = 3 } )
             ]

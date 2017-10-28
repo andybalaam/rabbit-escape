@@ -169,7 +169,12 @@ updateLevelClickRabbitWorld newRabbit world x y =
                 Just r ->
                     movedRabbit x y r :: world.rabbits
     in
-        makeWorld world.comment world.blocks rabbits world.things
+        makeWorld
+            world.comment
+            world.blocks
+            rabbits
+            world.things
+            world.metaLines
 
 
 updateLevelClickThing : Model -> Int -> Int -> Model
@@ -203,7 +208,12 @@ updateLevelClickThingWorld maybeNewThing world x y =
                 Just t ->
                     Thing.moved x y t :: world.things
     in
-        makeWorld world.comment world.blocks world.rabbits things
+        makeWorld
+            world.comment
+            world.blocks
+            world.rabbits
+            things
+            world.metaLines
 
 
 updateLevelClickBlock : Model -> Int -> Int -> Model
@@ -223,6 +233,7 @@ updateLevelClickBlockWorld newBlock world x y =
         )
         world.rabbits
         world.things
+        world.metaLines
 
 
 updateLevelClickBlockRow :
@@ -267,6 +278,7 @@ updateAddColumn model =
             )
             model.world.rabbits
             model.world.things
+            model.world.metaLines
     }
 
 
@@ -297,6 +309,7 @@ updateRemoveColumn model =
                 )
                 ( List.filter lastColRabbit model.world.rabbits )
                 ( List.filter lastColThing model.world.things )
+                model.world.metaLines
         }
 
 
@@ -318,6 +331,7 @@ updateAddRow model =
                 )
                 model.world.rabbits
                 model.world.things
+                model.world.metaLines
         }
 
 
@@ -343,4 +357,5 @@ updateRemoveRow model =
                 ( makeBlockGrid (List.take (rows - 1) bls) )
                 ( List.filter lastRowRabbit model.world.rabbits )
                 ( List.filter lastRowThing model.world.things )
+                model.world.metaLines
         }

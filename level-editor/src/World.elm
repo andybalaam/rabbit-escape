@@ -3,8 +3,10 @@ module World exposing
     , BlockMaterial(..)
     , BlockShape(..)
     , Grid
+    , MetaLines
     , World
     , blocks
+    , defaultMeta
     , makeBlockGrid
     , makeWorld
     , rabbitsAt
@@ -33,11 +35,23 @@ type Grid a =
     Grid Int Int (List (List a))
 
 
+type alias MetaLines =
+    { num_rabbits : Int
+    }
+
+
+defaultMeta : MetaLines
+defaultMeta =
+    { num_rabbits = 20
+    }
+
+
 type alias World =
     { comment : String
     , blocks : Grid Block
     , rabbits : List Rabbit
     , things : List Thing
+    , metaLines : MetaLines
     }
 
 
@@ -50,12 +64,19 @@ initBlocks =
     ]
 
 
-makeWorld : String -> Grid Block -> List Rabbit -> List Thing -> World
-makeWorld comment blocks rabbits things =
+makeWorld :
+    String ->
+    Grid Block ->
+    List Rabbit ->
+    List Thing ->
+    MetaLines ->
+    World
+makeWorld comment blocks rabbits things metaLines =
     { comment = comment
     , blocks = blocks
     , rabbits = rabbits
     , things = things
+    , metaLines = metaLines
     }
 
 

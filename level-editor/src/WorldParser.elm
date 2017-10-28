@@ -15,15 +15,20 @@ module WorldParser exposing
     )
 
 
+import Regex exposing (HowMany(..), regex)
+
+
 import Rabbit exposing (Rabbit, movedRabbit)
-import World exposing (
-    Block(..),
-    BlockMaterial(..),
-    BlockShape(..),
-    Grid,
-    World,
-    makeBlockGrid,
-    makeWorld
+import World exposing
+    ( Block(..)
+    , BlockMaterial(..)
+    , BlockShape(..)
+    , Grid
+    , MetaLines
+    , World
+    , defaultMeta
+    , makeBlockGrid
+    , makeWorld
     )
 import Thing exposing (Thing)
 
@@ -53,6 +58,8 @@ type ParseErr =
     | NotEnoughStarLines Pos
     | TooManyStarLines Pos
     | LineWrongLength Pos Int Int
+    | MetaParseFailure Pos String String String
+    | UnknownMetaName Pos String String
 
 
 type alias Line =
@@ -123,6 +130,23 @@ parseErrToString e =
             ++ " characters long, but this one is "
             ++ toString act
             ++ "."
+            )
+        MetaParseFailure pos err name value ->
+            ( posToString pos
+            ++ "Failed to parse meta property with name '"
+            ++ name
+            ++ "' and value '"
+            ++ value
+            ++ "'.  The error is: "
+            ++ err
+            )
+        UnknownMetaName pos name value ->
+            ( posToString pos
+            ++ "Unknown meta property name '"
+            ++ name
+            ++ "'.  (The value provided was '"
+            ++ value
+            ++ "')."
             )
 
 
@@ -342,8 +366,8 @@ parse comment textWorld =
         allLines : List String
         allLines = split textWorld
 
-        -- (grLines, stLines) : (List Line, List Line)
-        (grLines, stLines) = separateLineTypes allLines
+        -- (grLines, stLines, metaLines) : (List Line, List Line, List Line)
+        (grLines, stLines, meLines) = separateLineTypes allLines
 
         charItems : Result ParseErr (List (List CharItem))
         charItems = parseGridLines grLines
@@ -365,19 +389,24 @@ parse comment textWorld =
         grid : Result ParseErr (Grid Block)
         grid = Result.map makeBlockGrid blocks
 
+        rabbits : Result ParseErr (List Rabbit)
         rabbits =
             items                              -- List (List Items)
             |> Result.map List.concat          -- List Items
             |> Result.map (List.map .rabbits)  -- List (List Rabbit)
             |> Result.map List.concat          -- List Rabbit
 
+        things : Result ParseErr (List Thing)
         things =
             items                              -- List (List Items)
             |> Result.map List.concat          -- List Items
             |> Result.map (List.map .things)   -- List (List Thing)
             |> Result.map List.concat          -- List Thing
+
+        metaLines : Result ParseErr MetaLines
+        metaLines = makeMetaLines meLines
     in
-        Result.map3 (makeWorld comment) grid rabbits things
+        Result.map4 (makeWorld comment) grid rabbits things metaLines
 
 
 removeFirstIfEmpty : List String -> List String
@@ -402,24 +431,29 @@ isStarLine line =
     String.left 3 line.content == ":*="
 
 
-notStarLine : Line -> Bool
-notStarLine line =
-    not (isStarLine line)
+isMetaLine : Line -> Bool
+isMetaLine line =
+    String.left 1 line.content == ":"
 
 
-separateLineTypes : List String -> (List Line, List Line)
-separateLineTypes lines =
+separateLineTypes : List String -> (List Line, List Line, List Line)
+separateLineTypes rawLines =
     let
-        numLines = List.indexedMap makeLine lines
-        grLines = List.filter notStarLine numLines
-        stLines = List.filter isStarLine numLines
+        lines = List.indexedMap makeLine rawLines
+        (stLines, otherLines) = List.partition isStarLine lines
+        (meLines, grLines) = List.partition isMetaLine otherLines
     in
-        (grLines, stLines)
+        (grLines, stLines, meLines)
 
 
 makeStarLines : List Line -> Result ParseErr (List StarLine)
 makeStarLines lines =
     resultCombine (List.map makeStarLine lines)
+
+
+makeMetaLines : List Line -> Result ParseErr MetaLines
+makeMetaLines lines =
+    List.foldr addMetaLine (Ok defaultMeta) lines
 
 
 parseGridLines : List Line -> Result ParseErr (List (List CharItem))
@@ -445,6 +479,44 @@ parseGridLine line =
             (toCharItem Nothing line.row)
             (String.toList line.content)
         )
+
+
+addMetaProperty
+    :  Int
+    -> String
+    -> String
+    -> MetaLines
+    -> Result ParseErr MetaLines
+addMetaProperty row name value existing =
+    case name of
+        "num_rabbits" ->
+            case String.toInt value of
+                Ok n ->
+                    Ok { existing | num_rabbits = n }
+                Err s ->
+                    Err (MetaParseFailure { col = 0, row = row } s name value)
+        default ->
+            Err (UnknownMetaName { col = 0, row = row } name value)
+
+
+
+addMetaLine : Line -> Result ParseErr MetaLines -> Result ParseErr MetaLines
+addMetaLine line acc =
+    let
+        withoutColon : String
+        withoutColon = String.dropLeft 1 line.content
+
+        keyValue : List String
+        keyValue = Regex.split (AtMost 1) (regex "=") withoutColon
+
+        (propertyName, propertyValue) =
+            case keyValue of
+                [k, v] -> (k, v)
+                k :: t -> (k, String.concat t)
+                [] -> ("", "")
+    in
+        acc |>Result.andThen
+            (addMetaProperty line.row propertyName propertyValue)
 
 
 {- From https://github.com/circuithub/elm-result-extra -}
