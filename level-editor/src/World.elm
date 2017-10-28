@@ -37,12 +37,14 @@ type Grid a =
 
 type alias MetaLines =
     { num_rabbits : Int
+    , num_to_save : Int
     }
 
 
 defaultMeta : MetaLines
 defaultMeta =
-    { num_rabbits = 20
+    { num_rabbits = 10
+    , num_to_save = 1
     }
 
 

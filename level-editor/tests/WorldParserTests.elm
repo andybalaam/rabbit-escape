@@ -743,4 +743,16 @@ metaLineCases =
                 [ ":num_rabbits=3"
                 ]
                 ( [], [], [], { defaultMeta | num_rabbits = 3 } )
+            , t "Meta-line with grid"
+                [ "##"
+                , "# "
+                , ":num_rabbits=3"
+                , ":num_to_save=2"
+                ]
+                ( [ [fltErth, fltErth]
+                  , [fltErth, NoBlock]
+                  ]
+                , []
+                , []
+                , { defaultMeta | num_rabbits = 3, num_to_save = 2 } )
             ]

@@ -488,16 +488,21 @@ addMetaProperty
     -> MetaLines
     -> Result ParseErr MetaLines
 addMetaProperty row name value existing =
-    case name of
-        "num_rabbits" ->
-            case String.toInt value of
-                Ok n ->
-                    Ok { existing | num_rabbits = n }
-                Err s ->
-                    Err (MetaParseFailure { col = 0, row = row } s name value)
-        default ->
-            Err (UnknownMetaName { col = 0, row = row } name value)
+    let
+        num_rabbits n = {existing|num_rabbits=n}
+        num_to_save n = {existing|num_to_save=n}
 
+        parseInt : (Int -> MetaLines) -> Result ParseErr MetaLines
+        parseInt f =
+            case String.toInt value of
+                Err s -> Err (MetaParseFailure {col=0, row=row} s name value)
+                Ok n -> Ok (f n)
+    in
+        case name of
+            "num_rabbits" -> parseInt num_rabbits
+            "num_to_save" -> parseInt num_to_save
+            default ->
+                Err (UnknownMetaName { col = 0, row = row } name value)
 
 
 addMetaLine : Line -> Result ParseErr MetaLines -> Result ParseErr MetaLines
