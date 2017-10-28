@@ -1,6 +1,5 @@
 module WorldParser exposing
     ( Items
-    , ParseErr(..)
     , StarLine
     , integrateSquare
     , integrateLine
@@ -15,18 +14,26 @@ module WorldParser exposing
     )
 
 
+import Dict
 import Regex exposing (HowMany(..), regex)
 
 
+import MetaLines exposing
+    ( MetaLines
+    , MetaValue(..)
+    , ValueExtract
+    , ValueInsert
+    , defaultMeta
+        , valuesList
+    )
+import ParseErr exposing (ParseErr(..))
 import Rabbit exposing (Rabbit, movedRabbit)
 import World exposing
     ( Block(..)
     , BlockMaterial(..)
     , BlockShape(..)
     , Grid
-    , MetaLines
     , World
-    , defaultMeta
     , makeBlockGrid
     , makeWorld
     )
@@ -48,18 +55,6 @@ type alias Items =
     , rabbits : List Rabbit
     , things : List Thing
     }
-
-
-type ParseErr =
-      TwoBlocksInOneStarPoint Pos Char Char
-    | StarInsideStarPoint Pos
-    | UnrecognisedChar Pos Char
-    | StarLineDidNotStartWithColonStarEquals Pos String
-    | NotEnoughStarLines Pos
-    | TooManyStarLines Pos
-    | LineWrongLength Pos Int Int
-    | MetaParseFailure Pos String String String
-    | UnknownMetaName Pos String String
 
 
 type alias Line =
@@ -481,6 +476,11 @@ parseGridLine line =
         )
 
 
+insertDict : Dict.Dict String (ValueInsert Int)
+insertDict =
+    Dict.fromList (List.map (\(n, _, v) -> (n, v)) valuesList)
+
+
 addMetaProperty
     :  Int
     -> String
@@ -489,20 +489,25 @@ addMetaProperty
     -> Result ParseErr MetaLines
 addMetaProperty row name value existing =
     let
-        num_rabbits n = {existing|num_rabbits=n}
-        num_to_save n = {existing|num_to_save=n}
-
-        parseInt : (Int -> MetaLines) -> Result ParseErr MetaLines
+        parseInt : Maybe (ValueInsert Int) -> Result ParseErr MetaLines
         parseInt f =
-            case String.toInt value of
-                Err s -> Err (MetaParseFailure {col=0, row=row} s name value)
-                Ok n -> Ok (f n)
+            case f of
+                Nothing ->
+                    Err (UnknownMetaName { col = 0, row = row } name value)
+                Just fn ->
+                    case String.toInt value of
+                        Err s ->
+                            Err
+                                ( MetaParseFailure
+                                    {col=0, row=row}
+                                    s
+                                    name
+                                    value
+                                )
+                        Ok n ->
+                            Ok (fn existing (MetaValue n))
     in
-        case name of
-            "num_rabbits" -> parseInt num_rabbits
-            "num_to_save" -> parseInt num_to_save
-            default ->
-                Err (UnknownMetaName { col = 0, row = row } name value)
+        parseInt (Dict.get name insertDict)
 
 
 addMetaLine : Line -> Result ParseErr MetaLines -> Result ParseErr MetaLines
@@ -520,7 +525,7 @@ addMetaLine line acc =
                 k :: t -> (k, String.concat t)
                 [] -> ("", "")
     in
-        acc |>Result.andThen
+        acc |> Result.andThen
             (addMetaProperty line.row propertyName propertyValue)
 
 

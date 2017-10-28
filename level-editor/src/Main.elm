@@ -1,6 +1,8 @@
 import Html exposing (Html, program)
 import Window
 
+
+import MetaLines exposing (defaultMeta)
 import Model exposing (Model, UiMode(..), UiState)
 import Msg exposing (Msg(..))
 import Rabbit exposing (Direction(..), Rabbit, makeRabbit)
@@ -11,7 +13,6 @@ import World exposing
     , BlockMaterial(..)
     , BlockShape(..)
     , World
-    , defaultMeta
     , makeBlockGrid
     , makeWorld
     )

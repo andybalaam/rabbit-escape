@@ -1,7 +1,18 @@
 module WorldTextRender exposing (render)
 
 
+import Dict
+
+
 import Item2Text exposing (StarContent(..), toText)
+import MetaLines exposing
+    ( MetaLines
+    , MetaValue(..)
+    , ValueInsert
+    , ValueExtract
+    , defaultMeta
+    , valuesList
+    )
 import World exposing (Block, Grid(..), World, blocks, rabbitsAt, thingsAt)
 
 
@@ -9,6 +20,38 @@ renderStarLine : StarContent -> String
 renderStarLine starContent =
     case starContent of
         StarContent x -> ":*=" ++ x
+
+
+renderMetaLine : (String, MetaValue a) -> String
+renderMetaLine (name, value) =
+       ":"
+    ++ name
+    ++ "="
+    ++ case value of
+        MetaValue n -> toString n
+
+
+metaValues : MetaLines -> List (String, MetaValue Int)
+metaValues lines =
+    let
+        toValue
+            : (String, ValueExtract, ValueInsert a)
+            -> List (String, MetaValue Int)
+        toValue (name, f, _) =
+            let
+                val = f lines
+            in
+                if val == (f defaultMeta) then
+                    []
+                else
+                    [(name, val)]
+    in
+        List.concat (List.map toValue valuesList)
+
+
+renderMetaLines : World -> List String
+renderMetaLines world =
+    List.map renderMetaLine (metaValues world.metaLines)
 
 
 render : World -> String
@@ -21,6 +64,7 @@ render world =
             "\n"
             (  List.map Tuple.first lines
             ++ ( List.map renderStarLine allStarLines )
+            ++ renderMetaLines world
             )
 
 

@@ -3,10 +3,8 @@ module World exposing
     , BlockMaterial(..)
     , BlockShape(..)
     , Grid
-    , MetaLines
     , World
     , blocks
-    , defaultMeta
     , makeBlockGrid
     , makeWorld
     , rabbitsAt
@@ -15,6 +13,7 @@ module World exposing
     )
 
 
+import MetaLines exposing (MetaLines, defaultMeta)
 import Rabbit exposing (Rabbit)
 import Thing exposing (Thing)
 
@@ -33,19 +32,6 @@ type Block =
 
 type Grid a =
     Grid Int Int (List (List a))
-
-
-type alias MetaLines =
-    { num_rabbits : Int
-    , num_to_save : Int
-    }
-
-
-defaultMeta : MetaLines
-defaultMeta =
-    { num_rabbits = 10
-    , num_to_save = 1
-    }
 
 
 type alias World =

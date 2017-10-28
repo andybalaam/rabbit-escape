@@ -15,6 +15,8 @@ import Expect
 
 
 import Item2Text exposing (CharItem(..))
+import MetaLines exposing (MetaLines, MetaValue(..), defaultMeta)
+import ParseErr exposing (ParseErr(..))
 import Rabbit exposing (Direction(..), Rabbit, makeRabbit)
 import Thing exposing (Thing(..))
 import World exposing
@@ -22,14 +24,11 @@ import World exposing
     , Block(..)
     , BlockMaterial(..)
     , BlockShape(..)
-    , MetaLines
-    , defaultMeta
     , makeBlockGrid
     , makeWorld
     )
 import WorldParser exposing
     ( Items
-    , ParseErr(..)
     , StarLine
     , integrateSquare
     , integrateLine
@@ -742,7 +741,7 @@ metaLineCases =
             [ t "Meta-line on its own"
                 [ ":num_rabbits=3"
                 ]
-                ( [], [], [], { defaultMeta | num_rabbits = 3 } )
+                ( [], [], [], { defaultMeta | num_rabbits = MetaValue 3 } )
             , t "Meta-line with grid"
                 [ "##"
                 , "# "
@@ -754,5 +753,9 @@ metaLineCases =
                   ]
                 , []
                 , []
-                , { defaultMeta | num_rabbits = 3, num_to_save = 2 } )
+                , { defaultMeta
+                  | num_rabbits = MetaValue 3
+                  , num_to_save = MetaValue 2
+                  }
+                )
             ]

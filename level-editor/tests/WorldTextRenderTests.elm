@@ -4,6 +4,7 @@ import Test exposing (describe,test,Test)
 import Expect
 
 
+import MetaLines exposing (MetaLines, MetaValue(..), defaultMeta)
 import Rabbit exposing (Direction(..), Rabbit, makeRabbit, makeRabbot)
 import Thing exposing (Thing(..))
 import World exposing
@@ -11,7 +12,6 @@ import World exposing
     , Block(..)
     , BlockMaterial(..)
     , BlockShape(..)
-    , defaultMeta
     , makeBlockGrid
     , makeWorld
     )
@@ -25,7 +25,7 @@ all =
             [ [NoBlock, NoBlock, NoBlock]
             , [NoBlock, NoBlock, NoBlock]
             , [NoBlock, NoBlock, NoBlock]
-            ] [] []
+            ] [] [] defaultMeta
             [ "   "
             , "   "
             , "   "
@@ -36,7 +36,7 @@ all =
             , [NoBlock, NoBlock, NoBlock, fltErth]
             , [NoBlock, NoBlock, NoBlock, NoBlock]
             , [fltErth, fltErth, fltErth, fltErth]
-            ] [] []
+            ] [] [] defaultMeta
             [ "    "
             , "   #"
             , "    "
@@ -53,7 +53,7 @@ all =
             , makeRabbot 0 0 Left
             , makeRabbit 2 1 Right
             , makeRabbit 1 2 Left
-            ] []
+            ] [] defaultMeta
             [ "y   "
             , "t r#"
             , " j  "
@@ -74,6 +74,7 @@ all =
             [ Entrance 1 0
             , Exit 3 0
             ]
+            defaultMeta
             [ "yQ O"
             , "t r#"
             , " j  "
@@ -88,7 +89,7 @@ all =
             ]
             [ makeRabbit 2 1 Right
             , makeRabbit 2 1 Left
-            ] []
+            ] [] defaultMeta
             [ "    "
             , "  * "
             , "    "
@@ -110,6 +111,7 @@ all =
             [ Entrance 2 1
             , Exit 3 1
             ]
+            defaultMeta
             [ "    "
             , "  **"
             , "*   "
@@ -117,6 +119,22 @@ all =
             , ":*=#rjQ"
             , ":*=MrO"
             , ":*=/j"
+            ]
+
+        , t "Render meta-lines"
+            [ [NoBlock]
+            , [uprErth]
+            ]
+            []
+            []
+            { defaultMeta
+            | num_rabbits = MetaValue 4
+            , num_to_save = MetaValue 2
+            }
+            [ " "
+            , "/"
+            , ":num_rabbits=4"
+            , ":num_to_save=2"
             ]
         ]
 
@@ -144,21 +162,28 @@ uprErth =
     Block Earth UpRight
 
 
-rend : List (List Block) -> List Rabbit -> List Thing -> List String
-rend blocks rabbits things =
+rend
+    : List (List Block)
+    -> List Rabbit
+    -> List Thing
+    -> MetaLines
+    -> List String
+rend blocks rabbits things metaLines =
     renderToLines
-        (makeWorld "tst" (makeBlockGrid blocks) rabbits things defaultMeta)
+        (makeWorld "tst" (makeBlockGrid blocks) rabbits things metaLines)
 
 
-t :
-    String ->
-    List (List Block) ->
-    List Rabbit ->
-    List Thing -> List String ->
-    Test
-t desc blocks rabbits things expected =
+t
+    : String
+    -> List (List Block)
+    -> List Rabbit
+    -> List Thing
+    -> MetaLines
+    -> List String
+    -> Test
+t desc blocks rabbits things metaLines expected =
     test
         desc
         ( \() ->
-            Expect.equal expected (rend blocks rabbits things)
+            Expect.equal expected (rend blocks rabbits things metaLines)
         )

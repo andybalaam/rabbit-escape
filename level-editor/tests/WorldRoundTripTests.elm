@@ -4,8 +4,9 @@ import Test exposing (describe,test,Test)
 import Expect
 
 
+import ParseErr exposing (ParseErr)
 import World exposing (World)
-import WorldParser exposing (ParseErr, parse, parseErrToString)
+import WorldParser exposing (parse, parseErrToString)
 import WorldTextRender exposing (render)
 
 
