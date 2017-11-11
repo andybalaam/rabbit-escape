@@ -91,7 +91,21 @@ listToStringList metaLines =
 
 toStringList : MetaLines -> List (String, String)
 toStringList metaLines =
-    listToStringList (Dict.toList metaLines)
+    let
+        inOrder
+            : List (String, MetaValue)
+            -> MetaLines
+            -> List (String, MetaValue)
+        inOrder orderList metaLines =
+            case orderList of
+                (name, _) :: ts ->
+                    case Dict.get name metaLines of
+                        Just v -> (name, v) :: inOrder ts metaLines
+                        Nothing -> inOrder ts metaLines
+                default ->
+                    []
+    in
+        listToStringList (inOrder defaultList metaLines)
 
 
 toNonDefaultStringList : MetaLines -> List (String, String)
