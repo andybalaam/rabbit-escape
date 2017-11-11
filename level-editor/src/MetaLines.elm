@@ -32,9 +32,26 @@ type alias MetaLines =
 
 defaultList : List (String, MetaValue)
 defaultList =
-    [ ("num_rabbits", MvInt 10)
+    [ ("name", MvString "")
+    , ("description", MvString "")
+    , ("author_name", MvString "")
+    , ("author_url", MvString "")
+    , ("hint.1", MvString "")
+    , ("hint.2", MvString "") -- TODO: expandable lists?
+    , ("hint.3", MvString "")
+    , ("solution.1", MvString "")
+    , ("solution.2", MvString "")
+    , ("solution.3", MvString "")
+    , ("num_rabbits", MvInt 10)
     , ("num_to_save", MvInt 1)
-    , ("name", MvString "")
+    , ("rabbit_delay", MvString "4") -- TODO: list of ints
+    , ("bash", MvInt 0)
+    , ("dig", MvInt 0)
+    , ("bridge", MvInt 0)
+    , ("block", MvInt 0)
+    , ("climb", MvInt 0)
+    , ("explode", MvInt 0)
+    , ("brolly", MvInt 0)
     ]
 
 
