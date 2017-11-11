@@ -19,3 +19,5 @@ type Msg =
     | RemoveRow
     | Undo
     | Redo
+    | DetailsInput String String
+    | ChangeDetails

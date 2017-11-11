@@ -15,7 +15,7 @@ import Expect
 
 
 import Item2Text exposing (CharItem(..))
-import MetaLines exposing (MetaLines, MetaValue(..), defaultMeta)
+import MetaLines exposing (MetaLines, MetaValue(..))
 import ParseErr exposing (ParseErr(..))
 import Rabbit exposing (Direction(..), Rabbit, makeRabbit)
 import Thing exposing (Thing(..))
@@ -481,7 +481,7 @@ parseEmptyWorld =
             )
             []
             []
-            defaultMeta
+            MetaLines.default
         )
 
 
@@ -507,7 +507,7 @@ parseWorldWithBlocks =
             )
             []
             []
-            defaultMeta
+            MetaLines.default
         )
 
 
@@ -535,7 +535,7 @@ parseWorldWithRabbits =
             , makeRabbit 0 2 Right
             ]
             []
-            defaultMeta
+            MetaLines.default
         )
 
 
@@ -565,7 +565,7 @@ parseWorldWithThings =
             [ Entrance 0 0
             , Exit 1 2
             ]
-            defaultMeta
+            MetaLines.default
         )
 
 
@@ -594,7 +594,7 @@ parseOverlappingRabbits =
             , makeRabbit 3 0 Left
             ]
             []
-            defaultMeta
+            MetaLines.default
         )
 
 
@@ -631,7 +631,7 @@ parseMultipleStars =
             [ Entrance 3 0
             , Exit 2 1
             ]
-            defaultMeta
+            MetaLines.default
         )
 
 
@@ -741,7 +741,8 @@ metaLineCases =
             [ t "Meta-line on its own"
                 [ ":num_rabbits=3"
                 ]
-                ( [], [], [], { defaultMeta | num_rabbits = MetaValue 3 } )
+                ( [], [], [], MetaLines.fromList [("num_rabbits", MvInt 3)] )
+
             , t "Meta-line with grid"
                 [ "##"
                 , "# "
@@ -753,9 +754,9 @@ metaLineCases =
                   ]
                 , []
                 , []
-                , { defaultMeta
-                  | num_rabbits = MetaValue 3
-                  , num_to_save = MetaValue 2
-                  }
+                , MetaLines.fromList
+                    [ ("num_rabbits", MvInt 3)
+                    , ("num_to_save", MvInt 2)
+                    ]
                 )
             ]

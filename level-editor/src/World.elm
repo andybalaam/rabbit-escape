@@ -13,7 +13,7 @@ module World exposing
     )
 
 
-import MetaLines exposing (MetaLines, defaultMeta)
+import MetaLines exposing (MetaLines)
 import Rabbit exposing (Rabbit)
 import Thing exposing (Thing)
 

@@ -6,6 +6,7 @@ GAME_IMAGE_NAMES := \
 	allthings.png \
 	bridge_rising_left.svg \
 	bridge_rising_right.svg \
+	details.svg \
 	entrance.png \
 	exit.png \
 	land_block_1.png \

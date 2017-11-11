@@ -24,6 +24,7 @@ type ButtonDef =
     | BlockButton
     | ThingButton
     | RabbitButton
+    | DetailsButton
 
 
 buttonsList : List ButtonDef
@@ -34,6 +35,7 @@ buttonsList =
     , BlockButton
     , ThingButton
     , RabbitButton
+    , DetailsButton
     ]
 
 
@@ -60,6 +62,10 @@ buildClickCmd uiState buttonDef =
             case uiState.mode of
                 ChooseRabbitMode -> ChangeMode PlaceRabbitMode
                 default          -> ChangeMode ChooseRabbitMode
+        DetailsButton ->
+            case uiState.mode of
+                ModifyDetailsMode -> ChangeMode InitialMode
+                default           -> ChangeMode ModifyDetailsMode
 
 
 buttonImage : UiState -> ButtonDef -> String
@@ -68,6 +74,7 @@ buttonImage uiState buttondef =
         SaveButton -> "save.svg"
         UndoButton -> "undo.svg"
         RedoButton -> "redo.svg"
+        DetailsButton -> "details.svg"
         BlockButton ->
             case uiState.block of
                 Nothing    -> "allblocks.png"
@@ -93,6 +100,7 @@ pressedClass mode buttondef =
                 PlaceThingMode -> [ThingButton]
                 ChooseRabbitMode -> [RabbitButton]
                 PlaceRabbitMode -> [RabbitButton]
+                ModifyDetailsMode -> [DetailsButton]
     in
         if List.member buttondef pressedTypes then
             [ class "pressed" ]
@@ -107,6 +115,10 @@ buttonEnabled model buttondef =
             CodeMode _ ->
                 case buttondef of
                     SaveButton -> False
+                    default -> True
+            ModifyDetailsMode ->
+                case buttondef of
+                    DetailsButton -> False
                     default -> True
             default ->
                 case buttondef of

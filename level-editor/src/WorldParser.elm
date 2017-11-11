@@ -14,17 +14,12 @@ module WorldParser exposing
     )
 
 
-import Dict
 import Regex exposing (HowMany(..), regex)
 
 
 import MetaLines exposing
     ( MetaLines
     , MetaValue(..)
-    , ValueExtract
-    , ValueInsert
-    , defaultMeta
-        , valuesList
     )
 import ParseErr exposing (ParseErr(..))
 import Rabbit exposing (Rabbit, movedRabbit)
@@ -448,7 +443,7 @@ makeStarLines lines =
 
 makeMetaLines : List Line -> Result ParseErr MetaLines
 makeMetaLines lines =
-    List.foldr addMetaLine (Ok defaultMeta) lines
+    List.foldr addMetaLine (Ok MetaLines.default) lines
 
 
 parseGridLines : List Line -> Result ParseErr (List (List CharItem))
@@ -476,11 +471,6 @@ parseGridLine line =
         )
 
 
-insertDict : Dict.Dict String (ValueInsert Int)
-insertDict =
-    Dict.fromList (List.map (\(n, _, v) -> (n, v)) valuesList)
-
-
 addMetaProperty
     :  Int
     -> String
@@ -488,26 +478,24 @@ addMetaProperty
     -> MetaLines
     -> Result ParseErr MetaLines
 addMetaProperty row name value existing =
-    let
-        parseInt : Maybe (ValueInsert Int) -> Result ParseErr MetaLines
-        parseInt f =
-            case f of
-                Nothing ->
-                    Err (UnknownMetaName { col = 0, row = row } name value)
-                Just fn ->
-                    case String.toInt value of
-                        Err s ->
-                            Err
-                                ( MetaParseFailure
-                                    {col=0, row=row}
-                                    s
-                                    name
-                                    value
-                                )
-                        Ok n ->
-                            Ok (fn existing (MetaValue n))
-    in
-        parseInt (Dict.get name insertDict)
+    case MetaLines.parseAndSet name value existing of
+        Ok metaLines ->
+            Ok metaLines
+        Err (MetaLines.UnknownName _) ->
+            Err
+                ( UnknownMetaName
+                    {col=0, row=row}
+                    name
+                    value
+                )
+        Err (MetaLines.BadValue _ _) ->
+            Err
+                ( MetaParseFailure
+                    {col=0, row=row}
+                    "Should be a number!" -- Will need more if not just ints
+                    name
+                    value
+                )
 
 
 addMetaLine : Line -> Result ParseErr MetaLines -> Result ParseErr MetaLines

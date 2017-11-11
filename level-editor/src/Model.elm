@@ -1,6 +1,7 @@
 module Model exposing (Model, UiMode(..), UiState)
 
 
+import MetaLines
 import Rabbit exposing (Rabbit)
 import Thing exposing (Thing)
 import World exposing (Block(..), World)
@@ -15,6 +16,7 @@ type UiMode =
     | PlaceThingMode
     | ChooseRabbitMode
     | PlaceRabbitMode
+    | ModifyDetailsMode
 
 
 type alias UiState =
@@ -22,6 +24,7 @@ type alias UiState =
     , block : Maybe Block
     , rabbit : Maybe Rabbit
     , thing : Maybe (Maybe Thing)
+    , newMetaLines : MetaLines.Diff
     }
 
 

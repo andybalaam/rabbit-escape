@@ -4,7 +4,7 @@ import Test exposing (describe,test,Test)
 import Expect
 
 
-import MetaLines exposing (MetaLines, MetaValue(..), defaultMeta)
+import MetaLines exposing (MetaLines, MetaValue(..))
 import Rabbit exposing (Direction(..), Rabbit, makeRabbit, makeRabbot)
 import Thing exposing (Thing(..))
 import World exposing
@@ -25,7 +25,7 @@ all =
             [ [NoBlock, NoBlock, NoBlock]
             , [NoBlock, NoBlock, NoBlock]
             , [NoBlock, NoBlock, NoBlock]
-            ] [] [] defaultMeta
+            ] [] [] MetaLines.default
             [ "   "
             , "   "
             , "   "
@@ -36,7 +36,7 @@ all =
             , [NoBlock, NoBlock, NoBlock, fltErth]
             , [NoBlock, NoBlock, NoBlock, NoBlock]
             , [fltErth, fltErth, fltErth, fltErth]
-            ] [] [] defaultMeta
+            ] [] [] MetaLines.default
             [ "    "
             , "   #"
             , "    "
@@ -53,7 +53,7 @@ all =
             , makeRabbot 0 0 Left
             , makeRabbit 2 1 Right
             , makeRabbit 1 2 Left
-            ] [] defaultMeta
+            ] [] MetaLines.default
             [ "y   "
             , "t r#"
             , " j  "
@@ -74,7 +74,7 @@ all =
             [ Entrance 1 0
             , Exit 3 0
             ]
-            defaultMeta
+            MetaLines.default
             [ "yQ O"
             , "t r#"
             , " j  "
@@ -89,7 +89,7 @@ all =
             ]
             [ makeRabbit 2 1 Right
             , makeRabbit 2 1 Left
-            ] [] defaultMeta
+            ] [] MetaLines.default
             [ "    "
             , "  * "
             , "    "
@@ -111,7 +111,7 @@ all =
             [ Entrance 2 1
             , Exit 3 1
             ]
-            defaultMeta
+            MetaLines.default
             [ "    "
             , "  **"
             , "*   "
@@ -127,10 +127,11 @@ all =
             ]
             []
             []
-            { defaultMeta
-            | num_rabbits = MetaValue 4
-            , num_to_save = MetaValue 2
-            }
+            ( MetaLines.fromList
+                [ ("num_rabbits", MvInt 4)
+                , ("num_to_save", MvInt 2)
+                ]
+            )
             [ " "
             , "/"
             , ":num_rabbits=4"

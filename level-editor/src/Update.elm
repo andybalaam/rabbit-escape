@@ -1,6 +1,7 @@
 module Update exposing (update)
 
 
+import MetaLines exposing (MetaLines)
 import Model exposing (Model, UiMode(..))
 import Msg exposing (Msg(..))
 import Rabbit exposing (Rabbit, movedRabbit)
@@ -64,6 +65,10 @@ normalUpdate msg model =
                     updateAddRow model
                 RemoveRow ->
                     updateRemoveRow model
+                DetailsInput name value ->
+                    updateDetailsInput model name value
+                ChangeDetails ->
+                    updateChangeDetails model
                 Undo ->
                     crashBadMessage msg
                 Redo ->
@@ -82,6 +87,39 @@ crashBadMessage msg =
         ( "Msg '" ++ toString msg ++ "' should not "
         ++ "be passed in to normalUpdate."
         )
+
+
+updateDetailsInput : Model -> String -> String -> Model
+updateDetailsInput model name value =
+    let
+        uiState = model.uiState
+    in
+        { model
+        | uiState =
+            { uiState
+            | newMetaLines = MetaLines.setDiff name value uiState.newMetaLines
+            }
+        }
+
+
+updateChangeDetails : Model -> Model
+updateChangeDetails model =
+    let
+        uiState = model.uiState
+        world = model.world
+    in
+        { model
+        | world =
+            { world
+            | metaLines =
+                MetaLines.applyDiff uiState.newMetaLines world.metaLines
+            }
+        , uiState =
+            { uiState
+            | mode = InitialMode
+            , newMetaLines = MetaLines.emptyDiff
+            }
+        }
 
 
 updateUndo : Model -> Model
@@ -261,9 +299,15 @@ updateChangeMode model mode =
             case mode of
                 CodeMode _ -> CodeMode (WorldTextRender.render model.world)
                 default -> mode
+        newMetaLines =
+            case mode of
+                ModifyDetailsMode ->
+                    MetaLines.emptyDiff
+                default ->
+                    uiState.newMetaLines
     in
         { model
-        | uiState = { uiState | mode = m }
+        | uiState = { uiState | mode = m, newMetaLines = newMetaLines }
         }
 
 

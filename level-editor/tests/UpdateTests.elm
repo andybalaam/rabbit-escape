@@ -1,5 +1,7 @@
 module UpdateTests exposing (all)
 
+
+import Dict
 import Test exposing (describe,test,Test)
 import Expect
 
@@ -716,4 +718,5 @@ emptyState =
     , block = Nothing
     , rabbit = Nothing
     , thing = Nothing
+    , newMetaLines = Dict.empty
     }

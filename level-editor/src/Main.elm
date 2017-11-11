@@ -1,8 +1,10 @@
 import Html exposing (Html, program)
+
+
 import Window
 
 
-import MetaLines exposing (defaultMeta)
+import MetaLines
 import Model exposing (Model, UiMode(..), UiState)
 import Msg exposing (Msg(..))
 import Rabbit exposing (Direction(..), Rabbit, makeRabbit)
@@ -41,7 +43,7 @@ initWorld =
                     (makeBlockGrid [])
                     []
                     []
-                    defaultMeta
+                    MetaLines.default
 
 
 translationPlaceholder : String -> String
@@ -57,6 +59,7 @@ initModel =
         , block = Nothing
         , rabbit = Just (makeRabbit 0 0 Right)
         , thing = Nothing
+        , newMetaLines = MetaLines.emptyDiff
         }
     , t = translationPlaceholder
     , past = []

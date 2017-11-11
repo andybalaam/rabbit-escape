@@ -154,7 +154,7 @@ html
 #dialog
 {
     max-width: 90%;
-    max-height: 90%;
+    max-height: 85%;
     background-color: white;
     visibility: hidden;
     border-width: 0.2em;
@@ -177,6 +177,14 @@ html
     margin: 0.2em;
 }
 
+#dialog button.dialogSubmit
+{
+    justify-self: center;
+    align-self: center;
+    height: auto;
+    padding: 0.3em;
+}
+
 #dialog textarea
 {
     width: 96%;
@@ -184,4 +192,34 @@ html
     margin: 0em;
     resize: none;
     background-color: white;
+}
+
+#dialog input, #dialog label
+{
+    font-size: 0.9em;
+    border: 1px solid grey;
+    margin: 0.1em 0.05em;
+}
+
+#dialog input
+{
+    padding-left: 0.3em;
+}
+
+#dialog label
+{
+    text-align: right;
+    background-color: lightgrey;
+    color: black;
+    padding-top: 0.4em;
+    padding-right: 0.3em;
+}
+
+#dialog label.error
+{
+    background-color: red;
+    overflow: auto;
+    font-size: 80%;
+    padding-top: 0.1em;
+    color: white;
 }
