@@ -8,6 +8,7 @@ html, body, #main
 html
 {
     box-sizing: border-box;
+    background-color: #eeeeee;
 }
 
 *, *:*
@@ -17,63 +18,71 @@ html
 
 @media all and (orientation:landscape)
 {
-    #main
-    {
-        display: grid;
-        grid-template-columns: 5em 1fr;
-    }
     #toolbar
     {
         overflow-x: hidden;
         overflow-y: auto;
+        float: left;
+        width: 4.7em;
+        height: 100%;
     }
-    #workspace, #dialogBackground, #dialog
+    #workspace
     {
-        grid-row: 1;
-        grid-column: 2;
+        margin-left: 4.98em;
+    }
+    #dialogBackground
+    {
+        left: 4.98em;
+        top: 0em;
     }
     #dialog
     {
-        margin-left: 2%;
-        margin-top: 4%;
+        left: 5.98em;
+        top: 1em;
     }
 }
 
 @media all and (orientation:portrait)
 {
-    #main
-    {
-        display: grid;
-        grid-template-rows: 5em 1fr;
-    }
     #toolbar
     {
         overflow-x: auto;
         overflow-y: hidden;
         white-space: nowrap;
+        height: 4.7em;
+        width: 100%;
     }
-    #workspace, #dialogBackground, #dialog
+    #workspace
     {
-        grid-row: 2;
-        grid-column: 1;
+        margin-top: 4.98em;
+    }
+    #dialogBackground
+    {
+        top: 4.98em;
+        left: 0em;
     }
     #dialog
     {
-        margin-left: 5%;
-        margin-top: 2%;
+        top: 5.98em;
+        left: 1em;
     }
 }
 
 #workspace
 {
-    overflow: auto;
-    padding: 0.1em;
+    display: inline-block;
+    background-color: white;
+    z-index: 0;
 }
 
 #toolbar
 {
+    position: fixed;
+    top: 0px;
+    left: 0px;
     background-color: #eeeeff;
     padding: 0.2em;
+    z-index: 2;
 }
 
 #toolbar button, #dialog button
@@ -145,16 +154,20 @@ html
 
 #dialogBackground
 {
+    position: fixed;
+    right: 0px;
+    bottom: 0px;
     opacity: 0.6;
     background-color: black;
     visibility: hidden;
-    z-index: 2;
+    z-index: 1;
 }
 
 #dialog
 {
-    max-width: 90%;
-    max-height: 85%;
+    position: fixed;
+    right: 1em;
+    bottom: 1em;
     background-color: white;
     visibility: hidden;
     border-width: 0.2em;
