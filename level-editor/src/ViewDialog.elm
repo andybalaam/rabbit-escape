@@ -27,7 +27,7 @@ import Rabbit exposing
     , makeRabbot
     )
 import RabbitImage exposing (rabbitImage)
-import Thing exposing (Thing(..))
+import Thing exposing (Thing(..), TokenType(..))
 import ThingImage exposing (thingImage)
 
 
@@ -111,6 +111,14 @@ chooseThingButtons model =
             [ tp model "Choose an item:" []
             , but (Just (Entrance 0 0))
             , but (Just (Exit 0 0))
+            , but (Just (Fire 0 0))
+            , but (Just (Token Bash 0 0))
+            , but (Just (Token Dig 0 0))
+            , but (Just (Token Bridge 0 0))
+            , but (Just (Token BlockT 0 0))
+            , but (Just (Token Climb 0 0))
+            , but (Just (Token Explode 0 0))
+            , but (Just (Token Brolly 0 0))
             , but (Nothing)
             ]
         }

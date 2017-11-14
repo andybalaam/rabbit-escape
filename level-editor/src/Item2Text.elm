@@ -14,7 +14,7 @@ import EveryDict
 
 
 import Rabbit exposing (Direction(..), Rabbit, makeRabbit, makeRabbot)
-import Thing exposing (Thing(..))
+import Thing exposing (Thing(..), TokenType(..))
 import World exposing
     ( Block(..)
     , BlockMaterial(..)
@@ -124,6 +124,14 @@ t2thList : List (Char, Thing)
 t2thList =
     [ ('Q', Entrance 0 0)
     , ('O', Exit 0 0)
+    , ('A', Fire 0 0)
+    , ('b', Token Bash 0 0)
+    , ('d', Token Dig 0 0)
+    , ('i', Token Bridge 0 0)
+    , ('k', Token BlockT 0 0)
+    , ('c', Token Climb 0 0)
+    , ('p', Token Explode 0 0)
+    , ('l', Token Brolly 0 0)
     ]
 
 

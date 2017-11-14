@@ -9,6 +9,7 @@ GAME_IMAGE_NAMES := \
 	details.svg \
 	entrance.png \
 	exit.png \
+	fire.png \
 	land_block_1.png \
 	land_rising_left_1.png \
 	land_rising_right_1.png \
@@ -23,6 +24,13 @@ GAME_IMAGE_NAMES := \
 	remove_row.svg \
 	remove_thing.png \
 	save.svg \
+    token_bash.svg \
+    token_block.svg \
+    token_bridge.svg \
+    token_brolly.svg \
+    token_climb.svg \
+    token_dig.svg \
+    token_explode.svg \
 	undo.svg \
 	redo.svg \
 
