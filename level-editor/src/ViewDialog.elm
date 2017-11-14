@@ -197,7 +197,8 @@ modifyDetailsControls model =
         { visible =
             True
         , dialogStyles =
-            [ ("display", "grid")
+            [ ("overflow", "auto")
+            , ("display", "grid")
             , ("grid-template-columns", "1fr 2fr")
             , ("grid-template-rows", "2em 3em")
             , ("grid-auto-rows", "2em")
