@@ -15,6 +15,7 @@ import World exposing
     , makeWorld
     , makeBlockGrid
     )
+import WorldParser exposing (parse)
 import WorldTextRender
 
 
@@ -69,6 +70,10 @@ normalUpdate msg model =
                     updateDetailsInput model name value
                 ChangeDetails ->
                     updateChangeDetails model
+                CodeInput text ->
+                    updateCodeInput model text
+                ChangeCode ->
+                    updateChangeCode model
                 Undo ->
                     crashBadMessage msg
                 Redo ->
@@ -87,6 +92,39 @@ crashBadMessage msg =
         ( "Msg '" ++ toString msg ++ "' should not "
         ++ "be passed in to normalUpdate."
         )
+
+
+updateCodeInput : Model -> String -> Model
+updateCodeInput model text =
+    let
+        uiState = model.uiState
+    in
+        { model
+        | uiState =
+            { uiState
+            | newWorld = Just (text, parse "" text)
+            }
+        }
+
+
+updateChangeCode : Model -> Model
+updateChangeCode model =
+    let
+        uiState = model.uiState
+        world =
+            uiState.newWorld
+                |> Maybe.withDefault ("", Ok model.world)
+                |> Tuple.second
+                |> Result.withDefault model.world
+    in
+        { model
+        | world = world
+        , uiState =
+            { uiState
+            | newWorld = Nothing
+            , mode = InitialMode
+            }
+        }
 
 
 updateDetailsInput : Model -> String -> String -> Model
@@ -305,9 +343,18 @@ updateChangeMode model mode =
                     MetaLines.emptyDiff
                 default ->
                     uiState.newMetaLines
+        newWorld =
+            case mode of
+                CodeMode _ -> Nothing
+                default -> uiState.newWorld
     in
         { model
-        | uiState = { uiState | mode = m, newMetaLines = newMetaLines }
+        | uiState =
+            { uiState
+            | mode = m
+            , newMetaLines = newMetaLines
+            , newWorld = newWorld
+            }
         }
 
 

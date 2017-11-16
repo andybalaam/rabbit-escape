@@ -21,3 +21,5 @@ type Msg =
     | Redo
     | DetailsInput String String
     | ChangeDetails
+    | CodeInput String
+    | ChangeCode

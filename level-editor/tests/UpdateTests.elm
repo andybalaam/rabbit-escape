@@ -6,8 +6,10 @@ import Test exposing (describe,test,Test)
 import Expect
 
 
+import MetaLines
 import Model exposing (Model, UiMode(..), UiState)
 import Msg exposing (Msg(..))
+import ParseErr exposing (ParseErr(..))
 import Rabbit exposing (Direction(..), Rabbit, makeRabbit)
 import Thing exposing (Thing(..))
 import Update exposing (update)
@@ -192,6 +194,37 @@ all =
               , [ "#r#" ]
               , { emptyState | mode = CodeMode "#r#" }
                 -- We get a model
+              )
+            ]
+
+        , testActions "Changing to code mode deletes cached world text"
+            ( [ "#r#" ]
+            , { emptyState
+              | newWorld =
+                Just ("foo" , Err (UnrecognisedChar {row=1, col=1} 'f'))
+              }
+            )
+            [ ( (ChangeMode (CodeMode ""))
+              , [ "#r#" ]
+              , { emptyState
+                | mode = CodeMode "#r#"
+                , newWorld = Nothing -- "foo" etc was removed
+                }
+              )
+            ]
+
+        , testActions "Can update code"
+            ( [ "#r#" ]
+            , { emptyState
+              | newWorld =
+                Just ("#" , parse "" "#")
+              }
+            )
+            [ ( ChangeCode
+              , [ "#" ]
+              , { emptyState
+                | mode = InitialMode
+                }
               )
             ]
 
@@ -718,5 +751,6 @@ emptyState =
     , block = Nothing
     , rabbit = Nothing
     , thing = Nothing
-    , newMetaLines = Dict.empty
+    , newMetaLines = MetaLines.emptyDiff
+    , newWorld = Nothing
     }

@@ -9,6 +9,7 @@ import Html.Attributes exposing
     , for
     , id
     , readonly
+    , spellcheck
     , src
     , style
     , type_
@@ -19,6 +20,7 @@ import MetaLines exposing (MetaValue(..))
 import Model exposing (Model, UiMode(..), UiState)
 import Msg exposing (Msg(..))
 import World exposing (Block(..), BlockMaterial(..), BlockShape(..))
+import WorldParser exposing (parseErrToString)
 import Rabbit exposing
     ( Direction(..)
     , Rabbit
@@ -125,31 +127,61 @@ chooseThingButtons model =
 
 
 codeText : Model -> String -> Contents
-codeText model code =
-    { visible =
-        True
-    , dialogStyles =
-        [ ("display", "grid")
-        , ("grid-template-rows", "3em 3fr 1fr")
-        ]
-    , items =
-        [ tp model
-            (  "Copy this code and paste it somewhere to save. Paste it into "
-            ++ "Rabbit Escape to play it."
-            )
-            []
-        , textarea
-            [ id "code"
-            , readonly True
+codeText model initialCode =
+    let
+        (code, parsed) =
+            case model.uiState.newWorld of
+                Nothing -> (initialCode, Ok model.world)
+                Just (text, parsed) -> (text, parsed)
+
+        (parseError, canUpdate) =
+            case parsed of
+                Ok _ -> ("", True)
+                Err e -> (parseErrToString e, False)
+
+    in
+        { visible =
+            True
+        , dialogStyles =
+            [ ("display", "grid")
+            , ("grid-template-rows", "3em 3em 3fr 1fr")
             ]
-            [ text code ]
-        , textarea
-            [ id "errors"
-            , readonly True
+        , items =
+            [ tp model
+                (  "Copy this code and paste it somewhere to save. Paste it into "
+                ++ "Rabbit Escape to play it."
+                )
+                []
+            , p
+                []
+                [ button
+                    [ class "dialogSubmit"
+                    , onClick (ChangeMode InitialMode) -- TODO
+                    ]
+                    [ text "Cancel" ]
+                , button
+                    ( [ class "dialogSubmit"
+                        , onClick ChangeCode
+                      ]
+                    ++ if canUpdate then [] else [ disabled True ]
+                    )
+                    [ text "Update" ]
+                ]
+            , textarea
+                [ id "code"
+                , onInput CodeInput
+                , spellcheck False
+                ]
+                [ text code
+                ]
+            , textarea
+                [ id "errors"
+                , readonly True
+                , spellcheck False
+                ]
+                [ text parseError ]
             ]
-            [ text "" ]
-        ]
-    }
+        }
 
 
 metaLineBoxes
@@ -220,18 +252,25 @@ modifyDetailsControls model =
                     , ("grid-column-end", "3")
                     ]
                 ]
-            , button
-                [ class "dialogSubmit"
-                , onClick (ChangeMode InitialMode)
+            , p
+                [ style
+                    [ ("grid-column-start", "1")
+                    , ("grid-column-end", "3")
+                    ]
                 ]
-                [ text "Cancel" ]
-            , button
-                ( [ class "dialogSubmit"
-                  , onClick ChangeDetails
-                  ]
-                ++ if canUpdate then [] else [ disabled True ]
-                )
-                [ text "Update" ]
+                [ button
+                    [ class "dialogSubmit"
+                    , onClick (ChangeMode InitialMode)
+                    ]
+                    [ text "Cancel" ]
+                , button
+                    ( [ class "dialogSubmit"
+                      , onClick ChangeDetails
+                      ]
+                    ++ if canUpdate then [] else [ disabled True ]
+                    )
+                    [ text "Update" ]
+                ]
             ]
             ++ List.concat boxes
             )

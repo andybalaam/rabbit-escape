@@ -60,6 +60,7 @@ initModel =
         , rabbit = Just (makeRabbit 0 0 Right)
         , thing = Nothing
         , newMetaLines = MetaLines.emptyDiff
+        , newWorld = Nothing
         }
     , t = translationPlaceholder
     , past = []

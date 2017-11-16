@@ -10,10 +10,11 @@
 # Can make simple levels
 
 + Place all remaining types of thing in level, including tokens and fire
-- Modify/paste code directly
++ Modify/paste code directly
 
 # Can edit existing simple levels
 
+- Switch back to previous mode in several cases, instead of going to initial
 - Support pasting text into the real game on Android
 - Support pasting text into the real game on PC
 

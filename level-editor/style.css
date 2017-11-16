@@ -235,3 +235,8 @@ html
     padding-top: 0.1em;
     color: white;
 }
+
+#dialog textarea#errors
+{
+    color: red;
+}
