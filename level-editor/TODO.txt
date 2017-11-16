@@ -20,7 +20,7 @@
 
 # Workflow for editing levels
 
-- Convert everything possible to/from text
+- Highlight error line/char in code window - use <code contenteditable=true
 
 # Level editor done
 
