@@ -24,6 +24,7 @@
 
 # Level editor done
 
+- Save current work in a cookie or Local Storage
 - Save/load to/from the cloud and/or as a URL and/or as github issue
 - Log in and have a list of saved things
 - Play/test levels online
