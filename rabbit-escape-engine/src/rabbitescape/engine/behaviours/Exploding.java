@@ -38,7 +38,7 @@ public class Exploding extends Behaviour
         	
         	world.changes.killRabbit( rabbit );
         	
-        	
+        	/*
         	Block block = world.getBlockAt( rabbit.x+1, rabbit.y );//if the location has a block, then block is not null. if has not, it will be null. If a rabbit explodes, blocks that are on right, left and bottom of the rabbit are removed 
         	if(block!=null){
         		world.changes.removeBlockAt( rabbit.x+1, rabbit.y);	
@@ -53,11 +53,12 @@ public class Exploding extends Behaviour
             }
             
 <<<<<<< HEAD
-            world.changes.removeBlockAt( rabbit.x+1, rabbit.y );/*tavsan patlayinca cevresindeki duvarlar kırılacak(varsa) comment*/
+            world.changes.removeBlockAt( rabbit.x+1, rabbit.y );//tavsan patlayinca cevresindeki duvarlar kırılacak(varsa) comment 
             world.changes.removeBlockAt( rabbit.x-1, rabbit.y );
             world.changes.removeBlockAt( rabbit.x+1, rabbit.y+1 );
             world.changes.removeBlockAt( rabbit.x-1, rabbit.y+1 );
 =======
+*/
             world.changes.killRabbit( rabbit );
 >>>>>>> b7e7c3ed4d21c0a3fc2c0f08c59a685c0c3b48a5
             
