@@ -58,10 +58,10 @@ public class Exploding extends Behaviour
             world.changes.removeBlockAt( rabbit.x+1, rabbit.y+1 );
             world.changes.removeBlockAt( rabbit.x-1, rabbit.y+1 );
 =======
-*/
-            world.changes.killRabbit( rabbit );
+
 >>>>>>> b7e7c3ed4d21c0a3fc2c0f08c59a685c0c3b48a5
-            
+         world.changes.killRabbit( rabbit ); */
+
             return true;
         }
 
