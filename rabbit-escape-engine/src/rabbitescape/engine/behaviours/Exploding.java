@@ -37,7 +37,7 @@ public class Exploding extends Behaviour
         {
             world.changes.killRabbit( rabbit );
             
-            world.changes.removeBlockAt( rabbit.x+1, rabbit.y );/*tavsan patlayinca cevresindeki duvarlar kırılacak(varsa)*/
+            world.changes.removeBlockAt( rabbit.x+1, rabbit.y );/*tavsan patlayinca cevresindeki duvarlar kırılacak(varsa) comment*/
             world.changes.removeBlockAt( rabbit.x-1, rabbit.y );
             world.changes.removeBlockAt( rabbit.x+1, rabbit.y+1 );
             world.changes.removeBlockAt( rabbit.x-1, rabbit.y+1 );
