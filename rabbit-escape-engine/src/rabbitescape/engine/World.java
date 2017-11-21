@@ -26,6 +26,7 @@ public class World
         public DontStepAfterFinish( String worldName )
         {
             this.worldName = worldName;
+            
         }
     }
 
