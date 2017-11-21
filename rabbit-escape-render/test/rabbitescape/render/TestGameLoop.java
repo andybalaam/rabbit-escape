@@ -164,6 +164,7 @@ public class TestGameLoop
                 w.num_killed,
                 1,
                 w.getRabbitIndexCount(),
+                w.star,
                 w.paused,
                 new Comment[] {},
                 w.changes.statsListener,

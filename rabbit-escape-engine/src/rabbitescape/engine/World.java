@@ -98,6 +98,7 @@ public class World
         RUNNING,
         PAUSED,
         WON,
+        WONWITHSTAR,
         LOST
     }
 
@@ -118,6 +119,7 @@ public class World
     public final int num_rabbits;
     public final int num_to_save;
     public final int[] rabbit_delay;
+    public int star;
 
     private int rabbit_index_count;
     public int num_saved;
@@ -151,6 +153,7 @@ public class World
         int num_killed,
         int num_waiting,
         int rabbit_index_count,
+        int star,
         boolean paused,
         Comment[] comments,
         WorldStatsListener statsListener,
@@ -175,9 +178,11 @@ public class World
         this.num_killed = num_killed;
         this.num_waiting = num_waiting;
         this.rabbit_index_count = rabbit_index_count;
+        this.star=star;
         this.paused = paused;
         this.comments = comments;
         this.voidStyle = voidStyle;
+        
 
         if ( -1 == size.width )
         {
@@ -297,7 +302,7 @@ public class World
         return blockTable.getItemAt( x, y );
     }
 
-    public CompletionState completionState()
+    public CompletionState completionState() //process
     {
         if ( paused )
         {
@@ -305,9 +310,13 @@ public class World
         }
         else if ( rabbits.size() == 0 && this.num_waiting <= 0 )
         {
-            if ( num_saved >= num_to_save )
+        	if ( num_saved == num_to_save )
             {
                 return CompletionState.WON;
+            }
+            else if(num_saved == num_rabbits) {
+            	star++;
+            	return CompletionState.WONWITHSTAR;
             }
             else
             {

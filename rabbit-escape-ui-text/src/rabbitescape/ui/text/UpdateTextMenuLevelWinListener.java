@@ -21,4 +21,10 @@ public class UpdateTextMenuLevelWinListener implements LevelWinListener
     public void lost()
     {
     }
+
+	@Override
+	public void wonWithStar() {
+	
+		
+	}
 }

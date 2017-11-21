@@ -44,6 +44,7 @@ public class TextWorldManip
     private static final String num_killed           = "num_killed";
     private static final String num_waiting          = "num_waiting";
     private static final String rabbit_index_count   = "rabbit_index_count";
+    private static final String num_star			 = "num_star";
     private static final String intro                = "intro";
     private static final String paused               = "paused";
     private static final String ready_to_explode_all = "ready_to_explode_all";
@@ -55,7 +56,8 @@ public class TextWorldManip
         num_saved,
         num_killed,
         num_waiting,
-        rabbit_index_count
+        rabbit_index_count,
+        num_star
     );
 
     public static final List<String> META_INT_ARRAYS = Arrays.asList(
@@ -178,6 +180,7 @@ public class TextWorldManip
             processor.metaInt( num_killed, 0 ),
             processor.metaInt( num_waiting, num_rabs ),
             processor.metaInt( rabbit_index_count, 0 ),
+            processor.metaInt( num_star, 0 ),
             processor.metaBool( paused, false ),
             processor.getComments(),
             statsListener,
@@ -208,6 +211,7 @@ public class TextWorldManip
             0,               //num_killed
             0,               //num_waiting
             0,               //rabbit_index_count
+            0,  //star
             false,
             new Comment[] {},
             new IgnoreWorldStatsListener(),
@@ -341,6 +345,7 @@ public class TextWorldManip
             addMeta( ret, num_waiting, Integer.toString( world.num_waiting ), world.comments );
             addMeta( ret, rabbit_index_count, Integer.toString( world.getRabbitIndexCount() ), world.comments );
             addMeta( ret, paused,      Boolean.toString( world.paused ),      world.comments );
+            addMeta(ret , num_star, Integer.toString(world.star), world.comments);
         }
         abilityMetaLines( world, ret );
 

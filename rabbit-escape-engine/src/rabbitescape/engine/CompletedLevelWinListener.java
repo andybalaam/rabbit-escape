@@ -20,16 +20,26 @@ public class CompletedLevelWinListener implements LevelWinListener
     }
 
     @Override
-    public void won()
-    {
-        if ( levelsCompleted.highestLevelCompleted( levelsDir ) < levelNumber )
-        {
-            levelsCompleted.setCompletedLevel( levelsDir, levelNumber );
-        }
-    }
-
-    @Override
     public void lost()
     {
     }
+
+	@Override
+	public void won() {
+		if ( levelsCompleted.highestLevelCompleted( levelsDir ) < levelNumber )
+        {
+            levelsCompleted.setCompletedLevel( levelsDir, levelNumber );
+        }
+		
+	}
+
+	@Override
+	public void wonWithStar() {
+		if ( levelsCompleted.highestLevelCompleted( levelsDir ) < levelNumber )
+        {
+            levelsCompleted.setCompletedLevel( levelsDir, levelNumber );
+        }
+		
+		
+	}
 }

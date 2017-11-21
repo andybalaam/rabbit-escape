@@ -26,4 +26,14 @@ public class MultiLevelWinListener implements LevelWinListener
             listener.lost();
         }
     }
+
+	@Override
+	public void wonWithStar() {
+		for ( LevelWinListener listener : subListeners )
+        {
+            listener.wonWithStar();
+        }
+		
+	}
+
 }

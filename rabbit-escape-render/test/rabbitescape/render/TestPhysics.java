@@ -134,7 +134,7 @@ public class TestPhysics
     {
         public boolean wonCalled  = false;
         public boolean lostCalled = false;
-
+        public boolean winWithStarCalled = false;
         @Override
         public void won()
         {
@@ -148,6 +148,13 @@ public class TestPhysics
             assertFalse( lostCalled );
             lostCalled = true;
         }
+
+		@Override
+		public void wonWithStar() {
+			assertFalse( wonCalled );
+            wonCalled = true;
+			
+		}
     }
 
     @Test
