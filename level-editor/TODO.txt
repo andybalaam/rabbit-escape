@@ -1,0 +1,29 @@
++ Allow converting multiple things at the same place to text
++ Parser, including star points
++ Undo and redo
++ Place rabbits in level
++ Place entrances and exits in level
++ Add/delete columns and rows
+- Modify abilities, number of rabbits, number to save
+- Modify name, hints, description, author, music
+
+# Can make simple levels
+
+- Modify/paste code directly
+
+# Can edit existing simple levels
+
+- Support pasting text into the real game on Android
+- Support pasting text into the real game on PC
+
+# Workflow for editing levels
+
+- Place all remaining types of thing in level, including tokens and fire
+- Convert everything possible to/from text
+
+# Level editor done
+
+- Save/load to/from the cloud and/or as a URL and/or as github issue
+- Log in and have a list of saved things
+- Play/test levels online
+- Provide solutions after playing

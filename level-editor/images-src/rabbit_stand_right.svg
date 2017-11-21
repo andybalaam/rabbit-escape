@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="32"
+   height="32"
+   id="svg2"
+   version="1.1"
+   inkscape:version="0.91 r13725"
+   sodipodi:docname="rabbit_walk_right_01.svg">
+  <defs
+     id="defs4" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="11.844039"
+     inkscape:cx="-4.2767891"
+     inkscape:cy="16"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     inkscape:window-width="1920"
+     inkscape:window-height="1032"
+     inkscape:window-x="0"
+     inkscape:window-y="24"
+     inkscape:window-maximized="1" />
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(0,-1020.3622)">
+    <ellipse
+       style="fill:#4d4d4b;fill-opacity:1;stroke:#000000;stroke-opacity:1"
+       id="path3772-7"
+       transform="matrix(0.44740848,0.77493424,-0.77493424,0.44740848,17.757501,1014.0913)"
+       cx="10.204445"
+       cy="7.6088891"
+       rx="3.3777778"
+       ry="1.6355555" />
+    <ellipse
+       transform="translate(-0.46222208,1020.0178)"
+       style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-opacity:1"
+       id="path3766-3"
+       cx="17.528889"
+       cy="29.475555"
+       rx="3.3777778"
+       ry="1.1733333" />
+    <ellipse
+       style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-opacity:1"
+       id="path3766"
+       transform="translate(0,1021.2623)"
+       cx="17.528889"
+       cy="29.475555"
+       rx="3.3777778"
+       ry="1.1733333" />
+    <ellipse
+       style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-opacity:1"
+       id="path3768"
+       transform="matrix(0.96592583,0.25881905,-0.25881905,0.96592583,7.3863919,1018.3421)"
+       cx="13.262222"
+       cy="21.297777"
+       rx="5.3688889"
+       ry="8.6400003" />
+    <ellipse
+       style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-opacity:1"
+       id="path3792"
+       transform="matrix(0.93969262,-0.34202015,0.34202015,0.93969262,-6.5972498,1029.5018)"
+       cx="19.768888"
+       cy="22.151112"
+       rx="1.4222223"
+       ry="3.8044446" />
+    <ellipse
+       style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-opacity:1"
+       id="path3770"
+       transform="matrix(0.966571,0.17043255,-0.16501511,0.93584721,4.2840063,1019.8162)"
+       cx="16.782223"
+       cy="9.8488894"
+       rx="4.8355556"
+       ry="3.9466667" />
+    <ellipse
+       style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-opacity:1"
+       id="path3772"
+       transform="matrix(0.49999999,0.86602541,-0.86602541,0.49999999,16.100603,1013.7405)"
+       cx="10.204445"
+       cy="7.6088891"
+       rx="3.3777778"
+       ry="1.6355555" />
+    <circle
+       style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-opacity:1"
+       id="path3794"
+       transform="translate(0,1021.2623)"
+       cx="20.088888"
+       cy="9.7066669"
+       r="0.39111111" />
+    <ellipse
+       style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-opacity:1"
+       id="path3796"
+       transform="translate(-0.07111111,1021.1912)"
+       cx="13.795555"
+       cy="27.946667"
+       rx="3.6977777"
+       ry="2.2755556" />
+  </g>
+</svg>

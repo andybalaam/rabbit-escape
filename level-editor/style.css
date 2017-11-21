@@ -1,0 +1,225 @@
+html, body, #main
+{
+    height: 100%;
+    margin: 0em;
+    padding: 0em;
+}
+
+html
+{
+    box-sizing: border-box;
+}
+
+*, *:*
+{
+    box-sizing: inherit;
+}
+
+@media all and (orientation:landscape)
+{
+    #main
+    {
+        display: grid;
+        grid-template-columns: 5em 1fr;
+    }
+    #toolbar
+    {
+        overflow-x: hidden;
+        overflow-y: auto;
+    }
+    #workspace, #dialogBackground, #dialog
+    {
+        grid-row: 1;
+        grid-column: 2;
+    }
+    #dialog
+    {
+        margin-left: 2%;
+        margin-top: 4%;
+    }
+}
+
+@media all and (orientation:portrait)
+{
+    #main
+    {
+        display: grid;
+        grid-template-rows: 5em 1fr;
+    }
+    #toolbar
+    {
+        overflow-x: auto;
+        overflow-y: hidden;
+        white-space: nowrap;
+    }
+    #workspace, #dialogBackground, #dialog
+    {
+        grid-row: 2;
+        grid-column: 1;
+    }
+    #dialog
+    {
+        margin-left: 5%;
+        margin-top: 2%;
+    }
+}
+
+#workspace
+{
+    overflow: auto;
+    padding: 0.1em;
+}
+
+#toolbar
+{
+    background-color: #eeeeff;
+    padding: 0.2em;
+}
+
+#toolbar button, #dialog button
+{
+    overflow: hidden;
+    border-style: outset;
+    width: 4.6em;
+    height: 4.6em;
+    padding: 0em;
+}
+
+#toolbar button.pressed
+{
+    border-style: inset;
+}
+
+#toolbar button[disabled] img
+{
+    opacity: 0.3;
+}
+
+#toolbar button img, #dialog button img
+{
+    width: 4.2em;
+    height: 4.2em;
+}
+
+#level
+{
+    margin: 0.1em;
+    display: grid;
+    /* Using 4em here in Chrome measures different from
+     * 4em in the width and height of a button.
+     * Pixel measurements agree... */
+    grid-template-columns: repeat(auto-fill, 55px);
+    grid-template-rows: repeat(auto-fill, 55px);
+}
+
+#level button
+{
+    position: relative;
+    border: none;
+    background: none;
+    overflow: hidden;
+    padding: 0em;
+    margin: 0em;
+    width: 55px;
+    height: 55px;
+}
+
+#level button:focus
+{
+    outline: 0.05em dotted #000;
+}
+
+#level button img
+{
+    width: 55px;
+    height: 55px;
+    position: absolute;
+    left: 0em;
+    top: 0em;
+}
+
+#level button img.thing
+{
+    z-index: 1;
+}
+
+#dialogBackground
+{
+    opacity: 0.6;
+    background-color: black;
+    visibility: hidden;
+    z-index: 2;
+}
+
+#dialog
+{
+    max-width: 90%;
+    max-height: 85%;
+    background-color: white;
+    visibility: hidden;
+    border-width: 0.2em;
+    border-style: outset;
+    opacity: 0.95;
+    z-index: 3;
+}
+
+#dialog p
+{
+    font-family: verdana, sans-serif;
+    margin: 0.2em;
+    padding: 0em;
+    text-size: 1.5em;
+    overflow-y: auto;
+}
+
+#dialog button
+{
+    margin: 0.2em;
+}
+
+#dialog button.dialogSubmit
+{
+    justify-self: center;
+    align-self: center;
+    height: auto;
+    padding: 0.3em;
+}
+
+#dialog textarea
+{
+    width: 96%;
+    height: 96%;
+    margin: 0em;
+    resize: none;
+    background-color: white;
+}
+
+#dialog input, #dialog label
+{
+    font-size: 0.9em;
+    border: 1px solid grey;
+    margin: 0.1em 0.05em;
+}
+
+#dialog input
+{
+    padding-left: 0.3em;
+}
+
+#dialog label
+{
+    text-align: right;
+    background-color: lightgrey;
+    color: black;
+    padding-top: 0.4em;
+    padding-right: 0.3em;
+}
+
+#dialog label.error
+{
+    background-color: red;
+    overflow: auto;
+    font-size: 80%;
+    padding-top: 0.1em;
+    color: white;
+}
