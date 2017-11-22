@@ -4,6 +4,8 @@ import static rabbitescape.engine.util.Util.*;
 
 import java.util.List;
 
+import rabbitescape.engine.World;
+
 public class LevelsMenu extends Menu
 {
     private final String levelsDir;
@@ -57,6 +59,43 @@ public class LevelsMenu extends Menu
     }
 
     @Override
+   public void refresh()
+    {
+    	int x=World.star;
+    	if(x == 1) {
+	        int lastEnabled =
+	            levelsCompleted.highestLevelCompleted( levelsDir ) + 1;
+	
+	        for ( IdxObj<MenuItem> item : enumerate1( items ) )
+	        {
+	            item.object.enabled = ( item.index <= lastEnabled );
+	        }
+    	}
+    	else if(x == 2) {
+    		int lastEnabled =
+    	            levelsCompleted.highestLevelCompleted( levelsDir ) + 2;
+    	
+    	        for ( IdxObj<MenuItem> item : enumerate1( items ) )
+    	        {
+    	            item.object.enabled = ( item.index <= lastEnabled );
+    	        }
+    		
+    	}
+    	else if(x == 3) {
+    		int lastEnabled =
+    	            levelsCompleted.highestLevelCompleted( levelsDir ) + 3;
+    	
+    	        for ( IdxObj<MenuItem> item : enumerate1( items ) )
+    	        {
+    	            item.object.enabled = ( item.index <= lastEnabled );
+    	        }
+    	}
+    	World.star=0;
+    	
+    }
+    
+    
+  /*   @Override
     public void refresh()
     {
         int lastEnabled =
@@ -67,4 +106,17 @@ public class LevelsMenu extends Menu
             item.object.enabled = ( item.index <= lastEnabled );
         }
     }
+    
+    */
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 }

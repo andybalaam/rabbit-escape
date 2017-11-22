@@ -22,7 +22,5 @@ public class UpdateSwingMenuLevelWinListener implements LevelWinListener
     {
     }
 
-	@Override
-	public void wonWithStar() {	
-	}
+	
 }

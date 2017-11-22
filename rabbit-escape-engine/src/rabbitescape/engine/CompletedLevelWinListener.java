@@ -33,13 +33,5 @@ public class CompletedLevelWinListener implements LevelWinListener
 		
 	}
 
-	@Override
-	public void wonWithStar() {
-		if ( levelsCompleted.highestLevelCompleted( levelsDir ) < levelNumber )
-        {
-            levelsCompleted.setCompletedLevel( levelsDir, levelNumber );
-        }
-		
-		
-	}
+	
 }

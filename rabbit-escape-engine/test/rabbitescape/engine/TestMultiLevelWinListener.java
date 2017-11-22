@@ -33,31 +33,7 @@ public class TestMultiLevelWinListener
         assertThat( sub2.lostCalled, is( false ) );
     }
     
-    @Test
-    public void Each_sub_listener_is_notified_of_winWithStar()
-    {
-        TrackingLevelWinListener sub1 = new TrackingLevelWinListener();
-        TrackingLevelWinListener sub2 = new TrackingLevelWinListener();
-
-        // Make a multi-listener with 2 sub-listeners
-        MultiLevelWinListener listener =
-            new MultiLevelWinListener( sub1, sub2 );
-
-        // Sanity - no notifications yet
-        assertThat( sub1.wonWithStarCalled, is( false ) );
-        assertThat( sub2.wonWithStarCalled, is( false ) );
-
-        // This is what we are testing - say we won
-        listener.won();
-
-        // Both were notified
-        assertThat( sub1.wonWithStarCalled, is( true ) );
-        assertThat( sub2.wonWithStarCalled, is( true ) );
-
-        // Sanity: lost was not called
-        assertThat( sub1.wonWithStarCalled, is( false ) );
-        assertThat( sub2.wonWithStarCalled, is( false ) );
-    }
+   
     
     @Test
     public void Each_sub_listener_is_notified_of_losses()
@@ -91,8 +67,7 @@ public class TestMultiLevelWinListener
     {
         public boolean wonCalled = false;
         public boolean lostCalled = false;
-        public boolean wonWithStarCalled = false;
-
+       
         @Override
         public void won()
         {
@@ -105,10 +80,6 @@ public class TestMultiLevelWinListener
             lostCalled = true;
         }
 
-		@Override
-		public void wonWithStar() {
-			wonWithStarCalled = true;
-			
-		}
+		
     }
 }

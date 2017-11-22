@@ -14,11 +14,8 @@ public class IgnoreLevelWinListener implements LevelWinListener
 		
 	}
 
-	@Override
-	public void wonWithStar() {
-		// TODO Auto-generated method stub
-		
-	}
+	
+	
 		
 	
 }
