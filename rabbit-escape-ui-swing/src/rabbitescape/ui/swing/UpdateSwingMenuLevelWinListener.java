@@ -21,4 +21,6 @@ public class UpdateSwingMenuLevelWinListener implements LevelWinListener
     public void lost()
     {
     }
+
+	
 }

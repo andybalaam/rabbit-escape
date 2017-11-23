@@ -123,6 +123,7 @@ public class World
     public int num_saved;
     public int num_killed;
     public int num_waiting;
+    public static int star=1;
 
     public boolean paused;
 
@@ -307,6 +308,7 @@ public class World
         {
             if ( num_saved >= num_to_save )
             {
+            	star();
                 return CompletionState.WON;
             }
             else
@@ -320,6 +322,19 @@ public class World
         }
     }
 
+    public  int star() {
+	    	if(num_saved > num_to_save +1) {
+	    		star=3;
+	    	}
+	    	else if(num_saved == num_to_save +1) {
+	    		star=2;
+	    	}
+	    	else if(num_saved == num_to_save ) {
+	    		star=1;
+	    	}
+	    	System.out.println(star);
+    	return star;
+    }
     public Token getTokenAt( int x, int y )
     {
         // Note it is not worth using LookupTable2D for things.

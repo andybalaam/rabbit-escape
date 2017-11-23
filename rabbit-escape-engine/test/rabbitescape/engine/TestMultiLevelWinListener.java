@@ -32,7 +32,9 @@ public class TestMultiLevelWinListener
         assertThat( sub1.lostCalled, is( false ) );
         assertThat( sub2.lostCalled, is( false ) );
     }
-
+    
+   
+    
     @Test
     public void Each_sub_listener_is_notified_of_losses()
     {
@@ -65,7 +67,7 @@ public class TestMultiLevelWinListener
     {
         public boolean wonCalled = false;
         public boolean lostCalled = false;
-
+       
         @Override
         public void won()
         {
@@ -77,5 +79,7 @@ public class TestMultiLevelWinListener
         {
             lostCalled = true;
         }
+
+		
     }
 }
