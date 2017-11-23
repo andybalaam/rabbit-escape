@@ -173,6 +173,7 @@ public class ChangeDescription
         RABBIT_BLOCKING_RISE_LEFT,
         RABBIT_OUT_OF_BOUNDS,
         RABBIT_EXPLODING,
+        RABBIT_DYNAMITING,
         RABBIT_CRASHING,
         RABBIT_WAITING_LEFT,
         RABBIT_WAITING_RIGHT,
@@ -210,6 +211,12 @@ public class ChangeDescription
         TOKEN_BROLLY_STILL,
         TOKEN_BROLLY_FALL_TO_SLOPE,
         TOKEN_BROLLY_ON_SLOPE,
+        
+        TOKEN_DYNAMITE_FALLING,
+        TOKEN_DYNAMITE_STILL,
+        TOKEN_DYNAMITE_FALL_TO_SLOPE,
+        TOKEN_DYNAMITE_ON_SLOPE,
+
 
         WATER_REGION,
         WATER_REGION_HALF,

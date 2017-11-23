@@ -9,6 +9,7 @@
 :num_rabbits=20
 :num_to_save=15
 :dig=2
+:dynamite=5
 :bash=1
 :bridge=2
 :block=2

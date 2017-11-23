@@ -1,5 +1,9 @@
 package rabbitescape.engine.menu;
 
+//import java.io.File;
+//import java.io.FileWriter;
+//import java.io.IOException;
+//import java.io.*;
 import static rabbitescape.engine.util.Util.*;
 
 import java.util.List;
@@ -62,6 +66,23 @@ public class LevelsMenu extends Menu
    public void refresh()
     {
     	int x=World.star;
+   	
+    /*	try {
+    	File f = new File("/home/furkansenyurt/Masaüstü/rabbit/rabbit-escape/rabbit-escape-engine/src/rabbitescape/levels/01_easy");
+    	FileWriter fwriter = new FileWriter(f);
+    	PrintWriter pw = new PrintWriter(fwriter);
+    	
+    		for(int i=0;i<=x;i++) {
+    			pw.print("*");
+    		}
+    		pw.close();
+    
+    		
+    	} catch (IOException e) {
+    		e.printStackTrace();
+    	}
+    */
+    	
     	if(x == 1) {
 	        int lastEnabled =
 	            levelsCompleted.highestLevelCompleted( levelsDir ) + 1;
@@ -70,6 +91,7 @@ public class LevelsMenu extends Menu
 	        {
 	            item.object.enabled = ( item.index <= lastEnabled );
 	        }
+	    
     	}
     	else if(x == 2) {
     		int lastEnabled =
@@ -92,30 +114,16 @@ public class LevelsMenu extends Menu
     	}
     	World.star=0;
     	
+    
+    	
+    	
     }
     
     
-  /*   @Override
-    public void refresh()
-    {
-        int lastEnabled =
-            levelsCompleted.highestLevelCompleted( levelsDir ) + 1;
-
-        for ( IdxObj<MenuItem> item : enumerate1( items ) )
-        {
-            item.object.enabled = ( item.index <= lastEnabled );
-        }
-    }
-    
-    */
+ 
     
     
-    
-    
-    
-    
-    
-    
+   
     
     
     
