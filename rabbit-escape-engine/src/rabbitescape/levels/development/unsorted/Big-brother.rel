@@ -1,0 +1,27 @@
+:name=Big Brother
+:description=Big Brother sees all.
+:author_name=tttppp
+:author_url=https://github.com/tttppp
+:solution.1.code=;*;$e;U;I*;}5;;Ue4a;*;;jimM+)V4*;;?m8lma;;jiyjm5}Ukk5;e};k55Ue6;;8I*jil}5;}5;;Ue*;ylrU5;m656Ueel};m4y;j;;Uek.$5IU;lm8l6I)ej;;l55;Ik;Ig68}.*yr;6;;5*j6j$Ul};;;;;e$}8jrmlUilk6;e.I;5856j.5*;};}mi.?;U;B5g;k5}ej5;*k;IU)z;MImj;eV5jI;;;;}m;l;5U}j5.aIU;e5g;6;ie*k;M;65};?5**kjI;ll5;k5r;5;;
+:num_rabbits=0
+:num_to_save=3
+:rabbit_delay=4
+:bash=2
+:bridge=9
+:climb=1
+:dig=9
+ #t       # 
+ ########## 
+            
+            
+            
+    MMMM    
+    r  M    
+    MM M    
+    M  M    
+MM #M#MM# MM
+#    O     #
+#####MM#####
+#    M     #
+#r  /#\  j #
+##### ######
