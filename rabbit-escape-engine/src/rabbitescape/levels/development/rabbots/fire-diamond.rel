@@ -1,0 +1,25 @@
+            
+            
+     **     
+M   *OO*   M
+ *  *OO*  \ 
+  M  **  M  
+           \
+ MMMMMMMMMM 
+:*=(A
+:*=)A
+:*=(A
+:*=)A
+:*=/Q
+:*=)A
+:*=(A
+:*=)A
+:*=(A
+:bash=6
+:bridge=8
+:dig=2
+:name=Fire Diamond
+:num_rabbits=4
+:num_to_save=2
+:rabbit_delay=8
+:solution.1=bridge&(4,6);;bash;3;(5,6);;bridge;;(5,6);9;bash&(6,5);bridge;6;bash;(6,5);3
