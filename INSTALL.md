@@ -77,14 +77,19 @@ You will need to run make before you start.
 Android
 -------
 
-Before you start, run:
+    sudo apt install "android*"
 
-    make android-pre
+    # download sdkmanager and accept license
+
+    make
 
 Load the rabbit-escape-ui-android directory as a project into Android
 Studio.  From here you should be able to run it as normal.
 
-If you make changes in the non-Android code, run "make android-pre"
+If you make changes in the non-Android code, run:
+
+    make android-pre
+
 again and choose "Synchronize" on the jar file in Android Studio at
 app/src/libs/rabbit-escape-generic.jar
 
