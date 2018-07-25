@@ -46,11 +46,11 @@ public class TestAllActiveLevels
         forEachDevelopmentLevel( assertItsSolutionsWork() );
     }
 
-    @Test
-    public void All_dejavu_levels_work_and_any_solutions_are_correct()
-    {
-        forEachUnofficialLevel( assertItsSolutionsWork(), "07_dejavu" );
-    }
+    // @Test dejavu is now official - left as an example
+    // public void All_dejavu_levels_work_and_any_solutions_are_correct()
+    // {
+    //     forEachUnofficialLevel( assertItsSolutionsWork(), "07_dejavu" );
+    // }
 
     @Test
     public void All_official_levels_have_unique_names()
