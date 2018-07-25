@@ -1,0 +1,20 @@
+ Q/t  \Q 
+   ###   
+      /  
+M /OOO/ M
+MMM###MMM
+:author_name=Andy Balaam
+:author_url=http://artificialworlds.net/rabbit-escape/
+:block=2
+:bridge=2
+:brolly=2
+:description=So many exits, but using them might be tricky...
+:dig=2
+:explode=2
+:hint.1=Can you use the rabbot to help?
+:hint.2=Dig down to free the rabbot, and dig on the bottom slope on the right.
+:hint.3=Pile an explode token on top of the dig token to blow up the rabbot once it has done its job!
+:name=One from each side
+:num_rabbits=2
+:num_to_save=2
+:solution.1=;dig;2;(5,0);(6,3);;explode;;(6,3);until:WON
