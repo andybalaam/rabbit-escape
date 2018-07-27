@@ -28,6 +28,7 @@ to build the images, sounds and code.  On Ubuntu, Debian and similar:
         make \
         openjdk-7-jdk \
         ant \
+        imagemagick \
         sox \
         inkscape \
         expect \
