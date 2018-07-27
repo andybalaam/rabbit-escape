@@ -26,7 +26,7 @@ to build the images, sounds and code.  On Ubuntu, Debian and similar:
     sudo apt-get install \
         git \
         make \
-        openjdk-7-jdk \
+        openjdk-8-jdk \
         ant \
         imagemagick \
         sox \
