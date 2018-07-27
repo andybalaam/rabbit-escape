@@ -17,6 +17,7 @@
                 <compilerarg value="-Xlint"/>
                 <compilerarg value="-Xlint:-path"/>
                 <compilerarg value="-Xlint:-options"/>
+                <compilerarg value="-Xlint:-deprecation"/>
                 <compilerarg value="-encoding"/>
                 <compilerarg value="utf8"/>
                 <classpath>
