@@ -11,7 +11,7 @@ MMMMMMMMM
 :author_name=
 :author_url=
 :solution.1.code=78ca%i^i*`7{z]^`ziHio`c*==%Eioc^qcq`a*]ya7]yzc=
-:solution.2.code=(%=_((B} #fRI-8hGpJy{9
+:solution.2=bash;;(6,1);until:LOST
 :num_rabbits=3
 :num_to_save=3
 :rabbit_delay=5
