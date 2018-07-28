@@ -1,0 +1,23 @@
+:name=Tailgating
+:description=This rabbot keeps following me!
+:author_name=Andy Balaam
+:author_url=http://artificialworlds.net/rabbit-escape/
+:hint.1.code=k000k:;_tb;tkY_(P0oceY:k_bkk5.'kYYcP
+:hint.2.code=D2V..29h2-8n--bnhn.V.;2Uy.VVn2222.$)*hVV9*
+:hint.3.code=8e(Wb,e,,,b'MeCM$+KMM,W+B,$fb,(eMfBg,,,K9,hKMBMb,d+WBWMf+,,BM9,9B9eBM3(fbW-.r,B,7,(dM~,ewMBff,hW+MdbeBC+MC9b9g,MBy,eCb,i,(W&e,dB7W,9idMCB,
+:solution.1.code=-qjLkAdkY-qMwCqYqOyOtMX?uquMFqqO=FL-qqAtA=qtb
+:num_rabbits=1
+:num_to_save=1
+:rabbit_delay=4
+:bridge=1
+:climb=1
+:dig=1
+           
+    # /##)#
+O   #\ # (#
+M   # /#( #
+    #* *) #
+    #    )#
+    #######
+:*=\t{index:1}
+:*=#Q
