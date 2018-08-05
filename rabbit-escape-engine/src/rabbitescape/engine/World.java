@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import rabbitescape.engine.Rabbit.Type;
 import rabbitescape.engine.WaterRegion;
 import rabbitescape.engine.err.RabbitEscapeException;
 import rabbitescape.engine.textworld.Comment;
@@ -303,7 +304,7 @@ public class World
         {
             return CompletionState.PAUSED;
         }
-        else if ( rabbits.size() == 0 && this.num_waiting <= 0 )
+        else if ( numberOfLiveRabbits() == 0 && this.num_waiting <= 0 )
         {
             if ( num_saved >= num_to_save )
             {
@@ -320,7 +321,17 @@ public class World
         }
     }
 
-    public Token getTokenAt( int x, int y )
+    private int numberOfLiveRabbits() {
+    	int count = 0;
+		for ( Rabbit r : rabbits ) {
+			if ( r.type == Type.RABBIT ) {
+				++count;
+			}
+		}
+		return count;
+	}
+
+	public Token getTokenAt( int x, int y )
     {
         // Note it is not worth using LookupTable2D for things.
         // Handling their movement would complicate the code.

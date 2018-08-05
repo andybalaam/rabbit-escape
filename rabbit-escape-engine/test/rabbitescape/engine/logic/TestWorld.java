@@ -93,6 +93,38 @@ public class TestWorld
     }
 
     @Test
+    public void World_reports_when_finished_no_live_rabbits_even_if_rabbots()
+    {
+        World world = createWorld(
+            ":num_rabbits=5",
+            ":rabbit_delay=5",
+            " Q    ",
+            " O #y#",  // Exit right below entrance, trapped rabbot
+            "######"
+        );
+
+        world.step(); // First one over the exit
+
+        fiveSteps( world );
+        assertThat( world.completionState(), equalTo( RUNNING ) );
+
+        fiveSteps( world );
+        assertThat( world.completionState(), equalTo( RUNNING ) );
+
+        fiveSteps( world );
+        assertThat( world.completionState(), equalTo( RUNNING ) );
+
+        fiveSteps( world );
+        assertThat( world.completionState(), equalTo( RUNNING ) );
+
+        // Fifth one over the exit: send it in
+        world.step();
+
+        // We should now be finished
+        assertThat( world.completionState(), equalTo( WON ) );
+    }
+
+    @Test
     public void World_reports_won_when_enough_rabbits_saved()
     {
         World world = createWorld(
@@ -115,6 +147,36 @@ public class TestWorld
             ":num_saved=2",
             ":num_to_save=3",
             "   ",
+            "###"
+        );
+
+        // We should now be finished
+        assertThat( world.completionState(), equalTo( LOST ) );
+    }
+
+    @Test
+    public void Empty_world_reports_lost_immediately()
+    {
+        World world = createWorld(
+            ":num_rabbits=0",
+            ":num_saved=0",
+            ":num_to_save=1",
+            "   ",
+            "###"
+        );
+
+        // We should now be finished
+        assertThat( world.completionState(), equalTo( LOST ) );
+    }
+
+    @Test
+    public void World_with_only_rabbots_reports_lost_immediately()
+    {
+        World world = createWorld(
+            ":num_rabbits=0",
+            ":num_saved=0",
+            ":num_to_save=1",
+            " y ",
             "###"
         );
 
