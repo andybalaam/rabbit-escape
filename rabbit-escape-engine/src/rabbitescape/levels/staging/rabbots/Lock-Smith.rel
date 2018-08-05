@@ -1,0 +1,39 @@
+:name=Lock Smith
+:description=Can you slot the rabbits inbetween rabbots?
+:author_name=tttppp
+:author_url=https://github.com/tttppp
+:solution.1=bridge;(6,4);(6,4);20;(6,4);7;dig;2;(2,4);until:WON
+:solution.2=dig;4;(2,4);bridge;3;(1,4);23;(1,9);until:WON
+:solution.3=bridge;3;(1,4);dig;5;(2,4);until:WON
+:num_rabbits=3
+:num_to_save=3
+:rabbit_delay=4
+:bridge=5
+:dig=1
+#Q       #
+#        #
+#        #
+#        #
+#        #
+MM#MMMMMMM
+MM  MMMMMM
+MMM MMMMMM
+MM*****O*M
+M**MMMMM*M
+MM)******M
+MMMMMMMMMM
+:*=t{index:1}
+:*=t{index:2}
+:*=t{index:3}
+:*=t{index:4}
+:*=t{index:5}
+:*=t{index:6}
+:*=t{index:13}y{index:14}
+:*=(y{index:15}
+:*=t{index:7}
+:*=y{index:8}
+:*=y{index:9}
+:*=y{index:10}
+:*=y{index:11}
+:*=y{index:12}
+:*=t{index:16}y{index:17}
