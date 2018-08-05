@@ -125,6 +125,36 @@ public class TestWorld
     }
 
     @Test
+    public void World_reports_existing_rabbits_as_out_number_out_even_if_rabbots_and_existing_rabbits()
+    {
+        World world = createWorld(
+            "#r#y#",  // A rabbit and a rabbot
+            "#####"
+        );
+
+        assertThat( world.numRabbitsOut(), equalTo( 1 ) );
+    }
+
+    @Test
+    public void World_reports_existing_and_new_rabbots_as_out()
+    {
+        World world = createWorld(
+            ":num_rabbits=2",
+            ":rabbit_delay=1",
+            " Q #r#",
+            "   ###",
+            "# ##y#",  // New rabbits from entrance, and existing ones
+            "######"
+        );
+
+        assertThat( world.numRabbitsOut(), equalTo( 1 ) );
+        world.step();
+        assertThat( world.numRabbitsOut(), equalTo( 2 ) );
+        world.step();
+        assertThat( world.numRabbitsOut(), equalTo( 3 ) );
+    }
+
+    @Test
     public void World_reports_won_when_enough_rabbits_saved()
     {
         World world = createWorld(
@@ -182,6 +212,21 @@ public class TestWorld
 
         // We should now be finished
         assertThat( world.completionState(), equalTo( LOST ) );
+    }
+
+    @Test
+    public void World_with_only_rabbots_reports_zero_rabbits_out()
+    {
+        World world = createWorld(
+            ":num_rabbits=0",
+            ":num_saved=0",
+            ":num_to_save=1",
+            " y ",
+            "###"
+        );
+
+        // We should now be finished
+        assertThat( world.numRabbitsOut(), equalTo( 0 ) );
     }
 
     @Test

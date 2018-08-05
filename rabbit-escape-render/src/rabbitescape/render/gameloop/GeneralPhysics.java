@@ -240,4 +240,9 @@ public class GeneralPhysics implements Physics
     {
         return world;
     }
+
+    @Override
+    public void init() {
+        notifyStatsListeners();
+    }
 }

@@ -14,4 +14,5 @@ public interface Physics
     boolean gameRunning();
     void dispose();
     World world();
+    void init();
 }

@@ -45,6 +45,7 @@ public class GameLoop
     public void run()
     {
         resetClock();
+        physics.init();
 
         while( running )
         {

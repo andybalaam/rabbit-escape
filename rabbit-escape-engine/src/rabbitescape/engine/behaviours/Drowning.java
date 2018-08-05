@@ -21,12 +21,11 @@ public class Drowning extends Behaviour
     @Override
     public boolean checkTriggered( Rabbit rabbit, World world )
     {
-    	
-    	if ( rabbit.type == Rabbit.Type.RABBOT )
+        if ( rabbit.type == Rabbit.Type.RABBOT )
         {
             return false;  // Rabbots don't drown
         }
-    	
+
         int yCoordinate = rabbit.y;
         CellularDirection directionToCheck = UP;
         if ( rabbit.onSlope )

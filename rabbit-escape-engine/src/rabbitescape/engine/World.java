@@ -304,7 +304,7 @@ public class World
         {
             return CompletionState.PAUSED;
         }
-        else if ( numberOfLiveRabbits() == 0 && this.num_waiting <= 0 )
+        else if ( numRabbitsOut() == 0 && this.num_waiting <= 0 )
         {
             if ( num_saved >= num_to_save )
             {
@@ -321,17 +321,7 @@ public class World
         }
     }
 
-    private int numberOfLiveRabbits() {
-    	int count = 0;
-		for ( Rabbit r : rabbits ) {
-			if ( r.type == Type.RABBIT ) {
-				++count;
-			}
-		}
-		return count;
-	}
-
-	public Token getTokenAt( int x, int y )
+    public Token getTokenAt( int x, int y )
     {
         // Note it is not worth using LookupTable2D for things.
         // Handling their movement would complicate the code.
@@ -401,8 +391,13 @@ public class World
 
     public int numRabbitsOut()
     {
-        return num_rabbits -
-            ( this.num_waiting + num_killed + num_saved );
+        int count = 0;
+        for ( Rabbit r : rabbits ) {
+            if ( r.type == Type.RABBIT ) {
+                ++count;
+            }
+        }
+        return count;
     }
 
     public void setPaused( boolean paused )
