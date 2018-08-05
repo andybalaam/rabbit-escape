@@ -1,0 +1,21 @@
+####################
+#ttt  r         Q  #
+#              #   #
+############## ### #
+           #       #
+           #O *    #
+           #########
+:*=ppp
+:author_name=GamingInky
+:author_url=https://github.com/GamingInky
+:bash=1
+:block=1
+:bridge=1
+:description=...is on.
+:dig=1
+:hint.1=Stop the rabbots getting to the other rabbits.
+:hint.2=Make them pick up the exploding tokens so the rabbits don't have to...
+:hint.3=Place a blocker token just before the hole on the right then make the rabbit bridge then make the first rabbot dig through the bridge, after that make the blocker dig.
+:name=The Chase...
+:num_rabbits=2
+:num_to_save=3
