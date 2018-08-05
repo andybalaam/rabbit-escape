@@ -10,17 +10,17 @@ import rabbitescape.engine.ChangeDescription.State;
 
 public class Falling extends Behaviour
 {
-    private static final int fatalHeight = 4;
-
     private int heightFallen = 0;
 
     private final Climbing climbing;
     private final Brollychuting brollychuting;
+    private final int fatalHeight;
 
-    public Falling( Climbing climbing, Brollychuting brollychuting )
+    public Falling( Climbing climbing, Brollychuting brollychuting, int fatalHeight )
     {
         this.climbing = climbing;
         this.brollychuting = brollychuting;
+        this.fatalHeight = fatalHeight;
     }
 
     public boolean isFallingToDeath()
