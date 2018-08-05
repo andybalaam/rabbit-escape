@@ -52,7 +52,7 @@ public class Rabbit extends Thing implements Comparable<Rabbit>
         Drowning drowning = new Drowning();
         Exiting exiting = new Exiting();
         Brollychuting brollychuting = new Brollychuting( climbing );
-        falling = new Falling( climbing, brollychuting );
+        falling = new Falling( climbing, brollychuting, getFatalHeight() );
         Bashing bashing = new Bashing();
         Bridging bridging = new Bridging();
         Blocking blocking = new Blocking();
@@ -241,5 +241,11 @@ public class Rabbit extends Thing implements Comparable<Rabbit>
             return normalName.replaceFirst(
                 "^rabbit", type.name().toLowerCase() );
         }
+    }
+
+    /** Rabbots can fall further than rabbits. */
+    private int getFatalHeight()
+    {
+        return ( type == Type.RABBIT ? 4 : 5 );
     }
 }
