@@ -1,21 +1,27 @@
+:name=The Chase...
+:description=...is on.
+:author_name=GamingInky
+:author_url=https://github.com/GamingInky
+:hint.1.code=WxcxQG7aG%7Ax7"l""%"%7a`%%"%Wx"Q.QG%c""((cA,Q"
+:hint.2.code=oBBo]fB"BpA1R'=BB32ArfBR#o2!B#do]BjN#3]"ARddohnBBAAh"2TGon1(oAB2d31dfA
+:hint.3.code=Gp(p2w=|QGt2OGp|tGCG](p2Qb|9wp|"Gp2CGp"2p}"Gp9C2mRCGQCCtC2]Gp9CG"'||tCG9t]p2C]Gp}GGYCm}2R]pGbmGpGCG(G]]|GQ]Qp9}GC"CGb22Rp"pGQ||2G]|CGR"Q"R9'p2CmGpGQif|GO9C='wCpRGptQ'\
+:solution.1.code=vwEIw=}jHj\H= [^ e\v&jt%6Yh\=t[<E%~jwZ\H@Id HwE%IjwEhwwIw
+:num_rabbits=2
+:num_to_save=3
+:rabbit_delay=4
+:bash=1
+:block=1
+:bridge=1
+:dig=1
 ####################
-#ttt  r         Q  #
+#***  *         Q  #
 #              #   #
 ############## ### #
            #       #
            #O *    #
            #########
+:*=t{index:1}
+:*=t{index:2}
+:*=t{index:3}
+:*=r{index:4}
 :*=ppp
-:author_name=GamingInky
-:author_url=https://github.com/GamingInky
-:bash=1
-:block=1
-:bridge=1
-:description=...is on.
-:dig=1
-:hint.1=Stop the rabbots getting to the other rabbits.
-:hint.2=Make them pick up the exploding tokens so the rabbits don't have to...
-:hint.3=Place a blocker token just before the hole on the right then make the rabbit bridge then make the first rabbot dig through the bridge, after that make the blocker dig.
-:name=The Chase...
-:num_rabbits=2
-:num_to_save=3
