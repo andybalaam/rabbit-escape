@@ -1,0 +1,19 @@
+:name=Rabbot Practice
+:description=Rabbit vs Rabbot, who will win?
+:author_name=GamingInky
+:author_url=https://github.com/GamingInky
+:hint.1=Don't let the rabbot get you.
+:hint.2=Slow it down somehow.
+:hint.3=Make the rabbot bash to slow it down so it doesn't hit the rabbit.
+:solution.1=bash&(6,1);until:WON
+:num_rabbits=1
+:num_to_save=1
+:rabbit_delay=4
+:bash=1
+           
+         y 
+      #### 
+ Q         
+           
+     O     
+###########
