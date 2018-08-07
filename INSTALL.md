@@ -84,6 +84,14 @@ Android
 
     make
 
+Alternatively:
+
+    sudo snap install android-studio --classic
+
+    # Start up Android Studio and install everything it prompts you to install
+
+    make
+
 Load the rabbit-escape-ui-android directory as a project into Android
 Studio.  From here you should be able to run it as normal.
 
