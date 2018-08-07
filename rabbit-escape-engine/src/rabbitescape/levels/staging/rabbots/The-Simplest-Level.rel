@@ -1,0 +1,24 @@
+:name=The Simplest Level
+:description=Save the rabbit, burn the rabbot, then get yourself a nice cup of tea.
+:author_name=tttppp
+:author_url=http://github.com/tttppp
+:hint.1.code=pXIy^b=I`&bE`Xp^~>pb`p=Cby`ib=B^=cEgaII#ciI`biy
+:hint.2.code="if4fHiinnn_zb_iFiTU_zni_S"U}$zYSl4tU__niiHfFiSnnH}UHfbnUUU4iiG
+:hint.3.code=rqC7r6qq%C/rn.Tq(Vr%Clnr.=qqq7.C%r%r.Zyqqqsn65qqq5Zr6/6nynqwqwOC7n.nCZ8yZq.7lrrw(q7n7
+:solution.1.code=hOnH)$H)e<eHV__<@v<$<A|mQVQw_H*[w<v<v<S@<er)<AmH{eH<<<)VhH<V
+:solution.2=until:LOST
+:num_rabbits=0
+:num_to_save=1
+:rabbit_delay=4
+:block=1
+:bridge=9
+:climb=1
+#    t#j    #
+# ######### #
+#           #
+##### # #####
+#     #     #
+#     #     #
+#     #     #
+#  A  #  O  #
+#############
