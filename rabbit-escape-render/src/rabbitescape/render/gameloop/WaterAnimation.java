@@ -1,10 +1,5 @@
 package rabbitescape.render.gameloop;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import static rabbitescape.engine.CellularDirection.*;
-
 import rabbitescape.engine.WaterRegion;
 import rabbitescape.engine.World;
 import rabbitescape.engine.util.CellDebugPrint;
@@ -12,6 +7,12 @@ import rabbitescape.engine.util.Dimension;
 import rabbitescape.engine.util.LookupTable2D;
 import rabbitescape.render.PolygonBuilder;
 import rabbitescape.render.WaterRegionRenderer;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import static rabbitescape.engine.CellularDirection.HERE;
+import static rabbitescape.render.CellPosition.*;
 
 /**
  * Manages animation of polygons for water.
@@ -79,20 +80,18 @@ public class WaterAnimation
                 {
                     continue;
                 }
-                p.add( wrr.topVertex( LEFT ) );
+                p.add( wrr.topVertex( TOP_LEFT ) );
                 if ( null == start )
                 {
                     start = wrr;
                 }
-                if ( !wrr.region.isConnected( RIGHT ) || wrr.adjacentIsNull( RIGHT ) || wrr.adjacentWaterIsFalling( RIGHT ) )
-                {
-                    p.add( wrr.topVertex( RIGHT ) );
-                    p.add( wrr.bottomVertex( RIGHT ) );
-                    p.add( start.bottomVertex( LEFT ) );
-                    start = null;
-                    polygons.add( p );
-                    p = new PolygonBuilder();
-                }
+                p.add( wrr.topVertex( TOP_MIDDLE ) );
+                p.add( wrr.topVertex( TOP_RIGHT ) );
+                p.add( wrr.bottomVertex( BOTTOM_RIGHT ) );
+                p.add( start.bottomVertex( BOTTOM_LEFT ) );
+                start = null;
+                polygons.add( p );
+                p = new PolygonBuilder();
             }
         }
 
