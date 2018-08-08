@@ -1,9 +1,7 @@
 package rabbitescape.render;
 
-import static rabbitescape.engine.BehaviourTools.*;
 import rabbitescape.engine.Block;
 import rabbitescape.engine.CellularDirection;
-import static rabbitescape.engine.CellularDirection.*;
 import rabbitescape.engine.WaterRegion;
 import rabbitescape.engine.World;
 import rabbitescape.engine.textworld.BlockRenderer;
@@ -12,7 +10,9 @@ import rabbitescape.engine.util.LookupItem2D;
 import rabbitescape.engine.util.MathUtil;
 import rabbitescape.engine.util.Position;
 import rabbitescape.render.gameloop.WaterAnimation;
-import rabbitescape.render.Vertex;
+
+import static rabbitescape.engine.BehaviourTools.*;
+import static rabbitescape.engine.CellularDirection.*;
 
 public class WaterRegionRenderer implements LookupItem2D
 {
@@ -20,14 +20,6 @@ public class WaterRegionRenderer implements LookupItem2D
     public static final int contentsPerParticle = 50;
     public static final int maxParticleCountChange = 2;
     private static final int maxHeightChange = 1;
-
-    public static enum BounceSurface
-    {
-        VERTICAL,
-        HORIZONTAL,
-        LEFT_RISE,
-        RIGHT_RISE
-    }
 
     public WaterRegion region;
 
@@ -133,19 +125,21 @@ public class WaterRegionRenderer implements LookupItem2D
      * supplied ArrayLists of coordinates. Supplied vertex is towards the
      * cell in the supplied direction.
      */
-    public Vertex topVertex( CellularDirection d )
+    public Vertex topVertex( CellPosition d )
     {
         int x = region.x * 32, y = region.y * 32; // Local cell origin in nominal pixels.
         if ( 0 == height )
         {
             switch ( d )
             {
-            case LEFT:
+            case TOP_LEFT:
                 return new Vertex( x, y + 32 );
-            case RIGHT:
+            case TOP_MIDDLE:
+                return new Vertex( x + 16, y + 32 );
+            case TOP_RIGHT:
                 return new Vertex( x + 32, y + 32 );
             default:
-                throw new RuntimeException( "Can only add vertices for LEFT or RIGHT cells.");
+                throw new RuntimeException( "Can only add vertices for TOP_LEFT, TOP_MIDDLE or TOP_RIGHT cells.");
             }
         }
         Block block = world.getBlockAt( region.x, region.y );
@@ -154,7 +148,7 @@ public class WaterRegionRenderer implements LookupItem2D
 
         switch ( d )
         {
-        case LEFT:
+        case TOP_LEFT:
             if ( shapeEquals ( block, Block.Shape.UP_LEFT ) )
             {
                 xOffset = 32 - boundaryHeight;
@@ -164,7 +158,17 @@ public class WaterRegionRenderer implements LookupItem2D
                 xOffset = 0;
             }
             break;
-        case RIGHT:
+        case TOP_MIDDLE:
+            if ( shapeEquals ( block, Block.Shape.UP_LEFT ) || shapeEquals ( block, Block.Shape.UP_RIGHT ) )
+            {
+                xOffset = ( 32 - boundaryHeight ) / 2;
+            }
+            else
+            {
+                xOffset = 16;
+            }
+            break;
+        case TOP_RIGHT:
             if ( shapeEquals ( block, Block.Shape.UP_RIGHT ) )
             {
                 xOffset = boundaryHeight;
@@ -197,46 +201,36 @@ public class WaterRegionRenderer implements LookupItem2D
         return height;
     }
 
-    private int calcBoundaryHeight( CellularDirection d )
+    private int calcBoundaryHeight( CellPosition cellPosition )
     {
-        if ( !region.isConnected( d ) )
+        if ( cellPosition.leftRightness == null || !region.isConnected( cellPosition.leftRightness ) )
         { // The cell in that direction is not relevant
             return height;
         }
-        WaterRegionRenderer adjWrr = adjacentRenderer( d );
+        WaterRegionRenderer adjWrr = adjacentRenderer( cellPosition.leftRightness );
         if ( null == adjWrr )
         { // Adjacent is probably empty, and this cell is probably a low level
+            if ( region.isConnected( cellPosition.leftRightness ) )
+            {
+                WaterRegion adjReg = world.waterTable.getItemAt( region.x + cellPosition.leftRightness.xOffset, region.y + cellPosition.leftRightness.yOffset );
+                if ( adjReg != null && adjReg.isConnected( CellularDirection.opposite( cellPosition.leftRightness ) ) )
+                {
+                    return 0;
+                }
+            }
             return height;
         }
-        int heightDefect = Math.abs( targetWaterHeight - height );
-        int adjHeightDefect = Math.abs ( adjWrr.targetWaterHeight - adjWrr.height );
-        if ( heightDefect > adjHeightDefect )
-        {
-            if ( heightDefect > maxHeightChange )
-            {
-                return height;
-            }
-        }
-        else
-        {
-            if ( adjHeightDefect > maxHeightChange )
-            {
-                return adjWrr.height;
-            }
-        }
-        int adjHeight = adjacentRendererWaterHeight( d );
-        int boundaryHeight = adjHeight > height ?  adjHeight : height; // Use max
-        return boundaryHeight;
+        return ( height + adjWrr.height ) / 2;
     }
 
-    public Vertex bottomVertex( CellularDirection d )
+    public Vertex bottomVertex( CellPosition d )
     {
         int x = region.x * 32, y = region.y * 32; // Local cell origin in nominal pixels.
         int xOffset;
         Block block = world.getBlockAt( region.x, region.y );
         switch ( d )
         {
-        case LEFT:
+        case BOTTOM_LEFT:
             if ( shapeEquals ( block, Block.Shape.UP_LEFT ) )
             {
                 xOffset = 32;
@@ -246,7 +240,7 @@ public class WaterRegionRenderer implements LookupItem2D
                 xOffset = 0;
             }
             break;
-        case RIGHT:
+        case BOTTOM_RIGHT:
             if ( shapeEquals ( block, Block.Shape.UP_RIGHT ) )
             {
                 xOffset = 0;
@@ -257,7 +251,7 @@ public class WaterRegionRenderer implements LookupItem2D
             }
             break;
         default:
-            throw new RuntimeException( "Can only add vertices for LEFT or RIGHT cells." );
+            throw new RuntimeException( "Can only add bottom vertices for BOTTOM_LEFT or BOTTOM_RIGHT cells." );
         }
         return new Vertex( x + xOffset, y + 32 );
     }
