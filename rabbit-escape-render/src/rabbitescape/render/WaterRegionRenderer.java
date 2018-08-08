@@ -203,7 +203,7 @@ public class WaterRegionRenderer implements LookupItem2D
 
     private int calcBoundaryHeight( CellPosition cellPosition )
     {
-        if ( cellPosition.leftRightness == null || !region.isConnected( cellPosition.leftRightness ) )
+        if ( cellPosition.leftRightness == null || !region.isConnected( cellPosition.leftRightness ) || isFull( region.x, region.y ) )
         { // The cell in that direction is not relevant
             return height;
         }
@@ -219,6 +219,10 @@ public class WaterRegionRenderer implements LookupItem2D
                 }
             }
             return height;
+        }
+        else if ( isFull( adjWrr.region.x, adjWrr.region.y ) )
+        {
+            return adjWrr.height;
         }
         return ( height + adjWrr.height ) / 2;
     }
