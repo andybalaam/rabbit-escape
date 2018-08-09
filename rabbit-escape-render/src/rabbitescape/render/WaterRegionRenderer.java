@@ -144,44 +144,47 @@ public class WaterRegionRenderer implements LookupItem2D
         }
         Block block = world.getBlockAt( region.x, region.y );
         int boundaryHeight = calcBoundaryHeight( d );
-        int xOffset;
+        int xOffset, yOffset;
 
         switch ( d )
         {
         case TOP_LEFT:
+            xOffset = 0;
             if ( shapeEquals ( block, Block.Shape.UP_LEFT ) )
             {
-                xOffset = 32 - boundaryHeight;
+                yOffset = 0;
             }
             else
             {
-                xOffset = 0;
+                yOffset = 32 - boundaryHeight;
             }
             break;
         case TOP_MIDDLE:
+            xOffset = 16;
             if ( shapeEquals ( block, Block.Shape.UP_LEFT ) || shapeEquals ( block, Block.Shape.UP_RIGHT ) )
             {
-                xOffset = ( 32 - boundaryHeight ) / 2;
+                yOffset = ( 32 - height ) / 2;
             }
             else
             {
-                xOffset = 16;
+                yOffset = 32 - height;
             }
             break;
         case TOP_RIGHT:
+            xOffset = 32;
             if ( shapeEquals ( block, Block.Shape.UP_RIGHT ) )
             {
-                xOffset = boundaryHeight;
+                yOffset = 0;
             }
             else
             {
-                xOffset = 32;
+                yOffset = 32 - boundaryHeight;
             }
             break;
         default:
             throw new RuntimeException( "Can only add vertices for LEFT or RIGHT cells." );
         }
-        return new Vertex( x + xOffset, y + 32 - boundaryHeight );
+        return new Vertex( x + xOffset, y + yOffset );
     }
 
     /**
