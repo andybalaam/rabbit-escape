@@ -71,7 +71,6 @@ public class WaterAnimation
         ArrayList<PolygonBuilder> polygons = new ArrayList<PolygonBuilder>();
         for ( int y = 0; y < worldSize.height ; y++ )
         {
-            PolygonBuilder p = new PolygonBuilder();
             WaterRegionRenderer start = null;
             for ( int x = 0; x < worldSize.width; x++ )
             {
@@ -80,6 +79,7 @@ public class WaterAnimation
                 {
                     continue;
                 }
+                PolygonBuilder p = new PolygonBuilder();
                 p.add( wrr.topVertex( TOP_LEFT ) );
                 if ( null == start )
                 {
@@ -91,7 +91,6 @@ public class WaterAnimation
                 p.add( start.bottomVertex( BOTTOM_LEFT ) );
                 start = null;
                 polygons.add( p );
-                p = new PolygonBuilder();
             }
         }
 

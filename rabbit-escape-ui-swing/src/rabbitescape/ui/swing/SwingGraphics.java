@@ -1,29 +1,22 @@
 package rabbitescape.ui.swing;
 
-import java.awt.Color;
-import java.awt.Graphics2D;
-import java.awt.image.BufferStrategy;
-import java.util.List;
-
 import rabbitescape.engine.Thing;
 import rabbitescape.engine.World;
 import rabbitescape.engine.World.CompletionState;
+import rabbitescape.engine.util.MathUtil;
 import rabbitescape.engine.util.Util;
-import rabbitescape.render.AnimationCache;
-import rabbitescape.render.AnimationLoader;
-import rabbitescape.render.BitmapCache;
-import rabbitescape.render.GraphPaperBackground;
-import rabbitescape.render.PolygonBuilder;
-import rabbitescape.render.Renderer;
-import rabbitescape.render.SoundPlayer;
-import rabbitescape.render.Sprite;
-import rabbitescape.render.SpriteAnimator;
-import rabbitescape.render.Overlay;
-import rabbitescape.render.Vertex;
+import rabbitescape.render.*;
 import rabbitescape.render.androidlike.Path;
+import rabbitescape.render.androidlike.Rect;
 import rabbitescape.render.androidlike.Sound;
 import rabbitescape.render.gameloop.Graphics;
 import rabbitescape.render.gameloop.WaterAnimation;
+
+import java.awt.*;
+import java.awt.image.BufferStrategy;
+import java.util.List;
+
+import static rabbitescape.engine.CellularDirection.HERE;
 
 public class SwingGraphics implements Graphics
 {
@@ -39,7 +32,7 @@ public class SwingGraphics implements Graphics
             new SwingPaint( new Color( 235, 243, 255 ) );
 
         private static final SwingPaint waterColor =
-            new SwingPaint( new Color( 10, 100, 220, 100 ) );
+            new SwingPaint( new Color( 0x51, 0x5e, 0xb8, 100 ) );
 
         private final java.awt.Canvas canvas;
         private final Renderer<SwingBitmap, SwingPaint> renderer;
@@ -151,6 +144,29 @@ public class SwingGraphics implements Graphics
                 Path p = pb.path( f,
                     new Vertex( renderer.offsetX, renderer.offsetY ) );
                 swingCanvas.drawPath( p, waterColor );
+            }
+
+            for ( int y = 0; y < wa.worldSize.height ; y++ )
+            {
+                for ( int x = 0; x < wa.worldSize.width; x++ )
+                {
+                    WaterRegionRenderer wrr = wa.lookupRenderer.getItemAt( x, y );
+                    if ( wrr == null || !wrr.adjacentWaterIsFalling( HERE ) )
+                    {
+                        continue;
+                    }
+                    Rect rect = new Rect(
+                        renderer.tileSize * wrr.region.x + renderer.offsetX,
+                        renderer.tileSize * wrr.region.y + renderer.offsetY,
+                        renderer.tileSize * wrr.region.x + renderer.tileSize + renderer.offsetX,
+                        renderer.tileSize * wrr.region.y + renderer.tileSize + renderer.offsetY
+                    );
+                    int height = wrr.region.getContents();
+                    int alpha = MathUtil.constrain( ( 100 * height ) / 1024, 0, 100 );
+                    SwingPaint paint = new SwingPaint( new Color( 0x51, 0x5e, 0xb8, alpha ) );
+                    paint.setStyle( SwingPaint.Style.FILL );
+                    swingCanvas.drawRect( rect, paint );
+                }
             }
         }
 
