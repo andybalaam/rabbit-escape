@@ -1,0 +1,7 @@
+########
+r     Oy
+########
+:explode=1
+:name=Showdown
+:num_rabbits=0
+:solution.1=;explode;(4,1);until:WON
