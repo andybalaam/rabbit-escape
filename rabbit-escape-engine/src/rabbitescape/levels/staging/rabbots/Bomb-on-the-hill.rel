@@ -1,0 +1,19 @@
+:name=Bomb on the hill
+:description=
+:author_name=
+:author_url=
+:solution.1=dig&(5,1);2;block;(4,4);bash&(2,5);until:WON
+:solution.2=block;(2,5);;dig;(5,1);bash;3;(2,5);until:WON
+:num_rabbits=3
+:num_to_save=3
+:rabbit_delay=4
+:bash=1
+:block=1
+:dig=1
+#########
+#   y   #
+#########
+#Q     (#
+     p( #
+/  /##\O#
+#########
