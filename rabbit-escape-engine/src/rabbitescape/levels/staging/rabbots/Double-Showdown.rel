@@ -1,0 +1,13 @@
+#######
+Q      
+   ( Oy
+#######
+Q      
+   ( Oy
+#######
+:dig=2
+:name=Double Showdown
+:num_rabbits=2
+:solution.1=dig&(3,2);(3,5);until:WON
+:solution.2=dig;;(2,2);until:WON
+:solution.3=dig&(4,2);(3,5);until:WON
