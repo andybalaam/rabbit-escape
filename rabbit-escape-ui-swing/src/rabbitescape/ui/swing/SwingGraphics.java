@@ -16,8 +16,6 @@ import java.awt.*;
 import java.awt.image.BufferStrategy;
 import java.util.List;
 
-import static rabbitescape.engine.CellularDirection.HERE;
-
 public class SwingGraphics implements Graphics
 {
     private static class DrawFrame extends BufferedDraw
@@ -32,7 +30,7 @@ public class SwingGraphics implements Graphics
             new SwingPaint( new Color( 235, 243, 255 ) );
 
         private static final SwingPaint waterColor =
-            new SwingPaint( new Color( 0x51, 0x5e, 0xb8, 100 ) );
+            new SwingPaint( new Color( 130, 167, 221, 255 ) );
 
         private final java.awt.Canvas canvas;
         private final Renderer<SwingBitmap, SwingPaint> renderer;
@@ -139,19 +137,13 @@ public class SwingGraphics implements Graphics
         public void drawPolygons( WaterAnimation wa, SwingCanvas swingCanvas )
         {
             float f = renderer.tileSize / 32f;
-            for ( PolygonBuilder pb : wa.calculatePolygons() )
-            {
-                Path p = pb.path( f,
-                    new Vertex( renderer.offsetX, renderer.offsetY ) );
-                swingCanvas.drawPath( p, waterColor );
-            }
 
             for ( int y = 0; y < wa.worldSize.height ; y++ )
             {
                 for ( int x = 0; x < wa.worldSize.width; x++ )
                 {
                     WaterRegionRenderer wrr = wa.lookupRenderer.getItemAt( x, y );
-                    if ( wrr == null || !wrr.adjacentWaterIsFalling( HERE ) )
+                    if ( wrr == null )
                     {
                         continue;
                     }
@@ -162,11 +154,18 @@ public class SwingGraphics implements Graphics
                         renderer.tileSize * wrr.region.y + renderer.tileSize + renderer.offsetY
                     );
                     int height = wrr.region.getContents();
-                    int alpha = MathUtil.constrain( ( 100 * height ) / 1024, 0, 100 );
-                    SwingPaint paint = new SwingPaint( new Color( 0x51, 0x5e, 0xb8, alpha ) );
+                    int alpha = MathUtil.constrain( ( 255 * height ) / 1024, 0, 255 );
+                    SwingPaint paint = new SwingPaint( new Color( 130, 167, 221, alpha ) );
                     paint.setStyle( SwingPaint.Style.FILL );
                     swingCanvas.drawRect( rect, paint );
                 }
+            }
+
+            for ( PolygonBuilder pb : wa.calculatePolygons() )
+            {
+                Path p = pb.path( f,
+                    new Vertex( renderer.offsetX, renderer.offsetY ) );
+                swingCanvas.drawPath( p, waterColor );
             }
         }
 
