@@ -6,32 +6,6 @@
 # sudo apt-get install wmctrl byzanz
 
 
-function wait_for_window()
-{
-    echo -n "Waiting for a window called '$1' .."
-    while ! wmctrl -l | \
-        cut -d' ' --complement -f 1,2,3,4 | \
-        grep '^'"$1"'$' > /dev/null; do
-    {
-        echo -n .
-        sleep 1
-    }; done
-    echo " found"
-}
-
-function move_window()
-{
-    wait_for_window "$1"
-    echo "Moving window '$1' to position '$2'."
-    wmctrl -F -r "$1" -e "0,$2"
-}
-
-function close_window()
-{
-    echo "Closing window '$1'."
-    wmctrl -F -c "$1"
-}
-
 function record_level()
 {
     LEV="$1"
@@ -46,18 +20,13 @@ function record_level()
 
     mkdir -p bin/gifs
 
-    ./runrabbit swing "--level=${LEVELS}/${LEV}.rel" --solution=1 > /dev/null &
-    byzanz-record \
-        "--x=$X" "--y=$Y" "--width=$WIDTH" "--height=$HEIGHT" \
-        "--delay=$DELAY" "--duration=$DURATION" \
-        bin/gifs/"${LEV}.gif"
-    close_window "Rabbit Escape"
+    ./record-level \
+        "${LEVELS}/${LEV}.rel" \
+        50 50 1024 768 \
+        "$X" "$Y" "${WIDTH}" "${HEIGHT}" \
+        "${DELAY}" \
+        "${DURATION}" \
+        "bin/gifs/${LEV}.gif"
 }
-
-./runrabbit swing --level=01_easy/level_01.rel --solution=1 > /dev/null &
-
-move_window "Rabbit Escape" 50,50,1024,768
-sleep 1  # Rabbit Escape doesn't like to be closed immediately after opening
-close_window "Rabbit Escape"
 
 record_level bridge_to_fire 292 370 512 380 4 10

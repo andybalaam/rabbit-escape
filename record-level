@@ -1,0 +1,70 @@
+#!/bin/bash
+
+# Records a level to a GIF
+
+# Prerequisites:
+# sudo apt-get install wmctrl byzanz
+
+LEVEL="$1"
+WINDOW_X="$2"
+WINDOW_Y="$3"
+WINDOW_WIDTH="$4"
+WINDOW_HEIGHT="$5"
+RECORD_X="$6"
+RECORD_Y="$7"
+RECORD_WIDTH="$8"
+RECORD_HEIGHT="$9"
+RECORD_START="${10}"
+RECORD_DURATION="${11}"
+OUTPUT_FILE="${12}"
+
+function wait_for_window()
+{
+    echo -n "Waiting for a window called '$1' .."
+    while ! wmctrl -l | \
+        cut -d' ' --complement -f 1,2,3,4 | \
+        grep '^'"$1"'$' > /dev/null; do
+    {
+        echo -n .
+        sleep 1
+    }; done
+    echo " found"
+}
+
+function move_window()
+{
+    wait_for_window "$1"
+    echo "Moving window '$1' to position '$2'."
+    sleep 1
+    wmctrl -F -r "$1" -e "0,$2"
+}
+
+function close_window()
+{
+    echo "Closing window '$1'."
+    wmctrl -F -c "$1"
+}
+
+
+# Position the window
+
+./runrabbit swing --level=01_easy/level_01.rel --solution=1 > /dev/null &
+
+move_window \
+    "Rabbit Escape" \
+    "${WINDOW_X},${WINDOW_Y},${WINDOW_WIDTH},${WINDOW_HEIGHT}"
+
+sleep 1
+close_window "Rabbit Escape"
+
+
+# Record the action
+
+./runrabbit swing "--level=${LEVEL}" --solution=1 > /dev/null &
+byzanz-record \
+    "--x=${RECORD_X}" "--y=${RECORD_Y}" \
+    "--width=${RECORD_WIDTH}" "--height=${RECORD_HEIGHT}" \
+    "--delay=${RECORD_START}" "--duration=${RECORD_DURATION}" \
+    "${OUTPUT_FILE}"
+
+close_window "Rabbit Escape"
