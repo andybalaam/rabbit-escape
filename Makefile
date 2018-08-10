@@ -203,9 +203,9 @@ no-make-warnings:
 	@echo ". Checking for warnings in Makefile"
 	@! make -n $(MAKECMDGOALS) 2>&1 >/dev/null | grep warning
 
-snapshot: snapshot-version-set clean slowtest android-pre dist
+snapshot: snapshot-version-set android-pre dist
 	git tag v${SNAPSHOT_VERSION}
-	rm dist/rabbit-escape-generic.jar
+	- rm dist/rabbit-escape-generic.jar
 	rename 's/${VERSION}/${SNAPSHOT_VERSION}/' dist/rabbit-escape-*
 	scp dist/rabbit-escape-* dreamhost:artificialworlds.net/rabbit-escape/snapshots/
 
