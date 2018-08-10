@@ -60,7 +60,9 @@ close_window "Rabbit Escape"
 
 # Record the action
 
-./runrabbit swing "--level=${LEVEL}" --solution=1 > /dev/null &
+echo "Running level ${LEVEL}"
+
+./runrabbit swing "--level=${LEVEL}" --solution=1  &
 byzanz-record \
     "--x=${RECORD_X}" "--y=${RECORD_Y}" \
     "--width=${RECORD_WIDTH}" "--height=${RECORD_HEIGHT}" \
