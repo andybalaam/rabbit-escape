@@ -1,15 +1,17 @@
 :name=Too close for comfort
+:description=
 :author_name=tttppp
 :author_url=https://github.com/tttppp
+:solution.1=bridge&(1,2)&bash&(3,2);climb&(5,2);until:WON
 :num_rabbits=0
 :num_to_save=1
-:solution.1.code=dLcZELgO&^)xt)L tt,ZZ,!^l r[/Q^3O&J&)t
-:climb=2
-:brolly=1
-:bridge=1
+:rabbit_delay=4
 :bash=1
+:bridge=1
+:brolly=1
+:climb=2
      ##
       #
 *ttr  #
 #######
-:*=Ot
+:*=tO
