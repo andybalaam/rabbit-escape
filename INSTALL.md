@@ -34,6 +34,7 @@ to build the images, sounds and code.  On Ubuntu, Debian and similar:
         expect \
         grep \
         sed \
+        rename \
         python3-lxml
 
 Get the source
