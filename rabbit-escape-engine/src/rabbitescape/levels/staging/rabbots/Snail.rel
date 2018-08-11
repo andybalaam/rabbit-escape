@@ -6,6 +6,7 @@
 :hint.2=You don't need to save the rabbit on the right of the shell.
 :hint.3=Use the rabbit on the right to save the rabbit at the top left, get the two rabbots out of the shell and into the left of the body, use the other rabbits to bridge up and around the shell to the exit.
 :solution.1=dig&(1,6)&bash&(11,6)&bridge&(3,5)&bash;(7,1)&(7,1);(7,1)&bridge;;(10,6)&block;3;(7,8);5;dig;;(5,6);bridge;;(2,5);3;(2,4);6;(6,8);;bash;2;dig&(6,6);3;bash;;(5,8);5;(4,8);;bridge;9;(3,8);7;(4,8);10;(5,7);7;block;;(2,8);9;climb;4;(7,8);2;bridge;(6,6);12;(6,5);7;(6,4);3;dig;;(2,3);;bridge;(3,5);;dig;;(2,4);;(10,6);5;bridge;;(4,5);until:WON
+:solution.2.code=)<M$ggJ<)<MgmhJ<\HJv|gJ<)<nM)<)<[\MgH*J@{ 4M)4Jhv<n[\:<S4M)VJhM<J<)HM*)nHgJ[\:E<<ngmJ<)<MhmHJ<)<MgHnJ_<<MVh_J<E4JHJH:<)<Mg^nJ:h<n$$\J<Eh:MM<4<\))<hhMJg<EhMvJh[h)n)h:<<\*<S<vE:)vMn{-:C<E8rSw<EE)\Mhn_<\)_JVHMJQh<M)H*$<MJMVngvv))[V<SJ::E)\v<S-OEr<M|4=<(
 :num_rabbits=0
 :num_to_save=4
 :rabbit_delay=4
@@ -14,20 +15,13 @@
 :bridge=13
 :climb=1
 :dig=6
-  *   *      
+  r   j      
   MMMMM      
- M   * M    *
+ M   t M    j
  M MMM M  # #
  M MOM M     
- M  *M M  # #
- *MMM  M  # #
+ M  yM M  # #
+ rMMM  M  # #
  ############
-#*          #
+#r          #
 ############ 
-:*=r{index:1}
-:*=j{index:2}
-:*=t{index:3}
-:*=j{index:4}
-:*=y{index:5}
-:*=r{index:6}
-:*=r{index:7}
