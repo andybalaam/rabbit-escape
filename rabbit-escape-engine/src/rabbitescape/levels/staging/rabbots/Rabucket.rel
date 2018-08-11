@@ -1,0 +1,20 @@
+ A  Q  A 
+ #     # 
+ y     t 
+   / \   
+  p #    
+#O# # #O#
+### # ###
+    #    
+:author_name=Andy Balaam
+:author_url=http://artificialworlds.net/rabbit-escape
+:bash=2
+:bridge=2
+:brolly=1
+:description=Empty the buckets!
+:dig=1
+:name=Rabucket
+:num_rabbits=2
+:num_to_save=2
+:rabbit_delay=15
+:solution.1.code=gnoI"tnR+Oy ,:u,s+goOoyStoNNNoS-ino,itnl-uPg,64+b-ooRopNOOStOgNgigounyDonsooNSO0R9E
