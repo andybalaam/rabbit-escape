@@ -5,7 +5,6 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.view.SurfaceHolder;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import rabbitescape.engine.Thing;
@@ -46,8 +45,8 @@ public class AndroidGraphics implements Graphics
     public SurfaceHolder surfaceHolder;
 
     public float renderingTileSize;
-    public int levelWidthPixels;
-    public int levelHeightPixels;
+    private int levelWidthPixels;
+    private int levelHeightPixels;
 
     private int screenWidthPixels;
     private int screenHeightPixels;
@@ -96,7 +95,7 @@ public class AndroidGraphics implements Graphics
         return new AndroidPaint( p );
     }
 
-    public AndroidGraphics(
+    AndroidGraphics(
         BitmapCache<AndroidBitmap> bitmapCache,
         SoundPlayer soundPlayer,
         World world,
@@ -221,7 +220,7 @@ public class AndroidGraphics implements Graphics
         drawToCanvas( canvas, -scrollX, -scrollY, frame );
     }
 
-    public void adjustRenderingTileSize( float newSize )
+    private void adjustRenderingTileSize( float newSize )
     {
         // Make sure size >= 16 and at least 5 tiles are visible in each direction
 
@@ -318,7 +317,7 @@ public class AndroidGraphics implements Graphics
 
     }
 
-    void drawPolygons(
+    private void drawPolygons(
         WaterAnimation wa,
         AndroidCanvas androidCanvas,
         Renderer<AndroidBitmap, AndroidPaint> renderer
