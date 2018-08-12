@@ -1,0 +1,28 @@
+:name=Escalator
+:description=Help the rabbits get through the escalator, avoiding the rabbots
+:author_name=GamingInky
+:author_url=https://github.com/GamingInky
+:hint.1.code=X+DO|$+O=Az$+Dk$A$z>++X[DesOO+sD|D++Dk[H$kmFOkF+z[
+:hint.2.code=Ep|KdjIE]BOyKCdgTbbObbS|KbGGLTGGbCx##TVbOjCb#TVgOEVxOVbb
+:hint.3.code=91:)sKmZ)s`Zu9K0m`hm`9Z1)mZ)TZ``Z`Z}lT00`ZmZ`9g`0m0`ZumZhZZs`f`00Tm0/1Zu`0))Z`0`Z:`KT`f0Z`,mZ`f,}``u``fZ0fu099t0}u`);fTZu9`)M0m}m`0Z9``m+~}T9sT}Mf)l}0m~```}9Zu0ufYsf`99`l0Z0`Z.f,TM`m9}}K}Z,1s`Z9us``0`f9M}s;9l},`ulf`ZmZ`,Y
+:solution.1.code=EsENh:"(E,:#r)XC"EslNh,:)*EsENEEsE)qEsEIC:"r)3C"7JEslI3,:X7JL:"yl"7)qNhJEE:,:sl"()*ILE,Es:":#EjE6ErE7NC:"(E):XE)EsEN,EsCI#s"rCXC"7J,:)EEs)j6X,CNC"qJEJlIh:"E)-C"EEh:,(E,:js3,:)qE:"lEE)E)qE,IjC*r,)N"#6EE)q,El:3ss3*IE:",LECE"sNECEj"ErEENCE6Es,,CEC)LsCqC7,":ClE")sC7E"N(,qC)Jj7h:6ErqE,J,3h:CEsCC:*E"E,lE:)Nh(::I7"*NlEE)CJ(E6N,s*:,EsEE:CE":,E":E)sj):r,*N(E6:j)C"EsN3N6XE)EsE,s3ChEs:3C
+:num_rabbits=10
+:num_to_save=10
+:rabbit_delay=3
+:bash=99
+:bridge=99
+:climb=10
+Q             
+          MMM 
+MM          M 
+M   MM      M 
+MMMMM    MM MM
+    M)   M  OM
+    M \ MMMMMM
+    M M**M    
+    M*  *M    
+    MMMMMM    
+:*=\t{index:2}
+:*=t{index:1}
+:*=cccc
+:*=t{index:3}y{index:4}
