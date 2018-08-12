@@ -342,10 +342,10 @@ public class AndroidGraphics implements Graphics
                 );
                 int height = wrr.region.getContents();
                 int alpha = MathUtil.constrain( ( 255 * height ) / 1024, 0, 255 );
-                Paint p = new Paint( Color.argb( alpha, 130, 167, 221 ) );
-                AndroidPaint paint = new AndroidPaint( p );
-                p.setStyle( Paint.Style.FILL );
-                androidCanvas.drawRect( rect, paint );
+                Paint paint = new Paint();
+                paint.setStyle( Paint.Style.FILL );
+                paint.setARGB( alpha, 130, 167, 221 );
+                androidCanvas.drawRect( rect, new AndroidPaint( paint ) );
             }
         }
 
