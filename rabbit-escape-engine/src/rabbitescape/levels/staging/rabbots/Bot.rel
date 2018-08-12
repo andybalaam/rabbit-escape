@@ -2,13 +2,13 @@
 :description=A new challenger enters
 :author_name=andybalaam
 :author_url=https://github.com/andybalaam
+:solution.1=dig;(7,7);bridge;(5,7);(5,6);until:WON
+:solution.2=until:LOST
 :num_rabbits=2
 :num_to_save=2
 :rabbit_delay=2
 :bridge=4
 :dig=1
-:solution.1.code=pi.i.1RT:.b;R;[aT#|U|bTa::U;R)L
-:music=tryad-the_final_rewind
 ##############
 #            #
 #            #
@@ -16,5 +16,5 @@
 #            #
 # Q          #
 #            #
-#      y  tO #
+#      t  tO #
 ##############
