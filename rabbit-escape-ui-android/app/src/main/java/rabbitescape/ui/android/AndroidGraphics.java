@@ -270,7 +270,7 @@ public class AndroidGraphics implements Graphics
         GraphPaperBackground.drawBackground(
             world, renderer, androidCanvas, white, graphPaperMajor, graphPaperMinor );
 
-        drawPolygons( waterAnimation.calculatePolygons(), androidCanvas, renderer );
+        drawPolygons( waterAnimation, androidCanvas, renderer );
 
         List<Sprite> sprites = animator.getSprites( frameNum );
 
@@ -316,14 +316,14 @@ public class AndroidGraphics implements Graphics
     }
 
     void drawPolygons(
-        List<PolygonBuilder> polygons,
+        WaterAnimation wa,
         AndroidCanvas androidCanvas,
         Renderer<AndroidBitmap, AndroidPaint> renderer
     )
     {
         float f = renderer.tileSize / 32f;
 
-        for ( PolygonBuilder pb: polygons )
+        for ( PolygonBuilder pb: wa.calculatePolygons() )
         {
             rabbitescape.render.androidlike.Path rePath = pb.path(
                     f, new Vertex( renderer.offsetX, renderer.offsetY ) );
