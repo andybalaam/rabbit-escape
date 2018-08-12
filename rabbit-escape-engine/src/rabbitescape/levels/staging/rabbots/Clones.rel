@@ -2,10 +2,10 @@
 :description=Where are they coming from?
 :author_name=Andy Balaam
 :author_url=http://artificialworlds.net/rabbit-escape/
-:hint.1.code=@Xe@DeH@Q$eW$kQD|e@k@@$QW=W$D@sQ|Q@[|QQ[[>QD$>@sk|
-:hint.2.code=ytAXyt-<_t/--h.M.thht-yF_]f-Ft5-tt-/yy/Q].]tA-tt-Ff=<-<t-<CV.=p__5p--t-t<~.p=_h.-]=t.hht~y<FFt'Fc==ct.-_]p(t']_t=yFfay&
-:hint.3.code=#""l#r";"#"}`{t`"`MK"#Bv"D#r"Mr.Fr":.B;.fr"}.r""{;$rD"Krr"MT-:{r`F.#KBfr"}r""rr;v`"{3"3}{:Mx}f`F;v"r}l""`:rYM.}v}M3"`}:$.`v:M"MM:F{;Mr"F"M.r...}K`};r:`"{/Mf$:."{r~#3Yf";}".#"{":tM{}`T
-:solution.1.code=Kj:P0Bg?&K&L87%&w&: &,KjhSqB &/q/eSOBMewwOZqBh&,rKwb&ZSS&&rrOHb&h;/U&q%/K/fq0=B
+:hint.1=Get the rabbots to return and bash the rabbits out
+:hint.2=Once the rabbots have automatically bashed because of the first falling bash token, make one of them bridge before they step forward.
+:hint.3=Once the rabbot has bridged and turned around, bash through the top bridge on the way back to the right.  Bridge towards the block under the rabbits, bash that block, and quickly explode the rabbot.
+:solution.1=bridge;2;(5,5);4;bash;5;(2,2)&bridge;(6,5)&bash;8;(7,5);explode;(7,4);until:WON
 :num_rabbits=2
 :num_to_save=2
 :rabbit_delay=1
@@ -22,4 +22,4 @@
 ### ######
 :*=bb
 :*=bbb
-:*=y{index:1}y{index:2}y{index:3}y{index:4}
+:*=yyyy
