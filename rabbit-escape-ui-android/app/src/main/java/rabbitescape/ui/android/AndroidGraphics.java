@@ -10,6 +10,7 @@ import java.util.List;
 
 import rabbitescape.engine.Thing;
 import rabbitescape.engine.World;
+import rabbitescape.engine.util.MathUtil;
 import rabbitescape.engine.util.Util;
 import rabbitescape.render.AnimationCache;
 import rabbitescape.render.AnimationLoader;
@@ -22,6 +23,8 @@ import rabbitescape.render.SoundPlayer;
 import rabbitescape.render.Sprite;
 import rabbitescape.render.SpriteAnimator;
 import rabbitescape.render.Vertex;
+import rabbitescape.render.WaterRegionRenderer;
+import rabbitescape.render.androidlike.Rect;
 import rabbitescape.render.gameloop.Graphics;
 import rabbitescape.render.gameloop.WaterAnimation;
 
@@ -322,6 +325,30 @@ public class AndroidGraphics implements Graphics
     )
     {
         float f = renderer.tileSize / 32f;
+
+        for ( int y = 0; y < wa.worldSize.height ; y++ )
+        {
+            for ( int x = 0; x < wa.worldSize.width; x++ )
+            {
+                WaterRegionRenderer wrr = wa.lookupRenderer.getItemAt( x, y );
+                if ( wrr == null )
+                {
+                    continue;
+                }
+                Rect rect = new Rect(
+                    renderer.tileSize * wrr.region.x + renderer.offsetX,
+                    renderer.tileSize * wrr.region.y + renderer.offsetY,
+                    renderer.tileSize * wrr.region.x + renderer.tileSize + renderer.offsetX,
+                    renderer.tileSize * wrr.region.y + renderer.tileSize + renderer.offsetY
+                );
+                int height = wrr.region.getContents();
+                int alpha = MathUtil.constrain( ( 255 * height ) / 1024, 0, 255 );
+                Paint p = new Paint( Color.argb( alpha, 130, 167, 221 ) );
+                AndroidPaint paint = new AndroidPaint( p );
+                p.setStyle( Paint.Style.FILL );
+                androidCanvas.drawRect( rect, paint );
+            }
+        }
 
         for ( PolygonBuilder pb: wa.calculatePolygons() )
         {
