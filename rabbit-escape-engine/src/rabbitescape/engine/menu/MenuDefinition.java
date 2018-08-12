@@ -18,6 +18,7 @@ public class MenuDefinition
         new LevelSetInfo( "Arcade", "05_arcade", null ),
         new LevelSetInfo( "Small World", "06_small_world", null ),
         new LevelSetInfo( "Deja Vu", "07_dejavu", null ),
+        new LevelSetInfo( "Rabbots", "08_rabbots", null ),
         new LevelSetInfo( "Development", "development", null, true ),
         new LevelSetInfo( "Staging", "staging", null, true )
     );
