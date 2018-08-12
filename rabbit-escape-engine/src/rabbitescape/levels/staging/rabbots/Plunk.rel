@@ -1,5 +1,22 @@
+:name=Plunk
+:description=The rabbot wants to destroy the happy path!
+:author_name=Andy Balaam
+:author_url=http://artificialworlds.net/rabbit-escape/
+:hint.1=Can you prevent the rabbot getting to the bash token, without destroying the path
+:hint.2=Try bridging from the top of the bridge the rabbot falls onto
+:hint.3=Make the rabbot bridge over the bash token then dig through the bridge to fall away
+:solution.1=bridge;(6,4);8;(3,2);until:WON
+:solution.2=bridge&(2,4);until:LOST
+:solution.3=until:LOST
+:solution.4=bridge;(6,4);until:LOST
+:num_rabbits=5
+:num_to_save=5
+:rabbit_delay=10,6
+:bridge=2
+:brolly=1
+:climb=1
      MMMM
-       yM
+     ( yM
        ( 
 Q *      
   (   (  
@@ -9,19 +26,3 @@ Q *
 :*=(d
 :*=cccccccccc
 :*=(b
-:author_name=Andy Balaam
-:author_url=http://artificialworlds.net/rabbit-escape/
-:bash=1
-:bridge=1
-:brolly=1
-:climb=1
-:description=The rabbot wants to destroy the happy path!
-:dig=1
-:hint.1=Can you prevent the rabbot getting to the bash token, without destroying the path
-:hint.2=Try bridging from the top of the bridge the rabbot falls onto
-:hint.3=Make the rabbot bridge over the bash token then dig through the bridge to fall away
-:name=Plunk
-:num_rabbits=5
-:num_to_save=5
-:rabbit_delay=10,6
-:solution.1=bridge&(6,4);dig;8;(3,2);until:WON
