@@ -3,20 +3,23 @@
 # Records a level to a GIF
 
 # Prerequisites:
-# sudo apt-get install wmctrl byzanz
+# sudo apt-get install wmctrl byzanz ffmpeg
+
+set -e
+set -u
 
 LEVEL="$1"
-WINDOW_X="$2"
-WINDOW_Y="$3"
-WINDOW_WIDTH="$4"
-WINDOW_HEIGHT="$5"
-RECORD_X="$6"
-RECORD_Y="$7"
-RECORD_WIDTH="$8"
-RECORD_HEIGHT="$9"
-RECORD_START="${10}"
-RECORD_DURATION="${11}"
-OUTPUT_FILE="${12}"
+RECORD_DURATION="${2:-12}"
+OUTPUT_FILE="${3:-out.gif}"
+WINDOW_X="${4:-50}"
+WINDOW_Y="${5:-50}"
+WINDOW_WIDTH="${6:-400}"
+WINDOW_HEIGHT="${7:-300}"
+RECORD_X="${8:-120}"
+RECORD_Y="${9:-100}"
+RECORD_WIDTH="${10:-300}"
+RECORD_HEIGHT="${11:-255}"
+RECORD_START="${12:-2}"
 
 function wait_for_window()
 {
@@ -48,7 +51,7 @@ function close_window()
 
 # Position the window
 
-./runrabbit swing --level=01_easy/level_01.rel --solution=1 > /dev/null &
+./runrabbit swing &
 
 move_window \
     "Rabbit Escape" \
@@ -60,13 +63,40 @@ close_window "Rabbit Escape"
 
 # Record the action
 
-echo "Running level ${LEVEL}"
+TMP_OUTPUT=$(tempfile -s ".flv")
 
-./runrabbit swing "--level=${LEVEL}" --solution=1  &
+echo "Running level ${LEVEL}, recording to ${TMP_OUTPUT}"
+
+./runrabbit swing "--level=${LEVEL}" --solution=1 &
+
 byzanz-record \
     "--x=${RECORD_X}" "--y=${RECORD_Y}" \
     "--width=${RECORD_WIDTH}" "--height=${RECORD_HEIGHT}" \
     "--delay=${RECORD_START}" "--duration=${RECORD_DURATION}" \
-    "${OUTPUT_FILE}"
+    "${TMP_OUTPUT}"
 
 close_window "Rabbit Escape"
+
+echo "Converting to a GIF in '${OUTPUT_FILE}'"
+
+PALETTE="/tmp/palette.png"
+
+# If you want to scale or change fps:
+#FILTERS="fps=15,scale=320:-1:flags=lanczos"
+
+# Generate optimal palette
+set -x
+ffmpeg \
+    -loglevel error \
+    -i "${TMP_OUTPUT}" \
+    -vf "palettegen" \
+    -y \
+    $PALETTE
+
+ffmpeg \
+    -loglevel error \
+    -i "${TMP_OUTPUT}" \
+    -i $PALETTE \
+    -lavfi "paletteuse" \
+    -y \
+    "${OUTPUT_FILE}"

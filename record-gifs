@@ -3,7 +3,7 @@
 # Records some animations of rabbits to make into animated gifs.
 
 # Prerequisites:
-# sudo apt-get install wmctrl byzanz
+# sudo apt-get install wmctrl byzanz ffmpeg
 
 
 function record_level()
@@ -22,11 +22,11 @@ function record_level()
 
     ./record-level \
         "${LEVELS}/${LEV}.rel" \
+        "${DURATION}" \
+        "bin/gifs/${LEV}.gif" \
         50 50 1024 768 \
         "$X" "$Y" "${WIDTH}" "${HEIGHT}" \
-        "${DELAY}" \
-        "${DURATION}" \
-        "bin/gifs/${LEV}.gif"
+        "${DELAY}"
 }
 
 record_level bridge_to_fire 292 370 512 380 4 10
