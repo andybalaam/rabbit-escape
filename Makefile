@@ -307,7 +307,7 @@ clean: no-make-warnings
 	@mkdir -p dist && rm -r dist
 
 clean-images: no-make-warnings
-	- rm \
+	- rm -f \
 		$(IMAGESSVGGEN_DEST)/* \
 		$(IMAGES32_DEST)/* \
 		$(IMAGES64_DEST)/* \
