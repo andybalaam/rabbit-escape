@@ -81,24 +81,25 @@ LEVELS_DIRS := $(shell \
 	)
 
 $(SOUNDSWAV_DEST)/%.wav: sounds-src/%.flac
-	@echo ".. Generating $@"
+	@echo ".. Converting sound: $@"
 	@mkdir -p $(SOUNDSWAV_DEST); sox $< $@
 
 $(ANDROIDSOUNDSOGG_DEST)/%.ogg: sounds-src/%.flac
-	@echo ".. Generating $@"
+	@echo ".. Converting sound: $@"
 	@mkdir -p $(ANDROIDSOUNDSOGG_DEST); sox $< $@
 
 $(MUSICWAV_DEST)/%.wav: music-src/%.flac
-	@echo ".. Generating $@"
+	@echo ".. Converting sound: $@"
 	@mkdir -p $(MUSICWAV_DEST); sox $< $@ vol 0.4
 
 $(ANDROIDMUSICOGG_DEST)/%.ogg: music-src/%.flac
-	@echo ".. Generating $@"
+	@echo ".. Converting sound: $@"
 	@mkdir -p $(ANDROIDMUSICOGG_DEST); sox $< $@
 
 $(IMAGESSVGGEN_DEST)/rabbot_%.svg: images-src/rabbit_%.svg
-	@echo ".. Generating $@"
+	@echo ".. Making rabbot image from rabbit one: $@"
 	@mkdir -p $(IMAGESSVGGEN_DEST); ./build-scripts/rabbit-to-rabbot < $< > $@
+
 
 $(IMAGES32_DEST)/%.png: $(IMAGESSVGGEN_DEST)/%.svg
 	@echo ".. Converting from SVG: $@"
@@ -138,30 +139,30 @@ $(IMAGES128_DEST)/%.png: images-src/icons/%.svg
 
 
 $(IMAGES32_DEST)/%.png: images-src/%.png
-	@echo ".. Generating $@"
+	@echo ".. Resizing PNG: $@"
 	@mkdir -p $(IMAGES32_DEST); convert $< -resize 12.5% $@
 
 $(IMAGES64_DEST)/%.png: images-src/%.png
-	@echo ".. Generating $@"
+	@echo ".. Resizing PNG: $@"
 	@mkdir -p $(IMAGES64_DEST); convert $< -resize 25% $@
 
 $(IMAGES128_DEST)/%.png: images-src/%.png
-	@echo ".. Generating $@"
+	@echo ".. Resizing PNG: $@"
 	@mkdir -p $(IMAGES128_DEST); convert $< -resize 50% $@
 
 
 # Android images are just copies of the desktop ones
 
 $(ANDROIDIMAGES32_DEST)/%.png: $(IMAGES32_DEST)/%.png
-	@echo ".. Generating $@"
+	@echo ".. Copying PNG: $@"
 	@mkdir -p $(ANDROIDIMAGES32_DEST); cp $< $@
 
 $(ANDROIDIMAGES64_DEST)/%.png: $(IMAGES64_DEST)/%.png
-	@echo ".. Generating $@"
+	@echo ".. Copying PNG: $@"
 	@mkdir -p $(ANDROIDIMAGES64_DEST); cp $< $@
 
 $(ANDROIDIMAGES128_DEST)/%.png: $(IMAGES128_DEST)/%.png
-	@echo ".. Generating $@"
+	@echo ".. Copying PNG: $@"
 	@mkdir -p $(ANDROIDIMAGES128_DEST); cp $< $@
 
 
@@ -336,6 +337,24 @@ clean-music: no-make-warnings
 	- rm $(ANDROIDMUSICOGG_DEST)/*
 
 clean-all: clean clean-images clean-sounds clean-music clean-doxygen clean-android
+
+
+# Shortcut that generates all images much quicker than if Make asks Inkscape
+# to generate each one individually.
+all-images: $(SVGGENERATERABBOTS)
+	@echo ".. Converting all 32x32 images SVG->PNG"
+	./build-scripts/bulk-convert-images images-src $(IMAGES32_DEST) $(DPI_32) > /dev/null
+	./build-scripts/bulk-convert-images $(IMAGESSVGGEN_DEST) $(IMAGES32_DEST) $(DPI_32) > /dev/null
+	./build-scripts/bulk-convert-images images-src/icons $(IMAGES32_DEST) $(DPI_32) > /dev/null
+	@echo ".. Converting all 64x64 images SVG->PNG"
+	./build-scripts/bulk-convert-images images-src $(IMAGES64_DEST) $(DPI_64) > /dev/null
+	./build-scripts/bulk-convert-images $(IMAGESSVGGEN_DEST) $(IMAGES64_DEST) $(DPI_64) > /dev/null
+	./build-scripts/bulk-convert-images images-src/icons $(IMAGES64_DEST) $(DPI_64) > /dev/null
+	@echo ".. Converting all 128x128 images SVG->PNG"
+	./build-scripts/bulk-convert-images images-src $(IMAGES128_DEST) $(DPI_128) > /dev/null
+	./build-scripts/bulk-convert-images $(IMAGESSVGGEN_DEST) $(IMAGES128_DEST) $(DPI_128) > /dev/null
+	./build-scripts/bulk-convert-images images-src/icons $(IMAGES128_DEST) $(DPI_128) > /dev/null
+
 
 remove-trailing:
 	git status --porcelain | sed 's_^...__' | grep '\.java$$' - | xargs perl -p -i -e 's/[ \t]+$$//'

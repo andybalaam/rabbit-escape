@@ -1,0 +1,20 @@
+#!/bin/bash
+
+set -e
+set -u
+
+SRC=$1
+DEST=$2
+DPI=$3
+
+echo "... $SRC/*.svg ==> $DEST/*.png"
+
+find $SRC -name "*.svg" -print | \
+while read F; do
+{
+    NAME=${F##*/}
+    NAME=${NAME%.svg}
+
+    echo "$F --export-png=$DEST/$NAME.png --export-dpi=$3"
+}; done | \
+    inkscape --shell
