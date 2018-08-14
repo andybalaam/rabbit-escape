@@ -20,6 +20,12 @@ ANDROIDICONSXHDPI_DEST=rabbit-escape-ui-android/app/src/main/res/drawable-xhdpi
 ANDROIDICONSXXHDPI_DEST=rabbit-escape-ui-android/app/src/main/res/drawable-xxhdpi
 ANDROIDICONSXXXHDPI_DEST=rabbit-escape-ui-android/app/src/main/res/drawable-xxxhdpi
 
+DPI_32 := 96     # Required Inkscape DPI setting to get a block=32x32
+DPI_48 := 144
+DPI_64 := 192
+DPI_96 := 288
+DPI_128 := 384
+
 SVGIMAGESSRC := $(wildcard images-src/*.svg)
 SVGICONSSRC  := $(wildcard images-src/icons/*.svg)
 
@@ -95,40 +101,40 @@ $(IMAGESSVGGEN_DEST)/rabbot_%.svg: images-src/rabbit_%.svg
 	@mkdir -p $(IMAGESSVGGEN_DEST); ./build-scripts/rabbit-to-rabbot < $< > $@
 
 $(IMAGES32_DEST)/%.png: $(IMAGESSVGGEN_DEST)/%.svg
-	@echo ".. Generating $@"
-	@mkdir -p $(IMAGES32_DEST); inkscape $< --export-png=$@ --export-dpi=90 > /dev/null
+	@echo ".. Converting from SVG: $@"
+	@mkdir -p $(IMAGES32_DEST); inkscape $< --export-png=$@ --export-dpi=$(DPI_32) > /dev/null
 
 $(IMAGES32_DEST)/%.png: images-src/%.svg
-	@echo ".. Generating $@"
-	@mkdir -p $(IMAGES32_DEST); inkscape $< --export-png=$@ --export-dpi=90 > /dev/null
+	@echo ".. Converting from SVG: $@"
+	@mkdir -p $(IMAGES32_DEST); inkscape $< --export-png=$@ --export-dpi=$(DPI_32) > /dev/null
 
 $(IMAGES64_DEST)/%.png: $(IMAGESSVGGEN_DEST)/%.svg
-	@echo ".. Generating $@"
-	@mkdir -p $(IMAGES64_DEST); inkscape $< --export-png=$@ --export-dpi=180 > /dev/null
+	@echo ".. Converting from SVG: $@"
+	@mkdir -p $(IMAGES64_DEST); inkscape $< --export-png=$@ --export-dpi=$(DPI_64) > /dev/null
 
 $(IMAGES64_DEST)/%.png: images-src/%.svg
-	@echo ".. Generating $@"
-	@mkdir -p $(IMAGES64_DEST); inkscape $< --export-png=$@ --export-dpi=180 > /dev/null
+	@echo ".. Converting from SVG: $@"
+	@mkdir -p $(IMAGES64_DEST); inkscape $< --export-png=$@ --export-dpi=$(DPI_64) > /dev/null
 
 $(IMAGES128_DEST)/%.png: $(IMAGESSVGGEN_DEST)/%.svg
-	@echo ".. Generating $@"
-	@mkdir -p $(IMAGES128_DEST); inkscape $< --export-png=$@ --export-dpi=360 > /dev/null
+	@echo ".. Converting from SVG: $@"
+	@mkdir -p $(IMAGES128_DEST); inkscape $< --export-png=$@ --export-dpi=$(DPI_128) > /dev/null
 
 $(IMAGES128_DEST)/%.png: images-src/%.svg
-	@echo ".. Generating $@"
-	@mkdir -p $(IMAGES128_DEST); inkscape $< --export-png=$@ --export-dpi=360 > /dev/null
+	@echo ".. Converting from SVG: $@"
+	@mkdir -p $(IMAGES128_DEST); inkscape $< --export-png=$@ --export-dpi=$(DPI_128) > /dev/null
 
 $(IMAGES32_DEST)/%.png: images-src/icons/%.svg
-	@echo ".. Generating $@"
-	@mkdir -p $(IMAGES32_DEST); inkscape $< --export-png=$@ --export-dpi=90 > /dev/null
+	@echo ".. Converting from SVG: $@"
+	@mkdir -p $(IMAGES32_DEST); inkscape $< --export-png=$@ --export-dpi=$(DPI_32) > /dev/null
 
 $(IMAGES64_DEST)/%.png: images-src/icons/%.svg
-	@echo ".. Generating $@"
-	@mkdir -p $(IMAGES64_DEST); inkscape $< --export-png=$@ --export-dpi=180 > /dev/null
+	@echo ".. Converting from SVG: $@"
+	@mkdir -p $(IMAGES64_DEST); inkscape $< --export-png=$@ --export-dpi=$(DPI_64) > /dev/null
 
 $(IMAGES128_DEST)/%.png: images-src/icons/%.svg
-	@echo ".. Generating $@"
-	@mkdir -p $(IMAGES128_DEST); inkscape $< --export-png=$@ --export-dpi=360 > /dev/null
+	@echo ".. Converting from SVG: $@"
+	@mkdir -p $(IMAGES128_DEST); inkscape $< --export-png=$@ --export-dpi=$(DPI_128) > /dev/null
 
 
 $(IMAGES32_DEST)/%.png: images-src/%.png
@@ -162,24 +168,24 @@ $(ANDROIDIMAGES128_DEST)/%.png: $(IMAGES128_DEST)/%.png
 # Android icons
 
 $(ANDROIDICONSMDPI_DEST)/%.png: images-src/icons/%.svg
-	@echo ".. Generating $@"
-	@mkdir -p $(ANDROIDICONSMDPI_DEST); inkscape $< --export-png=$@ --export-dpi=90 > /dev/null
+	@echo ".. Converting from SVG: $@"
+	@mkdir -p $(ANDROIDICONSMDPI_DEST); inkscape $< --export-png=$@ --export-dpi=$(DPI_32) > /dev/null
 
 $(ANDROIDICONSHDPI_DEST)/%.png: images-src/icons/%.svg
-	@echo ".. Generating $@"
-	@mkdir -p $(ANDROIDICONSHDPI_DEST); inkscape $< --export-png=$@ --export-dpi=135 > /dev/null
+	@echo ".. Converting from SVG: $@"
+	@mkdir -p $(ANDROIDICONSHDPI_DEST); inkscape $< --export-png=$@ --export-dpi=$(DPI_48) > /dev/null
 
 $(ANDROIDICONSXHDPI_DEST)/%.png: images-src/icons/%.svg
-	@echo ".. Generating $@"
-	@mkdir -p $(ANDROIDICONSXHDPI_DEST); inkscape $< --export-png=$@ --export-dpi=180 > /dev/null
+	@echo ".. Converting from SVG: $@"
+	@mkdir -p $(ANDROIDICONSXHDPI_DEST); inkscape $< --export-png=$@ --export-dpi=$(DPI_64) > /dev/null
 
 $(ANDROIDICONSXXHDPI_DEST)/%.png: images-src/icons/%.svg
-	@echo ".. Generating $@"
-	@mkdir -p $(ANDROIDICONSXXHDPI_DEST); inkscape $< --export-png=$@ --export-dpi=270 > /dev/null
+	@echo ".. Converting from SVG: $@"
+	@mkdir -p $(ANDROIDICONSXXHDPI_DEST); inkscape $< --export-png=$@ --export-dpi=$(DPI_96) > /dev/null
 
 $(ANDROIDICONSXXXHDPI_DEST)/%.png: images-src/icons/%.svg
-	@echo ".. Generating $@"
-	@mkdir -p $(ANDROIDICONSXXXHDPI_DEST); inkscape $< --export-png=$@ --export-dpi=360 > /dev/null
+	@echo ".. Converting from SVG: $@"
+	@mkdir -p $(ANDROIDICONSXXXHDPI_DEST); inkscape $< --export-png=$@ --export-dpi=$(DPI_128) > /dev/null
 
 
 # Will be needed again if we have some icons drawn as .png

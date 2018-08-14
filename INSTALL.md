@@ -37,6 +37,9 @@ to build the images, sounds and code.  On Ubuntu, Debian and similar:
         rename \
         python3-lxml
 
+Make sure you have Inkscape 0.92 or above to avoid slightly-wrongly-sized
+images being generated.
+
 Get the source
 --------------
 
