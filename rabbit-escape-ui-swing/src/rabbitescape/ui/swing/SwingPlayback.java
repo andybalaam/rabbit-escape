@@ -16,6 +16,7 @@ public class SwingPlayback implements UiPlayback
     @Override
     public void selectToken( SelectAction selectAction )
     {
+        launch.solutionRecorder.append( selectAction );
         launch.getUi().chooseAbility( selectAction.type );
     }
 
