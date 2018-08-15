@@ -1,0 +1,13 @@
+######t#######
+##   y######r#
+#######    b##
+#    y######r#
+#######    b##
+############O#
+##############
+:name=GCD
+:description=For an extra challenge why not try adding more rows or columns?
+:dig=1
+:num_rabbits=0
+:num_to_save=2
+:solution.1.code=G%pI !y}z!#kh?c@B@{=m8
