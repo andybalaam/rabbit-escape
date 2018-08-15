@@ -42,13 +42,16 @@ public class RabbotWait extends Behaviour
     @Override
     public boolean checkTriggered( Rabbit rabbit, World world )
     {
-        if ( rabbit.type == Rabbit.Type.RABBOT )
+        if ( rabbit.type == Rabbit.Type.RABBOT && !Blocking.isBlocking(rabbit.state) )
         {
             for ( Rabbit otherRabbit : world.rabbits )
             {
-                if ( otherRabbit.type == Rabbit.Type.RABBIT &&
+                if (
+                    otherRabbit.type == Rabbit.Type.RABBIT &&
                     within1Vertically( otherRabbit, rabbit ) &&
-                    noseToNose( otherRabbit, rabbit ) )
+                    noseToNose( otherRabbit, rabbit ) &&
+                    !Blocking.isBlocking(otherRabbit.state)
+                )
                 {
                     return true;
                 }

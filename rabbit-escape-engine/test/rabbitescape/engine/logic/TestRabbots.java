@@ -58,4 +58,46 @@ public class TestRabbots
             "####"
         );
     }
+
+    @Test
+    public void Stopping_behaviour_is_suppressed_if_rabbot_is_a_blocker()
+    {
+        assertWorldEvolvesLike(
+            "r  ky j  r tk  j" + "\n" +
+            "################",
+
+            " r>H<j    r>H<j " + "\n" +  // Both rabbots are now blocking
+            "################",
+
+            "  ?H|      ?H|  " + "\n" +  // The rabbits turn
+            "################",
+
+            " <jHr>    <jHr> " + "\n" +
+            "################",
+
+            "<j H r>  <j H r>" + "\n" +  // The rabbots are still blockers
+            "################"
+        );
+    }
+
+    @Test
+    public void Stopping_behaviour_is_suppressed_if_rabbit_is_a_blocker()
+    {
+        assertWorldEvolvesLike(
+            "t  kj y  t rk  y" + "\n" +
+            "################",
+
+            " t>H<y    t>H<y " + "\n" +  // Both rabbits are now blocking
+            "################",
+
+            "  ?H|      ?H|  " + "\n" +  // The rabbots turn
+            "################",
+
+            " <yHt>    <yHt> " + "\n" +
+            "################",
+
+            "<y H t>  <y H t>" + "\n" +  // The rabbits are still blockers
+            "################"
+        );
+    }
 }

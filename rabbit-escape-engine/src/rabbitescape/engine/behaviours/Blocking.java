@@ -85,7 +85,7 @@ public class Blocking extends Behaviour
         return false;
     }
 
-    private static boolean isBlocking( State s )
+    static boolean isBlocking( State s )
     {
         switch ( s ) {
         case RABBIT_BLOCKING:
