@@ -1,20 +1,20 @@
-Mt#      p   pO
-M(M /MMM / / /M
-MtM( #rM M M MM
-MMM)MMMM M M MM
-MMM( #rM M M  M
-MMM)MMMM M MMMM
-MMM( #rMMM  MMM
+M        p   pO
+M /MMMMM / / /M
+M( #rMMM M M MM
+M)MMMMMM M M MM
+M( #tMtM M M  M
+M)MMMM#M M MMMM
+M( #r#rMMM  MMM
 MMMMMMMMMMMMMMM
 :name=Three drops
 :description=Three bunnies and three holes
-:dig=1
+:dig=2
 :brolly=1
 :climb=3
-:bridge=9
+:bridge=6
 :block=2
-:bash=9
+:bash=8
 :explode=2
 :num_rabbits=0
 :num_to_save=3
-:solution.1.code=!!y9@EsG!@"EREd%3Y&E!@/'E!@"ksEy@y"EREsG!,,!,K!ALE@H%IsEdL3YRE@E,"d(4,E3ERLd%3YA,'3@y"EERy/'E!E43RH3Yh/'3yd|L@EhERE'9!dRE!!d(@d!E!d(9@E'3dE3/E3sd@&"YE4EG(EEkRd3Bv!ERR&!!E@@REE(4ELE%3dHEKs|4IH(d@EE9yE3Y3sR9!3RsKYkG@&!ER@d3E"3E4Ed(YdEEs3E&LEyR4Gy4k@E3E/vE%RdH3/y@hIEH&@HRd7y"EE@ER(3REB!@RREY
+:solution.1.code=,,mq? v+|?zv+4+V%mq)4+lH4Hqc,,%&)4+VoXvs`)4+)4+)4+vi%+qFV&)+4Xvi++xVo|++ ) 4+l+vi{+`?mvix++V+qF@vx+i%+`E4+Vo+ +)+mF)+`z,V4)iV_+vvF+,,XxH++qV,Xs,Xq,mV_vx4_|c+o++H+X)+)X)x4@mX4)v,++i4?+X+,6%v?F+lqV+&+EV|H+o_),,z,F4?viE%v)v+6X+4)V,qxvs||)oV_+s`+?v)_vX`+4cv +,v)4+i4?4c+,+VVms+HlV?FvzF|V0o+++?)++m)?4 
