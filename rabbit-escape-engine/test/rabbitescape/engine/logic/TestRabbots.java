@@ -100,4 +100,72 @@ public class TestRabbots
             "################"
         );
     }
+
+    @Test
+    public void Stopping_behaviour_is_suppressed_if_rabbot_is_falling()
+    {
+        assertWorldEvolvesLike(
+            "ry" + "\n" +
+            "  " + "\n" +
+            "  " + "\n" +
+            "  " + "\n" +
+            "  " + "\n" +
+            "  " + "\n" +
+            "  ",
+
+            "  " + "\n" +
+            "  " + "\n" +
+            "ry" + "\n" +
+            "ff" + "\n" +
+            "ff" + "\n" +
+            "  " + "\n" +
+            "  ",
+
+            "  " + "\n" +
+            "  " + "\n" +
+            "  " + "\n" +
+            "  " + "\n" +
+            "ry" + "\n" +
+            "ff" + "\n" +
+            "ff"
+        );
+    }
+
+    @Test
+    public void Stopping_behaviour_is_suppressed_if_rabbot_is_digging()
+    {
+        assertWorldEvolvesLike(
+            "ry" + "\n" +
+            "  " + "\n" +
+            " d" + "\n" +
+            " #" + "\n" +
+            "  " + "\n" +
+            "  " + "\n" +
+            "  ",
+
+            "  " + "\n" +
+            "  " + "\n" +
+            "ry" + "\n" +
+            "fD" + "\n" +
+            "f " + "\n" +
+            "  " + "\n" +
+            "  ",
+
+            "  " + "\n" +
+            "  " + "\n" +
+            "  " + "\n" +
+            " D" + "\n" +
+            "r " + "\n" +
+            "f " + "\n" +
+            "f ",
+
+            "  " + "\n" +
+            "  " + "\n" +
+            "  " + "\n" +
+            " y" + "\n" +
+            " f" + "\n" +
+            " f" + "\n" +
+            "r "
+        );
+    }
 }

@@ -111,4 +111,18 @@ public class Digging extends Behaviour
             saveState, "Digging.stepsOfDigging", stepsOfDigging );
     }
 
+    public static boolean isDigging( State state )
+    {
+        switch ( state )
+        {
+            case RABBIT_DIGGING:
+            case RABBIT_DIGGING_2:
+            case RABBIT_DIGGING_ON_SLOPE:
+            case RABBIT_DIGGING_USELESSLY:
+                return true;
+            default:
+                return false;
+        }
+    }
+
 }
