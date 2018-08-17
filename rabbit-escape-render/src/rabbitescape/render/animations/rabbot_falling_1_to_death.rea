@@ -4,7 +4,7 @@ rabbot_fall_01 0 13
 rabbot_fall_02 0 19
 rabbot_fall_01 0 26
 rabbot_dying_of_falling_01 0 32
-rabbot_dying_of_falling_02 0 32
+rabbot_dying_of_falling_02 0 32 rabbit_dying
 rabbot_dying_of_falling_03 0 32
 rabbot_dying_of_falling_04 0 32
 rabbot_dying_of_falling_05 0 32
