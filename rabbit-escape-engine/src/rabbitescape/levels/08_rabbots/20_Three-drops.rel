@@ -19,3 +19,6 @@ MMMMMMMMMMMMMMM
 :num_to_save=3
 :solution.1.code=,,mq? v+|?zv+4+V%mq)4+lH4Hqc,,%&)4+VoXvs`)4+)4+)4+vi%+qFV&)+4Xvi++xVo|++ ) 4+l+vi{+`?mvix++V+qF@vx+i%+`E4+Vo+ +)+mF)+`z,V4)iV_+vvF+,,XxH++qV,Xs,Xq,mV_vx4_|c+o++H+X)+)X)x4@mX4)v,++i4?+X+,6%v?F+lqV+&+EV|H+o_),,z,F4?viE%v)v+6X+4)V,qxvs||)oV_+s`+?v)_vX`+4cv +,v)4+i4?4c+,+VVms+HlV?FvzF|V0o+++?)++m)?4 
 :solution.2=bash&(4,4)&climb&(7,0);2;bash;(4,6);2;dig;3;(2,1);block&(2,2);bash;4;(4,2);;(6,6);7;dig;;(6,4);3;bridge;(1,2);9;brolly;(7,0)&climb&(6,0);4;block&(4,0)&bash;2;(2,2);7;bridge;4;(9,1);15;bash;8;(8,1);bridge;;(9,1);3;bash;;(10,1);14;bridge;32;(12,4);27;(12,4);30;(12,3);45;climb;;(4,0);until:WON
+:hint.1=You need to use the rabbots to clear the bombs and get all the rabbits to the exit.
+:hint.2=Rabbots can fall one block further than rabbits.
+:hint.3=There is no hint 3! It's the last level in the set - try some things out ;-)
