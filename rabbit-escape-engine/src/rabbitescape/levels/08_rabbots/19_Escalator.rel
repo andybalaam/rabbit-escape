@@ -2,11 +2,11 @@
 :description=Help the rabbits get through the escalator, avoiding the rabbots
 :author_name=GamingInky
 :author_url=https://github.com/GamingInky
-:hint.1.code=X+DO|$+O=Az$+Dk$A$z>++X[DesOO+sD|D++Dk[H$kmFOkF+z[
-:hint.2.code=Ep|KdjIE]BOyKCdgTbbObbS|KbGGLTGGbCx##TVbOjCb#TVgOEVxOVbb
-:hint.3.code=91:)sKmZ)s`Zu9K0m`hm`9Z1)mZ)TZ``Z`Z}lT00`ZmZ`9g`0m0`ZumZhZZs`f`00Tm0/1Zu`0))Z`0`Z:`KT`f0Z`,mZ`f,}``u``fZ0fu099t0}u`);fTZu9`)M0m}m`0Z9``m+~}T9sT}Mf)l}0m~```}9Zu0ufYsf`99`l0Z0`Z.f,TM`m9}}K}Z,1s`Z9us``0`f9M}s;9l},`ulf`ZmZ`,Y
+:hint.1=The rabbits are in pairs can they help each other?
+:hint.2=Maybe the second rabbit in the pair could block the way?
+:hint.3=Make the first rabbit build a bridge to the exit the have the second rabbit bash through it. Keep repeating this process until there is only one rabbit left then have him bridge up as there is no need to break the bridge.
 :solution.1=;climb;11;(3,3);;bridge;2;(6,6);bash;4;(6,6);;climb;7;(3,3);bridge;3;(6,6);bash;4;(6,6);;climb;7;(3,3);;bridge;2;(6,6);bash;2;(6,6);2;bridge;2;climb;5;(3,3);bridge;3;(6,6);;bash;;(6,6);3;bridge;4;climb;4;(3,3);3;(3,3);bridge;(6,6);7;bash;(6,6);bridge;climb;4;(3,3);2;(3,3);bridge;(6,6);;bash;5;(6,6);;climb;5;(3,3);;(3,3);;bridge;(6,6);3;bash;until:WON
-:solution.2.code=YWChWtWMz\tWYm\W29}tWc}"YM_W\}RDW7}9W"WMMqFDFC"W_zYqW}hcWWWRW\W\29mtgt"Y
+:solution.2=;bridge;;(5,5);(10,3);28;bash;3;(6,6);6;bridge;6;(3,3);2;bash;;(10,3);19
 :num_rabbits=10
 :num_to_save=10
 :rabbit_delay=3

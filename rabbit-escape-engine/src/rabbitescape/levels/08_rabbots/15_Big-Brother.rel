@@ -2,8 +2,8 @@
 :description=Big Brother sees all.
 :author_name=tttppp
 :author_url=https://github.com/tttppp
-:solution.1.code=82Gh(8~hw8~l82Gdd33""((88R((R(8G8"CZ^~8Q8w3hd~!((2gu((8d(8Gd88!GQc88(8cG82G8u"(82G8whc88~hdu2"8Rcd2G88uhd8OG228uR8gGQh8dd!~68c8h(83lh28((h2R6(G2R8hG!d28Ghh(8((hR((2"
-:solution.2.code=N;^F4ki+i+vNGLTkU+44FT+^,*7cc/*<Fov+Ni+L^Fuv74TGLFN++uN+kN+47T^+vi^,+Lc,kiu+ /TTTvNvLFT+F7k+NG+L^iTiNTLoG,+Fu7/FLv<FTv^7c4TN^++u<w+,+eFF47<vvv7Tc+/N+v+k+/Fo+oiKGF3vT^+N>TvkNT++NwT++
+:solution.1=;dig;3;(6,0);5;(4,10);5;(10,10);2;climb;8;(4,13);3;dig;5;(10,13);;bridge;(9,13);11;(8,13);;(2,13);;dig;(5,8);;bridge;3;(9,13);(3,13);4;(4,12);2;(10,12);11;(10,11);12
+:solution.2=bridge&(6,8);4;(6,8);2;climb;4;(6,7);;dig&(3,10)&bridge&(1,13);11;(2,13);6;(3,12);7;(10,13);15;dig;(7,0);bridge;3;dig;(8,10)&bridge;10;bash;2;(10,10);(7,13);bridge;(9,13);8;(8,12);9
 :num_rabbits=0
 :num_to_save=3
 :rabbit_delay=4

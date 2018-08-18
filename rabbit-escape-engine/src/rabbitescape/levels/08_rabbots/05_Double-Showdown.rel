@@ -1,19 +1,20 @@
-#######
-Q      
-   ( Oy
-#######
-Q      
-   ( Oy
-#######
-:dig=2
 :name=Double Showdown
-:num_rabbits=2
-:num_to_save=2
-:solution.1=dig&(3,2);(3,5);until:WON
-:solution.2=dig&(4,2);(3,5);until:WON
 :description=Two to get past
+:author_name=Andy Balaam
+:author_url=http://artificialworlds.net/rabbit-escape
 :hint.1=You just need fast fingers.
 :hint.2=Dig the rabbots out of the way.
 :hint.3=Place one dig token on each bridge.
-:author_name=Andy Balaam
-:author_url=http://artificialworlds.net/rabbit-escape
+:solution.1=dig&(3,2);(3,5);until:WON
+:solution.2=dig&(4,2);(3,5);until:WON
+:num_rabbits=2
+:num_to_save=2
+:rabbit_delay=4
+:dig=2
+#######
+Q      
+   ( Oy
+#######
+Q      
+   ( Oy
+#######

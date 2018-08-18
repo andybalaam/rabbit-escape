@@ -1,3 +1,16 @@
+:name=Rabucket
+:description=Empty the buckets!
+:author_name=Andy Balaam
+:author_url=http://artificialworlds.net/rabbit-escape
+:solution.1=dig;;(4,3);;bridge;3;(4,6)&bash;2;(3,6);(3,5);3;brolly&(4,3);bridge&(4,6);until:WON
+:solution.2=bash;;(1,5);;(7,5);2;dig&(4,3)&bridge;3;(4,5);4;brolly&(6,4);6
+:num_rabbits=2
+:num_to_save=2
+:rabbit_delay=15
+:bash=2
+:bridge=2
+:brolly=1
+:dig=1
  A  Q  A 
  #     # 
  y     t 
@@ -6,16 +19,3 @@
 #O# # #O#
 ### # ###
     #    
-:author_name=Andy Balaam
-:author_url=http://artificialworlds.net/rabbit-escape
-:bash=2
-:bridge=2
-:brolly=1
-:description=Empty the buckets!
-:dig=1
-:name=Rabucket
-:num_rabbits=2
-:num_to_save=2
-:rabbit_delay=15
-:solution.1.code=gnoI"tnR+Oy ,:u,s+goOoyStoNNNoS-ino,itnl-uPg,64+b-ooRopNOOStOgNgigounyDonsooNSO0R9E
-:solution.2.code=| <IvT-ZITn<<JIvR<{T[-{<T["*0n[| !Q$$w<P#f<<IR<|<IR<^PRR[fvfZ[

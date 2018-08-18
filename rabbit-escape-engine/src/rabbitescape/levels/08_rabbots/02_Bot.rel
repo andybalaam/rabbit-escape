@@ -1,10 +1,10 @@
 :name=Bot
 :description=A new challenger enters
+:author_name=Andy Balaam
+:author_url=https://github.com/andybalaam
 :hint.1=Get rid of those rabbots!
 :hint.2=Place a dig token in front of the red rabbots
 :hint.3=Place a bridge token for the white rabbits to get over the hole
-:author_name=Andy Balaam
-:author_url=https://github.com/andybalaam
 :solution.1=dig;(7,7);bridge;(5,7);(5,6);until:WON
 :solution.2=until:LOST
 :num_rabbits=2

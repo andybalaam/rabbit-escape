@@ -1,11 +1,3 @@
-#     Q  
-    y#  #
-  #######
-   r     
-         
-  / MMMMM
-O#b     M
-MMMMMMMMM
 :name=Saboteur
 :description=
 :author_name=
@@ -19,3 +11,11 @@ MMMMMMMMM
 :bash=2
 :bridge=1
 :dig=1
+#     Q  
+    y#  #
+  #######
+   r     
+         
+  / MMMMM
+O#b     M
+MMMMMMMMM
