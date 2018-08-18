@@ -1,5 +1,8 @@
 #!/bin/bash
 
+set -u
+set -e
+
 echo ".. Changing all levels to standard format"
 for L in \
     $(find \
