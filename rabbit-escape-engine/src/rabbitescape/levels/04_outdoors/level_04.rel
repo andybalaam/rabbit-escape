@@ -4,6 +4,7 @@
 :author_url=https://github.com/colonelfazackerley
 :hint.1=Drop dig tokens.
 :hint.2=The dig tokens can be dropped on the blockers.
+:hint.3=Drop one dig token on each blocker.
 :solution.1=dig;(4,3);(10,3);17;WON
 :num_rabbits=10
 :num_to_save=12

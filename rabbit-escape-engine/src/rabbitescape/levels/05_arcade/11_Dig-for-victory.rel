@@ -3,7 +3,8 @@
 :author_name=tttppp
 :author_url=https://github.com/tttppp
 :hint.1=Get the rabbits from both exits together and dig a single path for them.
-:hint.2=Watch the rabbits move for a  while before spending a token.
+:hint.2=Watch the rabbits move for a while before spending a token.
+:hint.3=Dig once on the far right, twice on the far left directly above each other, then a few more times near the middle.
 :solution.1=dig;(7,2);(1,3);(1,4);(4,7);(5,9);(4,10);(3,6);until:WON
 :num_rabbits=10
 :num_to_save=10
