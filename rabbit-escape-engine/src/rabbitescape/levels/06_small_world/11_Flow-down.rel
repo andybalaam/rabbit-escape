@@ -9,6 +9,7 @@
 :num_rabbits=5
 :num_to_save=5
 :rabbit_delay=4
+:music=tryad-lovely
 :block=1
 :bridge=1
 :dig=1

@@ -9,6 +9,7 @@
 :num_rabbits=2
 :num_to_save=3
 :rabbit_delay=4
+:music=tryad-lovely
 :bash=3
 :bridge=2
               

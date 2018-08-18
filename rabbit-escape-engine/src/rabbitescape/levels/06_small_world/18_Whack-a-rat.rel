@@ -9,6 +9,7 @@
 :num_rabbits=10
 :num_to_save=10
 :rabbit_delay=5,7,3,1,4,2,1,1,10
+:music=tryad-lovely
 :brolly=10
 Q
  

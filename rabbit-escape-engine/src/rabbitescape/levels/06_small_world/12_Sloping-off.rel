@@ -11,6 +11,7 @@
 :num_rabbits=10
 :num_to_save=9
 :rabbit_delay=4
+:music=tryad-lovely
 :brolly=2
 :climb=1
 :dig=20
