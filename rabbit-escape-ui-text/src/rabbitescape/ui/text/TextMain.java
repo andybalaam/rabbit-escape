@@ -161,7 +161,7 @@ public class TextMain
         World world = new LoadWorldFile( fs ).load(
             new IgnoreWorldStatsListener(), fileName );
         String[] lines = TextWorldManip.renderCompleteWorld( world, true, false );
-        fs.write( fileName, Util.join( "\n", lines ) );
+        fs.write( fileName, Util.join( "\n", lines ) + "\n" );
     }
 
     public static void template( String fileName ) throws IOException
@@ -173,7 +173,7 @@ public class TextMain
         };
         String[] lines = TextWorldManip.renderCompleteWorld(
             TextWorldManip.createWorld( world ), true, false );
-        fs.write( fileName, Util.join( "\n", lines ) );
+        fs.write( fileName, Util.join( "\n", lines ) + "\n" );
     }
 
     private void run( String[] args )
