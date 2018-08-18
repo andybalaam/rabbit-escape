@@ -335,6 +335,7 @@ public class TextWorldManip
         addMeta( ret, num_rabbits,  Integer.toString( world.num_rabbits ), world.comments );
         addMeta( ret, num_to_save,  Integer.toString( world.num_to_save ), world.comments );
         addMeta( ret, rabbit_delay, renderIntArray( world.rabbit_delay ), world.comments );
+        addMeta( ret, music, world.music, world.comments );
 
         if ( runtimeMeta )
         {
