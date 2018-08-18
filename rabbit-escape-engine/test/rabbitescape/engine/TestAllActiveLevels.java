@@ -136,13 +136,22 @@ public class TestAllActiveLevels
             }
             for ( LevelsList.LevelInfo level : set.levels )
             {
-                World world = new LoadWorldFile( new NothingExistsFileSystem() )
-                .load(
-                    new IgnoreWorldStatsListener(),
-                    set.dirName + "/" + level.fileName + ".rel"
-                );
+                try
+                {
+                    World world = new LoadWorldFile( new NothingExistsFileSystem() )
+                    .load(
+                        new IgnoreWorldStatsListener(),
+                        set.dirName + "/" + level.fileName + ".rel"
+                    );
 
-                test.run( world, level.fileName );
+                    test.run( world, level.fileName );
+                }
+                catch (AssertionError e) {
+                    throw new AssertionError(
+                        "Level " + level.fileName + " failed.",
+                        e
+                    );
+                }
             }
         }
     }
