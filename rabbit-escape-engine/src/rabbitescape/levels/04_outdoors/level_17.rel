@@ -1,4 +1,5 @@
 :name=Chasm
+:description=Up and over
 :author_name=colonelfazackerley
 :author_url=https://github.com/colonelfazackerley
 :hint.1=Block the upper rabbits at the edge and bridge up from below.
@@ -7,15 +8,14 @@
 :solution.1=block;(4,1);bridge;(11,8);10;(8,6);13;dig;(1,1);5;(4,1);bridge;(4,2);(4,2);dig;(5,1);28
 :solution.2=dig&(1,1);bridge;(12,8);10;(9,6);;(9,6);6;(6,3);23
 :solution.3=dig;(2,1);bridge;2;(2,3);(12,8);6;(9,6);8;(6,3);23;LOST
-:description=Up and over
-:num_to_save=10
 :num_rabbits=10
-:dig=3
-:block=1
-:explode=1
-:bridge=4
+:num_to_save=10
 :rabbit_delay=14,4
 :music=tryad-empty
+:block=1
+:bridge=4
+:dig=3
+:explode=1
 \Q              
 #               
 #####           

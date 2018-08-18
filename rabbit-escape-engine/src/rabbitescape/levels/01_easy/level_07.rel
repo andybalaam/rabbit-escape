@@ -6,11 +6,12 @@
 :hint.2=Your second digger should be placed so the rabbits will fall near the exit.
 :hint.3=Dig on the far left, then in the middle of the slope.
 :solution.1=dig;(3,3);(4,7);113
-:bash=1
-:dig=2
 :num_rabbits=20
 :num_to_save=10
+:rabbit_delay=4
 :music=tryad-witness
+:bash=1
+:dig=2
 ###################
 #        Q        #
 #                 #

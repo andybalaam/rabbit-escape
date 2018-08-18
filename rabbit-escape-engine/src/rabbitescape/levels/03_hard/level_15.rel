@@ -8,13 +8,14 @@
 :solution.1=bridge;37;(16,12);(13,12);6;(16,10);8;(9,12);6;(12,10);8;1;(16,7);10;(15,2);(12,2);2;(23,4);79;WON
 :num_rabbits=10
 :num_to_save=7
-:climb=1
+:rabbit_delay=4
+:music=tryad-the_final_rewind
+:bash=1
 :block=5
 :bridge=15
-:bash=1
-:explode=5
+:climb=1
 :dig=1
-:music=tryad-the_final_rewind
+:explode=5
 #########################
 #                       #
 #          #  #         #

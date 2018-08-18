@@ -2,18 +2,19 @@
 :description=This level is not related to the Atari game of the same name, and any resemblance is purely coincidental.
 :author_name=tttppp
 :author_url=https://github.com/tttppp
-:solution.1=dig;11;(12,2);2;(11,2);2;(10,2);2;(9,2);2;bridge;(9,8);11;(12,6);11;(9,4);until:WON
 :hint.1=Let the first rabbit from the top entrance walk straight to the exit.
 :hint.2=Dig down from the top, placing the dig token one away from the exit.
 :hint.3=Dig 4 columns out. Bridge up, back and forth across the hole. The first bridge  should rise right from the bat.
-:music=tryad-beat_into_submission
+:solution.1=dig;11;(12,2);2;(11,2);2;(10,2);2;(9,2);2;bridge;(9,8);11;(12,6);11;(9,4);until:WON
 :num_rabbits=10
 :num_to_save=10
+:rabbit_delay=4
+:music=tryad-beat_into_submission
+:bash=3
 :block=2
+:bridge=3
 :climb=4
 :dig=4
-:bridge=3
-:bash=3
 :explode=2
 ################
 #Q             #

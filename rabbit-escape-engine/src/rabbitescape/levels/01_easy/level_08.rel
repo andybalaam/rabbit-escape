@@ -7,9 +7,10 @@
 :hint.3=Dig on the last or second-last square of the top platform.
 :solution.1=dig;(5,4);14
 :num_rabbits=1
-:dig=2
 :num_to_save=1
+:rabbit_delay=4
 :music=tryad-witness
+:dig=2
 #########
 #       #
 # Q     #

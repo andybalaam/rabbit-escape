@@ -1,4 +1,5 @@
 :name=Rabbit hole descent
+:description=You should have taken the blue pill.
 :author_name=colonelfazackerley
 :author_url=https://github.com/colonelfazackerley
 :hint.1=There are several ways of completing this level.
@@ -6,16 +7,15 @@
 :hint.3=Dig down 4, then bash. Use a blocker to turn back toward the exit.
 :solution.1=dig;(6,3);bridge;9;(6,7);bash;5;(9,5);;dig;;(10,4);bash;6;(10,8);dig;(11,8);bash;6;(11,12);block;(14,16);bash;25;(12,16);28;explode;(14,16);
 :solution.2=dig;(3,3);bash;(3,4);dig;4;(6,4);block;(5,4);21;bridge;;(6,17);8;(9,15);10;(6,13);9;(9,11);10;bash;2;(8,11);6;(7,13);4;(9,15);dig;;(10,14);;(5,4);3;bridge;9;(5,11);27
-:description=You should have taken the blue pill.
 :num_rabbits=4
 :num_to_save=2
 :rabbit_delay=25
-:bridge=5
-:dig=4
+:music=tryad-empty
 :bash=4
 :block=1
+:bridge=5
+:dig=4
 :explode=1
-:music=tryad-empty
                    
                    
   Q                

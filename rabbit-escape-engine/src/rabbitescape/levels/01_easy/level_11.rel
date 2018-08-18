@@ -8,10 +8,11 @@
 :solution.1=bridge;(10,4);;(5,4);(13,4);(17,4);(20,2);7;(9,4);24;explode;(15,9);28
 :num_rabbits=10
 :num_to_save=8
-:bridge=6
-:block=2
-:explode=2
+:rabbit_delay=4
 :music=tryad-witness
+:block=2
+:bridge=6
+:explode=2
 ##############################
 #                            #
 #    Q                      O#

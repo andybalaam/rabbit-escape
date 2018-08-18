@@ -8,12 +8,13 @@
 :solution.1=bash;(4,10);(7,4);(4,5);bridge;6;(9,10);8;climb;(7,8);(7,8);18;WON
 :num_rabbits=4
 :num_to_save=4
+:rabbit_delay=4
+:music=tryad-the_final_rewind
 :bash=3
+:block=4
 :bridge=1
 :climb=2
-:block=4
 :explode=4
-:music=tryad-the_final_rewind
 ############
 #    ##    #
 # Q  ##  Q #

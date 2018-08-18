@@ -7,10 +7,10 @@
 :hint.3=Dig in the middle of the roof over the green exit.
 :solution.1=dig;(7,2);(9,7);57
 :num_rabbits=10
-:rabbit_delay=5
 :num_to_save=10
-:dig=2
+:rabbit_delay=5
 :music=tryad-witness
+:dig=2
 ###################
 #  Q      Q       #
 #                 #

@@ -10,10 +10,10 @@
 :num_rabbits=10
 :num_to_save=10
 :rabbit_delay=5
+:music=tryad-the_final_rewind
 :bash=1
 :block=2
 :bridge=8
-:music=tryad-the_final_rewind
 #####################
 #    Q              #
 #                   #

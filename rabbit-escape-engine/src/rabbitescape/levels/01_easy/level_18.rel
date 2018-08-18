@@ -8,8 +8,9 @@
 :solution.1=climb;(15,4);(15,4);(15,4);(15,4);(15,4);(15,4);(15,4);(15,4);(15,4);(15,4);33
 :num_rabbits=10
 :num_to_save=10
-:climb=10
+:rabbit_delay=4
 :music=tryad-witness
+:climb=10
 ###########################
 #              Q          #
 #                 O       #

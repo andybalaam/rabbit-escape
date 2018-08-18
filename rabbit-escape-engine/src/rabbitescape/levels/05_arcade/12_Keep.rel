@@ -6,16 +6,16 @@
 :hint.2=Build a bridge to catch the rabbits falling from the right entrance.
 :hint.3=Use a blocker to prevent rabbits falling off the bridge. bridge back left and up to the exit.
 :solution.1=bridge;(4,13);(18,3);bash;7;(7,11);(17,11);bridge;12;(18,11);6;(21,9);block;7;(24,6);bridge;10;(23,7);8;(20,5);12;(17,4);98;explode;(24,3);until:WON
-:music=tryad-beat_into_submission
 :num_rabbits=20
 :num_to_save=15
+:rabbit_delay=30,30,30,30,4
+:music=tryad-beat_into_submission
 :bash=5
-:dig=1
+:block=2
 :bridge=10
 :climb=5
-:block=2
+:dig=1
 :explode=10
-:rabbit_delay=30,30,30,30,4
         #               #  
   #           O            
      #        #            

@@ -8,11 +8,12 @@
 :solution.1=bridge;(2,14);2;climb;4;(5,12);2;bash;(18,3);17;dig;4;(24,3);18
 :num_rabbits=1
 :num_to_save=1
-:dig=1
+:rabbit_delay=4
+:music=tryad-lovely
+:bash=1
 :bridge=3
 :climb=1
-:bash=1
-:music=tryad-lovely
+:dig=1
 ###########################
 #                  #      #
 #                  #      #

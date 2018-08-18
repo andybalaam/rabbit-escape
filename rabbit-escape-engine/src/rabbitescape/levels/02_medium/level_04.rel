@@ -8,12 +8,13 @@
 :solution.1=bash;(6,5);9;(7,6);3;(6,7);10
 :num_rabbits=1
 :num_to_save=1
+:rabbit_delay=4
+:music=tryad-lovely
 :bash=3
+:block=3
 :bridge=3
 :climb=3
-:block=3
 :explode=3
-:music=tryad-lovely
 ##############
 # Q          #
 #            #

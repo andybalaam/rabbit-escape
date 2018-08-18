@@ -9,12 +9,12 @@
 :num_rabbits=10
 :num_to_save=10
 :rabbit_delay=4
+:music=tryad-the_final_rewind
 :block=5
 :bridge=5
 :climb=1
 :dig=5
 :explode=5
-:music=tryad-the_final_rewind
 ##################
 #           O    #
 #           ####\#

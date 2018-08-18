@@ -10,10 +10,10 @@
 :num_rabbits=3
 :num_to_save=3
 :rabbit_delay=10
+:music=tryad-the_final_rewind
 :bash=5
 :block=2
 :dig=5
-:music=tryad-the_final_rewind
           Q          
                      
           /\         

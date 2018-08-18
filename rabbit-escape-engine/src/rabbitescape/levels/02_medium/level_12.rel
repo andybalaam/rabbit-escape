@@ -8,12 +8,13 @@
 :solution.1=climb;(3,8);bash;(4,6);bridge;(6,6);(11,4);climb;14;(3,8);6;(3,8);5;(3,8);5;(3,8);30
 :num_rabbits=5
 :num_to_save=4
-:climb=5
+:rabbit_delay=4
+:music=tryad-lovely
+:bash=5
 :block=5
 :bridge=5
-:bash=5
+:climb=5
 :explode=5
-:music=tryad-lovely
 #####################
 #                   #
 #    #         #O   #

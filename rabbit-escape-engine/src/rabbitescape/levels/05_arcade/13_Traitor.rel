@@ -7,12 +7,12 @@
 :hint.3=Bridge across to catch the traitor's dig token.
 :solution.1=bash;(2,13);bridge;(2,13);(6,9);(10,11);(16,11);(12,10);bash;10;(8,11);3;(7,9);14;(13,10);28;WON
 :solution.2=bash;(2,13);bridge&(2,12);(6,9);bash;(13,13);(14,13);(15,13);(8,11);bridge;(10,11);(10,9);33
-:music=tryad-beat_into_submission
 :num_rabbits=5
 :num_to_save=5
-:bridge=5
-:bash=5
 :rabbit_delay=5
+:music=tryad-beat_into_submission
+:bash=5
+:bridge=5
 ###################
 #r                #
 #c# # # # # # # #*#

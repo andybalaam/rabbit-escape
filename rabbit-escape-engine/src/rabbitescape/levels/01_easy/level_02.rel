@@ -8,8 +8,9 @@
 :solution.1=bash;(7,2);23
 :num_rabbits=3
 :num_to_save=1
-:bash=10
+:rabbit_delay=4
 :music=tryad-witness
+:bash=10
 ###########
 #   Q   # #
 # /\    # #

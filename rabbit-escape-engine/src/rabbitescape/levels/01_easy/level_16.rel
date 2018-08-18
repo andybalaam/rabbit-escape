@@ -8,12 +8,13 @@
 :solution.1=bridge;(8,8);(11,6);(14,4);(17,2);14;(13,5);37
 :num_rabbits=1
 :num_to_save=1
+:rabbit_delay=4
+:music=tryad-witness
+:block=1
 :bridge=20
 :climb=1
 :dig=1
 :explode=1
-:block=1
-:music=tryad-witness
 ####################
 #                  #
 #                  #
