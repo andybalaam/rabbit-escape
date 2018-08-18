@@ -70,18 +70,21 @@ public class TestAllActiveLevels
         } );
     }
 
-    //@Test
-    //public void All_official_levels_have_hints_and_descriptions()
-    //{
-    //    forEachOfficialLevel( new T() {
-    //        @Override public void run( World world, String fileName )
-    //        {
-    //            assertThat(world.description, not(equalTo("")));
-    //            assertThat(world.author_name, not(equalTo("")));
-    //            assertThat(world.hints.length, greaterThan(0));
-    //        }
-    //    } );
-    //}
+    @Test
+    public void All_official_levels_have_hints_and_descriptions()
+    {
+        forEachOfficialLevel( new T() {
+            @Override public void run( World world, String fileName )
+            {
+                assertThat(world.description, not(equalTo("")));
+                assertThat(world.author_name, not(equalTo("")));
+                assertThat(world.hints.length, equalTo(3));
+                assertThat(world.hints[0], not(equalTo("")));
+                assertThat(world.hints[1], not(equalTo("")));
+                assertThat(world.hints[2], not(equalTo("")));
+            }
+        } );
+    }
 
     // --
 
