@@ -19,3 +19,9 @@ O         #
 :solution.1=dig&(5,4)&block;2;(9,4)&bridge;5;(9,4);climb;3;(8,4);until:WON
 :solution.2.code=C5u$T|uVF$"Fd;]C5u]9w99x959;&9awF^h@TahE%;9CF5h9&99hufu
 :solution.3.code=|pFOZ}O:imApU:ZA#Upb)bmU[UUdi9`
+:description=On the march
+:hint.1=Dig to get rid of the rabbots.
+:hint.2=Dig on the bottom line, and make the rabbit a blocker.
+:hint.3=Ensure the rabbit is on the far right, but facing left, when you drop the block token.  Use a bridge token to release the blocker.
+:author_name=Andy Balaam
+:author_url=http://artificialworlds.net/rabbit-escape

@@ -2,9 +2,9 @@
 :description=The rabbot wants to destroy the happy path!
 :author_name=Andy Balaam
 :author_url=http://artificialworlds.net/rabbit-escape/
-:hint.1=Can you prevent the rabbot getting to the bash token, without destroying the path
-:hint.2=Try bridging from the top of the bridge the rabbot falls onto
-:hint.3=Make the rabbot bridge over the bash token then dig through the bridge to fall away
+:hint.1=Can you prevent the rabbot getting to the bash token, without destroying the path?
+:hint.2=Try bridging the rabbot as soon as it falls onto the bridge.
+:hint.3=Once you start the rabbot bridging, just keep going.
 :solution.1=bridge;(6,4);8;(3,2);until:WON
 :solution.2=bridge&(2,4);until:LOST
 :solution.3=until:LOST
