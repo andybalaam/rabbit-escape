@@ -1,7 +1,10 @@
 :name=Much too close for comfort
-:description=
+:description=So close you could feel them breathing, if they did that
 :author_name=tttppp
 :author_url=https://github.com/tttppp
+:hint.1=For precise timing, use the pause button a lot.
+:hint.2=Bridge the back rabbot to get it out of the way, and bash the front one to slow it down.
+:hint.3=Climb the rabbit to allow the rabbots to pass underneath.
 :solution.1=bridge&(1,2)&bash&(3,2);climb&(5,2);until:WON
 :num_rabbits=0
 :num_to_save=1

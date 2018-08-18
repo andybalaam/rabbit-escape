@@ -1,8 +1,11 @@
 :name=Three drops
 :description=Three bunnies and three holes
-:author_name=
-:author_url=
-:solution.1=bash&(4,4);2;climb;(7,0);;bash;;(4,6);2;brolly;(3,0);climb;(4,0);;bash;;(6,6);3;block;6;(7,0);5;bridge;2;(9,1);10;bash;12;(8,1);bridge;(9,1);bash;;(10,1);3;dig;2;(6,4);3;bash;2;(7,0);8;(4,2);3;block;3;dig&(11,1);block&(4,0)&bridge;(11,1);climb;(12,1);4;bash&(4,0);bridge&(13,4);2;(12,4);7;(12,3);6
+:author_name=tttppp
+:author_url=https://github.com/tttppp
+:hint.1=You need to use the rabbots to clear the bombs and get all the rabbits to the exit.
+:hint.2=Rabbots can fall one block further than rabbits.
+:hint.3=There is no hint 3! It's the last level in the set - try some things out ;-)
+:solution.1=bash&(4,4);2;climb;(7,0);;bash;;(4,6);2;brolly;(3,0);climb;(4,0);;bash;;(6,6);3;block;6;(7,0);5;bridge;2;(9,1);10;bash;12;(8,1);bridge;(9,1);bash;;(10,1);3;dig;2;(6,4);3;bash;2;(7,0);8;(4,2);3;block;3;dig&(11,1);block&(4,0)&bridge;(11,1);climb;(12,1);4;bash&(4,0);bridge&(13,4);2;(12,4);7;(12,3);until:WON
 :solution.2=bash&(4,4)&climb&(7,0);2;bash;(4,6);2;dig;3;(2,1);block&(2,2);bash;4;(4,2);;(6,6);7;dig;;(6,4);3;bridge;(1,2);9;brolly;(7,0)&climb&(6,0);4;block&(4,0)&bash;2;(2,2);7;bridge;4;(9,1);15;bash;8;(8,1);bridge;;(9,1);3;bash;;(10,1);14;bridge;32;(12,4);27;(12,4);30;(12,3);45;climb;;(4,0);until:WON
 :num_rabbits=0
 :num_to_save=3
@@ -22,6 +25,3 @@ M( #tMtM M M  M
 M)MMMM#M M MMMM
 M( #r#rMMM  MMM
 MMMMMMMMMMMMMMM
-:hint.1=You need to use the rabbots to clear the bombs and get all the rabbits to the exit.
-:hint.2=Rabbots can fall one block further than rabbits.
-:hint.3=There is no hint 3! It's the last level in the set - try some things out ;-)

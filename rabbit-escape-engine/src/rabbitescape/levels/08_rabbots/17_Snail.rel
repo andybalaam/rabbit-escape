@@ -1,7 +1,7 @@
 :name=Snail
 :description=Rabbits and rabbots slugging it out!
-:author_name=
-:author_url=
+:author_name=tttppp
+:author_url=https://github.com/tttppp
 :hint.1=Use blocker tokens to deflect the rabbits and rabbots off each other.
 :hint.2=You don't need to save the rabbit on the right of the shell.
 :hint.3=Use the rabbit on the right to save the rabbit at the top left, get the two rabbots out of the shell and into the left of the body, use the other rabbits to bridge up and around the shell to the exit.

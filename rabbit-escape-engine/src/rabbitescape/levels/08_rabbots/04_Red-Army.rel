@@ -6,8 +6,8 @@
 :hint.2=Dig on the bottom line, and make the rabbit a blocker.
 :hint.3=Ensure the rabbit is on the far right, but facing left, when you drop the block token.  Use a bridge token to release the blocker.
 :solution.1=dig&(5,4)&block;2;(9,4)&bridge;5;(9,4);climb;3;(8,4);until:WON
-:solution.2=block;(7,4)&bridge;;(9,4);dig;(7,4);23;climb;4;(8,4);12
-:solution.3=block&(8,4);3;brolly;6;(8,4);12
+:solution.2=block;(7,4)&bridge;;(9,4);dig;(7,4);23;climb;4;(8,4);until:WON
+:solution.3=block&(8,4);3;brolly;6;(8,4);until:WON
 :num_rabbits=1
 :num_to_save=1
 :rabbit_delay=4

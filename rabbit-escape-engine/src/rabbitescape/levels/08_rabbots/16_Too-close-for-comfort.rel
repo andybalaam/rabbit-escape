@@ -1,7 +1,10 @@
 :name=Too close for comfort
-:description=
+:description=They're right behind you!
 :author_name=tttppp
 :author_url=https://github.com/tttppp
+:hint.1=Get over the rabbots.
+:hint.2=As soon as the rabbit turns around, bridge.
+:hint.3=Climb the rabbit to stop it bridging.  Make a rabbot bash to slow them down.
 :solution.1=bridge;2;(5,2);climb;(4,2);;bash;(3,3);brolly;2;(1,3);until:WON
 :solution.2=bash;(3,3)&bridge;;(5,2);;brolly;2;(3,1);until:WON
 :num_rabbits=0

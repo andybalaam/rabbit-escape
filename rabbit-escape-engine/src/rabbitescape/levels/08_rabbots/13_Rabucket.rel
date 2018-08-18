@@ -1,10 +1,10 @@
 :name=Rabucket
 :description=Empty the buckets!
-:hint.1=
-:hint.2=
-:hint.3=
 :author_name=Andy Balaam
 :author_url=http://artificialworlds.net/rabbit-escape
+:hint.1=Get rid of a rabbot by exploding it somehow.
+:hint.2=Let the first rabbit turn, then dig.  When there is one block left of the column, bridge to the left.
+:hint.3=Bash the block away, and bash again so the rabbit harmlessly explodes.  Brolly the second rabbit and bridge to the right to turn around.
 :solution.1=dig;;(4,3);;bridge;3;(4,6)&bash;2;(3,6);(3,5);3;brolly&(4,3);bridge&(4,6);until:WON
 :solution.2=bash;;(1,5);;(7,5);2;dig&(4,3)&bridge;3;(4,5);4;brolly&(6,4);6
 :num_rabbits=2
