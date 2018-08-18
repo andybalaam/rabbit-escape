@@ -67,7 +67,7 @@ public class Entrance extends Thing
     }
 
     @Override
-    public Map<String, String> saveState()
+    public Map<String, String> saveState( boolean runtimeMeta )
     {
         Map<String, String> ret = new HashMap<String, String>();
         BehaviourState.addToStateIfGtZero(

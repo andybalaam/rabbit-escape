@@ -157,11 +157,14 @@ public class Rabbit extends Thing implements Comparable<Rabbit>
     }
 
     @Override
-    public Map<String, String> saveState()
+    public Map<String, String> saveState( boolean runtimeMeta )
     {
         Map<String, String> ret = new HashMap<String, String>();
 
-        BehaviourState.addToStateIfGtZero( ret, "index", index );
+        if ( runtimeMeta )
+        {
+            BehaviourState.addToStateIfGtZero( ret, "index", index );
+        }
 
         BehaviourState.addToStateIfTrue( ret, "onSlope", onSlope );
 

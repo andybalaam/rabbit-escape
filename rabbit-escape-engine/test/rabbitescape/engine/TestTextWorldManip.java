@@ -596,7 +596,7 @@ public class TestTextWorldManip
         World world = createWorld(
             "####",
             "#**#",
-            ":*=r{index:2}j{index:3}",
+            ":*=rj",
             ":*=bi",
             "#**#",
             "####",
@@ -606,13 +606,13 @@ public class TestTextWorldManip
 
         // Result is the same as if they came at the end
         assertThat(
-            renderCompleteWorld( world, false ),
+            renderCompleteWorld( world, false, false ),
             equalTo(
                 "####",
                 "#**#",
                 "#**#",
                 "####",
-                ":*=r{index:2}j{index:3}",
+                ":*=rj",
                 ":*=bi",
                 ":*=\\d",
                 ":*=/d"
@@ -775,14 +775,14 @@ public class TestTextWorldManip
             "#**#",
             "#**#",
             "####",
-            ":*=r{index:1}j{index:40}",
+            ":*=rj",
             ":*=bi",
             ":*=\\d",
             ":*=/d"
         };
 
         assertThat(
-            renderCompleteWorld( createWorld( lines ), false ),
+            renderCompleteWorld( createWorld( lines ), false, false ),
             equalTo( lines )
         );
     }
@@ -966,18 +966,13 @@ public class TestTextWorldManip
             world.step();
         }
 
-        String[] resultLines=renderCompleteWorld( world, false );
+        String[] resultLines = renderCompleteWorld( world, false, false );
 
         String[] expectedLines = {
             "*                                                                            ",
-            "      *  *  * **                                                             ",
+            "      r  r  r rr                                                             ",
             "#############################################################################",
-            ":*=Q{Entrance.timeToNextRabbit:2}",
-            ":*=r{index:5}",
-            ":*=r{index:4}",
-            ":*=r{index:3}",
-            ":*=r{index:2}",
-            ":*=r{index:1}"
+            ":*=Q{Entrance.timeToNextRabbit:2}"
         };
         assertThat( resultLines, equalTo( expectedLines ));
 
@@ -1303,9 +1298,9 @@ public class TestTextWorldManip
             "% starpoint comment 1",
             "% starpoint comment 2",
             "% starpoint comment 3",
-            ":*=r{index:1}r{index:2}",
-            ":*=j{index:3}j{index:4}",
-            ":*=r{index:5}j{index:6}"
+            ":*=rr",
+            ":*=jj",
+            ":*=rj"
         };
 
         assertThat(

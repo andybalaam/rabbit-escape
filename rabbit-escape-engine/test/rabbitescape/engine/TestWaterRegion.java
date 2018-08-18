@@ -22,7 +22,7 @@ public class TestWaterRegion
         WaterRegion start = new WaterRegion( 0, 0, Util.newSet( UP, LEFT, RIGHT, DOWN ), 25 );
         start.addContents( 10 );
 
-        Map<String, String> persisted = start.saveState();
+        Map<String, String> persisted = start.saveState( true );
         WaterRegion end = new WaterRegion( 0, 0, null, 0 );
         end.restoreFromState( persisted );
 

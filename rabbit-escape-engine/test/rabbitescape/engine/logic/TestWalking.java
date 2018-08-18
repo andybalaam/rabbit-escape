@@ -2222,14 +2222,12 @@ public class TestWalking
             world.step();
         }
 
-        String[] resultLines = renderCompleteWorld( world, false );
+        String[] resultLines = renderCompleteWorld( world, false, false );
 
         String[] expected = {
             " # # # # ",
-           "#\\*/#)*(#",
-            "#########",
-            ":*=r{index:1}",
-            ":*=r{index:2}"
+           "#\\r/#)r(#",
+            "#########"
         };
 
         assertThat( resultLines, equalTo( expected ) );

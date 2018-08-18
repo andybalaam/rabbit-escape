@@ -34,7 +34,7 @@ public class Pipe extends Thing
     }
 
     @Override
-    public Map<String, String> saveState()
+    public Map<String, String> saveState( boolean runtimeMeta )
     {
         return new HashMap<String, String>();
     }
