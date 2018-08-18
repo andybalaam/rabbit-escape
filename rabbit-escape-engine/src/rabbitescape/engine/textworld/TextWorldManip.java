@@ -173,7 +173,7 @@ public class TextWorldManip
             num_rabs,
             processor.metaInt( num_to_save,  1 ),
             processor.metaIntArray( rabbit_delay, new int[]{4} ),
-            processor.metaString( music, null ),
+            processor.metaString( music, "" ),
             processor.metaInt( num_saved, 0 ),
             processor.metaInt( num_killed, 0 ),
             processor.metaInt( num_waiting, num_rabs ),
@@ -203,7 +203,7 @@ public class TextWorldManip
             0,               //num_rabs
             1,               //num_to_save
             new int[]{4},    //rabbit_delay
-            null,            //music
+            "",              //music
             0,               //num_saved
             0,               //num_killed
             0,               //num_waiting

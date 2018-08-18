@@ -78,6 +78,7 @@ public class TestAllActiveLevels
             {
                 assertThat(world.description, not(equalTo("")));
                 assertThat(world.author_name, not(equalTo("")));
+                assertThat(world.music, not(equalTo("")));
                 assertThat(world.hints.length, equalTo(3));
                 assertThat(world.hints[0], not(equalTo("")));
                 assertThat(world.hints[1], not(equalTo("")));

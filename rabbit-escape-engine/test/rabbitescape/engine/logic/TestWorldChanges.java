@@ -110,6 +110,7 @@ public class TestWorldChanges
             ":num_rabbits=25",
             ":num_to_save=4",
             ":rabbit_delay=2",
+            ":music=",
             ":num_saved=5",
             ":num_killed=4",
             ":num_waiting=16",
