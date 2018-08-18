@@ -1,5 +1,8 @@
 :name=Rabucket
 :description=Empty the buckets!
+:hint.1=
+:hint.2=
+:hint.3=
 :author_name=Andy Balaam
 :author_url=http://artificialworlds.net/rabbit-escape
 :solution.1=dig;;(4,3);;bridge;3;(4,6)&bash;2;(3,6);(3,5);3;brolly&(4,3);bridge&(4,6);until:WON

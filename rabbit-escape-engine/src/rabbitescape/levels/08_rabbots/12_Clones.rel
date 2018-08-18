@@ -2,7 +2,7 @@
 :description=Where are they coming from?
 :author_name=Andy Balaam
 :author_url=http://artificialworlds.net/rabbit-escape/
-:hint.1=Get the rabbots to return and bash the rabbits out
+:hint.1=Get the rabbots to return and bash the rabbits out.
 :hint.2=Once the rabbots have automatically bashed because of the first falling bash token, make one of them bridge before they step forward.
 :hint.3=Once the rabbot has bridged and turned around, bash through the top bridge on the way back to the right.  Bridge towards the block under the rabbits, bash that block, and quickly explode the rabbot.
 :solution.1=bridge;2;(5,5);4;bash;5;(2,2)&bridge;(6,5)&bash;8;(7,5);explode;(7,4);until:WON

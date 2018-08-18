@@ -5,7 +5,7 @@
 :hint.1=Stop the rabbots getting to the other rabbits.
 :hint.2=Make them pick up the exploding tokens so the rabbits don't have to...
 :hint.3=Place a blocker token just before the hole on the right.  Make the chased rabbit bridge, then make the first rabbot dig through the bridge.  Make the blocker bash, and they can go home!
-:solution.1=block&(17,2)&bridge&(13,2);;dig;8;(14,2);4;bash;(17,2);14
+:solution.1=block&(17,2)&bridge&(13,2);;dig;8;(14,2);4;bash;(17,2);until:WON
 :num_rabbits=2
 :num_to_save=3
 :rabbit_delay=4

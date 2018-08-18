@@ -1,7 +1,10 @@
 :name=Saboteur
-:description=
-:author_name=
-:author_url=
+:description=Who'd have thought one of our own would betray us?
+:author_name=Andy Balaam
+:author_url=http://artificialworlds.net/rabbit-escape
+:hint.1=Get the rabbot to take out the rabbit at the bottom.
+:hint.2=Bridge the rabbot at the end of the top platform, and when it hit the block and begins to turn to the right, make it dig.
+:hint.3=Place a bash token where the rabbot lands to bash through the slope to take out the rabbit.  Bash the rabbits at the top to release them.
 :solution.1=bridge&(2,1);bash&(1,5);dig;2;(1,1);bash;(6,1);until:WON
 :solution.2=bash;;(6,1);until:LOST
 :solution.3=bridge;(3,6);bash;(6,1);until:LOST

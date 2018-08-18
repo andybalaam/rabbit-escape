@@ -5,7 +5,7 @@
 :hint.1=Who should build a path to the exit?
 :hint.2=Use the rabbot to bridge over to the exit.
 :hint.3=Make the rabbot a climber, and then use it to dig down through the left-hand pillar.  When it is nearly at the bottom, bridge to the exit.
-:solution.1=2;dig;(4,0);climb;7;(7,0);;bridge;14;(4,5);13
+:solution.1=2;dig;(4,0);climb;7;(7,0);;bridge;14;(4,5);until:WON
 :num_rabbits=1
 :num_to_save=1
 :rabbit_delay=4
