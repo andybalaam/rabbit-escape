@@ -12,6 +12,7 @@
 :num_rabbits=5
 :num_to_save=5
 :rabbit_delay=10,6
+:music=tryad-sampling_memory
 :bridge=2
 :brolly=1
 :climb=1

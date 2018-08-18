@@ -10,6 +10,7 @@
 :num_rabbits=2
 :num_to_save=2
 :rabbit_delay=2
+:music=tryad-sampling_memory
 :bridge=4
 :dig=1
 ##############

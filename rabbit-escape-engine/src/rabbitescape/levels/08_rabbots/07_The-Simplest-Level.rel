@@ -10,6 +10,7 @@
 :num_rabbits=0
 :num_to_save=1
 :rabbit_delay=4
+:music=tryad-sampling_memory
 :block=1
 :bridge=9
 :climb=1
