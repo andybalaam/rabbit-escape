@@ -160,8 +160,58 @@ public class TextMain
         // Decoded while parsing
         World world = new LoadWorldFile( fs ).load(
             new IgnoreWorldStatsListener(), fileName );
+        world = ensureHints(world);
         String[] lines = TextWorldManip.renderCompleteWorld( world, true, false );
         fs.write( fileName, Util.join( "\n", lines ) + "\n" );
+    }
+
+    private static World ensureHints( World world )
+    {
+        if ( world.hints.length >= 3 )
+        {
+            return world;
+        }
+        else
+        {
+            return new World(
+                world.size,
+                world.blockTable,
+                world.rabbits,
+                world.things,
+                world.waterTable,
+                world.abilities,
+                world.name,
+                world.description,
+                world.author_name,
+                world.author_url,
+                threeHints(world.hints),
+                world.solutions,
+                world.num_rabbits,
+                world.num_to_save,
+                world.rabbit_delay,
+                world.music,
+                world.num_saved,
+                world.num_killed,
+                world.num_waiting,
+                0,
+                world.paused,
+                world.comments,
+                new IgnoreWorldStatsListener(),
+                world.voidStyle
+            );
+        }
+    }
+
+    private static String[] threeHints( String[] oldHints )
+    {
+        String[] ret = new String[3];
+
+        for (int i = 0; i < 3; ++i)
+        {
+            ret[i] = ( oldHints.length > i ) ? oldHints[i] : "";
+        }
+
+        return ret;
     }
 
     public static void template( String fileName ) throws IOException

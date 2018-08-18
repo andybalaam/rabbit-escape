@@ -196,7 +196,61 @@ public class World
         this.changes = new WorldChanges( this, statsListener );
 
         init();
+    }
 
+    public World(
+        Dimension size,
+        LookupTable2D<Block> blockTable,
+        List<Rabbit> rabbits,
+        List<Thing> things,
+        LookupTable2D<WaterRegion> waterTable,
+        Map<rabbitescape.engine.Token.Type, Integer> abilities,
+        String name,
+        String description,
+        String author_name,
+        String author_url,
+        String[] hints,
+        String[] solutions,
+        int num_rabbits,
+        int num_to_save,
+        int[] rabbit_delay,
+        String music,
+        int num_saved,
+        int num_killed,
+        int num_waiting,
+        int rabbit_index_count,
+        boolean paused,
+        Comment[] comments,
+        IgnoreWorldStatsListener statsListener,
+        VoidMarkerStyle.Style voidStyle )
+    {
+        this.size = size;
+        this.blockTable = blockTable;
+        this.rabbits = rabbits;
+        this.things = things;
+        this.waterTable = waterTable;
+        this.abilities = abilities;
+        this.name = name;
+        this.description = description;
+        this.author_name = author_name;
+        this.author_url = author_url;
+        this.hints = hints;
+        this.solutions = solutions;
+        this.num_rabbits = num_rabbits;
+        this.num_to_save = num_to_save;
+        this.rabbit_delay = rabbit_delay;
+        this.music = music;
+        this.num_saved = num_saved;
+        this.num_killed = num_killed;
+        this.num_waiting = num_waiting;
+        this.rabbit_index_count = rabbit_index_count;
+        this.paused = paused;
+        this.comments = comments;
+        this.voidStyle = voidStyle;
+
+        this.changes = new WorldChanges( this, statsListener );
+
+        init();
     }
 
     private void init()
