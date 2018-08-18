@@ -25,12 +25,12 @@ public class ThingRenderer
         private static final long serialVersionUID = 1L;
     }
 
-    public static void render( Chars chars, List<Thing> things )
+    public static void render( Chars chars, List<Thing> things, boolean runtimeMeta )
     {
         for ( Thing thing : things )
         {
             chars.set(
-                thing.x, thing.y, charForThing( thing ), thing.saveState() );
+                thing.x, thing.y, charForThing( thing ), thing.saveState( runtimeMeta ) );
         }
     }
 

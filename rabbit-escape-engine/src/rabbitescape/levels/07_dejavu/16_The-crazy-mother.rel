@@ -9,9 +9,9 @@
 :num_rabbits=20
 :num_to_save=20
 :rabbit_delay=4
+:music=tryad-the_final_rewind
 :bridge=2
 :dig=1
-:music=tryad-the_final_rewind
     #            #        #
           #          #     
  #    #        #           

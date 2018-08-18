@@ -7,11 +7,11 @@
 :hint.3=After walking up the left-hand limb of the 'y' instruct the lead rabbit to dig down into the wall of the exit chamber. Explode the rabbit to stop digging when level with the chamber floor.
 :solution.1=dig;(2,3);(5,5);17;(7,1);explode;10;(7,3);11
 :num_rabbits=2
-:rabbit_delay=15
 :num_to_save=1
-:explode=1
-:dig=3
+:rabbit_delay=15
 :music=tryad-lovely
+:dig=3
+:explode=1
 ##################
 #Q #  #       (  #
 #  #  ##)    (   #

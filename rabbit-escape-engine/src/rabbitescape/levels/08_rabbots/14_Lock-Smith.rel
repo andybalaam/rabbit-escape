@@ -21,22 +21,10 @@
 MM#MMMMMMM
 MM  MMMMMM
 MMM MMMMMM
-MM*****O*M
-M**MMMMM*M
-MM)******M
+MMtttttOtM
+M**MMMMMtM
+MM)yyyyy*M
 MMMMMMMMMM
-:*=t{index:1}
-:*=t{index:2}
-:*=t{index:3}
-:*=t{index:4}
-:*=t{index:5}
-:*=t{index:6}
-:*=t{index:13}y{index:14}
-:*=(y{index:15}
-:*=t{index:7}
-:*=y{index:8}
-:*=y{index:9}
-:*=y{index:10}
-:*=y{index:11}
-:*=y{index:12}
-:*=t{index:16}y{index:17}
+:*=ty
+:*=(y
+:*=ty

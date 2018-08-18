@@ -51,7 +51,7 @@ public class MegaCoderCLI
             newName = uncodeName( fileName );
         }
         System.out.println( "Writing " + newName );
-        fs.write( newName, Util.join( "\n", lines ) );
+        fs.write( newName, Util.join( "\n", lines ) + "\n" );
     }
 
     private static void encodeLines( String[] lines )

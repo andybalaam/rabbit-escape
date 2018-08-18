@@ -8,8 +8,9 @@
 :solution.1=explode;20;(8,10);21
 :num_rabbits=2
 :num_to_save=1
-:explode=1
+:rabbit_delay=4
 :music=tryad-lovely
+:explode=1
 ##################
 #  Q             #
 #       d        #

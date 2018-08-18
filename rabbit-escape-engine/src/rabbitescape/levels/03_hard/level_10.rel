@@ -8,13 +8,14 @@
 :solution.1=dig;(12,2);bridge;12;(12,4);climb;(11,9);(11,9);(11,9);25;WON
 :num_rabbits=4
 :num_to_save=4
-:climb=3
-:bridge=3
+:rabbit_delay=4
+:music=tryad-the_final_rewind
 :bash=3
+:block=3
+:bridge=3
+:climb=3
 :dig=3
 :explode=3
-:block=3
-:music=tryad-the_final_rewind
 #################
 #  Q           O#
 #           / /##

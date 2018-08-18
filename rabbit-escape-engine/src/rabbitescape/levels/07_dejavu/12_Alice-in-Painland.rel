@@ -9,11 +9,11 @@
 :num_rabbits=4
 :num_to_save=4
 :rabbit_delay=25
+:music=tryad-the_final_rewind
 :bash=4
 :block=1
 :bridge=5
 :dig=4
-:music=tryad-the_final_rewind
 ###################
                    
                    

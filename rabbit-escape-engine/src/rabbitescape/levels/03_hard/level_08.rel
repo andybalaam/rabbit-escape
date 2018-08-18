@@ -8,10 +8,11 @@
 :solution.1=bridge;(7,6);bash;22;(10,3);51;WON
 :num_rabbits=1
 :num_to_save=1
-:bridge=3
-:bash=1
-:dig=1
+:rabbit_delay=4
 :music=tryad-the_final_rewind
+:bash=1
+:bridge=3
+:dig=1
 #################################
 #                               #
 #               #      #        #

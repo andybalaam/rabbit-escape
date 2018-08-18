@@ -1,21 +1,21 @@
 :name=Cliff hanger
 :description=Break out the crampons.
+:author_name=colonelfazackerley
+:author_url=https://github.com/colonelfazackerley
 :hint.1=There are 5 tokens on one square.
 :hint.2=The bridges can't get the rabbits high enough. The rabbits can climb into the exit.
 :hint.3=Use a bridge to get over the tokens and pick them up with the rabbits walking right.
-:author_name=colonelfazackerley
-:author_url=https://github.com/colonelfazackerley
 :solution.1=bridge;(5,7);91;climb;(7,7);until:WON
-:music=tryad-beat_into_submission
 :num_rabbits=4
 :num_to_save=4
+:rabbit_delay=10,10,4
+:music=tryad-beat_into_submission
+:bash=2
 :block=2
+:bridge=2
 :climb=1
 :dig=4
-:bridge=2
-:bash=2
 :explode=2
-:rabbit_delay=10,10,4
 ###########
 #        O#
 #         #

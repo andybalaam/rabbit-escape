@@ -1,16 +1,16 @@
 :name=Blockers
+:description=Free the blockers
 :author_name=colonelfazackerley
 :author_url=https://github.com/colonelfazackerley
 :hint.1=Drop dig tokens.
 :hint.2=The dig tokens can be dropped on the blockers.
 :solution.1=dig;(4,3);(10,3);17;WON
-:description=Free the blockers
 :num_rabbits=10
 :num_to_save=12
 :rabbit_delay=1
+:music=tryad-empty
 :bridge=3
 :dig=3
-:music=tryad-empty
        Q       
                
     j     r    

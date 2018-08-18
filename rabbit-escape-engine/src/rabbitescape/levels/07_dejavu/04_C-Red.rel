@@ -12,12 +12,12 @@
 :num_rabbits=9
 :num_to_save=9
 :rabbit_delay=10
+:music=tryad-the_final_rewind
 :bash=3
 :block=4
 :bridge=4
 :dig=3
 :explode=2
-:music=tryad-the_final_rewind
     Q                
                      
     #########        

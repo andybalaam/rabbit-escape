@@ -1,18 +1,18 @@
 :name=Ghost versus pie
 :description=Head for the pill.
+:author_name=colonelfazackerley
+:author_url=https://github.com/colonelfazackerley
 :hint.1=Bridge over to the ghost.
 :hint.2=When a rabbit has bashed from the ghost's eye, bridge and bash.
 :hint.3=Use a bash token to stop digging too far between the eyes.
-:author_name=colonelfazackerley
-:author_url=https://github.com/colonelfazackerley
 :solution.1=bridge;(12,4);(5,8);bash;(2,6);bridge;11;(15,8);bash;2;(13,7);12;(21,5);until:WON
-:music=tryad-beat_into_submission
 :num_rabbits=6
 :num_to_save=6
 :rabbit_delay=20
-:bridge=4
+:music=tryad-beat_into_submission
 :bash=4
 :block=1
+:bridge=4
 :explode=1
      Q                      
                             

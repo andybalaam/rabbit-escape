@@ -9,10 +9,10 @@
 :num_rabbits=5
 :num_to_save=4
 :rabbit_delay=5
-:bridge=2
-:dig=3
-:climb=2
 :music=tryad-the_final_rewind
+:bridge=2
+:climb=2
+:dig=3
 #########################
 #                       #
 #                  ##   #

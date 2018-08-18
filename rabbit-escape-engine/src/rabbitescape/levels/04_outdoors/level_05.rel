@@ -1,18 +1,18 @@
 :name=Platforms, small
+:description=It's a long way down.
 :author_name=colonelfazackerley
 :author_url=https://github.com/colonelfazackerley
 :hint.1=Use a bridge to turn the rabbits.
 :hint.2=Position the bridge to lead up to the edge of a platform.
 :hint.3=Bridge up to the next platform and dig.
 :solution.1=bridge;(13,7);(10,7);dig;(5,4);20;bridge;(10,7);45;WON
-:description=It's a long way down.
 :num_rabbits=5
 :num_to_save=5
 :rabbit_delay=10
-:bridge=3
-:bash=3
-:dig=2
 :music=tryad-empty
+:bash=3
+:bridge=3
+:dig=2
          Q            
                       
                       

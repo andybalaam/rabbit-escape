@@ -1,19 +1,19 @@
 :name=Saw
+:description=One way
 :author_name=colonelfazackerley
 :author_url=https://github.com/colonelfazackerley
 :hint.1=Use bridges to get over the saw teeth.
 :hint.2=Use a blocker at the end of the handle.
 :hint.3=Get to the gap just past the exit.
 :solution.1=block;(23,3);bridge;(18,5);16;(17,5);17;(14,5);(11,5);(8,5);38;(5,5);63;explode;(23,3);
-:description=One way
 :num_rabbits=6
 :num_to_save=4
 :rabbit_delay=5
+:music=tryad-empty
+:block=2
 :bridge=7
 :dig=3
-:block=2
 :explode=2
-:music=tryad-empty
                          
                          
                    Q     
@@ -22,4 +22,4 @@
  //*////////////// /#  # 
  ####################  # 
  ####################### 
-:*=O/
+:*=/O

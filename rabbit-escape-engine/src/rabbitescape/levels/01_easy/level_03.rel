@@ -9,8 +9,8 @@
 :num_rabbits=2
 :num_to_save=2
 :rabbit_delay=1
-:bridge=15
 :music=tryad-witness
+:bridge=15
 #####################
 #                   #
 #                   #

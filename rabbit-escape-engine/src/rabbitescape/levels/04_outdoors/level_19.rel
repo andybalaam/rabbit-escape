@@ -1,19 +1,19 @@
 :name=Sailing
+:description=Sink or swim
 :author_name=colonelfazackerley
 :author_url=https://github.com/colonelfazackerley
 :hint.1=Build a 2 token bridge to get the first rabbit onto the sail.
 :hint.2=Slow the second rabbit with a bridge token.
 :hint.3=Dig into the mast and and bridge to hold the rabbits while one builds bridges to get to the exit.
 :solution.1=bridge;(1,9);9;(4,7);(3,8);5;dig;(10,2);;bridge;7;(10,5);3;(15,7);8;(18,5);8;dig;(11,5);15
-:description=Sink or swim
-:num_to_save=3
 :num_rabbits=3
-:dig=5
-:block=2
-:explode=2
-:bridge=8
+:num_to_save=3
 :rabbit_delay=10
 :music=tryad-empty
+:block=2
+:bridge=8
+:dig=5
+:explode=2
            ##        
           ####    ## 
  ##              ####

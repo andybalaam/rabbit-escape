@@ -396,6 +396,9 @@ expecttest:
 	@echo ". Running expect tests"
 	./expecttests/expecttests
 
+placeholder-all-levels:
+	build-scripts/placeholder-all-levels
+
 # Android
 # -------
 

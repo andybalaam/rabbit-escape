@@ -8,11 +8,12 @@
 :solution.1=climb;(9,7);(7,6);dig;(7,1);54;WON
 :num_rabbits=2
 :num_to_save=2
-:dig=1
-:climb=2
-:explode=1
-:block=1
+:rabbit_delay=4
 :music=tryad-the_final_rewind
+:block=1
+:climb=2
+:dig=1
+:explode=1
 ##################
 #         Q      #
 #                #

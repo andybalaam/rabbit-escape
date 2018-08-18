@@ -1,21 +1,21 @@
 :name=Cloud bunnies
+:description=I am floating
 :author_name=colonelfazackerley
 :author_url=https://github.com/colonelfazackerley
-:description=I am floating
 :hint.1=The first rabbit on the right cloud should dig.
 :hint.2=The first rabbit on the middle cloud should bridge to the right cloud.
 :hint.3=Dig into the very end of the left cloud. Explode the digger leaving one block.
 :solution.1=dig;(12,3);(27,4);bridge;(17,7);10;(20,5);explode&(12,5);65
 % Save 9 solution for Deja Vu
-:solution.2.code=%}}hH}<&Z|E}t6Y%^<EH&E}}@[&H@Ht~~6<@h}b%EF~&}666%%&EZt}H}
+:solution.2=dig;(12,3);(27,4);bridge;(17,7);10;(20,5);2;dig;(11,3);62
 :num_rabbits=9
 :num_to_save=8
 :rabbit_delay=20
+:music=tryad-empty
+:block=2
 :bridge=3
 :dig=4
-:block=2
 :explode=2
-:music=tryad-empty
  Q                                   
                         Q            
      /##\                            

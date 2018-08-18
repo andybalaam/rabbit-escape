@@ -7,13 +7,13 @@
 :hint.3=Place a bridge token on the second rabbit as it is turning, so it has room to bridge up to the exit.
 :solution.1=block;(17,4);bash;(15,4);bridge;14;(16,4);14;explode;(17,4);3
 :num_rabbits=2
-:rabbit_delay=10
 :num_to_save=1
-:bridge=1
-:block=1
-:bash=1
-:explode=1
+:rabbit_delay=10
 :music=tryad-lovely
+:bash=1
+:block=1
+:bridge=1
+:explode=1
 ##################
 #Q         #O    #
 #          ##    #

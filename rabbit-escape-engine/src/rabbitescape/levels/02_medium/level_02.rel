@@ -9,9 +9,9 @@
 :num_rabbits=3
 :num_to_save=3
 :rabbit_delay=2
+:music=tryad-lovely
 :bridge=5
 :dig=1
-:music=tryad-lovely
 ##########################
 #                        #
 #                        #

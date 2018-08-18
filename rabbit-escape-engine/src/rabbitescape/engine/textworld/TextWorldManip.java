@@ -218,11 +218,13 @@ public class TextWorldManip
     public static String[] renderWorld(
         World world, boolean showChanges, boolean coordinates )
     {
+        boolean runtimeMeta = false;  // Call renderCompleteWorld if you want runtime info
+
         Chars chars = new Chars( world, false );
 
         BlockRenderer.render( chars, world.blockTable );
-        RabbitRenderer.render( chars, world.rabbits );
-        ThingRenderer.render( chars, world.things );
+        RabbitRenderer.render( chars, world.rabbits, runtimeMeta );
+        ThingRenderer.render( chars, world.things, runtimeMeta );
 
         if ( showChanges )
         {
@@ -250,8 +252,8 @@ public class TextWorldManip
 
         BlockRenderer.render( chars, world.blockTable );
         WaterRenderer.render( chars, world.waterTable );
-        RabbitRenderer.render( chars, world.rabbits );
-        ThingRenderer.render( chars, world.things );
+        RabbitRenderer.render( chars, world.rabbits, runtimeMeta );
+        ThingRenderer.render( chars, world.things, runtimeMeta );
 
         String[] things = charsToComplete( chars, world.comments );
 
@@ -333,6 +335,7 @@ public class TextWorldManip
         addMeta( ret, num_rabbits,  Integer.toString( world.num_rabbits ), world.comments );
         addMeta( ret, num_to_save,  Integer.toString( world.num_to_save ), world.comments );
         addMeta( ret, rabbit_delay, renderIntArray( world.rabbit_delay ), world.comments );
+        addMeta( ret, music, world.music, world.comments );
 
         if ( runtimeMeta )
         {

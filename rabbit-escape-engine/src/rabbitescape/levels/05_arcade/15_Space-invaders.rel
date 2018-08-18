@@ -7,14 +7,14 @@
 :hint.3=Bridge leftwards again from the middle of your bridge, towards the exit (use an extra bridger to make the last piece of bridge).  Bridge from the central block near the exit to the exit block.  Release the blocker under the entrance by bashing.  Dig your blocker and bridge left from the island.
 :solution.1=bash;(6,8);block;(5,8);bridge;2;(8,8);dig;(8,3);bridge;3;(11,6);12;(12,5);12;bash;(9,3);3;bridge;3;(9,3);6;(5,8);until:WON
 :solution.2=bash;(7,8);bridge;(11,8);bash;(6,8);bridge;8;(14,6);block;6;(16,4);bridge;2;(12,8);;(14,6);8;(11,4);2;(10,3);3;(8,1);50;dig;(16,4);bridge;2;(16,8);15
-:music=tryad-beat_into_submission
-:num_to_save=10
 :num_rabbits=10
-:dig=3
+:num_to_save=10
+:rabbit_delay=9
+:music=tryad-beat_into_submission
 :bash=2
 :block=2
 :bridge=8
-:rabbit_delay=9
+:dig=3
 ##    O         ##
 # #   #   #   #  #
     #   #   #   # 

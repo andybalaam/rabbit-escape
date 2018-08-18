@@ -2,10 +2,10 @@
 :description=This rabbot keeps following me!
 :author_name=Andy Balaam
 :author_url=http://artificialworlds.net/rabbit-escape/
-:hint.1.code=k000k:;_tb;tkY_(P0oceY:k_bkk5.'kYYcP
-:hint.2.code=D2V..29h2-8n--bnhn.V.;2Uy.VVn2222.$)*hVV9*
-:hint.3.code=8e(Wb,e,,,b'MeCM$+KMM,W+B,$fb,(eMfBg,,,K9,hKMBMb,d+WBWMf+,,BM9,9B9eBM3(fbW-.r,B,7,(dM~,ewMBff,hW+MdbeBC+MC9b9g,MBy,eCb,i,(W&e,dB7W,9idMCB,
-:solution.1.code=-qjLkAdkY-qMwCqYqOyOtMX?uquMFqqO=FL-qqAtA=qtb
+:hint.1=Who should build a path to the exit?
+:hint.2=Use the rabbot to bridge over to the exit.
+:hint.3=Make the rabbot a climber, and then use it to dig down through the left-hand pillar.  When it is nearly at the bottom, bridge to the exit.
+:solution.1=2;dig;(4,0);climb;7;(7,0);;bridge;14;(4,5);until:WON
 :num_rabbits=1
 :num_to_save=1
 :rabbit_delay=4
@@ -19,5 +19,5 @@ M   # /#( #
     #* *) #
     #    )#
     #######
-:*=\t{index:1}
+:*=\t
 :*=#Q

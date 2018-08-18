@@ -1,20 +1,20 @@
 :name=London Bridge
+:description=Don't fall down
 :author_name=colonelfazackerley
 :author_url=https://github.com/colonelfazackerley
 :hint.1=Bridge the gap.
 :hint.2=Build 2 bridges simultaneously.
 :hint.3=Drop the bridge tokens as soon as the level starts. Use pause.
 :solution.1=bridge;(8,9);(15,9);bash;13;(6,9);2;dig;(4,9);31
-:description=Don't fall down
 :num_rabbits=6
 :num_to_save=6
 :rabbit_delay=10
-:bridge=2
-:dig=4
+:music=tryad-empty
 :bash=4
 :block=1
+:bridge=2
+:dig=4
 :explode=1
-:music=tryad-empty
                         
    /\              /\   
   /  \            /  \  

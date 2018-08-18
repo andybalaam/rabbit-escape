@@ -6,14 +6,15 @@
 :hint.2=Bridge up from a corner in one long section.
 :hint.3=Keep dropping more bridge tokens The close roof will make the bunnies nervous and stop bridging.
 :solution.1=bridge;2;(15,6);4;(14,6);4;(13,5);8;(12,4);2;(11,3);5;(9,1);1;(10,2);3;(9,1);7;(10,2);16;WON
-:music=tryad-beat_into_submission
 :num_rabbits=30
 :num_to_save=21
+:rabbit_delay=4
+:music=tryad-beat_into_submission
+:bash=10
 :block=10
+:bridge=10
 :climb=10
 :dig=10
-:bridge=10
-:bash=10
 :explode=10
 ####### O #######
 ######  #  ######

@@ -8,9 +8,10 @@
 :solution.1=bridge;(10,9);3;(7,9);8;(10,7);11;(5,9);23;(14,3);10
 :num_rabbits=2
 :num_to_save=2
-:climb=2
-:bridge=20
+:rabbit_delay=4
 :music=tryad-witness
+:bridge=20
+:climb=2
 ################
 #\         O  ##
 #\         #  ##

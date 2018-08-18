@@ -9,12 +9,13 @@
 :solution.1=block;(7,3);bridge;9;(9,13);(12,5);41;(9,3);dig;(12,10);explode;69;(7,2);2;WON
 :num_rabbits=10
 :num_to_save=5
+:rabbit_delay=4
+:music=tryad-the_final_rewind
+:block=5
 :bridge=5
 :climb=1
 :dig=5
-:block=5
 :explode=5
-:music=tryad-the_final_rewind
 ##################
 #           O    #
 #           ####\#

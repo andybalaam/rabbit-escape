@@ -9,13 +9,13 @@
 :num_rabbits=5
 :num_to_save=5
 :rabbit_delay=3
-:climb=5
-:bridge=5
+:music=tryad-lovely
 :bash=5
+:block=5
+:bridge=5
+:climb=5
 :dig=5
 :explode=5
-:block=5
-:music=tryad-lovely
              ####
                 #
    Q            #

@@ -8,12 +8,13 @@
 :solution.1=bash;(6,3);dig;(15,3);(14,5);50
 :num_rabbits=20
 :num_to_save=15
-:dig=2
-:bash=1
-:bridge=2
-:block=2
-:explode=20
+:rabbit_delay=4
 :music=tryad-witness
+:bash=1
+:block=2
+:bridge=2
+:dig=2
+:explode=20
 #################
 #      ###      #
 #  Q   ###   Q  #

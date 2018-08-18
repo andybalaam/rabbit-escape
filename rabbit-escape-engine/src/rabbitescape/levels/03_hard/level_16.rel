@@ -10,13 +10,13 @@
 :num_rabbits=5
 :num_to_save=5
 :rabbit_delay=1
-:climb=10
-:bridge=10
+:music=tryad-the_final_rewind
 :bash=10
+:block=10
+:bridge=10
+:climb=10
 :dig=10
 :explode=10
-:block=10
-:music=tryad-the_final_rewind
              ####
                 #
    Q            #

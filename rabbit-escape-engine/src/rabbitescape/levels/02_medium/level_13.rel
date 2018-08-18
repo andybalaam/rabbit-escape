@@ -7,10 +7,10 @@
 :hint.3=Drop the bridge token directly above the column next to the exit.
 :solution.1=bridge;(9,4);43
 :num_rabbits=2
-:rabbit_delay=10
 :num_to_save=2
-:bridge=1
+:rabbit_delay=10
 :music=tryad-lovely
+:bridge=1
 #################
 #Q  #  #  #  #  #
 #               #

@@ -8,13 +8,14 @@
 :solution.1=bash;(8,9);8;bridge;2;(13,9);7;climb;(12,9);(12,9);(12,9);(12,9);(12,9);34
 :num_rabbits=4
 :num_to_save=4
-:climb=5
-:bridge=5
-:block=5
-:explode=5
-:bash=5
-:dig=5
+:rabbit_delay=4
 :music=tryad-witness
+:bash=5
+:block=5
+:bridge=5
+:climb=5
+:dig=5
+:explode=5
 ################
 ##        O   ##
 #/       ###  /#

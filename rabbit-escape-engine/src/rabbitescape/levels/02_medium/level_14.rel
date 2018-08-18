@@ -8,9 +8,10 @@
 :solution.1=climb;(1,3);bash;(3,1);(8,2);(9,3);climb;(1,3);(1,3);22
 :num_rabbits=3
 :num_to_save=3
-:climb=3
-:bash=3
+:rabbit_delay=4
 :music=tryad-lovely
+:bash=3
+:climb=3
 ##############
 #Q  #     #  #
 #  # # # # # #
