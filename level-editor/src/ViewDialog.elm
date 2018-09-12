@@ -35,7 +35,7 @@ import ThingImage exposing (thingImage)
 
 type alias Contents =
     { visible : Bool
-    , dialogStyles : List (String, String)
+    , dialogStyles : List (Html.Attribute Msg)
     , items : List (Html Msg)
     }
 
@@ -58,7 +58,7 @@ chooseBlockButtons model =
         { visible =
             True
         , dialogStyles =
-            [ ("overflow", "auto") ]
+            [ style "overflow" "auto" ]
         , items =
             [ tp model "Choose a block:" []
             , but (Block Earth Flat)
@@ -84,7 +84,7 @@ chooseRabbitButtons model =
         { visible =
             True
         , dialogStyles =
-            [ ("overflow", "auto") ]
+            [ style "overflow" "auto" ]
         , items =
             [ tp model "Choose a rabbit:" []
             , but (Just (makeRabbit 0 0 Right))
@@ -108,7 +108,7 @@ chooseThingButtons model =
         { visible =
             True
         , dialogStyles =
-            [ ("overflow", "auto") ]
+            [ style "overflow" "auto" ]
         , items =
             [ tp model "Choose an item:" []
             , but (Just (Entrance 0 0))
@@ -143,8 +143,8 @@ codeText model initialCode =
         { visible =
             True
         , dialogStyles =
-            [ ("display", "grid")
-            , ("grid-template-rows", "3em 3em 3fr 1fr")
+            [ style "display" "grid"
+            , style "grid-template-rows" "3em 3em 3fr 1fr"
             ]
         , items =
             [ tp model
@@ -237,26 +237,22 @@ modifyDetailsControls model =
         { visible =
             True
         , dialogStyles =
-            [ ("overflow", "auto")
-            , ("display", "grid")
-            , ("grid-template-columns", "1fr 2fr")
-            , ("grid-template-rows", "2em 3em")
-            , ("grid-auto-rows", "2em")
+            [ style "overflow" "auto"
+            , style "display" "grid"
+            , style "grid-template-columns" "1fr 2fr"
+            , style "grid-template-rows" "2em 3em"
+            , style "grid-auto-rows" "2em"
             ]
         , items =
             ( [ tp model
                 (  "Change the values and choose 'Update'."
                 )
-                [ style
-                    [ ("grid-column-start", "1")
-                    , ("grid-column-end", "3")
-                    ]
+                [ style "grid-column-start" "1"
+                , style "grid-column-end" "3"
                 ]
             , p
-                [ style
-                    [ ("grid-column-start", "1")
-                    , ("grid-column-end", "3")
-                    ]
+                [ style "grid-column-start" "1"
+                , style "grid-column-end" "3"
                 ]
                 [ button
                     [ class "dialogSubmit"
@@ -290,19 +286,15 @@ drawDialog contents =
     let
         vs =
             if contents.visible then
-                [("visibility", "visible")]
+                [style "visibility" "visible"]
             else
                 []
     in
         [ div
-            [ id "dialogBackground"
-            , style vs
-            ]
+            ( [ id "dialogBackground" ] ++ vs )
             []
         , div
-            [ id "dialog"
-            , style (vs ++ contents.dialogStyles)
-            ]
+            ( [ id "dialog" ] ++ vs ++ contents.dialogStyles )
             contents.items
         ]
 

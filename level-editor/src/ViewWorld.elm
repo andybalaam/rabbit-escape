@@ -54,16 +54,14 @@ blockImg block x y =
 buttonAttrs : Int -> Int -> List (Html.Attribute Msg)
 buttonAttrs x y =
     let
-        sx = toString (x + 1)
-        sy = toString (y + 1)
+        sx = String.fromInt (x + 1)
+        sy = String.fromInt (y + 1)
     in
-        [ style
-            [ ("grid-row-start", sy)
-            , ("grid-row-end",   sy)
-            , ("grid-column-start", sx)
-            , ("grid-column-end",   sx)
-            ]
-        , id (sx++","++sy)
+        [ style "grid-row-start" sy
+        , style "grid-row-end" sy
+        , style "grid-column-start" sx
+        , style "grid-column-end" sx
+        , id (sx ++ "," ++ sy)
         ]
 
 
