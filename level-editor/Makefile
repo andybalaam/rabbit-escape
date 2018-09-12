@@ -41,10 +41,8 @@ test:
 	elm-test
 
 setup:
-	sudo apt install nodejs npm
-	sudo npm install -g elm@0.18 elm-test
-	elm-package install -y
-	cd tests; elm-package install -y
+	echo "Install Elm from https://guide.elm-lang.org/install.html"
+	echo "Then 'sudo npm install -g elm-test@0.19.0-beta8' or similar"
 
 clean:
 	rm -r www
