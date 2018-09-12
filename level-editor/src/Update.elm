@@ -75,23 +75,15 @@ normalUpdate msg model =
                 ChangeCode ->
                     updateChangeCode model
                 Undo ->
-                    crashBadMessage msg
+                    model  -- Should never happen - covered in update
                 Redo ->
-                    crashBadMessage msg
+                    model  -- Should never happen - covered in update
     in
         -- If something changed, remember in undo stack.
         if updatedModel.world == model.world then
             updatedModel
         else
             { updatedModel | past = model.world :: model.past, future = [] }
-
-
-crashBadMessage : Msg -> Model
-crashBadMessage msg =
-    Debug.crash -- yuck
-        ( "Msg '" ++ toString msg ++ "' should not "
-        ++ "be passed in to normalUpdate."
-        )
 
 
 updateCodeInput : Model -> String -> Model

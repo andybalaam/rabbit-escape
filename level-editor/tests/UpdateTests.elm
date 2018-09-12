@@ -13,7 +13,16 @@ import ParseErr exposing (ParseErr(..))
 import Rabbit exposing (Direction(..), Rabbit, makeRabbit)
 import Thing exposing (Thing(..))
 import Update exposing (update)
-import World exposing (Block(..), BlockMaterial(..), BlockShape(..), World)
+
+import World exposing
+    ( Block(..)
+    , BlockMaterial(..)
+    , BlockShape(..)
+    , World
+    , makeBlockGrid
+    , makeWorld
+    )
+
 import WorldParser exposing (parse, parseErrToString)
 
 
@@ -668,8 +677,15 @@ all =
 parseFixed : List String -> World
 parseFixed textLines =
     case parse "" (String.join "\n" textLines) of
-        Err e -> Debug.crash (parseErrToString e)
-        Ok w -> w
+        Err e ->
+            makeWorld
+                "Parsing failed!"
+                (makeBlockGrid [])
+                []
+                []
+                MetaLines.defaults
+        Ok w ->
+            w
 
 
 testActions :

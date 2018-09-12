@@ -19,7 +19,7 @@ all = Test.concat
         ("num_to_save", "4")
         ( case parseAndSet "num_to_save" "4" defaults of
             Ok ml -> toStringList ml
-            _ -> Debug.crash "Failed to parse unexpectedly"
+            _ -> [("Failed to parse!", "")]
         )
 
     , eq "Convert to list of non-defaults is empty for default"
