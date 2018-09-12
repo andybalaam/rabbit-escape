@@ -708,19 +708,23 @@ parseErrorCases =
             ]
 
 
+type alias Defn =
+    { blocks : List (List Block)
+    , rabbits : List Rabbit
+    , things : List Thing
+    , metaLines : MetaLines
+    }
+
+
 metaLineCases : Test
 metaLineCases =
     let
         t
             :  String
             -> List String
-            -> ( List (List Block)
-               , List Rabbit
-               , List Thing
-               , MetaLines
-               )
+            -> Defn
             -> Test
-        t desc act (blocks, rabbits, things, metaLines) =
+        t desc act defn =
             test
                 desc
                 ( \() ->
@@ -729,10 +733,10 @@ metaLineCases =
                         ( Ok
                             ( makeWorld
                                 desc
-                                (makeBlockGrid blocks)
-                                rabbits
-                                things
-                                metaLines
+                                (makeBlockGrid defn.blocks)
+                                defn.rabbits
+                                defn.things
+                                defn.metaLines
                             )
                         )
                 )
@@ -741,7 +745,11 @@ metaLineCases =
             [ t "Meta-line on its own"
                 [ ":num_rabbits=3"
                 ]
-                ( [], [], [], MetaLines.fromList [("num_rabbits", MvInt 3)] )
+                { blocks = []
+                , rabbits = []
+                , things = []
+                , metaLines = MetaLines.fromList [("num_rabbits", MvInt 3)]
+                }
 
             , t "Meta-line with grid"
                 [ "##"
@@ -749,14 +757,16 @@ metaLineCases =
                 , ":num_rabbits=3"
                 , ":num_to_save=2"
                 ]
-                ( [ [fltErth, fltErth]
-                  , [fltErth, NoBlock]
-                  ]
-                , []
-                , []
-                , MetaLines.fromList
-                    [ ("num_rabbits", MvInt 3)
-                    , ("num_to_save", MvInt 2)
+                { blocks =
+                    [ [fltErth, fltErth]
+                    , [fltErth, NoBlock]
                     ]
-                )
+                , rabbits = []
+                , things = []
+                , metaLines =
+                    MetaLines.fromList
+                        [ ("num_rabbits", MvInt 3)
+                        , ("num_to_save", MvInt 2)
+                        ]
+                }
             ]
