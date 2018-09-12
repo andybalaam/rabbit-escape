@@ -182,4 +182,4 @@ toText block rabbits things =
         case chars of
             [] -> (' ', Nothing)
             [c] -> (c, Nothing)
-            default -> ('*', Just (StarContent (String.fromList chars)))
+            _ -> ('*', Just (StarContent (String.fromList chars)))

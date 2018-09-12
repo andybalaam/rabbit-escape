@@ -217,7 +217,7 @@ starLineToItemsCases =
         makeStarLineOk line =
             case makeStarLine line of
                 Ok s -> s
-                default -> Debug.crash "Starline failed to parse"
+                _ -> { row = -999, chars = ['p', 'a', 'r'] } -- parsing failed
         t desc inp row pos exp =
             test
                 desc

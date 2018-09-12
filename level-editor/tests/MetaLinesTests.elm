@@ -19,7 +19,7 @@ all = Test.concat
         ("num_to_save", "4")
         ( case parseAndSet "num_to_save" "4" default of
             Ok ml -> toStringList ml
-            default -> Debug.crash "Failed to parse unexpectedly"
+            _ -> Debug.crash "Failed to parse unexpectedly"
         )
 
     , eq "Convert to list of non-defaults is empty for default"
@@ -41,14 +41,14 @@ all = Test.concat
         ("name", "My Level")
         ( case parseAndSet "name" "My Level" default of
             Ok ml -> toStringList ml
-            default -> Debug.crash "Failed to parse unexpectedly"
+            _ -> [("Failed to parse!", "")]
         )
 
     , assert_contains "Default values stay after others are set"
         ("num_to_save", "1")
         ( case parseAndSet "num_rabbits" "34" default of
             Ok ml -> toStringList ml
-            default -> Debug.crash "Failed to parse unexpectedly"
+            _ -> [("Failed to parse!", "")]
         )
 
     , eq "Setting an unknown value is an error"

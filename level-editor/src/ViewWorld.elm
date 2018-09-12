@@ -44,7 +44,7 @@ blockImg : Block -> Int -> Int -> List (Html Msg)
 blockImg block x y =
     case block of
         NoBlock -> []
-        default ->
+        _ ->
             [ img
                 [ src ("images/" ++ blockImage block) ]
                 []
@@ -97,7 +97,7 @@ addCol x y =
                 ( [ onClick (RemoveColumn) ] ++ buttonAttrs x y )
                 [ img [ src "images/remove_column.svg" ] [] ]
             ]
-        default ->
+        _ ->
             []
 
 

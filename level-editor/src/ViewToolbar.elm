@@ -45,7 +45,7 @@ buildClickCmd uiState buttonDef =
         SaveButton  ->
             case uiState.mode of
                 CodeMode _ -> ChangeMode InitialMode
-                default    -> ChangeMode (CodeMode "")
+                _    -> ChangeMode (CodeMode "")
         UndoButton ->
             Undo
         RedoButton ->
@@ -53,19 +53,19 @@ buildClickCmd uiState buttonDef =
         BlockButton ->
             case uiState.mode of
                 ChooseBlockMode -> ChangeMode PlaceBlockMode
-                default         -> ChangeMode ChooseBlockMode
+                _         -> ChangeMode ChooseBlockMode
         ThingButton ->
             case uiState.mode of
                 ChooseThingMode -> ChangeMode PlaceThingMode
-                default         -> ChangeMode ChooseThingMode
+                _         -> ChangeMode ChooseThingMode
         RabbitButton ->
             case uiState.mode of
                 ChooseRabbitMode -> ChangeMode PlaceRabbitMode
-                default          -> ChangeMode ChooseRabbitMode
+                _          -> ChangeMode ChooseRabbitMode
         DetailsButton ->
             case uiState.mode of
                 ModifyDetailsMode -> ChangeMode InitialMode
-                default           -> ChangeMode ModifyDetailsMode
+                _           -> ChangeMode ModifyDetailsMode
 
 
 buttonImage : UiState -> ButtonDef -> String
@@ -115,16 +115,16 @@ buttonEnabled model buttondef =
             CodeMode _ ->
                 case buttondef of
                     SaveButton -> False
-                    default -> True
+                    _ -> True
             ModifyDetailsMode ->
                 case buttondef of
                     DetailsButton -> False
-                    default -> True
-            default ->
+                    _ -> True
+            _ ->
                 case buttondef of
                     UndoButton -> List.isEmpty model.past
                     RedoButton -> List.isEmpty model.future
-                    default -> False
+                    _ -> False
     then
         [disabled True]
     else

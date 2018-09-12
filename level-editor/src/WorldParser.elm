@@ -276,7 +276,7 @@ integrateLine charItems starLines =
                     case integrateLine others newStarLines of
                         Err e -> Err e
                         Ok (itemsList, sl) -> Ok (items :: itemsList, sl)
-        default -> Ok ([], starLines)
+        _ -> Ok ([], starLines)
 
 
 integrateLines :
@@ -294,7 +294,7 @@ integrateLines grid starLines =
                             Err e
                         Ok (newOtherLines, sl) ->
                             Ok (newLine :: newOtherLines, sl)
-        default -> Ok ([], starLines)
+        _ -> Ok ([], starLines)
 
 
 integrateStarLines :

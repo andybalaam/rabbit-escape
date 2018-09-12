@@ -27,7 +27,7 @@ update msg model =
             case msg of
                 Undo -> updateUndo model
                 Redo -> updateRedo model
-                default -> normalUpdate msg model
+                _ -> normalUpdate msg model
     in
         (updatedModel, Cmd.none)
 
@@ -48,7 +48,7 @@ normalUpdate msg model =
                             updateLevelClickThing model x y
                         PlaceRabbitMode ->
                             updateLevelClickRabbit model x y
-                        default ->
+                        _ ->
                             model
                 ChangeMode mode ->
                     updateChangeMode model mode
@@ -336,17 +336,17 @@ updateChangeMode model mode =
         m =
             case mode of
                 CodeMode _ -> CodeMode (WorldTextRender.render model.world)
-                default -> mode
+                _ -> mode
         newMetaLines =
             case mode of
                 ModifyDetailsMode ->
                     MetaLines.emptyDiff
-                default ->
+                _ ->
                     uiState.newMetaLines
         newWorld =
             case mode of
                 CodeMode _ -> Nothing
-                default -> uiState.newWorld
+                _ -> uiState.newWorld
     in
         { model
         | uiState =

@@ -102,7 +102,7 @@ toStringList metaLines =
                     case Dict.get name metaLines of
                         Just v -> (name, v) :: inOrder ts metaLines
                         Nothing -> inOrder ts metaLines
-                default ->
+                _ ->
                     []
     in
         listToStringList (inOrder defaultList metaLines)
@@ -141,7 +141,7 @@ parseAndSet name value metaLines =
                 setInt name value metaLines
             Just (MvString _) ->
                 setString name value metaLines
-            default ->
+            _ ->
                 Err (UnknownName name)
 
 

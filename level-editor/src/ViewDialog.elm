@@ -208,7 +208,7 @@ metaLineBoxes diff (name, defVal) =
                             {text="Should be a number!", attrs=[class "error"]}
                         Ok _ ->
                             {text=name, attrs=[]}
-                default ->
+                _ ->
                     {text=name, attrs=[]}
     in
         [ label ( [ for inpid ] ++ lbl.attrs ) [ text lbl.text ]
