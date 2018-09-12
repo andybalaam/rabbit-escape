@@ -736,7 +736,7 @@ expectUpdateGives num initModel msgsAndModels =
                 headTest : Test
                 headTest =
                     test
-                        ( "Step " ++ (toString num) )
+                        ( "Step " ++ (String.fromInt num) )
                         ( expectEqualWithoutHistory
                             ( expectedModel, Cmd.none )
                             ( newModel, newCmd )

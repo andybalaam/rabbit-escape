@@ -137,9 +137,9 @@ listContains item list =
     else
         Expect.fail
             (  "listContains: the list: "
-            ++ toString list
+            ++ Debug.toString list
             ++ " does not contain: "
-            ++ toString item
+            ++ Debug.toString item
             ++ "."
             )
 

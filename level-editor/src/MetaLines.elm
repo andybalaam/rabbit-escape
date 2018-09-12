@@ -81,7 +81,7 @@ listToStringList metaLines =
             let
                 v =
                     case value of
-                        MvInt i -> toString i
+                        MvInt i -> String.fromInt i
                         MvString s -> s
             in
                 (name, v)

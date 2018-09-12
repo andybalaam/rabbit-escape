@@ -70,9 +70,9 @@ makeLine row content =
 posToString : Pos -> String
 posToString pos =
     (  "Line "
-    ++ (toString (pos.row + 1))
+    ++ (String.fromInt (pos.row + 1))
     ++ ", column "
-    ++ (toString (pos.col + 1))
+    ++ (String.fromInt (pos.col + 1))
     ++ ": "
     )
 
@@ -83,9 +83,9 @@ parseErrToString e =
         TwoBlocksInOneStarPoint pos c1 c2 ->
             ( posToString pos
             ++ "Two blocks in one startpoint: '"
-            ++ (toString c1)
+            ++ (String.fromChar c1)
             ++ "' and '"
-            ++ (toString c2)
+            ++ (String.fromChar c2)
             ++ "'."
             )
         StarInsideStarPoint pos ->
@@ -95,7 +95,7 @@ parseErrToString e =
         UnrecognisedChar pos ch ->
             ( posToString pos
             ++ "Unrecognised character: '"
-            ++ (toString ch)
+            ++ (String.fromChar ch)
             ++ "'."
             )
         StarLineDidNotStartWithColonStarEquals pos line ->
@@ -116,9 +116,9 @@ parseErrToString e =
             ( posToString pos
             ++ "The lines of this level are different lengths - they must be "
             ++ "all exactly the same length.  The first line was "
-            ++ toString exp
+            ++ String.fromInt exp
             ++ " characters long, but this one is "
-            ++ toString act
+            ++ String.fromInt act
             ++ "."
             )
         MetaParseFailure pos err name value ->
