@@ -1,7 +1,7 @@
-import Html exposing (Html, program)
+import Browser
+import Html exposing (Html)
 
 
-import Window
 
 
 import MetaLines
@@ -68,15 +68,17 @@ initModel =
     }
 
 
-init : (Model, Cmd Msg)
-init =
+type alias Flags = String
+
+init : Flags -> ( Model, Cmd msg )
+init flags =
     (initModel, Cmd.none)
 
 
 main =
-   program
-     { init = init
-     , view = view
-     , update = update
-     , subscriptions = \(model) -> Sub.none
-     }
+  Browser.element
+    { init = init
+    , update = update
+    , view = view
+    , subscriptions = \(model) -> Sub.none
+    }
