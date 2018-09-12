@@ -443,7 +443,7 @@ makeStarLines lines =
 
 makeMetaLines : List Line -> Result ParseErr MetaLines
 makeMetaLines lines =
-    List.foldr addMetaLine (Ok MetaLines.default) lines
+    List.foldr addMetaLine (Ok MetaLines.defaults) lines
 
 
 parseGridLines : List Line -> Result ParseErr (List (List CharItem))

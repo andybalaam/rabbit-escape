@@ -25,7 +25,7 @@ all =
             [ [NoBlock, NoBlock, NoBlock]
             , [NoBlock, NoBlock, NoBlock]
             , [NoBlock, NoBlock, NoBlock]
-            ] [] [] MetaLines.default
+            ] [] [] MetaLines.defaults
             [ "   "
             , "   "
             , "   "
@@ -36,7 +36,7 @@ all =
             , [NoBlock, NoBlock, NoBlock, fltErth]
             , [NoBlock, NoBlock, NoBlock, NoBlock]
             , [fltErth, fltErth, fltErth, fltErth]
-            ] [] [] MetaLines.default
+            ] [] [] MetaLines.defaults
             [ "    "
             , "   #"
             , "    "
@@ -53,7 +53,7 @@ all =
             , makeRabbot 0 0 Left
             , makeRabbit 2 1 Right
             , makeRabbit 1 2 Left
-            ] [] MetaLines.default
+            ] [] MetaLines.defaults
             [ "y   "
             , "t r#"
             , " j  "
@@ -74,7 +74,7 @@ all =
             [ Entrance 1 0
             , Exit 3 0
             ]
-            MetaLines.default
+            MetaLines.defaults
             [ "yQ O"
             , "t r#"
             , " j  "
@@ -89,7 +89,7 @@ all =
             ]
             [ makeRabbit 2 1 Right
             , makeRabbit 2 1 Left
-            ] [] MetaLines.default
+            ] [] MetaLines.defaults
             [ "    "
             , "  * "
             , "    "
@@ -111,7 +111,7 @@ all =
             [ Entrance 2 1
             , Exit 3 1
             ]
-            MetaLines.default
+            MetaLines.defaults
             [ "    "
             , "  **"
             , "*   "

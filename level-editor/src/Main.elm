@@ -43,7 +43,7 @@ initWorld =
                     (makeBlockGrid [])
                     []
                     []
-                    MetaLines.default
+                    MetaLines.defaults
 
 
 translationPlaceholder : String -> String

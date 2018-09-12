@@ -6,7 +6,7 @@ module MetaLines exposing
     , SetFailed(..)
     , allOk
     , applyDiff
-    , default
+    , defaults
     , getDiff
     , emptyDiff
     , fromList
@@ -55,8 +55,8 @@ defaultList =
     ]
 
 
-default : MetaLines
-default =
+defaults : MetaLines
+defaults =
     Dict.fromList defaultList
 
 
@@ -66,11 +66,11 @@ fromList values =
         -- Ignore any bad keys
         checkedSet : (String, MetaValue) -> MetaLines -> MetaLines
         checkedSet (name, value) existing =
-            case Dict.get name default of
+            case Dict.get name defaults of
                 Just _ -> Dict.insert name value existing
                 Nothing -> Debug.log ("fromList: Bad name! " ++ name) existing
     in
-        List.foldl checkedSet default values
+        List.foldl checkedSet defaults values
 
 
 listToStringList : List (String, MetaValue) -> List (String, String)
@@ -113,7 +113,7 @@ toNonDefaultStringList metaLines =
     let
         nonDefault : String -> MetaValue -> Bool
         nonDefault name value =
-            Dict.get name default /= Just value
+            Dict.get name defaults /= Just value
     in
         listToStringList (Dict.toList (Dict.filter nonDefault metaLines))
 
@@ -172,7 +172,7 @@ setDiff name value diff =
                 Ok i -> Ok (MvInt i)
                 Err _ -> Err (BadValue name value)
     in
-        case Dict.get name default of  -- Uses default, which feels bad?
+        case Dict.get name defaults of  -- Uses default, which feels bad?
             Just (MvString _) ->
                 Dict.insert name {raw=value, parsed=Ok (MvString value)} diff
             Just (MvInt _) ->

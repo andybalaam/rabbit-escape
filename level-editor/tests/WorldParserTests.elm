@@ -481,7 +481,7 @@ parseEmptyWorld =
             )
             []
             []
-            MetaLines.default
+            MetaLines.defaults
         )
 
 
@@ -507,7 +507,7 @@ parseWorldWithBlocks =
             )
             []
             []
-            MetaLines.default
+            MetaLines.defaults
         )
 
 
@@ -535,7 +535,7 @@ parseWorldWithRabbits =
             , makeRabbit 0 2 Right
             ]
             []
-            MetaLines.default
+            MetaLines.defaults
         )
 
 
@@ -565,7 +565,7 @@ parseWorldWithThings =
             [ Entrance 0 0
             , Exit 1 2
             ]
-            MetaLines.default
+            MetaLines.defaults
         )
 
 
@@ -594,7 +594,7 @@ parseOverlappingRabbits =
             , makeRabbit 3 0 Left
             ]
             []
-            MetaLines.default
+            MetaLines.defaults
         )
 
 
@@ -631,7 +631,7 @@ parseMultipleStars =
             [ Entrance 3 0
             , Exit 2 1
             ]
-            MetaLines.default
+            MetaLines.defaults
         )
 
 

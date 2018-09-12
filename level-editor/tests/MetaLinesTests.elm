@@ -13,18 +13,18 @@ all : Test
 all = Test.concat
     [ assert_contains "Convert to list of string"
         ("num_rabbits", "10")
-        (toStringList default)
+        (toStringList defaults)
 
     , assert_contains "Parse a correct single int value"
         ("num_to_save", "4")
-        ( case parseAndSet "num_to_save" "4" default of
+        ( case parseAndSet "num_to_save" "4" defaults of
             Ok ml -> toStringList ml
             _ -> Debug.crash "Failed to parse unexpectedly"
         )
 
     , eq "Convert to list of non-defaults is empty for default"
         []
-        (toNonDefaultStringList default)
+        (toNonDefaultStringList defaults)
 
     , eq "Changed values appear in non-default list"
         ( Ok
@@ -32,36 +32,36 @@ all = Test.concat
             , ("num_to_save", "2")
             ]
         )
-        ( parseAndSet "num_to_save" "2" default
+        ( parseAndSet "num_to_save" "2" defaults
             |> Result.andThen (parseAndSet "name" "Lev !")
             |> Result.map toNonDefaultStringList
         )
 
     , assert_contains "Parse a correct single string value"
         ("name", "My Level")
-        ( case parseAndSet "name" "My Level" default of
+        ( case parseAndSet "name" "My Level" defaults of
             Ok ml -> toStringList ml
             _ -> [("Failed to parse!", "")]
         )
 
     , assert_contains "Default values stay after others are set"
         ("num_to_save", "1")
-        ( case parseAndSet "num_rabbits" "34" default of
+        ( case parseAndSet "num_rabbits" "34" defaults of
             Ok ml -> toStringList ml
             _ -> [("Failed to parse!", "")]
         )
 
     , eq "Setting an unknown value is an error"
-        (parseAndSet "custom_field" "foo" default)
+        (parseAndSet "custom_field" "foo" defaults)
         (Err (UnknownName "custom_field"))
 
     , eq "Parsing a non-int into an int value is an error"
-        (parseAndSet "num_rabbits" "foo" default)
+        (parseAndSet "num_rabbits" "foo" defaults)
         (Err (BadValue "num_rabbits" "foo"))
 
     , eq "Applying an empty diff does nothing"
-        (applyDiff emptyDiff default)
-        default
+        (applyDiff emptyDiff defaults)
+        defaults
 
     , eq "Convert diff to list"
         (toDiffList (setDiff "num_rabbits" "2" emptyDiff))
@@ -106,13 +106,13 @@ all = Test.concat
     , assert_contains "Applying a valid diff updates the lines"
         ("num_rabbits", "3")
         ( toStringList
-            (applyDiff (setDiff "num_rabbits" "3" emptyDiff) default)
+            (applyDiff (setDiff "num_rabbits" "3" emptyDiff) defaults)
         )
 
     , assert_contains "Applying an invalid diff makes no change"
         ("num_rabbits", "10")
         ( toStringList
-            (applyDiff (setDiff "num_rabbits" "BAD_INT" emptyDiff) default)
+            (applyDiff (setDiff "num_rabbits" "BAD_INT" emptyDiff) defaults)
         )
 
     , assert_contains "Applying valid and invalid values applies the valid"
@@ -124,7 +124,7 @@ all = Test.concat
                         (setDiff "name" "Ma Lev" emptyDiff)
                     )
                 )
-                default
+                defaults
             )
         )
     ]
