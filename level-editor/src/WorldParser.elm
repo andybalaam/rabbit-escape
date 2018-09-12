@@ -311,8 +311,8 @@ integrateStarLines charItems starLines =
                     case integrateLines items stars of
                         Err e ->
                             Err e
-                        Ok (items, []) ->  -- No extra star lines - all good
-                            Ok items
+                        Ok (its, []) ->  -- No extra star lines - all good
+                            Ok its
                         Ok (_, extraStar :: _) ->
                             Err
                                 ( TooManyStarLines

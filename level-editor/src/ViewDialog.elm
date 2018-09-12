@@ -132,7 +132,7 @@ codeText model initialCode =
         (code, parsed) =
             case model.uiState.newWorld of
                 Nothing -> (initialCode, Ok model.world)
-                Just (text, parsed) -> (text, parsed)
+                Just x -> x
 
         (parseError, canUpdate) =
             case parsed of

@@ -96,12 +96,12 @@ toStringList metaLines =
             : List (String, MetaValue)
             -> MetaLines
             -> List (String, MetaValue)
-        inOrder orderList metaLines =
+        inOrder orderList mLs =
             case orderList of
                 (name, _) :: ts ->
-                    case Dict.get name metaLines of
-                        Just v -> (name, v) :: inOrder ts metaLines
-                        Nothing -> inOrder ts metaLines
+                    case Dict.get name mLs of
+                        Just v -> (name, v) :: inOrder ts mLs
+                        Nothing -> inOrder ts mLs
                 _ ->
                     []
     in
@@ -127,14 +127,14 @@ parseAndSet : String -> String -> MetaLines -> Result SetFailed MetaLines
 parseAndSet name value metaLines =
     let
         setInt : String -> String -> MetaLines -> Result SetFailed MetaLines
-        setInt name value metaLines =
+        setInt n v mLs =
             case String.toInt value of
-                Ok i -> Ok (Dict.insert name (MvInt i) metaLines)
-                Err _ -> Err (BadValue name value)
+                Just i -> Ok (Dict.insert n (MvInt i) mLs)
+                Nothing -> Err (BadValue n v)
 
         setString : String -> String -> MetaLines -> Result SetFailed MetaLines
-        setString name value metaLines =
-            Ok (Dict.insert name (MvString value) metaLines)
+        setString n v mLs =
+            Ok (Dict.insert n (MvString v) mLs)
     in
         case Dict.get name metaLines of
             Just (MvInt _) ->
@@ -167,10 +167,10 @@ setDiff : String -> String -> Diff -> Diff
 setDiff name value diff =
     let
         parseInt : String -> String -> Result SetFailed MetaValue
-        parseInt name value =
-            case String.toInt value of
-                Ok i -> Ok (MvInt i)
-                Err _ -> Err (BadValue name value)
+        parseInt n v =
+            case String.toInt v of
+                Just i -> Ok (MvInt i)
+                Nothing -> Err (BadValue n v)
     in
         case Dict.get name defaults of  -- Uses default, which feels bad?
             Just (MvString _) ->
@@ -196,10 +196,10 @@ applyDiff : Diff -> MetaLines -> MetaLines
 applyDiff diff metaLines =
     let
         setValue : String -> DiffValue -> MetaLines -> MetaLines
-        setValue name diffValue metaLines =
+        setValue name diffValue mLs =
             case diffValue.parsed of
-                Ok v -> Dict.insert name v metaLines
-                Err _ -> metaLines  -- Ignore errors
+                Ok v -> Dict.insert name v mLs
+                Err _ -> mLs  -- Ignore errors
     in
         Dict.foldl setValue metaLines diff
 

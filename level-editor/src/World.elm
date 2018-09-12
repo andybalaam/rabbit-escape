@@ -59,9 +59,9 @@ makeWorld :
     List Thing ->
     MetaLines ->
     World
-makeWorld comment blocks rabbits things metaLines =
+makeWorld comment blocksGrid rabbits things metaLines =
     { comment = comment
-    , blocks = blocks
+    , blocks = blocksGrid
     , rabbits = rabbits
     , things = things
     , metaLines = metaLines
@@ -69,10 +69,10 @@ makeWorld comment blocks rabbits things metaLines =
 
 
 makeBlockGrid : List (List Block) -> Grid Block
-makeBlockGrid blocks =
-    case blocks of
-        [] -> Grid 0 0 blocks
-        x :: _ -> Grid (List.length x) (List.length blocks) blocks
+makeBlockGrid blocksList =
+    case blocksList of
+        [] -> Grid 0 0 blocksList
+        x :: _ -> Grid (List.length x) (List.length blocksList) blocksList
 
 
 -- How many blocks across this world
