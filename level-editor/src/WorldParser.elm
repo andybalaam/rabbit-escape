@@ -14,7 +14,7 @@ module WorldParser exposing
     )
 
 
-import Regex exposing (HowMany(..), regex)
+import Regex
 
 
 import MetaLines exposing
@@ -498,6 +498,11 @@ addMetaProperty row name value existing =
                 )
 
 
+equalsSign : Regex.Regex
+equalsSign =
+    Maybe.withDefault Regex.never (Regex.fromString "=")
+
+
 addMetaLine : Line -> Result ParseErr MetaLines -> Result ParseErr MetaLines
 addMetaLine line acc =
     let
@@ -505,7 +510,7 @@ addMetaLine line acc =
         withoutColon = String.dropLeft 1 line.content
 
         keyValue : List String
-        keyValue = Regex.split (AtMost 1) (regex "=") withoutColon
+        keyValue = Regex.splitAtMost 1 equalsSign withoutColon
 
         (propertyName, propertyValue) =
             case keyValue of
