@@ -22,20 +22,20 @@ images: ${IMAGES}
 
 index: www/index.html www/style.css
 
+# TODO https://elm-lang.org/0.19.0/optimize
+
 compile: index images
-	elm-make --output=www/level-editor.js src/Main.elm
+	elm make \
+		src/Main.elm \
+		--output=www/level-editor.js
 
 upload: compile
-	rsync -r --delete ./www/ dreamhost:artificialworlds.net/rabbit-escape/level-editor/
+	rsync -r --delete \
+		./www/ \
+		dreamhost:artificialworlds.net/rabbit-escape/level-editor/
 
 run:
-	elm-reactor
-
-compile-debug: clean index images
-	elm-make --output=www/level-editor.js src/Main.elm --debug
-
-upload-debug: compile-debug
-	rsync -r --delete ./www/ dreamhost:artificialworlds.net/rabbit-escape/level-editor-debug/
+	elm reactor
 
 test:
 	elm-test
@@ -45,4 +45,4 @@ setup:
 	echo "Then 'sudo npm install -g elm-test@0.19.0-beta8' or similar"
 
 clean:
-	rm -r www
+	rm -rf www

@@ -12,6 +12,14 @@
 + Place all remaining types of thing in level, including tokens and fire
 + Modify/paste code directly
 
+# Upgrade to 0.19
+
++ Upgrade to 0.19
+
+# Separate project
+
+- Separate into a different git project
+
 # Can edit existing simple levels
 
 - Switch back to previous mode in several cases, instead of going to initial
