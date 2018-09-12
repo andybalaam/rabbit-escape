@@ -1,50 +1,12 @@
-
-GAME_IMAGE_NAMES := \
-	add_column.svg \
-	add_row.svg \
-	allblocks.png \
-	allthings.png \
-	bridge_rising_left.svg \
-	bridge_rising_right.svg \
-	details.svg \
-	entrance.png \
-	exit.png \
-	fire.png \
-	land_block_1.png \
-	land_rising_left_1.png \
-	land_rising_right_1.png \
-	metal_block_1.png \
-	rabbit_stand_left.svg \
-	rabbit_stand_right.svg \
-	rabbot_stand_left.svg \
-	rabbot_stand_right.svg \
-	remove_block.png \
-	remove_column.svg \
-	remove_rabbit.svg \
-	remove_row.svg \
-	remove_thing.png \
-	save.svg \
-    token_bash.svg \
-    token_block.svg \
-    token_bridge.svg \
-    token_brolly.svg \
-    token_climb.svg \
-    token_dig.svg \
-    token_explode.svg \
-	undo.svg \
-	redo.svg \
-
-
-IMAGES_DIR := www/images
-IMAGES := $(foreach X,${GAME_IMAGE_NAMES}, ${IMAGES_DIR}/${X})
-
+IMAGES_ORIG := $(wildcard images/*)
+IMAGES := $(subst images,www/images,$(IMAGES_ORIG))
 
 all: compile test
 
 www:
 	mkdir -p www
 
-www/images/%: images-src/% www/images
+www/images/%: images/% www/images
 	cp $< $@
 
 www/images: www
@@ -56,7 +18,7 @@ www/index.html: index.html www
 www/style.css: style.css www
 	cp $< $@
 
-images: ${IMAGES_DIR} ${IMAGES}
+images: ${IMAGES}
 
 index: www/index.html www/style.css
 
