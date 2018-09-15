@@ -40,6 +40,11 @@ to build the images, sounds and code.  On Ubuntu, Debian and similar:
 Make sure you have Inkscape 0.92 or above to avoid slightly-wrongly-sized
 images being generated.
 
+On Fedora some of the packages have different names.
+
+    sudo dnf install git make ant sox inkscape expect grep sed python3-lxml \
+        java-1.8.0-openjdk-devel ImageMagick util-linux
+
 Get the source
 --------------
 
