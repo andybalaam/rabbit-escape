@@ -343,14 +343,17 @@ clean-all: clean clean-images clean-sounds clean-music clean-doxygen clean-andro
 # to generate each one individually.
 all-images: $(SVGGENERATERABBOTS)
 	@echo ".. Converting all 32x32 images SVG->PNG"
+	mkdir -p $(IMAGES32_DEST)
 	./build-scripts/bulk-convert-images images-src $(IMAGES32_DEST) $(DPI_32) > /dev/null
 	./build-scripts/bulk-convert-images $(IMAGESSVGGEN_DEST) $(IMAGES32_DEST) $(DPI_32) > /dev/null
 	./build-scripts/bulk-convert-images images-src/icons $(IMAGES32_DEST) $(DPI_32) > /dev/null
+	mkdir -p $(IMAGES64_DEST)
 	@echo ".. Converting all 64x64 images SVG->PNG"
 	./build-scripts/bulk-convert-images images-src $(IMAGES64_DEST) $(DPI_64) > /dev/null
 	./build-scripts/bulk-convert-images $(IMAGESSVGGEN_DEST) $(IMAGES64_DEST) $(DPI_64) > /dev/null
 	./build-scripts/bulk-convert-images images-src/icons $(IMAGES64_DEST) $(DPI_64) > /dev/null
 	@echo ".. Converting all 128x128 images SVG->PNG"
+	mkdir -p $(IMAGES128_DEST)
 	./build-scripts/bulk-convert-images images-src $(IMAGES128_DEST) $(DPI_128) > /dev/null
 	./build-scripts/bulk-convert-images $(IMAGESSVGGEN_DEST) $(IMAGES128_DEST) $(DPI_128) > /dev/null
 	./build-scripts/bulk-convert-images images-src/icons $(IMAGES128_DEST) $(DPI_128) > /dev/null
