@@ -107,7 +107,7 @@ public class SpriteAnimator
                 block.x,
                 block.y,
                 0,
-                0
+                block.shape == Block.Shape.FLAT ? -32 : 0
             )
         );
     }
