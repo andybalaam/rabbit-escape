@@ -1598,4 +1598,38 @@ public class TestBridging
 
         assertThat( world.num_killed, equalTo ( 6 ) );
     }
+
+    @Test
+    public void Bridge_preserves_water()
+    {
+        World world = createWorld(
+            "        ",
+            "        ",
+            "r       ",
+            "#*NNNN*#",
+            "########",
+            ":*=\\ni",
+            ":*=/n",
+            ":n=1,3,512",
+            ":n=6,3,512"
+        );
+
+        // The test will find out of
+        // bounds exceptions from rendering
+        // bridges outside the world.
+        assertWorldEvolvesLike(
+            world,
+            10,
+            new String[] {
+                "        ",
+                "    *   ",
+                "   (    ",
+                "#**NNN*#",
+                "########",
+                ":*=(r{Bridging.bridgeType:UP,index:1,onSlope:true}",
+                ":*=\\n",
+                ":*=(N",
+                ":*=/n",
+            });
+    }
 }

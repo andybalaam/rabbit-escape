@@ -240,7 +240,7 @@ public class TestDrowning
             "#    #" + "\n" +
             "# ####" + "\n" +
             "# NPP#" + "\n" +
-            "#  RN#" + "\n" + // The rabbit is drowning.
+            "# nRN#" + "\n" + // The rabbit is drowning.
             "######",
 
             // If the world was to continue after the death of the rabbit then
@@ -248,7 +248,7 @@ public class TestDrowning
             "#    #" + "\n" +
             "# ####" + "\n" +
             "# NPP#" + "\n" +
-            "# NNN#" + "\n" +
+            "#nNNN#" + "\n" +
             "######"
         );
     }

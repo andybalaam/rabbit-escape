@@ -461,8 +461,12 @@ public class World
 
     public void recalculateWaterRegions( Position point )
     {
+        int contents = 0;
+        for (WaterRegion waterRegion : waterTable.getItemsAt( point.x, point.y )) {
+            contents += waterRegion.getContents();
+        }
         waterTable.removeItemsAt( point.x, point.y );
-        WaterRegionFactory.createWaterRegionsAtPoint( blockTable, waterTable, point.x, point.y );
+        WaterRegionFactory.createWaterRegionsAtPoint( blockTable, waterTable, point.x, point.y, contents );
     }
 
     public Map<Position, Integer> getWaterContents()

@@ -36,12 +36,12 @@ public class WaterRegionFactory
         {
             for ( int y = -1; y <= blockTable.size.height; y++ )
             {
-                createWaterRegionsAtPoint( blockTable, waterTable, x, y );
                 Integer waterAmount = waterAmounts.get( new Position( x, y ) );
-                if ( waterAmount != null )
+                if ( waterAmount == null )
                 {
-                    waterTable.getItemAt( x, y ).setContents( waterAmount );
+                    waterAmount = 0;
                 }
+                createWaterRegionsAtPoint( blockTable, waterTable, x, y, waterAmount );
             }
         }
         return waterTable;
@@ -52,7 +52,8 @@ public class WaterRegionFactory
         LookupTable2D<Block> blockTable,
         LookupTable2D<WaterRegion> waterTable,
         int x,
-        int y )
+        int y,
+        int contents )
     {
         List<Block> blocks = blockTable.getItemsAt( x, y );
         Shape[] shapes = new Shape[blocks.size()];
@@ -64,12 +65,18 @@ public class WaterRegionFactory
         boolean outsideWorld = ( x == -1 || x == blockTable.size.width
             || y == -1 || y == blockTable.size.height );
 
-        List<WaterRegion> waterRegions = makeWaterRegion( x, y, shapes, outsideWorld );
+        List<WaterRegion> waterRegions = makeWaterRegion( x, y, shapes, contents, outsideWorld );
         waterTable.addAll( waterRegions );
     }
 
-    /** Create a set of water regions from the given shaped blocks. */
+    /** Create a set of empty water regions from the given shaped blocks. */
     public static List<WaterRegion> makeWaterRegion( int x, int y, Shape[] shapes, boolean outsideWorld )
+    {
+        return makeWaterRegion( x, y, shapes, 0, outsideWorld );
+    }
+
+    /** Create a set of water regions from the given shaped blocks. */
+    public static List<WaterRegion> makeWaterRegion( int x, int y, Shape[] shapes, int contents, boolean outsideWorld )
     {
         Set<CellularDirection> connections = new HashSet<>(
             Arrays.asList( UP, LEFT, RIGHT, DOWN ) );
@@ -88,7 +95,7 @@ public class WaterRegionFactory
                     connections.remove( DOWN );
                     connections.remove( LEFT );
                     break;
-                 // TODO Consider whether bridges should cause there to be two water regions.
+                 // Bridges allow water to pass through them.
                 case BRIDGE_UP_LEFT:
                 case BRIDGE_UP_RIGHT:
                     break;
@@ -102,7 +109,7 @@ public class WaterRegionFactory
         return Arrays.asList(
             new WaterRegion( x, y,
                 connections,
-                capacity, outsideWorld ) );
+                capacity, contents, outsideWorld ) );
     }
 
     private static int findCapacity( Set<CellularDirection> connections )
