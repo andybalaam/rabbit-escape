@@ -513,4 +513,36 @@ public class TestBashing
             "####"
         );
     }
+
+    @Test
+    public void Bashing_does_not_destroy_water()
+    {
+        World world = createWorld(
+            "rb*#",
+            "####",
+            ":*=\\n"
+        );
+
+        // Check the water is kept
+        assertWorldEvolvesLike(
+            world,
+            2,
+            new String[]{
+                " *n#",
+                "####",
+                ":*=r{Bashing.stepsOfBashing:1,index:1}"
+            });
+
+        // Check that the water spreads and the rabbit moves through it.
+        assertWorldEvolvesLike(
+            world,
+            1,
+            new String[]{
+                " n*#",
+                "####",
+                ":*=nr{Bashing.stepsOfBashing:2,index:1}",
+                ":n=1,0,256",
+                ":n=2,0,256"
+            });
+    }
 }
