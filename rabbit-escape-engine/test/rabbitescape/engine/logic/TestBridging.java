@@ -1600,7 +1600,7 @@ public class TestBridging
     }
 
     @Test
-    public void Bridge_preserves_water()
+    public void Bridging_preserves_water()
     {
         World world = createWorld(
             "        ",
@@ -1614,9 +1614,6 @@ public class TestBridging
             ":n=6,3,512"
         );
 
-        // The test will find out of
-        // bounds exceptions from rendering
-        // bridges outside the world.
         assertWorldEvolvesLike(
             world,
             10,
