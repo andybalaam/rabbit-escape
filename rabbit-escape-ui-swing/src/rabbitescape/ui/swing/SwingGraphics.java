@@ -145,12 +145,30 @@ public class SwingGraphics implements Graphics
             float f = renderer.tileSize / 32f;
             Vertex offset = new Vertex( renderer.offsetX, renderer.offsetY );
 
+            // shade whole background sqaure cells with any water
+            for ( WaterRegionRenderer wrr : wa.lookupRenderer)
+            {
+                Rect rect = new Rect(
+                    renderer.tileSize * wrr.region.x + renderer.offsetX,
+                    renderer.tileSize * wrr.region.y + renderer.offsetY,
+                    renderer.tileSize * wrr.region.x + renderer.tileSize + renderer.offsetX,
+                    renderer.tileSize * wrr.region.y + renderer.tileSize + renderer.offsetY
+                );
+                int height = wrr.region.getContents();
+                int alpha = MathUtil.constrain( ( 255 * height ) / 1024, 0, 255 ) / 4;
+                SwingPaint backShade =  new SwingPaint( new Color( waterR, waterG, waterB, alpha ) );
+                backShade.setStyle( SwingPaint.Style.FILL );
+                swingCanvas.drawRect( rect, backShade );
+            }
+
+            // draw polygons to represent pooled water
             for ( PolygonBuilder pb : wa.calculatePolygons() )
             {
                 Path p = pb.path( f, offset );
                 swingCanvas.drawPath( p, waterColor );
             }
 
+            // draw particles to represent falling water
             for ( WaterRegionRenderer wrr : wa.lookupRenderer )
             {
                 for ( WaterParticle wp : wrr.particles )
@@ -159,7 +177,6 @@ public class SwingGraphics implements Graphics
                     Vertex lastV = wp.lastPosition( renderer.tileSize, offset);
                     SwingPaint fadeShade =  new SwingPaint( new Color( waterR, waterG, waterB, wp.alpha ) );
                     swingCanvas.drawLine(v.x, v.y, lastV.x, lastV.y, fadeShade);
-                    //swingCanvas.drawCircle(v.x, v.y, renderer.tileSize / 16f, waterColor);
                 }
             }
         }
