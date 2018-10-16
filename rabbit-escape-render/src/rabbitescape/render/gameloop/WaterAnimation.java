@@ -63,6 +63,10 @@ public class WaterAnimation
             {
                 wrr.removeHeightGaps();
             }
+            for( WaterRegionRenderer wrr: lookupRenderer )
+            {
+                wrr.stepParticles();
+            }
         }
     }
 

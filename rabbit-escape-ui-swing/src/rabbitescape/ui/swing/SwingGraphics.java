@@ -29,8 +29,11 @@ public class SwingGraphics implements Graphics
         private static final SwingPaint graphPaperMinor =
             new SwingPaint( new Color( 235, 243, 255 ) );
 
+        private static final int
+            waterR = 130, waterG = 167, waterB = 221;
+
         private static final SwingPaint waterColor =
-            new SwingPaint( new Color( 130, 167, 221, 255 ) );
+            new SwingPaint( new Color( waterR, waterG, waterB, 255 ) );
 
         private final java.awt.Canvas canvas;
         private final Renderer<SwingBitmap, SwingPaint> renderer;
@@ -81,7 +84,7 @@ public class SwingGraphics implements Graphics
                 graphPaperMinor
             );
 
-            drawPolygons( waterAnimation, swingCanvas );
+            drawWater( waterAnimation, swingCanvas );
 
             List<Sprite> sprites = animator.getSprites( frameNum );
 
@@ -134,38 +137,30 @@ public class SwingGraphics implements Graphics
             }
         }
 
-        public void drawPolygons( WaterAnimation wa, SwingCanvas swingCanvas )
+        /**
+         * Polygons representing water that is not falling, and particle effects for falling water.
+         */
+        public void drawWater( WaterAnimation wa, SwingCanvas swingCanvas )
         {
             float f = renderer.tileSize / 32f;
-
-            for ( int y = 0; y < wa.worldSize.height ; y++ )
-            {
-                for ( int x = 0; x < wa.worldSize.width; x++ )
-                {
-                    WaterRegionRenderer wrr = wa.lookupRenderer.getItemAt( x, y );
-                    if ( wrr == null )
-                    {
-                        continue;
-                    }
-                    Rect rect = new Rect(
-                        renderer.tileSize * wrr.region.x + renderer.offsetX,
-                        renderer.tileSize * wrr.region.y + renderer.offsetY,
-                        renderer.tileSize * wrr.region.x + renderer.tileSize + renderer.offsetX,
-                        renderer.tileSize * wrr.region.y + renderer.tileSize + renderer.offsetY
-                    );
-                    int height = wrr.region.getContents();
-                    int alpha = MathUtil.constrain( ( 255 * height ) / 1024, 0, 255 );
-                    SwingPaint paint = new SwingPaint( new Color( 130, 167, 221, alpha ) );
-                    paint.setStyle( SwingPaint.Style.FILL );
-                    swingCanvas.drawRect( rect, paint );
-                }
-            }
+            Vertex offset = new Vertex( renderer.offsetX, renderer.offsetY );
 
             for ( PolygonBuilder pb : wa.calculatePolygons() )
             {
-                Path p = pb.path( f,
-                    new Vertex( renderer.offsetX, renderer.offsetY ) );
+                Path p = pb.path( f, offset );
                 swingCanvas.drawPath( p, waterColor );
+            }
+
+            for ( WaterRegionRenderer wrr : wa.lookupRenderer )
+            {
+                for ( WaterParticle wp : wrr.particles )
+                {
+                    Vertex v = wp.position(renderer.tileSize, offset );
+                    Vertex lastV = wp.lastPosition( renderer.tileSize, offset);
+                    SwingPaint fadeShade =  new SwingPaint( new Color( waterR, waterG, waterB, wp.alpha ) );
+                    swingCanvas.drawLine(v.x, v.y, lastV.x, lastV.y, fadeShade);
+                    //swingCanvas.drawCircle(v.x, v.y, renderer.tileSize / 16f, waterColor);
+                }
             }
         }
 

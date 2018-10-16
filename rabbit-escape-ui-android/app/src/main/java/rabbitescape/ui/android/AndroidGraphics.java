@@ -272,7 +272,7 @@ public class AndroidGraphics implements Graphics
         GraphPaperBackground.drawBackground(
             world, renderer, androidCanvas, white, graphPaperMajor, graphPaperMinor );
 
-        drawPolygons( waterAnimation, androidCanvas, renderer );
+        drawWater( waterAnimation, androidCanvas, renderer );
 
         List<Sprite> sprites = animator.getSprites( frameNum );
 
@@ -317,7 +317,7 @@ public class AndroidGraphics implements Graphics
 
     }
 
-    private void drawPolygons(
+    private void drawWater(
         WaterAnimation wa,
         AndroidCanvas androidCanvas,
         Renderer<AndroidBitmap, AndroidPaint> renderer

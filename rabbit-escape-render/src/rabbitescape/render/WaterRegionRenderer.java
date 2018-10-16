@@ -1,5 +1,8 @@
 package rabbitescape.render;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+
 import rabbitescape.engine.Block;
 import rabbitescape.engine.CellularDirection;
 import rabbitescape.engine.WaterRegion;
@@ -17,8 +20,7 @@ import static rabbitescape.engine.CellularDirection.*;
 public class WaterRegionRenderer implements LookupItem2D
 {
 
-    public static final int contentsPerParticle = 50;
-    public static final int maxParticleCountChange = 2;
+    public static final int contentsPerParticle = 16;
     private static final int maxHeightChange = 1;
 
     public WaterRegion region;
@@ -26,6 +28,10 @@ public class WaterRegionRenderer implements LookupItem2D
     private int targetWaterHeight = 0;
     private int height = 0;
     private int lastHeight = 0;
+
+    private int targetParticleCount = 0;
+    private int particleCount = 0;
+    public final ArrayList<WaterParticle> particles = new ArrayList<WaterParticle>();
 
     private final World world;
     private final WaterAnimation waterAnimation;
@@ -60,14 +66,20 @@ public class WaterRegionRenderer implements LookupItem2D
 
     /**
      * Called once per game step
+     * Calculates height of water in region (as an ambition - need to change
+     * actual height smoothly). Also calculates target number of splash
+     * particles.
      */
     public void setTargetWaterHeight()
     {
         if ( isFalling() )
         {
             targetWaterHeight = 0;
+            // Falling water is represented by particles instead.
+            adjustParticleCount();
             return;
         }
+        targetParticleCount = 0;
         Block block = world.getBlockAt( region.x, region.y );
         if ( null == block || isBridge( block ))
         {
@@ -85,7 +97,35 @@ public class WaterRegionRenderer implements LookupItem2D
     }
 
     /**
-     * Called once per animation step
+     * Fades splash particles in/out to approximate
+     * correct anount of falling water.
+     */
+    private void adjustParticleCount()
+    {
+        targetParticleCount = region.getContents() / contentsPerParticle;
+        // Some particles may have left the region: update this first.
+        checkParticlesInRegion( particles );
+        int particleDeficit = targetParticleCount  - particles.size();
+        if ( particleDeficit < 0 ) // Need to remove some: start fading
+        {
+            for ( int i = 0 ; i < -particleDeficit ; i++)
+            {
+                particles.get( i ).alphaStep =
+                    -WaterParticle.alphaStepMagnitude;
+            }
+        }
+        else if (particleDeficit > 0 ) // Need to add some
+        {
+            for ( int i = 0 ; i < particleDeficit ; i++)
+            {
+                particles.add( new WaterParticle(this.region) );
+            }
+        }
+    }
+
+    /**
+     * Called once per animation step.
+     * Smoothly tweaks height in the direction of targetWaterHeight.
      */
     public void setWaterHeight()
     {
@@ -93,6 +133,48 @@ public class WaterRegionRenderer implements LookupItem2D
                                      lastHeight - maxHeightChange ,
                                      lastHeight + maxHeightChange );
         lastHeight = height;
+    }
+
+    /**
+     * Particles start fading out if they have left bounds.
+     */
+    private void checkParticlesInRegion( ArrayList<WaterParticle> pl )
+    {
+        for ( WaterParticle p : particles )
+        {
+            if ( p.outOfRegion() )
+            {
+                p.alphaStep = -WaterParticle.alphaStepMagnitude;
+            }
+        }
+    }
+
+    /**
+     * Updates particle position. Called onces per animation step.
+     */
+    public void stepParticles()
+    {
+        for ( WaterParticle p : particles )
+        {
+            p.step();
+            p.alpha += p.alphaStep;
+            // If particle has finished waxing, stop fading it in.
+            if ( p.alpha > 255 )
+            {
+                p.alpha = 255;
+                p.alphaStep = 0;
+            }
+        }
+        // fully waned particles are removed
+        Iterator<WaterParticle> i = particles.iterator();
+        while ( i.hasNext() )
+        {
+            WaterParticle p = i.next();
+            if ( p.alpha < 0 )
+            {
+                i.remove();
+            }
+        }
     }
 
     /**
