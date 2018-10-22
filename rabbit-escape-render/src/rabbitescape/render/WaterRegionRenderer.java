@@ -20,7 +20,7 @@ import static rabbitescape.engine.CellularDirection.*;
 public class WaterRegionRenderer implements LookupItem2D
 {
 
-    public static final int contentsPerParticle = 16;
+    public static final int contentsPerParticle = 8;
     private static final int maxHeightChange = 1;
 
     public WaterRegion region;
@@ -98,13 +98,11 @@ public class WaterRegionRenderer implements LookupItem2D
 
     /**
      * Fades splash particles in/out to approximate
-     * correct anount of falling water.
+     * correct anount of falling water. Called once per game step
      */
     private void adjustParticleCount()
     {
         targetParticleCount = region.getContents() / contentsPerParticle;
-        // Some particles may have left the region: update this first.
-        checkParticlesInRegion( particles );
         int particleDeficit = targetParticleCount  - particles.size();
         if ( particleDeficit < 0 ) // Need to remove some: start fading
         {
@@ -118,7 +116,7 @@ public class WaterRegionRenderer implements LookupItem2D
         {
             for ( int i = 0 ; i < particleDeficit ; i++)
             {
-                particles.add( new WaterParticle(this.region) );
+                particles.add( new WaterParticle( this ) );
             }
         }
     }
@@ -136,15 +134,34 @@ public class WaterRegionRenderer implements LookupItem2D
     }
 
     /**
-     * Particles start fading out if they have left bounds.
+     * Particles may be passed to an adjacent (or further) region.
+     * Called once per animation step
      */
-    private void checkParticlesInRegion( ArrayList<WaterParticle> pl )
+    private void checkParticlesInRegion()
     {
-        for ( WaterParticle p : particles )
+        // make temporary list to iterate, so we can transfer ownership of items
+        ArrayList<WaterParticle> tmpList = new ArrayList<WaterParticle>(particles);
+        for ( WaterParticle p : tmpList )
         {
-            if ( p.outOfRegion() )
+            if ( p.outOfRegion( this ) )
             {
-                p.alphaStep = -WaterParticle.alphaStepMagnitude;
+                int newX = (int)Math.floor(p.x), newY = (int)Math.floor(p.y);
+                WaterRegionRenderer newRend =
+                    waterAnimation.lookupRenderer.getItemAt( newX, newY );
+                if ( newRend == null )
+                { // no water here: accelerate fading
+                    p.alphaStep = p.alphaStep - WaterParticle.alphaStepMagnitude;
+                    continue;
+                }
+                if ( isFull( newX, newY ) )
+                {   // particle has moved to full cell: delete immediately
+                    // block cells count as full too
+                    p.delete = true;
+                    continue;
+                }
+                // transfer ownership to other renderer
+                particles.remove( p );
+                newRend.particles.add( p );
             }
         }
     }
@@ -154,6 +171,9 @@ public class WaterRegionRenderer implements LookupItem2D
      */
     public void stepParticles()
     {
+        // Some particles may have left the region: update this first.
+        checkParticlesInRegion();
+
         for ( WaterParticle p : particles )
         {
             p.step();
@@ -166,11 +186,12 @@ public class WaterRegionRenderer implements LookupItem2D
             }
         }
         // fully waned particles are removed
-        Iterator<WaterParticle> i = particles.iterator();
+        // TODO not sure deleted or faded particles are going
+        Iterator<WaterParticle> i = particles.listIterator();
         while ( i.hasNext() )
         {
             WaterParticle p = i.next();
-            if ( p.alpha < 0 )
+            if ( p.alpha < 0 || p.delete)
             {
                 i.remove();
             }

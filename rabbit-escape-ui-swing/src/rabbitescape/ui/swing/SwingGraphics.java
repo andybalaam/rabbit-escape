@@ -173,9 +173,12 @@ public class SwingGraphics implements Graphics
             {
                 for ( WaterParticle wp : wrr.particles )
                 {
-                    Vertex v = wp.position(renderer.tileSize, offset );
-                    Vertex lastV = wp.lastPosition( renderer.tileSize, offset);
-                    SwingPaint fadeShade =  new SwingPaint( new Color( waterR, waterG, waterB, wp.alpha ) );
+                    Vertex v = WaterParticle.position( wp.x, wp.y,
+                                                       renderer.tileSize, offset );
+                    Vertex lastV = WaterParticle.position( wp.lastX, wp.lastY,
+                                                           renderer.tileSize, offset);
+                    SwingPaint fadeShade =  new SwingPaint(
+                        new Color( waterR, waterG, waterB, wp.alpha ) );
                     swingCanvas.drawLine(v.x, v.y, lastV.x, lastV.y, fadeShade);
                 }
             }
