@@ -28,12 +28,28 @@ public class WaterParticle
     public WaterParticle(WaterRegionRenderer wrr)
     {
         Position p = wrr.region.getPosition();
-        x = rand.nextFloat() + (float)p.x;
-        y = rand.nextFloat() + (float)p.y;
+        boolean hasPipe = wrr.hasPipe();
+        x = (float)p.x + genPosInCell( hasPipe );
+        y = (float)p.y + genPosInCell( hasPipe );
         lastX = x; lastY = y;
-        vx = ( rand.nextFloat() - 0.5f ) / 32f ;
-        vy = ( rand.nextFloat() - 0.5f ) / 32f ;
+        vx = genVelComponent( hasPipe ) ;
+        vy = genVelComponent( hasPipe ) ;
     }
+
+    private float genPosInCell( boolean hasPipe )
+    {
+        return hasPipe ?
+               (rand.nextFloat() + 2f) / 5f : // middle fifth of cell
+               rand.nextFloat() ;
+    }
+
+    private float genVelComponent( boolean hasPipe )
+    {
+        return hasPipe ?
+               ( rand.nextFloat() - 0.5f ) / 4f : // sprays out more
+               ( rand.nextFloat() - 0.5f ) / 32f ;
+    }
+
 
     /**
      * Constructor for tests
