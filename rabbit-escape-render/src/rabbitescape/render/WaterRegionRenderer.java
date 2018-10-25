@@ -2,9 +2,12 @@ package rabbitescape.render;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 import rabbitescape.engine.Block;
 import rabbitescape.engine.CellularDirection;
+import rabbitescape.engine.Pipe;
+import rabbitescape.engine.Thing;
 import rabbitescape.engine.WaterRegion;
 import rabbitescape.engine.World;
 import rabbitescape.engine.textworld.BlockRenderer;
@@ -20,7 +23,7 @@ import static rabbitescape.engine.CellularDirection.*;
 public class WaterRegionRenderer implements LookupItem2D
 {
 
-    public static final int contentsPerParticle = 8;
+    public static final int contentsPerParticle = 4;
     private static final int maxHeightChange = 1;
 
     public WaterRegion region;
@@ -389,6 +392,19 @@ public class WaterRegionRenderer implements LookupItem2D
             return false;
         }
         return 32 == wrr.height && 32 == wrr.targetWaterHeight;
+    }
+
+    public boolean hasPipe()
+    {
+        List<Thing> things = world.getThingsAt( region.x, region.y );
+        for ( Thing t : things )
+        {
+            if ( t instanceof Pipe )
+            {
+                return true;
+            }
+        }
+        return false;
     }
 
     public Vector2D cellPosition()
