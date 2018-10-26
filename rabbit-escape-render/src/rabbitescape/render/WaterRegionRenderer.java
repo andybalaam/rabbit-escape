@@ -407,6 +407,15 @@ public class WaterRegionRenderer implements LookupItem2D
         return false;
     }
 
+    public Vertex netFlow()
+    {
+        float netX = (float)( region.getFlow( CellularDirection.RIGHT ) -
+                              region.getFlow( CellularDirection.LEFT ) );
+        float netY = (float)( region.getFlow( CellularDirection.DOWN ) -
+                              region.getFlow( CellularDirection.UP ) );
+        return new Vertex( netX, netY );
+    }
+
     public Vector2D cellPosition()
     {
         return new Vector2D( region.x, region.y );
@@ -432,10 +441,6 @@ public class WaterRegionRenderer implements LookupItem2D
             s  );
 
         p.addString( region, 1, "cont %04d", region.getContents() );
-
-        //p.addString( region, 2, "netflow%6s", calcNetFlow().toString() );
-
-        //p.addString( region, 3, "watervel%6s", estimateVelocity( calcNetFlow() ).toString() );
 
         p.addString( region, 4, connStr  );
 

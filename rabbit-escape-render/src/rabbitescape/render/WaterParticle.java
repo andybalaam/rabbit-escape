@@ -14,6 +14,8 @@ public class WaterParticle
     private final float gravity = 0.008f;
     /** Damping: fraction of velocity retained per animation step. */
     private final float damping = 0.95f;
+    /** Converts flow into velocity */
+    private final float flowFactor = 0.0002f;
 
     /** Coordinates within world */
     public float x, y, lastX, lastY;
@@ -32,8 +34,9 @@ public class WaterParticle
         x = (float)p.x + genPosInCell( hasPipe );
         y = (float)p.y + genPosInCell( hasPipe );
         lastX = x; lastY = y;
-        vx = genVelComponent( hasPipe ) ;
-        vy = genVelComponent( hasPipe ) ;
+        Vertex flow = wrr.netFlow();
+        vx = genVelComponent( hasPipe ) + flow.x * flowFactor ;
+        vy = genVelComponent( hasPipe ) + flow.y * flowFactor;
     }
 
     private float genPosInCell( boolean hasPipe )
