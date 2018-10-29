@@ -2,6 +2,7 @@ package rabbitescape.render;
 
 import java.util.Random;
 import rabbitescape.engine.util.Position;
+import rabbitescape.engine.CellularDirection;
 import rabbitescape.engine.WaterRegion;
 
 public class WaterParticle
@@ -29,10 +30,21 @@ public class WaterParticle
 
     public WaterParticle(WaterRegionRenderer wrr)
     {
-        Position p = wrr.region.getPosition();
+        // make a starting point in a cell
         boolean hasPipe = wrr.hasPipe();
-        x = (float)p.x + genPosInCell( hasPipe );
-        y = (float)p.y + genPosInCell( hasPipe );
+        x = genPosInCell( hasPipe );
+        y = genPosInCell( hasPipe );
+        // create Coordinates in a part of the cell with the most flow
+        CellularDirection xBias = largeFlowMag( wrr, CellularDirection.LEFT,
+                                                     CellularDirection.RIGHT );
+        x = biasCoord( x, CellularDirection.LEFT, xBias);
+        CellularDirection yBias = largeFlowMag( wrr, CellularDirection.UP,
+                                                     CellularDirection.DOWN );
+        y = biasCoord( y, CellularDirection.UP, xBias);
+        // move across the world to the correct cell
+        Position p = wrr.region.getPosition();
+        x += (float)p.x;
+        y += (float)p.y;
         lastX = x; lastY = y;
         Vertex flow = wrr.netFlow();
         vx = genVelComponent( hasPipe ) + flow.x * flowFactor ;
@@ -53,6 +65,41 @@ public class WaterParticle
                ( rand.nextFloat() - 0.5f ) / 32f ;
     }
 
+    /**
+     * Compares flow magnitude for the given directions: if one is
+     * significantly larger than the other, it is returned. Returns null
+     * if neither is much bigger.
+     */
+    private CellularDirection largeFlowMag(WaterRegionRenderer wrr,
+                                           CellularDirection a, CellularDirection b)
+    {
+        int aMag = Math.abs(wrr.edgeNetFlow(a));
+        int bMag = Math.abs(wrr.edgeNetFlow(b));
+        if ( aMag > 2.0f * bMag )
+        {
+            return a;
+        }
+        if ( bMag > 2.0f * aMag )
+        {
+            return b;
+        }
+        return null;
+    }
+
+    private float biasCoord( float coord, CellularDirection lowerBiasDir,
+                             CellularDirection biasDir)
+    {
+        if ( biasDir == null )
+        {
+            return coord;
+        }
+        coord = coord / 2.0f;
+        if ( biasDir == lowerBiasDir )
+        {
+            return coord;
+        }
+        return coord + 0.5f;
+    }
 
     /**
      * Constructor for tests
