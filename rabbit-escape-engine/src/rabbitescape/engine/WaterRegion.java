@@ -103,7 +103,10 @@ public class WaterRegion extends Thing implements LookupItem2D
 
     /**
      * Get the amount of water being transferred from here in a given direction
-     * this tick.
+     * this tick. Note that it is always posotive. For example if water is
+     * flowing into a cell from the left, it's LEFT will give zero.
+     * However the cell to it's LEFT will yield a posotive number on it's
+     * RIGHT.
      *
      * @param direction
      *            The direction of interest.

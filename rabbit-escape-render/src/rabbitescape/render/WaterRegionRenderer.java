@@ -6,6 +6,10 @@ import java.util.List;
 
 import rabbitescape.engine.Block;
 import rabbitescape.engine.CellularDirection;
+import static rabbitescape.engine.CellularDirection.UP;
+import static rabbitescape.engine.CellularDirection.DOWN;
+import static rabbitescape.engine.CellularDirection.LEFT;
+import static rabbitescape.engine.CellularDirection.RIGHT;
 import rabbitescape.engine.Pipe;
 import rabbitescape.engine.Thing;
 import rabbitescape.engine.WaterRegion;
@@ -407,12 +411,28 @@ public class WaterRegionRenderer implements LookupItem2D
         return false;
     }
 
+    /**
+     * Returns the ney flow across a cell's edge considering water flowing
+     * in and out. A posotive value indicates net flow out. A negative
+     * value indicates net flow in.
+     */
+    public int edgeNetFlow( CellularDirection edge )
+    {
+        WaterRegionRenderer adj = adjacentRenderer( edge );
+        if ( null == adj )
+        {
+            return region.getFlow( edge );
+        }
+        return region.getFlow( edge ) -
+               adj.region.getFlow( CellularDirection.opposite( edge ) );
+    }
+
     public Vertex netFlow()
     {
-        float netX = (float)( region.getFlow( CellularDirection.RIGHT ) -
-                              region.getFlow( CellularDirection.LEFT ) );
-        float netY = (float)( region.getFlow( CellularDirection.DOWN ) -
-                              region.getFlow( CellularDirection.UP ) );
+        float netX = (float)( edgeNetFlow( CellularDirection.RIGHT ) -
+                              edgeNetFlow( CellularDirection.LEFT ) );
+        float netY = (float)( edgeNetFlow( CellularDirection.DOWN ) -
+                              edgeNetFlow( CellularDirection.UP ) );
         return new Vertex( netX, netY );
     }
 
