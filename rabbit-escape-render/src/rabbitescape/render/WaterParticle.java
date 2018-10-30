@@ -17,6 +17,8 @@ public class WaterParticle
     private final float damping = 0.95f;
     /** Converts flow into velocity */
     private final float flowFactor = 0.0002f;
+    /** Variation in colour +/- half this on 0-255 scale. */
+    private final float colVar = 60.0f;
 
     /** Coordinates within world */
     public float x, y, lastX, lastY;
@@ -25,6 +27,7 @@ public class WaterParticle
     /** Particles fade in and out. 0-255. */
     public int alpha = alphaStepMagnitude;
     public int alphaStep = alphaStepMagnitude;
+    public int colR = 130, colG = 167, colB = 221;
     /** schedule for deletion */
     public boolean delete = false;
 
@@ -49,6 +52,10 @@ public class WaterParticle
         Vertex flow = wrr.netFlow();
         vx = genVelComponent( hasPipe ) + flow.x * flowFactor ;
         vy = genVelComponent( hasPipe ) + flow.y * flowFactor;
+        // randomise colour
+        colR += (int)( ( rand.nextFloat() - 0.5f ) * colVar );
+        colG += (int)( ( rand.nextFloat() - 0.5f ) * colVar );
+        colB += (int)( ( rand.nextFloat() - 0.5f ) * colVar );
     }
 
     private float genPosInCell( boolean hasPipe )
