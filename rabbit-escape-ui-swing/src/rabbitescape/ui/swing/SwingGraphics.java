@@ -178,7 +178,7 @@ public class SwingGraphics implements Graphics
                     Vertex lastV = WaterParticle.position( wp.lastX, wp.lastY,
                                                            renderer.tileSize, offset);
                     SwingPaint fadeShade =  new SwingPaint(
-                        new Color( waterR, waterG, waterB, wp.alpha ) );
+                        new Color( wp.colR, wp.colG, wp.colB, wp.alpha ) );
                     swingCanvas.drawLine(v.x, v.y, lastV.x, lastV.y, fadeShade);
                 }
             }
