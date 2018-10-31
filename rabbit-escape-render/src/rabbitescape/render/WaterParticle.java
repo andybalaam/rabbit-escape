@@ -12,16 +12,17 @@ public class WaterParticle
 {
 
     private static final Random rand = new Random();
-    /** Change in opacity per animation step. */
-    public static final int alphaStepMagnitude = 32;
+    /** Change in opacity per animation step.
+     * alpha runs from 0 (invisible) to 255 (opaque).
+     * the alphaStep used for this particle will be
+     * maxAlpha/alphaStepNo.  */
+    public static final int alphaStepNo = 16;
     /** Acceleration due to gravity in cells per animation step squared. */
     private final float gravity = 0.008f;
     /** Damping: fraction of velocity retained per animation step. */
     private final float damping = 0.95f;
     /** Converts flow into velocity */
     private final float flowFactor = 0.0002f;
-    /** Variation in colour +/- half this on 0-255 scale. */
-    private final float colVar = 60.0f;
     /** Half width of kite-shaped streak in nominal pixels (32 to a cell). */
     private final static float kite = 1.0f;
 
@@ -29,10 +30,15 @@ public class WaterParticle
     public float x, y, lastX, lastY;
     /** Velocity in cells per animation step.*/
     private float vx, vy;
-    /** Particles fade in and out. 0-255. */
-    public int alpha = alphaStepMagnitude;
-    public int alphaStep = alphaStepMagnitude;
-    public int colR = 130, colG = 167, colB = 221;
+
+    /** The greatest alpha allowed for this particle. */
+    public int maxAlpha;
+    /** The size of the changes in alpha as this particle fades in or out */
+    public int alphaStepMagnitude;
+    /** This will be negative if the particle is currently fading. */
+    public int alphaStep;
+    /** the current value of alpha. */
+    public int alpha;
 
     public WaterParticle(WaterRegionRenderer wrr)
     {
@@ -58,10 +64,12 @@ public class WaterParticle
         Vertex flow = wrr.netFlow();
         vx = genVelComponent( hasPipe ) + flow.x * flowFactor ;
         vy = genVelComponent( hasPipe ) + flow.y * flowFactor;
-        // randomise colour
-        colR += (int)( ( rand.nextFloat() - 0.5f ) * colVar );
-        colG += (int)( ( rand.nextFloat() - 0.5f ) * colVar );
-        colB += (int)( ( rand.nextFloat() - 0.5f ) * colVar );
+        // make each particle have a different alpha so a cloud of spray
+        // has some texture
+        maxAlpha = 100 + (int)( rand.nextFloat() * 150.0f );
+        alphaStepMagnitude = maxAlpha / alphaStepNo;
+        alphaStep = alphaStepMagnitude;
+        alpha = alphaStepMagnitude;
     }
 
     private float genPosInCell( boolean hasPipe )

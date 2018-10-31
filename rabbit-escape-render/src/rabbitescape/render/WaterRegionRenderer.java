@@ -115,8 +115,8 @@ public class WaterRegionRenderer implements LookupItem2D
         {
             for ( int i = 0 ; i < -particleDeficit ; i++)
             {
-                particles.get( i ).alphaStep =
-                    -WaterParticle.alphaStepMagnitude;
+                WaterParticle p = particles.get( i );
+                p.alphaStep = -p.alphaStepMagnitude;
             }
         }
         else if (particleDeficit > 0 ) // Need to add some
@@ -154,7 +154,7 @@ public class WaterRegionRenderer implements LookupItem2D
                 WaterRegionRenderer newRend = p.rendererByPosition( waterAnimation );
                 if ( newRend == null )
                 { // no water here: accelerate fading
-                    p.alphaStep = p.alphaStep - WaterParticle.alphaStepMagnitude;
+                    p.alphaStep = p.alphaStep - p.alphaStepMagnitude;
                     continue;
                 }
                 if ( isFull( newRend.region.x, newRend.region.y ) )
@@ -198,11 +198,11 @@ public class WaterRegionRenderer implements LookupItem2D
         {
             p.step();
             p.alpha += p.alphaStep;
-            // If particle has finished waxing, stop fading it in.
-            if ( p.alpha > 255 )
+            // If particle has finished waxing, start in waning.
+            if ( p.alpha > p.maxAlpha )
             {
-                p.alpha = 255;
-                p.alphaStep = 0;
+                p.alpha = p.maxAlpha;
+                p.alphaStep = -p.alphaStepMagnitude;
             }
         }
         // fully waned particles are removed

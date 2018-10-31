@@ -175,7 +175,7 @@ public class SwingGraphics implements Graphics
                 {
                     Path p = wp.polygon().path( f, offset );
                     SwingPaint fadeShade =  new SwingPaint(
-                        new Color( wp.colR, wp.colG, wp.colB, wp.alpha ) );
+                        new Color( waterR, waterG, waterB, wp.alpha ) );
                     fadeShade.setStyle ( SwingPaint.Style.FILL );
                     swingCanvas.drawPath( p, fadeShade);
                 }
