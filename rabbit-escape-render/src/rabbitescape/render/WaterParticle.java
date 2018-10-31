@@ -5,6 +5,8 @@ import rabbitescape.engine.util.Position;
 import rabbitescape.engine.CellularDirection;
 import rabbitescape.engine.WaterRegion;
 import rabbitescape.render.gameloop.WaterAnimation;
+import rabbitescape.render.PolygonBuilder;
+import rabbitescape.render.Vertex;
 
 public class WaterParticle
 {
@@ -20,6 +22,8 @@ public class WaterParticle
     private final float flowFactor = 0.0002f;
     /** Variation in colour +/- half this on 0-255 scale. */
     private final float colVar = 60.0f;
+    /** Half width of kite-shaped streak in nominal pixels (32 to a cell). */
+    private final static float kite = 1.0f;
 
     /** Coordinates within world */
     public float x, y, lastX, lastY;
@@ -143,6 +147,30 @@ public class WaterParticle
      {
         int cx = (int)Math.floor(x), cy = (int)Math.floor(y);
         return wa.lookupRenderer.getItemAt( cx, cy );
+     }
+
+     /**
+      * create a polygon to represent a streak of water.
+      */
+     public PolygonBuilder polygon()
+     {
+        // multiply by 32 to convert to units of nominal pixels
+        Vertex last = ( new Vertex( lastX, lastY ) ).multiply( 32.0f );
+        Vertex here = ( new Vertex( x, y ) ).multiply( 32.0f );
+        // vector in the direction of travel
+        Vertex direction = here.subtract(last);
+        // vector from here to the tip of the kite
+        Vertex tip = direction.multiply( kite / direction.magnitude() );
+        // vector from here to one side of the kite
+        Vertex side = tip.rot90();
+
+        PolygonBuilder p = new PolygonBuilder();
+        p.add( last );
+        p.add( here.add( side ) );
+        p.add( here.add( tip ) );
+        p.add( here.subtract( side ) );
+
+        return p;
      }
 
     /**
