@@ -41,12 +41,15 @@ public class WaterParticle
         x = genPosInCell( hasPipe );
         y = genPosInCell( hasPipe );
         // create Coordinates in a part of the cell with the most flow
-        CellularDirection xBias = largeFlowMag( wrr, CellularDirection.LEFT,
-                                                     CellularDirection.RIGHT );
-        x = biasCoord( x, CellularDirection.LEFT, xBias);
-        CellularDirection yBias = largeFlowMag( wrr, CellularDirection.UP,
-                                                     CellularDirection.DOWN );
-        y = biasCoord( y, CellularDirection.UP, xBias);
+        if ( !hasPipe )
+        {
+            CellularDirection xBias = largeFlowMag( wrr, CellularDirection.LEFT,
+                                                        CellularDirection.RIGHT );
+            x = biasCoord( x, CellularDirection.LEFT, xBias);
+            CellularDirection yBias = largeFlowMag( wrr, CellularDirection.UP,
+                                                        CellularDirection.DOWN );
+            y = biasCoord( y, CellularDirection.UP, xBias);
+        }
         // move across the world to the correct cell
         Position p = wrr.region.getPosition();
         x += (float)p.x;
@@ -72,7 +75,7 @@ public class WaterParticle
     {
         return hasPipe ?
                ( rand.nextFloat() - 0.5f ) / 4f : // sprays out more
-               ( rand.nextFloat() - 0.5f ) / 32f ;
+               ( rand.nextFloat() - 0.5f ) / 16f ;
     }
 
     /**
