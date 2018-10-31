@@ -147,28 +147,41 @@ public class WaterRegionRenderer implements LookupItem2D
     private void checkParticlesInRegion()
     {
         // make temporary list to iterate, so we can transfer ownership of items
-        ArrayList<WaterParticle> tmpList = new ArrayList<WaterParticle>(particles);
-        for ( WaterParticle p : tmpList )
+        for ( WaterParticle p : new ArrayList<WaterParticle>(particles) )
         {
             if ( p.outOfRegion( this ) )
             {
-                int newX = (int)Math.floor(p.x), newY = (int)Math.floor(p.y);
-                WaterRegionRenderer newRend =
-                    waterAnimation.lookupRenderer.getItemAt( newX, newY );
+                WaterRegionRenderer newRend = p.rendererByPosition( waterAnimation );
                 if ( newRend == null )
                 { // no water here: accelerate fading
                     p.alphaStep = p.alphaStep - WaterParticle.alphaStepMagnitude;
                     continue;
                 }
-                if ( isFull( newX, newY ) )
+                if ( isFull( newRend.region.x, newRend.region.y ) )
                 {   // particle has moved to full cell: delete immediately
                     // block cells count as full too
-                    p.delete = true;
+                    particles.remove(p);
                     continue;
                 }
                 // transfer ownership to other renderer
                 particles.remove( p );
                 newRend.particles.add( p );
+            }
+        }
+        // now particles are in the correct cell remove those that have
+        // fallen below the water level.
+        for ( WaterParticle p : new ArrayList<WaterParticle>(particles) )
+        {
+            WaterRegionRenderer r = p.rendererByPosition( waterAnimation );
+            if ( r == null )
+            { // particle is not in a cell with a renderer:leave it
+                continue;
+            }
+            // convert to nominal pixels (32 in a cell)
+            int heightInCell = (int)( (1.0f + Math.floor(p.y) - p.y) * 32.0f );
+            if ( heightInCell < r.targetWaterHeight )
+            { // below water level: delete immediately
+                particles.remove(p);
             }
         }
     }
@@ -193,12 +206,11 @@ public class WaterRegionRenderer implements LookupItem2D
             }
         }
         // fully waned particles are removed
-        // TODO not sure deleted or faded particles are going
         Iterator<WaterParticle> i = particles.listIterator();
         while ( i.hasNext() )
         {
             WaterParticle p = i.next();
-            if ( p.alpha < 0 || p.delete)
+            if ( p.alpha < 0 )
             {
                 i.remove();
             }

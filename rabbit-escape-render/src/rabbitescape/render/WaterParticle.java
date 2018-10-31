@@ -4,6 +4,7 @@ import java.util.Random;
 import rabbitescape.engine.util.Position;
 import rabbitescape.engine.CellularDirection;
 import rabbitescape.engine.WaterRegion;
+import rabbitescape.render.gameloop.WaterAnimation;
 
 public class WaterParticle
 {
@@ -28,8 +29,6 @@ public class WaterParticle
     public int alpha = alphaStepMagnitude;
     public int alphaStep = alphaStepMagnitude;
     public int colR = 130, colG = 167, colB = 221;
-    /** schedule for deletion */
-    public boolean delete = false;
 
     public WaterParticle(WaterRegionRenderer wrr)
     {
@@ -134,6 +133,17 @@ public class WaterParticle
         return new Vertex(offset.x + x_ * tileSize,
                           offset.y + y_ * tileSize);
     }
+
+    /**
+     * return the WaterRegionRenderer for this particle's position.
+     * May return null if the particle has fallen (or drifted sideways)
+     * to a cell with no renderer.
+     */
+     public WaterRegionRenderer rendererByPosition( WaterAnimation wa)
+     {
+        int cx = (int)Math.floor(x), cy = (int)Math.floor(y);
+        return wa.lookupRenderer.getItemAt( cx, cy );
+     }
 
     /**
      * Apply momentum and gravity and damping. Called once per animation step.
