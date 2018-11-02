@@ -22,6 +22,8 @@ public class WaterAnimation
     public final LookupTable2D<WaterRegionRenderer> lookupRenderer;
     private int lastFramenumber = 10;
     public final Dimension worldSize;
+    private GameLoop gameLoop = null;
+    public int contentsPerParticle = 4;
 
     public WaterAnimation( World world )
     {
@@ -38,6 +40,11 @@ public class WaterAnimation
     public static WaterAnimation getDummyWaterAnimation()
     {
         return new WaterAnimation();
+    }
+
+    public void setGameLoop( GameLoop gl )
+    {
+        gameLoop = gl;
     }
 
     /**
@@ -102,6 +109,31 @@ public class WaterAnimation
     }
 
     /**
+     * Uses fewer particles if the computer is struggling.
+     */
+    private void moderateParticleCount()
+    {
+        if ( null == gameLoop )
+        {
+            return;
+        }
+        long waitTime = gameLoop.getWaitTime();
+        if ( -1l == waitTime )
+        {
+            return;
+        }
+        if ( waitTime < 20l )
+        {
+            contentsPerParticle += 2;
+        }
+        if ( waitTime > 30l )
+        {
+            contentsPerParticle -= 2;
+            contentsPerParticle = contentsPerParticle < 4 ? 4 : contentsPerParticle;
+        }
+    }
+
+    /**
      * Game step. Usually ten animation steps per game step.
      */
     public void step( World world )
@@ -110,6 +142,8 @@ public class WaterAnimation
         {
             return;
         }
+
+        moderateParticleCount();
 
         List<WaterRegionRenderer> currentRR = lookupRenderer.getListCopy();
         for ( WaterRegion w: world.waterTable )

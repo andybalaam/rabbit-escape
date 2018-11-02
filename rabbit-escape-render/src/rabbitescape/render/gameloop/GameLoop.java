@@ -6,6 +6,7 @@ import rabbitescape.engine.Rabbit;
 import rabbitescape.engine.config.Config;
 import rabbitescape.engine.config.ConfigKeys;
 import rabbitescape.engine.config.ConfigTools;
+import rabbitescape.engine.util.LongRingBuffer;
 
 public class GameLoop
 {
@@ -18,6 +19,7 @@ public class GameLoop
     private boolean running;
     private long simulation_time;
     private long frame_start_time;
+    private final LongRingBuffer waitTimes;
 
     private final Config config;
     private final PrintStream debugout;
@@ -40,6 +42,8 @@ public class GameLoop
         this.running = true;
         simulation_time = -1;
         frame_start_time = -1;
+        waitTimes = new LongRingBuffer( 64 );
+        water.setGameLoop( this );
     }
 
     public void run()
@@ -108,9 +112,24 @@ public class GameLoop
         long how_long_we_took = input.timeNow() - frame_start_time;
         long wait_time = frame_time_ms - how_long_we_took;
 
+        waitTimes.write( wait_time );
         input.waitMs( wait_time );
 
         return input.timeNow();
+    }
+
+    /**
+     * Return the smoothed wait time for use as a performance indicator.
+     * Returns -1 if there has been insufficent time to accumulate data to
+     * calculate a boxcar average.
+     */
+    public long getWaitTime()
+    {
+        if ( waitTimes.full() )
+        {
+            return waitTimes.mean();
+        }
+        return -1l;
     }
 
     private void printDebugOutput()
