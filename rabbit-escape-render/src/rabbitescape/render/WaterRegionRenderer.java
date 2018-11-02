@@ -27,7 +27,6 @@ import static rabbitescape.engine.CellularDirection.*;
 public class WaterRegionRenderer implements LookupItem2D
 {
 
-    public static final int contentsPerParticle = 4;
     private static final int maxHeightChange = 1;
 
     public WaterRegion region;
@@ -109,7 +108,7 @@ public class WaterRegionRenderer implements LookupItem2D
      */
     private void adjustParticleCount()
     {
-        targetParticleCount = region.getContents() / contentsPerParticle;
+        targetParticleCount = region.getContents() / waterAnimation.contentsPerParticle;
         int particleDeficit = targetParticleCount  - particles.size();
         if ( particleDeficit < 0 ) // Need to remove some: start fading
         {
