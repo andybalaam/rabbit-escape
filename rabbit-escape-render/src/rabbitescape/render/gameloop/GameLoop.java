@@ -10,6 +10,8 @@ import rabbitescape.engine.util.LongRingBuffer;
 
 public class GameLoop
 {
+    public final static long WAIT_TIME_UNAVAILABLE = -99999;
+
     private static final long frame_time_ms = 70;
 
     private final Input input;
@@ -42,7 +44,7 @@ public class GameLoop
         this.running = true;
         simulation_time = -1;
         frame_start_time = -1;
-        waitTimes = new LongRingBuffer( 64 );
+        waitTimes = new LongRingBuffer( 32 );
         water.setGameLoop( this );
     }
 
@@ -120,8 +122,8 @@ public class GameLoop
 
     /**
      * Return the smoothed wait time for use as a performance indicator.
-     * Returns -1 if there has been insufficent time to accumulate data to
-     * calculate a boxcar average.
+     * Returns WAIT_TIME_UNAVAILABLE if there has been insufficent time
+     * to accumulate data to calculate a boxcar average.
      */
     public long getWaitTime()
     {
@@ -129,7 +131,7 @@ public class GameLoop
         {
             return waitTimes.mean();
         }
-        return -1l;
+        return WAIT_TIME_UNAVAILABLE;
     }
 
     private void printDebugOutput()

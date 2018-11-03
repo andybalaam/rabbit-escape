@@ -2,6 +2,9 @@ package rabbitescape.render.gameloop;
 
 import rabbitescape.engine.WaterRegion;
 import rabbitescape.engine.World;
+import rabbitescape.engine.config.Config;
+import rabbitescape.engine.config.ConfigKeys;
+import rabbitescape.engine.config.ConfigTools;
 import rabbitescape.engine.util.CellDebugPrint;
 import rabbitescape.engine.util.Dimension;
 import rabbitescape.engine.util.LookupTable2D;
@@ -23,18 +26,40 @@ public class WaterAnimation
     private int lastFramenumber = 10;
     public final Dimension worldSize;
     private GameLoop gameLoop = null;
-    public int contentsPerParticle = 4;
+    public int contentsPerParticle;
+    public final boolean dynCPP;
+    private final Config config;
 
+    public WaterAnimation( World world, Config config )
+    {
+        worldSize = world.size;
+        lookupRenderer = new LookupTable2D<WaterRegionRenderer>( worldSize );
+        this.config = config;
+        dynCPP = ConfigTools.getBool( config,
+            ConfigKeys.CFG_WATER_DYN_CONTENTS_PER_PARTICLE );
+        contentsPerParticle = ConfigTools.getInt( config,
+            ConfigKeys.CFG_WATER_CONTENTS_PER_PARTICLE );
+    }
+
+    /**
+     * Constructor for tests that won't be rendering particles.
+     */
     public WaterAnimation( World world )
     {
         worldSize = world.size;
         lookupRenderer = new LookupTable2D<WaterRegionRenderer>( worldSize );
+        this.config = null;
+        dynCPP = false;
+        contentsPerParticle = 4;
     }
 
     private WaterAnimation()
     {
         lookupRenderer = null;
         worldSize = null;
+        config = null;
+        dynCPP = false;
+        contentsPerParticle = 4;
     }
 
     public static WaterAnimation getDummyWaterAnimation()
@@ -113,22 +138,22 @@ public class WaterAnimation
      */
     private void moderateParticleCount()
     {
-        if ( null == gameLoop )
+        if ( !dynCPP || null == gameLoop )
         {
             return;
         }
         long waitTime = gameLoop.getWaitTime();
-        if ( -1l == waitTime )
+        if ( GameLoop.WAIT_TIME_UNAVAILABLE == waitTime )
         {
             return;
         }
         if ( waitTime < 20l )
         {
-            contentsPerParticle += 2;
+            contentsPerParticle += 2 + contentsPerParticle / 3;
         }
         if ( waitTime > 30l )
         {
-            contentsPerParticle -= 2;
+            contentsPerParticle -= 2 + contentsPerParticle / 3;
             contentsPerParticle = contentsPerParticle < 4 ? 4 : contentsPerParticle;
         }
     }

@@ -98,7 +98,7 @@ public class SwingGameLaunch implements GameLaunch
             this.frameDumper = FrameDumper.createInactiveDumper();
         }
         this.swingPlayback = new SwingPlayback( this );
-        WaterAnimation waterAnimation = new WaterAnimation( world ) ;
+        WaterAnimation waterAnimation = new WaterAnimation( world, config ) ;
         this.physics = new GeneralPhysics(
             world,
             waterAnimation,
