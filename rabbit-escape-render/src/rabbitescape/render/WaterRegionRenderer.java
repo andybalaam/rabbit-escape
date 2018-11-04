@@ -19,6 +19,7 @@ import rabbitescape.engine.util.CellDebugPrint;
 import rabbitescape.engine.util.LookupItem2D;
 import rabbitescape.engine.util.MathUtil;
 import rabbitescape.engine.util.Position;
+import rabbitescape.engine.util.WaterUtil;
 import rabbitescape.render.gameloop.WaterAnimation;
 
 import static rabbitescape.engine.BehaviourTools.*;
@@ -407,6 +408,23 @@ public class WaterRegionRenderer implements LookupItem2D
             return false;
         }
         return 32 == wrr.height && 32 == wrr.targetWaterHeight;
+    }
+
+    /**
+     * returns opacity for whole cell water background.
+     * depends on contents and slope influence on capacity
+     */
+    public int backShadeAlpha()
+    {
+        Block b = world.getBlockAt( region.x, region.y );
+        // slope cells are half full of block to start with
+        int baselineContent =  isSlopeNotBridge( b ) ?
+                               WaterUtil.HALF_CAPACITY : 0;
+        int alpha = 255 * ( baselineContent + region.getContents() ) /
+                    WaterUtil.MAX_CAPACITY;
+        // divide by 4 to tame it, as particles and polygons should show
+        // the same thing.
+        return MathUtil.constrain( alpha, 0, 255 ) / 4;
     }
 
     public boolean hasPipe()

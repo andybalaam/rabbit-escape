@@ -154,9 +154,9 @@ public class SwingGraphics implements Graphics
                     renderer.tileSize * wrr.region.x + renderer.tileSize + renderer.offsetX,
                     renderer.tileSize * wrr.region.y + renderer.tileSize + renderer.offsetY
                 );
-                int height = wrr.region.getContents();
-                int alpha = MathUtil.constrain( ( 255 * height ) / 1024, 0, 255 ) / 4;
-                SwingPaint backShade =  new SwingPaint( new Color( waterR, waterG, waterB, alpha ) );
+                Color bsColor =
+                    new Color( waterR, waterG, waterB, wrr.backShadeAlpha() );
+                SwingPaint backShade =  new SwingPaint( bsColor );
                 backShade.setStyle( SwingPaint.Style.FILL );
                 swingCanvas.drawRect( rect, backShade );
             }
