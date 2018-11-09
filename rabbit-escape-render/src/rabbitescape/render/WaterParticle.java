@@ -157,7 +157,14 @@ public class WaterParticle
      public WaterRegionRenderer rendererByPosition( WaterAnimation wa)
      {
         int cx = (int)Math.floor(x), cy = (int)Math.floor(y);
-        return wa.lookupRenderer.getItemAt( cx, cy );
+        try
+        {
+            return wa.lookupRenderer.getItemAt( cx, cy );
+        }
+        catch ( IndexOutOfBoundsException eIOOB)
+        {
+            return null;
+        }
      }
 
      /**
