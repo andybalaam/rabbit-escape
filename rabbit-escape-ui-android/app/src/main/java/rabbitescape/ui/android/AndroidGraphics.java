@@ -22,6 +22,7 @@ import rabbitescape.render.SoundPlayer;
 import rabbitescape.render.Sprite;
 import rabbitescape.render.SpriteAnimator;
 import rabbitescape.render.Vertex;
+import rabbitescape.render.WaterParticle;
 import rabbitescape.render.WaterRegionRenderer;
 import rabbitescape.render.androidlike.Rect;
 import rabbitescape.render.gameloop.Graphics;
@@ -67,14 +68,16 @@ public class AndroidGraphics implements Graphics
     private static final AndroidPaint graphPaperMinor =
         makePaint( Color.rgb( 235, 243, 255 ), Paint.ANTI_ALIAS_FLAG );
 
-    private static final AndroidPaint waterColor =
-            makePaint( Color.argb( 100, 10, 100, 220 ), Paint.ANTI_ALIAS_FLAG );
-
     private static final AndroidPaint dullOverlay =
         makePaint( Color.argb( 200, 70, 70, 70 ) );
 
     private static final AndroidPaint greenText =
             makePaint( Color.rgb( 100, 255, 100 ), Paint.ANTI_ALIAS_FLAG );
+
+    private static final int waterR = 130, waterG = 167, waterB = 221;
+
+    private static final AndroidPaint waterColor =
+        makePaint( Color.argb( 255, waterR, waterG, waterB ) );
 
     static
     {
@@ -324,36 +327,42 @@ public class AndroidGraphics implements Graphics
     )
     {
         float f = renderer.tileSize / 32f;
+        Vertex offset = new Vertex( renderer.offsetX, renderer.offsetY );
 
-        for ( int y = 0; y < wa.worldSize.height ; y++ )
-        {
-            for ( int x = 0; x < wa.worldSize.width; x++ )
-            {
-                WaterRegionRenderer wrr = wa.lookupRenderer.getItemAt( x, y );
-                if ( wrr == null )
-                {
-                    continue;
-                }
-                Rect rect = new Rect(
-                    renderer.tileSize * wrr.region.x + renderer.offsetX,
-                    renderer.tileSize * wrr.region.y + renderer.offsetY,
-                    renderer.tileSize * wrr.region.x + renderer.tileSize + renderer.offsetX,
-                    renderer.tileSize * wrr.region.y + renderer.tileSize + renderer.offsetY
-                );
-                int height = wrr.region.getContents();
-                int alpha = MathUtil.constrain( ( 255 * height ) / 1024, 0, 255 );
-                Paint paint = new Paint();
-                paint.setStyle( Paint.Style.FILL );
-                paint.setARGB( alpha, 130, 167, 221 );
-                androidCanvas.drawRect( rect, new AndroidPaint( paint ) );
-            }
+        // shade whole background sqaure cells with any water
+        for ( WaterRegionRenderer wrr : wa.lookupRenderer) {
+            Rect rect = new Rect(
+                renderer.tileSize * wrr.region.x + renderer.offsetX,
+                renderer.tileSize * wrr.region.y + renderer.offsetY,
+                renderer.tileSize * wrr.region.x + renderer.tileSize + renderer.offsetX,
+                renderer.tileSize * wrr.region.y + renderer.tileSize + renderer.offsetY
+            );
+            Paint paint = new Paint();
+            paint.setStyle(Paint.Style.FILL);
+            paint.setARGB(wrr.backShadeAlpha(), waterR, waterG, waterB);
+            androidCanvas.drawRect(rect, new AndroidPaint(paint) );
         }
 
+        // draw polygons to represent pooled water
         for ( PolygonBuilder pb: wa.calculatePolygons() )
         {
             rabbitescape.render.androidlike.Path rePath = pb.path(
-                    f, new Vertex( renderer.offsetX, renderer.offsetY ) );
+                    f, offset );
             androidCanvas.drawPath( rePath, waterColor );
+        }
+
+        // draw particles to represent falling water
+        for ( WaterRegionRenderer wrr : wa.lookupRenderer )
+        {
+            for ( WaterParticle wp : wrr.particles )
+            {
+                Paint paint = new Paint();
+                paint.setStyle(Paint.Style.FILL);
+                paint.setARGB(wp.alpha, waterR, waterG, waterB);
+                rabbitescape.render.androidlike.Path rePath =
+                    wp.polygon().path( f, offset );
+                androidCanvas.drawPath( rePath, new AndroidPaint(paint) );
+            }
         }
     }
 
