@@ -48,7 +48,8 @@ public class WaterRegion extends Thing implements LookupItem2D
         super( x, y, State.WATER_REGION_EMPTY );
         this.connections = connections;
         this.capacity = capacity;
-        this.contents = contents;
+        // This also sets the water region state.
+        setContents(contents);
         this.outsideWorld = outsideWorld;
     }
 

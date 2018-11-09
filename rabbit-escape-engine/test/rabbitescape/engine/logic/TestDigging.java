@@ -860,4 +860,68 @@ public class TestDigging
             "#M#"
         );
     }
+
+    @Test
+    public void Digging_does_not_destroy_water()
+    {
+        World world = createWorld(
+            "#r#",
+            "#*#",
+            "###",
+            "#n#",
+            "###",
+            ":*=/nd"
+        );
+
+        // The rabbit digs through the floor.
+        assertWorldEvolvesLike(
+            world,
+            3,
+            new String[]{
+                "# #",
+                "#n#",
+                "#*#",
+                "#n#",
+                "###",
+                ":*=r{Digging.stepsOfDigging:1,index:1}"
+            });
+
+        // The water catches up with the rabbit.
+        assertWorldEvolvesLike(
+            world,
+            1,
+            new String[]{
+                "# #",
+                "# #",
+                "#*#",
+                "#n#",
+                "###",
+                ":*=nr{index:1}"
+            });
+
+        // The water combines to fill the cell.
+        assertWorldEvolvesLike(
+            world,
+            1,
+            new String[]{
+                "# #",
+                "# #",
+                "# #",
+                "#*#",
+                "###",
+                ":*=Nr{Falling.heightFallen:1,index:1}"
+            });
+
+        // ...and the rabbit drowns in the full cell of water.
+        assertWorldEvolvesLike(
+            world,
+            1,
+            new String[]{
+                "# #",
+                "# #",
+                "# #",
+                "#N#",
+                "###"
+            });
+    }
 }

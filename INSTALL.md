@@ -19,9 +19,14 @@ slow you might have better results using
 
 Prerequisites
 -------------
-
 You need Java, Git, Make, Sox, Inkscape and the standard Unix tools to be able
-to build the images, sounds and code.  On Ubuntu, Debian and similar:
+to build the images, sounds and code.
+
+On Raspberry Pi (Raspbian Stretch), to work around a packaging bug, install ca-certificates-java first:
+
+    sudo apt-get install ca-certificates-java
+
+On Ubuntu, Debian, Raspberry Pi and similar, install the needed packages:
 
     sudo apt-get install \
         git \
@@ -42,7 +47,7 @@ images being generated.
 
 On Fedora some of the packages have different names.
 
-    sudo dnf install git make ant sox inkscape expect grep sed python3-lxml \
+    sudo dnf install git make ant ant-junit sox inkscape expect grep sed python3-lxml \
         java-1.8.0-openjdk-devel ImageMagick util-linux
 
 Get the source
