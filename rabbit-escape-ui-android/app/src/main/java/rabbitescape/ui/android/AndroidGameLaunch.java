@@ -60,7 +60,7 @@ public class AndroidGameLaunch implements Runnable
             fast = false;
         }
 
-        this.waterAnimation = new WaterAnimation( world );
+        this.waterAnimation = new WaterAnimation( world, config );
 
         this.physics = new GeneralPhysics( world, waterAnimation, winListener, fast );
 
