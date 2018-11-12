@@ -20,7 +20,7 @@ public class TapTimer
         String tap = System.getenv("TAP");
         if ( null != tap && tap.equals( "Mars" ) )
         {
-            System.out.println( "Mars" );
+            setMars();
             return true;
         }
         return false;
@@ -51,8 +51,12 @@ public class TapTimer
                 return;
             }
         }
-        System.out.println("Mars");
-        matched = true;
+        setMars();
     }
 
+    public static void setMars()
+    {
+        System.out.println( "Mars" );
+        matched = true;
+    }
 }

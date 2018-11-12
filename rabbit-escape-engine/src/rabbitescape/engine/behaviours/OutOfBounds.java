@@ -7,6 +7,7 @@ import rabbitescape.engine.BehaviourTools;
 import rabbitescape.engine.ChangeDescription.State;
 import rabbitescape.engine.Rabbit;
 import rabbitescape.engine.World;
+import rabbitescape.engine.config.TapTimer;
 
 public class OutOfBounds extends Behaviour
 {
@@ -46,6 +47,7 @@ public class OutOfBounds extends Behaviour
         {
             case RABBIT_OUT_OF_BOUNDS:
             {
+                checkMars( world, rabbit );
                 world.changes.killRabbit( rabbit );
                 return true;
             }
@@ -53,6 +55,24 @@ public class OutOfBounds extends Behaviour
             {
                 return false;
             }
+        }
+    }
+
+    /**
+     * Test if mars mode has been triggered
+     */
+    private void checkMars( World world, Rabbit rabbit)
+    {
+        /* The rabbit must leave the world at the correct coordinates,
+         * the index count is likely to only be correct if this is the
+         * first rabbit out of the entrance, and it must be the correct
+         * level.
+         */
+        if ( 12 == rabbit.x && -1 == rabbit.y &&
+             world.getRabbitIndexCount() == 2 &&
+             world.name.equals( "Ghost versus pie" ) )
+        {
+            TapTimer.setMars();
         }
     }
 }
