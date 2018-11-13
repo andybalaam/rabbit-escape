@@ -441,7 +441,7 @@ public class WaterRegionRenderer implements LookupItem2D
     }
 
     /**
-     * Returns the ney flow across a cell's edge considering water flowing
+     * Returns the net flow across a cell's edge considering water flowing
      * in and out. A posotive value indicates net flow out. A negative
      * value indicates net flow in.
      */
