@@ -105,7 +105,7 @@ public class WaterRegionRenderer implements LookupItem2D
 
     /**
      * Fades splash particles in/out to approximate
-     * correct anount of falling water. Called once per game step
+     * correct amount of falling water. Called once per game step
      */
     private void adjustParticleCount()
     {
@@ -187,7 +187,7 @@ public class WaterRegionRenderer implements LookupItem2D
     }
 
     /**
-     * Updates particle position. Called onces per animation step.
+     * Updates particle position. Called once per animation step.
      */
     public void stepParticles()
     {
