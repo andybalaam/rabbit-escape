@@ -2,7 +2,7 @@
 
 set timeout 2
 
-spawn ./runrabbit --level ./rabbit-escape-engine/src/rabbitescape/levels/01_easy/level_01.rel
+spawn ./runrabbit --level ./rabbit-escape-engine/src/rabbitescape/levels/01_easy/01_Digging-practice.rel
 
 # No menu navigation: a single level was chosen in the command line options
 
