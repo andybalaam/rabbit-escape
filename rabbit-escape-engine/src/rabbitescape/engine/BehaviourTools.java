@@ -82,6 +82,24 @@ public class BehaviourTools
         }
     }
 
+    public boolean rabbitIsBashing()
+    {
+        switch( rabbit.state)
+        {
+        case RABBIT_BASHING_RIGHT:
+        case RABBIT_BASHING_LEFT:
+        case RABBIT_BASHING_UP_RIGHT:
+        case RABBIT_BASHING_UP_LEFT:
+        case RABBIT_BASHING_USELESSLY_RIGHT:
+        case RABBIT_BASHING_USELESSLY_LEFT:
+        case RABBIT_BASHING_USELESSLY_RIGHT_UP:
+        case RABBIT_BASHING_USELESSLY_LEFT_UP:
+            return true;
+        default:
+            return false;
+        }
+    }
+
     /**
      * Checks for the presence of a token. Removes token from the the world and returns
      * true if a token is being picked up.
