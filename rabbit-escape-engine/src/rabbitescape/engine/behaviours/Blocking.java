@@ -11,6 +11,7 @@ import rabbitescape.engine.ChangeDescription.State;
 public class Blocking extends Behaviour
 {
     public boolean abilityActive = false;
+    private boolean wasBasher = false;
 
     @Override
     public void cancel()
@@ -22,7 +23,7 @@ public class Blocking extends Behaviour
     public boolean checkTriggered( Rabbit rabbit, World world )
     {
         BehaviourTools t = new BehaviourTools( rabbit, world );
-
+        wasBasher = t.rabbitIsBashing();
         return t.pickUpToken( block );
     }
 
@@ -32,6 +33,17 @@ public class Blocking extends Behaviour
         if ( abilityActive || triggered )
         {
             abilityActive = true;
+            if ( wasBasher )
+            {
+                // Bashing from a slope makes them hop up a square,
+                // this needs reversing when they change to a blocker.
+                Block below = t.blockBelow();
+                if ( BehaviourTools.isSlope( below ) )
+                {
+                    ++t.rabbit.y;
+                }
+                wasBasher = false;
+            }
             Block here = t.blockHere();
             if( BehaviourTools.isRightRiseSlope( here ) )
             {
