@@ -1,0 +1,30 @@
+:name=Glass Half Full
+:description=Always look on the bright side of life.
+:author_name=tttppp
+:author_url=github.com/tttppp
+:hint.1.code=Zo|Aov.c(sAzoAoo|Y$Dv+|<|3CoZA<+sves(
+:hint.2.code=2&%%g.scg8-P%%s$f-%fZngc<%ssn%cg2ng%gsc*oo.g%%.F%f8&gP2bk%b%ceP2Gfn%ccoc+.c%-s-bsPP8cs-n+8%%b2-c&%%f&P%.gGngPb2n<%scc88ng%
+:hint.3.code=]!HM!M6!g_O!gD}EhOqHO!]GBghWHh_O!HQD!OiO!D5M}MG!!!HFgE'i!HhQ7Mh!!MGM'hQOF;GDhGbMqq!MOg5!G!hDDOD_WH!hOOH!W!'g!M'HMO!66!}!i!DOOgMHHM!WH6'!i6!_Gb!DDO
+:solution.1.code= kD I kxMXw D a k%MBOqk%pq%GYMrd `Ik%%%D dI ORkeDxdxk DMdxGYrr X!MD *Lq d O pX ORD GYrwdX  D wI  DkkD R D%%%a dIq RxwOdxeRakMGq rzd D-xxR d kekrw %Xr%aGdGwr!!wedBkrRrRID O%d dd   qkLX*  DXk%*-d-DekxG-wX  RDxY#Lw Ie*RkLdqD z
+:num_rabbits=10
+:num_to_save=9
+:rabbit_delay=4
+:music=tryad-witness
+:block=5
+:bridge=5
+:climb=5
+:dig=5
+:explode=5
+                     
+       M  M          
+       MnnM          
+       MNNM          
+       MNNM          
+       MMMM        y 
+ ################### 
+   Q#           #O   
+    #           #    
+    #           #    
+#####################
+:n=8,2,255
+:n=9,2,255
