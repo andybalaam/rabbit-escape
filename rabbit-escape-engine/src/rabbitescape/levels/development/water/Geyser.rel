@@ -1,0 +1,28 @@
+:name=Geyser
+:description=She's gonna blow!
+:author_name=ColonelFazackerley
+:author_url=https://github.com/colonelfazackerley
+:hint.1.code=
+:hint.2.code=
+:hint.3.code=
+:solution.1.code=4$[H838H-04Z}+3b?+?3*}0483+3}Z3803-Z}+8b0Z0}+%}3383[H03$4vv3ik}k[++b3Zi4+H>40{$1$88{H}4?+%133+$*3'30m0kRZ0r883
+:num_rabbits=6
+:num_to_save=6
+:rabbit_delay=10,18,18,18,2
+:bash=4
+:block=3
+:bridge=3
+:dig=3
+Q  r    
+        
+        
+   d   O
+########
+#NNNNNN#
+########
+:n=1,5,1000
+:n=2,5,1000
+:n=3,5,3000
+:n=4,5,1000
+:n=5,5,1000
+:n=6,5,40000
