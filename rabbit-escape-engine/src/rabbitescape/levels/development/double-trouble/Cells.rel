@@ -1,0 +1,25 @@
+:name=Cells
+:description=There are two different intended solutions. They are such that the rabbits go through different exits and don't receive the same token.
+:author_name=tttppp
+:author_url=http://github.com/tttppp
+:solution.1.code=~a&r~TMnhT&i fR8CN]i&fRih!11~m9&h(N~RK8XR{C~TfRofh(sXNN1&&~{i911~nmrhh1~~
+:solution.2.code=K*5~u uyK!"uS|&(c4u|K u!aT %u 5SSpTu|Up&K{c~~-S!(T=KS5!5u lu"
+:num_rabbits=0
+:num_to_save=4
+:rabbit_delay=4
+:music=
+:bash=1
+:block=1
+:bridge=1
+:brolly=1
+:climb=1
+:dig=1
+:explode=1
+#####
+#O#r#
+#r###
+##O #
+r # #
+#*#r#
+  ###
+:*=#O
