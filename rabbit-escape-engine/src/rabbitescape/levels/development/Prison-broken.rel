@@ -1,0 +1,23 @@
+:name=Prison broken
+:description=Someone's smuggled a spoon into the middle cell.
+:author_name=tttppp
+:author_url=https://github.com/tttppp
+:solution.1.code=8e.*j+*rIBg**.*=g*z*Bre.I8Me.*BB46?V*B6j=B?;Bj*V?+68Vr+*yV*MM*8}e*er*r).a6a.rBB6z6ae***j+j
+:num_rabbits=3
+:num_to_save=3
+:bash=2
+:bridge=3
+:dig=1
+:music=tryad-empty
+            ########          
+            #  Q   # ######## 
+ ########   #d     # #   Q  # 
+ #  Q   #   ######## #      # 
+ #      #            ######## 
+ ########                     
+                              
+                       O      
+            \       /######## 
+            ##########        
+                              
+ ##########                   
