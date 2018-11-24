@@ -3,7 +3,6 @@ package rabbitescape.render;
 import java.util.Random;
 import rabbitescape.engine.util.Position;
 import rabbitescape.engine.CellularDirection;
-import rabbitescape.engine.WaterRegion;
 import rabbitescape.render.gameloop.WaterAnimation;
 import rabbitescape.render.PolygonBuilder;
 import rabbitescape.render.Vertex;
@@ -54,7 +53,7 @@ public class WaterParticle
             x = biasCoord( x, CellularDirection.LEFT, xBias);
             CellularDirection yBias = largeFlowMag( wrr, CellularDirection.UP,
                                                         CellularDirection.DOWN );
-            y = biasCoord( y, CellularDirection.UP, xBias);
+            y = biasCoord( y, CellularDirection.UP, yBias);
         }
         // move across the world to the correct cell
         Position p = wrr.region.getPosition();

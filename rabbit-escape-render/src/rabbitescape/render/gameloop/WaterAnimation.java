@@ -28,13 +28,11 @@ public class WaterAnimation
     private GameLoop gameLoop = null;
     public int contentsPerParticle;
     public final boolean dynCPP;
-    private final Config config;
 
     public WaterAnimation( World world, Config config )
     {
         worldSize = world.size;
         lookupRenderer = new LookupTable2D<WaterRegionRenderer>( worldSize );
-        this.config = config;
         dynCPP = ConfigTools.getBool( config,
             ConfigKeys.CFG_WATER_DYN_CONTENTS_PER_PARTICLE );
         contentsPerParticle = ConfigTools.getInt( config,
@@ -48,7 +46,6 @@ public class WaterAnimation
     {
         worldSize = world.size;
         lookupRenderer = new LookupTable2D<WaterRegionRenderer>( worldSize );
-        this.config = null;
         dynCPP = false;
         contentsPerParticle = 4;
     }
@@ -57,7 +54,6 @@ public class WaterAnimation
     {
         lookupRenderer = null;
         worldSize = null;
-        config = null;
         dynCPP = false;
         contentsPerParticle = 4;
     }

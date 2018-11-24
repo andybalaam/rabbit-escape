@@ -23,7 +23,6 @@ import rabbitescape.engine.util.WaterUtil;
 import rabbitescape.render.gameloop.WaterAnimation;
 
 import static rabbitescape.engine.BehaviourTools.*;
-import static rabbitescape.engine.CellularDirection.*;
 
 public class WaterRegionRenderer implements LookupItem2D
 {
@@ -37,7 +36,6 @@ public class WaterRegionRenderer implements LookupItem2D
     private int lastHeight = 0;
 
     private int targetParticleCount = 0;
-    private int particleCount = 0;
     public final ArrayList<WaterParticle> particles = new ArrayList<WaterParticle>();
 
     private final World world;
