@@ -3,7 +3,6 @@ package rabbitescape.ui.swing;
 import rabbitescape.engine.Thing;
 import rabbitescape.engine.World;
 import rabbitescape.engine.World.CompletionState;
-import rabbitescape.engine.util.MathUtil;
 import rabbitescape.engine.util.Util;
 import rabbitescape.render.*;
 import rabbitescape.render.androidlike.Path;
