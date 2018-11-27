@@ -28,6 +28,9 @@ public class Rabbit extends Thing implements Comparable<Rabbit>
 
     public Direction dir;
     public boolean onSlope;
+    /** Rabbits move up 1 cell to bash from a slope.
+     *  Keep a note, so it can be undone.  */
+    public boolean slopeBashHop = false;
     public final Type type;
 
     public Rabbit( int x, int y, Direction dir, Type type )
@@ -120,6 +123,7 @@ public class Rabbit extends Thing implements Comparable<Rabbit>
         boolean done = false;
         for ( Behaviour behaviour : behaviours )
         {
+
             State thisState = behaviour.newState(
                 new BehaviourTools( this, world ), behaviour.triggered );
 
@@ -141,6 +145,22 @@ public class Rabbit extends Thing implements Comparable<Rabbit>
                 behaviour.cancel();
             }
         }
+    }
+
+    public void possiblyUndoSlopeBashHop( World world )
+    {
+        if ( !slopeBashHop )
+        {
+            return;
+        }
+        BehaviourTools t = new BehaviourTools( this, world );
+        if ( t.blockHere() != null ||
+            !BehaviourTools.isSlope( t.blockBelow() ) )
+        {
+            return;
+        }
+        ++y;
+        slopeBashHop = false;
     }
 
     @Override
