@@ -445,7 +445,7 @@ public class TestBashing
             "#\\#"
         );
     }
-    
+
     @Test
     public void Bashing_fails_if_first_block_is_unbreakable()
     {
@@ -544,5 +544,72 @@ public class TestBashing
                 ":n=1,0,256",
                 ":n=2,0,256"
             });
+    }
+
+    @Test
+    public void Basher_on_bridge_trans_to_digger_must_not_airwalk_after()
+    {
+        World world = createWorld(
+            "   ",
+            "r* ",
+            "## ",
+            "   ",
+            ":*=(bd"
+        );
+
+        world.step();
+        assertThat(
+            renderWorld( world, true, false ),
+            equalTo(
+                "   ",
+                " rI",
+                "## ",
+                "   "
+            )
+        );
+
+        world.step();
+        assertThat(
+            renderWorld( world, true, false ),
+            equalTo(
+                "   ",
+                " D ",
+                "## ",
+                "   "
+            )
+        );
+
+        world.step();
+        assertThat(
+            renderWorld( world, true, false ),
+            equalTo(
+                "   ",
+                " r ",
+                "#D ",
+                "   "
+            )
+        );
+
+        world.step();
+        assertThat(
+            renderWorld( world, true, false ),
+            equalTo(
+                "   ",
+                "   ",
+                "#D ",
+                "   "
+            )
+        );
+
+        world.step();
+        assertThat(
+            renderWorld( world, true, false ),
+            equalTo(
+                "   ",
+                "   ",
+                "#r ",
+                " f "
+            )
+        );
     }
 }
