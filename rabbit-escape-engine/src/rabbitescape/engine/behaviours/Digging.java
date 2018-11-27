@@ -33,6 +33,8 @@ public class Digging extends Behaviour
             return null;
         }
 
+        t.rabbit.possiblyUndoSlopeBashHop( t.world );
+
         if ( t.rabbit.state == RABBIT_DIGGING )
         {
             stepsOfDigging = 1;
