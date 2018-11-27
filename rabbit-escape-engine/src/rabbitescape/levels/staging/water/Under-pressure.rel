@@ -5,7 +5,7 @@
 :hint.1.code=332s2iriROrQlRmjdl3HO[ma3OiRp|[<^iXROiQr_O||kr$sOim|OOirO3s2Oi^pO3R3
 :hint.2.code=13V7y3v1[n0[[m3779[GVnn?[HlrQn797dVIg1_3Qgd7y9nQ7[737VV77[317[?3?gV"Q7h
 :hint.3.code=@N"ioioli "ZN#>@oN 2>NN)#kl)@N@N#OioT hihhN""2N@NiThN#)p>>Np]2#x2Ti
-:solution.1.code=[y#y7$CKgIO|}ggOVy#yy}[IOh'%y[Cy#jOp7yfV#T'CA7AyO~C|IgyzT#yppgOyCK7A%O|}'CpyCy%yy}Op'_gTp#CgKI*O#yyKO#OCVyyf7y'V%yf#CAygy7#y#pCpCIjy#p7py%O~}Ty%7f'~Tj}
+:solution.1=dig&(0,4);bash;2;(0,5);(2,5);bridge;4;(0,5)&block;12;(2,4);;(0,5);12;dig;(2,4);2;bash&(5,5);11;(0,5);22
 :num_rabbits=10
 :num_to_save=8
 :rabbit_delay=18,10,5,14,4
