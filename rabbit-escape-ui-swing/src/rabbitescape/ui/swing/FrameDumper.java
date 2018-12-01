@@ -37,7 +37,10 @@ public class FrameDumper
         recordingDir = recordingDirTmp;
 
         fs.mkdirs( recordingDir );
-        System.out.printf( "Dumping %sanim_test_frame_<set>_<frame>.png:", recordingDir );
+        System.out.printf( 
+            "Dumping %sanim_test_frame_<set>_<frame>.png:",
+            recordingDir 
+        );
     }
 
     private FrameDumper( boolean active )
@@ -60,16 +63,27 @@ public class FrameDumper
         dump( canvas, drawFrame, String.format( "%07d", frameI++ ) );
     }
 
-    public void dump( java.awt.Canvas canvas, BufferedDraw drawFrame, String frameID )
+    public void dump( 
+        java.awt.Canvas canvas, 
+        BufferedDraw drawFrame,
+        String frameID 
+    )
     {
         if ( !active )
         {
             return;
         }
-        BufferedImage im = new BufferedImage( canvas.getWidth(), canvas.getHeight(),
-            BufferedImage.TYPE_INT_ARGB );
+        BufferedImage im = new BufferedImage( 
+                canvas.getWidth(), 
+                canvas.getHeight(),
+                BufferedImage.TYPE_INT_ARGB 
+        );
         drawFrame.draw( (Graphics2D)im.getGraphics() );
-        String fileName = String.format( "%sframe_%s.png", recordingDir, frameID );
+        String fileName = String.format( 
+            "%sframe_%s.png", 
+            recordingDir,
+            frameID 
+        );
         System.out.printf( " " + frameID );
         try
         {
@@ -88,8 +102,11 @@ public class FrameDumper
         {
             return;
         }
-        String cmd = String.format( "convert -delay 10 -loop 0 %s*.png %sanimation.gif",
-            recordingDir, recordingDir );
+        String cmd = String.format(
+            "convert -delay 10 -loop 0 %s*.png %sanimation.gif",
+            recordingDir, 
+            recordingDir 
+        );
         try
         {
             Runtime.getRuntime().exec( cmd );
@@ -97,7 +114,8 @@ public class FrameDumper
         }
         catch ( IOException e )
         {
-            System.err.println( "convert from ImageMagick is required to make animated gifs" );
+            System.err.println(
+                "convert from ImageMagick is required to make animated gifs" );
             e.printStackTrace();
         }
     }

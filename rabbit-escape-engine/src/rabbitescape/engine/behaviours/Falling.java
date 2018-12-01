@@ -16,7 +16,11 @@ public class Falling extends Behaviour
     private final Brollychuting brollychuting;
     private final int fatalHeight;
 
-    public Falling( Climbing climbing, Brollychuting brollychuting, int fatalHeight )
+    public Falling( 
+        Climbing climbing, 
+        Brollychuting brollychuting,
+        int fatalHeight 
+    )
     {
         this.climbing = climbing;
         this.brollychuting = brollychuting;

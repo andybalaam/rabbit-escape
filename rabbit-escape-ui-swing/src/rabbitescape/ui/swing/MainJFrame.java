@@ -43,8 +43,9 @@ public class MainJFrame extends JFrame
         public void componentResized( ComponentEvent e )
         {
             if ( !frame.isActive() )
-            { // awt.EDT fires off a couple of events before the frame is active
-              // the second changes the frame's size slightly. protect against this.
+            { // awt.EDT fires off a couple of events before the
+              // frame is active the second changes the frame's size slightly.
+              // protect against this.
                 return;
             }
             ConfigTools.setInt(

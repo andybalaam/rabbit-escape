@@ -53,7 +53,8 @@ public class Entrance extends Thing
     {
         int delayIndex;
 
-        delayIndex = rabbitEntranceCount >= delay.length ? delay.length-1 : rabbitEntranceCount ;
+        delayIndex = rabbitEntranceCount >= delay.length
+                     ? delay.length-1 : rabbitEntranceCount ;
 
         rabbitEntranceCount++ ;
 
@@ -87,6 +88,8 @@ public class Entrance extends Thing
     @Override
     public String overlayText()
     {
-        return null == world ? "Entrance" : "Entrance\n" + world.num_waiting + " to come";
+        return null == world
+                       ? "Entrance"
+                       : "Entrance\n" + world.num_waiting + " to come";
     }
 }

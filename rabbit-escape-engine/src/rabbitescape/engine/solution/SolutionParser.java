@@ -16,7 +16,8 @@ public class SolutionParser
     public static final String COMMAND_DELIMITER = ";";
     public static final String ACTION_DELIMITER = "&";
     private static final Pattern WAIT_REGEX = Pattern.compile( "\\d+" );
-    private static final Pattern UNTIL_REGEX = Pattern.compile( "until:([A-Z]+)" );
+    private static final Pattern UNTIL_REGEX =
+        Pattern.compile( "until:([A-Z]+)" );
 
     private static final Pattern PLACE_TOKEN_REGEX = Pattern.compile(
         "\\((\\d+),(\\d+)\\)" );
@@ -90,7 +91,8 @@ public class SolutionParser
         }
         else if ( untilMatcher.matches() )
         {
-            CompletionState state = CompletionState.valueOf( untilMatcher.group( 1 ) );
+            CompletionState state =
+                CompletionState.valueOf( untilMatcher.group( 1 ) );
             return new UntilAction( state );
         }
         else if ( WAIT_REGEX.matcher( actionString ).matches() )

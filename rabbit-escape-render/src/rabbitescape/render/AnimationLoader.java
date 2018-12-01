@@ -150,7 +150,8 @@ public class AnimationLoader
                 case 2:
                 {
                     return new Frame(
-                        parts[0], Integer.valueOf( parts[1] ) + xOffset, yOffset, null );
+                        parts[0], Integer.valueOf( parts[1] ) + xOffset,
+                        yOffset, null );
                 }
                 case 3:
                 {

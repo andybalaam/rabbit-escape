@@ -48,11 +48,17 @@ public class WaterParticle
         // create Coordinates in a part of the cell with the most flow
         if ( !hasPipe )
         {
-            CellularDirection xBias = largeFlowMag( wrr, CellularDirection.LEFT,
-                                                        CellularDirection.RIGHT );
+            CellularDirection xBias = largeFlowMag( 
+                    wrr, 
+                    CellularDirection.LEFT,
+                    CellularDirection.RIGHT 
+                 );
             x = biasCoord( x, CellularDirection.LEFT, xBias);
-            CellularDirection yBias = largeFlowMag( wrr, CellularDirection.UP,
-                                                        CellularDirection.DOWN );
+            CellularDirection yBias = largeFlowMag( 
+                wrr, 
+                CellularDirection.UP,
+                CellularDirection.DOWN 
+            );
             y = biasCoord( y, CellularDirection.UP, yBias);
         }
         // move across the world to the correct cell
@@ -90,8 +96,11 @@ public class WaterParticle
      * significantly larger than the other, it is returned. Returns null
      * if neither is much bigger.
      */
-    private CellularDirection largeFlowMag(WaterRegionRenderer wrr,
-                                           CellularDirection a, CellularDirection b)
+    private CellularDirection largeFlowMag(
+        WaterRegionRenderer wrr,
+        CellularDirection a,
+        CellularDirection b
+    )
     {
         int aMag = Math.abs(wrr.edgeNetFlow(a));
         int bMag = Math.abs(wrr.edgeNetFlow(b));
@@ -106,8 +115,11 @@ public class WaterParticle
         return null;
     }
 
-    private float biasCoord( float coord, CellularDirection lowerBiasDir,
-                             CellularDirection biasDir)
+    private float biasCoord( 
+        float coord, 
+        CellularDirection lowerBiasDir,
+        CellularDirection biasDir
+    )
     {
         if ( biasDir == null )
         {

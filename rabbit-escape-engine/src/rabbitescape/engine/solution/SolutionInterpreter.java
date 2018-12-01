@@ -49,7 +49,8 @@ public class SolutionInterpreter
 
     public static SolutionInterpreter getNothingPlaying()
     {
-        SolutionInterpreter nothingPlaying = new SolutionInterpreter( SolutionParser.parse( "1" ) );
+        SolutionInterpreter nothingPlaying =
+            new SolutionInterpreter( SolutionParser.parse( "1" ) );
         nothingPlaying.emptySteps = true;
         return nothingPlaying;
     }
@@ -58,7 +59,8 @@ public class SolutionInterpreter
     {
         if ( emptySteps )
         {
-            return new SolutionTimeStep( ++commandIndex, new TimeStepAction[] {} );
+            return new SolutionTimeStep(
+                ++commandIndex, new TimeStepAction[] {} );
         }
         if ( wait != null )
         {

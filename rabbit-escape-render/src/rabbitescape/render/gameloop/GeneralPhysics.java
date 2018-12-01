@@ -29,7 +29,10 @@ public class GeneralPhysics implements Physics
         private final World world;
         public final SolutionRecorderTemplate solutionRecorder;
 
-        public WorldModifier( World world, SolutionRecorderTemplate solutionRecorder )
+        public WorldModifier( 
+            World world,
+            SolutionRecorderTemplate solutionRecorder 
+        )
         {
             this.world = world;
             this.solutionRecorder = solutionRecorder;
@@ -63,7 +66,11 @@ public class GeneralPhysics implements Physics
 
     private static final int FAST_FRAME_SKIP = 3;
 
-    public GeneralPhysics( World world, LevelWinListener winListener, boolean fast )
+    public GeneralPhysics( 
+        World world,
+        LevelWinListener winListener, 
+        boolean fast 
+    )
     {
         this(
             world,
@@ -77,7 +84,12 @@ public class GeneralPhysics implements Physics
         );
     }
 
-    public GeneralPhysics( World world, WaterAnimation waterAnimation, LevelWinListener winListener, boolean fast )
+    public GeneralPhysics( 
+        World world, 
+        WaterAnimation waterAnimation,
+        LevelWinListener winListener, 
+        boolean fast 
+    )
     {
         this(
             world,
@@ -161,7 +173,8 @@ public class GeneralPhysics implements Physics
      */
     private void doInterpreterActions()
     {
-        SolutionTimeStep stp = solutionInterpreter.next( CompletionState.RUNNING );
+        SolutionTimeStep stp =
+            solutionInterpreter.next( CompletionState.RUNNING );
         for ( TimeStepAction action: stp.actions )
         {
             if ( action instanceof SelectAction )

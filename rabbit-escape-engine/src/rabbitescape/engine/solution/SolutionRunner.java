@@ -20,17 +20,25 @@ public class SolutionRunner
 {
     /**
      * @return true if the supplied solution solved the level
-     * @param output  A stream (eg System.out) to print to. May be null if no output
-     *                is required.
+     * @param output  A stream (eg System.out) to print to.
+     *                May be null if no output is required.
      */
-    public static boolean runSolution( Solution solution, World world,
-        PrintStream output, boolean genTest )
-        throws SolutionExceptions.ProblemRunningSolution
+    public static boolean runSolution( 
+        Solution solution, 
+        World world,
+        PrintStream output, 
+        boolean genTest 
+        ) throws SolutionExceptions.ProblemRunningSolution
     {
         SandboxGame sandboxGame = new SandboxGame( world );
         SolutionInterpreter interpreter = new SolutionInterpreter( solution );
 
-        return runSolutionInSandbox( interpreter, sandboxGame, output, genTest );
+        return runSolutionInSandbox(
+            interpreter, 
+            sandboxGame, 
+            output, 
+            genTest 
+        );
     }
 
     public static boolean runSolution( Solution solution, World world)
@@ -39,10 +47,14 @@ public class SolutionRunner
     }
 
     public static void runPartialSolution(
-        Solution solution, final SandboxGame sandboxGame )
+        Solution solution, 
+        final SandboxGame sandboxGame 
+    )
     {
         SolutionInterpreter interpreter = new SolutionInterpreter(
-            solution, false );
+            solution, 
+            false 
+        );
 
         runSolutionInSandbox( interpreter, sandboxGame, null, false );
     }
@@ -78,7 +90,10 @@ public class SolutionRunner
                 e.world = join(
                     "\n",
                     TextWorldManip.renderWorld(
-                        sandboxGame.getWorld(), false, false )
+                        sandboxGame.getWorld(), 
+                        false, 
+                        false 
+                    )
                 );
                 throw e;
             }
@@ -129,7 +144,8 @@ public class SolutionRunner
         catch ( DontStepAfterFinish e )
         {
             throw new SolutionExceptions.RanPastEnd(
-                sandboxGame.getWorld().completionState() );
+                sandboxGame.getWorld().completionState() 
+            );
         }
     }
 
@@ -165,7 +181,9 @@ public class SolutionRunner
     }
 
     private static void performAction(
-        TimeStepAction action, final SandboxGame sandboxGame )
+        TimeStepAction action, 
+        final SandboxGame sandboxGame 
+    )
     throws SolutionExceptions.UnexpectedState
     {
         // TODO: stop using WaitAction to step in the command line interface -
@@ -178,7 +196,8 @@ public class SolutionRunner
         catch ( DontStepAfterFinish e )
         {
             throw new SolutionExceptions.RanPastEnd(
-                sandboxGame.getWorld().completionState() );
+                sandboxGame.getWorld().completionState() 
+            );
         }
         catch ( NoneOfThisAbilityLeft e )
         {
@@ -192,13 +211,18 @@ public class SolutionRunner
         {
             Dimension worldSize = sandboxGame.getWorld().size;
             throw new SolutionExceptions.PlacedTokenOutsideWorld(
-                e.x, e.y, worldSize.width, worldSize.height );
+                e.x, 
+                e.y, 
+                worldSize.width, 
+                worldSize.height 
+            );
         }
     }
 
     private static void doPerformAction(
-        TimeStepAction action, final SandboxGame sandboxGame )
-    throws SolutionExceptions.UnexpectedState
+        TimeStepAction action, 
+        final SandboxGame sandboxGame 
+    ) throws SolutionExceptions.UnexpectedState
     {
         action.typeSwitch( new TimeStepActionTypeSwitch()
             {
@@ -222,7 +246,8 @@ public class SolutionRunner
                         if ( s.targetState == CompletionState.WON )
                         {
                             throw new SolutionExceptions.DidNotWin(
-                                sandboxGame.getWorld().completionState() );
+                                sandboxGame.getWorld().completionState() 
+                            );
                         }
                         else
                         {
@@ -248,7 +273,10 @@ public class SolutionRunner
                     if ( world.abilities.get( type ) == previousNum )
                     {
                         throw new SolutionExceptions.FailedToPlaceToken(
-                            p.x, p.y, type );
+                            p.x,
+                            p.y, 
+                            type 
+                        );
                     }
                 }
             }

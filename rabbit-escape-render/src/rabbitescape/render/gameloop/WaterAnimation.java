@@ -150,7 +150,9 @@ public class WaterAnimation
         if ( waitTime > 30l )
         {
             contentsPerParticle -= 2 + contentsPerParticle / 3;
-            contentsPerParticle = contentsPerParticle < 4 ? 4 : contentsPerParticle;
+            contentsPerParticle = contentsPerParticle < 4 ?
+                                  4 :
+                                  contentsPerParticle;
         }
     }
 

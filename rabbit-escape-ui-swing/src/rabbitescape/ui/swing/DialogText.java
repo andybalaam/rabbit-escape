@@ -26,7 +26,8 @@ public class DialogText
     {
         return
               "<p>"
-            + Util.join( "<br/>", Util.wrap( t( world.description ), lineLength ) )
+            + Util.join( "<br/>",
+                         Util.wrap( t( world.description ), lineLength ) )
             + "</p>";
     }
 

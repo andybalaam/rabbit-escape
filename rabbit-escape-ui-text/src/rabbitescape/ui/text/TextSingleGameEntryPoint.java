@@ -13,7 +13,11 @@ import rabbitescape.render.SingleGameEntryPoint;
 
 public class TextSingleGameEntryPoint extends SingleGameEntryPoint
 {
-    public TextSingleGameEntryPoint( FileSystem fs, PrintStream out, Locale locale )
+    public TextSingleGameEntryPoint( 
+        FileSystem fs, 
+        PrintStream out,          
+        Locale locale 
+    )
     {
         super( fs, out, locale );
     }
@@ -24,13 +28,19 @@ public class TextSingleGameEntryPoint extends SingleGameEntryPoint
         Translation.init( locale );
 
         SingleGameEntryPoint m = new TextSingleGameEntryPoint(
-            new RealFileSystem(), System.out, locale );
+            new RealFileSystem(), 
+            System.out, 
+            locale 
+        );
 
         m.run( args );
     }
 
     @Override
-    public GameLaunch createGameLaunch( World world, LevelWinListener winListener )
+    public GameLaunch createGameLaunch( 
+        World world,
+        LevelWinListener winListener 
+    )
     {
         return new TextGameLaunch(
             world,

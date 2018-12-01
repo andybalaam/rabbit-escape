@@ -15,7 +15,8 @@ public class CommandLineOptionSet
             o.setPresent();
             try
             {
-                // If param was not concatenated with option, check along the array.
+                // If param was not concatenated with option,
+                // check along the array.
                 if ( o.takesParam && o.getValue() == null )
                 {
                     o.setValue( args[++i], arg );
@@ -32,14 +33,19 @@ public class CommandLineOptionSet
         {
             for ( int j = 0 ; j < i ; j++ )
             {
-                reAssert( !options[i].shortForm.equals( options[j].shortForm ),
-                    t( options[i].longForm + " and " + options[j].longForm +
-                    " have the same short form: " + options[i].shortForm ) );
+                reAssert( 
+                    !options[i].shortForm.equals( options[j].shortForm ),
+                    t( 
+                        options[i].longForm + " and " + options[j].longForm +
+                        " have the same short form: " + options[i].shortForm 
+                    ) 
+                );
             }
         }
     }
 
-    private static CommandLineOption match( String arg, CommandLineOption[] options )
+    private static CommandLineOption match( String arg,
+                                            CommandLineOption[] options )
     {
         for ( CommandLineOption o: options )
         {
@@ -48,7 +54,8 @@ public class CommandLineOptionSet
                 return o;
             }
         }
-        throw ( new CommandLineOption( "--null", false ) ).getUnknownOption( arg );
+        throw (
+            new CommandLineOption( "--null", false ) ).getUnknownOption( arg );
     }
 
 }

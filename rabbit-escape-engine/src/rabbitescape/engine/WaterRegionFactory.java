@@ -22,16 +22,20 @@ public class WaterRegionFactory
     /**
      * Generate a 2D lookup table of water regions based on a 2D table of
      * blocks.
-     * 
+     *
      * @param blockTable
      *            The table of blocks.
      * @param waterAmounts
      *            Any water region contents that are currently known.
      */
     public static LookupTable2D<WaterRegion> generateWaterTable(
-        LookupTable2D<Block> blockTable, Map<Position, Integer> waterAmounts )
+        LookupTable2D<Block> blockTable, 
+        Map<Position, 
+        Integer> waterAmounts 
+    )
     {
-        LookupTable2D<WaterRegion> waterTable = new LookupTable2D<>( blockTable.size );
+        LookupTable2D<WaterRegion> waterTable =
+            new LookupTable2D<>( blockTable.size );
         for ( int x = -1; x <= blockTable.size.width; x++ )
         {
             for ( int y = -1; y <= blockTable.size.height; y++ )
@@ -41,7 +45,13 @@ public class WaterRegionFactory
                 {
                     waterAmount = 0;
                 }
-                createWaterRegionsAtPoint( blockTable, waterTable, x, y, waterAmount );
+                createWaterRegionsAtPoint( 
+                    blockTable, 
+                    waterTable,
+                    x, 
+                    y, 
+                    waterAmount 
+                );
             }
         }
         return waterTable;
@@ -65,18 +75,30 @@ public class WaterRegionFactory
         boolean outsideWorld = ( x == -1 || x == blockTable.size.width
             || y == -1 || y == blockTable.size.height );
 
-        List<WaterRegion> waterRegions = makeWaterRegion( x, y, shapes, contents, outsideWorld );
+        List<WaterRegion> waterRegions =
+            makeWaterRegion( x, y, shapes, contents, outsideWorld );
         waterTable.addAll( waterRegions );
     }
 
     /** Create a set of empty water regions from the given shaped blocks. */
-    public static List<WaterRegion> makeWaterRegion( int x, int y, Shape[] shapes, boolean outsideWorld )
+    public static List<WaterRegion> makeWaterRegion( 
+        int x, 
+        int y,
+        Shape[] shapes,
+        boolean outsideWorld 
+    )
     {
         return makeWaterRegion( x, y, shapes, 0, outsideWorld );
     }
 
     /** Create a set of water regions from the given shaped blocks. */
-    public static List<WaterRegion> makeWaterRegion( int x, int y, Shape[] shapes, int contents, boolean outsideWorld )
+    public static List<WaterRegion> makeWaterRegion( 
+        int x, 
+        int y,
+        Shape[] shapes,
+        int contents,
+        boolean outsideWorld 
+    )
     {
         Set<CellularDirection> connections = new HashSet<>(
             Arrays.asList( UP, LEFT, RIGHT, DOWN ) );
@@ -100,16 +122,22 @@ public class WaterRegionFactory
                 case BRIDGE_UP_RIGHT:
                     break;
                 default:
-                    throw new IllegalArgumentException( "Unrecognised shape: " + shape );
+                    throw new IllegalArgumentException(
+                        "Unrecognised shape: " + shape );
             }
         }
 
         int capacity = findCapacity( connections );
 
         return Arrays.asList(
-            new WaterRegion( x, y,
+            new WaterRegion( 
+                x, 
+                y,
                 connections,
-                capacity, contents, outsideWorld ) );
+                capacity, 
+                contents, 
+                outsideWorld 
+        ) );
     }
 
     private static int findCapacity( Set<CellularDirection> connections )
@@ -120,7 +148,9 @@ public class WaterRegionFactory
         }
         else if ( connections.size() == 3 )
         {
-            System.out.println( "Unexpected combination of shapes has produced the connections: " + connections );
+            System.out.println(
+                "Unexpected combination of shapes has " +
+                "produced the connections: " + connections );
             // Grudgingly we can calculate the amount.
             return WaterUtil.HALF_CAPACITY + WaterUtil.QUARTER_CAPACITY;
         }

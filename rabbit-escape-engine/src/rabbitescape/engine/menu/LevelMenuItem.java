@@ -10,8 +10,13 @@ public class LevelMenuItem extends MenuItem
     public final String name;
 
     public LevelMenuItem(
-        String fileName, String levelsDir, int number, boolean enabled,
-        String levelName, boolean hidden )
+        String fileName, 
+        String levelsDir, 
+        int number, 
+        boolean enabled,
+        String levelName, 
+        boolean hidden 
+    )
     {
         super(
             "${number} " + levelName,
@@ -26,9 +31,14 @@ public class LevelMenuItem extends MenuItem
         this.levelNumber = number;
         this.name = levelName;
     }
-    
-    public LevelMenuItem(
-        String fileName, String levelsDir, int number, boolean enabled, String levelName )
+
+    public LevelMenuItem( 
+        String fileName, 
+        String levelsDir, 
+        int number,
+        boolean enabled, 
+        String levelName 
+    )
     {
         this( fileName, levelsDir, number, enabled, levelName, false );
     }

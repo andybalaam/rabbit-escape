@@ -261,7 +261,8 @@ public class GitHubIssueDialog extends JDialog implements ChangeListener
     protected GitHubIssueDialog( Frame frame )
     {
         super( frame, true ); // arg2 sets modal
-        setTitle( t( "Retrieve level from the GitHub Rabbit Escape issue pages." ) );
+        setTitle( t(
+            "Retrieve level from the GitHub Rabbit Escape issue pages." ) );
 
         GridBagConstraints gbc = new GridBagConstraints();
 
@@ -285,7 +286,8 @@ public class GitHubIssueDialog extends JDialog implements ChangeListener
         filterButtons.add( bugFilterButton );
         filterButtons.add( allFilterButton );
         allFilterButton.doClick(); // set preselected filter
-        JButton fetchFollowButton = new JButton( t( "Fetch followup comments" ) );
+        JButton fetchFollowButton =
+            new JButton( t( "Fetch followup comments" ) );
         JPanel spacerPanel = new JPanel();
         // Ater packing, this gives the dialog it's width
         spacerPanel.setPreferredSize( new Dimension( 500, 2 ) );
@@ -436,7 +438,8 @@ public class GitHubIssueDialog extends JDialog implements ChangeListener
         setLocationRelativeTo( frame );
         stateChanged( null ); // show initial values for GUI items
         ghc = new GitHubClient();
-        final InitFetchWorker<Void, Void> ifw = new InitFetchWorker<Void, Void>();
+        final InitFetchWorker<Void, Void> ifw =
+            new InitFetchWorker<Void, Void>();
         ifw.execute();
         DotTic dt = new DotTic( (SwingWorker<Void, Void>)ifw );
         dt.start();
@@ -480,8 +483,8 @@ public class GitHubIssueDialog extends JDialog implements ChangeListener
         {
             return;
         }
-        final FetchCommentsWorker<Void, Void> fcw = new FetchCommentsWorker<Void, Void>(
-            ghi );
+        final FetchCommentsWorker<Void, Void> fcw =
+            new FetchCommentsWorker<Void, Void>( ghi );
         fcw.execute();
         statusBox.setText( t( "Fetching followup comments for" ) + " #"
             + ghi.getNumber()

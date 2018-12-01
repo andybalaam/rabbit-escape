@@ -185,7 +185,8 @@ public class Bridging extends Behaviour
                     }
                     default:
                     {
-                        throw new AssertionError( "Unexpected bridge type: " + bt );
+                        throw new AssertionError(
+                            "Unexpected bridge type: " + bt );
                     }
                 }
             }
@@ -216,7 +217,8 @@ public class Bridging extends Behaviour
                     }
                     default:
                     {
-                        throw new AssertionError( "Unexpected bridge type: " + bt );
+                        throw new AssertionError(
+                            "Unexpected bridge type: " + bt );
                     }
                 }
             }

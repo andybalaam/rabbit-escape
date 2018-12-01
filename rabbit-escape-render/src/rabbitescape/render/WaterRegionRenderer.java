@@ -36,13 +36,17 @@ public class WaterRegionRenderer implements LookupItem2D
     private int lastHeight = 0;
 
     private int targetParticleCount = 0;
-    public final ArrayList<WaterParticle> particles = new ArrayList<WaterParticle>();
+    public final ArrayList<WaterParticle> particles =
+        new ArrayList<WaterParticle>();
 
     private final World world;
     private final WaterAnimation waterAnimation;
 
-    public WaterRegionRenderer(WaterRegion region, World world,
-                               WaterAnimation waterAnimation )
+    public WaterRegionRenderer(
+        WaterRegion region, 
+        World world,
+        WaterAnimation waterAnimation 
+    )
     {
         this.region = region;
         this.world = world;
@@ -51,7 +55,10 @@ public class WaterRegionRenderer implements LookupItem2D
 
     public WaterRegionRenderer adjacentRenderer( CellularDirection d )
     {
-        return waterAnimation.lookupRenderer.getItemAt( region.x + d.xOffset, region.y + d.yOffset );
+        return waterAnimation.lookupRenderer.getItemAt( 
+            region.x + d.xOffset,
+            region.y + d.yOffset 
+        );
     }
 
     public boolean adjacentIsNull( CellularDirection d )
@@ -107,7 +114,8 @@ public class WaterRegionRenderer implements LookupItem2D
      */
     private void adjustParticleCount()
     {
-        targetParticleCount = region.getContents() / waterAnimation.contentsPerParticle;
+        targetParticleCount = region.getContents() /
+                              waterAnimation.contentsPerParticle;
         int particleDeficit = targetParticleCount  - particles.size();
         if ( particleDeficit < 0 ) // Need to remove some: start fading
         {
@@ -132,9 +140,11 @@ public class WaterRegionRenderer implements LookupItem2D
      */
     public void setWaterHeight()
     {
-        height = MathUtil.constrain( targetWaterHeight,
-                                     lastHeight - maxHeightChange ,
-                                     lastHeight + maxHeightChange );
+        height = MathUtil.constrain( 
+            targetWaterHeight,
+            lastHeight - maxHeightChange ,
+            lastHeight + maxHeightChange 
+        );
         lastHeight = height;
     }
 
@@ -144,12 +154,14 @@ public class WaterRegionRenderer implements LookupItem2D
      */
     private void checkParticlesInRegion()
     {
-        // make temporary list to iterate, so we can transfer ownership of items
+        // make temporary list to iterate,
+        // so we can transfer ownership of items
         for ( WaterParticle p : new ArrayList<WaterParticle>(particles) )
         {
             if ( p.outOfRegion( this ) )
             {
-                WaterRegionRenderer newRend = p.rendererByPosition( waterAnimation );
+                WaterRegionRenderer newRend =
+                    p.rendererByPosition( waterAnimation );
                 if ( newRend == null )
                 { // no water here: accelerate fading
                     p.alphaStep = p.alphaStep - p.alphaStepMagnitude;
@@ -216,7 +228,8 @@ public class WaterRegionRenderer implements LookupItem2D
     }
 
     /**
-     * Called once per animation step, after all heights set. Checks if cell above has something in, and makes this cell
+     * Called once per animation step, after all heights set.
+     * Checks if cell above has something in, and makes this cell
      * look full, possibly breaking maxHeightChange.
      */
     public void removeHeightGaps()
@@ -247,7 +260,8 @@ public class WaterRegionRenderer implements LookupItem2D
      */
     public Vertex topVertex( CellPosition d )
     {
-        int x = region.x * 32, y = region.y * 32; // Local cell origin in nominal pixels.
+        // Local cell origin in nominal pixels.
+        int x = region.x * 32, y = region.y * 32;
         if ( 0 == height )
         {
             switch ( d )
@@ -259,7 +273,9 @@ public class WaterRegionRenderer implements LookupItem2D
             case TOP_RIGHT:
                 return new Vertex( x + 32, y + 32 );
             default:
-                throw new RuntimeException( "Can only add vertices for TOP_LEFT, TOP_MIDDLE or TOP_RIGHT cells.");
+                throw new RuntimeException(
+                    "Can only add vertices for TOP_LEFT, " +
+                    "TOP_MIDDLE or TOP_RIGHT cells.");
             }
         }
         Block block = world.getBlockAt( region.x, region.y );
@@ -281,7 +297,8 @@ public class WaterRegionRenderer implements LookupItem2D
             break;
         case TOP_MIDDLE:
             xOffset = 16;
-            if ( shapeEquals ( block, Block.Shape.UP_LEFT ) || shapeEquals ( block, Block.Shape.UP_RIGHT ) )
+            if ( shapeEquals ( block, Block.Shape.UP_LEFT ) ||
+                 shapeEquals ( block, Block.Shape.UP_RIGHT ) )
             {
                 yOffset = ( 32 - height ) / 2;
             }
@@ -302,7 +319,8 @@ public class WaterRegionRenderer implements LookupItem2D
             }
             break;
         default:
-            throw new RuntimeException( "Can only add vertices for LEFT or RIGHT cells." );
+            throw new RuntimeException(
+                "Can only add vertices for LEFT or RIGHT cells." );
         }
         return new Vertex( x + xOffset, y + yOffset );
     }
@@ -326,17 +344,33 @@ public class WaterRegionRenderer implements LookupItem2D
 
     private int calcBoundaryHeight( CellPosition cellPosition )
     {
-        if ( cellPosition.leftRightness == null || !region.isConnected( cellPosition.leftRightness ) || isFull( region.x, region.y ) )
+        if ( 
+            cellPosition.leftRightness == null ||
+            !region.isConnected( cellPosition.leftRightness ) ||
+            isFull( region.x, region.y ) 
+        )
         { // The cell in that direction is not relevant
             return height;
         }
-        WaterRegionRenderer adjWrr = adjacentRenderer( cellPosition.leftRightness );
+        WaterRegionRenderer adjWrr =
+            adjacentRenderer( cellPosition.leftRightness );
         if ( null == adjWrr )
         { // Adjacent is probably empty, and this cell is probably a low level
             if ( region.isConnected( cellPosition.leftRightness ) )
             {
-                WaterRegion adjReg = world.waterTable.getItemAt( region.x + cellPosition.leftRightness.xOffset, region.y + cellPosition.leftRightness.yOffset );
-                if ( adjReg != null && adjReg.isConnected( CellularDirection.opposite( cellPosition.leftRightness ) ) )
+                WaterRegion adjReg =
+                    world.waterTable.getItemAt(
+                        region.x + cellPosition.leftRightness.xOffset,
+                        region.y + cellPosition.leftRightness.yOffset 
+                    );
+                if ( 
+                     adjReg != null &&
+                     adjReg.isConnected( 
+                         CellularDirection.opposite( 
+                             cellPosition.leftRightness 
+                         ) 
+                     ) 
+                   )
                 {
                     return 0;
                 }
@@ -352,7 +386,8 @@ public class WaterRegionRenderer implements LookupItem2D
 
     public Vertex bottomVertex( CellPosition d )
     {
-        int x = region.x * 32, y = region.y * 32; // Local cell origin in nominal pixels.
+        // Local cell origin in nominal pixels.
+        int x = region.x * 32, y = region.y * 32;
         int xOffset;
         Block block = world.getBlockAt( region.x, region.y );
         switch ( d )
@@ -378,7 +413,10 @@ public class WaterRegionRenderer implements LookupItem2D
             }
             break;
         default:
-            throw new RuntimeException( "Can only add bottom vertices for BOTTOM_LEFT or BOTTOM_RIGHT cells." );
+            throw new RuntimeException(
+                "Can only add bottom vertices for BOTTOM_LEFT or " +
+                "BOTTOM_RIGHT cells." 
+            );
         }
         return new Vertex( x + xOffset, y + 32 );
     }
@@ -400,7 +438,8 @@ public class WaterRegionRenderer implements LookupItem2D
         { // Flat block cells have zero capacity: always full.
             return true;
         }
-        WaterRegionRenderer wrr = waterAnimation.lookupRenderer.getItemAt( x, y );
+        WaterRegionRenderer wrr =
+            waterAnimation.lookupRenderer.getItemAt( x, y );
         if ( null == wrr )
         { // Not full of flat block, but no region yet, empty
             return false;
@@ -492,9 +531,11 @@ public class WaterRegionRenderer implements LookupItem2D
         p.addString( region, 4, connStr  );
 
         p.addString( region, 5,
-            "falling" + bool01( isFalling() ) + " full" + isFull( region.x, region.y )  );
+            "falling" + bool01( isFalling() ) +
+            " full" + isFull( region.x, region.y )  );
 
-        p.addString( region, 6, "height(targ) %02d(%02d)", height, targetWaterHeight );
+        p.addString( region, 6, "height(targ) %02d(%02d)",
+                     height, targetWaterHeight );
 
         p.addString(  region, 7, "(%d,%d)", region.x, region.y );
     }

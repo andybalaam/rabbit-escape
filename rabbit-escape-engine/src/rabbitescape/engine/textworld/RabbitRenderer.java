@@ -9,7 +9,11 @@ import rabbitescape.engine.Rabbit;
 
 public class RabbitRenderer
 {
-    public static void render( Chars chars, List<Rabbit> rabbits, boolean runtimeMeta )
+    public static void render( 
+        Chars chars, 
+        List<Rabbit> rabbits,
+        boolean runtimeMeta 
+    )
     {
         for ( Rabbit rabbit : rabbits )
         {

@@ -185,11 +185,16 @@ public class SpriteAnimator
             case EARTH:
                 switch ( block.shape )
                 {
-                    case FLAT:            return land_block[block.variant];
-                    case UP_RIGHT:        return land_rising_right[block.variant];
-                    case UP_LEFT:         return land_rising_left[block.variant];
-                    case BRIDGE_UP_RIGHT: return bridge_rising_right;
-                    case BRIDGE_UP_LEFT:  return bridge_rising_left;
+                    case FLAT:
+                        return land_block[block.variant];
+                    case UP_RIGHT:
+                        return land_rising_right[block.variant];
+                    case UP_LEFT:
+                        return land_rising_left[block.variant];
+                    case BRIDGE_UP_RIGHT:
+                        return bridge_rising_right;
+                    case BRIDGE_UP_LEFT:
+                        return bridge_rising_left;
                 }
                 break;
             case METAL:

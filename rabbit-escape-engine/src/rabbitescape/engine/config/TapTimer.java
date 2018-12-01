@@ -6,7 +6,8 @@ public class TapTimer
     private static long intervals[] = new long[10]; // java inits array to zero.
 
     // Holst's Mars
-    private static final float[] pattern = { 1.0f, 1.0f, 1.0f, 3.0f, 3.0f, 1.5f, 1.5f };
+    private static final float[] pattern =
+        { 1.0f, 1.0f, 1.0f, 3.0f, 3.0f, 1.5f, 1.5f };
 
     public static boolean matched = checkEnv();
 
@@ -25,7 +26,7 @@ public class TapTimer
         }
         return false;
     }
-    
+
     public static void newTap()
     {
         long now = System.currentTimeMillis();
@@ -42,10 +43,14 @@ public class TapTimer
         float refInterval = intervals[refIntervalI];
 
         int intervalI = nextI - 2;
-        for ( int patternI = pattern.length - 2 ; patternI >= 0 ; patternI--, intervalI-- )
+        for ( int patternI = pattern.length - 2 ;
+              patternI >= 0 ;
+              patternI--, intervalI-- )
         {
             intervalI = intervalI >= 0 ? intervalI : intervals.length - 1;
-            float relativeInterval = intervals[intervalI] * pattern[pattern.length - 1] / refInterval ;
+            float relativeInterval =
+                intervals[intervalI] * pattern[pattern.length - 1]
+                / refInterval ;
             if ( Math.abs( relativeInterval - pattern[patternI] ) > 0.3 )
             {
                 return;

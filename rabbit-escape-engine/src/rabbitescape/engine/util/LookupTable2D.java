@@ -64,7 +64,8 @@ public class LookupTable2D <T extends LookupItem2D> implements Iterable<T>
             table.add( new ArrayList<LookupItems2D<T>>( size.height + 2 ) );
             for ( int y = -1 ; y < size.height + 1 ; y++ )
             {
-                table.get( i( x ) ).add( new LookupItems2D<T>( new Position( x, y ) ) );
+                table.get( i( x ) ).add(
+                    new LookupItems2D<T>( new Position( x, y ) ) );
             }
         }
         for ( T item: list)
@@ -96,7 +97,8 @@ public class LookupTable2D <T extends LookupItem2D> implements Iterable<T>
 
     public List<T> getItemsAt( int x, int y )
     {
-        ArrayList<T> ret = new ArrayList<T>( table.get( i( x ) ).get( i( y ) ).getItems() );
+        ArrayList<T> ret = new ArrayList<T>(
+            table.get( i( x ) ).get( i( y ) ).getItems() );
         return ret;
     }
 
@@ -158,7 +160,7 @@ public class LookupTable2D <T extends LookupItem2D> implements Iterable<T>
     {
         return list.size();
     }
-        
+
     public void debugPrint()
     {
         PrintStream p = System.out;
@@ -177,5 +179,5 @@ public class LookupTable2D <T extends LookupItem2D> implements Iterable<T>
             p.println();
         }
     }
-    
+
 }

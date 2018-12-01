@@ -27,7 +27,8 @@ public class SolutionRecorder implements SolutionRecorderTemplate
         SolutionCommand prevCmd =   prevCmdIndex >= 0
                                   ? solutionInProgress.get( prevCmdIndex )
                                   : null ;
-        SolutionCommand combCmd = SolutionCommand.tryToSimplify( prevCmd, newCmd );
+        SolutionCommand combCmd =
+            SolutionCommand.tryToSimplify( prevCmd, newCmd );
         if( null == combCmd)
         {
             solutionInProgress.add( newCmd );

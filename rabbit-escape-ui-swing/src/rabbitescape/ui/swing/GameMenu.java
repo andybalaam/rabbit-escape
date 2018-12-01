@@ -83,8 +83,9 @@ class GameMenu
 
         this.explodeAll = addButton( "menu_explode_all", t( "Explode all" ) );
 
-        this.speed = addToggleButton(
-            "menu_speedup_inactive", "menu_speedup_active", false, t( "speed up" ) );
+        this.speed =
+            addToggleButton( "menu_speedup_inactive", "menu_speedup_active",
+                             false, t( "speed up" ) );
 
         this.zoomIn     = addButton( "menu_zoom_in",     t( "Zoom in" ) );
         this.zoomOut    = addButton( "menu_zoom_out",    t( "Zoom out" ) );
