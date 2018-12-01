@@ -11,7 +11,8 @@ import static rabbitescape.engine.i18n.Translation.t;
  */
 public class GitHubClient implements GitHubPageFetchNotifier
 {
-    public final String baseURL = "https://api.github.com/repos/andybalaam/rabbit-escape/issues";
+    public final String baseURL =
+        "https://api.github.com/repos/andybalaam/rabbit-escape/issues";
     public final String acceptHeader = "Accept: application/vnd.github.v3+json";
     private ArrayList<GitHubIssue> issues = null;
     private String errMsg = "";
@@ -92,8 +93,9 @@ public class GitHubClient implements GitHubPageFetchNotifier
     { // / @TODO this is extremely crufty: hacking out most of the URL to split
       // on.
       // This leaves the issue number as the first thing in the string.
-        Pattern issuePattern = Pattern
-            .compile( "\\{\"url\":\"https://api\\.github\\.com/repos/andybalaam/rabbit-escape/issues/" );
+        Pattern issuePattern = Pattern.compile(
+            "\\{\"url\":\"https://api\\.github\\.com" +
+            "/repos/andybalaam/rabbit-escape/issues/" );
         String[] jsonIssuesStrings = issuePattern.split( json );
         ArrayList<GitHubIssue> ret = new ArrayList<GitHubIssue>();
         for ( int i = 0; i < jsonIssuesStrings.length; i++ )

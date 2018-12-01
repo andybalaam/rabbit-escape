@@ -115,6 +115,7 @@ public class SwingGraphics implements Graphics
 
 
             int h = swingCanvas.stringHeight();
+            int ts = renderer.tileSize;
 
             for ( Thing t : overlay.items )
             {
@@ -124,10 +125,11 @@ public class SwingGraphics implements Graphics
 
                 for ( int i = 0; i < lines.length ; i++ )
                 {
-                    int x = renderer.offsetX + t.x * renderer.tileSize;
-                    int y = renderer.offsetY + t.y * renderer.tileSize + i * h;
-                    x += ( renderer.tileSize - swingCanvas.stringWidth( lines[i] ) ) / 2; // centre
-                    y += ( renderer.tileSize - h * lines.length ) / 2 ;
+                    int x = renderer.offsetX + t.x * ts;
+                    int y = renderer.offsetY + t.y * ts + i * h;
+                    // centre
+                    x += ( ts - swingCanvas.stringWidth( lines[i] ) ) / 2;
+                    y += ( ts - h * lines.length ) / 2 ;
                     swingCanvas.drawText( lines[i],
                         x,
                         y,
@@ -137,21 +139,23 @@ public class SwingGraphics implements Graphics
         }
 
         /**
-         * Polygons representing water that is not falling, and particle effects for falling water.
+         * Polygons representing water that is not falling,
+         * and particle effects for falling water.
          */
         public void drawWater( WaterAnimation wa, SwingCanvas swingCanvas )
         {
             float f = renderer.tileSize / 32f;
             Vertex offset = new Vertex( renderer.offsetX, renderer.offsetY );
 
-            // shade whole background sqaure cells with any water
+            int ts = renderer.tileSize;
+            // shade whole background square cells with any water
             for ( WaterRegionRenderer wrr : wa.lookupRenderer)
             {
                 Rect rect = new Rect(
-                    renderer.tileSize * wrr.region.x + renderer.offsetX,
-                    renderer.tileSize * wrr.region.y + renderer.offsetY,
-                    renderer.tileSize * wrr.region.x + renderer.tileSize + renderer.offsetX,
-                    renderer.tileSize * wrr.region.y + renderer.tileSize + renderer.offsetY
+                    ts * wrr.region.x + renderer.offsetX,
+                    ts * wrr.region.y + renderer.offsetY,
+                    ts * wrr.region.x + ts + renderer.offsetX,
+                    ts * wrr.region.y + ts + renderer.offsetY
                 );
                 Color bsColor =
                     new Color( waterR, waterG, waterB, wrr.backShadeAlpha() );

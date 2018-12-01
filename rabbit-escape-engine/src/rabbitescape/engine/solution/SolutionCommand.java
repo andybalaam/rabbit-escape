@@ -9,7 +9,8 @@ import rabbitescape.engine.util.Util;
 
 public class SolutionCommand
 {
-    public final class WaitActionInMultiActionCommand extends RabbitEscapeException
+    public final class WaitActionInMultiActionCommand
+        extends RabbitEscapeException
     {
         private static final long serialVersionUID = 1L;
         final public String command;
@@ -78,7 +79,9 @@ public class SolutionCommand
      * Try to combine two commands. If this is not possible then return null.
      */
     public static SolutionCommand tryToSimplify(
-        SolutionCommand existingCmd, SolutionCommand newCmd )
+        SolutionCommand existingCmd, 
+        SolutionCommand newCmd 
+    )
     {
         if( null == existingCmd || null == newCmd )
         {

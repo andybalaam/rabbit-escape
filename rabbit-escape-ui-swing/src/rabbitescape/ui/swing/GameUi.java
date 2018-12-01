@@ -39,7 +39,8 @@ public class GameUi implements StatsChangedListener
         private int startX = -1;
         private int startY = -1;
         private long msTimePress = 0;
-        /** Time in ms. Longer press-release intervals are interpreted as drags */
+        /** Time in ms. Longer press-release intervals are
+         * interpreted as drags */
         private final long msClickThreshold =
             ConfigTools.getInt( uiConfig, CFG_CLICK_THRESHOLD_MS );
 
@@ -111,8 +112,10 @@ public class GameUi implements StatsChangedListener
          */
         public boolean noScrollRequired()
         {
-            int xRange = canvasScrollBarX.getMaximum() - canvasScrollBarX.getMinimum();
-            int yRange = canvasScrollBarY.getMaximum() - canvasScrollBarY.getMinimum();
+            int xRange = canvasScrollBarX.getMaximum() -
+                         canvasScrollBarX.getMinimum();
+            int yRange = canvasScrollBarY.getMaximum() -
+                         canvasScrollBarY.getMinimum();
             return ( canvasScrollBarX.getVisibleAmount() == xRange )
                 && ( canvasScrollBarY.getVisibleAmount() == yRange );
         }
@@ -286,7 +289,9 @@ public class GameUi implements StatsChangedListener
     private void zoomToFit()
     {
         // Start at MIN_AUTO_ZOOM_INDEX + 1 to enforce at least 32x32
-        for ( int index = MIN_AUTO_ZOOM_INDEX + 1; index < zoomValues.length; ++index )
+        for ( int index = MIN_AUTO_ZOOM_INDEX + 1;
+              index < zoomValues.length;
+              ++index )
         {
             if ( zoomIndexTooBig( index ) )
             {
@@ -339,7 +344,8 @@ public class GameUi implements StatsChangedListener
             public void abilityChosen( Token.Type ability )
             {
                 chooseAbility( ability );
-                gameLaunch.solutionRecorder.append( new SelectAction( ability ) );
+                gameLaunch.solutionRecorder.append(
+                    new SelectAction( ability ) );
             }
         } );
 
@@ -621,11 +627,11 @@ public class GameUi implements StatsChangedListener
     private Point pixelToCell( Point pixelPosition )
     {
         return new Point(
-                             ( pixelPosition.x - gameLaunch.graphics.renderer.offsetX )
-                               / worldTileSizeInPixels,
-                             ( pixelPosition.y - gameLaunch.graphics.renderer.offsetY )
-                               / worldTileSizeInPixels
-                               );
+            ( pixelPosition.x - gameLaunch.graphics.renderer.offsetX )
+              / worldTileSizeInPixels,
+            ( pixelPosition.y - gameLaunch.graphics.renderer.offsetY )
+              / worldTileSizeInPixels
+        );
     }
 
     private void click( Point pixelPosition )

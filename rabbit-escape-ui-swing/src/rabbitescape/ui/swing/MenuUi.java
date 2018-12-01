@@ -295,14 +295,15 @@ public class MenuUi
         String path = ConfigTools.getString(
             uiConfig, ConfigKeys.CFG_LOAD_LEVEL_PATH );
 
-        File nameCandidate = new File ( path + File.separator + id.generateFilename() + ".rel" );
+        File nameCandidate = new File ( path + File.separator +
+                                        id.generateFilename() + ".rel" );
         int version = 0;
         String filename = id.generateFilename();
         while( nameCandidate.exists() )
         {
             nameCandidate = new File (
                 path + File.separator + filename + "." + ( version++ ) + ".rel"
-                );
+            );
         }
         PrintWriter out;
         try
@@ -310,7 +311,10 @@ public class MenuUi
             out = new PrintWriter( nameCandidate );
             out.print( world );
             out.close();
-            playLevel( nameCandidate.getAbsolutePath(), new IgnoreLevelWinListener() );
+            playLevel( 
+                nameCandidate.getAbsolutePath(),
+                new IgnoreLevelWinListener() 
+            );
         }
         catch ( FileNotFoundException e ) /// @TODO fix exception handling
         {

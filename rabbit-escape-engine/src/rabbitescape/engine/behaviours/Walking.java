@@ -37,7 +37,8 @@ public class Walking extends Behaviour
                        t.isWall( aboveNext )
                     || Blocking.blockerAt( t.world, nextX, nextY )
                     || t.isRoof( above )
-                    || ( t.isCresting() && Blocking.blockerAt( t.world, nextX, t.rabbit.y ) )
+                    || ( t.isCresting() &&
+                         Blocking.blockerAt( t.world, nextX, t.rabbit.y ) )
                     )
                 {
                     return rl(
@@ -77,7 +78,8 @@ public class Walking extends Behaviour
                 if (
                        t.isWall( next )
                     || Blocking.blockerAt( t.world, nextX, nextY )
-                    || ( t.isValleying() && Blocking.blockerAt( t.world, nextX, t.rabbit.y ) )
+                    || ( t.isValleying() &&
+                         Blocking.blockerAt( t.world, nextX, t.rabbit.y ) )
                     )
                 {
                     return rl(

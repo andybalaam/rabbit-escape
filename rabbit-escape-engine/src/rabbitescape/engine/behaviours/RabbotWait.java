@@ -16,15 +16,19 @@ public class RabbotWait extends Behaviour
 
     private boolean noseToNose( Rabbit otherRabbit, Rabbit rabbit )
     {
-        if ( otherRabbit.x == rabbit.x - 1 &&
+        if ( 
+            otherRabbit.x == rabbit.x - 1 &&
             otherRabbit.dir == Direction.RIGHT &&
-            rabbit.dir == Direction.LEFT )
+            rabbit.dir == Direction.LEFT 
+        )
         {
             return true;
         }
-        else if ( otherRabbit.x == rabbit.x + 1 &&
+        else if ( 
+            otherRabbit.x == rabbit.x + 1 &&
             otherRabbit.dir == Direction.LEFT &&
-            rabbit.dir == Direction.RIGHT )
+            rabbit.dir == Direction.RIGHT 
+        )
         {
             return true;
         }
@@ -69,7 +73,10 @@ public class RabbotWait extends Behaviour
     {
         if ( triggered )
         {
-            return t.rl( State.RABBIT_WAITING_RIGHT, State.RABBIT_WAITING_LEFT );
+            return t.rl( 
+                State.RABBIT_WAITING_RIGHT,
+                State.RABBIT_WAITING_LEFT 
+            );
         }
         else
         {
@@ -80,8 +87,10 @@ public class RabbotWait extends Behaviour
     @Override
     public boolean behave( World world, Rabbit rabbit, State state )
     {
-        if ( state == State.RABBIT_WAITING_LEFT ||
-            state == State.RABBIT_WAITING_RIGHT )
+        if ( 
+            state == State.RABBIT_WAITING_LEFT ||
+            state == State.RABBIT_WAITING_RIGHT 
+        )
         {
             return true;
         }

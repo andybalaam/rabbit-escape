@@ -34,12 +34,17 @@ public class MegaCoderCLI
         }
     }
 
-    private static void codecFile( CommandLineOption o, String fileName, RealFileSystem fs ) throws IOException
+    private static void codecFile( 
+        CommandLineOption o, 
+        String fileName,     
+        RealFileSystem fs 
+    ) throws IOException
     {
         // Decoded while parsing
         World world = new LoadWorldFile( fs ).load(
             new IgnoreWorldStatsListener(), fileName );
-        String[] lines = TextWorldManip.renderCompleteWorld( world, true, false );
+        String[] lines =
+            TextWorldManip.renderCompleteWorld( world, true, false );
         String newName;
         if ( o.longForm.equals( "--encode" ))
         {
@@ -67,7 +72,8 @@ public class MegaCoderCLI
                 String key   = splitLine[0];
                 String value = splitLine[1];
 
-                lines[i] = ":"+key + LineProcessor.CODE_SUFFIX + "=" +MegaCoder.encode( value );
+                lines[i] = ":"+key + LineProcessor.CODE_SUFFIX +
+                           "=" +MegaCoder.encode( value );
             }
         }
     }

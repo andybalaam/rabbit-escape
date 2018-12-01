@@ -53,7 +53,13 @@ public class Chars
         set( x, y, ch, state, 0 );
     }
 
-    public void set( int x, int y, char ch, Map<String, String> state, int waterAmount )
+    public void set( 
+        int x, 
+        int y, 
+        char ch, 
+        Map<String, String> state,
+        int waterAmount 
+    )
     {
         String thisState = encodeState( state );
 
@@ -103,7 +109,8 @@ public class Chars
 
             ret.append( '{' );
             boolean begin = true;
-            for ( Map.Entry<String, String> e : new TreeMap<String, String>( state ).entrySet() )
+            for ( Map.Entry<String, String> e : new TreeMap<String,
+                  String>( state ).entrySet() )
             {
                 if ( !begin )
                 {

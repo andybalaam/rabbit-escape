@@ -33,17 +33,35 @@ public class WaterRegion extends Thing implements LookupItem2D
     /** Does this region need updating? */
     public final boolean outsideWorld;
 
-    public WaterRegion( int x, int y, Set<CellularDirection> connections, int capacity )
+    public WaterRegion( 
+        int x, 
+        int y, 
+        Set<CellularDirection> connections,
+        int capacity 
+    )
     {
         this( x, y, connections, capacity, false );
     }
 
-    public WaterRegion( int x, int y, Set<CellularDirection> connections, int capacity, boolean outsideWorld )
+    public WaterRegion( 
+        int x, 
+        int y, 
+        Set<CellularDirection> connections,
+        int capacity, 
+        boolean outsideWorld 
+    )
     {
         this( x, y, connections, capacity, 0, outsideWorld );
     }
 
-    public WaterRegion( int x, int y, Set<CellularDirection> connections, int capacity, int contents, boolean outsideWorld )
+    public WaterRegion( 
+        int x, 
+        int y, 
+        Set<CellularDirection> connections,
+        int capacity, 
+        int contents, 
+        boolean outsideWorld 
+    )
     {
         super( x, y, State.WATER_REGION_EMPTY );
         this.connections = connections;
@@ -158,8 +176,9 @@ public class WaterRegion extends Thing implements LookupItem2D
                     else
                     {
                         System.out.println(
-                            "Something went wrong when calculating water moving "
-                                + direction + " from " + this );
+                            "Something went wrong when " +
+                             "calculating water moving " +
+                             direction + " from " + this );
                     }
                 }
             }
@@ -172,8 +191,17 @@ public class WaterRegion extends Thing implements LookupItem2D
     {
         Map<String, String> ret = new HashMap<String, String>();
         ret.put( "WaterRegion.connections", Util.join( ",", connections ) );
-        BehaviourState.addToStateIfNotDefault( ret, "WaterRegion.capacity", String.valueOf( capacity ), "0" );
-        BehaviourState.addToStateIfNotDefault( ret, "WaterRegion.contents", String.valueOf( contents ), "0" );
+        BehaviourState.addToStateIfNotDefault( 
+            ret, 
+            "WaterRegion.capacity",
+            String.valueOf( capacity ),
+            "0" 
+        );
+        BehaviourState.addToStateIfNotDefault( 
+            ret, 
+            "WaterRegion.contents",
+            String.valueOf( contents ),
+            "0" );
         List<String> flowBits = new ArrayList<>();
         for ( Entry<CellularDirection, Integer> entry : flow.entrySet() )
         {
@@ -188,17 +216,21 @@ public class WaterRegion extends Thing implements LookupItem2D
     public void restoreFromState( Map<String, String> state )
     {
         connections = new HashSet<>();
-        for ( String connection : Util.split( state.get( "WaterRegion.connections" ), "," ) )
+        for ( String connection :
+            Util.split( state.get( "WaterRegion.connections" ), "," ) )
         {
             connections.add( CellularDirection.valueOf( connection ) );
         }
-        capacity = BehaviourState.restoreFromState( state, "WaterRegion.capacity", 0 );
-        contents = BehaviourState.restoreFromState( state, "WaterRegion.contents", 0 );
+        capacity = BehaviourState.restoreFromState(
+            state, "WaterRegion.capacity", 0 );
+        contents = BehaviourState.restoreFromState(
+            state, "WaterRegion.contents", 0 );
         flow = new HashMap<>();
         String[] flowBits = Util.split( state.get( "WaterRegion.flow" ), "," );
         for ( int i : Util.range( flowBits.length / 2 ))
         {
-            CellularDirection direction = CellularDirection.valueOf( flowBits[i * 2] );
+            CellularDirection direction =
+                CellularDirection.valueOf( flowBits[i * 2] );
             Integer amount = Integer.valueOf( flowBits[i * 2 + 1] );
             flow.put( direction, amount );
         }

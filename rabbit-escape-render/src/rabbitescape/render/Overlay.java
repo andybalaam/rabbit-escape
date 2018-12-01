@@ -41,7 +41,8 @@ public class Overlay
             return "";
         }
 
-        Iterable<Thing> thingsHere = Util.chain( waterRegions, things, Arrays.asList( rabbits ) );
+        Iterable<Thing> thingsHere =
+            Util.chain( waterRegions, things, Arrays.asList( rabbits ) );
 
         Function<Thing,String> textF = new Function<Thing,String>()
         {
@@ -60,7 +61,8 @@ public class Overlay
 
     private List<WaterRegion> waterRegionsAt( int x, int y )
     {
-        if ( x < 0 || y < 0 || x >= world.size.width || y >= world.size.height )
+        if ( x < 0 || y < 0 ||
+             x >= world.size.width || y >= world.size.height )
         {
             return Collections.emptyList();
         }

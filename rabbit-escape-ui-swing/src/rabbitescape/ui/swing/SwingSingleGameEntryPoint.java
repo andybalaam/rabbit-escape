@@ -57,14 +57,22 @@ public class SwingSingleGameEntryPoint extends SingleGameEntryPoint
     {
         if ( 1 == args.length && args[0].endsWith( ".rel" ) )
         { // Single arg must level file
-            go( args, SwingGameLaunch.NOT_DEMO_MODE, false );
+            go( 
+                args, 
+                SwingGameLaunch.NOT_DEMO_MODE, 
+                false 
+            );
             System.exit( 0 );
         }
 
-        CommandLineOption level =        new CommandLineOption( "--level",        true );
-        CommandLineOption solution =     new CommandLineOption( "--solution",     true );
-        CommandLineOption anim =         new CommandLineOption( "--animation",    false );
-        CommandLineOption dump =         new CommandLineOption( "--dump",         false );
+        CommandLineOption level =
+            new CommandLineOption( "--level",        true );
+        CommandLineOption solution =
+            new CommandLineOption( "--solution",     true );
+        CommandLineOption anim =
+            new CommandLineOption( "--animation",    false );
+        CommandLineOption dump =
+            new CommandLineOption( "--dump",         false );
 
         CommandLineOptionSet.parse( args,
                                     level, solution, anim, dump);
@@ -77,12 +85,17 @@ public class SwingSingleGameEntryPoint extends SingleGameEntryPoint
             }
             if ( solution.isPresent() )
             {
-                go( new String[] {level.getValue()}, solution.getValue(), dump.isPresent() );
+                go( new String[] {level.getValue()},
+                    solution.getValue(), dump.isPresent() );
                 System.exit( 0 );
             }
             if ( level.isPresent() )
             {
-                go( new String[] {level.getValue()}, SwingGameLaunch.NOT_DEMO_MODE, false );
+                go( 
+                    new String[] {level.getValue()},
+                    SwingGameLaunch.NOT_DEMO_MODE, 
+                    false 
+                );
                 System.exit( 0 );
             }
         }
@@ -94,7 +107,11 @@ public class SwingSingleGameEntryPoint extends SingleGameEntryPoint
 
     }
 
-    private static void go( String[] fileName, String solution, boolean frameDumping )
+    private static void go( 
+        String[] fileName, 
+        String solution,
+        boolean frameDumping 
+    )
     {
 
         Config cfg = SwingConfigSetup.createConfig();
@@ -131,7 +148,7 @@ public class SwingSingleGameEntryPoint extends SingleGameEntryPoint
 
         SwingUtilities.invokeLater( init );
 
-        return new SwingGameLaunch(
-            init, world, winListener, sound, uiConfig, out, solution, frameDumping );
+        return new SwingGameLaunch( init, world, winListener, sound, uiConfig,
+                                    out, solution, frameDumping );
     }
 }

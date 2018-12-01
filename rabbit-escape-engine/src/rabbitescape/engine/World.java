@@ -104,7 +104,8 @@ public class World
 
     public final Dimension size;
     public final LookupTable2D<Block> blockTable;
-    /** A grid of water. Only one water object should be stored in each location. */
+    /** A grid of water. Only one water object
+     * should be stored in each location. */
     public final LookupTable2D<WaterRegion> waterTable;
     public final List<Rabbit> rabbits;
     public final List<Thing> things;
@@ -462,11 +463,19 @@ public class World
     public void recalculateWaterRegions( Position point )
     {
         int contents = 0;
-        for (WaterRegion waterRegion : waterTable.getItemsAt( point.x, point.y )) {
+        for (WaterRegion waterRegion :
+             waterTable.getItemsAt( point.x, point.y ))
+        {
             contents += waterRegion.getContents();
         }
         waterTable.removeItemsAt( point.x, point.y );
-        WaterRegionFactory.createWaterRegionsAtPoint( blockTable, waterTable, point.x, point.y, contents );
+        WaterRegionFactory.createWaterRegionsAtPoint(
+            blockTable, 
+            waterTable, 
+            point.x, 
+            point.y, 
+            contents 
+        );
     }
 
     public Map<Position, Integer> getWaterContents()

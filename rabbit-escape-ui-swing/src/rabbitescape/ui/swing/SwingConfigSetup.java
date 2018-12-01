@@ -23,10 +23,14 @@ public class SwingConfigSetup
     public static final String CFG_GAME_WINDOW_WIDTH  = "game.window.width";
     public static final String CFG_GAME_WINDOW_HEIGHT = "game.window.height";
     public static final String CFG_CLICK_THRESHOLD_MS = "click.threshold.ms";
-    public static final String DEPRECATED_CFG_MENU_WINDOW_LEFT   = "menu.window.left";
-    public static final String DEPRECATED_CFG_MENU_WINDOW_TOP    = "menu.window.top";
-    public static final String DEPRECATED_CFG_MENU_WINDOW_WIDTH  = "menu.window.width";
-    public static final String DEPRECATED_CFG_MENU_WINDOW_HEIGHT = "menu.window.height";
+    public static final String DEPRECATED_CFG_MENU_WINDOW_LEFT   =
+        "menu.window.left";
+    public static final String DEPRECATED_CFG_MENU_WINDOW_TOP    =
+        "menu.window.top";
+    public static final String DEPRECATED_CFG_MENU_WINDOW_WIDTH  =
+        "menu.window.width";
+    public static final String DEPRECATED_CFG_MENU_WINDOW_HEIGHT =
+        "menu.window.height";
     public static final String CFG_MUTED = "muted";
 
     public static Config createConfig()

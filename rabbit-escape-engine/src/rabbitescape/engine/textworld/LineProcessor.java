@@ -166,7 +166,8 @@ public class LineProcessor
                 String v = temp.get( i );
                 if ( null == v )
                 {
-                    throw new RuntimeException( "temp should have 1, 2, ..., temp.size() members." );
+                    throw new RuntimeException(
+                        "temp should have 1, 2, ..., temp.size() members." );
                 }
                 ret[i - 1] = v;
             }
@@ -472,7 +473,8 @@ public class LineProcessor
     private void processItemsLine( String line, VariantGenerator variantGen )
     {
         maybeLinkToLastComment( Comment.WORLD_ASCII_ART );
-        // Treat empty lines as blank lines (Github converts blank lines to empty lines, so it seems sensible to reverse the process).
+        // Treat empty lines as blank lines (Github converts blank lines
+        // to empty lines, so it seems sensible to reverse the process).
         if ( line.length() != 0 )
         {
             if ( width == -1 )
@@ -637,16 +639,18 @@ public class LineProcessor
             }
             case 'N':
             {
-                // Default amount for a full water region, but may be overwritten by
-                // an explicit water definition line.
-                waterAmounts.put( new Position( x, y ), WaterUtil.MAX_CAPACITY );
+                // Default amount for a full water region, but may be
+                // overwritten by an explicit water definition line.
+                waterAmounts.put( new Position( x, y ),
+                                  WaterUtil.MAX_CAPACITY );
                 break;
             }
             case 'n':
             {
-                // Default amount for a half water region, but may be overwritten by
-                // an explicit water definition line.
-                waterAmounts.put( new Position( x, y ), WaterUtil.HALF_CAPACITY );
+                // Default amount for a half water region, but may be
+                // overwritten by an explicit water definition line.
+                waterAmounts.put( new Position( x, y ),
+                                  WaterUtil.HALF_CAPACITY );
                 break;
             }
             case '*':
@@ -678,7 +682,8 @@ public class LineProcessor
         }
         try
         {
-            VoidMarkerStyle.Style s = VoidMarkerStyle.Style.valueOf( marker.toUpperCase() );
+            VoidMarkerStyle.Style s =
+                VoidMarkerStyle.Style.valueOf( marker.toUpperCase() );
             return s;
         }
         catch ( IllegalArgumentException e )

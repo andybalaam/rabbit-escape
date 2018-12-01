@@ -37,17 +37,28 @@ public class TextMain
             return;
         }
 
-        CommandLineOption level =        new CommandLineOption( "--level",        true );
-        CommandLineOption solution =     new CommandLineOption( "--solution",     true );
-        CommandLineOption encode =       new CommandLineOption( "--encode",       true );
-        CommandLineOption decode =       new CommandLineOption( "--decode",       true );
-        CommandLineOption help =         new CommandLineOption( "--help",         false );
-        CommandLineOption noinput =      new CommandLineOption( "--noinput",      true );
-        CommandLineOption placeholders = new CommandLineOption( "--placeholders", true );
-        CommandLineOption template =     new CommandLineOption( "--template",     true );
-        CommandLineOption gentest =      new CommandLineOption( "--gentest",      false );
-        CommandLineOption rellist =      new CommandLineOption( "--rellist",      false );
-        CommandLineOption mars =         new CommandLineOption( "--mars",         false );
+        CommandLineOption level =
+            new CommandLineOption( "--level",        true );
+        CommandLineOption solution =
+            new CommandLineOption( "--solution",     true );
+        CommandLineOption encode =
+            new CommandLineOption( "--encode",       true );
+        CommandLineOption decode =
+            new CommandLineOption( "--decode",       true );
+        CommandLineOption help =
+            new CommandLineOption( "--help",         false );
+        CommandLineOption noinput =
+            new CommandLineOption( "--noinput",      true );
+        CommandLineOption placeholders =
+            new CommandLineOption( "--placeholders", true );
+        CommandLineOption template =
+            new CommandLineOption( "--template",     true );
+        CommandLineOption gentest =
+            new CommandLineOption( "--gentest",      false );
+        CommandLineOption rellist =
+            new CommandLineOption( "--rellist",      false );
+        CommandLineOption mars =
+            new CommandLineOption( "--mars",         false );
         try
         {
             CommandLineOptionSet.parse( args,
@@ -65,7 +76,8 @@ public class TextMain
             }
             if ( noinput.isPresent() )
             {
-                TextSingleGameEntryPoint.entryPoint( new String[] {noinput.getValue(), "noinput"} );
+                TextSingleGameEntryPoint.entryPoint(
+                    new String[] {noinput.getValue(), "noinput"} );
             }
             if ( rellist.isPresent() )
             {
@@ -84,7 +96,8 @@ public class TextMain
             }
             if ( level.isPresent() )
             {
-                TextSingleGameEntryPoint.entryPoint( new String[] {level.getValue()} );
+                TextSingleGameEntryPoint.entryPoint(
+                    new String[] {level.getValue()} );
                 System.exit( 0 );
             }
             if ( encode.isPresent() )
@@ -126,7 +139,11 @@ public class TextMain
         m.run( args );
     }
 
-    private static void demo( String relPath, String solnCmdLine, boolean genTest )
+    private static void demo( 
+        String relPath, 
+        String solnCmdLine,  
+        boolean genTest 
+    )
     {
 
         World world = new LoadWorldFile(
@@ -161,7 +178,8 @@ public class TextMain
         World world = new LoadWorldFile( fs ).load(
             new IgnoreWorldStatsListener(), fileName );
         world = ensureHints(world);
-        String[] lines = TextWorldManip.renderCompleteWorld( world, true, false );
+        String[] lines =
+            TextWorldManip.renderCompleteWorld( world, true, false );
         fs.write( fileName, Util.join( "\n", lines ) + "\n" );
     }
 

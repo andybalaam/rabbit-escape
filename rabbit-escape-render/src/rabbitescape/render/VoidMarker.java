@@ -103,16 +103,19 @@ public class VoidMarker
              vert_highlighter, sprites
             );
         // Bottom
-        row( new Position( 0, world.size.height ), new Position( 1, 0 ), world.size.width,
-            new Position( 0, 0 ),
-            horz_highlighter, sprites
+        row( new Position( 0, world.size.height ),
+             new Position( 1, 0 ), world.size.width,
+             new Position( 0, 0 ),
+             horz_highlighter, sprites
             );
         // Right
-        row( new Position( world.size.width, 0 ), new Position( 0, 1 ), world.size.height,
-            new Position( 0, 0 ),
-            vert_highlighter, sprites
+        row( new Position( world.size.width, 0 ),
+             new Position( 0, 1 ), world.size.height,
+             new Position( 0, 0 ),
+             vert_highlighter, sprites
            );
-        corners( world.size, new Position( 16, 16 ), corner_highlighter, sprites );
+        corners( world.size, new Position( 16, 16 ),
+                 corner_highlighter, sprites );
     }
 
     private static void torn( World world, List<Sprite> sprites )
@@ -123,19 +126,21 @@ public class VoidMarker
              top_torn, sprites
              );
        // Bottom
-        row( new Position( 0, world.size.height ), new Position( 1, 0 ), world.size.width,
+        row( new Position( 0, world.size.height ),
+             new Position( 1, 0 ), world.size.width,
              new Position( 0, 0 ),
              bottom_torn, sprites
              );
         // Left
         row( new Position( -2, 0 ), new Position( 0, 1 ), world.size.height,
-            new Position( 0, 0 ),
-            left_torn, sprites
+             new Position( 0, 0 ),
+             left_torn, sprites
             );
         // Right
-        row( new Position( world.size.width, 0 ), new Position( 0, 1 ), world.size.height,
-            new Position( 0, 0 ),
-            right_torn, sprites
+        row( new Position( world.size.width, 0 ),
+             new Position( 0, 1 ), world.size.height,
+             new Position( 0, 0 ),
+             right_torn, sprites
             );
         corners( world.size, new Position( 64, 64 ), corner_torn, sprites );
     }

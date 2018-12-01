@@ -47,7 +47,8 @@ import java.util.Set;
  * Input: An array of characters x of length l
  * k1 = uniquify(x)
  * x = replace(k1, x)
- * k2 = shuffle(C, l) where C is the array of ASCII characters from space (0x20) to tilde (0x7e)
+ * k2 = shuffle(C, l) where C is the array of ASCII characters from
+ *      space (0x20) to tilde (0x7e)
  * x = replace(k2, x)
  * x = shuffle(x, 0)
  * Output: The modified array x
@@ -56,7 +57,8 @@ import java.util.Set;
  * <pre>
  * Input: An array of characters x of length l
  * x = shuffle(x, 0)
- * k2 = shuffle(C, l) where C is the array of ASCII characters from space (0x20) to tilde (0x7e)
+ * k2 = shuffle(C, l) where C is the array of ASCII characters from
+ *      space (0x20) to tilde (0x7e)
  * x = replace(k2, x)
  * k1 = uniquify(x)
  * x = replace(k1, x)
@@ -67,7 +69,8 @@ import java.util.Set;
  */
 public class MegaCoder
 {
-    /** A list of common ASCII characters that can be swapped with each other. */
+    /** A list of common ASCII characters that can be swapped with each
+     *  other. */
     private static final char[] COMMON_CHARACTERS = new char[] {
         ' ', '!', '"', '#', '$', '%', '&',
         '\'', '(', ')', '*', '+', ',',
@@ -169,7 +172,8 @@ public class MegaCoder
         {
             if ( sortedCharsUsed[i] != sortedCharsUsed[i + 1] )
             {
-                uniqueSortedCharsUsed[uniqueArrayIndex] = sortedCharsUsed[i + 1];
+                uniqueSortedCharsUsed[uniqueArrayIndex] =
+                    sortedCharsUsed[i + 1];
                 uniqueArrayIndex++;
             }
         }

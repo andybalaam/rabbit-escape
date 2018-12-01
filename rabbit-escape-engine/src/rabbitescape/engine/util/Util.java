@@ -94,7 +94,9 @@ public class Util
     }
 
     public static <T, R> Iterable<R> map(
-        Function<T, R> function, Iterable<T> iterable )
+        Function<T, R> function, 
+        Iterable<T> iterable 
+    )
     {
         List<R> ret = new ArrayList<>();
 
@@ -107,7 +109,9 @@ public class Util
     }
 
     public static <T, R> Iterable<R> map(
-        Function<T, R> function, T[] input )
+        Function<T, R> function, 
+        T[] input 
+    )
     {
         List<R> ret = new ArrayList<>();
 
@@ -120,7 +124,10 @@ public class Util
     }
 
     public static <T, R> R[] map(
-        Function<T, R> function, T[] input, R[] retType )
+        Function<T, R> function, 
+        T[] input, 
+        R[] retType 
+    )
     {
         List<R> ret = new ArrayList<>();
 
@@ -162,7 +169,10 @@ public class Util
         return ret;
     }
 
-    public static <T> List<T> filterIn( Iterable<T> i, Class<? extends T> filter )
+    public static <T> List<T> filterIn( 
+        Iterable<T> i,
+        Class<? extends T> filter 
+    )
     {
         ArrayList<T> filtered = new ArrayList<T>();
         for ( T o: i)
@@ -175,7 +185,10 @@ public class Util
         return filtered;
     }
 
-    public static <T> List<T> filterOut( Iterable<T> i, Class<? extends T> filter )
+    public static <T> List<T> filterOut( 
+       Iterable<T> i,
+       Class<? extends T> filter 
+    )
     {
         ArrayList<T> filtered = new ArrayList<T>();
         for ( T o: i)
@@ -463,11 +476,12 @@ public class Util
     }
 
     /**
-     * This can be used to chain objects of different types (unlike concat). The returned
-     * Iterable will be of the first common superclass.
+     * This can be used to chain objects of different types (unlike concat).
+     * The returned Iterable will be of the first common superclass.
      */
     @SafeVarargs
-    public static <T> Iterable<T> chain( final Iterable<? extends T>... itArray )
+    public static <T> Iterable<T> chain(
+        final Iterable<? extends T>... itArray )
     {
         return new Iterable<T>()
         {
@@ -532,7 +546,8 @@ public class Util
 
                 }
 
-                List<Iterator<? extends T>> newIL = new ArrayList<Iterator<? extends T>>();
+                List<Iterator<? extends T>> newIL =
+                    new ArrayList<Iterator<? extends T>>();
                 for ( Iterable<? extends T> it: itArray )
                 {
                     newIL.add( it.iterator() );
@@ -704,8 +719,8 @@ public class Util
             @Override
             public Iterator<String> iterator()
             {
-                return new ReaderIterator(
-                    name, new BufferedReader( new InputStreamReader( input ) ) );
+                return new ReaderIterator( name,
+                    new BufferedReader( new InputStreamReader( input ) ) );
             }
         };
     }
@@ -905,7 +920,8 @@ public class Util
      *        Compare to String.replaceAll, which replaces the whole match.
      * @param patternFlags The flags from java.util.regex.Pattern.
      */
-    public static String regexRemovePreserveGroup( String s, String regex, int patternFlags )
+    public static String regexRemovePreserveGroup( String s, String regex,
+                                                   int patternFlags )
     {
         Pattern p = Pattern.compile( regex, patternFlags );
         Matcher dsMatcher = p.matcher( s );
@@ -924,7 +940,8 @@ public class Util
         return regexRemovePreserveGroup( s, regex, 0 );
     }
 
-    public static String regexReplace( String s, String regex, String replacement )
+    public static String regexReplace( String s, String regex,
+                                       String replacement )
     {
         Pattern p = Pattern.compile( regex );
         Matcher dsMatcher = p.matcher( s );

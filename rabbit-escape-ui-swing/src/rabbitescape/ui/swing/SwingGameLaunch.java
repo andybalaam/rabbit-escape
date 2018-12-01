@@ -69,8 +69,8 @@ public class SwingGameLaunch implements GameLaunch
     private final FrameDumper frameDumper;
 
     /**
-     * @param solutionIndex natural number values indicate demo mode. It is the index of the
-     *                      solution from the rel file to play.
+     * @param solutionIndex natural number values indicate demo mode. It is
+     *                      the index of the solution from the rel file to play.
      */
     public SwingGameLaunch(
         SwingGameInit init,
@@ -85,7 +85,8 @@ public class SwingGameLaunch implements GameLaunch
     {
         this.world = world;
 
-        SolutionInterpreter solutionInterpreter = createSolutionInterpreter( solution, world );
+        SolutionInterpreter solutionInterpreter =
+            createSolutionInterpreter( solution, world );
 
         this.frame = init.frame;
         this.solutionRecorder = new SolutionRecorder();
@@ -129,8 +130,14 @@ public class SwingGameLaunch implements GameLaunch
 
         sound.setMusic( world.music );
 
-        loop = new GameLoop(
-            new SwingInput(), physics, waterAnimation, graphics, config, debugout );
+        loop = new GameLoop( 
+            new SwingInput(), 
+            physics, 
+            waterAnimation,
+            graphics, 
+            config, 
+            debugout 
+        );
     }
 
     public GameUi getUi()
@@ -143,7 +150,10 @@ public class SwingGameLaunch implements GameLaunch
         physics.fast = !physics.fast;
     }
 
-    private static SolutionInterpreter createSolutionInterpreter( String solution, World world )
+    private static SolutionInterpreter createSolutionInterpreter(
+        String solution, 
+        World world 
+    )
     {
         if ( solution.equals( NOT_DEMO_MODE ) )
         {
@@ -178,7 +188,10 @@ public class SwingGameLaunch implements GameLaunch
      * Must not be called from within event loop.
      */
     private int showDialog(
-        final String title, final Object message, final Object[] options )
+        final String title, 
+        final Object message, 
+        final Object[] options 
+    )
     {
         final AnswerHolder holder = new AnswerHolder();
 

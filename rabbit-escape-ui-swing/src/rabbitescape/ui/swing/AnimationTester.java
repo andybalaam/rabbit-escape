@@ -85,19 +85,27 @@ public class AnimationTester extends JFrame
 
             JPanel dropDowns = new JPanel();
             JList<String> list0 = addList(
-                dropDowns, possibilties, animationNames[ i ][ 0 ]
+                dropDowns, 
+                possibilties, 
+                animationNames[ i ][ 0 ]
             );
 
             JList<String> list1 = addList(
-                dropDowns, possibilties, animationNames[ i ][ 1 ]
+                dropDowns, 
+                possibilties, 
+                animationNames[ i ][ 1 ]
             );
 
             JList<String> list2 = addList(
-                dropDowns, possibilties, animationNames[ i ][ 2 ]
+                dropDowns, 
+                possibilties, 
+                animationNames[ i ][ 2 ]
             );
 
             JList<String> blocksList = addList(
-                dropDowns, allBlocks, blockNames[ i ]
+                dropDowns, 
+                allBlocks, 
+                blockNames[ i ]
             );
 
             JScrollPane scrollPane = new JScrollPane( dropDowns );
@@ -134,7 +142,9 @@ public class AnimationTester extends JFrame
         private void saveSelectionsToConfig()
         {
             atConfig.set(
-                CFG_AT_ANIMATIONS, animationsToConfigString( animationNames ) );
+                CFG_AT_ANIMATIONS, 
+                animationsToConfigString( animationNames ) 
+            );
 
             atConfig.set( CFG_AT_BLOCKS, blocksToConfigString( blockNames ) );
 
@@ -154,7 +164,9 @@ public class AnimationTester extends JFrame
         }
 
         private JList<String> addList(
-            JPanel parent, String[] possibilities, String animation
+            JPanel parent, 
+            String[] possibilities, 
+            String animation
         )
         {
             JList<String> list = new JList<>( possibilities );
@@ -195,19 +207,21 @@ public class AnimationTester extends JFrame
                 forwardStep = true;
                 return;
             case KeyEvent.VK_H:
-                System.out.println( "" );
-                System.out.println( "Right arrow  Speed up" );
-                System.out.println( "Left arrow   Slow down" );
-                System.out.println( "A            In step mode, back one frame" );
-                System.out.println( "D            In step mode, forward one frame" );
-                System.out.println( "[CTRL]+X     Clear all animations" );
-                System.out.println( "H            Print this help" );
-                System.out.println( "L            Toggle printing log of frames" );
-                System.out.println( "S            Toggle step mode" );
-                System.out.println( "Q            Quit" );
-                System.out.println( "F5           Dump 30 frames to png" );
-                System.out.println( "F6           After creating pngs, animate them" );
-                System.out.println( "             Requires ImageMagick" );
+                String s =
+                    "" + "\n" +
+                    "Right arrow  Speed up" + "\n" +
+                    "Left arrow   Slow down" + "\n" +
+                    "A            In step mode, back one frame" + "\n" +
+                    "D            In step mode, forward one frame" + "\n" +
+                    "[CTRL]+X     Clear all animations" + "\n" +
+                    "H            Print this help" + "\n" +
+                    "L            Toggle printing log of frames" + "\n" +
+                    "S            Toggle step mode" + "\n" +
+                    "Q            Quit" + "\n" +
+                    "F5           Dump 30 frames to png" + "\n" +
+                    "F6           After creating pngs, animate them" + "\n" +
+                    "             Requires ImageMagick" ;
+                System.out.println( s );
                 return;
             case KeyEvent.VK_L:
                 frameLogging = !frameLogging;
@@ -246,7 +260,9 @@ public class AnimationTester extends JFrame
                 return;
             case KeyEvent.VK_Q:
                 System.exit( 0 );
-                return; // Should not be necessary. Gets rid of intermittent compiler warning
+                // return should not be necessary.
+                // Gets rid of intermittent compiler warning
+                return;
             default:
                 // Ignore fat fingers
             }
@@ -290,8 +306,8 @@ public class AnimationTester extends JFrame
         "bridge_rising_left",
     };
 
-    /** [0-8][0-2] position in 3x3 grid, and triplet of consecutive animations for
-     * that position.
+    /** [0-8][0-2] position in 3x3 grid, and triplet of
+     * consecutive animations for that position.
      */
     private final String[][] animationNames;
 
@@ -351,7 +367,8 @@ public class AnimationTester extends JFrame
         this.numTilesX = 3;
         this.animationCache = new AnimationCache( new AnimationLoader() );
 
-        /** Name of .rea files (changed to caps it's also the name of the state) */
+        /** Name of .rea files
+         * (changed to caps it's also the name of the state) */
         this.animationNames = animationsFromConfig(
             atConfig.get( CFG_AT_ANIMATIONS ) );
 
@@ -460,7 +477,8 @@ public class AnimationTester extends JFrame
                 return false;
             }
             FrameCounter f = (FrameCounter)o;
-            return this.frameSetNum == f.frameSetNum && this.frameNum == f.frameNum ;
+            return this.frameSetNum == f.frameSetNum &&
+                   this.frameNum == f.frameNum ;
         }
 
         public void inc()
@@ -507,7 +525,8 @@ public class AnimationTester extends JFrame
         BufferStrategy strategy = canvas.getBufferStrategy();
 
         Renderer<SwingBitmap, SwingPaint> renderer =
-            new Renderer<SwingBitmap, SwingPaint>( 0, 0, tileSize, bitmapCache );
+            new Renderer<SwingBitmap, SwingPaint>( 0, 0, tileSize,
+                                                   bitmapCache );
 
         SoundPlayer soundPlayer =
             new SoundPlayer( SwingSound.create( false ) );
@@ -570,7 +589,8 @@ public class AnimationTester extends JFrame
         return counter;
     }
 
-    private FrameCounter frameDumpStep( FrameCounter counter, DrawFrame drawFrame )
+    private FrameCounter frameDumpStep( FrameCounter counter,
+                                        DrawFrame drawFrame )
     {
         try
         {
@@ -587,7 +607,9 @@ public class AnimationTester extends JFrame
                 frameDumper = new FrameDumper();
                 firstFrameDumped = new FrameCounter( counter );
             }
-            String frameID = String.format("%02d_%02d", counter.getFrameSetNum(), counter.getFrameNum() );
+            String frameID =
+                String.format( "%02d_%02d", counter.getFrameSetNum(),
+                               counter.getFrameNum() );
             frameDumper.dump( canvas, drawFrame, frameID );
 
             counter.inc();

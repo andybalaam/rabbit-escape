@@ -28,7 +28,8 @@ public enum CellularDirection
             case RIGHT: return LEFT;
             case DOWN:  return UP;
             case LEFT:  return RIGHT;
-            case HERE:  throw new IllegalStateException( "Here has no opposite" );
+            case HERE:  throw new IllegalStateException(
+                "Here has no opposite" );
             default: throw new IllegalArgumentException( input.name() );
         }
     }

@@ -17,8 +17,10 @@ public class GitHubIssue
     private boolean isBug;
     private String body = ""; /** < @brief body text excluding world text. */
     private String title;
-    private ArrayList<String> wrappedWorlds; /** < @brief Worlds are []. These have \n */
-    private int worldIndex = 0;  /** < @brief Some issues have multiple worlds: current selected index */
+    /** @brief Worlds are []. These have \n */
+    private ArrayList<String> wrappedWorlds;
+    /** @brief Some issues have multiple worlds: current selected index */
+    private int worldIndex = 0;
 
     private static final String replaceWorldsWith = "\n-----\n";
     private static final String commentSeparator = "\n*****\n";
@@ -134,8 +136,10 @@ public class GitHubIssue
         ArrayList<Integer> endIndices = new ArrayList<Integer>();
         String bodyAdd = "" + bodyIn;
         ArrayList<String> wrappedWorldsAdd = new ArrayList<String>();
-        findBacktickWorlds( bodyAdd, wrappedWorldsAdd, startIndices, endIndices );
-        findIndentWorlds( bodyAdd, wrappedWorldsAdd, startIndices, endIndices );
+        findBacktickWorlds( bodyAdd, wrappedWorldsAdd,
+            startIndices, endIndices );
+        findIndentWorlds( bodyAdd, wrappedWorldsAdd,
+            startIndices, endIndices );
         ArrayList<String> newWorldOrder = new ArrayList<String>(
             wrappedWorldsAdd.size() );
         for ( int i = 0; i < startIndices.size(); i++ )
@@ -302,7 +306,8 @@ public class GitHubIssue
         fixed = fixed.replaceAll( "^\n", "" );
 
         // Strip trailing spaces from meta lines
-        fixed = Util.regexRemovePreserveGroup( fixed, "^(:.*?) *?$", Pattern.MULTILINE );
+        fixed = Util.regexRemovePreserveGroup(
+            fixed, "^(:.*?) *?$", Pattern.MULTILINE );
         return fixed;
     }
 
