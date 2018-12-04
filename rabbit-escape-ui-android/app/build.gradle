@@ -4,6 +4,7 @@ android {
     compileSdkVersion 21
     buildToolsVersion '25.0.0'
 
+    flavorDimensions "version"
     productFlavors {
         paid {
             applicationId "net.artificialworlds.rabbitescape"
