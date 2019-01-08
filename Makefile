@@ -454,26 +454,26 @@ android-compile: android-pre
 	${GRADLE} compilePaidDebugSources
 
 android-debug: \
-	rabbit-escape-ui-android/app/build/outputs/apk/app-paid-debug.apk \
-	rabbit-escape-ui-android/app/build/outputs/apk/app-free-debug.apk
+	rabbit-escape-ui-android/app/build/outputs/apk/paid/app-paid-debug.apk \
+	rabbit-escape-ui-android/app/build/outputs/apk/free/app-free-debug.apk
 
 android-debug-test: android-debug \
-	rabbit-escape-ui-android/app/build/outputs/apk/app-paid-debug-androidTest.apk \
-	rabbit-escape-ui-android/app/build/outputs/apk/app-free-debug-androidTest.apk
+	rabbit-escape-ui-android/app/build/outputs/apk/paid/app-paid-debug-androidTest.apk \
+	rabbit-escape-ui-android/app/build/outputs/apk/free/app-free-debug-androidTest.apk
 
-rabbit-escape-ui-android/app/build/outputs/apk/app-paid-debug.apk: android-pre
+rabbit-escape-ui-android/app/build/outputs/apk/paid/app-paid-debug.apk: android-pre
 	@echo ". Building $@"
 	@cd rabbit-escape-ui-android && ${GRADLE} assemblePaidDebug
 
-rabbit-escape-ui-android/app/build/outputs/apk/app-free-debug.apk: android-pre
+rabbit-escape-ui-android/app/build/outputs/apk/free/app-free-debug.apk: android-pre
 	@echo ". Building $@"
 	@cd rabbit-escape-ui-android && ${GRADLE} assembleFreeDebug
 
-rabbit-escape-ui-android/app/build/outputs/apk/app-free-debug-androidTest.apk: android-pre
+rabbit-escape-ui-android/app/build/outputs/apk/free/app-free-debug-androidTest.apk: android-pre
 	@echo ". Building $@"
 	@cd rabbit-escape-ui-android && ${GRADLE} assembleFreeDebugAndroidTest
 
-rabbit-escape-ui-android/app/build/outputs/apk/app-paid-debug-androidTest.apk: android-pre
+rabbit-escape-ui-android/app/build/outputs/apk/paid/app-paid-debug-androidTest.apk: android-pre
 	@echo ". Building $@"
 	@cd rabbit-escape-ui-android && ${GRADLE} assemblePaidDebugAndroidTest
 
@@ -489,8 +489,8 @@ dist-android-release-signed: android-pre
 	KEY_STORE_PASSWORD=`cat $(KEY_STORE_PASSWORD_FILE)` \
 	KEY_PASSWORD=`cat $(KEY_PASSWORD_FILE)` \
 	${GRADLE} assembleRelease && \
-	mv app/build/outputs/apk/app-paid-release.apk ../dist/rabbit-escape-${VERSION}.apk && \
-	mv app/build/outputs/apk/app-free-release.apk ../dist/rabbit-escape-free-${VERSION}.apk
+	mv app/build/outputs/apk/paid/app-paid-release.apk ../dist/rabbit-escape-${VERSION}.apk && \
+	mv app/build/outputs/apk/free/app-free-release.apk ../dist/rabbit-escape-free-${VERSION}.apk
 
 android-smoke-tests: android-debug-test
 	@echo ". Running Android smoke tests"
