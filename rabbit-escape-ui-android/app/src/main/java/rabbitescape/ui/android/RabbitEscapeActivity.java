@@ -6,7 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
 import rabbitescape.engine.config.Config;
@@ -14,7 +14,7 @@ import rabbitescape.engine.config.ConfigTools;
 import rabbitescape.render.androidutil.Lifecycle2SoundEvents;
 import rabbitescape.ui.android.sound.AndroidSound;
 
-public abstract class RabbitEscapeActivity extends ActionBarActivity
+public abstract class RabbitEscapeActivity extends AppCompatActivity
 {
     protected static final AndroidSound sound = Globals.sound;
     private static final Lifecycle2SoundEvents<Activity> soundEvents = Globals.soundEvents;
