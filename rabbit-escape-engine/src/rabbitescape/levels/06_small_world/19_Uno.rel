@@ -6,7 +6,7 @@
 :hint.2=Start by immediately bashing then bridging.  Give the second rabbit a brolly.  Find a way to stop the bridger, then turn your rabbits around into the exit.
 :hint.3=Be fast at the start: quickly bash then bridge, then drop a brolly token on the entrance so it's picked up by the second rabbit.  Switch back and make the first rabbit a climber as it completes the first bit of bridge.  Dig one square to the right of the entrance, and turn the digger into a blocker.
 :solution.1=bash&(0,1);bridge&(0,1);brolly&(0,0);climb;(1,1);;dig;(3,4);3;block;(3,6);6;explode;(3,6);;
-:solution.2.code=A.Jp&kGn&APGm{.zZJM0SEYQ``Z&AQYMQ0z@i?{Q2b0tGM~QAM{GJz?SQo0Q.`JQAw M0J?`Tk7
+:solution.2=bash&(0,1)&bridge&(0,1)&explode;;(1,1);dig&(3,4);3;brolly;2;(3,5);until:WON
 :num_rabbits=5
 :num_to_save=4
 :rabbit_delay=3
