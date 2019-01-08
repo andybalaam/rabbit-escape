@@ -1,5 +1,6 @@
 package rabbitescape.ui.android;
 
+import android.graphics.Typeface;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -50,7 +51,10 @@ public class MenuListAdapter extends ArrayAdapter<MenuItem>
 
         MenuItem item = items[ position ];
         ret.setText( t( item.name, item.nameParams ) );
-        ret.setTypeface( null, menuActivity.selectedItemPosition == position ? 1 : 0 );
+        ret.setTypeface(
+            null,
+            menuActivity.selectedItemPosition == position ? Typeface.BOLD : Typeface.NORMAL
+        );
         ret.setEnabled( item.enabled || TapTimer.matched );
 
         return ret;

@@ -4,16 +4,16 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
+import android.support.v7.widget.AppCompatButton;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.RadioGroup;
 
 import static net.artificialworlds.rabbitescape.BuildConfig.APPLICATION_ID;
 
-public class AbilityButton extends Button
+public class AbilityButton extends AppCompatButton
 {
     private class OnClickListener implements ImageButton.OnClickListener
     {
