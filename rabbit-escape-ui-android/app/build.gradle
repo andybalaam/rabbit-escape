@@ -2,9 +2,9 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 21
-    buildToolsVersion '25.0.0'
+    buildToolsVersion '28.0.3'
 
-    flavorDimensions "version"
+    flavorDimensions "price"
     productFlavors {
         paid {
             applicationId "net.artificialworlds.rabbitescape"
@@ -44,7 +44,7 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile 'com.android.support:appcompat-v7:21.0.3'
-    compile files('libs/rabbit-escape-generic.jar')
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation 'com.android.support:appcompat-v7:21.0.3'
+    implementation files('libs/rabbit-escape-generic.jar')
 }
