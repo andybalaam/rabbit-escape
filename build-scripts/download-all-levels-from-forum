@@ -1,0 +1,64 @@
+#!/bin/bash
+
+set -e
+set -u
+
+function all_level_ids()
+{
+    curl --silent 'https://www.artificialworlds.net/rabbit-escape/levels/api/discussions?filter[q]=tag:level' \
+        | jq --raw-output '.data|.[].id'
+}
+
+function existing_level_with_name()
+{
+    grep --files-with-matches -E -r \
+        '^:name='"$1"'$' \
+        ../rabbit-escape-engine/src/rabbitescape/levels
+}
+
+
+echo "Downloading levels into tmp/"
+
+mkdir -p tmp
+
+
+all_level_ids | \
+while read ID; do
+{
+    echo -n "tmp/$ID.rel "
+    curl --silent 'https://www.artificialworlds.net/rabbit-escape/levels/api/discussions/'"$ID" \
+        | jq --raw-output '.included[0]|.attributes.contentHtml' \
+        | sed -n '1h;2,$H;${g;
+            s/.*<code class=\"language-rel\">\(.*\)<\/code><\/pre><script>.*/\1/g;
+            s/&amp;/\&/g
+            s/&gt;/>/g
+            s/&lt;/</g
+            ;p} ' \
+        > "tmp/$ID.rel"
+
+
+
+
+
+#        | sed 's/\\n/\n/g' \
+
+    NAME=$(grep -E '^:name=' "tmp/$ID.rel" | sed 's/:name=\(.*\)/\1/')
+    echo -n "$NAME "
+
+
+    if ! existing_level_with_name "$NAME" > /dev/null; then
+    {
+        echo " - not yet in the code!"
+    } else {
+        existing_level_with_name "$NAME" | \
+        while read LEV; do
+        {
+            echo "> ${LEV#"../rabbit-escape-engine/src/rabbitescape/"}"
+            cp "tmp/$ID.rel" "$LEV"
+        }; done
+        rm "tmp/$ID.rel"
+    }; fi
+
+}; done
+
+
