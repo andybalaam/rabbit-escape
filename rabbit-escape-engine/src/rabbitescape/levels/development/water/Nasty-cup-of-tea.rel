@@ -2,7 +2,7 @@
 :description=It's gone cold, the milk was off, ... and what's that green thing lurking at the bottom of the mug?
 :author_name=tttppp
 :author_url=github.com/tttppp
-:solution.1.code=rEVE`i`z-V-F{EVEzL76e@`i#W`rE#I`=g6EVEVEElE77#WV-6FrE@c#fVE6E)LEV6`#Wze@mWEi=W6e@E~ccLez#f#rEf(Em-VWF{&LW6e@-c6r-VF#f@WrE#F{6@fI-Vz#E-7&mV6lWEm6E6E`7#e`fF7Vr@fg#6{`E-6###ffiVVE)fr6W`-6V`F{eIEFEEr`6@\z{bmEEf#-\W#-VV#WVb6WEE(7`-fe`EmW#zFWz6f
+:solution.1=dig&(2,1);(3,3);(3,5)&bridge;(1,1);brolly;2;(2,1)&dig;(4,3);5;block;4;(3,10)&dig;(3,10);;bridge&(3,11);6;bash&(1,1)&bridge;(6,9);4;block&brolly&(2,3)&bridge;2;(7,8);;block&(2,3);bridge;block&(1,1);bridge;3;(4,6);bash&(7,8);3;(2,3);(1,1);13
 :num_rabbits=5
 :num_to_save=5
 :rabbit_delay=3,30,4
