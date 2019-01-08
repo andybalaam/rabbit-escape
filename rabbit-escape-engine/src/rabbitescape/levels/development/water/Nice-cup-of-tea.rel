@@ -3,10 +3,10 @@
 :author_name=colonelfazackerley
 :author_url=github.com/colonelfazackerley
 :hint.1=
-:solution.1.code=U'aU~')X$U'S$U-.U-UU.gX$~c`UU]'U`U-.-`)a2Ua^..`)U.~'aU$aX~SgU.EU-nI`n$-p'UUIg'Uc^a~-aI)U`.UCUX-)g2U~S'$U))'-caa.I
-:solution.2.code=voLKoGoaoLKoaF<*-3>UUo aoioF7u*ev*,uw*vouFoeFvLeiiL>-7ou-o4ucaTFvaTF7/oTTu-iTu>avvTaeF
-:solution.3.code=%c_M<86P+<_P+8eoQi-_MV8oQcc8c-ePo6poc%po-8i_oVVcQei%PPc6H8%:%8:coCcccVP-%6Pc%6cyp
-:solution.4.code=3pv v.pREX#W#&#z! w.\\#4#H+z#W#Wpzv&#XX#Fy#z#z+vFv!X&vzFXFp W3#$z$#H.#WF& &WXz+#y"z3#+#RW?p+W#X E# W#X"$X
+:solution.1=brolly;(4,3);3;(3,1);bridge;;(6,11);;dig;5;(5,11);bridge;3;(8,10);;dig;(4,3);bridge;3;(5,8);dig;(8,10);7;(3,1);15
+:solution.2=dig&(2,1);(3,3)&brolly;;(1,1);dig&(3,5)&(5,11);bridge;5;bash;;(3,7);bridge;3;(4,11);39
+:solution.3=dig&(2,1);(2,3)&bridge;;(1,1);brolly;;(2,1);bridge&(5,11);22;(8,9);5;dig;(8,9);18
+:solution.4=dig&(2,1);(3,3);;brolly;2;(3,5);(3,5);;bridge&(4,11)&dig;(5,11);5;bridge;6;(7,9);3;(7,9);5;dig;5;(8,8);16
 :num_rabbits=5
 :num_to_save=3
 :rabbit_delay=3,30,4
