@@ -203,7 +203,7 @@ ifndef MAKECMDGOALS
 MAKECMDGOALS = all
 endif
 
-all: compile android-compile
+all: test android-compile
 
 # Fails if the Makefile contains any warnings
 no-make-warnings:
