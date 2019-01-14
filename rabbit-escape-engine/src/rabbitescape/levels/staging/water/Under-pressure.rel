@@ -5,7 +5,8 @@
 :hint.1=Remove the landing block. This will allow the water to escape later.
 :hint.2=Build a bridge to keep catch the rabbits and hold them above the water.
 :hint.3=Use a blocker to hold rabbits on the bridge while the water drains.
-:solution.1=dig&(0,4);bash;2;(0,5);(2,5);bridge;4;(0,5)&block;12;(2,4);;(0,5);12;dig;(2,4);2;bash&(5,5);11;(0,5);22
+:solution.1=dig&(0,4);bash;2;(0,5);(2,5);bridge;4;(0,5)&block;12;(2,4);;(0,5);12;dig;(2,4);2;bash&(5,5);11;(0,5);until:WON
+:solution.2=dig&(0,4);bash;2;(0,5);bridge&(1,5)&bash;2;(2,5);dig;(2,4)&bash&(2,5);;bridge;(1,5);16;(1,5);until:WON
 :num_rabbits=10
 :num_to_save=8
 :rabbit_delay=18,10,5,14,4
