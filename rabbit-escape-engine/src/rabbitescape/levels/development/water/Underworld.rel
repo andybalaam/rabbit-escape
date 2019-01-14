@@ -1,0 +1,28 @@
+:name=Underworld
+:description=The rabbots live beneath
+:author_name=colonelfazackerley
+:author_url=github.com/colonelfazackerley
+:solution.1=bridge&(5,3)&dig&(9,0);block&(6,5);31
+:solution.2=bridge&(7,3);;block;(6,5);;dig;3;(8,3);9
+:num_rabbits=0
+:num_to_save=1
+:rabbit_delay=4
+:music=tryad-witness
+:block=9
+:bridge=9
+:dig=9
+:explode=9
+            
+         # #
+         # #
+ r       # #
+######## MMM
+#*NNNNN#bAO 
+############
+:*=Nt
+:n=1,5,1536
+:n=2,5,1536
+:n=3,5,1536
+:n=4,5,1536
+:n=5,5,1536
+:n=6,5,1536
