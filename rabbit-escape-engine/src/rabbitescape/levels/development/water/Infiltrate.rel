@@ -2,6 +2,9 @@
 :description=One rabbit. One exit. Thirty thousand units of water.
 :author_name=tttppp
 :author_url=https://github.com/tttppp
+:hint.1=If you need to bash but not step forward, quickly place a dig token on the rabbit while it is bashing.
+:hint.2=The water is a red herring!  You need to move the fire out of the way to get to the exit.
+:hint.3=Dig out all the blocks around the fire. Then bridge over the fire to the exit.
 :solution.1=bridge&(2,2);bash;4;(3,2);(4,2)&dig;2;(4,1);bridge&(4,4);bash;4;(4,4);dig;;(4,3);bridge;3;(4,6);3;(4,6);bash&(3,4)&bridge;4;(2,4);;(2,4);4;bash;4;(5,2);until:WON
 :num_rabbits=1
 :num_to_save=1
