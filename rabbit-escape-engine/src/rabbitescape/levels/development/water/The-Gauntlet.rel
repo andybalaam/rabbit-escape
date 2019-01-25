@@ -1,0 +1,33 @@
+:name=The Gauntlet
+:description=Run past the bomb, jump over the water, dodge around the rabbot and race through the fire!
+:author_name=tttppp
+:author_url=https://github.com/tttppp
+:hint.1=Only one rabbit needs to survive - clearing bombs with rabbits is a good idea.
+:hint.2=The only way to the exit is by extinguishing the fire next to it. The water falls are no good for this.
+:hint.3=Use some bridges on the left to keep some rabbits safe, get the rabbot up to the top and then dig down to the water on the right. Use it to extinguish the fires and then take the rabbits through the guantlet to the exit.
+:solution.1=2;block;2;(7,7);;bridge;6;(3,7);2;(3,7);;block;2;(0,5);;bridge;(1,6);5;(3,5);3;block;4;(0,3);;bridge;;(1,4);block;(2,4);4;dig;;(8,5);;bridge;(7,7);;climb;2;(8,8);block;(9,6);18;bash;;(10,0);dig;9;(11,0);;block;(11,7);12;dig&(11,7);;bash&(11,8);block&(11,8);3;bash&(11,8);;dig&(7,1);26;bridge&(9,6);;dig&(2,4);;(3,5);11;(0,3);2;(0,5);until:WON
+:solution.2=block;(5,7)&bash&bridge;6;(2,7);block;3;(0,6);;bridge;2;(1,7);12;bash;17;(9,7);;(8,5);13;(5,7);85;bridge;3;(8,8);6;(10,7);2;bash;(9,7);bridge&(9,6);213;(7,7);9;dig;2;(3,6);32;explode;3;(0,6);until:LOST
+:solution.3=block&(7,7);bridge;;(4,7);19;(1,5)&block;;(0,4);4;(1,5);bridge&(2,6);2;explode&(4,7);(6,7);2;(6,7);;(3,6);(7,7);bash;(8,5);(9,7);5;bridge&(8,8);6;climb;6;(3,6);2;dig;3;(5,1);311;bash;10;(3,6);98;(1,5);9;bridge;3;(10,7);9;(9,7);4;(6,5);11;explode;(0,4);until:WON
+:num_rabbits=10
+:num_to_save=1
+:rabbit_delay=4
+:music=
+:bash=99
+:block=99
+:bridge=99
+:brolly=1
+:climb=1
+:dig=99
+:explode=99
+PP         ## PP
+    MNM MNM##   
+    M#M#MMM##   
+    # p AOM##   
+    #(####M##   
+    #)A * M##   
+   Q##### M##   
+      p   #N#   
+  #####MNM####  
+   \ / MMM###   
+:*=t{Blocking.abilityActive:true}k
+:n=11,7,25000
