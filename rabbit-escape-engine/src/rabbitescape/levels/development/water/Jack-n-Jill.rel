@@ -1,0 +1,21 @@
+ Q  #nn#    
+/   ####   \
+            
+/    /\    \
+#M########M#
+#    MM  AO#
+############
+:author_name=Andy Balaam
+:author_url=https://www.artificialworlds.net/rabbit-escape
+:bash=2
+:block=1
+:bridge=10
+:description=...went all over looking for some way past that fire
+:dig=2
+:hint.1=Use that pail of water to put out the fire.
+:hint.2=Bash through the right-hand side of the water container.
+:hint.3=TODO
+:solution.1=bridge;;(8,3);11;(10,2);3;bash;;(8,1);;dig;2;block;(7,5);;dig;(7,3);11;(8,1);6;bash;(7,5);until:WON
+:name=Jack n Jill
+:num_rabbits=2
+:num_to_save=2
