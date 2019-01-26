@@ -103,16 +103,8 @@ then click Import...
 
 You will need to run make before you start.
 
-Android
--------
-
-    sudo apt install "android*"
-
-    # download sdkmanager and accept license
-
-    make
-
-Alternatively:
+Android with Android Studio
+---------------------------
 
     sudo snap install android-studio --classic
 
@@ -141,6 +133,13 @@ To build the debug APK from the command line:
 
 This will create a file at
 rabbit-escape-ui-android/app/build/outputs/apk/app-debug.apk .
+
+Android via command line
+------------------------
+
+It should definitely be possible to build without Android Studio but
+we've not quite worked out the right instructions.  If you figure it
+out, please let us know so we can update this page.
 
 Contributing
 ------------
