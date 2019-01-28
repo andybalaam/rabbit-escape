@@ -2,6 +2,9 @@
 :description=It's gone cold, the milk was off, ... and what's that green thing lurking at the bottom of the mug?
 :author_name=tttppp
 :author_url=github.com/tttppp
+:hint.1=
+:hint.2=
+:hint.3=
 :solution.1=dig&(2,1);(3,3);(3,5)&bridge;(1,1);brolly;2;(2,1)&dig;(4,3);5;block;4;(3,10)&dig;(3,10);;bridge&(3,11);6;bash&(1,1)&bridge;(6,9);4;block&brolly&(2,3)&bridge;2;(7,8);;block&(2,3);bridge;block&(1,1);bridge;3;(4,6);bash&(7,8);3;(2,3);(1,1);until:WON
 :solution.2=brolly&(2,1);(2,1)&dig&(4,3);;bridge&(6,11);;block;2;(0,1);2;(2,1);5;(4,11)&bridge;3;(8,10);bash&(4,11);3;(8,10);;dig;(9,9)&bridge;(5,8);bash;;(9,11)&bridge;(9,11);2;(6,9);5;(8,8);9;(5,6);bash;(2,1);2;(8,8);2;(0,1);until:WON
 :num_rabbits=5

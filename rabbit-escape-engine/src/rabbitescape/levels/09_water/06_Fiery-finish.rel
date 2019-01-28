@@ -1,16 +1,20 @@
 :name=Fiery Finish
 :description=Place digging tokens in the right places to avoid falling too far.
 :author_name=tttppp
-:solution.1.code=`6i'i!i},}.!i{i!iL!i6{iH/.u60HLF6!!i&;.7i}iL}fZ/.Li/7f{L0fi/Gb{idHZ.Gi6i.6.!i&!i!L`&Zi6i6i76ii,..HF7b
-:music=tryad-witness
+:author_url=
+:hint.1=
+:hint.2=
+:hint.3=
+:solution.1=;bridge;(6,6);;(8,5);;dig&(5,6);bridge;2;(8,5);4;(7,5);4;;bash;(9,4);;(11,3);15;(13,9);2;dig;(7,5);42
 :num_rabbits=10
 :num_to_save=8
-:dig=99
-:bash=99
-:bridge=99
-:block=99
-:explode=99
+:rabbit_delay=4
 :music=tryad-witness
+:bash=99
+:block=99
+:bridge=99
+:dig=99
+:explode=99
 ###################
 #                P#
 # ### ##### ##### #

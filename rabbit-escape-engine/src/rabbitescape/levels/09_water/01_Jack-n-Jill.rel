@@ -1,3 +1,19 @@
+:name=Jack n Jill
+:description=...went all over looking for some way past that fire
+:author_name=Andy Balaam
+:author_url=https://www.artificialworlds.net/rabbit-escape
+:hint.1=Use that pail of water to put out the fire.
+:hint.2=Bash through the right-hand side of the water container.
+:hint.3=Bridge up to hit the slope on the right and turn around, then bridge leftward from the tp of your bridge to hit the side of the water pale.  Bash at the top of that bridge to let the water out, then dig into the area where the exit is, using a blocker to stop the rabbit hitting fire.  Once the water has put out the fire, use a bash token to release the blocker.
+:solution.1=bridge;;(8,3);11;(10,2);3;bash;;(8,1);;dig;2;block;(7,5);;dig;(7,3);11;(8,1);6;bash;(7,5);until:WON
+:num_rabbits=2
+:num_to_save=2
+:rabbit_delay=4
+:music=tryad-witness
+:bash=2
+:block=1
+:bridge=10
+:dig=2
  Q  #nn#    
 /   ####   \
             
@@ -5,18 +21,3 @@
 #M########M#
 #    MM  AO#
 ############
-:author_name=Andy Balaam
-:author_url=https://www.artificialworlds.net/rabbit-escape
-:bash=2
-:block=1
-:bridge=10
-:description=...went all over looking for some way past that fire
-:dig=2
-:hint.1=Use that pail of water to put out the fire.
-:hint.2=Bash through the right-hand side of the water container.
-:hint.3=Bridge up to hit the slope on the right and turn around, then bridge leftward from the tp of your bridge to hit the side of the water pale.  Bash at the top of that bridge to let the water out, then dig into the area where the exit is, using a blocker to stop the rabbit hitting fire.  Once the water has put out the fire, use a bash token to release the blocker.
-:solution.1=bridge;;(8,3);11;(10,2);3;bash;;(8,1);;dig;2;block;(7,5);;dig;(7,3);11;(8,1);6;bash;(7,5);until:WON
-:music=tryad-witness
-:name=Jack n Jill
-:num_rabbits=2
-:num_to_save=2

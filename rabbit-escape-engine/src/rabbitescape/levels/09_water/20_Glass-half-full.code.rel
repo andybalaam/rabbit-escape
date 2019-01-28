@@ -2,10 +2,10 @@
 :description=Always look on the bright side of life.
 :author_name=tttppp
 :author_url=github.com/tttppp
-:hint.1.code=Zo|Aov.c(sAzoAoo|Y$Dv+|<|3CoZA<+sves(
-:hint.2.code=2&%%g.scg8-P%%s$f-%fZngc<%ssn%cg2ng%gsc*oo.g%%.F%f8&gP2bk%b%ceP2Gfn%ccoc+.c%-s-bsPP8cs-n+8%%b2-c&%%f&P%.gGngPb2n<%scc88ng%
-:hint.3.code=]!HM!M6!g_O!gD}EhOqHO!]GBghWHh_O!HQD!OiO!D5M}MG!!!HFgE'i!HhQ7Mh!!MGM'hQOF;GDhGbMqq!MOg5!G!hDDOD_WH!hOOH!W!'g!M'HMO!66!}!i!DOOgMHHM!WH6'!i6!_Gb!DDO
-:solution.1.code= kD I kxMXw D a k%MBOqk%pq%GYMrd `Ik%%%D dI ORkeDxdxk DMdxGYrr X!MD *Lq d O pX ORD GYrwdX  D wI  DkkD R D%%%a dIq RxwOdxeRakMGq rzd D-xxR d kekrw %Xr%aGdGwr!!wedBkrRrRID O%d dd   qkLX*  DXk%*-d-DekxG-wX  RDxY#Lw Ie*RkLdqD z
+:hint.1=The rabbits can't get over the glass.
+:hint.2=By placing a blocker token one step from the entrance it's possible to get all nine other rabbits in sync with each other.
+:hint.3=The rabbot needs to dig through two bits of the table, be turned around by a blocker, then dig through two more bits of the table on the way back.
+:solution.1=dig&(17,5)&block&(2,9);(0,9)&climb&(17,9);;dig&(5,5);(3,5);30;climb;2;(2,9);block;5;(2,9);bridge;11;(4,5);5;dig;5;(16,5);3;dig;2;(4,5);3;climb;2;(2,9);block;2;(2,9);3;bridge;10;(4,9);6;(14,9);climb;3;(2,9);9;explode;(0,9);9
 :num_rabbits=10
 :num_to_save=9
 :rabbit_delay=4

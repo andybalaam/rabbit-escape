@@ -2,14 +2,14 @@
 :description=Who dropped it in the water?
 :author_name=
 :author_url=
-:hint.1.code=\c1HG7}\1-7y}99,c\(\}7
-:hint.2.code=|O3]|d$O$ORX]OjHIdRHO$a<$dOO$&2d]Hk3^Hllss|OO_j2$|Hm2OplmjOOd|Rll_pd
-:hint.3.code=mWYqW7qWM;W;WWM{vWW;m;WMI2;B-q"UvBmW`YfWMv$0;~-mqMW6;v`WWW2`;f6fWqqmfWm8$YMvM$Bf{B-W22v;6$0
-:solution.1.code=7q8XdH8XoH&y]daXdUdz-dUddc8&EUdXcc]dHzX7q8X=z&&*A8g%U&gE]dUdHdaE*XoH8a{]dAz{UH&dd]&Ed=dzU&d88UzU*da8EX-gdzd*X]7&a{]HAydqd*=&8&EUEU8U&XaddXdgdX
-:music=tryad-witness
+:hint.1=Use the speedup button
+:hint.2=Dig down one side, pausing with block tokens to let the water drain.
+:hint.3=Hold two rabbits at the top with a blocker. They can both dig down when the water is clear.
+:solution.1=dig;3;(4,1);block&(3,1);2;(4,3);22;dig&(4,3);block;(4,4);35;dig;(4,4);block;(4,5);8;dig&(4,5);bridge;(4,6);dig;;(1,1);3;(3,1);bridge;4;(1,6);5
 :num_rabbits=3
 :num_to_save=3
 :rabbit_delay=3
+:music=tryad-witness
 :block=4
 :bridge=2
 :dig=6

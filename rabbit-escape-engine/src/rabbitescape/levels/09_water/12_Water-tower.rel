@@ -2,15 +2,18 @@
 :description=
 :author_name=colonelfazackerley
 :author_url=https://github.com/colonelfazackerley
-:music=tryad-witness
+:hint.1=
+:hint.2=
+:hint.3=
+:solution.1=;brolly;(4,2);block;4;(4,2);;(5,2);bash;(3,7);14;bridge;(4,2);dig;3;(2,1);4;bash&(5,2);9
 :num_rabbits=5
 :num_to_save=4
 :rabbit_delay=4
-:solution.1.code=M3<j`{I/`.3:"}/~QHe3/`/{/3/C};.FI/M/j/}/Fm$`//$F/}<*{~hMQ}3QhFUM://v`/m3{/}{`{`vMC}/MDFM
-:brolly=2
-:bridge=2
-:block=2
+:music=tryad-witness
 :bash=2
+:block=2
+:bridge=2
+:brolly=2
 :dig=2
      Q  
         

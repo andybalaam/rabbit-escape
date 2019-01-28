@@ -1,14 +1,15 @@
 :name=Underfloor heating
 :description=They start off safe and warm. Why not just leave them be?
 :author_name=tttppp
-:hint.1.code=,|Yv|2|Y?)||22/YY$2`'y|Y32|ZZ2`93y
-:hint.2.code=,#*#[u#=*|fI|~||&F*,|=f&&*
-:hint.3.code=-iTVKivZv<iV"i-O+Vi2v<"i+"PV<inV7OO-i,ii<<7vZnOixq-K<in78"-"in7OKyZ-q<<Kii==7"777w"K<iniZiKwv-2<,
-:solution.1.code=$==Fk'~\3B;\;;m'nF;<;mr>mD
-:music=tryad-witness
+:author_url=
+:hint.1=Use the water to put the fire out.
+:hint.2=Bash to release the water.
+:hint.3=Bash out left and right. Then turn the bashers into bockers and wait until the fire has gone out.
+:solution.1=;bash&(3,1);dig;2;(2,1);10
 :num_rabbits=3
 :num_to_save=2
 :rabbit_delay=4
+:music=tryad-witness
 :bash=10
 :block=10
 :bridge=10

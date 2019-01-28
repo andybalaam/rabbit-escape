@@ -2,14 +2,14 @@
 :description=She's gonna blow!
 :author_name=ColonelFazackerley
 :author_url=https://github.com/colonelfazackerley
-:hint.1.code=
-:hint.2.code=
-:hint.3.code=
-:solution.1.code=4$[H838H-04Z}+3b?+?3*}0483+3}Z3803-Z}+8b0Z0}+%}3383[H03$4vv3ik}k[++b3Zi4+H>40{$1$88{H}4?+%133+$*3'30m0kRZ0r883
-:music=tryad-witness
+:hint.1=
+:hint.2=
+:hint.3=
+:solution.1=bridge&(0,3);block;7;(3,1);3;(2,2);;(1,3);19;bash;7;(3,1);bridge&(2,2);(1,3)&bash&(3,1);2;(3,1);4;dig&(4,0);24
 :num_rabbits=6
 :num_to_save=6
 :rabbit_delay=10,18,18,18,2
+:music=tryad-witness
 :bash=4
 :block=3
 :bridge=3
@@ -19,7 +19,7 @@ Q  r
         
    d   O
 ########
-#NNNNNN#
+#nnNnnN#
 ########
 :n=1,5,1000
 :n=2,5,1000

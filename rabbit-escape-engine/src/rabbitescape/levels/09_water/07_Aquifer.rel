@@ -1,15 +1,20 @@
 :name=Aquifer
 :description=Try not to drown.
 :author_name=tttppp
-:solution.1.code= v :v 8ZRu}0CR(R:u v  EC?< (C a~B EC 6:v 3z3`8:R}2~(CZ68: -R-v CR:v/C-} 3 B2~`23`B v 6 <:5u28v 6~v E8:0CRa :uZuu C ZC v5uC8(C:(R v 3 :? 3a3`zv 5 R /? 2 6uCuB:v  RC5C(8 R6 C  E:36R5:0B v` u vC:( Z:Z:  - 3Cv2 ZB} ` v 5C:8(R6:/URv:R-}aC3Z -z5Cv8R?6R  Uu  U3 a?5uav z6R< 8 (}} z :<:C(Rv<EZ2v BR ~CZ~  5}3: ?R33 2zvB<u``R Zu5
-:solution.2.code=m46?zx,m40ozc@F46?z,mx?%,4xz?om?oc?zc,moz?x%qEo6,clzmF6zlm?&xo4%m,o,z@z{4?m,z6zs?@|4mo,%czo?@o,m,,x&o?@mozx
+:author_url=
+:hint.1=
+:hint.2=
+:hint.3=
+:solution.1=;dig;(19,4);2;bash;(18,7);dig;;block;3;(15,1);3;bash;dig;(17,7);(18,7);3;bash&bash;dig;(1,4);dig;block;;(4,1);4;bash;(2,7);3;dig&(3,7);105;dig;6;(9,2);2;block;2;(6,4);2;(15,4);;dig;2;(12,4);3;(9,6);(14,6);12;(6,4);;(6,6);10;(15,1);block;2;(16,4);4;block&bash;;(15,4);3;dig;;(10,6);8;block&bash;dig&(4,1);3;bash&(16,4);12
+:solution.2=dig&(10,2)&(13,4);(14,6)&(14,8);4;(12,4);3;(13,6);(13,8)&(12,6);(11,4)&(11,6)&block;;(12,8);38;dig&(12,8);4
 :num_rabbits=10
 :num_to_save=5
+:rabbit_delay=4
+:music=tryad-witness
+:bash=20
 :block=10
 :dig=20
-:bash=20
 :explode=10
-:music=tryad-witness
 #####################
 #         Q         #
 #  ###\       /###  #

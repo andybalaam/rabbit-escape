@@ -3,6 +3,8 @@
 :author_name=colonelfazackerley
 :author_url=github.com/colonelfazackerley
 :hint.1=
+:hint.2=
+:hint.3=
 :solution.1=brolly;(4,3);3;(3,1);bridge;;(6,11);;dig;5;(5,11);bridge;3;(8,10);;dig;(4,3);bridge;3;(5,8);dig;(8,10);7;(3,1);15
 :solution.2=dig&(2,1);(3,3)&brolly;;(1,1);dig&(3,5)&(5,11);bridge;5;bash;;(3,7);bridge;3;(4,11);39
 :solution.3=dig&(2,1);(2,3)&bridge;;(1,1);brolly;;(2,1);bridge&(5,11);22;(8,9);5;dig;(8,9);18

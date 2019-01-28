@@ -1,3 +1,18 @@
+:name=Escape from Shurrapak
+:description=[To Gilgamesh] I thought you were dead.
+:author_name=colonelfazackerley
+:author_url=https://github.com/colonelfazackerley
+:hint.1=
+:hint.2=
+:hint.3=
+:solution.1=bridge&(1,5);(1,5)&(1,5)&(1,5);(1,5)&(3,4);(3,4)&(3,4)&(3,4);(3,4);(6,2)&(6,2)&(6,2)&(6,2);(6,2);(8,1);(10,2);(12,3)&(12,3)&(12,3);(12,3)&(12,3);(16,2);(16,2)&(16,2)&(16,2);(16,2);dig&(18,2);bash&(18,1)&bridge&dig;3;(10,0);8;(12,1);33
+:num_rabbits=5
+:num_to_save=5
+:rabbit_delay=9,6,5
+:music=tryad-witness
+:bash=5
+:bridge=30
+:dig=4
    P               
                    
   P     #        # 
@@ -6,15 +21,3 @@
    #  # ### #P ## O
 ##(  ( ( ( (  ((( #
 ###################
-:author_name=colonelfazackerley
-:author_url=https://github.com/colonelfazackerley
-:bash=5
-:bridge=30
-:description=[To Gilgamesh] I thought you were dead.
-:dig=4
-:music=tryad-witness
-:name=Escape from Shurrapak
-:num_rabbits=5
-:num_to_save=5
-:rabbit_delay=9,6,5
-:solution.1.code=7[ce^dF7[-*^de7[c*^de0c,^Gc,^_20-7[-7[-m[-^F7m[c^F7m[c^F7m[-^-[c[c7c[F[-[-fmdF^F7[-e7dF*[-*^de7[^*^97[7<7*c9x9Fef,^dF/ed_7d9*^0[72eFx^^c[e77cd*7[^e'ed^^[--777*d*c[^e'ee^^dc7-77-d,[[[d'd0^^-c^-77Fdd2[d['[c^ed-^/7-dd7e[2d'e-^[/cf^7^eFc6

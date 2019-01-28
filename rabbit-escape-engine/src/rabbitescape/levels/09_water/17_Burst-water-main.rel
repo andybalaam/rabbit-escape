@@ -2,9 +2,13 @@
 :description=
 :author_name=tttppp
 :author_url=github.com/tttppp
-:solution.1.code=y]Y]UIev_]cvy.UI$e]L$,x +vnL]Y]x $,x_],v]!$Zx_]Y]x $cHUnL_]I],e$zY]v]D+$,Y]vx]!y] ,x_$Y]c$cY_]Y]$v,U]+x_]znx UvnL$cLL$Ix ]L]$]UcY.!$ec_]vv]!]YxUIyce!.Y UI]v]!]Y,x$Yn!,Uev__]LxxIYn.]U$]]H]LYUI,,Yv!$]],|nx]]+x_vyYc!_| v].]]$vzZ+YY]+cyvv.]]YUxx]n$_UI]_vLL]]Ix$.+z$$Yce]YvvD$]v|L]]nxYUdy qyLEvIXDn]]]]D$$,LZ+YY|,cZvv.]]y]]n+x]
+:hint.1=
+:hint.2=
+:hint.3=
+:solution.1=bridge&(1,6);2;bash&(3,5);bridge&(5,9);block;;(3,5);;bridge;6;(7,8);9;(4,6);;bash;(5,6);bridge;(5,5);bash;(6,5);bridge;(6,4);2;(8,4);6;dig;(8,4);bridge;;(8,6);;bash;(7,6);bridge;(7,5);;dig;;(5,6);bash&bridge;;(5,7);;dig;;(4,6)&bash;(4,7)&bridge;;(4,7);2;bash;;(6,6)&bridge;;(6,5);7;bash&(9,3);bridge;(9,2);4;bash;;(3,5);14
 :num_rabbits=5
 :num_to_save=3
+:rabbit_delay=4
 :music=tryad-witness
 :bash=99
 :block=99
@@ -24,7 +28,7 @@ M  #    #   M
 MMMMMM MMMMMM
 ****NNNNNNNNN
 MMMMMMMMMMMMM
-:*=PN
-:*=PN
-:*=PN
-:*=PN
+:*=NP
+:*=NP
+:*=NP
+:*=NP

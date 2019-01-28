@@ -2,6 +2,9 @@
 :description=The rabbots live beneath
 :author_name=colonelfazackerley
 :author_url=github.com/colonelfazackerley
+:hint.1=
+:hint.2=
+:hint.3=
 :solution.1=bridge&(5,3)&dig&(9,0);block&(6,5);31
 :solution.2=bridge&(7,3);;block;(6,5);;dig;3;(8,3);9
 :num_rabbits=0

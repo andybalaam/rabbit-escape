@@ -2,17 +2,20 @@
 :description=
 :author_name=colonelfazackerley
 :author_url=
-:music=tryad-witness
+:hint.1=
+:hint.2=
+:hint.3=
+:solution.1=bridge&(2,6);block&(1,6);bridge&(3,5);11;(6,3);bash;3;(4,2);block;(5,3);bridge;(3,1);(1,6);;(5,3);dig;7;(7,3);13
 :num_rabbits=5
 :num_to_save=5
 :rabbit_delay=4
-:solution.1.code=|CiC|CB?UH1H(U>C(U11(_|CHr9>B=|DC|?+UZHF(XHUD(1(_X|CHC|C991r)1Bk$>U(D(_?r9=CU(>H)CC||9_XLH}}C|A9BCFHHiCC$C(kDU=C
-:block=2
-:climb=1
+:music=tryad-witness
 :bash=1
+:block=2
 :bridge=6
-:explode=5
+:climb=1
 :dig=2
+:explode=5
 /# #  ##\
  P #  #  
 #  #  # A
