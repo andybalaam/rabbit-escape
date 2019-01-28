@@ -1,0 +1,13 @@
+ Q    #
+#nn\ (#
+##### #
+# AAAA#
+# #####
+#AAAA #
+##### #
+#OAAAA#
+#######
+:bash=10
+:dig=2
+:num_rabbits=1
+:solution.1=bash;2;(2,1);20;dig;2;(5,1);until:WON
