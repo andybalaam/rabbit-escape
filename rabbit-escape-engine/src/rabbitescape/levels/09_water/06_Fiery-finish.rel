@@ -2,9 +2,9 @@
 :description=Place digging tokens in the right places to avoid falling too far.
 :author_name=tttppp
 :author_url=
-:hint.1=
-:hint.2=
-:hint.3=
+:hint.1=Send one rabbit to release the water while the others hide.
+:hint.2=Bridge up the first step then bridge again immediately to turn the first rabbit around.  Meanwhile, dig the second rabbit through to the bottom.
+:hint.3=Bridge the first rabbit leftwards to keep it in the higher area, then turn and bridge right again, and bash into the area containing shallow water.  The water will put out the fires.  Now bash the other rabbits towards the exit and dig the first rabbit to come down and join them.
 :solution.1=;bridge;(6,6);;(8,5);;dig&(5,6);bridge;2;(8,5);4;(7,5);4;;bash;(9,4);;(11,3);15;(13,9);2;dig;(7,5);42
 :num_rabbits=10
 :num_to_save=8

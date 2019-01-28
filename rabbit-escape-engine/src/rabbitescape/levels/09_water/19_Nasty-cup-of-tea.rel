@@ -1,10 +1,10 @@
 :name=Nasty cup of tea
 :description=It's gone cold, the milk was off, ... and what's that green thing lurking at the bottom of the mug?
 :author_name=tttppp
-:author_url=github.com/tttppp
-:hint.1=
-:hint.2=
-:hint.3=
+:author_url=https://github.com/tttppp
+:hint.1=Dig away the left-hand side of the cup to release the water.
+:hint.2=Dig the first rabbit on the square before the edge, then dig again above the left side of the cup and again on the actual left side of the cup.  Meanwhile, bridge the second rabbit over the first hole made by the first rabbit, using a float token to stop bridging after one square.
+:hint.3=Dig the second rabbit through the block it lands on.  Briefly block the first rabbit one square before the bottom to stop it drowning, then dig one more square to release the water, and bridge immediately.  Keep bridging all the way to the right, and bridge back leftwards from the top.  Meanwhile, bash the third rabbit through the bridge by the entrance and float it.  The fourth and fifth rabbit should block to wait while the bridger gets up to them.  Bash through the bridge to fall into the exit, and bash the blockers to release them.
 :solution.1=dig&(2,1);(3,3);(3,5)&bridge;(1,1);brolly;2;(2,1)&dig;(4,3);5;block;4;(3,10)&dig;(3,10);;bridge&(3,11);6;bash&(1,1)&bridge;(6,9);4;block&brolly&(2,3)&bridge;2;(7,8);;block&(2,3);bridge;block&(1,1);bridge;3;(4,6);bash&(7,8);3;(2,3);(1,1);until:WON
 :solution.2=brolly&(2,1);(2,1)&dig&(4,3);;bridge&(6,11);;block;2;(0,1);2;(2,1);5;(4,11)&bridge;3;(8,10);bash&(4,11);3;(8,10);;dig;(9,9)&bridge;(5,8);bash;;(9,11)&bridge;(9,11);2;(6,9);5;(8,8);9;(5,6);bash;(2,1);2;(8,8);2;(0,1);until:WON
 :num_rabbits=5
