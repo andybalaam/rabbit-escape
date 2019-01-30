@@ -1,10 +1,10 @@
 :name=Water tower
-:description=
+:description=You're on top of the solution to your problems.
 :author_name=colonelfazackerley
 :author_url=https://github.com/colonelfazackerley
-:hint.1=
-:hint.2=
-:hint.3=
+:hint.1=Sacrifice one rabbit to release the water from the tower.
+:hint.2=Float the first rabbit down and bash into the tower, then block the second.
+:hint.3=Block the third rabbit directly under the entrance.  When the water puts out the fires, bridge the second rabbit and dig towards the exit, and when ready, bash the third rabbit to release the others.
 :solution.1=;brolly;(4,2);block;4;(4,2);;(5,2);bash;(3,7);14;bridge;(4,2);dig;3;(2,1);4;bash&(5,2);9
 :num_rabbits=5
 :num_to_save=4

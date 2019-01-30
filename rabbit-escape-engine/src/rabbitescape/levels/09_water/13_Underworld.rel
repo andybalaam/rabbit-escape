@@ -2,9 +2,9 @@
 :description=The rabbots live beneath
 :author_name=colonelfazackerley
 :author_url=github.com/colonelfazackerley
-:hint.1=
-:hint.2=
-:hint.3=
+:hint.1=Get the water out of the underworld to put out the fire.
+:hint.2=Rabbits and rabbots don't collide if one blocks the other.
+:hint.3=Bridge up on top of the U shape, and dig away its left side.  Meanwhile, block the rabbot on the far right of where it can go.  When the rabbit turns around, bash through the side of the underworld to release the water.  Your rabbit will turn around because the rabbot is blocking, and go into the exit!
 :solution.1=bridge&(5,3)&dig&(9,0);block&(6,5);31
 :solution.2=bridge&(7,3);;block;(6,5);;dig;3;(8,3);9
 :num_rabbits=0

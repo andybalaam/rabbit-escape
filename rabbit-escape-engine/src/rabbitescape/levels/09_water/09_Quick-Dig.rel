@@ -4,8 +4,10 @@
 :author_url=
 :hint.1=
 :hint.2=
-:hint.3=
-:solution.1=;dig&(5,2);3;(6,4);21
+:hint.3=Immediately dig through the slope to the right of the entrance, then dig through the flat block just before the slope up to the right.  Simple, right?
+:solution.1=;dig&(5,2);3;(6,4);until:WON
+:solution.3=dig&(3,2);;(3,4)&(3,6);(5,4);(4,2);until:WON
+:solution.2=dig;2;(4,2);(3,4);(5,4);5;(4,6);until:WON
 :num_rabbits=6
 :num_to_save=5
 :rabbit_delay=4

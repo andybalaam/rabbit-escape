@@ -1,7 +1,7 @@
 :name=Dive
 :description=Who dropped it in the water?
-:author_name=
-:author_url=
+:author_name=colonelfazackerley
+:author_url=https://github.com/colonelfazackerley
 :hint.1=Use the speedup button
 :hint.2=Dig down one side, pausing with block tokens to let the water drain.
 :hint.3=Hold two rabbits at the top with a blocker. They can both dig down when the water is clear.

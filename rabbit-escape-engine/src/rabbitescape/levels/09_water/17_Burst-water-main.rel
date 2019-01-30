@@ -1,10 +1,10 @@
 :name=Burst Water Main
-:description=
+:description=Get out of there before the whole place floods!
 :author_name=tttppp
 :author_url=github.com/tttppp
-:hint.1=
-:hint.2=
-:hint.3=
+:hint.1=Bridge tthe first rabbit immediately, then bash through the block you bridged onto.  Block the second rabbit so the first one can clear the way.  Bridge the first rabbit from the metal block next to the hole, and bridge back again.  Now find a way to bridge and bash your way to the exit.
+:hint.2=Whenever a block or bridge gets in your way, bash and then immediately bridge to continue.  This trick gets you past things blocking you way as well as things stopping you bridging because you are hitting your head.
+:hint.3=Bridge-and-bash your way up from the top of the bridge (near the blocker), and after 3 block drop off the end and bridge up to the square one below the exit.  Turn around and dig through the block at the bottom of that last bridge, and start bridging again after dropping down.  Bash-and-bridge through the already-existing bridge, drop when under the floating block and dig down and bridge to get rid of the extra remaining bit of the older bridge.  Dig through at the top and bash-then-bridge all the way up to hit the block next to the exit.  Bash through it and release others by bashing the blocker.
 :solution.1=bridge&(1,6);2;bash&(3,5);bridge&(5,9);block;;(3,5);;bridge;6;(7,8);9;(4,6);;bash;(5,6);bridge;(5,5);bash;(6,5);bridge;(6,4);2;(8,4);6;dig;(8,4);bridge;;(8,6);;bash;(7,6);bridge;(7,5);;dig;;(5,6);bash&bridge;;(5,7);;dig;;(4,6)&bash;(4,7)&bridge;;(4,7);2;bash;;(6,6)&bridge;;(6,5);7;bash&(9,3);bridge;(9,2);4;bash;;(3,5);14
 :num_rabbits=5
 :num_to_save=3

@@ -2,9 +2,9 @@
 :description=She's gonna blow!
 :author_name=ColonelFazackerley
 :author_url=https://github.com/colonelfazackerley
-:hint.1=
-:hint.2=
-:hint.3=
+:hint.1=Find somewhere to wait while the water subsides.
+:hint.2=Build a bridge and keep your rabbits on it until the water flows away.
+:hint.3=Bridge immediately from under the entrance, and block the bridger at the top.  Block the next rabbit half-way up the bridge, and the third at the bottom.  Wait until the water is not completely filling any square.  Bash the top rabbit and bridge the other two to release them.  Bash or dig them at the top to stop them going off the screen.  Be careful not to dig through the bridge too early.
 :solution.1=bridge&(0,3);block;7;(3,1);3;(2,2);;(1,3);19;bash;7;(3,1);bridge&(2,2);(1,3)&bash&(3,1);2;(3,1);4;dig&(4,0);24
 :num_rabbits=6
 :num_to_save=6
