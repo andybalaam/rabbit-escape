@@ -1,10 +1,10 @@
 :name=Dambusters
-:description=
+:description=There's a lot of water behind that dam!
 :author_name=colonelfazackerley
-:author_url=
-:hint.1=
-:hint.2=
-:hint.3=
+:author_url=github.com/colonelfazackerley
+:hint.1=Put out the fire using water!
+:hint.2=You need to free a little water without drowning yourself.  Try breaking through quite high up.
+:hint.3=Bridge under the entrance and as soon as it is gone, place a block token there to stop the next rabbit.  Bridge from the leftmost block of the three raised ones to end up on the L-shaped platform.  Bridge leftwards from the edge of that towards the water.  At the top, bash to free the water and bridge left to avoid drowning.  Free the blocker by bashing, and dig down near the exit to finish.
 :solution.1=bridge&(2,6);block&(1,6);bridge&(3,5);11;(6,3);bash;3;(4,2);block;(5,3);bridge;(3,1);(1,6);;(5,3);dig;7;(7,3);13
 :num_rabbits=5
 :num_to_save=5

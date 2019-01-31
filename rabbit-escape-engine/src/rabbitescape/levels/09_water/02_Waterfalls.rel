@@ -2,9 +2,9 @@
 :description=Bridge across the waterfalls, but don't spend too long looking at the view.
 :author_name=tttppp
 :author_url=http://artificialworlds.net/rabbit-escape/
-:hint.1=
-:hint.2=
-:hint.3=
+:hint.1=Place multiple bridge tokens to slow down rabbits.
+:hint.2=Build loads of bridges near the exit and you'll find a way in.
+:hint.3=Bridge just before the step up, then three times on the first block of the step.  Bridge five times under the second pipe, twice under the third pipe, and then three times on the sticking up block.  Wait for the rabbits to turn around and bridge twice again on the same block.  Finally, bridge rightwards from the bridge you just built towards the exit.
 :solution.1=bridge;;(5,6);2;(7,5);(7,5);3;(7,5);3;(11,4)&(11,4);(11,4);2;(11,4);3;(11,4);2;(15,2);(15,2);5;(17,4)&(17,4);(17,4)&(17,4);8;(17,4);(17,4);5;(16,4);12
 :num_rabbits=5
 :num_to_save=3

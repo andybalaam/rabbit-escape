@@ -2,9 +2,9 @@
 :description=[To Gilgamesh] I thought you were dead.
 :author_name=colonelfazackerley
 :author_url=https://github.com/colonelfazackerley
-:hint.1=
-:hint.2=
-:hint.3=
+:hint.1=Place bridge tokens on top of each other to slow down later rabbits.
+:hint.2=Bridge and then dig to make rabbits drop in the right places.
+:hint.3=Bridge under the entrance and in multiple places to make the rabbits travel across the top of all the blocks in the level.  Wherever later rabbits are in danger of overtaking the bridger, make them into bridgers too.  Where the bridger will overshoot the block where they should, use a dig token to stop them.  At the very end, place a dig token and a bash token on top of each other to slow down one rabbit while the other digs.
 :solution.1=bridge&(1,5);(1,5)&(1,5)&(1,5);(1,5)&(3,4);(3,4)&(3,4)&(3,4);(3,4);(6,2)&(6,2)&(6,2)&(6,2);(6,2);(8,1);(10,2);(12,3)&(12,3)&(12,3);(12,3)&(12,3);(16,2);(16,2)&(16,2)&(16,2);(16,2);dig&(18,2);bash&(18,1)&bridge&dig;3;(10,0);8;(12,1);33
 :num_rabbits=5
 :num_to_save=5
