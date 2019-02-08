@@ -1,0 +1,31 @@
+       QO
+O*      #
+##)     #
+   )    #
+    #))##
+   (*    
+O (      
+MMMMMMMM 
+        O
+:*=yk
+:*=)A
+:author_name=Andy Balaam
+:author_url=http://artificialworlds.net/rabbit-escape
+:bash=1
+:block=1
+:bridge=1
+:brolly=1
+:climb=1
+:description=Can you find all seven solutions?
+:dig=1
+:explode=1
+:name=Seven ways
+:num_rabbits=2
+:rabbit_delay=6
+:solution.1=;bash;;(4,3);until:WON
+:solution.2=dig;(5,4);until:WON
+:solution.3=bridge;11;(4,3);until:WON
+:solution.4=block;(7,6);32;explode;(7,6);until:WON
+:solution.5=climb&(7,3);until:WON
+:solution.6=explode;2;(1,1);until:WON
+:solution.7=;brolly&(7,6);until:WON
