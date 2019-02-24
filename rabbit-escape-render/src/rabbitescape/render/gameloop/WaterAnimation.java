@@ -178,7 +178,7 @@ public class WaterAnimation
             WaterRegionRenderer r = lookupRenderer.getItemAt( w.x, w.y );
             if ( null == r)
             { // Create renderer for region that does not have one
-                lookupRenderer.add( new WaterRegionRenderer( w, world, this ) );
+                lookupRenderer.add( new WaterRegionRenderer( w.x, w.y, world, this ) );
             }
             else
             { // Remove renderers that are being used from temporary list.

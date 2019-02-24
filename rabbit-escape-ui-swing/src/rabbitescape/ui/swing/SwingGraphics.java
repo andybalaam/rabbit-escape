@@ -152,10 +152,10 @@ public class SwingGraphics implements Graphics
             for ( WaterRegionRenderer wrr : wa.lookupRenderer)
             {
                 Rect rect = new Rect(
-                    ts * wrr.region.x + renderer.offsetX,
-                    ts * wrr.region.y + renderer.offsetY,
-                    ts * wrr.region.x + ts + renderer.offsetX,
-                    ts * wrr.region.y + ts + renderer.offsetY
+                    ts * wrr.getX() + renderer.offsetX,
+                    ts * wrr.getY() + renderer.offsetY,
+                    ts * wrr.getX() + ts + renderer.offsetX,
+                    ts * wrr.getY() + ts + renderer.offsetY
                 );
                 Color bsColor =
                     new Color( waterR, waterG, waterB, wrr.backShadeAlpha() );

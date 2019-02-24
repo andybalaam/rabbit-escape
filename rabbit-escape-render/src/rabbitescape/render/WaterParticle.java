@@ -1,11 +1,10 @@
 package rabbitescape.render;
 
-import java.util.Random;
-import rabbitescape.engine.util.Position;
 import rabbitescape.engine.CellularDirection;
+import rabbitescape.engine.util.Position;
 import rabbitescape.render.gameloop.WaterAnimation;
-import rabbitescape.render.PolygonBuilder;
-import rabbitescape.render.Vertex;
+
+import java.util.Random;
 
 public class WaterParticle
 {
@@ -62,7 +61,7 @@ public class WaterParticle
             y = biasCoord( y, CellularDirection.UP, yBias);
         }
         // move across the world to the correct cell
-        Position p = wrr.region.getPosition();
+        Position p = wrr.getPosition();
         x += (float)p.x;
         y += (float)p.y;
         lastX = x; lastY = y;
@@ -143,7 +142,7 @@ public class WaterParticle
 
     public boolean outOfRegion( WaterRegionRenderer wrr)
     {
-        Position p = wrr.region.getPosition();
+        Position p = wrr.getPosition();
         float rx = (float)p.x, ry = (float)p.y;
         return  x < rx || y < ry ||
                 x >= ( rx + 1f ) || y >= ( ry + 1f) ;
