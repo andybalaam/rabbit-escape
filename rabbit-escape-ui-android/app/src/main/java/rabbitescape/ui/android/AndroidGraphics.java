@@ -332,10 +332,10 @@ public class AndroidGraphics implements Graphics
         // shade whole background sqaure cells with any water
         for ( WaterRegionRenderer wrr : wa.lookupRenderer) {
             Rect rect = new Rect(
-                renderer.tileSize * wrr.region.x + renderer.offsetX,
-                renderer.tileSize * wrr.region.y + renderer.offsetY,
-                renderer.tileSize * wrr.region.x + renderer.tileSize + renderer.offsetX,
-                renderer.tileSize * wrr.region.y + renderer.tileSize + renderer.offsetY
+                renderer.tileSize * wrr.getRegion().x + renderer.offsetX,
+                renderer.tileSize * wrr.getRegion().y + renderer.offsetY,
+                renderer.tileSize * wrr.getRegion().x + renderer.tileSize + renderer.offsetX,
+                renderer.tileSize * wrr.getRegion().y + renderer.tileSize + renderer.offsetY
             );
             Paint paint = new Paint();
             paint.setStyle(Paint.Style.FILL);
