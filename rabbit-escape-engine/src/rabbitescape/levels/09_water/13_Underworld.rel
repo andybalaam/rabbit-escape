@@ -10,7 +10,7 @@
 :num_rabbits=0
 :num_to_save=1
 :rabbit_delay=4
-:music=tryad-witness
+:music=tryad-this
 :block=9
 :bridge=9
 :dig=9
