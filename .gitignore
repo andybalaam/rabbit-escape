@@ -14,6 +14,7 @@ recordings/
 /.ropeproject/
 /.recommenders/
 /.metadata/
+/out/
 
 # Android
 rabbit-escape-ui-android/app/libs/rabbit-escape-generic.jar
