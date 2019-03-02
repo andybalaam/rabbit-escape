@@ -1,7 +1,7 @@
 :name=Fiery Finish
 :description=Place digging tokens in the right places to avoid falling too far.
 :author_name=tttppp
-:author_url=
+:author_url=github.com/tttppp
 :hint.1=Send one rabbit to release the water while the others hide.
 :hint.2=Bridge up the first step then bridge again immediately to turn the first rabbit around.  Meanwhile, dig the second rabbit through to the bottom.
 :hint.3=Bridge the first rabbit leftwards to keep it in the higher area, then turn and bridge right again, and bash into the area containing shallow water.  The water will put out the fires.  Now bash the other rabbits towards the exit and dig the first rabbit to come down and join them.
