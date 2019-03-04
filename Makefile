@@ -197,7 +197,7 @@ $(ANDROIDICONSXXXHDPI_DEST)/%.png: images-src/icons/%.svg
 #$(MUSICOGG_DEST)/%.ogg: music-src/%.flac
 #	mkdir -p $(MUSICOGG_DEST); avconv -i $< -c:a libvorbis -q:a 1 $@
 
-VERSION=0.11
+VERSION=0.12
 
 ifndef MAKECMDGOALS
 MAKECMDGOALS = all
