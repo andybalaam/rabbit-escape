@@ -141,6 +141,18 @@ It should definitely be possible to build without Android Studio but
 we've not quite worked out the right instructions.  If you figure it
 out, please let us know so we can update this page.
 
+System tests
+------------
+
+To run the system tests, make sure you have an x86 Jelly-Bean system image (SDK
+level 16) installed, and run:
+
+```bash
+make slowtest
+```
+
+This will run command-line and Android UI tests.
+
 Contributing
 ------------
 
