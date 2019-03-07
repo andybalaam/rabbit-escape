@@ -1,0 +1,27 @@
+:name=Seven
+:description=Both of those rabbits need to get there!
+:author_name=Andy Balaam
+:author_url=http://artificialworlds.net/rabbit-escape
+:hint.1=Use the top rabbit to help the bottom one.
+:hint.2=Dig down from the top as far right as you can.
+:hint.3=Bash at the top of the slope after you've dug down.
+:solution.1=dig;(5,1);bash;(5,3);until:WON
+:num_rabbits=2
+:num_to_save=2
+:rabbit_delay=4
+:music=
+:bash=1
+:block=1
+:bridge=1
+:climb=1
+:dig=1
+:explode=1
+:brolly=1
+  Q      
+ /    \  
+ ######) 
+     /#) 
+Q   /#  O
+   /#   M
+  /#     
+//#      

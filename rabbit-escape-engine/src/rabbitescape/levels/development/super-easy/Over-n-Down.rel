@@ -1,0 +1,23 @@
+:name=Over n down
+:description=Get both rabbits over into the exit
+:author_name=Andy Balaam
+:author_url=http://artificialworlds.net/rabbit-escape
+:hint.1=Send one rabbit ahead.
+:hint.2=Climb one rabbit and brolly down.
+:hint.3=Before the rabbit gets there, place a bridge token at the bottom of the hole.  After the rabbit bridges, place another bridge token at the bottom while the rabbit climbs.  Finally, climb the second rabbit over.
+:solution.1=2;climb;2;(2,6);;brolly;(4,1);2;bridge;(5,6);17;(5,6);9;climb;8;(2,6);until:WON
+:num_rabbits=2
+:num_to_save=2
+:rabbit_delay=8
+:music=
+:bridge=2
+:brolly=1
+:climb=2
+     ##
+      #
+   ## #
+   ## #
+ Q #O #
+   ## #
+#  ## #
+#######

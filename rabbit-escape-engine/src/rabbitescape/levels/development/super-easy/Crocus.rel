@@ -1,0 +1,26 @@
+:name=Crocus
+:description=A simple flower
+:author_name=Andy Balaam
+:author_url=http://arttificialworlds.net
+:hint.1=Don't try to get over the top...
+:hint.2=Dig through the centre of the flower.
+:hint.3=Dig down one square and then immediately bash.
+:solution.1=dig;3;(4,2)&bash;;(4,3);until:WON
+:num_rabbits=1
+:num_to_save=1
+:rabbit_delay=4
+:music=
+:bash=1
+:block=1
+:bridge=1
+:brolly=1
+:climb=1
+:dig=1
+:explode=1
+   )Q(  
+   / \  
+  /M M\ 
+  ##### 
+   ###  
+  O # O 
+  M   M 
