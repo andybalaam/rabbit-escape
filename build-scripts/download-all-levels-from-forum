@@ -5,7 +5,7 @@ set -u
 
 function all_level_ids()
 {
-    curl --silent 'https://www.artificialworlds.net/rabbit-escape/levels/api/discussions?filter[q]=tag:level' \
+    curl --silent 'https://www.artificialworlds.net/rabbit-escape/levels/api/discussions?filter[q]=tag:level&page[offset]=0' \
         | jq --raw-output '.data|.[].id'
 }
 
