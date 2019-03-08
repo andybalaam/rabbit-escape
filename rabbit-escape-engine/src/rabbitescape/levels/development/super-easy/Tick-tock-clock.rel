@@ -1,29 +1,20 @@
-     M MMMM M   M               
-    MrM   MMkMMMkM              
-    M*M    M( t )M              
-    MrM    M *M* M              
-    M#     M*MPMyM              
-   M  MM   M*MMMyM              
-   M (M    M*MPMyM              
-   M) MMM  M*MMMyM              
-   M (M    M*M MyM              
-   M) M    #*yyy*M              
-   M OMMMMMMMMMMMM              
-    M#                          
-                                
-                                
-                                
-                                
-:*=rr
-:*=(t
-:*=)t
-:*=(t
-:*=)t
-:*=(t
-:*=)t
-:*=(t
-:*=)y
-:*=(y
+ #*# MMM 
+# * M  yM
+#(# Mt* M
+#)  M(M M
+#### ) yM
+M   MMMMM
+MO      M
+ MMMMMMM 
+:*=#Q
+:*=llll
+:*=tllll
+:name=Tick tock clock
+:description=Time waits for no rabbit
+:author_name=Raory
+:num_rabbits=4
+:num_to_save=3
+:rabbit_delay=2
 :bash=2
 :bridge=3
-:name=Tick tock clock
+:solution.1=bridge;(6,2);2;bash;5;(6,4);(4,4);until:WON
