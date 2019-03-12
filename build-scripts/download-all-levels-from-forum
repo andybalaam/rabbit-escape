@@ -3,16 +3,23 @@
 set -e
 set -u
 
+function some_level_ids()
+{
+    curl --silent 'https://www.artificialworlds.net/rabbit-escape/levels/api/discussions?filter[q]=tag:level&page[offset]='"$1" \
+        | jq --raw-output '.data|.[].id'
+}
+
 function all_level_ids()
 {
-    curl --silent 'https://www.artificialworlds.net/rabbit-escape/levels/api/discussions?filter[q]=tag:level&page[offset]=0' \
-        | jq --raw-output '.data|.[].id'
+    some_level_ids 0
+    some_level_ids 20
+    some_level_ids 40
 }
 
 function existing_level_with_name()
 {
     grep --files-with-matches -E -r \
-        '^:name='"$1"'$' \
+        '^:name='"${1//\?/.}"'$' \
         ../rabbit-escape-engine/src/rabbitescape/levels
 }
 
