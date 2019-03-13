@@ -1,0 +1,21 @@
+:name=Patrol
+:description=Get your rabbits past the rabbot
+:author_name=Andy Balaam
+:author_url=http://artificialworlds.net/rabbit-escape
+:hint.1=Can you get rid of that rabbot?
+:hint.2=Explode the rabbot!
+:hint.3=Bash rightwards to walk into the exit.
+:solution.1=explode;;(5,1);bash;;(1,3);until:WON
+:num_rabbits=2
+:num_to_save=2
+:rabbit_delay=4
+:music=tryad-witness
+:bash=1
+:explode=1
+ Q        
+          
+     #)   
+/ \    ) #
+MMM#t*\(##
+MMM###### 
+:*=(O

@@ -1,0 +1,24 @@
+:name=Save Jem
+:description=Don't explode on the way to the exit.
+:author_name=Andy Balaam
+:author_url=http://artificialworlds.net
+:hint.1=Can you get the rabbot to use up the explode token?
+:hint.2=Make the rabbot a floater first.
+:hint.3=Dig the rabbot down, climb it across through the water to explode, then climb the rabbit leftwards to the exit.
+:solution.1=brolly;(1,0);;dig;;(1,0);18;climb;;(7,7);until:WON
+:num_rabbits=1
+:num_to_save=1
+:rabbit_delay=4
+:music=tryad-witness
+:brolly=1
+:climb=1
+:dig=1
+MtM       
+M#M       
+          
+          
+        Q 
+          
+    O     
+McMNMpM  M
+MMMMMMMMMM

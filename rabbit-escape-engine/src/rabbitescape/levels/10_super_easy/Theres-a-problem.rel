@@ -1,0 +1,26 @@
+:name=There's a problem
+:description=The problem is getting rabbits down from high up to low down!
+:author_name=Raory
+:author_url=https://www.artificialworlds.net/rabbit-escape/levels/u/Raory
+:hint.1=You need to turn the rabbits around after they drop onto the bridge.
+:hint.2=Block after bridging 3 squares.
+:hint.3=Explode the 2 blockers standing on metal and wait for their rabbits to fall down.  Dig through the bridge into the exit.
+:solution.1=block;10;(6,4);;explode;(4,1);(3,3);2;dig;5;(5,5);4;explode;(6,4);until:WON
+:num_rabbits=6
+:num_to_save=3
+:rabbit_delay=8
+:music=tryad-witness
+:block=1
+:dig=1
+:explode=3
+M*MM   
+M   k  
+M*MMM  
+M  k   
+M*MM   
+M      
+M  i O 
+MMMMMM 
+:*=MQ
+:*=MQ
+:*=MQ

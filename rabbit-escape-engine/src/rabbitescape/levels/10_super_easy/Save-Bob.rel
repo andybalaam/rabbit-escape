@@ -1,0 +1,26 @@
+:name=Save Bob
+:description=Bob is stuck underground!
+:author_name=Andy Balaam
+:author_url=http://artificialworlds.net
+:hint.1=The rabbot can survive under water
+:hint.2=Get the rabbot down to the bottom to put out the fire
+:hint.3=Save the top rabbit by digging then bridging to the exit.  Dig the rabbot down onto the bridge, then dig through the bridge.  Bash the rabbot leftwards from the bottom-right to release the water then again to put of the fire.  Once the rabbot has burned, release the rabbit by bashing right, and bridge out to the exit.
+:solution.1=dig;;(1,1);;bridge;2;(4,5);3;dig;7;(7,0);6;(6,4);8;bash;3;(7,7);;(5,7);7;(1,7);;bridge;2;(5,7);6;(7,6);7;(5,5);until:WON
+:num_rabbits=1
+:num_to_save=2
+:rabbit_delay=4
+:music=tryad-witness
+:bash=3
+:bridge=4
+:dig=3
+:explode=1
+ Q    MyM    
+M M   M#M    
+M#M     *    
+        #    
+        #    
+#       #    
+MMMMMM  #    
+#r#A#N# #    
+#########    
+:*=OO

@@ -2,10 +2,10 @@
 :description=An Introduction to bomb tokens.
 :author_name=tttppp
 :author_url=github.com/tttppp
-:hint.1.code=aFqaqLap)qCaLp;(&qaUB&{}BBCLg
-:hint.2.code=3T33))],B[3/,b]Y)b])?|3N|B3/,%3/,[-m'[3u
-:hint.3.code=_/k\6R  i6/i?5\:LK?f ?5\_{???_?/+4i{"{5?kz?/Lk\_5:`{?U?z?i\s5,\5KTKQ?R? __zzK"{5\k:/i?TK__?\5?:/?JsT
-:solution.1.code=t0DNU5|=W
+:hint.1=Don't click on the bomb icon.
+:hint.2=If you do then don't click on the level.
+:hint.3=If you absolutely have to click on both, then don't click somewhere a rabbit will pick the token up.
+:solution.1=until:WON
 :num_rabbits=3
 :num_to_save=3
 :rabbit_delay=4

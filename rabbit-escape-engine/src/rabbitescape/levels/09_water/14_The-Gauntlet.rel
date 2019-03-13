@@ -29,5 +29,5 @@ PP         ## PP
       p   #N#   
   #####MNM####  
    \ / MMM###   
-:*=tk
+:*=t{Blocking.abilityActive:true}k
 :n=11,7,25000

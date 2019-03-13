@@ -1,9 +1,3 @@
-       #O#
-Q      ###
-          
-       MOM
-# #    MMM
-####  ####
 :name=Good cup bad cup
 :description=Can you drip into a cup?
 :author_name=Andy Balaam
@@ -13,7 +7,16 @@ Q      ###
 :hint.3=When your bridge token is placed, bash through towards it (time it right so your rabbit is facing the right way) then place a bash token at the very top of the bridge.
 :solution.1=bridge&(3,4);;bash&(1,4);11;(6,2);until:WON
 :num_rabbits=1
+:num_to_save=1
+:rabbit_delay=4
+:music=tryad-witness
 :bash=2
 :bridge=1
-:climb=1
 :brolly=1
+:climb=1
+       #O#
+Q      ###
+          
+       MOM
+# #    MMM
+####  ####

@@ -1,18 +1,19 @@
 :name=Choices
 :description=You find yourself in a room with six identical doors...
+:author_name=TTTPPP
+:author_url=github.com/tttppp
 :hint.1=One method to solve the level involves extinguishing the fire.
 :hint.2=The other method to solve it involves getting past the bomb and dig tokens.
 :hint.3=Bridge to the top row, bash right then dig down. Bash three times under the bomb token then bridge once it has fallen past. Bash to the exit.
-:author_name=TTTPPP
-:author_url=github.com/tttppp
-:num_rabbits=0
-:num_to_save=1
 :solution.1=bridge&(3,5);;(3,5);2;(3,4);7;(3,3)&bash;;(3,2);dig;6;(3,2);(3,3);(3,4);;(3,5)&bash;2;(3,5);;(2,5);bridge;;(2,5);2;(3,5);8;(3,4);4;(3,3);;bash;(3,2);bridge;;(4,1);11
 :solution.2=bridge&(3,5);;(3,5);3;(3,4);3;(3,3);2;bash;(3,2)&dig;2;(4,1);bash;4;(4,4)&(4,4)&(4,4);bridge&(4,4);2;bash&(5,4);6
-:music=tryad-lovely
+:num_rabbits=0
+:num_to_save=1
+:rabbit_delay=4
+:music=tryad-witness
 :bash=99
-:dig=99
 :bridge=99
+:dig=99
 #####   #
 #N# #/M #
 ### ### #

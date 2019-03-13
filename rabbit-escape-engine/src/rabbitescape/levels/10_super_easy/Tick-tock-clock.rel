@@ -1,0 +1,25 @@
+:name=Tick tock clock
+:description=Time waits for no rabbit
+:author_name=Raory
+:author_url=https://www.artificialworlds.net/rabbit-escape/levels/u/Raory
+:hint.1=Find a way to stop the "clock" of rabbots going around and around.
+:hint.2=Bridge on the top metal block where the rabbits walk to stop them rotating around.
+:hint.3=Use the last rabbot to bash through the bridge and then the wall to the left, releasing the rabbits.
+:solution.1=bridge;(6,2);2;bash;5;(6,4);(4,4);until:WON
+:num_rabbits=4
+:num_to_save=3
+:rabbit_delay=2
+:music=tryad-witness
+:bash=2
+:bridge=3
+ #*# MMM 
+# * M  yM
+#(# Mt* M
+#)  M(M M
+#### ) yM
+M   MMMMM
+MO      M
+ MMMMMMM 
+:*=#Q
+:*=llll
+:*=tllll

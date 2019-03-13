@@ -1,0 +1,24 @@
+:name=Save Kim
+:description=You're both stuck high up!
+:author_name=Andy Balaam
+:author_url=http://artificialworlds.net
+:hint.1=Rabbots can actually fall a long way.
+:hint.2=Dig the rabbot down, and place a bridge token 4 squares from the left-hand wall.
+:hint.3=Dig the rabbit down onto the top of the bridge, but make sure the rabbit has started turning towards the right when you place the token.
+:solution.1=dig;2;(9,1)&bridge;7;(4,7);7;dig;8;(1,1);until:WON
+:num_rabbits=1
+:num_to_save=1
+:rabbit_delay=4
+:music=tryad-witness
+:bridge=2
+:dig=2
+:explode=1
+#Q##   ## #
+#  #   # t#
+####   ####
+           
+           
+           
+           
+#        O#
+###########

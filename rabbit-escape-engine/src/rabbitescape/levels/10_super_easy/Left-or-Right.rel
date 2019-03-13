@@ -1,0 +1,20 @@
+:name=Left or Right?
+:description=Do rabbits start walking left or right?
+:author_name=KangJO
+:author_url=https://www.artificialworlds.net/rabbit-escape/levels/u/KangJO
+:hint.1=You need to use the blocker token to prevent the rabbits walking into the fire.
+:hint.2=They start walking to the right!
+:hint.3=Place the blocker token on the top level to stop the rabbits getting burnt.
+:solution.1=block;(3,1);22;explode;;(3,1);until:WON
+:num_rabbits=10
+:num_to_save=6
+:rabbit_delay=4
+:music=tryad-witness
+:block=1
+:explode=1
+##Q##
+O   A
+#####
+##Q##
+A   O
+#####

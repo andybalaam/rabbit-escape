@@ -63,7 +63,11 @@ public class TestAllActiveLevels
                 String name = ByNameConfigBasedLevelsCompleted.canonicalName(
                     world.name );
 
-                assertThat( names, not( hasItem( name ) ) );
+                assertThat(
+                    "Level name is not unique",
+                    names,
+                    not( hasItem( name ) )
+                );
 
                 names.add( name );
             }
@@ -76,13 +80,41 @@ public class TestAllActiveLevels
         forEachOfficialLevel( new T() {
             @Override public void run( World world, String fileName )
             {
-                assertThat(world.description, not(equalTo("")));
-                assertThat(world.author_name, not(equalTo("")));
-                assertThat(world.music, not(equalTo("")));
-                assertThat(world.hints.length, equalTo(3));
-                assertThat(world.hints[0], not(equalTo("")));
-                assertThat(world.hints[1], not(equalTo("")));
-                assertThat(world.hints[2], not(equalTo("")));
+                assertThat(
+                    "Description is empty",
+                    world.description,
+                    not( equalTo( "" ) )
+                );
+                assertThat(
+                    "Author name is empty",
+                    world.author_name,
+                    not( equalTo( "" ) )
+                );
+                assertThat(
+                    "Music is empty",
+                    world.music,
+                    not( equalTo( "" ) )
+                );
+                assertThat(
+                    "There are not 3 hints",
+                    world.hints.length,
+                    equalTo( 3 )
+                );
+                assertThat(
+                    "A hint is empty",
+                    world.hints[ 0 ],
+                    not( equalTo( "" ) )
+                );
+                assertThat(
+                    "A hint is empty",
+                    world.hints[ 1 ],
+                    not( equalTo( "" ) )
+                );
+                assertThat(
+                    "A hint is empty",
+                    world.hints[ 2 ],
+                    not( equalTo( "" ) )
+                );
             }
         } );
     }

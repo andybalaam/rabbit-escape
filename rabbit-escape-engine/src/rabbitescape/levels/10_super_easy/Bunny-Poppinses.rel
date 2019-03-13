@@ -1,0 +1,26 @@
+:name=Bunny Poppinses
+:description=Winds in the east, there's a mist coming in, like something is brewing, about to begin.
+:author_name=ColonelFazackerley
+:author_url=https://github.com/colonelfazackerley
+:hint.1=Fall safely using brollies
+:hint.2=Place all the brollies on the right lip
+:hint.3=Place all the brollies on the right lip, then place a bridge just below in front of a rabbit walking right
+:solution.1=brolly;(5,0)&(5,0)&(5,0)&(5,0);(5,0);bridge;;(4,1);30
+:num_rabbits=5
+:num_to_save=4
+:rabbit_delay=6
+:music=tryad-witness
+:bash=1
+:block=1
+:bridge=1
+:brolly=5
+:climb=3
+:dig=5
+  Q     
+#    #  
+######  
+        
+        
+        
+  #   O#
+  ######

@@ -1,0 +1,23 @@
+:name=Firehose
+:description=Looks like you might get hot feet!
+:author_name=Andy Balaam
+:author_url=http://artificialworlds.net
+:hint.1=Put out those fires.
+:hint.2=Bash rightwards to release the water.
+:hint.3=Wait a while after bashing before you dig, so the water has time to flow down.
+:solution.1=bash;2;(2,1);20;dig;2;(5,1);until:WON
+:num_rabbits=1
+:num_to_save=1
+:rabbit_delay=4
+:music=tryad-witness
+:bash=10
+:dig=2
+ Q    #
+#nn\ (#
+##### #
+# AAAA#
+# #####
+#AAAA #
+##### #
+#OAAAA#
+#######

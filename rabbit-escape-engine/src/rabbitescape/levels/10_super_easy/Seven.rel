@@ -9,14 +9,14 @@
 :num_rabbits=2
 :num_to_save=2
 :rabbit_delay=4
-:music=
+:music=tryad-witness
 :bash=1
 :block=1
 :bridge=1
+:brolly=1
 :climb=1
 :dig=1
 :explode=1
-:brolly=1
   Q      
  /    \  
  ######) 

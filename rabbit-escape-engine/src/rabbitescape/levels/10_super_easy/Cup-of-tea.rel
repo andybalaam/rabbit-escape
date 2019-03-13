@@ -1,0 +1,21 @@
+:name=Cup of tea
+:description=Mmmmmmm...
+:author_name=Andy Balaam
+:author_url=https://www.artificialworlds.net/rabbit-escape/
+:hint.1=Quick, save that rabbit!
+:hint.2=Put a bridge token on the lower metal block as quickly as you can.
+:hint.3=Put a bash token on your bridge when the rabbit is facing right.
+:solution.1=bridge&(3,2)&bash;3;(4,2);until:WON
+:num_rabbits=1
+:num_to_save=1
+:rabbit_delay=4
+:music=tryad-witness
+:bash=1
+:bridge=1
+\ Q  /  
+#    ##\
+# M  # #
+#  M # #
+#    #O#
+#AAAA## 
+######  
