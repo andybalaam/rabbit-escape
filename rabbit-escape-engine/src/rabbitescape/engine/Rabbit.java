@@ -180,12 +180,12 @@ public class Rabbit extends Thing implements Comparable<Rabbit>
     public Map<String, String> saveState( boolean runtimeMeta )
     {
         Map<String, String> ret = new HashMap<String, String>();
-
-        if ( runtimeMeta )
+        if ( !runtimeMeta )
         {
-            BehaviourState.addToStateIfGtZero( ret, "index", index );
+            return ret;
         }
 
+        BehaviourState.addToStateIfGtZero( ret, "index", index );
         BehaviourState.addToStateIfTrue( ret, "onSlope", onSlope );
 
         for ( Behaviour behaviour : behaviours )

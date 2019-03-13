@@ -621,6 +621,25 @@ public class TestTextWorldManip
     }
 
     @Test
+    public void Object_properties_are_excluded_when_runtime_meta_is_off()
+    {
+        World world = createWorld(
+            "*",
+            ":*=r{Blocking.abilityActive:true}k"  // Make blocking active
+        );
+
+        world.rabbits.get( 0 ).restoreFromState( map("Blocking.abilityActive", "true") );
+
+        assertThat(
+            renderCompleteWorld( world, false, false ),
+            equalTo(
+                "*",
+                ":*=rk"  // No {Blocking.abilityActive:true} because runtime
+            )
+        );
+    }
+
+    @Test
     public void Blocking_state_is_preserved()
     {
         World world = createWorld(
