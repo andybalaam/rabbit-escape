@@ -1,0 +1,10 @@
+# see slowtests file
+
+set timeout 2
+
+spawn ./runrabbit --level ./rabbit-escape-engine/src/rabbitescape/levels/08_rabbots/02_Bot.rel --solution=2
+
+demand "You lost."
+
+# java exits and closes stream
+demand eof

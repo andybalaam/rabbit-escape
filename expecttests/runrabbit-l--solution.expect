@@ -5,6 +5,7 @@ set timeout 2
 spawn ./runrabbit -l ./rabbit-escape-engine/src/rabbitescape/levels/01_easy/02_Bashing-practice.rel --solution=1
 
 demand "  Saved:3"
+demand "You won!"
 
 # java exits and closes stream
 demand eof

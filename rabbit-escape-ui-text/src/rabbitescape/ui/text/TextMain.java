@@ -18,6 +18,7 @@ import rabbitescape.engine.util.Util;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.PrintStream;
 import java.util.Locale;
 
 public class TextMain
@@ -151,7 +152,24 @@ public class TextMain
                 new IgnoreWorldStatsListener(), relPath );
 
         SolutionDemo demo = new SolutionDemo( solnCmdLine, world );
-        SolutionRunner.runSolution( demo.solution, world, System.out, genTest );
+        boolean solved = SolutionRunner.runSolution(
+            demo.solution, world, System.out, genTest );
+        printResult(solved, System.out);
+    }
+
+    private static void printResult(
+        boolean solved,
+        PrintStream out
+    )
+    {
+        if ( solved )
+        {
+            out.println( t( "You won!" ) );
+        }
+        else
+        {
+            out.println( t( "You lost." ) );
+        }
     }
 
     private static void listRel()
