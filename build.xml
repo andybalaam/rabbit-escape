@@ -6,7 +6,7 @@
         <attribute name="includetests" default="true"/>
         <sequential>
             <mkdir dir="@{dir}/bin"/>
-            <mkdir if:true="${includetests}" dir="@{dir}/test"/>
+            <mkdir if:true="@{includetests}" dir="@{dir}/test"/>
             <javac
                 destdir="@{dir}/bin"
                 includeantruntime="false"
@@ -28,11 +28,11 @@
                     <pathelement location="@{dir}/bin"/>
                 </classpath>
                 <src path="@{dir}/src"/>
-                <src if:true="${includetests}" path="@{dir}/test"/>
+                <src if:true="@{includetests}" path="@{dir}/test"/>
             </javac>
             <copy todir="@{dir}/bin">
                 <fileset dir="@{dir}/src"  excludes="**/*.java"/>
-                <fileset if:true="${includetests}" dir="@{dir}/test" excludes="**/*.java" />
+                <fileset if:true="@{includetests}" dir="@{dir}/test" excludes="**/*.java" />
             </copy>
         </sequential>
     </macrodef>

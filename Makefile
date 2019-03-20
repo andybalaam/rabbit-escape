@@ -300,7 +300,17 @@ compile-noui-notests: \
 	@echo ". Compiling"
 	@ant -quiet compile-noui-notests
 
-compile: images sounds music compile-noui
+compile: \
+		no-make-warnings \
+		versioncheck \
+		no-awt-in-engine \
+		animations \
+		levels \
+		images \
+		sounds \
+		music
+	@echo ". Compiling"
+	@ant -quiet compile
 
 clean: no-make-warnings
 	@echo ". Cleaning compiled Java, lists and dist dir"
