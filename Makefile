@@ -225,7 +225,7 @@ dist: no-make-warnings dist-swing dist-android-release-signed
 
 dist-swing: dist/rabbit-escape-${VERSION}.jar
 
-dist/rabbit-escape-generic.jar: compile-noui
+dist/rabbit-escape-generic.jar: compile-noui-notests
 	@echo ". Building generic jar $@"
 	@mkdir -p dist
 	@rm -f dist/rabbit-escape-generic.jar
@@ -291,14 +291,14 @@ no-awt-in-engine:
 	@! find rabbit-escape-engine/src -name "*.java" -print0 | xargs -0 grep 'java\.awt'
 	@! find rabbit-escape-render/src -name "*.java" -print0 | xargs -0 grep 'java\.awt'
 
-compile-noui: \
+compile-noui-notests: \
 		no-make-warnings \
 		versioncheck \
 		no-awt-in-engine \
 		animations \
 		levels
 	@echo ". Compiling"
-	@ant -quiet compile
+	@ant -quiet compile-noui-notests
 
 compile: images sounds music compile-noui
 
@@ -501,6 +501,7 @@ android-smoke-tests: android-debug-test
 
 clean-android:
 	cd rabbit-escape-ui-android && ${GRADLE} clean
+	rm rabbit-escape-ui-android/app/libs/rabbit-escape-generic.jar
 
 # Docs
 # ----
