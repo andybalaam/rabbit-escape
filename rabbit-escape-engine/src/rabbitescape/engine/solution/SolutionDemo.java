@@ -9,7 +9,7 @@ import rabbitescape.engine.util.MegaCoder;
 public class SolutionDemo
 {
     public final String solnChars =
-        "[0-9a-z\\(\\);,&]*";
+        "[0-9a-zA-Z\\(\\):;,&]*";
 
     public final Solution solution;
 
