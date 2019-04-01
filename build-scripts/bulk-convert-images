@@ -15,6 +15,12 @@ while read F; do
     NAME=${F##*/}
     NAME=${NAME%.svg}
 
-    echo "$F --export-png=$DEST/$NAME.png --export-dpi=$3"
+    SVG="$SRC/$NAME.svg"
+    PNG="$DEST/$NAME.png"
+
+    if [[ "$SVG" -nt "$PNG" ]]; then
+        echo "$SVG --export-png=$PNG --export-dpi=$3"
+        echo "... $SVG --export-png=$PNG --export-dpi=$3" >&2
+    fi
 }; done | \
     inkscape --shell
