@@ -1,7 +1,4 @@
 
-# Ensure all intermediate files are kept
-.SECONDARY:
-
 MAKEFLAGS += --warn-undefined-variables
 
 CLASSPATH=rabbit-escape-engine/bin/:rabbit-escape-render/bin/:rabbit-escape-ui-text/bin/:rabbit-escape-ui-swing/bin/
@@ -59,16 +56,14 @@ no-make-warnings:
 	@echo ". Checking for warnings in Makefile"
 	@! make -n $(MAKECMDGOALS) 2>&1 >/dev/null | grep warning
 
-snapshot: snapshot-version-set android-pre dist
+snapshot: android-pre dist
+ifndef SNAPSHOT_VERSION
+	$(error Run like this: SNAPSHOT_VERSION=0.8.0.3 make snapshot)
+endif
 	git tag v${SNAPSHOT_VERSION}
 	- rm dist/rabbit-escape-generic.jar
 	rename 's/${VERSION}/${SNAPSHOT_VERSION}/' dist/rabbit-escape-*
 	scp dist/rabbit-escape-* dreamhost:artificialworlds.net/rabbit-escape/snapshots/
-
-snapshot-version-set:
-ifndef SNAPSHOT_VERSION
-	$(error Run like this: SNAPSHOT_VERSION=0.8.0.3 make snapshot)
-endif
 
 dist: no-make-warnings dist-swing dist-android-release-signed
 
