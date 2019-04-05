@@ -46,7 +46,7 @@ $(ANDROIDMUSICOGG_DEST)/%.ogg: music-src/%.flac
 	@echo ".. Converting sound: $@"
 	@mkdir -p $(ANDROIDMUSICOGG_DEST); sox $< $@
 
-VERSION=0.13
+VERSION=0.13.1
 
 ifndef MAKECMDGOALS
 MAKECMDGOALS = all
