@@ -3,21 +3,6 @@ MAKEFLAGS += --warn-undefined-variables
 
 CLASSPATH=rabbit-escape-engine/bin/:rabbit-escape-render/bin/:rabbit-escape-ui-text/bin/:rabbit-escape-ui-swing/bin/
 
-SOUNDSWAV_DEST := rabbit-escape-ui-swing/src/rabbitescape/ui/swing/sounds
-ANDROIDSOUNDSOGG_DEST := rabbit-escape-ui-android/app/src/main/assets/sounds
-
-MUSICWAV_DEST := rabbit-escape-ui-swing/src/rabbitescape/ui/swing/music
-ANDROIDMUSICOGG_DEST := rabbit-escape-ui-android/app/src/main/assets/music
-
-MUSICSRC  := $(wildcard music-src/*.flac)
-SOUNDSSRC := $(wildcard sounds-src/*.flac)
-
-SOUNDSWAV := $(SOUNDSSRC:sounds-src/%.flac=$(SOUNDSWAV_DEST)/%.wav)
-ANDROIDSOUNDSOGG := $(SOUNDSSRC:sounds-src/%.flac=$(ANDROIDSOUNDSOGG_DEST)/%.ogg)
-
-MUSICWAV := $(MUSICSRC:music-src/%.flac=$(MUSICWAV_DEST)/%.wav)
-ANDROIDMUSICOGG := $(MUSICSRC:music-src/%.flac=$(ANDROIDMUSICOGG_DEST)/%.ogg)
-
 ANIMATIONS_DIR := rabbit-escape-render/src/rabbitescape/render/animations
 RABBIT_ANIMATIONS := $(wildcard $(ANIMATIONS_DIR)/rabbit_*.rea)
 RABBOT_ANIMATIONS := $(subst animations/rabbit,animations/rabbot,$(RABBIT_ANIMATIONS))
@@ -26,22 +11,6 @@ LEVELS_DIRS := $(shell \
 	find rabbit-escape-engine -type d \
 		-regex '.*/\(src\|test\)/rabbitescape/levels/[^/]*' \
 	)
-
-$(SOUNDSWAV_DEST)/%.wav: sounds-src/%.flac
-	@echo ".. Converting sound: $@"
-	@mkdir -p $(SOUNDSWAV_DEST); sox $< $@
-
-$(ANDROIDSOUNDSOGG_DEST)/%.ogg: sounds-src/%.flac
-	@echo ".. Converting sound: $@"
-	@mkdir -p $(ANDROIDSOUNDSOGG_DEST); sox $< $@
-
-$(MUSICWAV_DEST)/%.wav: music-src/%.flac
-	@echo ".. Converting sound: $@"
-	@mkdir -p $(MUSICWAV_DEST); sox $< $@ vol 0.4
-
-$(ANDROIDMUSICOGG_DEST)/%.ogg: music-src/%.flac
-	@echo ".. Converting sound: $@"
-	@mkdir -p $(ANDROIDMUSICOGG_DEST); sox $< $@
 
 VERSION=0.13.1
 
@@ -97,12 +66,13 @@ dist/rabbit-escape-${VERSION}.jar: compile
 	@chmod o+r $@
 
 include images.mk
+include sounds.mk
 
 images: images.mk
 
-sounds: no-make-warnings $(SOUNDSWAV)
+sounds: sounds.mk-sounds
 
-music: no-make-warnings $(MUSICWAV)
+music: sounds.mk-music
 
 %/ls.txt: %/*.rea
 	@ls $(@D) --hide=ls.txt > $(@D)/ls.txt
@@ -169,15 +139,7 @@ clean: no-make-warnings
 	@find ./ -empty -type d -delete
 	@mkdir -p dist && rm -r dist
 
-clean-sounds: no-make-warnings
-	- rm $(SOUNDSWAV_DEST)/*
-	- rm $(ANDROIDSOUNDSOGG_DEST)/*
-
-clean-music: no-make-warnings
-	- rm $(MUSICWAV_DEST)/*
-	- rm $(ANDROIDMUSICOGG_DEST)/*
-
-clean-all: clean images.mk-clean clean-sounds clean-music clean-doxygen clean-android
+clean-all: clean images.mk-clean sounds.mk-clean-sounds sounds.mk-clean-music clean-doxygen clean-android
 
 remove-trailing:
 	git status --porcelain | sed 's_^...__' | grep '\.java$$' - | xargs perl -p -i -e 's/[ \t]+$$//'
@@ -232,14 +194,10 @@ rabbit-escape-ui-android/app/libs/rabbit-escape-generic.jar: dist/rabbit-escape-
 	@mkdir -p rabbit-escape-ui-android/app/libs/
 	@cp dist/rabbit-escape-generic.jar rabbit-escape-ui-android/app/libs/
 
-android-sounds: $(ANDROIDSOUNDSOGG)
-
-android-music: $(ANDROIDMUSICOGG)
-
 android-pre: \
 	images \
-	android-sounds \
-	android-music \
+	sounds.mk-android-sounds \
+	sounds.mk-android-music \
 	rabbit-escape-ui-android/app/libs/rabbit-escape-generic.jar
 
 # Special target for F-Droid that does not build the sound or music files,
