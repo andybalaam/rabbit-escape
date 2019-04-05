@@ -3,15 +3,6 @@ MAKEFLAGS += --warn-undefined-variables
 
 CLASSPATH=rabbit-escape-engine/bin/:rabbit-escape-render/bin/:rabbit-escape-ui-text/bin/:rabbit-escape-ui-swing/bin/
 
-ANIMATIONS_DIR := rabbit-escape-render/src/rabbitescape/render/animations
-RABBIT_ANIMATIONS := $(wildcard $(ANIMATIONS_DIR)/rabbit_*.rea)
-RABBOT_ANIMATIONS := $(subst animations/rabbit,animations/rabbot,$(RABBIT_ANIMATIONS))
-
-LEVELS_DIRS := $(shell \
-	find rabbit-escape-engine -type d \
-		-regex '.*/\(src\|test\)/rabbitescape/levels/[^/]*' \
-	)
-
 VERSION=0.13.1
 
 ifndef MAKECMDGOALS
@@ -65,33 +56,15 @@ dist/rabbit-escape-${VERSION}.jar: compile
 	@chmod ug+rwx $@
 	@chmod o+r $@
 
+include levels.mk
 include images.mk
 include sounds.mk
 
 images: images.mk
-
 sounds: sounds.mk-sounds
-
 music: sounds.mk-music
-
-%/ls.txt: %/*.rea
-	@ls $(@D) --hide=ls.txt > $(@D)/ls.txt
-
-%/levels.txt: %/*.rel
-	@./build-scripts/levelnames $(@D) > $(@D)/levels.txt
-
-%/levels.txt: %/*/*.rel
-	@./build-scripts/levelnames $(@D) > $(@D)/levels.txt
-
-
-$(ANIMATIONS_DIR)/rabbot%.rea: $(ANIMATIONS_DIR)/rabbit%.rea
-	./build-scripts/rea-rabbit-to-rabbot < $< > $@
-
-animations: no-make-warnings $(ANIMATIONS_DIR)/ls.txt $(RABBOT_ANIMATIONS)
-	@echo ". Generating animations list"
-
-levels: no-make-warnings $(patsubst %, %/levels.txt, $(LEVELS_DIRS))
-	@echo ". Generating level lists"
+animations: levels.mk-animations
+levels: levels.mk-levels
 
 versioncheck:
 	@echo ". Checking version number (${VERSION}) is consistent everywhere"
@@ -128,15 +101,14 @@ compile: \
 	@echo ". Compiling"
 	@ant -quiet compile
 
-clean: no-make-warnings
-	@echo ". Cleaning compiled Java, lists and dist dir"
+clean: levels.mk-clean-levels levels.mk-clean-animations
+	@echo ". Cleaning compiled Java"
 	@mkdir -p rabbit-escape-engine/bin && touch rabbit-escape-engine/bin/touchfile && rm -r rabbit-escape-engine/bin/*
 	@mkdir -p rabbit-escape-render/bin && touch rabbit-escape-render/bin/touchfile && rm -r rabbit-escape-render/bin/*
 	@mkdir -p rabbit-escape-ui-text/bin/touchfile && touch rabbit-escape-ui-text/bin/touchfile && rm -r rabbit-escape-ui-text/bin/*
 	@mkdir -p rabbit-escape-ui-swing/bin/touchfile && touch rabbit-escape-ui-swing/bin/touchfile && rm -r rabbit-escape-ui-swing/bin/*
-	@find ./ -name "ls.txt" -delete
-	@find ./ -name "levels.txt" -delete
 	@find ./ -empty -type d -delete
+	@echo ". Cleaning dist/"
 	@mkdir -p dist && rm -r dist
 
 clean-all: clean images.mk-clean sounds.mk-clean-sounds sounds.mk-clean-music clean-doxygen clean-android
