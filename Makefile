@@ -6,45 +6,6 @@ MAKEFLAGS += --warn-undefined-variables
 
 CLASSPATH=rabbit-escape-engine/bin/:rabbit-escape-render/bin/:rabbit-escape-ui-text/bin/:rabbit-escape-ui-swing/bin/
 
-IMAGESSVGGEN_DEST=bin/imagessvggen
-IMAGES32_DEST=rabbit-escape-ui-swing/src/rabbitescape/ui/swing/images32
-IMAGES64_DEST=rabbit-escape-ui-swing/src/rabbitescape/ui/swing/images64
-IMAGES128_DEST=rabbit-escape-ui-swing/src/rabbitescape/ui/swing/images128
-ANDROIDIMAGES32_DEST=rabbit-escape-ui-android/app/src/main/assets/images32
-ANDROIDIMAGES64_DEST=rabbit-escape-ui-android/app/src/main/assets/images64
-ANDROIDIMAGES128_DEST=rabbit-escape-ui-android/app/src/main/assets/images128
-
-ANDROIDICONSMDPI_DEST=rabbit-escape-ui-android/app/src/main/res/drawable-mdpi
-ANDROIDICONSHDPI_DEST=rabbit-escape-ui-android/app/src/main/res/drawable-hdpi
-ANDROIDICONSXHDPI_DEST=rabbit-escape-ui-android/app/src/main/res/drawable-xhdpi
-ANDROIDICONSXXHDPI_DEST=rabbit-escape-ui-android/app/src/main/res/drawable-xxhdpi
-ANDROIDICONSXXXHDPI_DEST=rabbit-escape-ui-android/app/src/main/res/drawable-xxxhdpi
-
-DPI_32 := 96     # Required Inkscape DPI setting to get a block=32x32
-DPI_48 := 144
-DPI_64 := 192
-DPI_96 := 288
-DPI_128 := 384
-
-SVGIMAGESSRC := $(wildcard images-src/*.svg)
-SVGICONSSRC  := $(wildcard images-src/icons/*.svg)
-
-# Find all rabbits images, check whether the equivalent rabbot image
-# exists.  If not, add it to a list of images to generate.
-SVGRABBITS := $(wildcard images-src/rabbit_*.svg)
-bit2bot = $(subst rabbit,rabbot,$(1))
-botexists = $(wildcard $(call bit2bot,$(1)))
-SVGGENERATERABBOTS := $(foreach F,$(SVGRABBITS),$(if $(call botexists,$(F)),,$(subst images-src,$(IMAGESSVGGEN_DEST),$(call bit2bot,$(F)))))
-
-SVGIMAGES32  := $(SVGIMAGESSRC:images-src/%.svg=$(IMAGES32_DEST)/%.png) $(SVGICONSSRC:images-src/icons/%.svg=$(IMAGES32_DEST)/%.png) $(SVGGENERATERABBOTS:$(IMAGESSVGGEN_DEST)/%.svg=$(IMAGES32_DEST)/%.png)
-SVGIMAGES64  := $(SVGIMAGESSRC:images-src/%.svg=$(IMAGES64_DEST)/%.png) $(SVGICONSSRC:images-src/icons/%.svg=$(IMAGES64_DEST)/%.png) $(SVGGENERATERABBOTS:$(IMAGESSVGGEN_DEST)/%.svg=$(IMAGES64_DEST)/%.png)
-SVGIMAGES128 := $(SVGIMAGESSRC:images-src/%.svg=$(IMAGES128_DEST)/%.png) $(SVGICONSSRC:images-src/icons/%.svg=$(IMAGES128_DEST)/%.png) $(SVGGENERATERABBOTS:$(IMAGESSVGGEN_DEST)/%.svg=$(IMAGES128_DEST)/%.png)
-
-PNGIMAGESSRC := $(wildcard images-src/*.png)
-PNGIMAGES32  := $(PNGIMAGESSRC:images-src/%.png=$(IMAGES32_DEST)/%.png)
-PNGIMAGES64  := $(PNGIMAGESSRC:images-src/%.png=$(IMAGES64_DEST)/%.png)
-PNGIMAGES128 := $(PNGIMAGESSRC:images-src/%.png=$(IMAGES128_DEST)/%.png)
-
 SOUNDSWAV_DEST := rabbit-escape-ui-swing/src/rabbitescape/ui/swing/sounds
 ANDROIDSOUNDSOGG_DEST := rabbit-escape-ui-android/app/src/main/assets/sounds
 
@@ -59,17 +20,6 @@ ANDROIDSOUNDSOGG := $(SOUNDSSRC:sounds-src/%.flac=$(ANDROIDSOUNDSOGG_DEST)/%.ogg
 
 MUSICWAV := $(MUSICSRC:music-src/%.flac=$(MUSICWAV_DEST)/%.wav)
 ANDROIDMUSICOGG := $(MUSICSRC:music-src/%.flac=$(ANDROIDMUSICOGG_DEST)/%.ogg)
-
-SVGANDROIDIMAGES32  := $(SVGIMAGESSRC:images-src/%.svg=$(ANDROIDIMAGES32_DEST)/%.png) $(SVGGENERATERABBOTS:$(IMAGESSVGGEN_DEST)/%.svg=$(ANDROIDIMAGES32_DEST)/%.png)
-SVGANDROIDIMAGES64  := $(SVGIMAGESSRC:images-src/%.svg=$(ANDROIDIMAGES64_DEST)/%.png) $(SVGGENERATERABBOTS:$(IMAGESSVGGEN_DEST)/%.svg=$(ANDROIDIMAGES64_DEST)/%.png)
-SVGANDROIDIMAGES128 := $(SVGIMAGESSRC:images-src/%.svg=$(ANDROIDIMAGES128_DEST)/%.png) $(SVGGENERATERABBOTS:$(IMAGESSVGGEN_DEST)/%.svg=$(ANDROIDIMAGES128_DEST)/%.png)
-PNGANDROIDIMAGES32  := $(PNGIMAGESSRC:images-src/%.png=$(ANDROIDIMAGES32_DEST)/%.png)
-PNGANDROIDIMAGES64  := $(PNGIMAGESSRC:images-src/%.png=$(ANDROIDIMAGES64_DEST)/%.png)
-PNGANDROIDIMAGES128 := $(PNGIMAGESSRC:images-src/%.png=$(ANDROIDIMAGES128_DEST)/%.png)
-
-SVGANDROIDICONSMDPI  := $(SVGICONSSRC:images-src/icons/%.svg=$(ANDROIDICONSMDPI_DEST)/%.png)
-SVGANDROIDICONSHDPI  := $(SVGICONSSRC:images-src/icons/%.svg=$(ANDROIDICONSHDPI_DEST)/%.png)
-SVGANDROIDICONSXHDPI := $(SVGICONSSRC:images-src/icons/%.svg=$(ANDROIDICONSXHDPI_DEST)/%.png)
 
 ANIMATIONS_DIR := rabbit-escape-render/src/rabbitescape/render/animations
 RABBIT_ANIMATIONS := $(wildcard $(ANIMATIONS_DIR)/rabbit_*.rea)
@@ -95,107 +45,6 @@ $(MUSICWAV_DEST)/%.wav: music-src/%.flac
 $(ANDROIDMUSICOGG_DEST)/%.ogg: music-src/%.flac
 	@echo ".. Converting sound: $@"
 	@mkdir -p $(ANDROIDMUSICOGG_DEST); sox $< $@
-
-$(IMAGESSVGGEN_DEST)/rabbot_%.svg: images-src/rabbit_%.svg
-	@echo ".. Making rabbot image from rabbit one: $@"
-	@mkdir -p $(IMAGESSVGGEN_DEST); ./build-scripts/rabbit-to-rabbot < $< > $@
-
-
-$(IMAGES32_DEST)/%.png: $(IMAGESSVGGEN_DEST)/%.svg
-	@echo ".. Converting from SVG: $@"
-	@mkdir -p $(IMAGES32_DEST); inkscape $< --export-png=$@ --export-dpi=$(DPI_32) > /dev/null
-
-$(IMAGES32_DEST)/%.png: images-src/%.svg
-	@echo ".. Converting from SVG: $@"
-	@mkdir -p $(IMAGES32_DEST); inkscape $< --export-png=$@ --export-dpi=$(DPI_32) > /dev/null
-
-$(IMAGES64_DEST)/%.png: $(IMAGESSVGGEN_DEST)/%.svg
-	@echo ".. Converting from SVG: $@"
-	@mkdir -p $(IMAGES64_DEST); inkscape $< --export-png=$@ --export-dpi=$(DPI_64) > /dev/null
-
-$(IMAGES64_DEST)/%.png: images-src/%.svg
-	@echo ".. Converting from SVG: $@"
-	@mkdir -p $(IMAGES64_DEST); inkscape $< --export-png=$@ --export-dpi=$(DPI_64) > /dev/null
-
-$(IMAGES128_DEST)/%.png: $(IMAGESSVGGEN_DEST)/%.svg
-	@echo ".. Converting from SVG: $@"
-	@mkdir -p $(IMAGES128_DEST); inkscape $< --export-png=$@ --export-dpi=$(DPI_128) > /dev/null
-
-$(IMAGES128_DEST)/%.png: images-src/%.svg
-	@echo ".. Converting from SVG: $@"
-	@mkdir -p $(IMAGES128_DEST); inkscape $< --export-png=$@ --export-dpi=$(DPI_128) > /dev/null
-
-$(IMAGES32_DEST)/%.png: images-src/icons/%.svg
-	@echo ".. Converting from SVG: $@"
-	@mkdir -p $(IMAGES32_DEST); inkscape $< --export-png=$@ --export-dpi=$(DPI_32) > /dev/null
-
-$(IMAGES64_DEST)/%.png: images-src/icons/%.svg
-	@echo ".. Converting from SVG: $@"
-	@mkdir -p $(IMAGES64_DEST); inkscape $< --export-png=$@ --export-dpi=$(DPI_64) > /dev/null
-
-$(IMAGES128_DEST)/%.png: images-src/icons/%.svg
-	@echo ".. Converting from SVG: $@"
-	@mkdir -p $(IMAGES128_DEST); inkscape $< --export-png=$@ --export-dpi=$(DPI_128) > /dev/null
-
-
-$(IMAGES32_DEST)/%.png: images-src/%.png
-	@echo ".. Resizing PNG: $@"
-	@mkdir -p $(IMAGES32_DEST); convert $< -resize 12.5% $@
-
-$(IMAGES64_DEST)/%.png: images-src/%.png
-	@echo ".. Resizing PNG: $@"
-	@mkdir -p $(IMAGES64_DEST); convert $< -resize 25% $@
-
-$(IMAGES128_DEST)/%.png: images-src/%.png
-	@echo ".. Resizing PNG: $@"
-	@mkdir -p $(IMAGES128_DEST); convert $< -resize 50% $@
-
-
-# Android images are just copies of the desktop ones
-
-$(ANDROIDIMAGES32_DEST)/%.png: $(IMAGES32_DEST)/%.png
-	@echo ".. Copying PNG: $@"
-	@mkdir -p $(ANDROIDIMAGES32_DEST); cp $< $@
-
-$(ANDROIDIMAGES64_DEST)/%.png: $(IMAGES64_DEST)/%.png
-	@echo ".. Copying PNG: $@"
-	@mkdir -p $(ANDROIDIMAGES64_DEST); cp $< $@
-
-$(ANDROIDIMAGES128_DEST)/%.png: $(IMAGES128_DEST)/%.png
-	@echo ".. Copying PNG: $@"
-	@mkdir -p $(ANDROIDIMAGES128_DEST); cp $< $@
-
-
-# Android icons
-
-$(ANDROIDICONSMDPI_DEST)/%.png: images-src/icons/%.svg
-	@echo ".. Converting from SVG: $@"
-	@mkdir -p $(ANDROIDICONSMDPI_DEST); inkscape $< --export-png=$@ --export-dpi=$(DPI_32) > /dev/null
-
-$(ANDROIDICONSHDPI_DEST)/%.png: images-src/icons/%.svg
-	@echo ".. Converting from SVG: $@"
-	@mkdir -p $(ANDROIDICONSHDPI_DEST); inkscape $< --export-png=$@ --export-dpi=$(DPI_48) > /dev/null
-
-$(ANDROIDICONSXHDPI_DEST)/%.png: images-src/icons/%.svg
-	@echo ".. Converting from SVG: $@"
-	@mkdir -p $(ANDROIDICONSXHDPI_DEST); inkscape $< --export-png=$@ --export-dpi=$(DPI_64) > /dev/null
-
-$(ANDROIDICONSXXHDPI_DEST)/%.png: images-src/icons/%.svg
-	@echo ".. Converting from SVG: $@"
-	@mkdir -p $(ANDROIDICONSXXHDPI_DEST); inkscape $< --export-png=$@ --export-dpi=$(DPI_96) > /dev/null
-
-$(ANDROIDICONSXXXHDPI_DEST)/%.png: images-src/icons/%.svg
-	@echo ".. Converting from SVG: $@"
-	@mkdir -p $(ANDROIDICONSXXXHDPI_DEST); inkscape $< --export-png=$@ --export-dpi=$(DPI_128) > /dev/null
-
-
-# Will be needed again if we have some icons drawn as .png
-#$(ANDROIDICONSMDPI_DEST)/%.png: images-src/icons/%.png
-#	mkdir -p $(ANDROIDICONSMDPI_DEST); convert $< -resize 12.5% $@
-# ... etc for other sizes
-
-#$(MUSICOGG_DEST)/%.ogg: music-src/%.flac
-#	mkdir -p $(MUSICOGG_DEST); avconv -i $< -c:a libvorbis -q:a 1 $@
 
 VERSION=0.13
 
@@ -252,7 +101,9 @@ dist/rabbit-escape-${VERSION}.jar: compile
 	@chmod ug+rwx $@
 	@chmod o+r $@
 
-images: no-make-warnings $(SVGIMAGES32) $(PNGIMAGES32) $(SVGIMAGES64) $(PNGIMAGES64) $(SVGIMAGES128) $(PNGIMAGES128)
+include images.mk
+
+images: images.mk
 
 sounds: no-make-warnings $(SOUNDSWAV)
 
@@ -323,21 +174,6 @@ clean: no-make-warnings
 	@find ./ -empty -type d -delete
 	@mkdir -p dist && rm -r dist
 
-clean-images: no-make-warnings
-	- rm -f \
-		$(IMAGESSVGGEN_DEST)/* \
-		$(IMAGES32_DEST)/* \
-		$(IMAGES64_DEST)/* \
-		$(IMAGES128_DEST)/* \
-		$(ANDROIDIMAGES32_DEST)/* \
-		$(ANDROIDIMAGES64_DEST)/* \
-		$(ANDROIDIMAGES128_DEST)/* \
-		$(ANDROIDICONSMDPI_DEST)/* \
-		$(ANDROIDICONSHDPI_DEST)/* \
-		$(ANDROIDICONSXHDPI_DEST)/* \
-		$(ANDROIDICONSXXHDPI_DEST)/* \
-		$(ANDROIDICONSXXXHDPI_DEST)/*
-
 clean-sounds: no-make-warnings
 	- rm $(SOUNDSWAV_DEST)/*
 	- rm $(ANDROIDSOUNDSOGG_DEST)/*
@@ -346,28 +182,7 @@ clean-music: no-make-warnings
 	- rm $(MUSICWAV_DEST)/*
 	- rm $(ANDROIDMUSICOGG_DEST)/*
 
-clean-all: clean clean-images clean-sounds clean-music clean-doxygen clean-android
-
-
-# Shortcut that generates all images much quicker than if Make asks Inkscape
-# to generate each one individually.
-all-images: $(SVGGENERATERABBOTS)
-	@echo ".. Converting all 32x32 images SVG->PNG"
-	mkdir -p $(IMAGES32_DEST)
-	./build-scripts/bulk-convert-images images-src $(IMAGES32_DEST) $(DPI_32) > /dev/null
-	./build-scripts/bulk-convert-images $(IMAGESSVGGEN_DEST) $(IMAGES32_DEST) $(DPI_32) > /dev/null
-	./build-scripts/bulk-convert-images images-src/icons $(IMAGES32_DEST) $(DPI_32) > /dev/null
-	mkdir -p $(IMAGES64_DEST)
-	@echo ".. Converting all 64x64 images SVG->PNG"
-	./build-scripts/bulk-convert-images images-src $(IMAGES64_DEST) $(DPI_64) > /dev/null
-	./build-scripts/bulk-convert-images $(IMAGESSVGGEN_DEST) $(IMAGES64_DEST) $(DPI_64) > /dev/null
-	./build-scripts/bulk-convert-images images-src/icons $(IMAGES64_DEST) $(DPI_64) > /dev/null
-	@echo ".. Converting all 128x128 images SVG->PNG"
-	mkdir -p $(IMAGES128_DEST)
-	./build-scripts/bulk-convert-images images-src $(IMAGES128_DEST) $(DPI_128) > /dev/null
-	./build-scripts/bulk-convert-images $(IMAGESSVGGEN_DEST) $(IMAGES128_DEST) $(DPI_128) > /dev/null
-	./build-scripts/bulk-convert-images images-src/icons $(IMAGES128_DEST) $(DPI_128) > /dev/null
-
+clean-all: clean images.mk-clean clean-sounds clean-music clean-doxygen clean-android
 
 remove-trailing:
 	git status --porcelain | sed 's_^...__' | grep '\.java$$' - | xargs perl -p -i -e 's/[ \t]+$$//'
@@ -422,32 +237,12 @@ rabbit-escape-ui-android/app/libs/rabbit-escape-generic.jar: dist/rabbit-escape-
 	@mkdir -p rabbit-escape-ui-android/app/libs/
 	@cp dist/rabbit-escape-generic.jar rabbit-escape-ui-android/app/libs/
 
-android-images-32:  $(SVGANDROIDIMAGES32)  $(PNGANDROIDIMAGES32)
-android-images-64:  $(SVGANDROIDIMAGES64)  $(PNGANDROIDIMAGES64)
-android-images-128: $(SVGANDROIDIMAGES128) $(PNGANDROIDIMAGES128)
-
-android-icons-mdpi:    $(SVGANDROIDICONSMDPI)
-android-icons-hdpi:    $(SVGANDROIDICONSHDPI)
-android-icons-xhdpi:   $(SVGANDROIDICONSXHDPI)
-android-icons-xxhdpi:  $(ANDROIDICONSXXHDPI_DEST)/ic_launcher.png $(ANDROIDICONSXXHDPI_DEST)/ic_launcher_free.png
-android-icons-xxxhdpi: $(ANDROIDICONSXXXHDPI_DEST)/ic_launcher.png $(ANDROIDICONSXXXHDPI_DEST)/ic_launcher_free.png
-
-android-images: \
-	android-images-32 \
-	android-images-64 \
-	android-images-128 \
-	android-icons-mdpi \
-	android-icons-hdpi \
-	android-icons-xhdpi \
-	android-icons-xxhdpi \
-	android-icons-xxxhdpi
-
 android-sounds: $(ANDROIDSOUNDSOGG)
 
 android-music: $(ANDROIDMUSICOGG)
 
 android-pre: \
-	android-images \
+	images \
 	android-sounds \
 	android-music \
 	rabbit-escape-ui-android/app/libs/rabbit-escape-generic.jar
@@ -455,7 +250,7 @@ android-pre: \
 # Special target for F-Droid that does not build the sound or music files,
 # to avoid needing sox to be installed on the F-Droid server.
 android-pre-fdroid: \
-	android-images \
+	images \
 	rabbit-escape-ui-android/app/libs/rabbit-escape-generic.jar
 
 android-compile: android-pre
@@ -511,7 +306,7 @@ android-smoke-tests: android-debug-test
 
 clean-android:
 	cd rabbit-escape-ui-android && ${GRADLE} clean
-	rm rabbit-escape-ui-android/app/libs/rabbit-escape-generic.jar
+	rm -f rabbit-escape-ui-android/app/libs/rabbit-escape-generic.jar
 
 # Docs
 # ----
@@ -529,4 +324,3 @@ doxygen-upload: doxygen
 clean-doxygen:
 	@echo ". Cleaning doxygen files"
 	@mkdir -p doc/doxygen && rm -r doc/doxygen
-

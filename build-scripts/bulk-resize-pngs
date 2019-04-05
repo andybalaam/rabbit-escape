@@ -1,0 +1,23 @@
+#!/bin/bash
+
+# Resize PNGs from source and put into destination.
+
+set -e
+set -u
+
+SRC=$1
+DEST=$2
+PC=$3
+
+mkdir -p "$DEST"
+
+find $SRC -name "*.png" -print | \
+while read F; do
+{
+    NAME=${F##*/}
+
+    if [[ "$SRC/$NAME" -nt "$DEST/$NAME" ]]; then
+        echo ".. resize $DEST/$NAME"
+        convert "$SRC/$NAME" -resize "$PC" "$DEST/$NAME"
+    fi
+}; done

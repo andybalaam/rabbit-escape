@@ -56,20 +56,6 @@ Get the source
     git clone https://github.com/andybalaam/rabbit-escape.git
     cd rabbit-escape
 
-First, generate images
-----------------------
-
-Rabbit Escape has a lot of SVG images that need to be converted to PNG to be
-used.  This happens when you run the default `make` targets, but you can do
-it much quicker by running the special bulk target like this:
-
-    make all-images
-
-You should only need to do this once - after that you can run `make` normally
-and any updated images will be regenerated.  If you run `make clean-images`
-to delete all generated images, it is a good idea to regenerate them with
-`make all-images` again, or you will be in for a long wait.
-
 Run tests
 ---------
 

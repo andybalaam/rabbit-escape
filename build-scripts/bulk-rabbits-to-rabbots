@@ -1,0 +1,26 @@
+#!/bin/bash
+
+# Find any rabbit images that don't have a custom
+# equivalent rabbot image, and generate one.
+
+set -e
+set -u
+
+SRC=$1
+DEST=$2
+
+mkdir -p "$DEST"
+
+find $SRC -name "rabbit*.svg" -print | \
+while read F; do
+{
+    RAB=${F##*/}
+    BOT=${RAB/rabbit/rabbot}
+
+    if [ ! -e "$SRC/$BOT" ]; then
+        if [[ "$SRC/$RAB" -nt "$DEST/$BOT" ]]; then
+            echo ".. rabbot $DEST/$BOT"
+            ./build-scripts/rabbit-to-rabbot < "$SRC/$RAB" > "$DEST/$BOT"
+        fi
+    fi
+}; done
