@@ -5,13 +5,12 @@ CLASSPATH=rabbit-escape-engine/bin/:rabbit-escape-render/bin/:rabbit-escape-ui-t
 
 VERSION=0.13.1
 
-ifndef MAKECMDGOALS
-MAKECMDGOALS = all
-endif
-
 all: test android-compile
 
 # Fails if the Makefile contains any warnings
+ifndef MAKECMDGOALS
+MAKECMDGOALS = all
+endif
 no-make-warnings:
 	@echo ". Checking for warnings in Makefile"
 	@! make -n $(MAKECMDGOALS) 2>&1 >/dev/null | grep warning
