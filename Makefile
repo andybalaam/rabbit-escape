@@ -7,14 +7,6 @@ VERSION=0.13.1
 
 all: test android-compile
 
-# Fails if the Makefile contains any warnings
-ifndef MAKECMDGOALS
-MAKECMDGOALS = all
-endif
-no-make-warnings:
-	@echo ". Checking for warnings in Makefile"
-	@! make -n $(MAKECMDGOALS) 2>&1 >/dev/null | grep warning
-
 snapshot: android-pre dist
 ifndef SNAPSHOT_VERSION
 	$(error Run like this: SNAPSHOT_VERSION=0.8.0.3 make snapshot)
@@ -24,7 +16,7 @@ endif
 	rename 's/${VERSION}/${SNAPSHOT_VERSION}/' dist/rabbit-escape-*
 	scp dist/rabbit-escape-* dreamhost:artificialworlds.net/rabbit-escape/snapshots/
 
-dist: no-make-warnings dist-swing dist-android-release-signed
+dist: checks dist-swing dist-android-release-signed
 
 dist-swing: dist/rabbit-escape-${VERSION}.jar
 
@@ -55,43 +47,28 @@ dist/rabbit-escape-${VERSION}.jar: compile
 	@chmod ug+rwx $@
 	@chmod o+r $@
 
+include checks.mk
 include levels.mk
 include images.mk
 include sounds.mk
 
+
+checks: checks.mk-checks
 images: images.mk
 sounds: sounds.mk-sounds
 music: sounds.mk-music
 animations: levels.mk-animations
 levels: levels.mk-levels
 
-versioncheck:
-	@echo ". Checking version number (${VERSION}) is consistent everywhere"
-	@grep "version = \"${VERSION}\"" \
-		rabbit-escape-engine/src/rabbitescape/engine/menu/AboutText.java \
-		> /dev/null
-	@grep "versionName \"${VERSION}\"" \
-		rabbit-escape-ui-android/app/build.gradle > /dev/null
-
-# Fails if we use java.awt in the engine code - this is not available on Android
-no-awt-in-engine:
-	@echo ". Checking for use of java.awt in engine code"
-	@! find rabbit-escape-engine/src -name "*.java" -print0 | xargs -0 grep 'java\.awt'
-	@! find rabbit-escape-render/src -name "*.java" -print0 | xargs -0 grep 'java\.awt'
-
 compile-noui-notests: \
-		no-make-warnings \
-		versioncheck \
-		no-awt-in-engine \
+		checks \
 		animations \
 		levels
 	@echo ". Compiling"
 	@ant -quiet compile-noui-notests
 
 compile: \
-		no-make-warnings \
-		versioncheck \
-		no-awt-in-engine \
+		checks \
 		animations \
 		levels \
 		images \
