@@ -1629,4 +1629,85 @@ public class TestBridging
                 ":*=/n",
             });
     }
+
+    @Test
+    public void Roof_prevents_bridging_even_when_in_a_hole_issue_511()
+    {
+        assertWorldEvolvesLike(
+            "## " + "\n" +
+            "#ij" + "\n" +
+            "#)#" + "\n" +
+            "###",
+
+            "## " + "\n" +
+            "#j " + "\n" +
+            "#a#" + "\n" +
+            "###",
+
+            "## " + "\n" +
+            "#  " + "\n" +
+            "#|#" + "\n" +
+            "###",
+
+            "## " + "\n" +
+            "#  " + "\n" +
+            "#]#" + "\n" + // Does not bridge - would hit head
+            "###",
+
+            "## " + "\n" +
+            "#  " + "\n" +
+            "#|#" + "\n" +
+            "###"
+        );
+    }
+
+    @Test
+    public void Roof_does_not_prevent_bridging_when_higher()
+    {
+        assertWorldEvolvesLike(
+            "###" + "\n" +
+            "   " + "\n" +
+            "#i#" + "\n" +
+            "r( " + "\n" +
+            "###",
+
+            "###" + "\n" +
+            "   " + "\n" +
+            "#B#" + "\n" +
+            " r " + "\n" + // Starts bridging
+            "###",
+
+            "###" + "\n" +
+            "   " + "\n" +
+            "#[#" + "\n" +
+            " r " + "\n" +
+            "###"
+        );
+    }
+
+    @Test
+    public void Bridge_roof_does_not_prevent_bridging()
+    {
+        assertWorldEvolvesLike(
+            "#( " + "\n" +
+            "#ij" + "\n" +
+            "#)#" + "\n" +
+            "###",
+
+            "#( " + "\n" +
+            "#j " + "\n" +
+            "#a#" + "\n" +
+            "###",
+
+            "#( " + "\n" +
+            "#  " + "\n" +
+            "#|#" + "\n" +
+            "###",
+
+            "#( " + "\n" +
+            "#B " + "\n" +
+            "#r#" + "\n" + // Starts bridging
+            "###"
+        );
+    }
 }

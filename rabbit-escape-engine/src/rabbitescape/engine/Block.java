@@ -56,6 +56,18 @@ public class Block implements LookupItem2D
         }
     }
 
+    public boolean isBridge()
+    {
+        switch ( shape )
+        {
+            case BRIDGE_UP_LEFT:
+            case BRIDGE_UP_RIGHT:
+                return true;
+            default:
+                return false;
+        }
+    }
+
     @Override
     public Position getPosition()
     {

@@ -232,12 +232,15 @@ public class Bridging extends Behaviour
     private static State stateIntoWall(
         BehaviourTools t, Rabbit rabbit, World world, int ss )
     {
+        // We are facing a wall.  This makes us a bit keener to
+        // bridge.
         Block thisBlock = world.getBlockAt( rabbit.x, rabbit.y );
 
         boolean slopeUp = isSlopeUp( rabbit, thisBlock );
         int bx = behindX( rabbit );
         int ny = nextY( rabbit, slopeUp );
 
+        // Don't bridge if there is no block behind us (we're not in a hole)
         if ( isSlope( thisBlock ) && world.getBlockAt( bx, ny ) == null )
         {
             return null;
@@ -249,10 +252,22 @@ public class Bridging extends Behaviour
             {
                 if ( isSlope( thisBlock ) )
                 {
-                    return t.rl(
-                        RABBIT_BRIDGING_IN_CORNER_UP_RIGHT_1,
-                        RABBIT_BRIDGING_IN_CORNER_UP_LEFT_1
-                    );
+                    // Special behaviour where we bridge higher up because we
+                    // are already on top of a slope.
+
+                    Block twoAbove = world.getBlockAt( rabbit.x, rabbit.y - 2 );
+
+                    if ( twoAbove == null || twoAbove.isBridge() ) {
+                        return t.rl(
+                            RABBIT_BRIDGING_IN_CORNER_UP_RIGHT_1,
+                            RABBIT_BRIDGING_IN_CORNER_UP_LEFT_1
+                        );
+                    }
+                    else
+                    {
+                        // We would hit our head, so don't bridge.
+                        return null;
+                    }
                 }
                 else
                 {

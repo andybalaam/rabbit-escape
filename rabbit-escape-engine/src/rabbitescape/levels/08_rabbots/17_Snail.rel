@@ -4,17 +4,17 @@
 :author_url=https://github.com/tttppp
 :hint.1=Use blocker tokens to deflect the rabbits and rabbots off each other.
 :hint.2=You don't need to save the rabbit on the right of the shell.
-:hint.3=Use the rabbit on the right to save the rabbit at the top left, get the two rabbots out of the shell and into the left of the body, use the other rabbits to bridge up and around the shell to the exit.
-:solution.1=dig&(1,6)&bash&(11,6)&bridge&(3,5)&bash;(7,1)&(7,1);(7,1)&bridge;;(10,6)&block;3;(7,8);5;dig;;(5,6);bridge;;(2,5);3;(2,4);6;(6,8);;bash;2;dig&(6,6);3;bash;;(5,8);5;(4,8);;bridge;9;(3,8);7;(4,8);10;(5,7);7;block;;(2,8);9;climb;4;(7,8);2;bridge;(6,6);12;(6,5);7;(6,4);3;dig;;(2,3);;bridge;(3,5);;dig;;(2,4);;(10,6);5;bridge;;(4,5);until:WON
-:solution.2=dig&(1,6)&bridge&block&(3,0);2;(5,0)&bash;(11,6);bridge;(10,6);(2,5);5;(2,5);6;(2,4);8;dig;2;(6,6);bridge&dig&(6,8);bridge&(7,8);6;(6,8);5;(5,6);7;(6,6);5;(6,5);7;(6,4);2;dig;(2,3);;bash&(5,0);2;(3,0);;dig&(11,6);(2,4);;bridge;(3,5);2;(4,5);until:WON
+:hint.3=Use the rabbit on the right to save the rabbit at the top left, get the two rabbots out of the shell and into the left of the body, use the other rabbits to bridge up and around the shell and ciimb into the exit.
+:solution.1=dig&(1,6)&bash&(11,6)&bridge&(3,5)&bash;(7,1)&(7,1);(7,1)&bridge;;(10,6)&block;3;(7,8);5;dig;;(5,6);bridge;;(2,5);3;(2,4);6;(6,8);;bash;2;dig&(6,6);3;bash;;(5,8);5;(4,8);;bridge;9;(3,8);7;(4,8);10;(5,7);7;block;;(2,8);9;climb;4;(7,8);2;bridge;(6,6);12;(6,5);7;(6,4);3;dig;;(2,3);;bridge;(3,5);;dig;;(2,4);;(10,6);12;climb;;(3,5);3;(3,5);9;(3,5);until:WON
+:solution.2=dig&(1,6)&bridge&block&(3,0);2;(5,0)&bash;(11,6);bridge;(10,6);(2,5);5;(2,5);6;(2,4);8;dig;2;(6,6);bridge&dig&(6,8);bridge&(7,8);6;(6,8);5;(5,6);7;(6,6);5;(6,5);7;(6,4);2;dig;(2,3);;bash&(5,0);2;(3,0);;dig&(11,6);(2,4);;bridge;(3,5);climb;;(3,5);(3,5);(3,5);(3,5);(3,5);until:WON
 :num_rabbits=0
 :num_to_save=4
 :rabbit_delay=4
 :music=tryad-sampling_memory
 :bash=6
 :block=2
-:bridge=13
-:climb=1
+:bridge=12
+:climb=5
 :dig=6
   r   j      
   MMMMM      
