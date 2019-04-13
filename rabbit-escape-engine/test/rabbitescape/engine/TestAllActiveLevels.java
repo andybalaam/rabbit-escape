@@ -187,13 +187,11 @@ public class TestAllActiveLevels
             {
                 try
                 {
+                    String path = set.dirName + "/" + level.fileName + ".rel";
                     World world = new LoadWorldFile( new NothingExistsFileSystem() )
-                    .load(
-                        new IgnoreWorldStatsListener(),
-                        set.dirName + "/" + level.fileName + ".rel"
-                    );
+                        .load( new IgnoreWorldStatsListener(), path );
 
-                    test.run( world, level.fileName );
+                    test.run( world, path );
                 }
                 catch (AssertionError e) {
                     throw new AssertionError(
@@ -227,13 +225,11 @@ public class TestAllActiveLevels
         {
             for ( LevelsList.LevelInfo level : set.levels )
             {
+                String path = levelsDir + "/" + level.fileName + ".rel";
                 World world = new LoadWorldFile( new NothingExistsFileSystem() )
-                    .load(
-                        new IgnoreWorldStatsListener(),
-                        levelsDir + "/" + level.fileName + ".rel"
-                    );
+                    .load( new IgnoreWorldStatsListener(), path );
 
-                test.run( world, level.fileName );
+                test.run( world, path );
             }
         }
     }
