@@ -10,7 +10,7 @@ import rabbitescape.engine.ChangeDescription.State;
 
 public class Digging extends Behaviour
 {
-    private int stepsOfDigging;
+    int stepsOfDigging;
 
     @Override
     public void cancel()

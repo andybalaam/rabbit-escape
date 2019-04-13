@@ -54,7 +54,7 @@ public class Rabbit extends Thing implements Comparable<Rabbit>
         OutOfBounds outOfBounds = new OutOfBounds();
         Drowning drowning = new Drowning();
         Exiting exiting = new Exiting();
-        Brollychuting brollychuting = new Brollychuting( climbing );
+        Brollychuting brollychuting = new Brollychuting( climbing, digging );
         falling = new Falling( climbing, brollychuting, getFatalHeight() );
         Bashing bashing = new Bashing();
         Bridging bridging = new Bridging();

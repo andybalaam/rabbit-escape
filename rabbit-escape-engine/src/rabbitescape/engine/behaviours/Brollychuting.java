@@ -17,10 +17,12 @@ public class Brollychuting extends Behaviour
 {
     boolean hasAbility = false;
     private final Climbing climbing;
+    private final Digging digging;
 
-    public Brollychuting( Climbing climbing)
+    public Brollychuting( Climbing climbing, Digging digging )
     {
         this.climbing = climbing;
+        this.digging = digging;
     }
 
     @Override
@@ -108,7 +110,7 @@ public class Brollychuting extends Behaviour
             return false;
         }
 
-        if ( climbing.abilityActive || rabbit.state == RABBIT_DIGGING )
+        if ( climbing.abilityActive || digging.stepsOfDigging > 2 )
         {
             return false;
         }
