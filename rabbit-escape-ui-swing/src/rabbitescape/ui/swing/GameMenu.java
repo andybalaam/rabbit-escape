@@ -4,24 +4,14 @@ import static rabbitescape.engine.i18n.Translation.*;
 import static rabbitescape.engine.util.Util.*;
 import static rabbitescape.ui.swing.SwingConfigSetup.*;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Container;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.LayoutManager;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.swing.ButtonGroup;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JToggleButton;
+import javax.swing.*;
 
 import rabbitescape.engine.Token;
 import rabbitescape.engine.config.Config;
@@ -30,7 +20,7 @@ import rabbitescape.render.BitmapCache;
 
 class GameMenu
 {
-    public static interface AbilityChangedListener
+    public interface AbilityChangedListener
     {
         void abilityChosen( Token.Type ability );
     }
@@ -50,7 +40,7 @@ class GameMenu
     private final Color backgroundColor;
 
     private final JPanel panel;
-    public final Map<Token.Type, JToggleButton> abilities;
+    public final Map<Token.Type, AbilityDisplay> abilities;
 
     public GameMenu(
         Container contentPane,
@@ -63,7 +53,7 @@ class GameMenu
     {
         this.bitmapCache = bitmapCache;
         this.backgroundColor = backgroundColor;
-        this.panel = createPanel( contentPane );
+        this.panel = createPanel();
 
         this.mute = addToggleButton(
             "menu_unmuted",
@@ -110,7 +100,7 @@ class GameMenu
         contentPane.add( scrollPane, BorderLayout.WEST );
     }
 
-    private JPanel createPanel( Container contentPane )
+    private JPanel createPanel()
     {
         LayoutManager layout = new FlowLayout( FlowLayout.CENTER, 4, 4 );
         JPanel ret = new JPanel( layout );
@@ -120,10 +110,10 @@ class GameMenu
         return ret;
     }
 
-    private Map<Token.Type, JToggleButton> addAbilitiesButtons(
+    private Map<Token.Type, AbilityDisplay> addAbilitiesButtons(
         Map<Token.Type, Integer> abilityTypes )
     {
-        Map<Token.Type, JToggleButton> ret = new HashMap<>();
+        Map<Token.Type, AbilityDisplay> ret = new HashMap<>();
 
         ButtonGroup abilitiesGroup = new ButtonGroup();
 
@@ -135,9 +125,17 @@ class GameMenu
             JToggleButton button = addToggleButton(
                 iconName, null, false, t( Token.name( ability ) ) );
 
+            JLabel abilityNumber =  new JLabel();
+            panel.add( abilityNumber );
+
             MenuTools.clickOnKey( button, iconName, key );
 
-            ret.put( ability, button );
+            AbilityDisplay abilityDisplay = new AbilityDisplay(
+                button,
+                abilityNumber
+            );
+            abilityDisplay.setNumLeft( abilityTypes.get( abilityt statu ) );
+            ret.put( ability, abilityDisplay );
 
             abilitiesGroup.add( button );
 
@@ -201,18 +199,39 @@ class GameMenu
     public void addAbilitiesListener( final AbilityChangedListener listener )
     {
         for (
-            final Map.Entry<Token.Type, JToggleButton> abilityEntry
+            final Map.Entry<Token.Type, AbilityDisplay> abilityEntry
                 : abilities.entrySet()
         )
         {
-            abilityEntry.getValue().addActionListener( new ActionListener()
-            {
-                @Override
-                public void actionPerformed( ActionEvent evt )
+            abilityEntry.getValue().button.addActionListener(
+                new ActionListener()
                 {
-                    listener.abilityChosen( abilityEntry.getKey() );
+                    @Override
+                    public void actionPerformed( ActionEvent evt )
+                    {
+                        listener.abilityChosen( abilityEntry.getKey() );
+                    }
                 }
-            } );
+            );
+        }
+    }
+
+    static class AbilityDisplay
+    {
+        final JToggleButton button;
+        final JLabel label;
+
+        AbilityDisplay(JToggleButton button, JLabel label) {
+            this.button = button;
+            this.label = label;
+        }
+
+        public void setNumLeft( int numLeft )
+        {
+            if ( numLeft == 0 ) {
+                button.setEnabled( false );
+            }
+            label.setText( " " + numLeft );
         }
     }
 }
