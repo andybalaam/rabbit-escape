@@ -55,38 +55,75 @@ class GameMenu
         this.backgroundColor = backgroundColor;
         this.panel = createPanel();
 
+        Dimension doubleButtonSize = new Dimension(
+            buttonSizeInPixels.width * 2,
+            buttonSizeInPixels.height
+        );
+        Dimension spacerSize = new Dimension(
+            buttonSizeInPixels.width * 2,
+            buttonSizeInPixels.height / 2
+        );
+
         this.mute = addToggleButton(
             "menu_unmuted",
             "menu_muted",
             ConfigTools.getBool( uiConfig, CFG_MUTED ),
-            t( "Mute" )
+            t( "Mute" ),
+            doubleButtonSize
         );
 
         this.pause = addToggleButton(
-            "menu_pause", "menu_unpause", false, t( "Pause" ) );
+            "menu_pause",
+            "menu_unpause",
+            false,
+            t( "Pause" ),
+            doubleButtonSize
+        );
 
-        addSpacer();
+        addSpacer( spacerSize );
 
-        this.abilities = addAbilitiesButtons( abilityTypes );
+        this.abilities = addAbilitiesButtons(
+            abilityTypes, buttonSizeInPixels );
 
-        addSpacer();
+        addSpacer( spacerSize );
 
-        this.explodeAll = addButton( "menu_explode_all", t( "Explode all" ) );
+        this.explodeAll = addButton(
+            "menu_explode_all",
+            t( "Explode all" ),
+            doubleButtonSize
+        );
 
         this.speed =
-            addToggleButton( "menu_speedup_inactive", "menu_speedup_active",
-                             false, t( "speed up" ) );
+            addToggleButton(
+                "menu_speedup_inactive",
+                "menu_speedup_active",
+                false,
+                t( "speed up" ),
+                doubleButtonSize
+            );
 
-        this.zoomIn     = addButton( "menu_zoom_in",     t( "Zoom in" ) );
-        this.zoomOut    = addButton( "menu_zoom_out",    t( "Zoom out" ) );
-        this.back       = addButton( "menu_back",        t( "Back" ) );
+        this.zoomIn = addButton(
+            "menu_zoom_in",
+            t( "Zoom in" ),
+            doubleButtonSize
+        );
+        this.zoomOut = addButton(
+            "menu_zoom_out",
+            t( "Zoom out" ),
+            doubleButtonSize
+        );
+        this.back = addButton(
+            "menu_back",
+            t( "Back" ),
+            doubleButtonSize
+        );
 
         panel.setPreferredSize(
             new Dimension(
-                buttonSizeInPixels.width + 8,
-                  ( 2 * 16 )                                // Spacers
-                + ( 6 + abilityTypes.size() )               // Buttons
-                    * ( 16 + buttonSizeInPixels.height )
+                (int)( doubleButtonSize.width * 1.5 ),
+                  ( 2 * spacerSize.height )       // Spacers
+                + ( 6 + abilityTypes.size() )     // Buttons
+                    * ( 8 + buttonSizeInPixels.height )
             )
         );
 
@@ -111,7 +148,9 @@ class GameMenu
     }
 
     private Map<Token.Type, AbilityDisplay> addAbilitiesButtons(
-        Map<Token.Type, Integer> abilityTypes )
+        Map<Token.Type, Integer> abilityTypes,
+        Dimension buttonSizeInPixels
+    )
     {
         Map<Token.Type, AbilityDisplay> ret = new HashMap<>();
 
@@ -123,9 +162,16 @@ class GameMenu
             String iconName = "ability_" + ability.toString();
 
             JToggleButton button = addToggleButton(
-                iconName, null, false, t( Token.name( ability ) ) );
+                iconName,
+                null,
+                false,
+                t( Token.name( ability ) ),
+                buttonSizeInPixels
+            );
 
             JLabel abilityNumber =  new JLabel();
+            abilityNumber.setPreferredSize( buttonSizeInPixels );
+            abilityNumber.setHorizontalTextPosition( SwingConstants.LEFT );
             panel.add( abilityNumber );
 
             MenuTools.clickOnKey( button, iconName, key );
@@ -134,7 +180,7 @@ class GameMenu
                 button,
                 abilityNumber
             );
-            abilityDisplay.setNumLeft( abilityTypes.get( abilityt statu ) );
+            abilityDisplay.setNumLeft( abilityTypes.get( ability ) );
             ret.put( ability, abilityDisplay );
 
             abilitiesGroup.add( button );
@@ -145,10 +191,11 @@ class GameMenu
         return ret;
     }
 
-    private void addSpacer()
+    private void addSpacer( Dimension spacerSize )
     {
         JPanel spacer = new JPanel();
         spacer.setBackground( backgroundColor );
+        spacer.setPreferredSize( spacerSize );
 
         panel.add( spacer );
     }
@@ -157,7 +204,8 @@ class GameMenu
         String unSelectedImage,
         String selectedImage,
         boolean selected,
-        String description
+        String description,
+        Dimension buttonSizeInPixels
     )
     {
         JToggleButton button = new JToggleButton( getIcon( unSelectedImage ) );
@@ -166,6 +214,7 @@ class GameMenu
         button.setBorderPainted( false );
         button.setSelected( selected );
         button.setToolTipText( description );
+        button.setPreferredSize( buttonSizeInPixels );
 
         if ( selectedImage != null )
         {
@@ -177,13 +226,18 @@ class GameMenu
         return button;
     }
 
-    private JButton addButton( String image, String description )
+    private JButton addButton(
+        String image,
+        String description,
+        Dimension buttonSizeInPixels
+    )
     {
         JButton button = new JButton( getIcon( image ) );
 
         button.setBackground( backgroundColor );
         button.setBorderPainted( false );
         button.setToolTipText( description );
+        button.setPreferredSize( buttonSizeInPixels );
 
         panel.add( button );
 
