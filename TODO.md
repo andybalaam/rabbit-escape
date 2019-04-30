@@ -3,17 +3,17 @@ Time moves upwards.
 Later
 -----
 
-- Graphics in level design
-- Level editor
+- Graphics in level design i.e. you can say what specific block looks like
++ Level editor
 - Fail to bridge action when bridge placed somewhere you can't bridge
 - Separate rabbits who find themselves on top of each other.
-- More colourful?
+-> #602 More colourful?
 - Fix many things not animating nicely
-- graphics:float
-- action:float
-- Fix Android bug where winning alert disappears when you rotate the screen
++ graphics:brolly
++ action:brolly
+-> #50 Fix Android bug where dialog disappears when you rotate the screen
 - Display level previews on menu
-- Display level names on menu
++ Display level names on menu
 - Fix bug where using the Title bar on android to go backwards makes
   Quit not work properly.
 - Fix bug where diggers go too fast when you rotate the screen (see
@@ -22,9 +22,9 @@ Later
 - Pause when screen power save kicks in
 - Next and Retry buttons when finished level, which update the
   bolded menu item
-- Remove Settings button (Android)
+-> #617 Remove Settings button (Android)
 - Tell you what level you are playing
-- Victory screen
+-> -94 Victory screen
 - favicon for web site
 - Save up zoom events and do them between frames
 - Consider whether http://developer.android.com/training/gestures/detector.html
@@ -32,10 +32,10 @@ Later
 - climbing up a 1 high wall glitches. First animation needs to be custom
 - climbing from an upward slope glitches. Also probably a downward slope.
 - walking from flat to downward slope starts off with rabbit about 2 pixels too high
-- after climbing and hitting head sometimes the rabbit walks on air
-- show level name in menu
++ after climbing and hitting head sometimes the rabbit walks on air
++ show level name in menu
 - front menu with quick play button that jumps to what you are stuck on
-- victory message (and sound?) when you complete a level set
+-> #94 victory message (and sound?) when you complete a level set
 - jump to next level or retry when finished level
 - js port (and level editor)
 - when continuing to bridge rabbit floats
@@ -47,7 +47,7 @@ Later
     ###
 - when I explode a blocker it jerks to the left
 - Use cant_place_token sound effect when you cannot place a token
-- Sounds for winning an losing a level and winning a level set
+- Sounds for winning and losing a level and winning a level set
 
 Release 0.9
 -----------
