@@ -44,6 +44,8 @@ public class AndroidGameActivity extends RabbitEscapeActivity
     public static final String INTENT_LEVELS_DIR   = "rabbitescape.levelsdir";
     public static final String INTENT_LEVEL        = "rabbitescape.level";
     public static final String INTENT_LEVEL_NUMBER = "rabbitescape.levelnumber";
+    public static final String INTENT_LEVELSET     = "rabbitescape.levelset";
+    public static final String INTENT_LASTINSET    = "rabbitescape.lastlevel";
     public static final String STATE_CHECKED_ABILITY_INDEX = "rabbitescape.checkedAbilityIndex";
 
     public AlertDialog currentDialog;
@@ -72,6 +74,8 @@ public class AndroidGameActivity extends RabbitEscapeActivity
         String levelsDir     = intent.getStringExtra( INTENT_LEVELS_DIR );
         String levelFileName = intent.getStringExtra( INTENT_LEVEL );
         int    levelNum      = intent.getIntExtra( INTENT_LEVEL_NUMBER, 0 );
+        String levelSet      = intent.getStringExtra( INTENT_LEVELSET );
+        boolean lastInSet    = intent.getBooleanExtra( INTENT_LASTINSET, false );
 
         Resources resources = getResources();
 
@@ -82,7 +86,7 @@ public class AndroidGameActivity extends RabbitEscapeActivity
 
         LevelWinListener winListener = new MultiLevelWinListener(
             new CompletedLevelWinListener( levelsDir, levelNum, levelsCompleted ),
-            new AndroidAlertWinListener( this )
+            new AndroidAlertWinListener( this, levelSet, lastInSet )
         );
 
         game = new Game(

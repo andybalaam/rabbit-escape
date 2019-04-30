@@ -42,15 +42,7 @@ import rabbitescape.engine.config.ConfigKeys;
 import rabbitescape.engine.config.ConfigTools;
 import rabbitescape.engine.config.TapTimer;
 import rabbitescape.engine.err.RabbitEscapeException;
-import rabbitescape.engine.menu.AboutText;
-import rabbitescape.engine.menu.ByNameConfigBasedLevelsCompleted;
-import rabbitescape.engine.menu.LevelMenuItem;
-import rabbitescape.engine.menu.LevelsCompleted;
-import rabbitescape.engine.menu.LevelsList;
-import rabbitescape.engine.menu.LoadLevelsList;
-import rabbitescape.engine.menu.Menu;
-import rabbitescape.engine.menu.MenuDefinition;
-import rabbitescape.engine.menu.MenuItem;
+import rabbitescape.engine.menu.*;
 import rabbitescape.engine.util.RealFileSystem;
 import rabbitescape.engine.util.Util.IdxObj;
 import rabbitescape.render.BitmapCache;
@@ -75,10 +67,12 @@ public class MenuUi
     private class ButtonListener implements ActionListener
     {
         private final MenuItem item;
+        private final Menu menu;
 
-        public ButtonListener( MenuItem item )
+        public ButtonListener( MenuItem item, Menu menu )
         {
             this.item = item;
+            this.menu = menu;
         }
 
         @Override
@@ -106,7 +100,7 @@ public class MenuUi
                 }
                 case LEVEL:
                 {
-                    level( (LevelMenuItem)item );
+                    level( (LevelMenuItem)item, (LevelsMenu)menu );
                     return;
                 }
                 case LOAD:
@@ -248,7 +242,8 @@ public class MenuUi
                 t( item.object.name, item.object.nameParams ) );
 
             button.setBackground( buttonColor );
-            button.addActionListener( new ButtonListener( item.object ) );
+            button.addActionListener(
+                new ButtonListener( item.object, menu ) );
             button.setVisible( true );
             button.setEnabled( item.object.enabled || TapTimer.matched );
             button.setPreferredSize( buttonSize );
@@ -313,7 +308,9 @@ public class MenuUi
             out.close();
             playLevel( 
                 nameCandidate.getAbsolutePath(),
-                new IgnoreLevelWinListener() 
+                new IgnoreLevelWinListener(),
+                null,
+                null
             );
         }
         catch ( FileNotFoundException e ) /// @TODO fix exception handling
@@ -330,7 +327,7 @@ public class MenuUi
             return;  // The user cancelled or closed the dialog
         }
 
-        playLevel( filename, new IgnoreLevelWinListener() );
+        playLevel( filename, new IgnoreLevelWinListener(), null, null );
     }
 
     private String chooseLevelFilename()
@@ -367,13 +364,16 @@ public class MenuUi
         return filename;
     }
 
-    private void level( final LevelMenuItem item )
+    private void level( final LevelMenuItem item, final LevelsMenu menu )
     {
-        playLevel( item.fileName, winListeners( item ) );
+        playLevel( item.fileName, winListeners( item ), item, menu );
     }
 
     private void playLevel(
-        final String filename, final LevelWinListener levelWinListener )
+        final String filename,
+        final LevelWinListener levelWinListener,
+        final LevelMenuItem item,
+        final LevelsMenu menu )
     {
         new SwingWorker<Void, Void>()
         {
@@ -392,7 +392,9 @@ public class MenuUi
                     sound,
                     MenuUi.this,
                     SwingGameLaunch.NOT_DEMO_MODE,
-                    false
+                    false,
+                    item,
+                    menu
                 ).launchGame(
                     new String[] { filename },
                     levelWinListener

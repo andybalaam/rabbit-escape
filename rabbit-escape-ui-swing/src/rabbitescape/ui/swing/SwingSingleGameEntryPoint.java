@@ -11,6 +11,8 @@ import rabbitescape.engine.LevelWinListener;
 import rabbitescape.engine.World;
 import rabbitescape.engine.config.Config;
 import rabbitescape.engine.config.ConfigTools;
+import rabbitescape.engine.menu.LevelMenuItem;
+import rabbitescape.engine.menu.LevelsMenu;
 import rabbitescape.engine.util.CommandLineOption;
 import rabbitescape.engine.util.CommandLineOptionSet;
 import rabbitescape.engine.util.FileSystem;
@@ -29,6 +31,8 @@ public class SwingSingleGameEntryPoint extends SingleGameEntryPoint
     private final MenuUi menuUi;
     private final String solution;
     private final boolean frameDumping;
+    private final LevelMenuItem menuItem;
+    private final LevelsMenu menu;
 
     public SwingSingleGameEntryPoint(
         FileSystem fs,
@@ -40,7 +44,9 @@ public class SwingSingleGameEntryPoint extends SingleGameEntryPoint
         Sound sound,
         MenuUi menuUi,
         String solution,
-        boolean frameDumping
+        boolean frameDumping,
+        LevelMenuItem menuItem,
+        LevelsMenu menu
     )
     {
         super( fs, out, locale );
@@ -51,6 +57,8 @@ public class SwingSingleGameEntryPoint extends SingleGameEntryPoint
         this.menuUi = menuUi;
         this.solution = solution;
         this.frameDumping = frameDumping;
+        this.menuItem = menuItem;
+        this.menu = menu;
     }
 
     public static void entryPoint( String[] args )
@@ -133,7 +141,9 @@ public class SwingSingleGameEntryPoint extends SingleGameEntryPoint
             sound,
             null,
             solution,
-            frameDumping
+            frameDumping,
+            null,
+            null
         );
 
         m.run( fileName );
@@ -149,6 +159,6 @@ public class SwingSingleGameEntryPoint extends SingleGameEntryPoint
         SwingUtilities.invokeLater( init );
 
         return new SwingGameLaunch( init, world, winListener, sound, uiConfig,
-                                    out, solution, frameDumping );
+                                    out, solution, frameDumping, menuItem, menu );
     }
 }

@@ -14,6 +14,7 @@ import rabbitescape.engine.config.TapTimer;
 import rabbitescape.engine.menu.ByNameConfigBasedLevelsCompleted;
 import rabbitescape.engine.menu.LevelMenuItem;
 import rabbitescape.engine.menu.LevelsList;
+import rabbitescape.engine.menu.LevelsMenu;
 import rabbitescape.engine.menu.LoadLevelsList;
 import rabbitescape.engine.menu.Menu;
 import rabbitescape.engine.menu.MenuDefinition;
@@ -143,7 +144,7 @@ public class AndroidMenuActivity extends RabbitEscapeActivity
                         }
                         case LEVEL:
                         {
-                            level( parentActivity, (LevelMenuItem)item );
+                            level( parentActivity, (LevelMenuItem)item, (LevelsMenu)menu );
                             return;
                         }
                         case QUIT:
@@ -176,12 +177,18 @@ public class AndroidMenuActivity extends RabbitEscapeActivity
         startActivity( intent );
     }
 
-    private void level( AndroidMenuActivity parentActivity, LevelMenuItem item )
-    {
+    private void level(
+        AndroidMenuActivity parentActivity,
+        LevelMenuItem item,
+        LevelsMenu menu
+    ) {
+        boolean lastInSet = menu.items[menu.items.length - 1] == item;
         Intent intent = new Intent( parentActivity, AndroidGameActivity.class );
         intent.putExtra( AndroidGameActivity.INTENT_LEVELS_DIR,   item.levelsDir );
         intent.putExtra( AndroidGameActivity.INTENT_LEVEL,        item.fileName );
         intent.putExtra( AndroidGameActivity.INTENT_LEVEL_NUMBER, item.levelNumber );
+        intent.putExtra( AndroidGameActivity.INTENT_LEVELSET,     menu.name );
+        intent.putExtra( AndroidGameActivity.INTENT_LASTINSET,    lastInSet );
         startActivity( intent );
     }
 

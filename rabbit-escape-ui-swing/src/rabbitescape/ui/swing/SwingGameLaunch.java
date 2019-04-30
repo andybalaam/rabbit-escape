@@ -8,11 +8,14 @@ import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 
 import static rabbitescape.engine.i18n.Translation.t;
+import static rabbitescape.engine.util.Util.map;
 
 import rabbitescape.engine.LevelWinListener;
 import rabbitescape.engine.Token;
 import rabbitescape.engine.World;
 import rabbitescape.engine.config.Config;
+import rabbitescape.engine.menu.LevelMenuItem;
+import rabbitescape.engine.menu.LevelsMenu;
 import rabbitescape.engine.solution.PlaceTokenAction;
 import rabbitescape.engine.solution.SolutionDemo;
 import rabbitescape.engine.solution.SolutionInterpreter;
@@ -67,11 +70,9 @@ public class SwingGameLaunch implements GameLaunch
     public final SolutionRecorderTemplate solutionRecorder;
     private final SwingPlayback swingPlayback;
     private final FrameDumper frameDumper;
+    private final LevelMenuItem menuItem;
+    private final LevelsMenu menu;
 
-    /**
-     * @param solutionIndex natural number values indicate demo mode. It is
-     *                      the index of the solution from the rel file to play.
-     */
     public SwingGameLaunch(
         SwingGameInit init,
         World world,
@@ -80,7 +81,9 @@ public class SwingGameLaunch implements GameLaunch
         Config config,
         PrintStream debugout,
         String solution,
-        boolean frameDumping
+        boolean frameDumping,
+        LevelMenuItem menuItem,
+        LevelsMenu menu
     )
     {
         this.world = world;
@@ -90,6 +93,8 @@ public class SwingGameLaunch implements GameLaunch
 
         this.frame = init.frame;
         this.solutionRecorder = new SolutionRecorder();
+        this.menuItem = menuItem;
+        this.menu = menu;
         if ( frameDumping )
         {
             this.frameDumper = new FrameDumper();
@@ -298,7 +303,7 @@ public class SwingGameLaunch implements GameLaunch
             world.name,
             Util.concat(
                 new Object[] { DialogText.introText( this.frame, world ) },
-                Util.map(
+                map(
                     insertNewlines,
                     world.hints,
                     new String[3]
@@ -407,14 +412,34 @@ public class SwingGameLaunch implements GameLaunch
             return;
         }
 
-        showDialog(
-            t( "You won!" ),
-            t(
-                "Saved: ${num_saved}  Needed: ${num_to_save}",
-                DialogText.statsValues( world )
-            ),
-            new Object[] { t( "Ok" ) }
-        );
+        boolean levelSetComplete =
+            ( menuItem == menu.items[menu.items.length - 1] );
+
+        if ( levelSetComplete ) {
+            Map<String, Object> values = DialogText.statsValues( world );
+            values.put( "levelset", menu.name );
+
+            showDialog(
+                t( "Level set complete!" ),
+                t(
+                    "Saved: ${num_saved}  Needed: ${num_to_save}\n" +
+                    "Well done! You have completed the ${levelset} levels!",
+                    values
+                ),
+                new Object[]{ t( "Yippee!" ) }
+            );
+        }
+        else
+        {
+            showDialog(
+                t( "You won!" ),
+                t(
+                    "Saved: ${num_saved}  Needed: ${num_to_save}",
+                    DialogText.statsValues( world )
+                ),
+                new Object[]{ t( "Ok" ) }
+            );
+        }
     }
 
     /**

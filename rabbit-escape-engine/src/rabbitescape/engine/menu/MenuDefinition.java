@@ -68,7 +68,12 @@ public class MenuDefinition
             LevelSetInfo set = setI.object;
             ret[setI.index] = item(
                 set.name,
-                new LevelsMenu( set.dirName, loadedLevels, levelsCompleted ),
+                new LevelsMenu(
+                    set.name,
+                    set.dirName,
+                    loadedLevels,
+                    levelsCompleted
+                ),
                 true,
                 set.hidden
             );

@@ -6,16 +6,19 @@ import java.util.List;
 
 public class LevelsMenu extends Menu
 {
+    public final String name;
     private final String levelsDir;
     private final LevelsCompleted levelsCompleted;
 
     public LevelsMenu(
+        String name,
         String levelsDir,
         LevelsList levelsList,
         LevelsCompleted levelsCompleted
     )
     {
         this(
+            name,
             levelsDir,
             levelsCompleted,
             menuItems( levelsDir, levelsList )
@@ -23,10 +26,14 @@ public class LevelsMenu extends Menu
     }
 
     private LevelsMenu(
-        String levelsDir, LevelsCompleted levelsCompleted, MenuItem[] items )
-    {
+        String name,
+        String levelsDir,
+        LevelsCompleted levelsCompleted,
+        MenuItem[] items
+    ) {
         super( "Choose a level:", items );
 
+        this.name = name;
         this.levelsDir = levelsDir;
         this.levelsCompleted = levelsCompleted;
 
