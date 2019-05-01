@@ -182,7 +182,9 @@ public class AndroidMenuActivity extends RabbitEscapeActivity
         LevelMenuItem item,
         LevelsMenu menu
     ) {
-        boolean lastInSet = menu.items[menu.items.length - 1] == item;
+        boolean lastInSet =
+            ( menu != null && menu.items[menu.items.length - 1] == item );
+
         Intent intent = new Intent( parentActivity, AndroidGameActivity.class );
         intent.putExtra( AndroidGameActivity.INTENT_LEVELS_DIR,   item.levelsDir );
         intent.putExtra( AndroidGameActivity.INTENT_LEVEL,        item.fileName );

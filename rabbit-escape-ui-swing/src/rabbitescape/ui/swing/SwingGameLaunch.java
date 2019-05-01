@@ -413,7 +413,10 @@ public class SwingGameLaunch implements GameLaunch
         }
 
         boolean levelSetComplete =
-            ( menuItem == menu.items[menu.items.length - 1] );
+            (
+                menu != null &&
+                ( menuItem == menu.items[menu.items.length - 1] )
+            );
 
         if ( levelSetComplete ) {
             Map<String, Object> values = DialogText.statsValues( world );
