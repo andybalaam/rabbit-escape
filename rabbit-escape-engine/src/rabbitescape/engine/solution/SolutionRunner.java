@@ -47,8 +47,8 @@ public class SolutionRunner
     }
 
     public static void runPartialSolution(
-        Solution solution, 
-        final SandboxGame sandboxGame 
+        Solution solution,
+        final SandboxGame sandboxGame
     )
     {
         SolutionInterpreter interpreter = new SolutionInterpreter(
@@ -143,9 +143,14 @@ public class SolutionRunner
         }
         catch ( DontStepAfterFinish e )
         {
-            throw new SolutionExceptions.RanPastEnd(
-                sandboxGame.getWorld().completionState() 
-            );
+            // If we're not really doing something (e.g. we are waiting)
+            // This is fine.  Otherwise, this is an error.
+            if ( nextStep.actions.length != 0 )
+            {
+                throw new SolutionExceptions.RanPastEnd(
+                    sandboxGame.getWorld().completionState()
+                );
+            }
         }
     }
 
@@ -196,7 +201,7 @@ public class SolutionRunner
         catch ( DontStepAfterFinish e )
         {
             throw new SolutionExceptions.RanPastEnd(
-                sandboxGame.getWorld().completionState() 
+                sandboxGame.getWorld().completionState()
             );
         }
         catch ( NoneOfThisAbilityLeft e )

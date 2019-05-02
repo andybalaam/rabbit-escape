@@ -3,17 +3,11 @@ package rabbitescape.ui.text;
 import java.io.IOException;
 
 import static rabbitescape.engine.i18n.Translation.*;
+
+import rabbitescape.engine.World;
 import rabbitescape.engine.err.ExceptionTranslation;
 import rabbitescape.engine.err.RabbitEscapeException;
-import rabbitescape.engine.solution.AssertStateAction;
-import rabbitescape.engine.solution.SandboxGame;
-import rabbitescape.engine.solution.Solution;
-import rabbitescape.engine.solution.SolutionExceptions;
-import rabbitescape.engine.solution.SolutionParser;
-import rabbitescape.engine.solution.SolutionRecorder;
-import rabbitescape.engine.solution.SolutionRunner;
-import rabbitescape.engine.solution.UntilAction;
-import rabbitescape.engine.solution.SolutionCommand;
+import rabbitescape.engine.solution.*;
 import rabbitescape.engine.util.Util;
 
 public class InputHandler
@@ -76,7 +70,22 @@ public class InputHandler
             {
                 // TODO: it's weird we have to do the last time step
                 //       outside of runSingleCommand
-                sandboxGame.getWorld().step();
+                try
+                {
+                    sandboxGame.getWorld().step();
+                }
+                catch ( World.DontStepAfterFinish e )
+                {
+                    // Ignore stepping after finish if it's just a wait.
+                    if (
+                        ! (
+                               command.actions.length > 0
+                            && command.actions[0] instanceof WaitAction
+                        )
+                    ) {
+                        throw e;
+                    }
+                }
             }
 
             appendAll( partialSolution );

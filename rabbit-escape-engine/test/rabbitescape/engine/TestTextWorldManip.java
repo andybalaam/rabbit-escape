@@ -1606,7 +1606,7 @@ public class TestTextWorldManip
     {
         String[] lines = {
             ":num_rabbits=1",
-            ":solution.1=8",
+            ":solution.1=8;bash",
             "Q    ",
             "    O",
             "#####"

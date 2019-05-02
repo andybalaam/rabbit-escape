@@ -1,0 +1,71 @@
+# This file is written in a special dialect of expect
+# that adds a 'demand' command that is an expect that
+# fails when it times out.
+#
+# Details are in the file "slowtests/slowtest"
+
+set timeout 2
+
+spawn java -cp rabbit-escape-engine/bin/:rabbit-escape-render/bin/:rabbit-escape-ui-text/bin/:rabbit-escape-ui-swing/bin/ rabbitescape.ui.text.TextMain
+
+# Navigate the menus to level hard 1
+
+demand "1. Start Game"
+demand "Enter a number (1-4), or 0 to go back: "
+
+send "1\r"
+
+demand "3. Hard"
+demand "or 0 to go back: "
+
+send "3\r"
+
+demand "1. 1 Choppy"
+demand "or 0 to go back: "
+
+send "1\r"
+
+demand "bridge: 100"
+demand ">"
+
+# Play almost to the end
+
+send "bridge\r"
+send "(11,7)\r"
+send "11\r"
+send "(12,7)\r"
+send "2\r"
+send "(12,7)\r"
+send "4\r"
+send "(12,7)\r"
+send "2\r"
+send "(10,6)\r"
+send "16\r"
+send "(13,4)\r"
+send "5\r"
+send "(13,4)\r"
+
+# Wait too long to win (see issue #146)
+
+send "24\r"
+
+# Exit by choosing "back" each time
+
+demand "You won!"
+demand "or 0 to go back: "
+
+send "0\r"
+
+demand "Choose a set of levels"
+demand "or 0 to go back: "
+
+send "0\r"
+
+demand "Welcome to Rabbit Escape"
+demand "or 0 to go back: "
+
+send "0\r"
+
+# java exits and closes stream
+demand eof
+

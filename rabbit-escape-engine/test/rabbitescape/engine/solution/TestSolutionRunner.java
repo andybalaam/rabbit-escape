@@ -13,7 +13,6 @@ import org.junit.Test;
 import rabbitescape.engine.Token;
 import rabbitescape.engine.World;
 import rabbitescape.engine.World.CompletionState;
-import rabbitescape.engine.solution.SolutionExceptions;
 import rabbitescape.engine.textworld.TextWorldManip;
 
 public class TestSolutionRunner
@@ -87,7 +86,7 @@ public class TestSolutionRunner
     @Test( expected = SolutionExceptions.RanPastEnd.class )
     public void Going_on_beyond_the_end_is_an_error()
     {
-        SolutionRunner.runSolution( waitFourSolution(), threeStepWorld() );
+        SolutionRunner.runSolution( waitFourThenBashSolution(), threeStepWorld() );
     }
 
     @Test
@@ -95,7 +94,7 @@ public class TestSolutionRunner
     {
         try
         {
-            SolutionRunner.runSolution( waitFourSolution(), threeStepWorld() );
+            SolutionRunner.runSolution( waitFourThenBashSolution(), threeStepWorld() );
             fail( "Expected exception!" );
         }
         catch( SolutionExceptions.RanPastEnd e )
@@ -535,12 +534,13 @@ public class TestSolutionRunner
         return new Solution( new SolutionCommand( new AssertStateAction( expected ) ) );
     }
 
-    private Solution waitFourSolution()
+    private Solution waitFourThenBashSolution()
     {
         return new Solution(
             new SolutionCommand( new WaitAction( 1 ) ),
             new SolutionCommand( new WaitAction( 2 ) ),
-            new SolutionCommand( new WaitAction( 2 ) )
+            new SolutionCommand( new WaitAction( 1 ) ),
+            new SolutionCommand( new SelectAction( Token.Type.bash ) )
         );
     }
 
