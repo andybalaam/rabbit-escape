@@ -1,0 +1,43 @@
+#!/usr/bin/env bash
+
+set -u
+set -e
+
+# Compile Java code and copy resources.
+# Usage:
+# ./build-scripts/compile-java CLASSPATH DESTDIR SRCDIRS...
+
+# Compiles all .java files inside each SRCDIR to .class files in DESTDIR,
+# and copies all other files inside each SRCDIR into the same directory
+# structure inside DESTDIR.
+
+CP="$1"
+shift
+DESTDIR="$1"
+shift
+SRCDIRS="$@"
+
+for SRC in ${SRCDIRS}; do
+    JAVAFILES=$(find "$SRC" -type f -name "*.java")
+    RESOURCES=$(cd "$SRC" && find ./ -type f -not -name "*.java")
+
+    mkdir -p "$DESTDIR"
+
+    javac \
+        -Werror \
+        -Xlint \
+        -Xlint:-path \
+        -Xlint:-options \
+        -Xlint:-deprecation \
+        -encoding utf8 \
+        -classpath "$SRC:$DESTDIR:$CP" \
+        -d "$DESTDIR" \
+        -source "1.7" \
+        -target "1.7" \
+        $JAVAFILES
+
+    for F in $RESOURCES; do
+        mkdir -p $(dirname "$DESTDIR/$F")
+        cp --update "$SRC/$F" "$DESTDIR/$F"
+    done
+done

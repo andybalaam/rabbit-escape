@@ -64,8 +64,20 @@ compile-noui-notests: \
 		checks \
 		animations \
 		levels
-	@echo ". Compiling"
-	@ant -quiet compile-noui-notests
+	@echo ". Compiling (no tests or UI)"
+
+	@./build-scripts/compile-java \
+		"" \
+		rabbit-escape-engine/bin \
+		rabbit-escape-engine/src
+
+	@./build-scripts/compile-java \
+		"rabbit-escape-engine/bin" \
+		rabbit-escape-render/bin \
+		rabbit-escape-render/src
+
+
+TEST_CLASSPATH := lib/org.hamcrest.core_1.3.0.jar:lib/junit.jar
 
 compile: \
 		checks \
@@ -75,7 +87,30 @@ compile: \
 		sounds \
 		music
 	@echo ". Compiling"
-	@ant -quiet compile
+
+	@./build-scripts/compile-java \
+		"${TEST_CLASSPATH}" \
+		rabbit-escape-engine/bin \
+		rabbit-escape-engine/src \
+		rabbit-escape-engine/test
+
+	@./build-scripts/compile-java \
+		"${TEST_CLASSPATH}:rabbit-escape-engine/bin" \
+		rabbit-escape-render/bin \
+		rabbit-escape-render/src \
+		rabbit-escape-render/test
+
+	@./build-scripts/compile-java \
+		"${TEST_CLASSPATH}:rabbit-escape-engine/bin:rabbit-escape-render/bin" \
+		rabbit-escape-ui-text/bin \
+		rabbit-escape-ui-text/src \
+		rabbit-escape-ui-text/test
+
+	@./build-scripts/compile-java \
+		"${TEST_CLASSPATH}:rabbit-escape-engine/bin:rabbit-escape-render/bin" \
+		rabbit-escape-ui-swing/bin \
+		rabbit-escape-ui-swing/src \
+		rabbit-escape-ui-swing/test
 
 clean: levels.mk-clean-levels levels.mk-clean-animations
 	@echo ". Cleaning compiled Java"
