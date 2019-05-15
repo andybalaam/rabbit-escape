@@ -1,0 +1,40 @@
+#!/usr/bin/env bash
+
+set -u
+set -e
+
+# Test Java code
+# Usage:
+# ./build-scripts/test-java CLASSPATH BINDIR
+
+# Finds all test classes inside BINDIR and runs them with JUnit
+
+CP="$1"
+shift
+DESTDIR="$1"
+
+CLASSES=$(
+    cd "$DESTDIR"
+    find ./ -type f -name "Test*.class" \
+        | grep -v '\$' \
+        | sed 's/\.\/\(.*\)\.class$/\1/' \
+        | sed 's/\//./g' \
+)
+
+set +e
+
+OUTPUT=$(
+    java \
+    -classpath "$CP:$DESTDIR" \
+    org.junit.runner.JUnitCore \
+    $CLASSES 2>&1
+)
+
+RET=$?
+
+set -e
+
+if [ "$RET" != "0" ]; then
+    echo "$OUTPUT" 1>&2
+    exit $RET
+fi

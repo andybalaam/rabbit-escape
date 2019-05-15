@@ -32,7 +32,6 @@ On Ubuntu, Debian, Raspberry Pi and similar, install the needed packages:
         git \
         make \
         openjdk-8-jdk \
-        ant \
         imagemagick \
         sox \
         inkscape \
@@ -47,7 +46,7 @@ images being generated.
 
 On Fedora some of the packages have different names.
 
-    sudo dnf install git make ant ant-junit sox inkscape expect grep sed python3-lxml \
+    sudo dnf install git make sox inkscape expect grep sed python3-lxml \
         java-1.8.0-openjdk-devel ImageMagick util-linux
 
 Get the source
