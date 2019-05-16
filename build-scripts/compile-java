@@ -5,12 +5,14 @@ set -e
 
 # Compile Java code and copy resources.
 # Usage:
-# ./build-scripts/compile-java CLASSPATH DESTDIR SRCDIRS...
+# ./build-scripts/compile-java TOUCHFILE CLASSPATH DESTDIR SRCDIRS...
 
 # Compiles all .java files inside each SRCDIR to .class files in DESTDIR,
 # and copies all other files inside each SRCDIR into the same directory
 # structure inside DESTDIR.
 
+TOUCHFILE="$1"
+shift
 CP="$1"
 shift
 DESTDIR="$1"
@@ -41,3 +43,5 @@ for SRC in ${SRCDIRS}; do
         cp --update "$SRC/$F" "$DESTDIR/$F"
     done
 done
+
+touch "$TOUCHFILE"
