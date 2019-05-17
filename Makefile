@@ -101,7 +101,7 @@ placeholder-all-levels:
 GRADLE := ./gradlew --daemon -q
 
 rabbit-escape-ui-android/app/libs/rabbit-escape-generic.jar: dist/rabbit-escape-generic.jar
-	@echo ". Copying generic jar into Android workspace $@"
+	@echo ". Copying $@"
 	@mkdir -p rabbit-escape-ui-android/app/libs/
 	@cp dist/rabbit-escape-generic.jar rabbit-escape-ui-android/app/libs/
 
