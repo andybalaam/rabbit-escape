@@ -1,16 +1,16 @@
 IMAGESSVGGEN_DEST=bin/imagessvggen
-IMAGES32_DEST=rabbit-escape-ui-swing/src/rabbitescape/ui/swing/images32
-IMAGES64_DEST=rabbit-escape-ui-swing/src/rabbitescape/ui/swing/images64
-IMAGES128_DEST=rabbit-escape-ui-swing/src/rabbitescape/ui/swing/images128
+IMAGES32_DEST=src/ui-swing/src/rabbitescape/ui/swing/images32
+IMAGES64_DEST=src/ui-swing/src/rabbitescape/ui/swing/images64
+IMAGES128_DEST=src/ui-swing/src/rabbitescape/ui/swing/images128
 
-ANDROIDIMAGES32_DEST=rabbit-escape-ui-android/app/src/main/assets/images32
-ANDROIDIMAGES64_DEST=rabbit-escape-ui-android/app/src/main/assets/images64
-ANDROIDIMAGES128_DEST=rabbit-escape-ui-android/app/src/main/assets/images128
-ANDROIDICONSMDPI_DEST=rabbit-escape-ui-android/app/src/main/res/drawable-mdpi
-ANDROIDICONSHDPI_DEST=rabbit-escape-ui-android/app/src/main/res/drawable-hdpi
-ANDROIDICONSXHDPI_DEST=rabbit-escape-ui-android/app/src/main/res/drawable-xhdpi
-ANDROIDICONSXXHDPI_DEST=rabbit-escape-ui-android/app/src/main/res/drawable-xxhdpi
-ANDROIDICONSXXXHDPI_DEST=rabbit-escape-ui-android/app/src/main/res/drawable-xxxhdpi
+ANDROIDIMAGES32_DEST=android/app/src/main/assets/images32
+ANDROIDIMAGES64_DEST=android/app/src/main/assets/images64
+ANDROIDIMAGES128_DEST=android/app/src/main/assets/images128
+ANDROIDICONSMDPI_DEST=android/app/src/main/res/drawable-mdpi
+ANDROIDICONSHDPI_DEST=android/app/src/main/res/drawable-hdpi
+ANDROIDICONSXHDPI_DEST=android/app/src/main/res/drawable-xhdpi
+ANDROIDICONSXXHDPI_DEST=android/app/src/main/res/drawable-xxhdpi
+ANDROIDICONSXXXHDPI_DEST=android/app/src/main/res/drawable-xxxhdpi
 
 DPI_32  := 96   # Required Inkscape DPI setting to get a block=32x32
 DPI_48  := 144

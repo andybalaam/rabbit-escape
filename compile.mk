@@ -2,10 +2,10 @@ J = \
 	$(shell find $(1)/src -type f -name "*.java") \
 	$(shell find $(1)/test -type f -name "*.java") \
 
-JAVA_ENGINE := $(call J,rabbit-escape-engine)
-JAVA_RENDER := $(call J,rabbit-escape-render)
-JAVA_UI_TEXT := $(call J,rabbit-escape-ui-text)
-JAVA_UI_SWING := $(call J,rabbit-escape-ui-swing)
+JAVA_ENGINE := $(call J,src/engine)
+JAVA_RENDER := $(call J,src/render)
+JAVA_UI_TEXT := $(call J,src/ui-text)
+JAVA_UI_SWING := $(call J,src/ui-swing)
 
 TEST_CLASSPATH := lib/org.hamcrest.core_1.3.0.jar:lib/junit.jar
 
@@ -16,10 +16,10 @@ compile.mk-compile: \
 		images \
 		sounds \
 		music \
-		rabbit-escape-engine/bin/compile.touchfile \
-		rabbit-escape-render/bin/compile.touchfile \
-		rabbit-escape-ui-text/bin/compile.touchfile \
-		rabbit-escape-ui-swing/bin/compile.touchfile
+		src/engine/bin/compile.touchfile \
+		src/render/bin/compile.touchfile \
+		src/ui-text/bin/compile.touchfile \
+		src/ui-swing/bin/compile.touchfile
 
 compile.mk-compile-noui-notests: \
 		checks \
@@ -27,52 +27,52 @@ compile.mk-compile-noui-notests: \
 		levels
 	@echo ". Compiling without UI and tests"
 
-	@rm -rf rabbit-escape-engine/bin/*
+	@rm -rf src/engine/bin/*
 	@./build-scripts/compile-java \
-		rabbit-escape-engine/bin/compilenotests.touchfile \
+		src/engine/bin/compilenotests.touchfile \
 		"" \
-		rabbit-escape-engine/bin \
-		rabbit-escape-engine/src
+		src/engine/bin \
+		src/engine/src
 
-	@rm -rf rabbit-escape-render/bin/*
+	@rm -rf src/render/bin/*
 	@./build-scripts/compile-java \
-		rabbit-escape-render/bin/compilenotests.touchfile \
-		"rabbit-escape-engine/bin" \
-		rabbit-escape-render/bin \
-		rabbit-escape-render/src
+		src/render/bin/compilenotests.touchfile \
+		"src/engine/bin" \
+		src/render/bin \
+		src/render/src
 
-rabbit-escape-engine/bin/compile.touchfile: ${JAVA_ENGINE}
+src/engine/bin/compile.touchfile: ${JAVA_ENGINE}
 	@echo ". Compiling engine"
 	@./build-scripts/compile-java \
 		"$@" \
 		"${TEST_CLASSPATH}" \
-		rabbit-escape-engine/bin \
-		rabbit-escape-engine/src \
-		rabbit-escape-engine/test
+		src/engine/bin \
+		src/engine/src \
+		src/engine/test
 
-rabbit-escape-render/bin/compile.touchfile: ${JAVA_ENGINE} ${JAVA_RENDER}
+src/render/bin/compile.touchfile: ${JAVA_ENGINE} ${JAVA_RENDER}
 	@echo ". Compiling rendering"
 	@./build-scripts/compile-java \
 		"$@" \
-		"${TEST_CLASSPATH}:rabbit-escape-engine/bin" \
-		rabbit-escape-render/bin \
-		rabbit-escape-render/src \
-		rabbit-escape-render/test
+		"${TEST_CLASSPATH}:src/engine/bin" \
+		src/render/bin \
+		src/render/src \
+		src/render/test
 
-rabbit-escape-ui-text/bin/compile.touchfile: ${JAVA_ENGINE} ${JAVA_RENDER} ${JAVA_UI_TEXT}
+src/ui-text/bin/compile.touchfile: ${JAVA_ENGINE} ${JAVA_RENDER} ${JAVA_UI_TEXT}
 	@echo ". Compiling text UI"
 	@./build-scripts/compile-java \
 		"$@" \
-		"${TEST_CLASSPATH}:rabbit-escape-engine/bin:rabbit-escape-render/bin" \
-		rabbit-escape-ui-text/bin \
-		rabbit-escape-ui-text/src \
-		rabbit-escape-ui-text/test
+		"${TEST_CLASSPATH}:src/engine/bin:src/render/bin" \
+		src/ui-text/bin \
+		src/ui-text/src \
+		src/ui-text/test
 
-rabbit-escape-ui-swing/bin/compile.touchfile: ${JAVA_ENGINE} ${JAVA_RENDER} ${JAVA_UI_SWING}
+src/ui-swing/bin/compile.touchfile: ${JAVA_ENGINE} ${JAVA_RENDER} ${JAVA_UI_SWING}
 	@echo ". Compiling Swing UI"
 	@./build-scripts/compile-java \
 		"$@" \
-		"${TEST_CLASSPATH}:rabbit-escape-engine/bin:rabbit-escape-render/bin" \
-		rabbit-escape-ui-swing/bin \
-		rabbit-escape-ui-swing/src \
-		rabbit-escape-ui-swing/test
+		"${TEST_CLASSPATH}:src/engine/bin:src/render/bin" \
+		src/ui-swing/bin \
+		src/ui-swing/src \
+		src/ui-swing/test

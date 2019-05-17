@@ -1,8 +1,8 @@
-SOUNDSWAV_DEST := rabbit-escape-ui-swing/src/rabbitescape/ui/swing/sounds
-ANDROIDSOUNDSOGG_DEST := rabbit-escape-ui-android/app/src/main/assets/sounds
+SOUNDSWAV_DEST := src/ui-swing/src/rabbitescape/ui/swing/sounds
+ANDROIDSOUNDSOGG_DEST := android/app/src/main/assets/sounds
 
-MUSICWAV_DEST := rabbit-escape-ui-swing/src/rabbitescape/ui/swing/music
-ANDROIDMUSICOGG_DEST := rabbit-escape-ui-android/app/src/main/assets/music
+MUSICWAV_DEST := src/ui-swing/src/rabbitescape/ui/swing/music
+ANDROIDMUSICOGG_DEST := android/app/src/main/assets/music
 
 MUSICSRC  := $(wildcard music-src/*.flac)
 SOUNDSSRC := $(wildcard sounds-src/*.flac)

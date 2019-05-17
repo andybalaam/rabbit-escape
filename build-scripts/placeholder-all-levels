@@ -6,7 +6,7 @@ set -e
 echo ".. Changing all levels to standard format"
 for L in \
     $(find \
-        rabbit-escape-engine/src/rabbitescape/levels \
+        src/engine/src/rabbitescape/levels \
         -name "test" -prune -o \
         -name "development" -prune -o \
         -name "staging" -prune -o \

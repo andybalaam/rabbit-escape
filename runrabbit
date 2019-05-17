@@ -1,5 +1,5 @@
 #!/bin/bash
-CP=rabbit-escape-engine/bin/:rabbit-escape-render/bin/:rabbit-escape-ui-text/bin/:rabbit-escape-ui-swing/bin/
+CP=src/engine/bin/:src/render/bin/:src/ui-text/bin/:src/ui-swing/bin/
 if [ "$1" == "swing" ]
     then
     # shift drops the first arg, "swing". $@ passes the rest on.

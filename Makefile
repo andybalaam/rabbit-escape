@@ -1,7 +1,7 @@
 
 MAKEFLAGS += --warn-undefined-variables
 
-CLASSPATH=rabbit-escape-engine/bin/:rabbit-escape-render/bin/:rabbit-escape-ui-text/bin/:rabbit-escape-ui-swing/bin/
+CLASSPATH=src/engine/bin/:src/render/bin/:src/ui-text/bin/:src/ui-swing/bin/
 
 VERSION=0.13.1
 
@@ -24,10 +24,10 @@ dist/rabbit-escape-generic.jar: compile-noui-notests
 	@echo ". Building generic jar $@"
 	@mkdir -p dist
 	@rm -f dist/rabbit-escape-generic.jar
-	@cd rabbit-escape-engine/bin; \
-		jar -cf ../../dist/rabbit-escape-generic.jar `find ./`
-	@cd rabbit-escape-render/bin; \
-		jar -uf ../../dist/rabbit-escape-generic.jar `find ./`
+	@cd src/engine/bin; \
+		jar -cf ../../../dist/rabbit-escape-generic.jar `find ./`
+	@cd src/render/bin; \
+		jar -uf ../../../dist/rabbit-escape-generic.jar `find ./`
 	@chmod ug+rw $@
 	@chmod o+r $@
 
@@ -35,13 +35,13 @@ dist/rabbit-escape-${VERSION}.jar: compile
 	@echo ". Building Swing jar $@"
 	@mkdir -p dist
 	@rm -f dist/rabbit-escape-${VERSION}.jar
-	@cd rabbit-escape-engine/bin; \
+	@cd src/engine/bin; \
 		jar -cf ../../dist/rabbit-escape-${VERSION}.jar `find ./`
-	@cd rabbit-escape-render/bin; \
+	@cd src/render/bin; \
 		jar -uf ../../dist/rabbit-escape-${VERSION}.jar `find ./`
-	@cd rabbit-escape-ui-text/bin; \
+	@cd src/ui-text/bin; \
 		jar -uf ../../dist/rabbit-escape-${VERSION}.jar `find ./`
-	@cd rabbit-escape-ui-swing/bin; \
+	@cd src/ui-swing/bin; \
 		jar -uf ../../dist/rabbit-escape-${VERSION}.jar `find ./`
 	@jar -ufm dist/rabbit-escape-${VERSION}.jar MANIFEST.MF
 	@chmod ug+rwx $@
@@ -66,10 +66,10 @@ levels: levels.mk-levels
 
 clean: levels.mk-clean-levels levels.mk-clean-animations
 	@echo ". Cleaning compiled Java"
-	@mkdir -p rabbit-escape-engine/bin && touch rabbit-escape-engine/bin/touchfile && rm -r rabbit-escape-engine/bin/*
-	@mkdir -p rabbit-escape-render/bin && touch rabbit-escape-render/bin/touchfile && rm -r rabbit-escape-render/bin/*
-	@mkdir -p rabbit-escape-ui-text/bin/touchfile && touch rabbit-escape-ui-text/bin/touchfile && rm -r rabbit-escape-ui-text/bin/*
-	@mkdir -p rabbit-escape-ui-swing/bin/touchfile && touch rabbit-escape-ui-swing/bin/touchfile && rm -r rabbit-escape-ui-swing/bin/*
+	@mkdir -p src/engine/bin && touch src/engine/bin/touchfile && rm -r src/engine/bin/*
+	@mkdir -p src/render/bin && touch src/render/bin/touchfile && rm -r src/render/bin/*
+	@mkdir -p src/ui-text/bin/touchfile && touch src/ui-text/bin/touchfile && rm -r src/ui-text/bin/*
+	@mkdir -p src/ui-swing/bin/touchfile && touch src/ui-swing/bin/touchfile && rm -r src/ui-swing/bin/*
 	@find ./ -empty -type d -delete
 	@echo ". Cleaning dist/"
 	@mkdir -p dist && rm -r dist
@@ -81,7 +81,7 @@ remove-trailing:
 
 test: compile
 	@echo ". Running unit tests"
-	@./build-scripts/test-java "${TEST_CLASSPATH}" rabbit-escape-engine/bin
+	@./build-scripts/test-java "${TEST_CLASSPATH}" src/engine/bin
 
 slowtest: test android-debug-test slowtest-run
 
@@ -100,51 +100,51 @@ placeholder-all-levels:
 
 GRADLE := ./gradlew --daemon -q
 
-rabbit-escape-ui-android/app/libs/rabbit-escape-generic.jar: dist/rabbit-escape-generic.jar
+android/app/libs/rabbit-escape-generic.jar: dist/rabbit-escape-generic.jar
 	@echo ". Copying $@"
-	@mkdir -p rabbit-escape-ui-android/app/libs/
-	@cp dist/rabbit-escape-generic.jar rabbit-escape-ui-android/app/libs/
+	@mkdir -p android/app/libs/
+	@cp dist/rabbit-escape-generic.jar android/app/libs/
 
 android-pre: \
 	images \
 	sounds.mk-android-sounds \
 	sounds.mk-android-music \
-	rabbit-escape-ui-android/app/libs/rabbit-escape-generic.jar
+	android/app/libs/rabbit-escape-generic.jar
 
 # Special target for F-Droid that does not build the sound or music files,
 # to avoid needing sox to be installed on the F-Droid server.
 android-pre-fdroid: \
 	images \
-	rabbit-escape-ui-android/app/libs/rabbit-escape-generic.jar
+	android/app/libs/rabbit-escape-generic.jar
 
 android-compile: android-pre
 	@echo ". Compiling Android code"
-	@cd rabbit-escape-ui-android && \
+	@cd android && \
 	${GRADLE} compilePaidDebugSources
 
 android-debug: \
-	rabbit-escape-ui-android/app/build/outputs/apk/paid/debug/app-paid-debug.apk \
-	rabbit-escape-ui-android/app/build/outputs/apk/free/debug/app-free-debug.apk
+	android/app/build/outputs/apk/paid/debug/app-paid-debug.apk \
+	android/app/build/outputs/apk/free/debug/app-free-debug.apk
 
 android-debug-test: android-debug \
-	rabbit-escape-ui-android/app/build/outputs/apk/paid/debug/app-paid-debug-androidTest.apk \
-	rabbit-escape-ui-android/app/build/outputs/apk/free/debug/app-free-debug-androidTest.apk
+	android/app/build/outputs/apk/paid/debug/app-paid-debug-androidTest.apk \
+	android/app/build/outputs/apk/free/debug/app-free-debug-androidTest.apk
 
-rabbit-escape-ui-android/app/build/outputs/apk/paid/debug/app-paid-debug.apk: android-pre
+android/app/build/outputs/apk/paid/debug/app-paid-debug.apk: android-pre
 	@echo ". Building $@"
-	@cd rabbit-escape-ui-android && ${GRADLE} assemblePaidDebug
+	@cd android && ${GRADLE} assemblePaidDebug
 
-rabbit-escape-ui-android/app/build/outputs/apk/free/debug/app-free-debug.apk: android-pre
+android/app/build/outputs/apk/free/debug/app-free-debug.apk: android-pre
 	@echo ". Building $@"
-	@cd rabbit-escape-ui-android && ${GRADLE} assembleFreeDebug
+	@cd android && ${GRADLE} assembleFreeDebug
 
-rabbit-escape-ui-android/app/build/outputs/apk/free/debug/app-free-debug-androidTest.apk: android-pre
+android/app/build/outputs/apk/free/debug/app-free-debug-androidTest.apk: android-pre
 	@echo ". Building $@"
-	@cd rabbit-escape-ui-android && ${GRADLE} assembleFreeDebugAndroidTest
+	@cd android && ${GRADLE} assembleFreeDebugAndroidTest
 
-rabbit-escape-ui-android/app/build/outputs/apk/paid/debug/app-paid-debug-androidTest.apk: android-pre
+android/app/build/outputs/apk/paid/debug/app-paid-debug-androidTest.apk: android-pre
 	@echo ". Building $@"
-	@cd rabbit-escape-ui-android && ${GRADLE} assemblePaidDebugAndroidTest
+	@cd android && ${GRADLE} assemblePaidDebugAndroidTest
 
 KEY_STORE_PASSWORD_FILE := $(HOME)/pw/android-key-store-password.txt
 KEY_PASSWORD_FILE := $(HOME)/pw/android-key-password.txt
@@ -154,7 +154,7 @@ dist-android-release-signed: android-pre
 	@echo ". Building and signing release apk dist/rabbit-escape-${VERSION}.apk and dist/rabbit-escape-free-${VERSION}.apk"
 	@ls $(KEY_STORE_PASSWORD_FILE) > /dev/null && \
 	ls $(KEY_PASSWORD_FILE) > /dev/null && \
-	cd rabbit-escape-ui-android && \
+	cd android && \
 	KEY_STORE_PASSWORD=`cat $(KEY_STORE_PASSWORD_FILE)` \
 	KEY_PASSWORD=`cat $(KEY_PASSWORD_FILE)` \
 	${GRADLE} assembleRelease && \
@@ -169,8 +169,8 @@ android-smoke-tests: android-debug-test
 	./build-scripts/android-stop-emulator
 
 clean-android:
-	cd rabbit-escape-ui-android && ${GRADLE} clean
-	rm -f rabbit-escape-ui-android/app/libs/rabbit-escape-generic.jar
+	cd android && ${GRADLE} clean
+	rm -f android/app/libs/rabbit-escape-generic.jar
 
 # Docs
 # ----

@@ -71,7 +71,7 @@ compile and run out of the box - please contact us if not.
 
 You should have 2 separate IntelliJ projects - one for non-Android and
 (optional) one for Android (see below).  Avoid loading the directory
-rabbit-escape-ui-android into the non-Android project.
+android into the non-Android project.
 
 You will need to run `make dist-swing` before you start.
 
@@ -80,7 +80,7 @@ Eclipse
 
 There are Eclipse project files, so "File" -> "Import" ->
 "Existing projects into workspace" should work.  Avoid the
-rabbit-escape-ui-android directory.
+android directory.
 
 There is a code formatting profile in doc/eclipse-format.xml.  You can
 import it in Window -> Preferences -> Java -> Code Style -> Formatter
@@ -97,7 +97,7 @@ Android with Android Studio
 
     make
 
-Load the rabbit-escape-ui-android directory as a project into Android
+Load the android directory as a project into Android
 Studio.  From here you should be able to run it as normal.
 
 If you make changes in the non-Android code, run:
@@ -117,7 +117,7 @@ To build the debug APK from the command line:
     make android-debug
 
 This will create a file at
-rabbit-escape-ui-android/app/build/outputs/apk/app-debug.apk .
+android/app/build/outputs/apk/app-debug.apk .
 
 Android via command line
 ------------------------
@@ -144,7 +144,7 @@ Contributing
 As far as is practical, all code should be unit tested.
 
 The only directory that can contain java.awt or javax.swing code is
-rabbit-escape-ui-swing.  Everything else must not use these packages
+src/ui-swing.  Everything else must not use these packages
 since they are not available on Android.
 
 Please try to stick to the code format as you find it - braces on

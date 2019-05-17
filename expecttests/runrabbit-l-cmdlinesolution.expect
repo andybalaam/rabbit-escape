@@ -2,7 +2,7 @@
 
 set timeout 2
 
-spawn ./runrabbit -l rabbit-escape-engine/src/rabbitescape/levels/01_easy/01_Digging-practice.rel -s "dig;(7,2);until:WON"
+spawn ./runrabbit -l src/engine/src/rabbitescape/levels/01_easy/01_Digging-practice.rel -s "dig;(7,2);until:WON"
 
 demand "You won!"
 

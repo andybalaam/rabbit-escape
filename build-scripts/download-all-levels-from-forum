@@ -20,7 +20,7 @@ function existing_level_with_name()
 {
     grep --files-with-matches -E -r \
         '^:name='"${1//\?/.}"'$' \
-        ../rabbit-escape-engine/src/rabbitescape/levels
+        ../src/engine/src/rabbitescape/levels
 }
 
 
@@ -60,7 +60,7 @@ while read ID; do
         existing_level_with_name "$NAME" | \
         while read LEV; do
         {
-            echo "> ${LEV#"../rabbit-escape-engine/src/rabbitescape/"}"
+            echo "> ${LEV#"../src/engine/src/rabbitescape/"}"
             cp "tmp/$ID.rel" "$LEV"
         }; done
         rm "tmp/$ID.rel"

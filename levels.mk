@@ -1,9 +1,9 @@
-ANIMATIONS_DIR := rabbit-escape-render/src/rabbitescape/render/animations
+ANIMATIONS_DIR := src/render/src/rabbitescape/render/animations
 RABBIT_ANIMATIONS := $(wildcard $(ANIMATIONS_DIR)/rabbit_*.rea)
 RABBOT_ANIMATIONS := $(subst animations/rabbit,animations/rabbot,$(RABBIT_ANIMATIONS))
 
 LEVELS_DIRS := $(shell \
-	find rabbit-escape-engine -type d \
+	find src/engine -type d \
 		-regex '.*/\(src\|test\)/rabbitescape/levels/[^/]*' \
 	)
 

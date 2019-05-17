@@ -12,13 +12,13 @@ checks.mk-no-make-warnings:
 checks.mk-versioncheck:
 	@echo ". Checking version number (${VERSION}) is consistent everywhere"
 	@grep "version = \"${VERSION}\"" \
-		rabbit-escape-engine/src/rabbitescape/engine/menu/AboutText.java \
+		src/engine/src/rabbitescape/engine/menu/AboutText.java \
 		> /dev/null
 	@grep "versionName \"${VERSION}\"" \
-		rabbit-escape-ui-android/app/build.gradle > /dev/null
+		android/app/build.gradle > /dev/null
 
 # Fails if we use java.awt in the engine code - this is not available on Android
 checks.mk-no-awt-in-engine:
 	@echo ". Checking for use of java.awt in engine code"
-	@! find rabbit-escape-engine/src -name "*.java" -print0 | xargs -0 grep 'java\.awt'
-	@! find rabbit-escape-render/src -name "*.java" -print0 | xargs -0 grep 'java\.awt'
+	@! find src/engine/src -name "*.java" -print0 | xargs -0 grep 'java\.awt'
+	@! find src/render/src -name "*.java" -print0 | xargs -0 grep 'java\.awt'

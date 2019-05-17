@@ -16,7 +16,7 @@ function record_level()
     DELAY="$6"
     DURATION="$7"
 
-    LEVELS="rabbit-escape-engine/src/rabbitescape/levels/gifs"
+    LEVELS="src/engine/src/rabbitescape/levels/gifs"
 
     mkdir -p bin/gifs
 
