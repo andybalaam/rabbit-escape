@@ -79,24 +79,6 @@ clean-all: clean images.mk-clean sounds.mk-clean-sounds sounds.mk-clean-music cl
 remove-trailing:
 	git status --porcelain | sed 's_^...__' | grep '\.java$$' - | xargs perl -p -i -e 's/[ \t]+$$//'
 
-run: compile-noui
-	java -cp $(CLASSPATH) rabbitescape.ui.text.TextMain --noinput test/level_01.rel
-
-runinteractive: compile-noui
-	java -cp $(CLASSPATH) rabbitescape.ui.text.TextMain test/level_01.rel
-
-runmenu: compile-noui
-	java -cp $(CLASSPATH) rabbitescape.ui.text.TextMain
-
-rungui: compile
-	java -cp $(CLASSPATH) rabbitescape.ui.swing.SwingMain
-
-runlevel: compile
-	java -cp $(CLASSPATH) rabbitescape.ui.swing.SwingMain test/level_01.rel
-
-runat: compile
-	java -cp $(CLASSPATH) rabbitescape.ui.swing.AnimationTester
-
 test: compile
 	@echo ". Running unit tests"
 	@./build-scripts/test-java "${TEST_CLASSPATH}" rabbit-escape-engine/bin
