@@ -36,13 +36,13 @@ dist/rabbit-escape-${VERSION}.jar: compile
 	@mkdir -p dist
 	@rm -f dist/rabbit-escape-${VERSION}.jar
 	@cd src/engine/bin; \
-		jar -cf ../../dist/rabbit-escape-${VERSION}.jar `find ./`
+		jar -cf ../../../dist/rabbit-escape-${VERSION}.jar `find ./`
 	@cd src/render/bin; \
-		jar -uf ../../dist/rabbit-escape-${VERSION}.jar `find ./`
+		jar -uf ../../../dist/rabbit-escape-${VERSION}.jar `find ./`
 	@cd src/ui-text/bin; \
-		jar -uf ../../dist/rabbit-escape-${VERSION}.jar `find ./`
+		jar -uf ../../../dist/rabbit-escape-${VERSION}.jar `find ./`
 	@cd src/ui-swing/bin; \
-		jar -uf ../../dist/rabbit-escape-${VERSION}.jar `find ./`
+		jar -uf ../../../dist/rabbit-escape-${VERSION}.jar `find ./`
 	@jar -ufm dist/rabbit-escape-${VERSION}.jar MANIFEST.MF
 	@chmod ug+rwx $@
 	@chmod o+r $@
