@@ -75,6 +75,8 @@ android into the non-Android project.
 
 You will need to run `make dist-swing` before you start.
 
+There is a video of how to set Rabbit Escape up from a clean git clone here: https://peertube.mastodon.host/videos/watch/11dc5754-7b75-46ea-af62-f983892f882e
+
 Eclipse
 -------
 
