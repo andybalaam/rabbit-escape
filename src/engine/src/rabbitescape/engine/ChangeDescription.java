@@ -178,6 +178,7 @@ public class ChangeDescription
         RABBIT_CRASHING,
         RABBIT_WAITING_LEFT,
         RABBIT_WAITING_RIGHT,
+        
         TOKEN_BASH_STILL,
         TOKEN_BASH_FALLING,
         TOKEN_BASH_FALL_TO_SLOPE,
