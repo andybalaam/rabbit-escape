@@ -28,6 +28,7 @@ import rabbitescape.engine.Pipe;
 import rabbitescape.engine.Rabbit;
 import rabbitescape.engine.Thing;
 import rabbitescape.engine.Token;
+import rabbitescape.engine.TokenFactory;
 import rabbitescape.engine.VoidMarkerStyle;
 import rabbitescape.engine.util.Dimension;
 import rabbitescape.engine.util.MegaCoder;
@@ -596,44 +597,14 @@ public class LineProcessor
                 break;
             }
             case 'b':
-            {
-                ret = new Token( x, y, Token.Type.bash );
-                things.add( ret );
-                break;
-            }
             case 'd':
-            {
-                ret = new Token( x, y, Token.Type.dig );
-                things.add( ret );
-                break;
-            }
             case 'i':
-            {
-                ret = new Token( x, y, Token.Type.bridge );
-                things.add( ret );
-                break;
-            }
             case 'k':
-            {
-                ret = new Token( x, y, Token.Type.block );
-                things.add( ret );
-                break;
-            }
             case 'c':
-            {
-                ret = new Token( x, y, Token.Type.climb );
-                things.add( ret );
-                break;
-            }
             case 'p':
-            {
-                ret = new Token( x, y, Token.Type.explode );
-                things.add( ret );
-                break;
-            }
             case 'l':
             {
-                ret = new Token( x, y, Token.Type.brolly );
+                ret = TokenFactory.createToken(x, y, c);
                 things.add( ret );
                 break;
             }
