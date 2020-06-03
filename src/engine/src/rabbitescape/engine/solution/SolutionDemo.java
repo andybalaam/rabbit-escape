@@ -1,8 +1,6 @@
 package rabbitescape.engine.solution;
 
 import rabbitescape.engine.World;
-import rabbitescape.engine.solution.Solution;
-import rabbitescape.engine.solution.SolutionParser;
 import rabbitescape.engine.util.MegaCoder;
 
 
