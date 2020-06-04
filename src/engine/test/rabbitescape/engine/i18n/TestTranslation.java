@@ -7,7 +7,6 @@ import java.util.Locale;
 
 import org.junit.Test;
 
-import rabbitescape.engine.i18n.Translation;
 
 public class TestTranslation
 {

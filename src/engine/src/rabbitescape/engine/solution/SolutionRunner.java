@@ -11,7 +11,6 @@ import rabbitescape.engine.World.CompletionState;
 import rabbitescape.engine.World.DontStepAfterFinish;
 import rabbitescape.engine.World.NoSuchAbilityInThisWorld;
 import rabbitescape.engine.World.NoneOfThisAbilityLeft;
-import rabbitescape.engine.solution.SolutionExceptions;
 import rabbitescape.engine.textworld.TextWorldManip;
 import rabbitescape.engine.util.Dimension;
 import rabbitescape.engine.util.Util;

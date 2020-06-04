@@ -6,7 +6,7 @@ import java.util.Map;
 import rabbitescape.engine.ChangeDescription.State;
 import rabbitescape.engine.err.RabbitEscapeException;
 
-public class Token extends Thing
+public abstract class Token extends Thing
 {
     public static class UnknownType extends RabbitEscapeException
     {
@@ -54,8 +54,8 @@ public class Token extends Thing
         boolean slopeBelow, 
         boolean onSlope 
     ) {
-        throw new UnknownType( type );
-    }
+    	return null;
+    };
 
     protected static State chooseState( 
         boolean moving, 
@@ -65,8 +65,7 @@ public class Token extends Thing
         State onFlat, 
         State fallingToSlope,
         State onSlopeState
-    )
-    {
+    ) {
         if ( onSlope )
         {
             return onSlopeState;
