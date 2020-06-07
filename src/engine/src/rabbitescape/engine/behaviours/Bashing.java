@@ -138,7 +138,7 @@ public class Bashing extends Behaviour
         }
     }
 
-    private int destX( Rabbit rabbit )
+    public static int destX( Rabbit rabbit )
     {
         return ( rabbit.dir == RIGHT ) ? rabbit.x + 1 : rabbit.x - 1;
     }
