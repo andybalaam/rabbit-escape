@@ -178,7 +178,8 @@ public class WorldChanges
             throw new NoneOfThisAbilityLeft( type );
         }
 
-        if ( x < 0 || y < 0 || x >= world.size.width || y >= world.size.height )
+        boolean isPositionValid = x < 0 || y < 0 || x >= world.size.width || y >= world.size.height;
+		if ( isPositionValid )
         {
             throw new CantAddTokenOutsideWorld( type, x, y, world.size );
         }
