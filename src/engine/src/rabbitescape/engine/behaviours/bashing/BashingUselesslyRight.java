@@ -1,19 +1,21 @@
-package rabbitescape.engine.behaviours.Bashing;
+package rabbitescape.engine.behaviours.bashing;
 
 import rabbitescape.engine.ChangeDescription.State;
 import rabbitescape.engine.World;
 import rabbitescape.engine.Rabbit;
 
-public class NotBashing implements BashingInterFace {
+import static rabbitescape.engine.ChangeDescription.State.RABBIT_BASHING_USELESSLY_RIGHT;
+
+public class BashingUselesslyRight implements BashingInterFace {
 
     @Override
     public State getState() {
-        return null;
+        return RABBIT_BASHING_USELESSLY_RIGHT;
     }
 
     @Override
     public boolean behave(World world, Rabbit rabbit) {
         rabbit.slopeBashHop = false;
-        return false;
+        return true;
     }
 }

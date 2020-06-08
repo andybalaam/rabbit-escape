@@ -1,6 +1,5 @@
 package rabbitescape.engine.behaviours;
 
-import static rabbitescape.engine.ChangeDescription.State.*;
 import static rabbitescape.engine.Direction.*;
 import static rabbitescape.engine.Token.Type.*;
 
@@ -8,11 +7,31 @@ import java.util.Map;
 
 import rabbitescape.engine.*;
 import rabbitescape.engine.ChangeDescription.State;
+import rabbitescape.engine.behaviours.bashing.*;
 
 public class Bashing extends Behaviour
 {
     private int stepsOfBashing;
+    private BashingInterFace bashingState;
+    
+	public BashingInterFace getBashingState() {
+		return bashingState;
+	}
 
+	public void setBashingState(BashingInterFace bashingState) {
+		this.bashingState = bashingState;
+	}
+	
+	public void setBashingState(BashingInterFace right, BashingInterFace left, Rabbit rabbit) {
+        if (rabbit.dir == RIGHT) {
+            setBashingState(right);
+        } else {
+            setBashingState(left);
+        }
+	}
+	
+	public Bashing() {setBashingState(new NotBashing());}
+	
     @Override
     public void cancel()
     {
@@ -40,18 +59,13 @@ public class Bashing extends Behaviour
                 if (t.blockAboveNext().material == Block.Material.METAL)
                 {
                     stepsOfBashing = 0;
-                    return t.rl(
-                        RABBIT_BASHING_USELESSLY_RIGHT_UP,
-                        RABBIT_BASHING_USELESSLY_LEFT_UP
-                        );
+                    setBashingState(new BashingUselesslyRightUp(), new BashingUselesslyLeftUp(),
+                            t.rabbit);
                 }
                 else
                 {
                     stepsOfBashing = 2;
-                    return t.rl(
-                        RABBIT_BASHING_UP_RIGHT,
-                        RABBIT_BASHING_UP_LEFT
-                    );
+                    setBashingState(new BashingUpRight(), new BashingUpLeft(), t.rabbit);
                 }
             }
             else if (
@@ -60,36 +74,24 @@ public class Bashing extends Behaviour
              && triggered
             )
             {
-                return t.rl(
-                    RABBIT_BASHING_USELESSLY_RIGHT_UP,
-                    RABBIT_BASHING_USELESSLY_LEFT_UP
-                );
+                setBashingState(new BashingUselesslyRightUp(), new BashingUselesslyLeftUp(), t.rabbit);
             }
             else if ( t.blockNext() != null )
             {
                 if ( t.blockNext().material == Block.Material.METAL )
                 {
                     stepsOfBashing = 0;
-                    return t.rl(
-                        RABBIT_BASHING_USELESSLY_RIGHT,
-                        RABBIT_BASHING_USELESSLY_LEFT
-                    );
+                    setBashingState(new BashingUselesslyRight(), new BashingUselesslyLeft(), t.rabbit);
                 }
                 else
                 {
                     stepsOfBashing = 2;
-                    return t.rl(
-                        RABBIT_BASHING_RIGHT,
-                        RABBIT_BASHING_LEFT
-                    );
+                    setBashingState(new BashingRight(), new BashingLeft(), t.rabbit);
                 }
             }
             else if ( triggered )
             {
-                return t.rl(
-                    RABBIT_BASHING_USELESSLY_RIGHT,
-                    RABBIT_BASHING_USELESSLY_LEFT
-                );
+                setBashingState(new BashingUselesslyRight(), new BashingUselesslyLeft(), t.rabbit);
             }
         }
         --stepsOfBashing;
@@ -99,43 +101,7 @@ public class Bashing extends Behaviour
     @Override
     public boolean behave( World world, Rabbit rabbit, State state )
     {
-
-        switch ( state )
-        {
-            case RABBIT_BASHING_RIGHT:
-            case RABBIT_BASHING_LEFT:
-            {
-                rabbit.slopeBashHop = false;
-                world.changes.removeBlockAt( destX( rabbit ), rabbit.y );
-                return true;
-            }
-            case RABBIT_BASHING_UP_RIGHT:
-            case RABBIT_BASHING_UP_LEFT:
-            {
-                world.changes.removeBlockAt( destX( rabbit ), rabbit.y - 1 );
-                rabbit.slopeBashHop = true;
-                rabbit.y -= 1;
-                return true;
-            }
-            case RABBIT_BASHING_USELESSLY_RIGHT:
-            case RABBIT_BASHING_USELESSLY_LEFT:
-            {
-                rabbit.slopeBashHop = false;
-                return true;
-            }
-            case RABBIT_BASHING_USELESSLY_RIGHT_UP:
-            case RABBIT_BASHING_USELESSLY_LEFT_UP:
-            {
-                rabbit.slopeBashHop = true;
-                rabbit.y -= 1;
-                return true;
-            }
-            default:
-            {
-                rabbit.slopeBashHop = false;
-                return false;
-            }
-        }
+        return bashingState.behave(world, rabbit);
     }
 
     public static int destX( Rabbit rabbit )

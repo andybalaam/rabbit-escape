@@ -1,4 +1,4 @@
-package rabbitescape.engine.behaviours.Bashing;
+package rabbitescape.engine.behaviours.bashing;
 
 import rabbitescape.engine.ChangeDescription.*;
 import rabbitescape.engine.Rabbit;

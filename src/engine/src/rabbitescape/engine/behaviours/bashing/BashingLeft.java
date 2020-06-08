@@ -1,16 +1,16 @@
-package rabbitescape.engine.behaviours.Bashing;
+package rabbitescape.engine.behaviours.bashing;
 
 import rabbitescape.engine.ChangeDescription.State;
 import rabbitescape.engine.behaviours.Bashing;
 import rabbitescape.engine.World;
 import rabbitescape.engine.Rabbit;
+import static rabbitescape.engine.ChangeDescription.State.RABBIT_BASHING_LEFT;
 
-import static rabbitescape.engine.ChangeDescription.State.RABBIT_BASHING_RIGHT;
-
-public class BashingRight implements BashingInterFace {
+public class BashingLeft implements BashingInterFace {
+	
     @Override
     public State getState() {
-        return RABBIT_BASHING_RIGHT;
+        return RABBIT_BASHING_LEFT;
     }
 
     @Override
