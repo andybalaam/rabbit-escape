@@ -13,6 +13,7 @@ import rabbitescape.engine.Pipe;
 import rabbitescape.engine.Rabbit;
 import rabbitescape.engine.Thing;
 import rabbitescape.engine.Token;
+import rabbitescape.engine.TokenFactory;
 import rabbitescape.engine.VoidMarkerStyle;
 import rabbitescape.engine.World;
 import rabbitescape.engine.textworld.Comment;
@@ -97,7 +98,7 @@ public class SandboxGame
             else if ( thing instanceof Token )
             {
                 Token token = (Token)thing;
-                clonedThings.add( new Token( token.x, token.y, token.type ) );
+                clonedThings.add( TokenFactory.createToken( token.x, token.y, token.type ) );
             }
             else if ( thing instanceof Fire )
             {

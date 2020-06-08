@@ -22,6 +22,7 @@ import org.junit.Test;
 
 import rabbitescape.engine.Rabbit;
 import rabbitescape.engine.Token;
+import rabbitescape.engine.TokenFactory;
 import rabbitescape.engine.World;
 import rabbitescape.engine.World.DontStepAfterFinish;
 import rabbitescape.engine.WorldStatsListener;
@@ -342,7 +343,7 @@ public class TestWorld
             "###"
         );
 
-        world.things.add( new Token( 1, 0, Token.Type.bridge ) );
+        world.things.add( TokenFactory.createToken( 1, 0, Token.Type.bridge ) );
 
         Token token = world.getTokenAt( 1, 0 );
 

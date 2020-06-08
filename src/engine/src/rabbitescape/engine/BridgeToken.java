@@ -12,6 +12,10 @@ public class BridgeToken extends Token {
 		super(x, y, Token.Type.bridge);
 	}
 	
+	public BridgeToken(int x, int y, World world) {
+		super(x, y, Token.Type.bash, world);
+	}
+	
 	protected static State switchType(Type type, 
 			boolean moving, 
 			boolean slopeBelow, 

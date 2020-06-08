@@ -12,6 +12,10 @@ public class DigToken extends Token {
 		super(x, y, Token.Type.dig);
 	}
 	
+	public DigToken(int x, int y, World world) {
+		super(x, y, Token.Type.bash, world);
+	}
+	
 	protected static State switchType(Type type, 
 			boolean moving, 
 			boolean slopeBelow, 

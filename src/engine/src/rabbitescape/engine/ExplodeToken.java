@@ -12,6 +12,10 @@ public class ExplodeToken extends Token {
 		super(x, y, Token.Type.explode);
 	}
 	
+	public ExplodeToken(int x, int y, World world) {
+		super(x, y, Token.Type.explode, world);
+	}
+	
 	protected static State switchType(Type type, 
 			boolean moving, 
 			boolean slopeBelow, 

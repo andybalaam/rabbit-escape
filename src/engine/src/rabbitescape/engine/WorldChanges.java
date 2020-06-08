@@ -189,7 +189,8 @@ public class WorldChanges
             return;
         }
 
-        tokensToAdd.add( new Token( x, y, type, world ) );
+        Token newToken = TokenFactory.createToken( x, y, type );
+        tokensToAdd.add( newToken );
         world.abilities.put( type, numLeft - 1 );
     }
 
