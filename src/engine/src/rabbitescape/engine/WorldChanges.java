@@ -178,7 +178,8 @@ public class WorldChanges
             throw new NoneOfThisAbilityLeft( type );
         }
 
-        if ( x < 0 || y < 0 || x >= world.size.width || y >= world.size.height )
+        boolean isPositionValid = x < 0 || y < 0 || x >= world.size.width || y >= world.size.height;
+		if ( isPositionValid )
         {
             throw new CantAddTokenOutsideWorld( type, x, y, world.size );
         }
@@ -189,7 +190,8 @@ public class WorldChanges
             return;
         }
 
-        tokensToAdd.add( new Token( x, y, type, world ) );
+        Token newToken = TokenFactory.createToken( x, y, type, world );
+        tokensToAdd.add( newToken );
         world.abilities.put( type, numLeft - 1 );
     }
 

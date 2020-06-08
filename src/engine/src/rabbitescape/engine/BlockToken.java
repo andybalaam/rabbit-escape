@@ -12,6 +12,10 @@ public class BlockToken extends Token {
 		super(x, y, Token.Type.block);
 	}
 	
+	public BlockToken(int x, int y, World world) {
+		super(x, y, Token.Type.bash, world);
+	}
+	
 	public static State switchType(Type type, 
 			boolean moving, 
 			boolean slopeBelow, 

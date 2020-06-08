@@ -27,6 +27,7 @@ import rabbitescape.engine.Direction;
 import rabbitescape.engine.Rabbit;
 import rabbitescape.engine.Thing;
 import rabbitescape.engine.Token;
+import rabbitescape.engine.TokenFactory;
 
 public class TestUtil
 {
@@ -1080,8 +1081,8 @@ public class TestUtil
     {
         Token[] tokens = new Token[]
         {
-            new Token( 0, 0, Token.Type.bash ),
-            new Token( 1, 1, Token.Type.bridge )
+        	TokenFactory.createToken( 0, 0, Token.Type.bash ),
+        	TokenFactory.createToken( 1, 1, Token.Type.bridge )
         };
 
         Rabbit[] rabbits = new Rabbit[]

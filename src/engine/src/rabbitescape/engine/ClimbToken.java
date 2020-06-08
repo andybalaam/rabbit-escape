@@ -12,6 +12,10 @@ public class ClimbToken extends Token {
 		super(x, y, Token.Type.climb);
 	}
 	
+	public ClimbToken(int x, int y, World world) {
+		super(x, y, Token.Type.climb, world);
+	}
+	
 	protected static State switchType(Type type, 
 			boolean moving, 
 			boolean slopeBelow, 

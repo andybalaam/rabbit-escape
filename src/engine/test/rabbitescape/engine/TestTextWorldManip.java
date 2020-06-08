@@ -535,8 +535,8 @@ public class TestTextWorldManip
         // put 2 rabbits and 2 items all in the same place, on top of a block
         world.rabbits.add( new Rabbit( 2, 2, Direction.RIGHT, RABBIT ) );
         world.rabbits.add( new Rabbit( 2, 2, Direction.LEFT, RABBIT ) );
-        world.things.add( new Token( 2, 2, Token.Type.bash ) );
-        world.things.add( new Token( 2, 2, Token.Type.bridge ) );
+        world.things.add( TokenFactory.createToken( 2, 2, Token.Type.bash ) );
+        world.things.add( TokenFactory.createToken( 2, 2, Token.Type.bridge ) );
 
         assertThat(
             renderCompleteWorld( world, false ),
@@ -566,12 +566,12 @@ public class TestTextWorldManip
         world.rabbits.add( new Rabbit( 1, 1, Direction.LEFT, RABBIT ) );
 
         // bash and bridge in top right
-        world.things.add( new Token( 2, 1, Token.Type.bash ) );
-        world.things.add( new Token( 2, 1, Token.Type.bridge ) );
+        world.things.add( TokenFactory.createToken( 2, 1, Token.Type.bash ) );
+        world.things.add( TokenFactory.createToken( 2, 1, Token.Type.bridge ) );
 
         // dig in bottom left and bottom right
-        world.things.add( new Token( 1, 2, Token.Type.dig ) );
-        world.things.add( new Token( 2, 2, Token.Type.dig ) );
+        world.things.add( TokenFactory.createToken( 1, 2, Token.Type.dig ) );
+        world.things.add( TokenFactory.createToken( 2, 2, Token.Type.dig ) );
 
         assertThat(
             renderCompleteWorld( world, false ),

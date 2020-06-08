@@ -10,6 +10,7 @@ import static rabbitescape.engine.util.WorldAssertions.*;
 import org.junit.Test;
 
 import rabbitescape.engine.Token;
+import rabbitescape.engine.TokenFactory;
 import rabbitescape.engine.World;
 
 public class TestTokens
@@ -19,7 +20,7 @@ public class TestTokens
     @Test
     public void Tokens_return_their_state_names_lowercase()
     {
-        Token t = new Token( 1, 2, Token.Type.bash );
+        Token t = TokenFactory.createToken( 1, 2, Token.Type.bash );
         t.state = TOKEN_BASH_FALLING;
         assertThat(t.stateName(), equalTo("token_bash_falling"));
     }
@@ -355,8 +356,8 @@ public class TestTokens
             "##"
         );
 
-        Token inAir = new Token( 0, 0, Token.Type.brolly, world );
-        Token onSlope = new Token( 1, 1, Token.Type.brolly, world );
+        Token inAir = TokenFactory.createToken( 0, 0, Token.Type.brolly, world );
+        Token onSlope = TokenFactory.createToken( 1, 1, Token.Type.brolly, world );
 
         // Until a time step passes, these are in non-moving states
         assertThat( inAir.state, is( TOKEN_BROLLY_STILL ) );
