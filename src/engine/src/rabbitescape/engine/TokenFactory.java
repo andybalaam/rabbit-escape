@@ -1,5 +1,6 @@
 package rabbitescape.engine;
 
+
 public class TokenFactory {
 	public static Token createToken(int x, int y, char TypeChar) {
 		Token ret = null;

@@ -13,7 +13,7 @@ public class BrollyToken extends Token {
 	}
 	
 	public BrollyToken(int x, int y, World world) {
-		super(x, y, Token.Type.bash, world);
+		super(x, y, Token.Type.brolly, world);
 	}
 	
 	protected static State switchType(Type type, 
