@@ -13,7 +13,7 @@ public class BlockToken extends Token {
 	}
 	
 	public BlockToken(int x, int y, World world) {
-		super(x, y, Token.Type.bash, world);
+		super(x, y, Token.Type.block, world);
 	}
 	
 	public static State switchType(Type type, 

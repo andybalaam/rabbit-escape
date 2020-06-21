@@ -55,6 +55,8 @@ public class Bridging extends Behaviour
         return false;
     }
 
+   
+    
     @Override
     public State newState( BehaviourTools t, boolean triggered )
     {
@@ -417,10 +419,9 @@ public class Bridging extends Behaviour
     	this.bridgeType = bridgeType;
     }
     
-    private boolean moveRabbit( World world, Rabbit rabbit, State state )
+    public boolean setBridgeType(State state) 
     {
-    	
-        switch ( state )
+    	switch ( state )
         {
             case RABBIT_BRIDGING_RIGHT_1:
             case RABBIT_BRIDGING_RIGHT_2:
@@ -458,14 +459,19 @@ public class Bridging extends Behaviour
                 bridgeType = BridgeType.ALONG;
                 return true;
             }
-            
-            
             default:
             {
-            	currentState.moveRabbit(world, rabbit, state);
                 return false;
             }
         }
+
+    }
+    private boolean moveRabbit( World world, Rabbit rabbit, State state )
+    {
+    	boolean isBridgeTypeSet = setBridgeType(state);
+    	if( isBridgeTypeSet )
+    		return currentState.moveRabbit(world, rabbit, state);
+         return isBridgeTypeSet;   
     }
 
     @Override
