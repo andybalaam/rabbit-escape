@@ -1,16 +1,21 @@
 package rabbitescape.engine.behaviours;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static rabbitescape.engine.Direction.RIGHT;
 import static rabbitescape.engine.textworld.TextWorldManip.createEmptyWorld;
+
+import org.junit.Test;
+
 import static rabbitescape.engine.ChangeDescription.State.*;
+import static org.junit.Assert.*;
+
 import rabbitescape.engine.ChangeDescription.State;
 import rabbitescape.engine.Rabbit;
 import rabbitescape.engine.World;
 import rabbitescape.engine.behaviours.Bridging;
 import rabbitescape.engine.behaviours.Bridging.BridgeType;
-
-import org.junit.jupiter.api.Test;
+import rabbitescape.engine.behaviours.bridging.BridgingLeft;
+import rabbitescape.engine.behaviours.bridging.BridgingRight;
+import rabbitescape.engine.behaviours.bridging.BridgingState;
 
 class BridgingTest {
 	Bridging bridging = new Bridging();

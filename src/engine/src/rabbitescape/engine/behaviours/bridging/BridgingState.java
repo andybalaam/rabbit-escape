@@ -1,4 +1,4 @@
-package rabbitescape.engine.behaviours;
+package rabbitescape.engine.behaviours.bridging;
 
 import rabbitescape.engine.Rabbit;
 import rabbitescape.engine.World;

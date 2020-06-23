@@ -2,13 +2,14 @@ package rabbitescape.engine.behaviours;
 
 import static rabbitescape.engine.ChangeDescription.State.*;
 import static rabbitescape.engine.Token.Type.*;
-import static rabbitescape.engine.Block.Material.*;
 import static rabbitescape.engine.Block.Shape.*;
 
 import java.util.Map;
 
 import rabbitescape.engine.*;
 import rabbitescape.engine.ChangeDescription.State;
+import rabbitescape.engine.behaviours.bridging.BridgingLeft;
+import rabbitescape.engine.behaviours.bridging.BridgingState;
 
 public class Bridging extends Behaviour
 {
