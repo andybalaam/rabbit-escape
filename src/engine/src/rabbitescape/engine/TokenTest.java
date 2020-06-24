@@ -5,6 +5,14 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import rabbitescape.engine.tokens.BashToken;
+import rabbitescape.engine.tokens.BlockToken;
+import rabbitescape.engine.tokens.BridgeToken;
+import rabbitescape.engine.tokens.BrollyToken;
+import rabbitescape.engine.tokens.DigToken;
+import rabbitescape.engine.tokens.ExplodeToken;
+import rabbitescape.engine.tokens.TokenFactory;
+
 public class TokenTest {
 	public TokenFactory testTokenFactory;
 	

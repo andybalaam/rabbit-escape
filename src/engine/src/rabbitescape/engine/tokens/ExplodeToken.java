@@ -1,4 +1,4 @@
-package rabbitescape.engine;
+package rabbitescape.engine.tokens;
 
 import static rabbitescape.engine.ChangeDescription.State.TOKEN_EXPLODE_FALLING;
 import static rabbitescape.engine.ChangeDescription.State.TOKEN_EXPLODE_FALL_TO_SLOPE;
@@ -6,6 +6,8 @@ import static rabbitescape.engine.ChangeDescription.State.TOKEN_EXPLODE_ON_SLOPE
 import static rabbitescape.engine.ChangeDescription.State.TOKEN_EXPLODE_STILL;
 
 import rabbitescape.engine.ChangeDescription.State;
+import rabbitescape.engine.Token;
+import rabbitescape.engine.World;
 
 public class ExplodeToken extends Token {
 	public ExplodeToken(int x, int y) {

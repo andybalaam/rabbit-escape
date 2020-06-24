@@ -27,7 +27,7 @@ import rabbitescape.engine.Direction;
 import rabbitescape.engine.Rabbit;
 import rabbitescape.engine.Thing;
 import rabbitescape.engine.Token;
-import rabbitescape.engine.TokenFactory;
+import rabbitescape.engine.tokens.TokenFactory;
 
 public class TestUtil
 {

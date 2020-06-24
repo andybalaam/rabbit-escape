@@ -1,4 +1,4 @@
-package rabbitescape.engine;
+package rabbitescape.engine.tokens;
 
 import static rabbitescape.engine.ChangeDescription.State.TOKEN_BROLLY_FALLING;
 import static rabbitescape.engine.ChangeDescription.State.TOKEN_BROLLY_FALL_TO_SLOPE;
@@ -6,6 +6,8 @@ import static rabbitescape.engine.ChangeDescription.State.TOKEN_BROLLY_ON_SLOPE;
 import static rabbitescape.engine.ChangeDescription.State.TOKEN_BROLLY_STILL;
 
 import rabbitescape.engine.ChangeDescription.State;
+import rabbitescape.engine.Token;
+import rabbitescape.engine.World;
 
 public class BrollyToken extends Token {
 	public BrollyToken(int x, int y) {

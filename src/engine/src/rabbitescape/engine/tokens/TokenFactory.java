@@ -1,5 +1,8 @@
-package rabbitescape.engine;
+package rabbitescape.engine.tokens;
 
+import rabbitescape.engine.ClimbToken;
+import rabbitescape.engine.Token;
+import rabbitescape.engine.World;
 
 public class TokenFactory {
 	public static Token createToken(int x, int y, char TypeChar) {

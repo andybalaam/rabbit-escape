@@ -1,4 +1,4 @@
-package rabbitescape.engine;
+package rabbitescape.engine.tokens;
 
 import static rabbitescape.engine.ChangeDescription.State.TOKEN_DIG_FALLING;
 import static rabbitescape.engine.ChangeDescription.State.TOKEN_DIG_FALL_TO_SLOPE;
@@ -6,6 +6,8 @@ import static rabbitescape.engine.ChangeDescription.State.TOKEN_DIG_ON_SLOPE;
 import static rabbitescape.engine.ChangeDescription.State.TOKEN_DIG_STILL;
 
 import rabbitescape.engine.ChangeDescription.State;
+import rabbitescape.engine.Token;
+import rabbitescape.engine.World;
 
 public class DigToken extends Token {
 	public DigToken(int x, int y) {

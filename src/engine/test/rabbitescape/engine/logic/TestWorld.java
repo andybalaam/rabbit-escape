@@ -22,11 +22,11 @@ import org.junit.Test;
 
 import rabbitescape.engine.Rabbit;
 import rabbitescape.engine.Token;
-import rabbitescape.engine.TokenFactory;
 import rabbitescape.engine.World;
 import rabbitescape.engine.World.DontStepAfterFinish;
 import rabbitescape.engine.WorldStatsListener;
 import rabbitescape.engine.textworld.TextWorldManip;
+import rabbitescape.engine.tokens.TokenFactory;
 import rabbitescape.engine.util.Position;
 import rabbitescape.engine.util.WaterUtil;
 

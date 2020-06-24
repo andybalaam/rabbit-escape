@@ -10,8 +10,8 @@ import static rabbitescape.engine.util.WorldAssertions.*;
 import org.junit.Test;
 
 import rabbitescape.engine.Token;
-import rabbitescape.engine.TokenFactory;
 import rabbitescape.engine.World;
+import rabbitescape.engine.tokens.TokenFactory;
 
 public class TestTokens
 {

@@ -17,7 +17,7 @@ import rabbitescape.engine.behaviours.bridging.BridgingLeft;
 import rabbitescape.engine.behaviours.bridging.BridgingRight;
 import rabbitescape.engine.behaviours.bridging.BridgingState;
 
-class BridgingTest {
+public class BridgingTest {
 	Bridging bridging = new Bridging();
 	Rabbit r = new Rabbit( 0, 1, RIGHT, Rabbit.Type.RABBIT );
 	World world = createEmptyWorld( 3, 4 );
@@ -51,7 +51,7 @@ class BridgingTest {
 		assertEquals(true, bridging.moveRabbit(world, r, state));
 		
 		state = RABBIT_BRIDGING_RIGHT_3;
-		assertEquals(true, bridging.moveRabbit(world, r, state));
+		assertEquals(false, bridging.moveRabbit(world, r, state));
 		
 		state = RABBIT_BRIDGING_LEFT_2;
 		bridgingState = new BridgingLeft();
