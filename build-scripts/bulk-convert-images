@@ -21,11 +21,14 @@ function ink()
         PNG="$DEST/$NAME.png"
 
         if [[ "$SVG" -nt "$PNG" ]]; then
-            echo "$SVG --export-png=$PNG --export-dpi=$DPI"
+            inkscape \
+                --export-type=png \
+                --export-filename=$PNG \
+                --export-dpi=$DPI \
+                $SVG
             echo ".. svg->png $PNG" 1>&2
         fi
-    }; done | \
-        inkscape --shell > /dev/null
+    }; done
 }
 
 ink 2>&1
