@@ -1,0 +1,1 @@
+RedirectMatch 301 /rabbit-escape/levels/(.*) https://rabbitescape.artificialworlds.net/$1
