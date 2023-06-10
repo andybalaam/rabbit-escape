@@ -3,7 +3,7 @@ MAKEFLAGS += --warn-undefined-variables
 
 CLASSPATH=src/engine/bin/:src/render/bin/:src/ui-text/bin/:src/ui-swing/bin/
 
-VERSION=0.13.1
+VERSION=0.13.2
 
 all: test android-compile
 
