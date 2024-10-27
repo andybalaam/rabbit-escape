@@ -35,7 +35,7 @@ android {
 
     signingConfigs {
         release {
-            storeFile file( "/home/andy/NextcloudHome/Andy/apk-key-store/keystore.jks" )
+            storeFile file( "/home/andy/Nextcloud/Andy/apk-key-store/keystore.jks" )
             storePassword System.getenv( "KEY_STORE_PASSWORD" )
             keyAlias "andybalaam"
             keyPassword System.getenv( "KEY_PASSWORD" )

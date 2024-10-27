@@ -146,8 +146,8 @@ android/app/build/outputs/apk/paid/debug/app-paid-debug-androidTest.apk: android
 	@echo ". Building $@"
 	@cd android && ${GRADLE} assemblePaidDebugAndroidTest
 
-KEY_STORE_PASSWORD_FILE := $(HOME)/NextcloudHome/pw/android-key-store-password.txt
-KEY_PASSWORD_FILE := $(HOME)/NextcloudHome/pw/android-key-password.txt
+KEY_STORE_PASSWORD_FILE := $(HOME)/Nextcloud/pw/android-key-store-password.txt
+KEY_PASSWORD_FILE := $(HOME)/Nextcloud/pw/android-key-password.txt
 
 # ls commands are to check that the password files exist
 dist-android-release-signed: android-pre
