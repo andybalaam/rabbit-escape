@@ -11,10 +11,10 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.RadioGroup;
 
-import static net.artificialworlds.rabbitescape.BuildConfig.APPLICATION_ID;
-
 public class AbilityButton extends AppCompatButton
 {
+    private final String packageName;
+
     private class OnClickListener implements ImageButton.OnClickListener
     {
         @Override
@@ -44,6 +44,7 @@ public class AbilityButton extends AppCompatButton
         this.ability = ability;
         this.buttonIndex = buttonIndex;
         this.checked = false;
+        this.packageName = context.getPackageName();
 
         setUpLayout();
         setImage( resources );
@@ -68,7 +69,7 @@ public class AbilityButton extends AppCompatButton
             resources.getIdentifier(
                 "ability_" + ability,
                 "drawable",
-                APPLICATION_ID
+                packageName
             )
         );
 
