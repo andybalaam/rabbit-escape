@@ -59,7 +59,6 @@ android {
 }
 
 dependencies {
-
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation libs.appcompat.v7
     implementation files('libs/rabbit-escape-generic.jar')
