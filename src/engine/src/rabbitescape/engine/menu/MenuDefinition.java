@@ -31,7 +31,7 @@ public class MenuDefinition
         boolean includeLoadLevel
     )
     {
-        return menu(
+        return menu( //gyh주석 메뉴의 항목들 composite트리구조로 불러오기
             "Welcome to Rabbit Escape!",
             item(
                 "Start Game",

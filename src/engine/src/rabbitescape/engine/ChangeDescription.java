@@ -213,6 +213,11 @@ public class ChangeDescription
         TOKEN_BROLLY_FALL_TO_SLOPE,
         TOKEN_BROLLY_ON_SLOPE,
 
+        TOKEN_BREAK_FALLING, //gyh
+        TOKEN_BREAK_STILL,
+        TOKEN_BREAK_FALL_TO_SLOPE,
+        TOKEN_BREAK_ON_SLOPE,
+
         WATER_REGION,
         WATER_REGION_HALF,
         WATER_REGION_EMPTY,

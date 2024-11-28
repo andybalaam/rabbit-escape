@@ -221,7 +221,7 @@ public class LineProcessor
         return new Dimension( width, height );
     }
 
-    private void process( VariantGenerator variantGen )
+    private void process( VariantGenerator variantGen ) //gyh 주석 : /levels/.rel로부터 텍스트를 읽어서 구성하는곳
     {
         for ( String line : lines )
         {
@@ -298,8 +298,9 @@ public class LineProcessor
         return key;
     }
 
-    private void processMetaLine( String line, VariantGenerator variantGen )
+    private void processMetaLine( String line, VariantGenerator variantGen ) //gyh주석, .rel에서 각종 정보를 읽어오는 실제 구현
     {
+
         String[] splitLine = split( line.substring( 1 ), "=", 1 );
         if ( splitLine.length != 2 )
         {

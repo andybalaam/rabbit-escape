@@ -30,7 +30,8 @@ public class Token extends Thing
         block,
         climb,
         explode,
-        brolly
+        brolly,
+        breakblock //gyh
     }
 
     public final Type type;
@@ -128,6 +129,14 @@ public class Token extends Thing
                 TOKEN_BROLLY_FALL_TO_SLOPE, 
                 TOKEN_BROLLY_ON_SLOPE
                 );
+            case breakblock: return chooseState( //gyh
+                 moving,
+                 slopeBelow,
+                 onSlope,
+                 TOKEN_BREAK_FALLING,
+                 TOKEN_BREAK_STILL,
+                 TOKEN_BREAK_FALL_TO_SLOPE,
+                 TOKEN_BREAK_ON_SLOPE);
 
             default: throw new UnknownType( type );
         }

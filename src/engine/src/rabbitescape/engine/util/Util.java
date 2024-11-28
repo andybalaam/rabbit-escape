@@ -728,10 +728,12 @@ public class Util
     public static Iterable<String> resourceLines( String name )
     {
         InputStream res = Util.class.getResourceAsStream( name );
+
         if ( res == null )
         {
             throw new MissingResource( name );
         }
+
         return streamLines( name, res );
     }
 

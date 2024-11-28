@@ -90,6 +90,7 @@ public class TextWorldManip
         for ( Token.Type type : Token.Type.values() )
         {
             ret.add( type.name() );
+
         }
         return ret;
     }
