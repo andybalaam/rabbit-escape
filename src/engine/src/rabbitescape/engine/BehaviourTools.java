@@ -133,6 +133,11 @@ public class BehaviourTools
         return world.getBlockAt( nextX(), rabbit.y );
     }
 
+    public Block block2Next()
+    {
+        return world.getBlockAt( next2X(), rabbit.y );
+    }
+
     public Block blockBelow()
     {
         return world.getBlockAt( rabbit.x, rabbit.y + 1 );
@@ -362,6 +367,14 @@ public class BehaviourTools
         return
             rabbit.x + (
                 rabbit.dir == RIGHT ? 1 : -1
+            );
+    }
+
+    public int next2X()
+    {
+        return
+            rabbit.x + (
+                rabbit.dir == RIGHT ? 2 : -2
             );
     }
 
