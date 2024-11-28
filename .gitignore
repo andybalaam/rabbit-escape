@@ -37,4 +37,5 @@ local.properties
 proguard/
 *.log
 
-
+.idea/
+*.iml
