@@ -19,13 +19,14 @@ public class SwingGraphics implements Graphics
 {
     private static class DrawFrame extends BufferedDraw
     {
-        private static final SwingPaint white =
+        private static SwingPaint baseColor =
             new SwingPaint( Color.WHITE );
 
-        private static final SwingPaint graphPaperMajor =
+
+        private static SwingPaint graphPaperMajor =
             new SwingPaint( new Color( 205, 212, 220 ) );
 
-        private static final SwingPaint graphPaperMinor =
+        private static SwingPaint graphPaperMinor =
             new SwingPaint( new Color( 235, 243, 255 ) );
 
         private static final int
@@ -78,7 +79,7 @@ public class SwingGraphics implements Graphics
                 world,
                 renderer,
                 swingCanvas,
-                white,
+                baseColor,
                 graphPaperMajor,
                 graphPaperMinor
             );
@@ -90,7 +91,7 @@ public class SwingGraphics implements Graphics
             renderer.render(
                 swingCanvas,
                 sprites,
-                white
+                baseColor
             );
 
             if ( world.paused )
@@ -184,7 +185,21 @@ public class SwingGraphics implements Graphics
                 }
             }
         }
+    }
 
+    public void setBaseColor( SwingPaint baseColor )
+    {
+        DrawFrame.baseColor = baseColor;
+    }
+
+    public void setGraphPaperMajor( SwingPaint graphPaperMajor )
+    {
+        DrawFrame.graphPaperMajor = graphPaperMajor;
+    }
+
+    public void setGraphPaperMinor( SwingPaint graphPaperMinor )
+    {
+        DrawFrame.graphPaperMinor = graphPaperMinor;
     }
 
     public final World world;
