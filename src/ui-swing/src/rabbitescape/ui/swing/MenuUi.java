@@ -1,12 +1,6 @@
 package rabbitescape.ui.swing;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Container;
-import java.awt.Dimension;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -14,6 +8,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintStream;
 import java.io.PrintWriter;
+import java.util.Arrays;
 import java.util.Locale;
 import java.util.Stack;
 
@@ -43,6 +38,8 @@ import rabbitescape.engine.config.ConfigTools;
 import rabbitescape.engine.config.TapTimer;
 import rabbitescape.engine.err.RabbitEscapeException;
 import rabbitescape.engine.menu.*;
+import rabbitescape.engine.menu.Menu;
+import rabbitescape.engine.menu.MenuItem;
 import rabbitescape.engine.util.RealFileSystem;
 import rabbitescape.engine.util.Util.IdxObj;
 import rabbitescape.render.BitmapCache;
@@ -146,6 +143,7 @@ public class MenuUi
     private final JPanel menuPanel;
     private final LevelsCompleted levelsCompleted;
     private SideMenu sidemenu;
+    private Theme nextTheme;
 
     public MenuUi(
         RealFileSystem fs,
@@ -193,6 +191,8 @@ public class MenuUi
             uiConfig,
             backgroundColor
         );
+
+        nextTheme = DarkTheme.getInstance();
 
         JScrollPane scrollPane = new JScrollPane( menuPanel  );
         contentPane.add( scrollPane, BorderLayout.CENTER );
@@ -458,6 +458,13 @@ public class MenuUi
         sound.mute( muted );
     }
 
+    private void setDarkTheme(boolean dark) {
+        ConfigTools.setBool( uiConfig, CFG_DARK_THEME,  dark);
+        uiConfig.save();
+        nextTheme.change(sidemenu, this);
+        nextTheme = nextTheme.getOppositeTheme();
+    }
+
     private void initListeners()
     {
         sidemenu.mute.addActionListener( new ActionListener()
@@ -466,6 +473,15 @@ public class MenuUi
             public void actionPerformed( ActionEvent evt )
             {
                 setMuted( sidemenu.mute.isSelected() );
+            }
+        } );
+
+        sidemenu.darkTheme.addActionListener( new ActionListener()
+        {
+            @Override
+            public void actionPerformed( ActionEvent evt )
+            {
+                setDarkTheme( sidemenu.darkTheme.isSelected() );
             }
         } );
 
@@ -492,5 +508,9 @@ public class MenuUi
         } );
 
         MenuTools.clickOnKey( sidemenu.exit, "quit", KeyEvent.VK_Q );
+    }
+
+    public void setBackgroundColor(Color color) {
+        menuPanel.setBackground( color );
     }
 }

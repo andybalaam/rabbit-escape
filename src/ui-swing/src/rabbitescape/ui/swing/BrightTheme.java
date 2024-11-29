@@ -4,21 +4,27 @@ import java.awt.*;
 
 public class BrightTheme extends Theme
 {
-    private final SwingPaint baseColor = new SwingPaint( Color.WHITE );
-    private final SwingPaint graphPaperMajor = new SwingPaint( new Color( 205, 212, 220 ) );
-    private final SwingPaint graphPaperMinor =  new SwingPaint( new Color( 235, 243, 255 ) );
+    static Theme uniqueInstance = new BrightTheme();
 
     @Override
-    public void setSwingGraphicsColors( SwingGraphics swingGraphics )
+    public void setSideMenuColor( SideMenu sideMenu )
     {
-        swingGraphics.setBaseColor(baseColor);
-        swingGraphics.setGraphPaperMinor(graphPaperMajor);
-        swingGraphics.setGraphPaperMinor(graphPaperMinor);
+        sideMenu.setPanelBackground( Color.WHITE );
+    }
+
+    @Override
+    public void setMenuUiColor( MenuUi menuUi )
+    {
+        menuUi.setBackgroundColor( Color.WHITE );
     }
 
     @Override
     public Theme getOppositeTheme()
     {
-        return new DarkTheme();
+        return DarkTheme.getInstance();
+    }
+
+    public static Theme getInstance() {
+        return uniqueInstance;
     }
 }

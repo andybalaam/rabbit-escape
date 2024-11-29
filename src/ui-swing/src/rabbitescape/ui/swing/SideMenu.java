@@ -27,6 +27,7 @@ class SideMenu
     public final JToggleButton mute;
     public final JButton back;
     public final JButton exit;
+    public final JToggleButton darkTheme;
 
     private final BitmapCache<SwingBitmap> bitmapCache;
     private final Color backgroundColor;
@@ -70,7 +71,21 @@ class SideMenu
             )
         );
 
+        addSpacer();
+
+        // TODO make dark mode icon
+        this.darkTheme = addToggleButton(
+            "menu_unmuted",
+            "menu_muted",
+            ConfigTools.getBool( uiConfig, CFG_DARK_THEME ),
+            t( "DarkTheme" )
+        );
+
         addPanelInScrollPane( contentPane );
+    }
+
+    public void setPanelBackground(Color color) {
+        panel.setBackground( color );
     }
 
     private void addPanelInScrollPane( Container contentPane )

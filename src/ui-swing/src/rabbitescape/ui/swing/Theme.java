@@ -1,11 +1,19 @@
 package rabbitescape.ui.swing;
 
-public abstract class Theme {
+import java.awt.*;
 
-    public void change(SwingGraphics swingGraphics) {
-        setSwingGraphicsColors(swingGraphics);
+public abstract class Theme
+{
+
+    public void change( SideMenu sideMenu, MenuUi menuUi)
+    {
+        setSideMenuColor( sideMenu);
+        setMenuUiColor(menuUi);
     }
 
-    public abstract void setSwingGraphicsColors(SwingGraphics swingGraphics);
+    public abstract void setSideMenuColor( SideMenu sideMenu );
+    public abstract void setMenuUiColor( MenuUi menuUi );
+
     public abstract Theme getOppositeTheme();
 }
+
