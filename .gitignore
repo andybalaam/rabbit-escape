@@ -20,7 +20,9 @@ src/ui-swing/ui-swing.iml
 src/ui-swing/ui-swing2.iml
 src/ui-text/ui-text.iml
 src/ui-text/ui-text2.iml
-
+.idea/libraries/gradle_wrapper6.xml
+.idea/libraries/lib7.xml
+.idea/modules.xml
 
 bin/
 dist/
