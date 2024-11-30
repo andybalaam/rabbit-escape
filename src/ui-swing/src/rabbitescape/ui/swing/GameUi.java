@@ -65,6 +65,8 @@ public class GameUi implements StatsChangedListener
                 click( e.getPoint() );
                 return;
             }
+
+
             msTimePress = System.currentTimeMillis();
             startX  = e.getX();
             startY  = e.getY();
@@ -78,11 +80,13 @@ public class GameUi implements StatsChangedListener
             {
                 click( e.getPoint() );
             }
+            System.out.println("놓았어");
         }
 
         @Override
         public void mouseClicked( MouseEvent e )
         {
+
             // use pressed and released calls.
             // if this was used too, would get double event calls.
         }
@@ -95,6 +99,7 @@ public class GameUi implements StatsChangedListener
             { // Wait and see if this is a click or a drag
                 return;
             }
+
 
             canvasScrollBarX.setValue(
                 canvasScrollBarX.getValue() + startX - e.getX() );
@@ -641,14 +646,14 @@ public class GameUi implements StatsChangedListener
         addToken( p.x , p.y );
     }
 
-    protected void addToken(int tileX, int tileY )
+    protected void addToken(int tileX, int tileY ) //gyh주석 : 마우스 클릭했을때 토큰을 놓는다
     {
         if ( chosenAbility == null )
         {
             return;
         }
 
-        int numLeft = gameLaunch.addToken( tileX, tileY, chosenAbility );
+        int numLeft = gameLaunch.addToken( tileX, tileY, chosenAbility ); //gyh 주석 : 계속 이어져서 결과적으로 WorldChages의 addToken에서 구현된다.
         menu.abilities.get( chosenAbility ).setNumLeft( numLeft );
 
         updateChosenAbility();

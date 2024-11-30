@@ -2,6 +2,7 @@ package rabbitescape.engine;
 
 import static rabbitescape.engine.util.Util.*;
 
+import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -132,7 +133,7 @@ public class World
     public final String music;
     public final VoidMarkerStyle.Style voidStyle;
 
-    public World(
+    public World( //gyh주석 : 메뉴에서 스테이지 클릭하면 호출됨
         Dimension size,
         List<Block> blocks,
         List<Rabbit> rabbits,
@@ -180,6 +181,7 @@ public class World
         this.paused = paused;
         this.comments = comments;
         this.voidStyle = voidStyle;
+
 
         if ( -1 == size.width )
         {
@@ -309,7 +311,7 @@ public class World
 
         for ( Thing thing : allThings() )
         {
-            thing.step( this );
+            thing.step( this ); //gyh주석 : 모든 Thing들이 단위 step동안 각자의 일을 함, 각자의 step메소드
         }
 
         changes.rememberWhatWillHappen();

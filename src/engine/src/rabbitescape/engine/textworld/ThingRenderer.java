@@ -82,6 +82,7 @@ public class ThingRenderer
             case climb:   return 'c';
             case explode: return 'p';
             case brolly:  return 'l';
+            case breakblock: return 'ㄱ'; //gyh 주석 : B도 있는것같아서 한번도 안쓰였을것 같은것
             default: throw new UnknownTokenType( thing.type );
         }
     }

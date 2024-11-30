@@ -5,7 +5,7 @@ CLASSPATH=src/engine/bin/:src/render/bin/:src/ui-text/bin/:src/ui-swing/bin/
 
 VERSION=0.13.4
 
-all: test android-compile
+all: test #android-compile gyh주석 : 안드로이드는 손 안대니까 제외 
 
 snapshot: android-pre dist
 ifndef SNAPSHOT_VERSION
@@ -16,7 +16,7 @@ endif
 	rename 's/${VERSION}/${SNAPSHOT_VERSION}/' dist/rabbit-escape-*
 	scp dist/rabbit-escape-* dreamhost:artificialworlds.net/rabbit-escape/snapshots/
 
-dist: checks dist-swing dist-android-release-signed
+dist: checks dist-swing #dist-android-release-signed gyh주석: 안드로이드는 손 안댐
 
 dist-swing: dist/rabbit-escape-${VERSION}.jar
 

@@ -51,7 +51,7 @@ public class Token extends Thing
         state = switchType( type, false, false, onSlope );
     }
 
-    private static State switchType( 
+    private static State switchType(  //gyh주석 : Thing-Token과 Behaviour-bash,dig...을 이어주는 메소드
         Type type, 
         boolean moving,
         boolean slopeBelow, 
@@ -133,10 +133,10 @@ public class Token extends Thing
                  moving,
                  slopeBelow,
                  onSlope,
-                 TOKEN_BREAK_FALLING,
-                 TOKEN_BREAK_STILL,
-                 TOKEN_BREAK_FALL_TO_SLOPE,
-                 TOKEN_BREAK_ON_SLOPE);
+                 TOKEN_BREAKBLOCK_FALLING,
+                 TOKEN_BREAKBLOCK_STILL,
+                 TOKEN_BREAKBLOCK_FALL_TO_SLOPE,
+                 TOKEN_BREAKBLOCK_ON_SLOPE);
 
             default: throw new UnknownType( type );
         }
@@ -184,7 +184,7 @@ public class Token extends Thing
     }
 
     @Override
-    public void step( World world )
+    public void step( World world ) //gyh 주석 : step단위가 지날때마다 토큰의 위치 조정
     {
         switch ( state )
         {
@@ -202,6 +202,8 @@ public class Token extends Thing
         case TOKEN_EXPLODE_FALLING:
         case TOKEN_BROLLY_FALLING:
         case TOKEN_BROLLY_FALL_TO_SLOPE:
+        case TOKEN_BREAKBLOCK_FALLING: //gyh
+        case TOKEN_BREAKBLOCK_FALL_TO_SLOPE:
         {
             ++y;
 
@@ -212,6 +214,16 @@ public class Token extends Thing
 
             return;
         }
+
+
+            case TOKEN_BREAKBLOCK_STILL: { //gyh
+                Block belowBlock = world.getBlockAt( x, y + 1 );
+                if(belowBlock != null) {
+                    world.changes.removeBlockAt( x, y + 1 );
+                    world.changes.removeToken( this );
+                }
+
+            }
         default:
             // Nothing to do
         }

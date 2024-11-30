@@ -164,7 +164,7 @@ public class WorldChanges
     }
 
     public synchronized void addToken( int x, int y, Token.Type type )
-    throws UnableToAddToken
+    throws UnableToAddToken // gyh 주석 : 여기서 월드 바깥을 벗어났나 체크 여기서 블록 안에 있는지 체크하면 될듯?
     {
         Integer numLeft = world.abilities.get( type );
 

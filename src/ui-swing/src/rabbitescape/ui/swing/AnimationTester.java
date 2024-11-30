@@ -80,6 +80,7 @@ public class AnimationTester extends JFrame
         public void mouseClicked( MouseEvent mouseEvent )
         {
             int i = screen2index( mouseEvent.getX(), mouseEvent.getY() );
+            System.out.println("너냐");
 
             String[] possibilties = animationCache.listAll();
 

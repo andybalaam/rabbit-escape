@@ -85,7 +85,7 @@ public class SwingGraphics implements Graphics
 
             drawWater( waterAnimation, swingCanvas );
 
-            List<Sprite> sprites = animator.getSprites( frameNum );
+            List<Sprite> sprites = animator.getSprites( frameNum ); //gyh주석 : 게임 맵에 표시되는 모든 블록 래빗 토큰등등 애니메이션함
 
             renderer.render(
                 swingCanvas,

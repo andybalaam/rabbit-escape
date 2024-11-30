@@ -77,7 +77,8 @@ public class Digging extends Behaviour
         {
             case RABBIT_DIGGING:
             {
-                world.changes.removeBlockAt( rabbit.x, rabbit.y + 1 );
+
+                world.changes.removeBlockAt( rabbit.x, rabbit.y + 1 ); //gyh 블록파괴 핵심
                 ++rabbit.y;
                 return true;
             }

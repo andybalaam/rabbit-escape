@@ -81,6 +81,7 @@ public class SpriteAnimator
 
         for ( Thing thing : world.changes.tokensAboutToAppear() )
         {
+            System.out.println( "Adding token " + thing.stateName() );
             addThing( frameNum, thing, null, ret );
         }
 
@@ -112,13 +113,14 @@ public class SpriteAnimator
         );
     }
 
-    private void addThing(
+    private void addThing( //Gyh주석 : 맵에 표시되는 entrance, exit, tokenrabbit들을 반복적으로 추가시킴, block은 안하는듯
         int frameNum,
         Thing thing,
         String soundEffectOverride,
         List<Sprite> ret
     )
     {
+
         Frame frame = frameForThing( frameNum, thing );
 
         String bitmapName = null;
