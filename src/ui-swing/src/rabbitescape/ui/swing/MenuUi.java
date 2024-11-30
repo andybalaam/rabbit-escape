@@ -190,7 +190,7 @@ public class MenuUi
 
         contentPane.setLayout( new BorderLayout( 4, 4 ) );
 
-        theme = ConfigTools.getBool( uiConfig, CFG_DARK_THEME ) ? DarkTheme.getInstance() : BrightTheme.getInstance();
+        theme = Theme.getTheme( uiConfig );
 
         Color backgroundColor = theme.getBackgroundColor();
 

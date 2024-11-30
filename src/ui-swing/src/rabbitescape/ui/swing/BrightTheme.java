@@ -9,6 +9,9 @@ public class BrightTheme extends Theme
 
     private BrightTheme() {
         backgroundColor = Color.WHITE;
+        graphPaperMajor =  new Color( 205, 212, 220 );
+        graphPaperMinor = new Color( 235, 243, 255 );
+        waterColor = new Color(130, 167, 221);
     }
 
     @Override

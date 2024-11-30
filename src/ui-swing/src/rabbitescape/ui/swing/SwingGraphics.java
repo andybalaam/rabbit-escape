@@ -3,6 +3,8 @@ package rabbitescape.ui.swing;
 import rabbitescape.engine.Thing;
 import rabbitescape.engine.World;
 import rabbitescape.engine.World.CompletionState;
+import rabbitescape.engine.config.Config;
+import rabbitescape.engine.config.ConfigTools;
 import rabbitescape.engine.util.Util;
 import rabbitescape.render.*;
 import rabbitescape.render.androidlike.Path;
@@ -15,26 +17,12 @@ import java.awt.*;
 import java.awt.image.BufferStrategy;
 import java.util.List;
 
+import static rabbitescape.ui.swing.SwingConfigSetup.CFG_DARK_THEME;
+
 public class SwingGraphics implements Graphics
 {
     private static class DrawFrame extends BufferedDraw
     {
-        private static SwingPaint baseColor =
-            new SwingPaint( Color.WHITE );
-
-
-        private static SwingPaint graphPaperMajor =
-            new SwingPaint( new Color( 205, 212, 220 ) );
-
-        private static SwingPaint graphPaperMinor =
-            new SwingPaint( new Color( 235, 243, 255 ) );
-
-        private static final int
-            waterR = 130, waterG = 167, waterB = 221;
-
-        private static final SwingPaint waterColor =
-            new SwingPaint( new Color( waterR, waterG, waterB, 255 ) );
-
         private final java.awt.Canvas canvas;
         private final Renderer<SwingBitmap, SwingPaint> renderer;
         private final SoundPlayer soundPlayer;
@@ -42,11 +30,7 @@ public class SwingGraphics implements Graphics
         private final int frameNum;
         private final World world;
         private final WaterAnimation waterAnimation;
-
-        static
-        {
-            waterColor.setStyle( SwingPaint.Style.FILL );
-        }
+        private final Config uiConfig;
 
         public DrawFrame(
             BufferStrategy strategy,
@@ -56,7 +40,8 @@ public class SwingGraphics implements Graphics
             SpriteAnimator animator,
             int frameNum,
             World world,
-            WaterAnimation waterAnimation
+            WaterAnimation waterAnimation,
+            Config config
         )
         {
             super( strategy );
@@ -67,11 +52,19 @@ public class SwingGraphics implements Graphics
             this.frameNum = frameNum;
             this.world = world;
             this.waterAnimation = waterAnimation;
+            this.uiConfig = config;
         }
 
         @Override
         void draw( Graphics2D g )
         {
+
+            Theme theme = Theme.getTheme( uiConfig );
+
+            SwingPaint backgroundColor = new SwingPaint( theme.getBackgroundColor() );
+            SwingPaint graphPaperMajor = new SwingPaint( theme.getGraphPaperMajor() );
+            SwingPaint graphPaperMinor = new SwingPaint( theme.getGraphPaperMinor() );
+
             SwingCanvas swingCanvas = new SwingCanvas(
                 g, canvas.getWidth(), canvas.getHeight() );
 
@@ -79,7 +72,7 @@ public class SwingGraphics implements Graphics
                 world,
                 renderer,
                 swingCanvas,
-                baseColor,
+                backgroundColor,
                 graphPaperMajor,
                 graphPaperMinor
             );
@@ -91,7 +84,7 @@ public class SwingGraphics implements Graphics
             renderer.render(
                 swingCanvas,
                 sprites,
-                baseColor
+                backgroundColor
             );
 
             if ( world.paused )
@@ -149,6 +142,13 @@ public class SwingGraphics implements Graphics
             Vertex offset = new Vertex( renderer.offsetX, renderer.offsetY );
 
             int ts = renderer.tileSize;
+
+            Theme theme = Theme.getTheme( uiConfig );
+            Color waterColor = theme.getWaterColor();
+            SwingPaint waterPaint = new SwingPaint( waterColor );
+
+            waterPaint.setStyle( SwingPaint.Style.FILL );
+
             // shade whole background square cells with any water
             for ( WaterRegionRenderer wrr : wa.lookupRenderer)
             {
@@ -159,7 +159,7 @@ public class SwingGraphics implements Graphics
                     ts * wrr.getY() + ts + renderer.offsetY
                 );
                 Color bsColor =
-                    new Color( waterR, waterG, waterB, wrr.backShadeAlpha() );
+                    new Color( waterColor.getRed(), waterColor.getGreen(), waterColor.getBlue(), wrr.backShadeAlpha() );
                 SwingPaint backShade =  new SwingPaint( bsColor );
                 backShade.setStyle( SwingPaint.Style.FILL );
                 swingCanvas.drawRect( rect, backShade );
@@ -169,7 +169,7 @@ public class SwingGraphics implements Graphics
             for ( PolygonBuilder pb : wa.calculatePolygons() )
             {
                 Path p = pb.path( f, offset );
-                swingCanvas.drawPath( p, waterColor );
+                swingCanvas.drawPath( p, waterPaint );
             }
 
             // draw particles to represent falling water
@@ -179,27 +179,12 @@ public class SwingGraphics implements Graphics
                 {
                     Path p = wp.polygon().path( f, offset );
                     SwingPaint fadeShade =  new SwingPaint(
-                        new Color( waterR, waterG, waterB, wp.alpha ) );
+                        new Color( waterColor.getRed(), waterColor.getBlue(), waterColor.getBlue(), wp.alpha ) );
                     fadeShade.setStyle ( SwingPaint.Style.FILL );
                     swingCanvas.drawPath( p, fadeShade);
                 }
             }
         }
-    }
-
-    public void setBaseColor( SwingPaint baseColor )
-    {
-        DrawFrame.baseColor = baseColor;
-    }
-
-    public void setGraphPaperMajor( SwingPaint graphPaperMajor )
-    {
-        DrawFrame.graphPaperMajor = graphPaperMajor;
-    }
-
-    public void setGraphPaperMinor( SwingPaint graphPaperMinor )
-    {
-        DrawFrame.graphPaperMinor = graphPaperMinor;
     }
 
     public final World world;
@@ -209,6 +194,7 @@ public class SwingGraphics implements Graphics
     private final SpriteAnimator animator;
     private final FrameDumper frameDumper;
     private final WaterAnimation waterAnimation;
+    private final Config uiConfig;
 
     public final Renderer<SwingBitmap, SwingPaint> renderer;
     private final SoundPlayer soundPlayer;
@@ -226,7 +212,8 @@ public class SwingGraphics implements Graphics
         BitmapCache<SwingBitmap> bitmapCache,
         Sound sound,
         FrameDumper frameDumper,
-        WaterAnimation waterAnimation
+        WaterAnimation waterAnimation,
+        Config config
     )
     {
         this.world = world;
@@ -245,6 +232,7 @@ public class SwingGraphics implements Graphics
         this.lastWorldState = null;
         this.frameDumper = frameDumper;
         this.waterAnimation = waterAnimation;
+        this.uiConfig = config;
 
         this.lastFrame = -1;
         this.drawing = false;
@@ -263,7 +251,8 @@ public class SwingGraphics implements Graphics
             animator,
             frame,
             world,
-            waterAnimation
+            waterAnimation,
+            uiConfig
         );
 
         df.run();
@@ -299,7 +288,8 @@ public class SwingGraphics implements Graphics
             animator,
             lastFrame,
             world,
-            waterAnimation
+            waterAnimation,
+            uiConfig
         );
 
         df.run();

@@ -9,6 +9,9 @@ public class DarkTheme extends Theme
 
     private DarkTheme() {
         backgroundColor = Color.LIGHT_GRAY;
+        graphPaperMajor =  new Color( 210, 210, 210 );
+        graphPaperMinor = new Color( 200 , 200, 200 );
+        waterColor = new Color(24, 50, 100);
     }
 
     @Override

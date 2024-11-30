@@ -471,8 +471,9 @@ public class GameUi implements StatsChangedListener
     {
         this.gameLaunch = gameLaunch;
 
-        Theme theme = ConfigTools.getBool( uiConfig, CFG_DARK_THEME ) ? DarkTheme.getInstance() : BrightTheme.getInstance();
+        Theme theme = Theme.getTheme( uiConfig );
         Color backgroundColor = theme.getBackgroundColor();
+        frame.setBackground( backgroundColor );
 
         this.menu = new GameMenu(
             contentPane,
