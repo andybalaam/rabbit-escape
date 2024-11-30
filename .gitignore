@@ -37,4 +37,10 @@ local.properties
 proguard/
 *.log
 
+# IntelliJ
+.idea/libraries/
+*.iml
+.idea/modules.xml
 
+# Vim
+*.swp
