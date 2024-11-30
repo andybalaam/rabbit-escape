@@ -27,7 +27,7 @@ class SideMenu
     public final JToggleButton mute;
     public final JButton back;
     public final JButton exit;
-    public final JToggleButton darkTheme;
+    public final JToggleButton darkThemeToggle;
 
     private final BitmapCache<SwingBitmap> bitmapCache;
     private final Color backgroundColor;
@@ -74,7 +74,7 @@ class SideMenu
         addSpacer();
 
         // TODO make dark mode icon
-        this.darkTheme = addToggleButton(
+        this.darkThemeToggle = addToggleButton(
             "menu_unmuted",
             "menu_muted",
             ConfigTools.getBool( uiConfig, CFG_DARK_THEME ),

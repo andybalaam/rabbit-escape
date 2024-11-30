@@ -8,7 +8,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintStream;
 import java.io.PrintWriter;
-import java.util.Arrays;
 import java.util.Locale;
 import java.util.Stack;
 
@@ -127,7 +126,7 @@ public class MenuUi
         }
     }
 
-    private static final Color backgroundColor = Color.WHITE;
+//    private static final Color backgroundColor = Color.WHITE;
     private static final Color buttonColor = Color.LIGHT_GRAY;
 
     private final RealFileSystem fs;
@@ -137,13 +136,20 @@ public class MenuUi
 
     private final Stack<Menu> stack;
     private final Config uiConfig;
+
+    public MainJFrame getFrame()
+    {
+        return frame;
+    }
+
     private final MainJFrame frame;
     private final Sound sound;
 
+    private JScrollPane scrollPane;
     private final JPanel menuPanel;
     private final LevelsCompleted levelsCompleted;
     private SideMenu sidemenu;
-    private Theme nextTheme;
+    private Theme theme;
 
     public MenuUi(
         RealFileSystem fs,
@@ -184,6 +190,14 @@ public class MenuUi
 
         contentPane.setLayout( new BorderLayout( 4, 4 ) );
 
+        if(ConfigTools.getBool( uiConfig, CFG_DARK_THEME )) {
+            theme = DarkTheme.getInstance();
+        } else {
+            theme = BrightTheme.getInstance();
+        }
+
+        Color backgroundColor = theme.getBackgroundColor();
+
         sidemenu = new SideMenu(
             contentPane,
             bitmapCache,
@@ -192,14 +206,11 @@ public class MenuUi
             backgroundColor
         );
 
-        nextTheme = DarkTheme.getInstance();
-
-        JScrollPane scrollPane = new JScrollPane( menuPanel  );
+        scrollPane = new JScrollPane( menuPanel  );
         contentPane.add( scrollPane, BorderLayout.CENTER );
-        contentPane.setBackground( backgroundColor );
-        scrollPane.setBackground( backgroundColor );
         scrollPane.getVerticalScrollBar().setUnitIncrement( 16 );
-        menuPanel.setBackground( backgroundColor );
+
+        theme.setColorMenuUi(contentPane, scrollPane, menuPanel);
 
         placeMenu();
 
@@ -461,8 +472,8 @@ public class MenuUi
     private void setDarkTheme(boolean dark) {
         ConfigTools.setBool( uiConfig, CFG_DARK_THEME,  dark);
         uiConfig.save();
-        nextTheme.change(sidemenu, this);
-        nextTheme = nextTheme.getOppositeTheme();
+        theme = theme.getOppositeTheme();
+        theme.change(sidemenu, this, frame.getContentPane(), scrollPane, menuPanel);
     }
 
     private void initListeners()
@@ -476,12 +487,12 @@ public class MenuUi
             }
         } );
 
-        sidemenu.darkTheme.addActionListener( new ActionListener()
+        sidemenu.darkThemeToggle.addActionListener( new ActionListener()
         {
             @Override
             public void actionPerformed( ActionEvent evt )
             {
-                setDarkTheme( sidemenu.darkTheme.isSelected() );
+                setDarkTheme( sidemenu.darkThemeToggle.isSelected() );
             }
         } );
 
@@ -508,9 +519,5 @@ public class MenuUi
         } );
 
         MenuTools.clickOnKey( sidemenu.exit, "quit", KeyEvent.VK_Q );
-    }
-
-    public void setBackgroundColor(Color color) {
-        menuPanel.setBackground( color );
     }
 }
