@@ -75,8 +75,8 @@ class SideMenu
 
         // TODO make dark mode icon
         this.darkThemeToggle = addToggleButton(
-            "menu_unmuted",
-            "menu_muted",
+            "bright_mode",
+            "dark_mode",
             ConfigTools.getBool( uiConfig, CFG_DARK_THEME ),
             t( "DarkTheme" )
         );
