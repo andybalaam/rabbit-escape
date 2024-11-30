@@ -115,7 +115,7 @@ class SideMenu
     private void addSpacer()
     {
         JPanel spacer = new JPanel();
-        spacer.setBackground( backgroundColor );
+        spacer.setBackground( new Color( 0, 0, 0, 0 ) );
 
         panel.add( spacer );
     }
@@ -129,7 +129,7 @@ class SideMenu
     {
         JToggleButton button = new JToggleButton( getIcon( unSelectedImage ) );
 
-        button.setBackground( backgroundColor );
+        button.setBackground( new Color( 0, 0, 0, 0 ) );
         button.setBorderPainted( false );
         button.setSelected( selected );
         button.setToolTipText( description );
@@ -148,7 +148,7 @@ class SideMenu
     {
         JButton button = new JButton( getIcon( image ) );
 
-        button.setBackground( backgroundColor );
+        button.setBackground( new Color( 0, 0, 0, 0 ) );
         button.setBorderPainted( false );
         button.setToolTipText( description );
 
