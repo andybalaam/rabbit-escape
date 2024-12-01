@@ -2,11 +2,7 @@ package rabbitescape.engine;
 
 import static rabbitescape.engine.util.Util.*;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import rabbitescape.engine.Rabbit.Type;
 import rabbitescape.engine.WaterRegion;
@@ -394,6 +390,30 @@ public class World
             }
         }
         return null;
+    }
+
+    public Token getOtherPortalToken(int x, int y) {
+        List<Token> portalTokens = new ArrayList<>();
+        for (Thing thing : things) {
+            if (thing instanceof Token) {
+                Token token = (Token) thing;
+                if(token.type == Token.Type.portal) {
+                    portalTokens.add(token);
+                }
+            }
+        }
+        // check number of portlaTokens in the map
+        if (portalTokens.size() < 2) {
+            return null;
+        }
+
+        for (Token portal : portalTokens) {
+            if(portal.x != x || portal.y != y) {
+                return portal;
+            }
+        }
+        // in order to handle both portals at the same position
+        return portalTokens.get(1);
     }
 
     public List<Thing> getThingsAt( int x, int y )

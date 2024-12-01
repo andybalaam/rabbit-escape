@@ -167,6 +167,10 @@ public class ChangeDescription
         RABBIT_CLIMBING_RIGHT_CONTINUE_2,
         RABBIT_CLIMBING_RIGHT_END,
         RABBIT_CLIMBING_RIGHT_BANG_HEAD,
+        // rabbit_portaling
+        RABBIT_PORTALING_RIGHT,
+        RABBIT_PORTALING_LEFT,
+
 
         RABBIT_DROWNING,
 
@@ -212,6 +216,12 @@ public class ChangeDescription
         TOKEN_BROLLY_STILL,
         TOKEN_BROLLY_FALL_TO_SLOPE,
         TOKEN_BROLLY_ON_SLOPE,
+
+        // rabbit_token
+        TOKEN_PORTAL_FALLING,
+        TOKEN_PORTAL_STILL,
+        TOKEN_PORTAL_FALL_TO_SLOPE,
+        TOKEN_PORTAL_ON_SLOPE,
 
         WATER_REGION,
         WATER_REGION_HALF,

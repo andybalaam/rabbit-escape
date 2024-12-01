@@ -189,7 +189,7 @@ public class WorldChanges
             return;
         }
 
-        tokensToAdd.add( new Token( x, y, type, world ) );
+        tokensToAdd.add( new Token( x, y, type, world) );
         world.abilities.put( type, numLeft - 1 );
     }
 
