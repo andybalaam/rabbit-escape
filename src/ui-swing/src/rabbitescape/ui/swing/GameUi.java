@@ -207,6 +207,7 @@ public class GameUi implements StatsChangedListener
     private JScrollBar canvasScrollBarY;
     private GameMenu menu;
     private TopBar topBar;
+    private Theme theme;
 
     private Token.Type chosenAbility;
     private SwingGameLaunch gameLaunch;
@@ -471,7 +472,7 @@ public class GameUi implements StatsChangedListener
     {
         this.gameLaunch = gameLaunch;
 
-        Theme theme = Theme.getTheme( uiConfig );
+        theme = Theme.getTheme( uiConfig );
         Color backgroundColor = theme.getBackgroundColor();
         frame.setBackground( backgroundColor );
 

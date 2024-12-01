@@ -4,7 +4,6 @@ import rabbitescape.engine.Thing;
 import rabbitescape.engine.World;
 import rabbitescape.engine.World.CompletionState;
 import rabbitescape.engine.config.Config;
-import rabbitescape.engine.config.ConfigTools;
 import rabbitescape.engine.util.Util;
 import rabbitescape.render.*;
 import rabbitescape.render.androidlike.Path;
@@ -17,7 +16,6 @@ import java.awt.*;
 import java.awt.image.BufferStrategy;
 import java.util.List;
 
-import static rabbitescape.ui.swing.SwingConfigSetup.CFG_DARK_THEME;
 
 public class SwingGraphics implements Graphics
 {
@@ -31,6 +29,7 @@ public class SwingGraphics implements Graphics
         private final World world;
         private final WaterAnimation waterAnimation;
         private final Config uiConfig;
+        private Theme theme;
 
         public DrawFrame(
             BufferStrategy strategy,
@@ -59,7 +58,7 @@ public class SwingGraphics implements Graphics
         void draw( Graphics2D g )
         {
 
-            Theme theme = Theme.getTheme( uiConfig );
+            theme = Theme.getTheme( uiConfig );
 
             SwingPaint backgroundColor = new SwingPaint( theme.getBackgroundColor() );
             SwingPaint graphPaperMajor = new SwingPaint( theme.getGraphPaperMajor() );
@@ -143,7 +142,7 @@ public class SwingGraphics implements Graphics
 
             int ts = renderer.tileSize;
 
-            Theme theme = Theme.getTheme( uiConfig );
+            theme = Theme.getTheme( uiConfig );
             Color waterColor = theme.getWaterColor();
             SwingPaint waterPaint = new SwingPaint( waterColor );
 
