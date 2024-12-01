@@ -137,11 +137,6 @@ public class MenuUi
     private final Stack<Menu> stack;
     private final Config uiConfig;
 
-    public MainJFrame getFrame()
-    {
-        return frame;
-    }
-
     private final MainJFrame frame;
     private final Sound sound;
 
