@@ -73,14 +73,14 @@ public class GameUi implements StatsChangedListener
         }
 
         @Override
-        public void mouseReleased( MouseEvent e )
+        public void mouseReleased( MouseEvent e ) //gyh 주석 : 토큰을 놓거나 할때, clicked대신 release될때 체크가 된다.
         {
             long msDownTime = System.currentTimeMillis() - msTimePress;
             if ( msDownTime < msClickThreshold )
             {
                 click( e.getPoint() );
             }
-            System.out.println("놓았어");
+
         }
 
         @Override

@@ -186,10 +186,17 @@ public class WorldChanges
         Block block = world.getBlockAt( x, y );
         if ( BehaviourTools.s_isFlat( block ) )
         {
-            return;
+            if(type.toString().equals("breakblock")) { //gyh
+
+                world.changes.removeBlockAt(x, y);
+                world.abilities.put( type, numLeft - 1 );
+            }
+
+            return; //gyh 주석 : 이걸 주석처리하면 테스트에서 에러남
         }
 
-        tokensToAdd.add( new Token( x, y, type, world ) );
+
+        tokensToAdd.add( new Token( x, y, type, world ) ); //gyh주석 : 맵상에 실제로 토큰이 추가되도록 함
         world.abilities.put( type, numLeft - 1 );
     }
 

@@ -47,7 +47,7 @@ public class GeneralPhysics implements Physics
         public synchronized void addToken(
             int tileX, int tileY, Token.Type type )
         {
-            world.changes.addToken( tileX, tileY, type );
+            world.changes.addToken( tileX, tileY, type ); //gyh주석 : addToken의 실제 구현으로 이어짐
         }
     }
 
