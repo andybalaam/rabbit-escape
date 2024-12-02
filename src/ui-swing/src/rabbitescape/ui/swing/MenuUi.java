@@ -1,12 +1,6 @@
 package rabbitescape.ui.swing;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Container;
-import java.awt.Dimension;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -43,6 +37,8 @@ import rabbitescape.engine.config.ConfigTools;
 import rabbitescape.engine.config.TapTimer;
 import rabbitescape.engine.err.RabbitEscapeException;
 import rabbitescape.engine.menu.*;
+import rabbitescape.engine.menu.Menu;
+import rabbitescape.engine.menu.MenuItem;
 import rabbitescape.engine.util.RealFileSystem;
 import rabbitescape.engine.util.Util.IdxObj;
 import rabbitescape.render.BitmapCache;
@@ -130,7 +126,7 @@ public class MenuUi
         }
     }
 
-    private static final Color backgroundColor = Color.WHITE;
+//    private static final Color backgroundColor = Color.WHITE;
     private static final Color buttonColor = Color.LIGHT_GRAY;
 
     private final RealFileSystem fs;
@@ -140,12 +136,15 @@ public class MenuUi
 
     private final Stack<Menu> stack;
     private final Config uiConfig;
+
     private final MainJFrame frame;
     private final Sound sound;
 
+    private JScrollPane scrollPane;
     private final JPanel menuPanel;
     private final LevelsCompleted levelsCompleted;
     private SideMenu sidemenu;
+    private Theme theme;
 
     public MenuUi(
         RealFileSystem fs,
@@ -186,6 +185,10 @@ public class MenuUi
 
         contentPane.setLayout( new BorderLayout( 4, 4 ) );
 
+        theme = Theme.getTheme( uiConfig );
+
+        Color backgroundColor = theme.getBackgroundColor();
+
         sidemenu = new SideMenu(
             contentPane,
             bitmapCache,
@@ -194,12 +197,11 @@ public class MenuUi
             backgroundColor
         );
 
-        JScrollPane scrollPane = new JScrollPane( menuPanel  );
+        scrollPane = new JScrollPane( menuPanel  );
         contentPane.add( scrollPane, BorderLayout.CENTER );
-        contentPane.setBackground( backgroundColor );
-        scrollPane.setBackground( backgroundColor );
         scrollPane.getVerticalScrollBar().setUnitIncrement( 16 );
-        menuPanel.setBackground( backgroundColor );
+
+        theme.setColorMenuUi(contentPane, scrollPane, menuPanel);
 
         placeMenu();
 
@@ -458,6 +460,13 @@ public class MenuUi
         sound.mute( muted );
     }
 
+    private void setDarkTheme(boolean dark) {
+        ConfigTools.setBool( uiConfig, CFG_DARK_THEME,  dark);
+        uiConfig.save();
+        theme = theme.getOppositeTheme();
+        theme.change(sidemenu, this, frame.getContentPane(), scrollPane, menuPanel);
+    }
+
     private void initListeners()
     {
         sidemenu.mute.addActionListener( new ActionListener()
@@ -466,6 +475,15 @@ public class MenuUi
             public void actionPerformed( ActionEvent evt )
             {
                 setMuted( sidemenu.mute.isSelected() );
+            }
+        } );
+
+        sidemenu.darkThemeToggle.addActionListener( new ActionListener()
+        {
+            @Override
+            public void actionPerformed( ActionEvent evt )
+            {
+                setDarkTheme( sidemenu.darkThemeToggle.isSelected() );
             }
         } );
 
