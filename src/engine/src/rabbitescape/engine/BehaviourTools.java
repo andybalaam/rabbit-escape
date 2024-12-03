@@ -163,6 +163,11 @@ public class BehaviourTools
         return world.getBlockAt( nextX(), rabbit.y - 1 );
     }
 
+    public Block blockAbove2Next()
+    {
+        return world.getBlockAt( next2X(), rabbit.y - 1 );
+    }
+
     private boolean onGround()
     {
         return ( rabbit.onSlope || blockBelow() != null );
