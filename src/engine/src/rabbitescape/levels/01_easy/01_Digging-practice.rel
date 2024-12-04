@@ -6,17 +6,15 @@
 :hint.2=Choose a token on the left, then drop it anywhere on a white square near where the rabbits are walking.
 :hint.3=Make sure your token is selected on the left. Be careful not to move your finger as you touch.
 :solution.1=dig;(7,2);15
-:solution.2=jump;(5,5);dig;(2,2);25
-:num_rabbits=1
+:num_rabbits=3
 :num_to_save=1
 :rabbit_delay=4
 :music=tryad-witness
 :dig=5
-:jump=10
 ###########
 #   Q     #
 #\      /##
 ###########
 #         #
 #\       O#
-###### ####
+###########
