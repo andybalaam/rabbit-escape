@@ -206,6 +206,7 @@ public class Token extends Thing
         case TOKEN_BREAKBLOCK_FALL_TO_SLOPE:
         {
             ++y;
+            System.out.println(state);
 
             if ( y >= world.size.height )
             {
@@ -216,14 +217,24 @@ public class Token extends Thing
         }
 
 
-            case TOKEN_BREAKBLOCK_STILL: { //gyh
-                Block belowBlock = world.getBlockAt( x, y + 1 );
-                if(belowBlock != null) {
-                    world.changes.removeBlockAt( x, y + 1 );
-                    world.changes.removeToken( this );
-                }
+        case TOKEN_BREAKBLOCK_ON_SLOPE:
+        case TOKEN_BREAKBLOCK_STILL: { //gyh
+            Block belowBlock = world.getBlockAt( x, y + 1 );
+            Block onBlock = world.getBlockAt( x, y );
 
+            if(onBlock != null) { //gyh 주석 : on, below를 구분하지 않으면, 블록 안쪽에 토큰을 겹치게 소환한 경우, on을 안하면 그 아래만 지워짐
+
+                world.changes.removeBlockAt( x, y );
+                world.changes.removeToken( this );
+                return;
             }
+            if(belowBlock != null) {
+
+                world.changes.removeBlockAt( x, y + 1 );
+                world.changes.removeToken( this );
+            }
+
+        }
         default:
             // Nothing to do
         }

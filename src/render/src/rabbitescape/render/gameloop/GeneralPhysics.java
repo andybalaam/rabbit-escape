@@ -40,7 +40,7 @@ public class GeneralPhysics implements Physics
 
         public synchronized void step()
         {
-            world.step();
+            world.step(); //gyh주석 : world.step에서는 모든 Thing에 대하여 step을 하게하고 이후 calCNewState를 실행한다.
             solutionRecorder.appendStepEnd( );
         }
 
@@ -144,7 +144,7 @@ public class GeneralPhysics implements Physics
                 frame -= 10;
 
                 doInterpreterActions();
-                worldModifier.step();
+                worldModifier.step(); //gyh 주석 : 이 클래스의 내부클래스의 step을 실행
                 water.step( world );
                 checkWon();
                 notifyStatsListeners();

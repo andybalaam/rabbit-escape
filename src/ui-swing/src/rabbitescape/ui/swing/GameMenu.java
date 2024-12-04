@@ -160,7 +160,7 @@ class GameMenu
         for ( Token.Type ability : sorted( abilityTypes.keySet() ) )
         {
             String iconName = "ability_" + ability.toString();
-            System.out.println("asdf"+ability.toString());
+
 
             JToggleButton button = addToggleButton(
                 iconName,

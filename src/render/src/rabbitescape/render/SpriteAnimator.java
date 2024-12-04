@@ -79,9 +79,9 @@ public class SpriteAnimator
             addThing( frameNum, thing, null, ret );
         }
 
-        for ( Thing thing : world.changes.tokensAboutToAppear() )
+        for ( Thing thing : world.changes.tokensAboutToAppear() ) //gyh주석 : worldchanges에서 tokensToAdd라는 그래픽으로 구현할 토큰 리스트를 관리하는데 그걸 순회하면서 addThing으로 그래픽으로 나타냄
         {
-            System.out.println( "Adding token " + thing.stateName() );
+
             addThing( frameNum, thing, null, ret );
         }
 
