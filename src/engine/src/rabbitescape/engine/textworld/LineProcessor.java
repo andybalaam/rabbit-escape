@@ -637,6 +637,12 @@ public class LineProcessor
                 things.add( ret );
                 break;
             }
+            case 'w':
+            {
+                ret = new Token( x, y, Token.Type.jump );
+                things.add( ret );
+                break;
+            }
             case 'N':
             {
                 // Default amount for a full water region, but may be

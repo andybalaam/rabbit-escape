@@ -12,7 +12,8 @@ public class InputExpansion
         new InputExpansion( "k", "block" ),
         new InputExpansion( "c", "climb" ),
         new InputExpansion( "p", "explode" ),
-        new InputExpansion( "l", "brolly" )
+        new InputExpansion( "l", "brolly" ),
+        new InputExpansion( "j", "jump" )
     };
 
     public InputExpansion( String character, String expansion )

@@ -292,6 +292,16 @@ public class ChangeRenderer
             case RABBIT_WAITING_RIGHT:
                 chars.set( change.x, change.y, 'z' );
                 break;
+            case RABBIT_JUMPING_LEFT:
+            case RABBIT_JUMPING_RIGHT:
+            case RABBIT_JUMPING_ON_DOWN_SLOPE_LEFT:
+            case RABBIT_JUMPING_ON_DOWN_SLOPE_RIGHT:
+                chars.set( change.x, change.y, 'w' );
+                break;
+            case RABBIT_JUMPING_ON_UP_SLOPE_LEFT:
+            case RABBIT_JUMPING_ON_UP_SLOPE_RIGHT:
+                chars.set( change.x, change.y - 1, 'w' );
+                break;
             case RABBIT_OUT_OF_BOUNDS:
                 break;
             case TOKEN_BASH_STILL:
