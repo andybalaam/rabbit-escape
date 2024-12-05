@@ -308,7 +308,7 @@ public class ChangeRenderer
             case TOKEN_EXPLODE_ON_SLOPE:
             case TOKEN_BROLLY_STILL:
             case TOKEN_BROLLY_ON_SLOPE:
-            case TOKEN_BREAKBLOCK_STILL: //gyh
+            case TOKEN_BREAKBLOCK_STILL:
             case TOKEN_BREAKBLOCK_ON_SLOPE:
                 break;
             case TOKEN_BASH_FALLING:
@@ -325,7 +325,7 @@ public class ChangeRenderer
             case TOKEN_EXPLODE_FALL_TO_SLOPE:
             case TOKEN_BROLLY_FALLING:
             case TOKEN_BROLLY_FALL_TO_SLOPE:
-            case TOKEN_BREAKBLOCK_FALLING: //gyh
+            case TOKEN_BREAKBLOCK_FALLING:
             case TOKEN_BREAKBLOCK_FALL_TO_SLOPE:
                 chars.set( change.x, change.y + 1, 'f' );
                 break;

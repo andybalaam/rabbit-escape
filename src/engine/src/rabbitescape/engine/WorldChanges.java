@@ -164,7 +164,7 @@ public class WorldChanges
     }
 
     public synchronized void addToken( int x, int y, Token.Type type )
-    throws UnableToAddToken // gyh 주석 : 여기서 월드 바깥을 벗어났나 체크 여기서 블록 안에 있는지 체크하면 될듯?
+    throws UnableToAddToken
     {
         Integer numLeft = world.abilities.get( type );
 
@@ -186,22 +186,22 @@ public class WorldChanges
         Block block = world.getBlockAt( x, y );
         if ( BehaviourTools.s_isFlat( block ) )
         {
-            if(type.toString().equals("breakblock")) { //gyh 주석 : 일반블록안의 breakblock 처리, Token의 특성을 생각했을때, Rabbit이 먹고 쓰냐, Block에 바로 쓰냐 구분자를 추가하거나 Behaviour의 상속관계를 추가하면
-                                                        //더 나은 설계일것같은데 일단 블록에 바로 적용되는게 breakblock밖에 없어서 이렇게 함
+            if(type.toString().equals("breakblock")) {
+
 
 
 
                 tokensToAdd.add( new Token( x, y, type, world ) );
                // world.changes.removeBlockAt(x, y);
-                world.abilities.put( type, numLeft - 1 ); //gyh 주석 : 해당 스테이지에서 사용가능한 토큰의 수 표시
+                world.abilities.put( type, numLeft - 1 );
 
             }
 
-            return; //gyh 주석 : 이걸 주석처리하면 테스트에서 에러남
+            return;
         }
 
 
-        tokensToAdd.add( new Token( x, y, type, world ) ); //gyh주석 : 맵상에 실제로 토큰이 추가되도록 함
+        tokensToAdd.add( new Token( x, y, type, world ) );
         world.abilities.put( type, numLeft - 1 );
     }
 

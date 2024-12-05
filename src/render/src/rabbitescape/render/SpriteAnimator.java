@@ -79,7 +79,7 @@ public class SpriteAnimator
             addThing( frameNum, thing, null, ret );
         }
 
-        for ( Thing thing : world.changes.tokensAboutToAppear() ) //gyh주석 : worldchanges에서 tokensToAdd라는 그래픽으로 구현할 토큰 리스트를 관리하는데 그걸 순회하면서 addThing으로 그래픽으로 나타냄
+        for ( Thing thing : world.changes.tokensAboutToAppear() )
         {
 
             addThing( frameNum, thing, null, ret );
@@ -113,7 +113,7 @@ public class SpriteAnimator
         );
     }
 
-    private void addThing( //Gyh주석 : 맵에 표시되는 entrance, exit, tokenrabbit들을 반복적으로 추가시킴, block은 안하는듯
+    private void addThing(
         int frameNum,
         Thing thing,
         String soundEffectOverride,

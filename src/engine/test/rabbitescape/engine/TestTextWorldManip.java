@@ -47,7 +47,7 @@ public class TestTextWorldManip
             equalTo( lines )
         );
 
-        // Also, shouldn`'t throw if we render this with states
+        // Also, shouldn't throw if we render this with states
         renderWorld( createWorld( lines ), true, false );
     }
 

@@ -82,7 +82,7 @@ public class ThingRenderer
             case climb:   return 'c';
             case explode: return 'p';
             case brolly:  return 'l';
-            case breakblock: return '5'; //gyh 주석 : ㄱ으로 했는데 와이드문자? 라고해서 한칸 밀리는 현상이 발생함
+            case breakblock: return '5';
             default: throw new UnknownTokenType( thing.type );
         }
     }

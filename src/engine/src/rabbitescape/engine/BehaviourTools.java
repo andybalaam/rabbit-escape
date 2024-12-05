@@ -269,7 +269,7 @@ public class BehaviourTools
     }
 
     public static boolean s_isFlat( Block block )
-    { //Gyh 주석 : 이 코드가 있으면 평평블록 있으면 토큰 안놓아짐
+    {
         return ( block != null && block.shape == FLAT );
     }
 

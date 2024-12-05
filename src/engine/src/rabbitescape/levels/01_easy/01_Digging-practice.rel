@@ -10,8 +10,7 @@
 :num_to_save=1
 :rabbit_delay=4
 :music=tryad-witness
-:dig=8
-:breakblock=2
+:dig=5
 ###########
 #   Q     #
 #\      /##

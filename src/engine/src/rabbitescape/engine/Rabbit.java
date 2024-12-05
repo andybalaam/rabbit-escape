@@ -93,7 +93,7 @@ public class Rabbit extends Thing implements Comparable<Rabbit>
         behaviours.add( blocking );
         behaviours.add( climbing );
         behaviours.add( rabbotWait );
-        behaviours.add( walking ); //gyh주석 : waling보다 아래에 놓으면 거의 동작 안함, rabbit은 오더가 심해서 ㄱㄴ들기 힘듬
+        behaviours.add( walking );
 
         assert behavioursTriggerOrder.size() == behaviours.size();
     }
@@ -113,7 +113,7 @@ public class Rabbit extends Thing implements Comparable<Rabbit>
 
         for ( Behaviour behaviour : behavioursTriggerOrder )
         {
-            behaviour.triggered = behaviour.checkTriggered( this, world ); //gyh 주석 : 같은위치면 먹는다
+            behaviour.triggered = behaviour.checkTriggered( this, world );
             if ( behaviour.triggered )
             {
                 cancelAllBehavioursExcept( behaviour );
@@ -169,7 +169,7 @@ public class Rabbit extends Thing implements Comparable<Rabbit>
         for ( Behaviour behaviour : behaviours )
         {
 
-            boolean handled = behaviour.behave( world, this, state ); //gyh 주석 : 토큰을 먹은 토끼가 behaviour의 concret class에 정의된 행동을 함
+            boolean handled = behaviour.behave( world, this, state );
             if ( handled )
             {
                 break;

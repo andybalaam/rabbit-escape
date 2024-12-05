@@ -80,7 +80,7 @@ public class TestBreakBlocking {
         World w = createWorld( world );
         w.step();
 
-        w.step(); //gyh주석 : 슬로프에 있는 토큰은 같은자리에 있는걸로 취급되는것같아 step추가함
+        w.step();
         assertThat(
 
                 renderWorld( w, false, true ),

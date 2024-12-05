@@ -221,7 +221,7 @@ public class LineProcessor
         return new Dimension( width, height );
     }
 
-    private void process( VariantGenerator variantGen ) //gyh 주석 : /levels/.rel로부터 텍스트를 읽어서 구성하는곳
+    private void process( VariantGenerator variantGen )
     {
         for ( String line : lines )
         {
@@ -298,7 +298,7 @@ public class LineProcessor
         return key;
     }
 
-    private void processMetaLine( String line, VariantGenerator variantGen ) //gyh주석, .rel에서 각종 정보를 읽어오는 실제 구현
+    private void processMetaLine( String line, VariantGenerator variantGen )
     {
 
         String[] splitLine = split( line.substring( 1 ), "=", 1 );
@@ -639,7 +639,7 @@ public class LineProcessor
                 break;
             }
 
-            case '5': //gyh
+            case '5':
             {
               ret = new Token( x, y, Token.Type.breakblock );
               things.add( ret );

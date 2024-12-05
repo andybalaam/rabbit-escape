@@ -73,7 +73,7 @@ public class GameUi implements StatsChangedListener
         }
 
         @Override
-        public void mouseReleased( MouseEvent e ) //gyh 주석 : 토큰을 놓거나 할때, clicked대신 release될때 체크가 된다.
+        public void mouseReleased( MouseEvent e )
         {
             long msDownTime = System.currentTimeMillis() - msTimePress;
             if ( msDownTime < msClickThreshold )
@@ -646,14 +646,14 @@ public class GameUi implements StatsChangedListener
         addToken( p.x , p.y );
     }
 
-    protected void addToken(int tileX, int tileY ) //gyh주석 : 마우스 클릭했을때 토큰을 놓는다
+    protected void addToken(int tileX, int tileY )
     {
         if ( chosenAbility == null )
         {
             return;
         }
 
-        int numLeft = gameLaunch.addToken( tileX, tileY, chosenAbility ); //gyh 주석 : 계속 이어져서 결과적으로 WorldChages의 addToken에서 구현된다.
+        int numLeft = gameLaunch.addToken( tileX, tileY, chosenAbility );
         menu.abilities.get( chosenAbility ).setNumLeft( numLeft );
 
         updateChosenAbility();

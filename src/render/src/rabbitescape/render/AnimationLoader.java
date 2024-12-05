@@ -87,7 +87,7 @@ public class AnimationLoader
             "/rabbitescape/render/animations/ls.txt" );
     }
 
-    public static Animation load( String name ) //gyh주석 : GameMenu의 addAbilitiesButtons가 불려오기전에 .rea파일을 전부 가져온다
+    public static Animation load( String name )
     {
         try
         {
@@ -113,7 +113,7 @@ public class AnimationLoader
 
     private static int xOffset = 0, yOffset = 0;
 
-    public static Animation readAnimation( InputStream stream ) //gyh 주석 : 그냥 모든 .rea를 다 읽는듯
+    public static Animation readAnimation( InputStream stream )
         throws IOException
     {
         BufferedReader reader = new BufferedReader(

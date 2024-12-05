@@ -31,7 +31,7 @@ public class Token extends Thing
         climb,
         explode,
         brolly,
-        breakblock //gyh
+        breakblock
     }
 
     public final Type type;
@@ -51,7 +51,7 @@ public class Token extends Thing
         state = switchType( type, false, false, onSlope );
     }
 
-    private static State switchType(  //gyh주석 : Thing-Token과 Behaviour-bash,dig...을 이어주는 메소드
+    private static State switchType(
         Type type, 
         boolean moving,
         boolean slopeBelow, 
@@ -129,7 +129,7 @@ public class Token extends Thing
                 TOKEN_BROLLY_FALL_TO_SLOPE, 
                 TOKEN_BROLLY_ON_SLOPE
                 );
-            case breakblock: return chooseState( //gyh
+            case breakblock: return chooseState(
                  moving,
                  slopeBelow,
                  onSlope,
@@ -184,7 +184,7 @@ public class Token extends Thing
     }
 
     @Override
-    public void step( World world ) //gyh 주석 : step단위가 지날때마다 토큰의 위치 조정
+    public void step( World world )
     {
         switch ( state )
         {
@@ -202,7 +202,7 @@ public class Token extends Thing
         case TOKEN_EXPLODE_FALLING:
         case TOKEN_BROLLY_FALLING:
         case TOKEN_BROLLY_FALL_TO_SLOPE:
-        case TOKEN_BREAKBLOCK_FALLING: //gyh
+        case TOKEN_BREAKBLOCK_FALLING:
         case TOKEN_BREAKBLOCK_FALL_TO_SLOPE:
         {
             ++y;
@@ -218,11 +218,11 @@ public class Token extends Thing
 
 
         case TOKEN_BREAKBLOCK_ON_SLOPE:
-        case TOKEN_BREAKBLOCK_STILL: { //gyh
+        case TOKEN_BREAKBLOCK_STILL: {
             Block belowBlock = world.getBlockAt( x, y + 1 );
             Block onBlock = world.getBlockAt( x, y );
 
-            if(onBlock != null) { //gyh 주석 : on, below를 구분하지 않으면, 블록 안쪽에 토큰을 겹치게 소환한 경우, on을 안하면 그 아래만 지워짐
+            if(onBlock != null) {
 
 
 
