@@ -82,6 +82,7 @@ public class ThingRenderer
             case climb:   return 'c';
             case explode: return 'p';
             case brolly:  return 'l';
+            case portal:  return 'u';   // portal token
             default: throw new UnknownTokenType( thing.type );
         }
     }

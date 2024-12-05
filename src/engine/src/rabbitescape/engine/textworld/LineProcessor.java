@@ -637,6 +637,13 @@ public class LineProcessor
                 things.add( ret );
                 break;
             }
+            // 'u' represents a portal token
+            case 'u':
+            {
+                ret = new Token(x, y, Token.Type.portal);
+                things.add(ret);
+                break;
+            }
             case 'N':
             {
                 // Default amount for a full water region, but may be

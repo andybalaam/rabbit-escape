@@ -274,6 +274,10 @@ public class ChangeRenderer
             case RABBIT_DIGGING_2:
                 chars.set( change.x, change.y, 'D' );
                 break;
+            case RABBIT_PORTALING_LEFT:     // rabbit_portaling
+            case RABBIT_PORTALING_RIGHT:
+                chars.set( change.x, change.y, '~');
+                break;
             case RABBIT_BLOCKING:
             case RABBIT_BLOCKING_RISE_RIGHT:
             case RABBIT_BLOCKING_RISE_LEFT:
