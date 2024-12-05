@@ -638,6 +638,13 @@ public class LineProcessor
                 things.add( ret );
                 break;
             }
+
+            case '5': //gyh
+            {
+              ret = new Token( x, y, Token.Type.breakblock );
+              things.add( ret );
+              break;
+            }
             case 'N':
             {
                 // Default amount for a full water region, but may be

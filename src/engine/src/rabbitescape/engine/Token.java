@@ -224,11 +224,15 @@ public class Token extends Thing
 
             if(onBlock != null) { //gyh 주석 : on, below를 구분하지 않으면, 블록 안쪽에 토큰을 겹치게 소환한 경우, on을 안하면 그 아래만 지워짐
 
+
+                System.out.println("onBlock = world.getBlockAt( x, y + 1 );\n\n\n\n\n");
                 world.changes.removeBlockAt( x, y );
                 world.changes.removeToken( this );
                 return;
             }
             if(belowBlock != null) {
+                System.out.println("belowBlock = world.getBlockAt( x, y + 1 );\n\n\n\n\n");
+
 
                 world.changes.removeBlockAt( x, y + 1 );
                 world.changes.removeToken( this );
