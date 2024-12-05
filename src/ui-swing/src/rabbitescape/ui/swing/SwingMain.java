@@ -48,7 +48,7 @@ public class SwingMain
             return;
         }
 
-        System.out.println("psvm 시작");
+       
 
         Locale locale = Locale.getDefault();
         Translation.init( locale );
