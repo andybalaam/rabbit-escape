@@ -190,7 +190,6 @@ public class GameUi implements StatsChangedListener
         }
     }
 
-    private static final Color backgroundColor = Color.WHITE;
     private static int[] zoomValues = { 16, 24, 32, 48, 64, 96, 128 };
 
         // 32x32 is the lowest "reasonable" zoom size
@@ -213,6 +212,7 @@ public class GameUi implements StatsChangedListener
     private JScrollBar canvasScrollBarY;
     private GameMenu menu;
     private TopBar topBar;
+    private Theme theme;
 
     private Token.Type chosenAbility;
     private SwingGameLaunch gameLaunch;
@@ -476,6 +476,10 @@ public class GameUi implements StatsChangedListener
     public void setGameLaunch( SwingGameLaunch gameLaunch )
     {
         this.gameLaunch = gameLaunch;
+
+        theme = Theme.getTheme( uiConfig );
+        Color backgroundColor = theme.getBackgroundColor();
+        frame.setBackground( backgroundColor );
 
         this.menu = new GameMenu(
             contentPane,

@@ -59,6 +59,7 @@ public class Rabbit extends Thing implements Comparable<Rabbit>
         Bashing bashing = new Bashing();
         Bridging bridging = new Bridging();
         Blocking blocking = new Blocking();
+        Jumping jumping = new Jumping();
         Walking walking = new Walking();
         RabbotCrash rabbotCrash = new RabbotCrash();
         RabbotWait rabbotWait = new RabbotWait();
@@ -70,6 +71,7 @@ public class Rabbit extends Thing implements Comparable<Rabbit>
         behavioursTriggerOrder.add( rabbotCrash );
         behavioursTriggerOrder.add( falling );
         behavioursTriggerOrder.add( exiting );
+        behavioursTriggerOrder.add( jumping );
         behavioursTriggerOrder.add( brollychuting );
         behavioursTriggerOrder.add( climbing );
         behavioursTriggerOrder.add( bashing );
@@ -86,6 +88,7 @@ public class Rabbit extends Thing implements Comparable<Rabbit>
         behaviours.add( rabbotCrash );
         behaviours.add( falling );
         behaviours.add( exiting );
+        behaviours.add( jumping );
         behaviours.add( brollychuting );
         behaviours.add( bashing );
         behaviours.add( digging );
