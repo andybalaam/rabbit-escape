@@ -206,7 +206,7 @@ public class Token extends Thing
         case TOKEN_BREAKBLOCK_FALL_TO_SLOPE:
         {
             ++y;
-            System.out.println(state);
+            
 
             if ( y >= world.size.height )
             {
