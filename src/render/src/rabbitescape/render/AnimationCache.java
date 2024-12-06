@@ -13,10 +13,13 @@ public class AnimationCache
         this.names = AnimationLoader.listAll();
         this.animations = new HashMap<>();
 
+
+
         for ( String name : names )
         {
             if ( !name.equals( AnimationLoader.NONE ) )
             {
+
                 this.animations.put( name, AnimationLoader.load( name ) );
             }
         }

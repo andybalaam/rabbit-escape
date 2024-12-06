@@ -64,9 +64,11 @@ proguard/
 *.log
 
 # IntelliJ
-.idea/libraries/
+.idea/
 *.iml
-.idea/modules.xml
 
 # Vim
 *.swp
+
+# out
+out/

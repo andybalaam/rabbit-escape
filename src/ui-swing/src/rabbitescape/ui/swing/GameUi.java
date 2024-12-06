@@ -65,6 +65,8 @@ public class GameUi implements StatsChangedListener
                 click( e.getPoint() );
                 return;
             }
+
+
             msTimePress = System.currentTimeMillis();
             startX  = e.getX();
             startY  = e.getY();
@@ -78,11 +80,13 @@ public class GameUi implements StatsChangedListener
             {
                 click( e.getPoint() );
             }
+
         }
 
         @Override
         public void mouseClicked( MouseEvent e )
         {
+
             // use pressed and released calls.
             // if this was used too, would get double event calls.
         }
@@ -95,6 +99,7 @@ public class GameUi implements StatsChangedListener
             { // Wait and see if this is a click or a drag
                 return;
             }
+
 
             canvasScrollBarX.setValue(
                 canvasScrollBarX.getValue() + startX - e.getX() );

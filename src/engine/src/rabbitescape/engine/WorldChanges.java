@@ -186,6 +186,17 @@ public class WorldChanges
         Block block = world.getBlockAt( x, y );
         if ( BehaviourTools.s_isFlat( block ) )
         {
+            if(type.toString().equals("breakblock")) {
+
+
+
+
+                tokensToAdd.add( new Token( x, y, type, world ) );
+               // world.changes.removeBlockAt(x, y);
+                world.abilities.put( type, numLeft - 1 );
+
+            }
+
             return;
         }
 
