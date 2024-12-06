@@ -31,9 +31,9 @@ public class Token extends Thing
         climb,
         explode,
         brolly,
+        portal,
         breakblock,
         jump
-
     }
 
     public final Type type;
@@ -140,6 +140,16 @@ public class Token extends Thing
                  TOKEN_BREAKBLOCK_FALL_TO_SLOPE,
                  TOKEN_BREAKBLOCK_ON_SLOPE);
 
+            case portal: return chooseState(
+                moving,
+                slopeBelow,
+                onSlope,
+                TOKEN_PORTAL_FALLING,
+                TOKEN_PORTAL_STILL,
+                TOKEN_PORTAL_FALL_TO_SLOPE,
+                TOKEN_PORTAL_ON_SLOPE
+                );
+
             case jump:   return chooseState(
                 moving, 
                 slopeBelow, 
@@ -214,10 +224,10 @@ public class Token extends Thing
         case TOKEN_EXPLODE_FALLING:
         case TOKEN_BROLLY_FALLING:
         case TOKEN_BROLLY_FALL_TO_SLOPE:
-
+        case TOKEN_PORTAL_FALLING:
+        case TOKEN_PORTAL_FALL_TO_SLOPE:
         case TOKEN_BREAKBLOCK_FALLING:
         case TOKEN_BREAKBLOCK_FALL_TO_SLOPE:
-
         case TOKEN_JUMP_FALLING:
         case TOKEN_JUMP_FALL_TO_SLOPE:
 

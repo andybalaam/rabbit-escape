@@ -200,8 +200,48 @@ public class WorldChanges
             return;
         }
 
+        // handle portal tokens (keep maximum 2 portal tokens in the world)
+        if (type == Token.Type.portal) {
+            // combined list of portal tokens in the world and tokensToAdd
+            List<Token> portalTokens = new ArrayList<>();
 
-        tokensToAdd.add( new Token( x, y, type, world ) );
+            // collect portal tokens from world.things
+            for (Thing thing : world.things) {
+                if (thing instanceof Token) {
+                    Token t = (Token) thing;
+                    // exclude tokens to be removed (tokens in tokensToRemove list)
+                    if (t.type == Token.Type.portal && !tokensToRemove.contains(t)) {
+                        portalTokens.add(t);
+                    }
+                }
+            }
+
+            // collect portal tokens from tokensToAdd
+            for (Token t : tokensToAdd) {
+                if (t.type == Token.Type.portal) {
+                    portalTokens.add(t);
+                }
+            }
+
+            // if adding this new portal token will exceed the limit ( 2 tokens max)
+            if (portalTokens.size() >= 2) {
+                // find the oldest portal token
+                Token oldestPortal = portalTokens.get(0);
+
+                // Remove the oldest portal token
+                if (tokensToAdd.contains(oldestPortal)) {
+                    // Remove from tokensToAdd
+                    tokensToAdd.remove(oldestPortal);
+                } else {
+                    // Schedule for removal from world.things
+                    removeToken(oldestPortal);
+                }
+
+                portalTokens.remove(oldestPortal);
+            }
+        }
+        // add new tokens to tokensToAdd
+        tokensToAdd.add( new Token( x, y, type, world) );
         world.abilities.put( type, numLeft - 1 );
     }
 

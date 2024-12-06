@@ -638,20 +638,23 @@ public class LineProcessor
                 things.add( ret );
                 break;
             }
-
+            case 'u':
+            {
+                ret = new Token(x, y, Token.Type.portal);
+                things.add(ret);
+                break;
+            }
             case '5':
             {
               ret = new Token( x, y, Token.Type.breakblock );
               things.add( ret );
               break;
             }
-
             case 'w':
             {
                 ret = new Token( x, y, Token.Type.jump );
                 things.add( ret );
                 break;
-
             }
             case 'N':
             {

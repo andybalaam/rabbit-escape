@@ -63,6 +63,12 @@ local.properties
 proguard/
 *.log
 
+# IntelliJ
 .idea/
 *.iml
+
+# Vim
+*.swp
+
+# out
 out/

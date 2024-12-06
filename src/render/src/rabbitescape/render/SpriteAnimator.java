@@ -66,6 +66,10 @@ public class SpriteAnimator
 
         for ( Thing thing : Util.filterOut( world.things, Fire.class ) )
         {
+            // tokens to be removed disappears from the screen immediatedly
+            if(thing instanceof Token && world.changes.tokensToRemove.contains( thing )) {
+                continue;
+            }
             addThing( frameNum, thing, null, ret );
         }
 

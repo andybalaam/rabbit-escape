@@ -274,6 +274,10 @@ public class ChangeRenderer
             case RABBIT_DIGGING_2:
                 chars.set( change.x, change.y, 'D' );
                 break;
+            case RABBIT_PORTALING_LEFT:     // rabbit_portaling
+            case RABBIT_PORTALING_RIGHT:
+                chars.set( change.x, change.y, '~');
+                break;
             case RABBIT_BLOCKING:
             case RABBIT_BLOCKING_RISE_RIGHT:
             case RABBIT_BLOCKING_RISE_LEFT:
@@ -319,9 +323,12 @@ public class ChangeRenderer
             case TOKEN_BROLLY_STILL:
             case TOKEN_BROLLY_ON_SLOPE:
 
+            case TOKEN_PORTAL_STILL:
+            case TOKEN_PORTAL_ON_SLOPE:
+
             case TOKEN_BREAKBLOCK_STILL:
             case TOKEN_BREAKBLOCK_ON_SLOPE:
-
+            
             case TOKEN_JUMP_STILL:
             case TOKEN_JUMP_ON_SLOPE:
 
@@ -340,13 +347,16 @@ public class ChangeRenderer
             case TOKEN_EXPLODE_FALL_TO_SLOPE:
             case TOKEN_BROLLY_FALLING:
             case TOKEN_BROLLY_FALL_TO_SLOPE:
+            
+            case TOKEN_PORTAL_FALLING:
+            case TOKEN_PORTAL_FALL_TO_SLOPE:
 
             case TOKEN_BREAKBLOCK_FALLING:
             case TOKEN_BREAKBLOCK_FALL_TO_SLOPE:
 
             case TOKEN_JUMP_FALLING:
             case TOKEN_JUMP_FALL_TO_SLOPE:
-
+            
                 chars.set( change.x, change.y + 1, 'f' );
                 break;
             case WATER_REGION:

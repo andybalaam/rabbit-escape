@@ -6,11 +6,12 @@
 :hint.2=Choose a token on the left, then drop it next to the wall to the right of the rabbits.
 :hint.3=Make sure your token is selected on the left. Be careful not to move your finger as you touch.
 :solution.1=bash;(7,2);23
-:num_rabbits=3
+:num_rabbits=1
 :num_to_save=1
 :rabbit_delay=4
 :music=tryad-witness
-:bash=10
+:bash=2
+:portal=4
 ###########
 #   Q   # #
 # /\    # #
