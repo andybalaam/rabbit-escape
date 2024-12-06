@@ -31,9 +31,7 @@ public class Token extends Thing
         climb,
         explode,
         brolly,
-
-        breakblock
-
+        breakblock,
         jump
 
     }

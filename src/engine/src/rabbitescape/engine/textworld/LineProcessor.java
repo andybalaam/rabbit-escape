@@ -639,12 +639,12 @@ public class LineProcessor
                 break;
             }
 
-
             case '5':
             {
               ret = new Token( x, y, Token.Type.breakblock );
               things.add( ret );
               break;
+            }
 
             case 'w':
             {
