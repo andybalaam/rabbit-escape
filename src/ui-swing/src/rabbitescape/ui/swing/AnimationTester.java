@@ -81,6 +81,7 @@ public class AnimationTester extends JFrame
         {
             int i = screen2index( mouseEvent.getX(), mouseEvent.getY() );
 
+
             String[] possibilties = animationCache.listAll();
 
             JPanel dropDowns = new JPanel();

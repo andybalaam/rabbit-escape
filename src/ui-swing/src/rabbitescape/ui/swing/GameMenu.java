@@ -161,6 +161,7 @@ class GameMenu
         {
             String iconName = "ability_" + ability.toString();
 
+
             JToggleButton button = addToggleButton(
                 iconName,
                 null,

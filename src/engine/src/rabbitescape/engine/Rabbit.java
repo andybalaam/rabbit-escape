@@ -171,6 +171,7 @@ public class Rabbit extends Thing implements Comparable<Rabbit>
     {
         for ( Behaviour behaviour : behaviours )
         {
+
             boolean handled = behaviour.behave( world, this, state );
             if ( handled )
             {

@@ -9,7 +9,6 @@ import java.util.List;
 import java.util.Map;
 
 import rabbitescape.engine.Rabbit.Type;
-import rabbitescape.engine.WaterRegion;
 import rabbitescape.engine.err.RabbitEscapeException;
 import rabbitescape.engine.textworld.Comment;
 import rabbitescape.engine.util.Dimension;
@@ -180,6 +179,7 @@ public class World
         this.paused = paused;
         this.comments = comments;
         this.voidStyle = voidStyle;
+
 
         if ( -1 == size.width )
         {

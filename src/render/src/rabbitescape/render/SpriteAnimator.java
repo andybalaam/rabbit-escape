@@ -81,6 +81,7 @@ public class SpriteAnimator
 
         for ( Thing thing : world.changes.tokensAboutToAppear() )
         {
+
             addThing( frameNum, thing, null, ret );
         }
 
@@ -119,6 +120,7 @@ public class SpriteAnimator
         List<Sprite> ret
     )
     {
+
         Frame frame = frameForThing( frameNum, thing );
 
         String bitmapName = null;

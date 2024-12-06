@@ -318,8 +318,13 @@ public class ChangeRenderer
             case TOKEN_EXPLODE_ON_SLOPE:
             case TOKEN_BROLLY_STILL:
             case TOKEN_BROLLY_ON_SLOPE:
+
+            case TOKEN_BREAKBLOCK_STILL:
+            case TOKEN_BREAKBLOCK_ON_SLOPE:
+
             case TOKEN_JUMP_STILL:
             case TOKEN_JUMP_ON_SLOPE:
+
                 break;
             case TOKEN_BASH_FALLING:
             case TOKEN_BASH_FALL_TO_SLOPE:
@@ -335,8 +340,13 @@ public class ChangeRenderer
             case TOKEN_EXPLODE_FALL_TO_SLOPE:
             case TOKEN_BROLLY_FALLING:
             case TOKEN_BROLLY_FALL_TO_SLOPE:
+
+            case TOKEN_BREAKBLOCK_FALLING:
+            case TOKEN_BREAKBLOCK_FALL_TO_SLOPE:
+
             case TOKEN_JUMP_FALLING:
             case TOKEN_JUMP_FALL_TO_SLOPE:
+
                 chars.set( change.x, change.y + 1, 'f' );
                 break;
             case WATER_REGION:

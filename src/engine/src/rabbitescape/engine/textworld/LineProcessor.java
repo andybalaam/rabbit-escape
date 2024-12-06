@@ -300,6 +300,7 @@ public class LineProcessor
 
     private void processMetaLine( String line, VariantGenerator variantGen )
     {
+
         String[] splitLine = split( line.substring( 1 ), "=", 1 );
         if ( splitLine.length != 2 )
         {
@@ -637,11 +638,20 @@ public class LineProcessor
                 things.add( ret );
                 break;
             }
+
+
+            case '5':
+            {
+              ret = new Token( x, y, Token.Type.breakblock );
+              things.add( ret );
+              break;
+
             case 'w':
             {
                 ret = new Token( x, y, Token.Type.jump );
                 things.add( ret );
                 break;
+
             }
             case 'N':
             {

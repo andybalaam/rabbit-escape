@@ -91,6 +91,7 @@ public class AnimationLoader
     {
         try
         {
+
             String key = "/rabbitescape/render/animations/" + name + ".rea";
 
             URL url = AnimationLoader.class.getResource( key );
@@ -99,6 +100,7 @@ public class AnimationLoader
                 throw new AnimationNotFound( name );
             }
             InputStream stream = url.openStream();
+
 
             return readAnimation( stream );
         }
@@ -125,6 +127,7 @@ public class AnimationLoader
             String trimmedLn = ln.trim();
             if ( !Util.isEmpty( trimmedLn ) )
             {
+
                 Frame lineFrame = frameFromLine( trimmedLn );
                 if ( null != lineFrame ) {
                     ret.add( lineFrame );
