@@ -32,6 +32,7 @@ public class SwingConfigSetup
     public static final String DEPRECATED_CFG_MENU_WINDOW_HEIGHT =
         "menu.window.height";
     public static final String CFG_MUTED = "muted";
+    public static final String CFG_DARK_THEME = "dark";
 
     public static Config createConfig()
     {
@@ -96,6 +97,12 @@ public class SwingConfigSetup
             CFG_MUTED,
             String.valueOf( false ),
             "Disable all sound"
+        );
+
+        definition.set(
+            CFG_DARK_THEME,
+            String.valueOf( false ),
+            "Set Dark Theme"
         );
 
         definition.set(

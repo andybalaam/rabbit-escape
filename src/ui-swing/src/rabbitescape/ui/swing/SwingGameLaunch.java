@@ -125,7 +125,8 @@ public class SwingGameLaunch implements GameLaunch
             uiPieces.bitmapCache,
             sound,
             frameDumper,
-            waterAnimation
+            waterAnimation,
+            config
         );
 
         // Used for redraw after window is resized.

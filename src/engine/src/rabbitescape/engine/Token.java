@@ -31,7 +31,8 @@ public class Token extends Thing
         climb,
         explode,
         brolly,
-        portal  // added portal type
+        portal,
+        jump
     }
 
     public final Type type;
@@ -130,7 +131,6 @@ public class Token extends Thing
                 TOKEN_BROLLY_ON_SLOPE
                 );
 
-            // portal
             case portal: return chooseState(
                 moving,
                 slopeBelow,
@@ -139,8 +139,18 @@ public class Token extends Thing
                 TOKEN_PORTAL_STILL,
                 TOKEN_PORTAL_FALL_TO_SLOPE,
                 TOKEN_PORTAL_ON_SLOPE
-            );
+                );
 
+            case jump:   return chooseState(
+                moving, 
+                slopeBelow, 
+                onSlope,
+                TOKEN_JUMP_FALLING, 
+                TOKEN_JUMP_STILL,
+                TOKEN_JUMP_FALL_TO_SLOPE, 
+                TOKEN_JUMP_ON_SLOPE
+                );
+                
             default: throw new UnknownType( type );
         }
     }
@@ -205,9 +215,10 @@ public class Token extends Thing
         case TOKEN_EXPLODE_FALLING:
         case TOKEN_BROLLY_FALLING:
         case TOKEN_BROLLY_FALL_TO_SLOPE:
-        // token_portal
         case TOKEN_PORTAL_FALLING:
         case TOKEN_PORTAL_FALL_TO_SLOPE:
+        case TOKEN_JUMP_FALLING:
+        case TOKEN_JUMP_FALL_TO_SLOPE:
         {
             ++y;
 

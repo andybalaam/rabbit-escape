@@ -296,6 +296,16 @@ public class ChangeRenderer
             case RABBIT_WAITING_RIGHT:
                 chars.set( change.x, change.y, 'z' );
                 break;
+            case RABBIT_JUMPING_LEFT:
+            case RABBIT_JUMPING_RIGHT:
+            case RABBIT_JUMPING_ON_DOWN_SLOPE_LEFT:
+            case RABBIT_JUMPING_ON_DOWN_SLOPE_RIGHT:
+                chars.set( change.x, change.y, 'w' );
+                break;
+            case RABBIT_JUMPING_ON_UP_SLOPE_LEFT:
+            case RABBIT_JUMPING_ON_UP_SLOPE_RIGHT:
+                chars.set( change.x, change.y - 1, 'w' );
+                break;
             case RABBIT_OUT_OF_BOUNDS:
                 break;
             case TOKEN_BASH_STILL:
@@ -312,9 +322,10 @@ public class ChangeRenderer
             case TOKEN_EXPLODE_ON_SLOPE:
             case TOKEN_BROLLY_STILL:
             case TOKEN_BROLLY_ON_SLOPE:
-            // token portal
             case TOKEN_PORTAL_STILL:
             case TOKEN_PORTAL_ON_SLOPE:
+            case TOKEN_JUMP_STILL:
+            case TOKEN_JUMP_ON_SLOPE:
                 break;
             case TOKEN_BASH_FALLING:
             case TOKEN_BASH_FALL_TO_SLOPE:
@@ -330,9 +341,10 @@ public class ChangeRenderer
             case TOKEN_EXPLODE_FALL_TO_SLOPE:
             case TOKEN_BROLLY_FALLING:
             case TOKEN_BROLLY_FALL_TO_SLOPE:
-            // token portal
             case TOKEN_PORTAL_FALLING:
             case TOKEN_PORTAL_FALL_TO_SLOPE:
+            case TOKEN_JUMP_FALLING:
+            case TOKEN_JUMP_FALL_TO_SLOPE:
                 chars.set( change.x, change.y + 1, 'f' );
                 break;
             case WATER_REGION:
